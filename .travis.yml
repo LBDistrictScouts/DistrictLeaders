@@ -26,6 +26,11 @@ matrix:
       php: 7.2
       env: PHPCS=1 PHPSTAN=0 DEFAULT=1
 
+  allow_failures:
+    - name: "Standards Check"
+      php: 7.1
+      env: PHPCS=1 PHPSTAN=1 DEFAULT=0
+
 before_script:
   - if [[ $DEFAULT = 1 ]]; then composer install; fi
   - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
