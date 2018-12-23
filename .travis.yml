@@ -4,15 +4,11 @@ dist: trusty
 
 sudo: false
 
-php:
-  - 7.1
-  - 7.2
-
 env:
   - DB=postgres
 
 services:
-  - postgres
+  - postgresql
 
 matrix:
   fast_finish: true
@@ -30,9 +26,9 @@ before_script:
   - if [[ $DEFAULT = 1 ]]; then composer require phpunit/phpunit:"^5.7|^6.0"; fi
   - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
   - if [[ $PHPSTAN = 1 ]]; then composer require --dev "phpstan/phpstan"; fi
-  - psql -c 'create database cake;' -U postgres
-  - sh -c "bin/cake database build"
-  - sh -c "bin/cake database seed"
+  - if [[ $DEFAULT = 1 ]]; psql -c 'create database cake;' -U postgres; fi
+  - if [[ $DEFAULT = 1 ]]; sh -c "bin/cake database build"; fi
+  - if [[ $DEFAULT = 1 ]]; sh -c "bin/cake database seed"; fi
 
 script:
   - if [[ $DEFAULT = 1 ]]; then vendor/bin/phpunit; fi
