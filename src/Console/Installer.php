@@ -105,12 +105,12 @@ class Installer
             $io->write('Created `config/app.php` file');
         }
 
-	    $appConfig = $dir . '/config/app_db.php';
-	    $defaultConfig = $dir . '/config/app_db.default.php';
-	    if (!file_exists($appConfig)) {
-		    copy($defaultConfig, $appConfig);
-		    $io->write('Created `config/app_db.php` file');
-	    }
+        $appConfig = $dir . '/config/app_db.php';
+        $defaultConfig = $dir . '/config/app_db.default.php';
+        if (!file_exists($appConfig)) {
+            copy($defaultConfig, $appConfig);
+            $io->write('Created `config/app_db.php` file');
+        }
     }
 
     /**

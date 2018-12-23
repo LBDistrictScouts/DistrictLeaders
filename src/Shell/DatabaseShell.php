@@ -40,7 +40,7 @@ class DatabaseShell extends Shell
     {
 //        $migrations = new Migrations();
 
-	    $this->out('Settings Seeding Succeeded.');
+        $this->out('Settings Seeding Succeeded.');
 
         /*$seeded = $migrations->seed(['seed' => 'UsersSeed']);
         if (!$seeded) {
