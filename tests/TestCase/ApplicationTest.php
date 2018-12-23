@@ -35,7 +35,7 @@ class ApplicationTest extends IntegrationTestCase
      */
     public function testBootstrap()
     {
-        $app = new Application( dirname( dirname( __DIR__ ) ) . '/config' );
+        $app = new Application(dirname(dirname(__DIR__)) . '/config');
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
@@ -55,7 +55,7 @@ class ApplicationTest extends IntegrationTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $app = $this->getMockBuilder(Application::class)
-            ->setConstructorArgs([ dirname( dirname( __DIR__ ) ) . '/config' ])
+            ->setConstructorArgs([ dirname(dirname(__DIR__)) . '/config' ])
             ->setMethods(['addPlugin'])
             ->getMock();
 
@@ -72,7 +72,7 @@ class ApplicationTest extends IntegrationTestCase
      */
     public function testMiddleware()
     {
-        $app = new Application( dirname( dirname( __DIR__ ) ) . '/config' );
+        $app = new Application(dirname(dirname(__DIR__)) . '/config');
         $middleware = new MiddlewareQueue();
 
         $middleware = $app->middleware($middleware);
