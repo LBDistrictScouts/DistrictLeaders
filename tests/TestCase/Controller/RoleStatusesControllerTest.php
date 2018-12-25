@@ -1,14 +1,14 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\UsersController;
+use App\Controller\RoleStatusesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\UsersController Test Case
+ * App\Controller\RoleStatusesController Test Case
  */
-class UsersControllerTest extends TestCase
+class RoleStatusesControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 

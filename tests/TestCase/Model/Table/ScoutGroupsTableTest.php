@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\UsersTable;
+use App\Model\Table\ScoutGroupsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\UsersTable Test Case
+ * App\Model\Table\ScoutGroupsTable Test Case
  */
-class UsersTableTest extends TestCase
+class ScoutGroupsTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var \App\Model\Table\ScoutGroupsTable
      */
-    public $Users;
+    public $ScoutGroups;
 
     /**
      * Fixtures
@@ -24,14 +24,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Users',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.SectionTypes',
         'app.ScoutGroups',
-        'app.Audits',
-        'app.Roles',
     ];
 
     /**
@@ -42,8 +35,8 @@ class UsersTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = TableRegistry::getTableLocator()->get('Users', $config);
+        $config = TableRegistry::getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
+        $this->ScoutGroups = TableRegistry::getTableLocator()->get('ScoutGroups', $config);
     }
 
     /**
@@ -53,7 +46,7 @@ class UsersTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Users);
+        unset($this->ScoutGroups);
 
         parent::tearDown();
     }
