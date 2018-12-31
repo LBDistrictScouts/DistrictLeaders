@@ -36,7 +36,6 @@ class RoleTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'role_type' => 'Lorem ipsum dolor sit amet',
                 'role_abbreviation' => 'Lorem ipsum dolor sit amet',
                 'section_type_id' => 1

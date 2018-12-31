@@ -39,10 +39,12 @@ class ApplicationTest extends IntegrationTestCase
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
-        $this->assertCount(3, $plugins);
+        $this->assertCount(5, $plugins);
         $this->assertSame('Bake', $plugins->get('Bake')->getName());
         $this->assertSame('Migrations', $plugins->get('Migrations')->getName());
         $this->assertSame('DebugKit', $plugins->get('DebugKit')->getName());
+        $this->assertSame('BootstrapUI', $plugins->get('BootstrapUI')->getName());
+        $this->assertSame('Muffin/Trash', $plugins->get('Muffin/Trash')->getName());
     }
 
     /**

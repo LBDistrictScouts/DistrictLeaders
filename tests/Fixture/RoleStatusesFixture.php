@@ -35,7 +35,6 @@ class RoleStatusesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'role_status' => 'Lorem ipsum dolor sit amet'
             ],
         ];

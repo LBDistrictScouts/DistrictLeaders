@@ -25,6 +25,7 @@ class ScoutGroupsFixture extends TestFixture
         'group_domain' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => 'now()', 'null' => false, 'comment' => null, 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'scout_groups_scout_group' => ['type' => 'unique', 'columns' => ['scout_group'], 'length' => []],
@@ -41,14 +42,14 @@ class ScoutGroupsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'scout_group' => 'Lorem ipsum dolor sit amet',
                 'group_alias' => 'Lorem ipsum dolor sit amet',
                 'number_stripped' => 1,
                 'charity_number' => 1,
                 'group_domain' => 'Lorem ipsum dolor sit amet',
                 'created' => 1545697609,
-                'modified' => 1545697609
+                'modified' => 1545697609,
+                'deleted' => null,
             ],
         ];
         parent::init();

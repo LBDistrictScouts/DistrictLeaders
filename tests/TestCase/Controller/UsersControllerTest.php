@@ -32,10 +32,18 @@ class UsersControllerTest extends TestCase
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'Users', 'action' => 'index']);
+
+        $this->assertResponseOk();
     }
 
     /**
@@ -45,7 +53,13 @@ class UsersControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'Users', 'action' => 'view', 1]);
+
+        $this->assertResponseOk();
     }
 
     /**
@@ -55,7 +69,40 @@ class UsersControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'Users', 'action' => 'add']);
+
+        $this->assertResponseOk();
+
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->post([
+            'controller' => 'Users',
+            'action' => 'add'
+        ], [
+            'username' => 'TEST_BOB',
+            'membership_number' => '12345',
+            'first_name' => 'BOB',
+            'last_name' => 'ROBERT',
+            'email' => 'bob@robert.com',
+            'password' => 'FISH_LLAMA',
+            'address_line_1' => 'My House',
+            'address_line_2' => '',
+            'city' => 'Somewhere',
+            'county' => 'Fun',
+            'postcode' => 'SG8 1BN',
+        ]);
+
+        $this->assertRedirect(['controller' => 'Users', 'action' => 'view', 3]);
     }
 
     /**
@@ -65,7 +112,41 @@ class UsersControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'Users', 'action' => 'edit', 1]);
+
+        $this->assertResponseOk();
+
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->post([
+            'controller' => 'Users',
+            'action' => 'edit',
+            1
+        ], [
+            'username' => 'TEST_GOAT',
+            'membership_number' => 145921,
+            'first_name' => 'Goat',
+            'last_name' => 'Fish',
+            'email' => 'goat@octopus.com',
+            'password' => 'FishyLlama',
+            'address_line_1' => '47 Goat Ave',
+            'address_line_2' => '',
+            'city' => 'London',
+            'county' => 'Greater London',
+            'postcode' => 'PS99 4NG',
+        ]);
+
+        $this->assertRedirect(['controller' => 'Users', 'action' => 'view', 1]);
     }
 
     /**
@@ -75,6 +156,20 @@ class UsersControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 2,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->delete([
+            'controller' => 'Users',
+            'action' => 'delete',
+            1
+        ]);
+
+        $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
     }
 }

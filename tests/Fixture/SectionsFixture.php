@@ -23,6 +23,7 @@ class SectionsFixture extends TestFixture
         'scout_group_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => 'now()', 'null' => false, 'comment' => null, 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'sections_section' => ['type' => 'unique', 'columns' => ['section'], 'length' => []],
@@ -41,12 +42,12 @@ class SectionsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'section' => 'Lorem ipsum dolor sit amet',
                 'section_type_id' => 1,
                 'scout_group_id' => 1,
                 'created' => 1545697629,
-                'modified' => 1545697629
+                'modified' => 1545697629,
+                'deleted' => null,
             ],
         ];
         parent::init();

@@ -40,6 +40,7 @@ class ScoutGroupsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Muffin/Trash.Trash');
 
         $this->hasMany('Sections', [
             'foreignKey' => 'scout_group_id'

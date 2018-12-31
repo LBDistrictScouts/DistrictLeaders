@@ -24,6 +24,7 @@ class RolesFixture extends TestFixture
         'role_status_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => 'now()', 'null' => false, 'comment' => null, 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_indexes' => [
             'roles_role_type_id' => ['type' => 'index', 'columns' => ['role_type_id'], 'length' => []],
             'roles_section_id' => ['type' => 'index', 'columns' => ['section_id'], 'length' => []],
@@ -49,13 +50,13 @@ class RolesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'role_type_id' => 1,
                 'section_id' => 1,
                 'user_id' => 1,
                 'role_status_id' => 1,
                 'created' => 1545697703,
-                'modified' => 1545697703
+                'modified' => 1545697703,
+                'deleted' => null,
             ],
         ];
         parent::init();

@@ -1,7 +1,5 @@
-<footer class="footer bg-light">
+<footer class="footer bg-light fixed-bottom">
     <div class="container">
-        <div class="divider">
-        </div>
         <div class="row justify-content-center">
             <div class="col align-self-center my-auto h-100 text-center text-lg-left">
                 <ul class="list-inline mb-2">

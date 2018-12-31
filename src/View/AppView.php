@@ -13,6 +13,7 @@
  */
 namespace App\View;
 
+use BootstrapUI\View\UIViewTrait;
 use Cake\View\View;
 
 /**
@@ -24,7 +25,6 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-
     /**
      * Initialization hook method.
      *
@@ -36,5 +36,12 @@ class AppView extends View
      */
     public function initialize()
     {
+        $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
+        $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
+        $this->loadHelper('Flash', ['className' => 'BootstrapUI.Flash']);
+        $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator', 'templates' => 'paginator_templates']);
+        if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
+            $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
+        }
     }
 }

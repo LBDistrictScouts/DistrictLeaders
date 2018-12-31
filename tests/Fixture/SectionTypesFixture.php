@@ -35,7 +35,6 @@ class SectionTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'section_type' => 'Lorem ipsum dolor sit amet'
             ],
         ];

@@ -65,5 +65,7 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
+
+        $this->viewBuilder()->setLayout('landing');
     }
 }

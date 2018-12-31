@@ -42,6 +42,7 @@ class UsersTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Muffin/Trash.Trash');
 
         $this->belongsTo('ScoutGroups', [
             'foreignKey' => 'admin_scout_group_id'

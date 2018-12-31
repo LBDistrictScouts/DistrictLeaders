@@ -32,6 +32,7 @@ class UsersFixture extends TestFixture
         'admin_scout_group_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => 'now()', 'null' => false, 'comment' => null, 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'last_login' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
@@ -52,7 +53,6 @@ class UsersFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'username' => 'Lorem ipsum dolor sit amet',
                 'membership_number' => 1,
                 'first_name' => 'Lorem ipsum dolor sit amet',
@@ -67,7 +67,26 @@ class UsersFixture extends TestFixture
                 'admin_scout_group_id' => 1,
                 'created' => 1545696847,
                 'modified' => 1545696847,
-                'last_login' => 1545696847
+                'last_login' => 1545696847,
+                'deleted' => null,
+            ],
+            [
+                'username' => 'FishyLlama',
+                'membership_number' => 123,
+                'first_name' => 'Llama',
+                'last_name' => 'Fish',
+                'email' => 'go@away.com',
+                'password' => 'HeyGoNowGo',
+                'address_line_1' => 'Bad Llama Road',
+                'address_line_2' => 'Somewhere',
+                'city' => 'NewPlace',
+                'county' => 'OctopusLand',
+                'postcode' => 'LN9 0II',
+                'admin_scout_group_id' => 1,
+                'created' => 1545696847,
+                'modified' => 1545696847,
+                'last_login' => null,
+                'deleted' => null,
             ],
         ];
         parent::init();

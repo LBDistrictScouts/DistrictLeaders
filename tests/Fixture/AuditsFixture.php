@@ -40,7 +40,6 @@ class AuditsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'audit_field' => 'Lorem ipsum dolor sit amet',
                 'audit_table' => 'Lorem ipsum dolor sit amet',
                 'original_value' => 'Lorem ipsum dolor sit amet',

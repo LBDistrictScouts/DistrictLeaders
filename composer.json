@@ -9,7 +9,10 @@
         "cakephp/cakephp": "3.7.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
-        "mobiledetect/mobiledetectlib": "2.*"
+        "friendsofcake/bootstrap-ui": "^1.4",
+        "friendsofcake/search": "@stable",
+        "mobiledetect/mobiledetectlib": "2.*",
+        "muffin/trash": "^2.1"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",

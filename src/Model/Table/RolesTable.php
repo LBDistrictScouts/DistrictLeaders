@@ -43,6 +43,7 @@ class RolesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Muffin/Trash.Trash');
 
         $this->belongsTo('RoleTypes', [
             'foreignKey' => 'role_type_id',
