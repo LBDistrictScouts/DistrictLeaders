@@ -35,7 +35,7 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
         <?= $this->element('navbar'); ?>
         <br/>
         <?= $this->Flash->render() ?>
-        <div class="container">
+        <div class="container" style="padding-bottom: 120px">
             <?= $this->fetch('content') ?>
         </div>
         <br/>

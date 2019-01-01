@@ -109,4 +109,62 @@ class UsersController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+    /**
+     * Login method
+     *
+     * @return \Cake\Http\Response If Successful - redirects to landing.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
+     */
+    public function login()
+    {
+        // Set the layout.
+        $this->viewBuilder()->setLayout('landing');
+
+        $session = $this->request->getSession();
+
+        if ($session->check('Reset.lgTries')) {
+            $tries = $session->read('Reset.lgTries');
+        }
+
+        if (!isset($tries)) {
+            $tries = 0;
+        }
+
+        if (isset($tries) && $tries > 10) {
+            $this->Flash->error('You have failed entry too many times. Please try again later.');
+
+            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'reset']);
+        }
+
+        if ($this->request->is('post')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
+
+                if ($this->request->getData('remember_me')) {
+                    $this->Cookie->configKey('CookieAuth', [
+                        'expires' => '+1 year',
+                        'httpOnly' => true
+                    ]);
+                    $this->Cookie->write('CookieAuth', [
+                        'username' => $this->request->getData('username'),
+                        'password' => $this->request->getData('password')
+                    ]);
+                }
+                //Last login date
+                $user->last_login = new Time();
+                //Last login IP
+                $user->last_login_ip = $this->request->clientIp();
+
+                $this->Users->save($user);
+
+                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            }
+            $tries = $tries + 1;
+            $this->Flash->error('Your username or password is incorrect. Please try again.');
+            $session->write('Reset.lgTries', $tries);
+        }
+        $this->set(compact('eventId'));
+    }
 }

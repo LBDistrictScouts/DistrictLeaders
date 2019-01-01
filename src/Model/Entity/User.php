@@ -22,6 +22,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property \Cake\I18n\FrozenTime|null $last_login
+ * @property string|null $last_login_ip
  *
  * @property \App\Model\Entity\ScoutGroup $scout_group
  * @property \App\Model\Entity\Audit[] $audits
@@ -55,6 +56,7 @@ class User extends Entity
         'created' => true,
         'modified' => true,
         'last_login' => true,
+        'last_login_ip' => true,
         'scout_group' => true,
         'audits' => true,
         'roles' => true

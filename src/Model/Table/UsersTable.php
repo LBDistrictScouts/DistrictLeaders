@@ -65,73 +65,73 @@ class UsersTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('username')
             ->maxLength('username', 255)
             ->requirePresence('username', 'create')
-            ->notEmpty('username')
+            ->allowEmptyString('username', false)
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('membership_number')
             ->requirePresence('membership_number', 'create')
-            ->notEmpty('membership_number')
+            ->allowEmptyString('membership_number', false)
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->notEmpty('first_name');
+            ->allowEmptyString('first_name', false);
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->notEmpty('last_name');
+            ->allowEmptyString('last_name', false);
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmpty('email')
+            ->allowEmptyString('email', false)
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
             ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->allowEmptyString('password', 'update');
 
         $validator
             ->scalar('address_line_1')
             ->maxLength('address_line_1', 255)
-            ->allowEmpty('address_line_1');
+            ->allowEmptyString('address_line_1');
 
         $validator
             ->scalar('address_line_2')
             ->maxLength('address_line_2', 255)
-            ->allowEmpty('address_line_2');
+            ->allowEmptyString('address_line_2');
 
         $validator
             ->scalar('city')
             ->maxLength('city', 255)
-            ->allowEmpty('city');
+            ->allowEmptyString('city');
 
         $validator
             ->scalar('county')
             ->maxLength('county', 255)
-            ->allowEmpty('county');
+            ->allowEmptyString('county');
 
         $validator
             ->scalar('postcode')
             ->maxLength('postcode', 9)
-            ->allowEmpty('postcode');
+            ->allowEmptyString('postcode');
 
         $validator
             ->dateTime('last_login')
-            ->allowEmpty('last_login');
+            ->allowEmptyDateTime('last_login');
 
         return $validator;
     }

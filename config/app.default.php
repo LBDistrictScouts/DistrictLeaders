@@ -69,6 +69,7 @@ return [
      */
     'Security' => [
         'salt' => env('SECURITY_SALT', '__SALT__'),
+        'cookieKey' => env('COOKIE_SALT', '__COOKIE_SALT__'),
     ],
 
     /**
@@ -301,5 +302,11 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
+    ],
+
+    'Xety/Cake3CookieAuth.Cookie' => [
+	    'cookie' => [
+		    'name' => 'CookieAuth'
+	    ]
     ],
 ];

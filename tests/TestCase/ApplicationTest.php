@@ -17,6 +17,9 @@ namespace App\Test\TestCase;
 use App\Application;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\TestSuite\IntegrationTestCase;
@@ -45,6 +48,7 @@ class ApplicationTest extends IntegrationTestCase
         $this->assertSame('DebugKit', $plugins->get('DebugKit')->getName());
         $this->assertSame('BootstrapUI', $plugins->get('BootstrapUI')->getName());
         $this->assertSame('Muffin/Trash', $plugins->get('Muffin/Trash')->getName());
+//      $this->assertSame('Xety/Cake3CookieAuth', $plugins->get('Xety/Cake3CookieAuth')->getName());
     }
 
     /**
@@ -82,5 +86,8 @@ class ApplicationTest extends IntegrationTestCase
         $this->assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
         $this->assertInstanceOf(AssetMiddleware::class, $middleware->get(1));
         $this->assertInstanceOf(RoutingMiddleware::class, $middleware->get(2));
+        $this->assertInstanceOf(SecurityHeadersMiddleware::class, $middleware->get(3));
+//        $this->assertInstanceOf(CsrfProtectionMiddleware::class, $middleware->get(4));
+        $this->assertInstanceOf(EncryptedCookieMiddleware::class, $middleware->get(4));
     }
 }

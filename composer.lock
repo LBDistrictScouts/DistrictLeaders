@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "71012d027b5d9542e56cedede0b7d1c5",
+    "content-hash": "3262a0889458e85acafd2acb33fcd3e6",
     "packages": [
         {
             "name": "aura/intl",
@@ -1141,6 +1141,58 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2018-11-11T19:48:54+00:00"
+        },
+        {
+            "name": "xety/cake3-cookieauth",
+            "version": "v1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Xety/Cake3-CookieAuth.git",
+                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Xety/Cake3-CookieAuth/zipball/3fb54c89759dbfbc53c1f921d86855f85befcfc1",
+                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "~3.0",
+                "php": ">=5.4.16"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "master-dev",
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Xety\\Cake3CookieAuth\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Xety",
+                    "email": "zoro.fmt@gmail.com",
+                    "homepage": "https://github.com/Xety"
+                }
+            ],
+            "description": "A simple Cake3 plugin to authenticate users with Cookies.",
+            "homepage": "https://github.com/Xety/Cake3-CookieAuth",
+            "keywords": [
+                "auth",
+                "authenticate",
+                "cake3",
+                "cakephp",
+                "cookie",
+                "login",
+                "plugin"
+            ],
+            "time": "2016-10-25T06:10:13+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",

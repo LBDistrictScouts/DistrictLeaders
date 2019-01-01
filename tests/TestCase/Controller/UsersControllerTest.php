@@ -103,6 +103,8 @@ class UsersControllerTest extends TestCase
         ]);
 
         $this->assertRedirect(['controller' => 'Users', 'action' => 'view', 3]);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The user has been saved.');
     }
 
     /**
@@ -128,6 +130,10 @@ class UsersControllerTest extends TestCase
         $this->enableSecurityToken();
         $this->enableRetainFlashMessages();
 
+        $this->configRequest([
+            'environment' => ['HTTPS' => 'on']
+        ]);
+
         $this->post([
             'controller' => 'Users',
             'action' => 'edit',
@@ -147,12 +153,16 @@ class UsersControllerTest extends TestCase
         ]);
 
         $this->assertRedirect(['controller' => 'Users', 'action' => 'view', 1]);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The user has been saved.');
     }
 
     /**
      * Test delete method
      *
      * @return void
+     *
+     * @throws
      */
     public function testDelete()
     {
@@ -171,5 +181,7 @@ class UsersControllerTest extends TestCase
         ]);
 
         $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The user has been deleted.');
     }
 }

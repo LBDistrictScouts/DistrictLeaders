@@ -178,7 +178,7 @@ class Installer
     }
 
     /**
-     * Set the security.salt value in the application's config file.
+     * Set the security.salt & cookie_salt value in the application's config file.
      *
      * @param string $dir The application's root directory.
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
@@ -186,8 +186,15 @@ class Installer
      */
     public static function setSecuritySalt($dir, $io)
     {
-        $newKey = hash('sha256', Security::randomBytes(64));
-        static::setSecuritySaltInFile($dir, $io, $newKey, 'app.php');
+        $salts = [
+            'Security.salt' => '__SALT__',
+            'Cookie.salt' => '__COOKIE_SALT__',
+        ];
+
+        foreach ($salts as $placeHolderName => $searchString) {
+            $newKey = hash('sha256', Security::randomBytes(64));
+            static::setSecuritySaltInFile($dir, $io, $newKey, 'app.php', $searchString, $placeHolderName);
+        }
     }
 
     /**
@@ -197,28 +204,30 @@ class Installer
      * @param \Composer\IO\IOInterface $io IO interface to write to console.
      * @param string $newKey key to set in the file
      * @param string $file A path to a file relative to the application's root
+     * @param string $searchString The Token to Replace in File
+     * @param string $placeHolderName The Name to emit in the IO
      * @return void
      */
-    public static function setSecuritySaltInFile($dir, $io, $newKey, $file)
+    public static function setSecuritySaltInFile($dir, $io, $newKey, $file, $searchString, $placeHolderName)
     {
         $config = $dir . '/config/' . $file;
         $content = file_get_contents($config);
 
-        $content = str_replace('__SALT__', $newKey, $content, $count);
+        $content = str_replace($searchString, $newKey, $content, $count);
 
         if ($count == 0) {
-            $io->write('No Security.salt placeholder to replace.');
+            $io->write('No ' . $placeHolderName . ' placeholder to replace.');
 
             return;
         }
 
         $result = file_put_contents($config, $content);
         if ($result) {
-            $io->write('Updated Security.salt value in config/' . $file);
+            $io->write('Updated ' . $placeHolderName . ' value in config/' . $file);
 
             return;
         }
-        $io->write('Unable to update Security.salt value.');
+        $io->write('Unable to update ' . $placeHolderName . ' value.');
     }
 
     /**

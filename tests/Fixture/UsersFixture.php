@@ -34,6 +34,7 @@ class UsersFixture extends TestFixture
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'last_login' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'last_login_ip' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'users_username' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
@@ -68,6 +69,7 @@ class UsersFixture extends TestFixture
                 'created' => 1545696847,
                 'modified' => 1545696847,
                 'last_login' => 1545696847,
+                'last_login_ip' => '192.168.0.1',
                 'deleted' => null,
             ],
             [
@@ -86,6 +88,7 @@ class UsersFixture extends TestFixture
                 'created' => 1545696847,
                 'modified' => 1545696847,
                 'last_login' => null,
+                'last_login_ip' => null,
                 'deleted' => null,
             ],
         ];
