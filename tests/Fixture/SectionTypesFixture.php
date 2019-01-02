@@ -35,8 +35,29 @@ class SectionTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'section_type' => 'Lorem ipsum dolor sit amet'
+                'section_type' => 'Beavers'
             ],
+	        [
+		        'section_type' => 'Cubs'
+	        ],
+	        [
+		        'section_type' => 'Scouts'
+	        ],
+	        [
+		        'section_type' => 'Explorers'
+	        ],
+	        [
+		        'section_type' => 'Executive'
+	        ],
+	        [
+		        'section_type' => 'Network'
+	        ],
+	        [
+		        'section_type' => 'District'
+	        ],
+	        [
+		        'section_type' => 'Group'
+	        ],
         ];
         parent::init();
     }

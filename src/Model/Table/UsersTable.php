@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -151,5 +152,75 @@ class UsersTable extends Table
         $rules->add($rules->existsIn(['admin_scout_group_id'], 'ScoutGroups'));
 
         return $rules;
+    }
+
+
+	/**
+	 * @param User $user
+	 *
+	 * @return array
+	 */
+    public function retrieveCapabilities(User $user)
+    {
+    	$user = $this->get($user->id, [
+    		'contain' => [
+    			'Roles' => [
+		            'RoleTypes.Capabilities',
+				    'Sections.ScoutGroups'
+			    ]
+		    ]
+	    ]);
+
+	    $permissions = [];
+
+	    $groupPermissions = []; // Group - GroupID
+	    $sectionPermissions = []; // Section - SectionID
+
+	    foreach ( $user->roles as $role )
+	    {
+	    	$roleType = $role->role_type;
+
+		    // Non-specific Capabilities
+		    if (in_array($roleType->level, [0, 1, 4, 5])) {
+			    foreach ( $roleType->capabilities as $capability ) {
+				    array_push( $permissions, $capability->capability_code );
+			    }
+		    }
+
+		    // Section capabilities
+            if ($roleType->level == 2) {
+	            foreach ( $roleType->capabilities as $capability ) {
+		            if ( ! isset( $sectionPermissions[ $role->section->id ] ) ) {
+			            $section = [];
+		            }
+		            if ( isset( $sectionPermissions[ $role->section->id ] ) ) {
+			            $section = $sectionPermissions[ $role->section->id ];
+		            }
+		            array_push( $section, $capability->capability_code );
+		            $sectionPermissions[ $role->section->id ] = $section;
+	            }
+		    }
+
+		    // Group capabilities
+		    if ($roleType->level == 3) {
+			    foreach ( $roleType->capabilities as $capability ) {
+				    if ( ! isset( $groupPermissions[ $role->section->scout_group->id ] ) ) {
+					    $group = [];
+				    }
+				    if ( isset( $groupPermissions[ $role->section->scout_group->id ] ) ) {
+					    $group = $groupPermissions[ $role->section->scout_group->id ];
+				    }
+				    array_push( $group, $capability->capability_code );
+				    $groupPermissions[ $role->section->scout_group->id ] = $group;
+			    }
+		    }
+	    }
+
+	    $permissions['group'] = $groupPermissions;
+	    $permissions['section'] = $sectionPermissions;
+
+    	debug($permissions);
+
+    	return $permissions;
     }
 }

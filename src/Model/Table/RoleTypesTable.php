@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * RoleTypes Model
  *
  * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
+ * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsToMany $Capabilities
  * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
@@ -44,6 +45,10 @@ class RoleTypesTable extends Table
         $this->hasMany('Roles', [
             'foreignKey' => 'role_type_id'
         ]);
+	    $this->belongsToMany('Capabilities', [
+		    'joinTable' => 'capabilities_role_types',
+
+	    ]);
     }
 
     /**
@@ -68,6 +73,11 @@ class RoleTypesTable extends Table
             ->scalar('role_abbreviation')
             ->maxLength('role_abbreviation', 32)
             ->allowEmpty('role_abbreviation');
+
+	    $validator
+		    ->integer('level')
+		    ->requirePresence('level', 'create')
+		    ->notEmpty('level');
 
         return $validator;
     }

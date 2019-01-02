@@ -10,9 +10,11 @@ use Cake\ORM\Entity;
  * @property string $role_type
  * @property string|null $role_abbreviation
  * @property int|null $section_type_id
+ * @property int $level
  *
  * @property \App\Model\Entity\SectionType $section_type
  * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\Capability[] $capabilities
  */
 class RoleType extends Entity
 {
@@ -31,6 +33,8 @@ class RoleType extends Entity
         'role_abbreviation' => true,
         'section_type_id' => true,
         'section_type' => true,
-        'roles' => true
+        'roles' => true,
+        'level' => true,
+	    'capabilities' => true,
     ];
 }
