@@ -32,8 +32,8 @@ class UsersTableTest extends TestCase
         'app.ScoutGroups',
         'app.Audits',
         'app.Roles',
-	    'app.Capabilities',
-	    'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.CapabilitiesRoleTypes',
     ];
 
     /**
@@ -90,54 +90,54 @@ class UsersTableTest extends TestCase
         $this->markTestIncomplete('Not implemented yet.');
     }
 
-	/**
-	 * Test retrieveCapabilities method
-	 *
-	 * @return void
-	 */
+    /**
+     * Test retrieveCapabilities method
+     *
+     * @return void
+     */
     public function testRetrieveCapabilities()
     {
-    	$user = $this->Users->get(1);
-    	$capabilities = $this->Users->retrieveCapabilities($user);
+        $user = $this->Users->get(1);
+        $capabilities = $this->Users->retrieveCapabilities($user);
 
-    	$expected = [
-		    (int) 0 => 'OWN_USER',
-		    (int) 1 => 'EDIT_GROUP',
-		    (int) 2 => 'ALL',
-		    (int) 3 => 'LOGIN',
-		    'group' => [
-			    (int) 1 => [
-				    (int) 0 => 'EDIT_SECT'
-			    ]
-		    ],
-		    'section' => [
-			    (int) 1 => [
-				    (int) 0 => 'EDIT_USER'
-			    ]
-		    ]
-	    ];
+        $expected = [
+            (int)0 => 'OWN_USER',
+            (int)1 => 'EDIT_GROUP',
+            (int)2 => 'ALL',
+            (int)3 => 'LOGIN',
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
+        ];
 
-    	$this->assertEquals($expected, $capabilities);
+        $this->assertEquals($expected, $capabilities);
 
-	    $user = $this->Users->get(2);
-	    $capabilities = $this->Users->retrieveCapabilities($user);
+        $user = $this->Users->get(2);
+        $capabilities = $this->Users->retrieveCapabilities($user);
 
-	    $expected = [
-		    'group' => [
-			    (int) 1 => [
-				    (int) 0 => 'EDIT_SECT'
-			    ]
-		    ],
-		    'section' => [
-			    (int) 2 => [
-				    (int) 0 => 'EDIT_USER'
-			    ],
-			    (int) 1 => [
-				    (int) 0 => 'EDIT_USER'
-			    ]
-		    ]
-	    ];
+        $expected = [
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)2 => [
+                    (int)0 => 'EDIT_USER'
+                ],
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
+        ];
 
-	    $this->assertEquals($expected, $capabilities);
+        $this->assertEquals($expected, $capabilities);
     }
 }

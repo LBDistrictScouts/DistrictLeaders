@@ -38,7 +38,7 @@ class CapabilitiesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsToMany('RoleTypes', [
-	        'joinTable' => 'capabilities_role_types',
+            'joinTable' => 'capabilities_role_types',
 
         ]);
     }
@@ -69,10 +69,10 @@ class CapabilitiesTable extends Table
             ->notEmpty('capability')
             ->add('capability', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
-	    $validator
-		    ->integer('min_level')
-		    ->requirePresence('min_level', 'create')
-		    ->notEmpty('min_level');
+        $validator
+            ->integer('min_level')
+            ->requirePresence('min_level', 'create')
+            ->notEmpty('min_level');
 
         return $validator;
     }

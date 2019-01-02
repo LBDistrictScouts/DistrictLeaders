@@ -64,10 +64,10 @@ class CapabilitiesTableTest extends TestCase
         debug($cap);
 
         $expected = [
-        	'id' => 1,
-	        'capability_code' => 'ALL',
-	        'capability' => 'SuperUser Permissions',
-	        'min_level' => 5
+            'id' => 1,
+            'capability_code' => 'ALL',
+            'capability' => 'SuperUser Permissions',
+            'min_level' => 5
         ];
 
         $this->assertEquals($expected, $cap);

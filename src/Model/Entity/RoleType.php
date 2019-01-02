@@ -35,6 +35,6 @@ class RoleType extends Entity
         'section_type' => true,
         'roles' => true,
         'level' => true,
-	    'capabilities' => true,
+        'capabilities' => true,
     ];
 }

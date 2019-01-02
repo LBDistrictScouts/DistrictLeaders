@@ -49,14 +49,14 @@ class SectionsFixture extends TestFixture
                 'modified' => 1545697629,
                 'deleted' => null,
             ],
-	        [
-		        'section' => 'Lorem lla dolor sit amet',
-		        'section_type_id' => 2,
-		        'scout_group_id' => 1,
-		        'created' => 1545697629,
-		        'modified' => 1545697629,
-		        'deleted' => null,
-	        ],
+            [
+                'section' => 'Lorem lla dolor sit amet',
+                'section_type_id' => 2,
+                'scout_group_id' => 1,
+                'created' => 1545697629,
+                'modified' => 1545697629,
+                'deleted' => null,
+            ],
         ];
         parent::init();
     }

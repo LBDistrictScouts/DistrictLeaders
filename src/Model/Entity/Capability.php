@@ -29,6 +29,6 @@ class Capability extends Entity
         'capability_code' => true,
         'capability' => true,
         'role_types' => true,
-	    'min_level' => true,
+        'min_level' => true,
     ];
 }

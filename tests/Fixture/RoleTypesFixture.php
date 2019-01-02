@@ -40,38 +40,38 @@ class RoleTypesFixture extends TestFixture
                 'role_type' => 'Lorem ipsum dolor sit amet',
                 'role_abbreviation' => 'Lorem ipsum dolor sit amet',
                 'section_type_id' => 1,
-	            'level' => 1,
+                'level' => 1,
             ],
-	        [
-		        'role_type' => 'Lorem ipsum dolor sit amet',
-		        'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-		        'section_type_id' => 1,
-		        'level' => 2,
-	        ],
-	        [
-		        'role_type' => 'Lorem ipsum dolor sit amet',
-		        'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-		        'section_type_id' => 1,
-		        'level' => 3,
-	        ],
-	        [
-		        'role_type' => 'Lorem ipsum dolor sit amet',
-		        'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-		        'section_type_id' => 1,
-		        'level' => 4,
-	        ],
-	        [
-		        'role_type' => 'Lorem ipsum dolor sit amet',
-		        'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-		        'section_type_id' => 1,
-		        'level' => 5,
-	        ],
-	        [
-		        'role_type' => 'Lorem ipsum dolor sit amet',
-		        'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-		        'section_type_id' => 1,
-		        'level' => 0,
-	        ],
+            [
+                'role_type' => 'Lorem ipsum dolor sit amet',
+                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 2,
+            ],
+            [
+                'role_type' => 'Lorem ipsum dolor sit amet',
+                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 3,
+            ],
+            [
+                'role_type' => 'Lorem ipsum dolor sit amet',
+                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 4,
+            ],
+            [
+                'role_type' => 'Lorem ipsum dolor sit amet',
+                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 5,
+            ],
+            [
+                'role_type' => 'Lorem ipsum dolor sit amet',
+                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 0,
+            ],
         ];
         parent::init();
     }

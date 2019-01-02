@@ -45,10 +45,10 @@ class RoleTypesTable extends Table
         $this->hasMany('Roles', [
             'foreignKey' => 'role_type_id'
         ]);
-	    $this->belongsToMany('Capabilities', [
-		    'joinTable' => 'capabilities_role_types',
+        $this->belongsToMany('Capabilities', [
+            'joinTable' => 'capabilities_role_types',
 
-	    ]);
+        ]);
     }
 
     /**
@@ -74,10 +74,10 @@ class RoleTypesTable extends Table
             ->maxLength('role_abbreviation', 32)
             ->allowEmpty('role_abbreviation');
 
-	    $validator
-		    ->integer('level')
-		    ->requirePresence('level', 'create')
-		    ->notEmpty('level');
+        $validator
+            ->integer('level')
+            ->requirePresence('level', 'create')
+            ->notEmpty('level');
 
         return $validator;
     }
