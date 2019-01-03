@@ -27,7 +27,9 @@
         <?php
             echo $this->Form->control('role_type');
             echo $this->Form->control('role_abbreviation');
+            echo $this->Form->control('level');
             echo $this->Form->control('section_type_id', ['options' => $sectionTypes, 'empty' => true]);
+            echo $this->Form->control('capabilities._ids',['options' => $capabilities, 'multiple' => 'checkbox']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

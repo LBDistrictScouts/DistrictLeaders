@@ -34,7 +34,7 @@ class CapabilitiesTable extends Table
         parent::initialize($config);
 
         $this->setTable('capabilities');
-        $this->setDisplayField('id');
+        $this->setDisplayField('capability_code');
         $this->setPrimaryKey('id');
 
         $this->belongsToMany('RoleTypes', [

@@ -25,8 +25,8 @@
         <?php
             echo $this->Form->control('capability_code');
             echo $this->Form->control('capability');
-            echo $this->Form->control('level');
-            echo $this->Form->control('role_types._ids', ['options' => $roleTypes]);
+            echo $this->Form->control('min_level');
+            echo $this->Form->control('role_types._ids', ['options' => $roleTypes, 'multiple' => 'checkbox']);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

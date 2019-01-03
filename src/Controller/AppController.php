@@ -47,25 +47,25 @@ class AppController extends Controller
 
         $this->loadComponent('Flash');
 //      $this->loadComponent('Cookie');
-        $this->loadComponent('Auth', [
-            'authorize' => 'Controller',
-            'loginRedirect' => [
-                'controller' => 'Pages',
-                'action' => 'home'
-            ],
-            'logoutRedirect' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            'authenticate' => [
-                'Form',
-                //'Xety/Cake3CookieAuth.Cookie'
-            ]
-        ]);
+//        $this->loadComponent('Auth', [
+//            'authorize' => 'Controller',
+//            'loginRedirect' => [
+//                'controller' => 'Pages',
+//                'action' => 'home'
+//            ],
+//            'logoutRedirect' => [
+//                'controller' => 'Users',
+//                'action' => 'login'
+//            ],
+//            'loginAction' => [
+//                'controller' => 'Users',
+//                'action' => 'login'
+//            ],
+//            'authenticate' => [
+//                'Form',
+//                //'Xety/Cake3CookieAuth.Cookie'
+//            ]
+//        ]);
 
 //      $this->loadComponent('csrf');
 
@@ -87,11 +87,11 @@ class AppController extends Controller
      */
     public function beforeFilter(Event $event)
     {
-        $this->Auth->allow(['register']);
-        $this->Auth->allow(['login']);
-        $this->Auth->allow(['validate']);
-        $this->Auth->allow(['reset']);
-        $this->Auth->allow(['token']);
+//        $this->Auth->allow(['register']);
+//        $this->Auth->allow(['login']);
+//        $this->Auth->allow(['validate']);
+//        $this->Auth->allow(['reset']);
+//        $this->Auth->allow(['token']);
 
 //      if (!$this->Auth->user() /*&& $this->Cookie->read('CookieAuth')*/) {
 //          $this->loadModel('Users');

@@ -57,7 +57,7 @@ class RoleTypesController extends AppController
             if ($this->RoleTypes->save($roleType)) {
                 $this->Flash->success(__('The role type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $roleType->id]);
             }
             $this->Flash->error(__('The role type could not be saved. Please, try again.'));
         }
@@ -82,12 +82,13 @@ class RoleTypesController extends AppController
             if ($this->RoleTypes->save($roleType)) {
                 $this->Flash->success(__('The role type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $roleType->id]);
             }
             $this->Flash->error(__('The role type could not be saved. Please, try again.'));
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
-        $this->set(compact('roleType', 'sectionTypes'));
+        $capabilities = $this->RoleTypes->Capabilities->find('list', ['conditions' => ['min_level <=' => $roleType->level]]);
+        $this->set(compact('roleType', 'sectionTypes', 'capabilities'));
     }
 
     /**

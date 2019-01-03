@@ -36,7 +36,7 @@ class RoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_types');
-        $this->setDisplayField('id');
+        $this->setDisplayField('role_abbreviation');
         $this->setPrimaryKey('id');
 
         $this->belongsTo('SectionTypes', [

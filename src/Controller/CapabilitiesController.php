@@ -58,8 +58,7 @@ class CapabilitiesController extends AppController
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
-        $roleTypes = $this->Capabilities->RoleTypes->find('list', ['limit' => 200]);
-        $this->set(compact('capability', 'roleTypes'));
+        $this->set(compact('capability'));
     }
 
     /**
@@ -83,7 +82,14 @@ class CapabilitiesController extends AppController
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
-        $roleTypes = $this->Capabilities->RoleTypes->find('list', ['limit' => 200]);
+        $roleTypes = $this->Capabilities->RoleTypes->find('list', [
+            'conditions' => [
+                'level >=' => $capability->min_level
+            ],
+            'keyField' => 'id',
+            'valueField' => 'role_abbreviation',
+            'groupField' => 'level',
+        ]);
         $this->set(compact('capability', 'roleTypes'));
     }
 

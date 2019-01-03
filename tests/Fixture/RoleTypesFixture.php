@@ -72,6 +72,12 @@ class RoleTypesFixture extends TestFixture
                 'section_type_id' => 1,
                 'level' => 0,
             ],
+            [
+                'role_type' => 'Lorem ipsum  sit amet',
+                'role_abbreviation' => 'Lorem  dolor sit amet',
+                'section_type_id' => 1,
+                'level' => 0,
+            ],
         ];
         parent::init();
     }

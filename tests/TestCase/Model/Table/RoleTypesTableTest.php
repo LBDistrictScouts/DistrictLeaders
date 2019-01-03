@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\RoleTypesTable;
+use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -25,6 +26,8 @@ class RoleTypesTableTest extends TestCase
      */
     public $fixtures = [
         'app.RoleTypes',
+        'app.Capabilities',
+        'app.CapabilitiesRoleTypes',
     ];
 
     /**
