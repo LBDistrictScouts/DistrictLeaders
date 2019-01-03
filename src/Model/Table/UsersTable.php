@@ -195,13 +195,13 @@ class UsersTable extends Table
                     if (isset($sectionPermissions[$role->section->id])) {
                         $section = $sectionPermissions[$role->section->id];
                     }
-	                if ( $capability->min_level > 1 ) {
-		                array_push($section, $capability->capability_code);
-		                $sectionPermissions[$role->section->id] = $section;
-	                }
-	                if ( $capability->min_level <= 1 ) {
-		                array_push($permissions, $capability->capability_code);
-	                }
+                    if ($capability->min_level > 1) {
+                        array_push($section, $capability->capability_code);
+                        $sectionPermissions[$role->section->id] = $section;
+                    }
+                    if ($capability->min_level <= 1) {
+                        array_push($permissions, $capability->capability_code);
+                    }
                 }
             }
 
@@ -214,25 +214,25 @@ class UsersTable extends Table
                     if (isset($groupPermissions[$role->section->scout_group->id])) {
                         $group = $groupPermissions[$role->section->scout_group->id];
                     }
-                    if ( $capability->min_level > 1 ) {
-	                    array_push($group, $capability->capability_code);
-	                    $groupPermissions[$role->section->scout_group->id] = array_unique($group);
+                    if ($capability->min_level > 1) {
+                        array_push($group, $capability->capability_code);
+                        $groupPermissions[$role->section->scout_group->id] = array_unique($group);
                     }
-                    if ( $capability->min_level <= 1 ) {
-	                    array_push($permissions, $capability->capability_code);
+                    if ($capability->min_level <= 1) {
+                        array_push($permissions, $capability->capability_code);
                     }
                 }
             }
         }
 
-	    $userPermissions = [];
+        $userPermissions = [];
 
         $permissions = array_unique($permissions);
-	    asort($permissions);
-	    $userPermissions['user'] = $permissions;
+        asort($permissions);
+        $userPermissions['user'] = $permissions;
 
-	    $userPermissions['group'] = $groupPermissions;
-	    $userPermissions['section'] = $sectionPermissions;
+        $userPermissions['group'] = $groupPermissions;
+        $userPermissions['section'] = $sectionPermissions;
 
         return $userPermissions;
     }
@@ -263,33 +263,33 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveCapabilities($user);
 
-	    $userCapabilities = $capabilities['user'];
-        if ( in_array($capability, $userCapabilities)) {
-        	return true;
+        $userCapabilities = $capabilities['user'];
+        if (in_array($capability, $userCapabilities)) {
+            return true;
         }
 
         $sections = [];
-        foreach ( $capabilities['section'] as $section => $sectionCapabilities ) {
-	        if ( in_array($capability, $sectionCapabilities)) {
-	        	array_push($sections, $section);
-	        }
+        foreach ($capabilities['section'] as $section => $sectionCapabilities) {
+            if (in_array($capability, $sectionCapabilities)) {
+                array_push($sections, $section);
+            }
         }
-	    $sections = array_unique($sections);
+        $sections = array_unique($sections);
 
-	    $groups = [];
-	    foreach ( $capabilities['group'] as $group => $groupCapabilities ) {
-		    if ( in_array($capability, $groupCapabilities)) {
-			    array_push($groups, $group);
-		    }
-	    }
-	    $groups = array_unique($groups);
+        $groups = [];
+        foreach ($capabilities['group'] as $group => $groupCapabilities) {
+            if (in_array($capability, $groupCapabilities)) {
+                array_push($groups, $group);
+            }
+        }
+        $groups = array_unique($groups);
 
-	    if (!empty($groups) || !empty($sections)) {
-	    	return [
-	    		'sections' => $sections,
-			    'groups' => $groups,
-		    ];
-	    }
+        if (!empty($groups) || !empty($sections)) {
+            return [
+                'sections' => $sections,
+                'groups' => $groups,
+            ];
+        }
 
         return false;
     }

@@ -101,22 +101,22 @@ class UsersTableTest extends TestCase
         $capabilities = $this->Users->retrieveAllCapabilities($user);
 
         $expected = [
-	        'user' => [
-		        (int) 6 => 'ALL',
-		        (int) 4 => 'EDIT_GROUP',
-		        (int) 1 => 'LOGIN',
-		        (int) 0 => 'OWN_USER'
-	        ],
-	        'group' => [
-		        (int) 1 => [
-			        (int) 0 => 'EDIT_SECT'
-		        ]
-	        ],
-	        'section' => [
-		        (int) 1 => [
-			        (int) 0 => 'EDIT_USER'
-		        ]
-	        ]
+            'user' => [
+                (int)6 => 'ALL',
+                (int)4 => 'EDIT_GROUP',
+                (int)1 => 'LOGIN',
+                (int)0 => 'OWN_USER'
+            ],
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
         ];
 
         $this->assertEquals($expected, $capabilities);
@@ -125,83 +125,82 @@ class UsersTableTest extends TestCase
         $capabilities = $this->Users->retrieveAllCapabilities($user);
 
         $expected = [
-	        'user' => [
-		        (int) 0 => 'LOGIN'
-	        ],
-	        'group' => [
-		        (int) 1 => [
-			        (int) 0 => 'EDIT_SECT'
-		        ]
-	        ],
-	        'section' => [
-		        (int) 2 => [
-			        (int) 0 => 'EDIT_USER'
-		        ],
-		        (int) 1 => [
-			        (int) 0 => 'EDIT_USER'
-		        ]
-	        ]
+            'user' => [
+                (int)0 => 'LOGIN'
+            ],
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)2 => [
+                    (int)0 => 'EDIT_USER'
+                ],
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
         ];
 
         $this->assertEquals($expected, $capabilities);
     }
 
+    /**
+     * Test retrieveCapabilities method
+     *
+     * @return void
+     */
+    public function testRetrieveCapabilities()
+    {
+        $user = $this->Users->get(1);
+        $capabilities = $this->Users->retrieveCapabilities($user);
 
-	/**
-	 * Test retrieveCapabilities method
-	 *
-	 * @return void
-	 */
-	public function testRetrieveCapabilities()
-	{
-		$user = $this->Users->get(1);
-		$capabilities = $this->Users->retrieveCapabilities($user);
+        $expected = [
+            'user' => [
+                (int)6 => 'ALL',
+                (int)4 => 'EDIT_GROUP',
+                (int)1 => 'LOGIN',
+                (int)0 => 'OWN_USER'
+            ],
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
+        ];
 
-		$expected = [
-			'user' => [
-				(int) 6 => 'ALL',
-				(int) 4 => 'EDIT_GROUP',
-				(int) 1 => 'LOGIN',
-				(int) 0 => 'OWN_USER'
-			],
-			'group' => [
-				(int) 1 => [
-					(int) 0 => 'EDIT_SECT'
-				]
-			],
-			'section' => [
-				(int) 1 => [
-					(int) 0 => 'EDIT_USER'
-				]
-			]
-		];
+        $this->assertEquals($expected, $capabilities);
 
-		$this->assertEquals($expected, $capabilities);
+        $user = $this->Users->get(2);
+        $capabilities = $this->Users->retrieveCapabilities($user);
 
-		$user = $this->Users->get(2);
-		$capabilities = $this->Users->retrieveCapabilities($user);
+        $expected = [
+            'user' => [
+                (int)0 => 'LOGIN'
+            ],
+            'group' => [
+                (int)1 => [
+                    (int)0 => 'EDIT_SECT'
+                ]
+            ],
+            'section' => [
+                (int)2 => [
+                    (int)0 => 'EDIT_USER'
+                ],
+                (int)1 => [
+                    (int)0 => 'EDIT_USER'
+                ]
+            ]
+        ];
 
-		$expected = [
-			'user' => [
-				(int) 0 => 'LOGIN'
-			],
-			'group' => [
-				(int) 1 => [
-					(int) 0 => 'EDIT_SECT'
-				]
-			],
-			'section' => [
-				(int) 2 => [
-					(int) 0 => 'EDIT_USER'
-				],
-				(int) 1 => [
-					(int) 0 => 'EDIT_USER'
-				]
-			]
-		];
-
-		$this->assertEquals($expected, $capabilities);
-	}
+        $this->assertEquals($expected, $capabilities);
+    }
 
     /**
      * Test userCapability method
@@ -232,11 +231,11 @@ class UsersTableTest extends TestCase
         $this->assertArrayHasKey('sections', $result);
 
         $expected = [
-	        'sections' => [
-		        (int) 0 => (int) 2,
-		        (int) 1 => (int) 1
-	        ],
-	        'groups' => []
+            'sections' => [
+                (int)0 => (int)2,
+                (int)1 => (int)1
+            ],
+            'groups' => []
         ];
         $this->assertEquals($expected, $result);
 
@@ -247,12 +246,12 @@ class UsersTableTest extends TestCase
         $result = $this->Users->userCapability($user, $cap);
         $this->assertArrayHasKey('groups', $result);
 
-	    $expected = [
-		    'sections' => [],
-		    'groups' => [
-			    (int) 0 => (int) 1
-		    ]
-	    ];
-	    $this->assertEquals($expected, $result);
+        $expected = [
+            'sections' => [],
+            'groups' => [
+                (int)0 => (int)1
+            ]
+        ];
+        $this->assertEquals($expected, $result);
     }
 }
