@@ -73,6 +73,7 @@ try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
 	Configure::load('app_db', 'default', false);
+	Configure::load('capabilities', 'default', false);
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }

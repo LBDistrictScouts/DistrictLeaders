@@ -92,4 +92,24 @@ class CapabilitiesTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /**
+     * Test installBaseCapabilities method
+     *
+     * @return void
+     */
+    public function testInstallBaseCapabilities()
+    {
+        $before = $this->Capabilities->find('all')->count();
+
+        $installed = $this->Capabilities->installBaseCapabilities();
+
+        $this->assertNotEquals($before, $installed);
+        $this->assertNotEquals(0, $installed);
+
+        $new = $before + $installed;
+        $after = $this->Capabilities->find('all')->count();
+
+        $this->assertEquals($new, $after);
+    }
 }

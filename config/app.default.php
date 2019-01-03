@@ -138,6 +138,14 @@ return [
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEROUTES_URL', null),
         ],
+
+        'capability' => [
+	        'className' => 'Cake\Cache\Engine\FileEngine',
+	        'prefix' => 'leaders_cap_',
+	        'path' => CACHE . 'capabilities/',
+	        'serialize' => true,
+	        'duration' => '+30 minutes',
+        ],
     ],
 
     /**

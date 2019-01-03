@@ -140,4 +140,40 @@ class UsersTableTest extends TestCase
 
         $this->assertEquals($expected, $capabilities);
     }
+
+    /**
+     * Test userCapability method
+     *
+     * @return void
+     */
+    public function testUserCapability()
+    {
+        // Basic Assert Positive
+        $user = $this->Users->get(1);
+        $cap = 'OWN_USER';
+
+        $result = $this->Users->userCapability($user, $cap);
+        $this->assertTrue($result);
+
+        // Basic Assert Negative
+        $user = $this->Users->get(2);
+        $cap = 'OWN_USER';
+
+        $result = $this->Users->userCapability($user, $cap);
+        $this->assertFalse($result);
+
+        // Sections
+        /*$user = $this->Users->get(2);
+        $cap = 'EDIT_USER';
+
+        $result = $this->Users->userCapability($user, $cap);
+        $this->assertArrayHasKey('SECTIONS', $result);
+
+        // Groups
+        $user = $this->Users->get(2);
+        $cap = 'EDIT_SECT';
+
+        $result = $this->Users->userCapability($user, $cap);
+        $this->assertArrayHasKey('GROUPS', $result);*/
+    }
 }

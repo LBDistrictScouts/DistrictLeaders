@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\User;
+use Cake\Cache\Cache;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -159,7 +160,7 @@ class UsersTable extends Table
      *
      * @return array
      */
-    public function retrieveCapabilities(User $user)
+    private function retrieveAllCapabilities(User $user)
     {
         $user = $this->get($user->id, [
             'contain' => [
@@ -218,5 +219,36 @@ class UsersTable extends Table
         $permissions['section'] = $sectionPermissions;
 
         return $permissions;
+    }
+
+    /**
+     * Retrieve User Capabilities
+     *
+     * @param User $user The User to have their capabilities Cache Remembered
+     *
+     * @return array
+     */
+    public function retrieveCapabilities(User $user)
+    {
+        return Cache::remember('USR_CAP_' . $user->id, function () use ($user) {
+            return $this->retrieveAllCapabilities($user);
+        }, 'capability');
+    }
+
+    /**
+     * Check for a User Specific Capability
+     *
+     * @param User $user The User to be checked
+     * @param string $capability The Capability to be found
+     *
+     * @return bool|array
+     */
+    public function userCapability(User $user, string $capability)
+    {
+        $capabilities = $this->retrieveCapabilities($user);
+
+        $canUser = in_array($capability, $capabilities);
+
+        return $canUser;
     }
 }

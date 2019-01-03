@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -90,5 +91,26 @@ class CapabilitiesTable extends Table
         $rules->add($rules->isUnique(['capability']));
 
         return $rules;
+    }
+
+    /**
+     * install the application config capabilities
+     *
+     * @return mixed
+     */
+    public function installBaseCapabilities()
+    {
+        $base = Configure::read('baseCapabilities');
+
+        $total = 0;
+
+        foreach ($base as $baseCapability) {
+            $capability = $this->newEntity($baseCapability);
+            if ($this->save($capability)) {
+                $total += 1;
+            };
+        }
+
+        return $total;
     }
 }
