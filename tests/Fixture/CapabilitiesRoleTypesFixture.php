@@ -55,10 +55,26 @@ class CapabilitiesRoleTypesFixture extends TestFixture
                 'capability_id' => 5, // Level 1
                 'role_type_id' => 1
             ],
-            [
-                'capability_id' => 6, // Level 0
-                'role_type_id' => 6
-            ],
+	        [
+		        'capability_id' => 6, // Level 0
+		        'role_type_id' => 5
+	        ],
+	        [
+		        'capability_id' => 6, // Level 0
+		        'role_type_id' => 4
+	        ],
+	        [
+		        'capability_id' => 6, // Level 0
+		        'role_type_id' => 3
+	        ],
+	        [
+		        'capability_id' => 6, // Level 0
+		        'role_type_id' => 2
+	        ],
+	        [
+		        'capability_id' => 6, // Level 0
+		        'role_type_id' => 1
+	        ],
         ];
         parent::init();
     }

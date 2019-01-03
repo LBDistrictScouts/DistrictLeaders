@@ -160,7 +160,7 @@ class UsersTable extends Table
      *
      * @return array
      */
-    private function retrieveAllCapabilities(User $user)
+    public function retrieveAllCapabilities(User $user)
     {
         $user = $this->get($user->id, [
             'contain' => [
@@ -195,8 +195,13 @@ class UsersTable extends Table
                     if (isset($sectionPermissions[$role->section->id])) {
                         $section = $sectionPermissions[$role->section->id];
                     }
-                    array_push($section, $capability->capability_code);
-                    $sectionPermissions[$role->section->id] = $section;
+	                if ( $capability->min_level > 1 ) {
+		                array_push($section, $capability->capability_code);
+		                $sectionPermissions[$role->section->id] = $section;
+	                }
+	                if ( $capability->min_level <= 1 ) {
+		                array_push($permissions, $capability->capability_code);
+	                }
                 }
             }
 
@@ -209,16 +214,27 @@ class UsersTable extends Table
                     if (isset($groupPermissions[$role->section->scout_group->id])) {
                         $group = $groupPermissions[$role->section->scout_group->id];
                     }
-                    array_push($group, $capability->capability_code);
-                    $groupPermissions[$role->section->scout_group->id] = $group;
+                    if ( $capability->min_level > 1 ) {
+	                    array_push($group, $capability->capability_code);
+	                    $groupPermissions[$role->section->scout_group->id] = array_unique($group);
+                    }
+                    if ( $capability->min_level <= 1 ) {
+	                    array_push($permissions, $capability->capability_code);
+                    }
                 }
             }
         }
 
-        $permissions['group'] = $groupPermissions;
-        $permissions['section'] = $sectionPermissions;
+	    $userPermissions = [];
 
-        return $permissions;
+        $permissions = array_unique($permissions);
+	    asort($permissions);
+	    $userPermissions['user'] = $permissions;
+
+	    $userPermissions['group'] = $groupPermissions;
+	    $userPermissions['section'] = $sectionPermissions;
+
+        return $userPermissions;
     }
 
     /**
@@ -247,8 +263,34 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveCapabilities($user);
 
-        $canUser = in_array($capability, $capabilities);
+	    $userCapabilities = $capabilities['user'];
+        if ( in_array($capability, $userCapabilities)) {
+        	return true;
+        }
 
-        return $canUser;
+        $sections = [];
+        foreach ( $capabilities['section'] as $section => $sectionCapabilities ) {
+	        if ( in_array($capability, $sectionCapabilities)) {
+	        	array_push($sections, $section);
+	        }
+        }
+	    $sections = array_unique($sections);
+
+	    $groups = [];
+	    foreach ( $capabilities['group'] as $group => $groupCapabilities ) {
+		    if ( in_array($capability, $groupCapabilities)) {
+			    array_push($groups, $group);
+		    }
+	    }
+	    $groups = array_unique($groups);
+
+	    if (!empty($groups) || !empty($sections)) {
+	    	return [
+	    		'sections' => $sections,
+			    'groups' => $groups,
+		    ];
+	    }
+
+        return false;
     }
 }
