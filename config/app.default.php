@@ -146,6 +146,14 @@ return [
 	        'serialize' => true,
 	        'duration' => '+30 minutes',
         ],
+
+        'combo' => [
+	        'className' => 'Cake\Cache\Engine\FileEngine',
+	        'prefix' => 'combo_session_',
+	        'path' => CACHE . 'combo/',
+	        'serialize' => true,
+	        'duration' => '+3 hours',
+        ],
     ],
 
     /**
@@ -309,7 +317,12 @@ return [
      * To use database sessions, load the SQL file located at config/schema/sessions.sql
      */
     'Session' => [
-        'defaults' => 'php',
+	    'defaults' => 'database',
+	    'handler' => [
+		    'engine' => 'ComboSession',
+		    'model' => 'SiteSessions',
+		    'cache' => 'combo'
+	    ]
     ],
 
     'Xety/Cake3CookieAuth.Cookie' => [
