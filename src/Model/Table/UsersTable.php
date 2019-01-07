@@ -197,6 +197,7 @@ class UsersTable extends Table
                     }
                     if ($capability->min_level > 1) {
                         array_push($section, $capability->capability_code);
+                        sort($section);
                         $sectionPermissions[$role->section->id] = $section;
                     }
                     if ($capability->min_level <= 1) {
@@ -216,6 +217,7 @@ class UsersTable extends Table
                     }
                     if ($capability->min_level > 1) {
                         array_push($group, $capability->capability_code);
+                        sort($group);
                         $groupPermissions[$role->section->scout_group->id] = array_unique($group);
                     }
                     if ($capability->min_level <= 1) {
@@ -226,11 +228,13 @@ class UsersTable extends Table
         }
 
         $userPermissions = [];
-
         $permissions = array_unique($permissions);
-        asort($permissions);
-        $userPermissions['user'] = $permissions;
 
+        asort($permissions);
+        asort($groupPermissions);
+        asort($sectionPermissions);
+
+        $userPermissions['user'] = $permissions;
         $userPermissions['group'] = $groupPermissions;
         $userPermissions['section'] = $sectionPermissions;
 
@@ -292,5 +296,21 @@ class UsersTable extends Table
         }
 
         return false;
+    }
+
+    /**
+     * Finder Method for
+     *
+     * @param Query $query The Query to be Modified
+     * @param array $options The Options passed
+     *
+     * @return Query
+     */
+    public function findAuth(Query $query, array $options)
+    {
+        $query
+            ->select(['id', 'username', 'password', 'first_name', 'last_name']);
+
+        return $query;
     }
 }

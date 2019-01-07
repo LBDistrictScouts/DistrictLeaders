@@ -2,6 +2,9 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Form\ResetForm;
+use Cake\Event\Event;
+use Cake\I18n\Time;
 
 /**
  * Users Controller
@@ -142,6 +145,8 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
 
+                $user = $this->Users->get($user['id']);
+
                 if ($this->request->getData('remember_me')) {
                     $this->Cookie->configKey('CookieAuth', [
                         'expires' => '+1 year',
@@ -159,12 +164,199 @@ class UsersController extends AppController
 
                 $this->Users->save($user);
 
-                $this->Flash->error(__('The user could not be saved. Please, try again.'));
+                return $this->redirect($this->Auth->redirectUrl());
             }
             $tries = $tries + 1;
             $this->Flash->error('Your username or password is incorrect. Please try again.');
             $session->write('Reset.lgTries', $tries);
         }
-        $this->set(compact('eventId'));
+    }
+
+    /**
+     * Password Reset Function - Enables Resetting a User's Password via Email
+     *
+     * @return \Cake\Http\Response
+     *
+     * @throws \Exception
+     */
+    public function reset()
+    {
+        $this->viewBuilder()->setLayout('landing');
+
+        $resForm = new ResetForm();
+
+        $session = $this->request->getSession();
+
+        $this->set(compact('resForm'));
+
+        if ($this->request->is('post')) {
+            if ($session->check('Reset.rsTries')) {
+                $tries = $session->read('Reset.rsTries');
+            }
+
+            if (!isset($tries)) {
+                $tries = 0;
+            }
+
+            if (isset($tries) && $tries < 6) {
+                // Extract Form Info
+                $fmMembership = $this->request->getData('membership_number');
+                $fmEmail = $this->request->getData('email');
+
+                $found = $this->Users->find('all')
+                                     ->where(['email' => $fmEmail, 'membership_number' => $fmMembership]);
+
+                $count = $found->count();
+                $user = $found->first();
+
+                $tries += 1;
+                $session->write('Reset.rsTries', $tries);
+
+                if ($count == 1) {
+                    // Success in Resetting Triggering Reset - Bouncing to Reset.
+                    $session->delete('Reset.lgTries');
+                    $session->delete('Reset.rsTries');
+
+                    $this->loadComponent('Password');
+
+                    if ($this->Password->sendReset($user->id)) {
+                        $this->Flash->success('We have sent a password reset token to your email. This is valid for a short period of time.');
+
+                        return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+                    }
+
+                    $this->Flash->error(__('The user could not be saved. Please, try again.'));
+
+                    $this->log('Token Creation Error during Password Reset for user ' . $user->id, 'notice');
+                } else {
+                    $this->Flash->error('This user was not found in the system.');
+                }
+            } else {
+                $this->Flash->error('You have failed entry too many times. Please try again later.');
+
+                return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+            }
+        }
+    }
+
+    /**
+     * Username Clarification Function - Enables Resetting a User's Password via Email
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function username()
+    {
+        $this->viewBuilder()->setLayout('landing');
+
+        $resForm = new ResetForm();
+        $this->set(compact('resForm'));
+
+        if ($this->request->is('post')) {
+            $found = $this->Users->find('all')
+                                 ->where([
+                                    'membership_number' => $this->request->getData('membership_number'),
+                                    'first_name' => $this->request->getData('first_name'),
+                                    'last_name' => $this->request->getData('last_name')
+                                 ]);
+
+            $count = $found->count();
+            $user = $found->first();
+
+            if ($count == 1) {
+                $this->set('username', $user->username);
+            } else {
+                $this->Flash->error('This user was not found in the system.');
+            }
+        }
+    }
+
+    /**
+     * Token - Completes Password Reset Function
+     *
+     * @param string $token The String to Be Validated
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function token($token = null)
+    {
+        $tokenTable = TableRegistry::get('Tokens');
+
+        $this->viewBuilder()->setLayout('outside');
+
+        $valid = $tokenTable->validateToken($token);
+        if (!$valid) {
+            $this->Flash->error('Password Reset Token could not be validated.');
+
+            return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+        }
+
+        if (is_numeric($valid)) {
+            $tokenRow = $tokenTable->get($valid);
+            $resetUser = $this->Users->get($tokenRow->user_id);
+
+            $passwordForm = new PasswordForm();
+            $this->set(compact('passwordForm'));
+
+            if ($this->request->is('post')) {
+                $fmPassword = $this->request->getData('newpw');
+                $fmConfirm = $this->request->getData('confirm');
+
+                if ($fmConfirm == $fmPassword) {
+                    $fmPostcode = $this->request->getData('postcode');
+                    $fmPostcode = str_replace(" ", "", strtoupper($fmPostcode));
+
+                    $usPostcode = $resetUser->postcode;
+                    $usPostcode = str_replace(" ", "", strtoupper($usPostcode));
+
+                    if ($usPostcode == $fmPostcode) {
+                        $newPw = [
+                            'password' => $fmPassword,
+                            'reset' => 'No Longer Active'
+                        ];
+
+                        $resetUser = $this->Users->patchEntity($resetUser, $newPw, [ 'fields' => ['password'], 'validate' => false ]);
+
+                        if ($this->Users->save($resetUser)) {
+                            $this->Flash->success('Your password was saved successfully.');
+
+                            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                        } else {
+                            $this->Flash->error(__('The user could not be saved. Please try again.'));
+                        }
+                    } else {
+                        $this->Flash->error(__('Your postcode could not be validated. Please try again.'));
+                    }
+                } else {
+                    $this->Flash->error(__('The passwords you have entered do not match. Please try again.'));
+                }
+            }
+        }
+    }
+
+    /**
+     * @param Event $event The CakePHP Event
+     *
+     * @return \Cake\Http\Response|void|null
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->Auth->allow(['login']);
+        $this->Auth->allow(['username']);
+        $this->Auth->allow(['reset']);
+        $this->Auth->allow(['token']);
+    }
+
+    /**
+     * Authorisation Check
+     *
+     * @param User $user The Authorised User
+     *
+     * @return bool
+     */
+    public function isAuthorized($user)
+    {
+        return true;
     }
 }

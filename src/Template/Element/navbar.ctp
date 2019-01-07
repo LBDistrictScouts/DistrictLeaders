@@ -1,3 +1,10 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var integer $loggedInUserId
+ */
+?>
+
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
     <a class="navbar-brand" href="#">Leaders</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nToggle" aria-controls="nToggle" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,27 +13,19 @@
 
     <div class="collapse navbar-collapse" id="nToggle">
         <ul class="navbar-nav">
-            <li class="nav-item active">
-                <div class="dropdown">
-                    <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </div>
-            </li>
+            <?php if (isset($loggedInUserId)) : ?>
+                <?php
+                $cell = $this->cell('NavBar', [$loggedInUserId], [
+                    'cache' => [
+                            'config' => 'cell_cache',
+                            'key' => 'nav_' . $loggedInUserId
+                    ]
+                ]); ?>
+            <?php else: ?>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <?= $this->Html->link('Login', ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link'])  ?>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Disabled</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Jacob Tyler <i class="fal fa-user-cog"></i></a>
-            </li>
+            <?php endif; ?>
         </ul>
     </div>
 </nav>

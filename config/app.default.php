@@ -147,6 +147,14 @@ return [
 	        'duration' => '+30 minutes',
         ],
 
+        'cell_cache' => [
+	        'className' => 'Cake\Cache\Engine\FileEngine',
+	        'prefix' => 'cell_',
+	        'path' => CACHE . 'cell/',
+	        'serialize' => true,
+	        'duration' => '+30 minutes',
+        ],
+
         'combo' => [
 	        'className' => 'Cake\Cache\Engine\FileEngine',
 	        'prefix' => 'combo_session_',

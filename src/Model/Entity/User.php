@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
 /**
@@ -23,6 +24,9 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property \Cake\I18n\FrozenTime|null $last_login
  * @property string|null $last_login_ip
+ *
+ * @property string $full_name
+ * @property array $capabilities
  *
  * @property \App\Model\Entity\ScoutGroup $scout_group
  * @property \App\Model\Entity\Audit[] $audits
@@ -70,4 +74,45 @@ class User extends Entity
     protected $_hidden = [
         'password'
     ];
+
+    /**
+     * @param string $value The un-hashed password string
+     *
+     * @return bool|string
+     */
+    protected function _setPassword($value)
+    {
+        if (strlen($value)) {
+            $hasher = new DefaultPasswordHasher();
+
+            return $hasher->hash($value);
+        }
+    }
+
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
+    }
+
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return array
+     */
+    protected function _getCapabilities()
+    {
+        return ['LOGIN'];
+    }
+
+    /**
+     * Exposed Virtual Properties
+     *
+     * @var array
+     */
+    protected $_virtual = ['full_name', 'capabilities'];
 }

@@ -26,6 +26,10 @@ class UsersControllerTest extends TestCase
         'app.ScoutGroups',
         'app.Audits',
         'app.Roles',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Camps',
+        'app.CampTypes',
     ];
 
     /**

@@ -46,38 +46,56 @@ class AppController extends Controller
         parent::initialize();
 
         $this->loadComponent('Flash');
-//      $this->loadComponent('Cookie');
-//        $this->loadComponent('Auth', [
-//            'authorize' => 'Controller',
-//            'loginRedirect' => [
-//                'controller' => 'Pages',
-//                'action' => 'home'
-//            ],
-//            'logoutRedirect' => [
-//                'controller' => 'Users',
-//                'action' => 'login'
-//            ],
-//            'loginAction' => [
-//                'controller' => 'Users',
-//                'action' => 'login'
-//            ],
-//            'authenticate' => [
-//                'Form',
-//                //'Xety/Cake3CookieAuth.Cookie'
-//            ]
-//        ]);
+        $this->loadComponent('Cookie');
+
+        $this->loadComponent('Auth', [
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'username',
+                        'password' => 'password'
+                    ],
+                    'finder' => 'auth',
+                    'storage' => 'session',
+                ]
+            ],
+            'loginAction' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            'loginRedirect' => [
+                'controller' => 'Pages',
+                'action' => 'home'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login'
+            ],
+            //use isAuthorized in Controllers
+            'authorize' => ['Controller'],
+            // If unauthorized, return them to page they were just on
+            'unauthorizedRedirect' => $this->referer()
+        ]);
+
+        // Allow the display action so our PagesController
+        // continues to work. Also enable the read only actions.
+        $this->Auth->allow(['display']);
 
 //      $this->loadComponent('csrf');
 
-//        $this->loadComponent('RequestHandler', [
-//            'enableBeforeRedirect' => false,
-//        ]);
+        $this->loadComponent('RequestHandler', [
+            'enableBeforeRedirect' => false,
+        ]);
 
         /*
          * Enable the following component for recommended CakePHP security settings.
          * see https://book.cakephp.org/3.0/en/controllers/components/security.html
          */
         //$this->loadComponent('Security');
+
+        if (null !== $this->Auth->user()) {
+            $this->set('loggedInUserId', $this->Auth->user('id'));
+        }
     }
 
     /**
@@ -87,33 +105,25 @@ class AppController extends Controller
      */
     public function beforeFilter(Event $event)
     {
-//        $this->Auth->allow(['register']);
-//        $this->Auth->allow(['login']);
-//        $this->Auth->allow(['validate']);
-//        $this->Auth->allow(['reset']);
-//        $this->Auth->allow(['token']);
+        if (!$this->Auth->user() && $this->Cookie->read('CookieAuth')) {
+            $user = $this->Auth->identify();
+            if ($user) {
+                $this->Auth->setUser($user);
 
-//      if (!$this->Auth->user() /*&& $this->Cookie->read('CookieAuth')*/) {
-//          $this->loadModel('Users');
-//
-//          $user = $this->Auth->identify();
-//          if ($user) {
-//              $this->Auth->setUser($user);
-//
-//              $user = $this->Users->newEntity($user);
-//              $user->isNew(false);
-//
-//              //Last login date
-//              $user->last_login = new Time();
-//              //Last login IP
-//              $user->last_login_ip = $this->request->clientIp();
-//              //etc...
-//
-//              $this->Users->save($user);
-//          } else {
-//              $this->Cookie->delete('CookieAuth');
-//          }
-//      }
+                $this->loadModel('Users');
+                $user = $this->Users->get($user['id']);
+
+                //Last login date
+                $user->last_login = new Time();
+                //Last login IP
+                $user->last_login_ip = $this->request->clientIp();
+                //etc...
+
+                $this->Users->save($user);
+            } else {
+                $this->Cookie->delete('CookieAuth');
+            }
+        }
     }
 
     /**
@@ -125,25 +135,7 @@ class AppController extends Controller
      */
     public function isAuthorized($user)
     {
-        // Admin can access every action
-        if (isset($user['authrole']) && $user['authrole'] === 'admin') {
-            return true;
-        }
-
-        if (isset($user['id'])) {
-            if (null !== $this->request->getParam('prefix') && $this->request->getParam('prefix') === 'admin') {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        //The add and index actions are always allowed.
-        if (isset($user['id']) && in_array($this->request->getParam('action'), ['index', 'add', 'admin-home'])) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     /**
