@@ -1,3 +1,4 @@
 **/*.yml
 **/*.md
 **/*.default.php
+config/Migrations/schema-dump-default.lock
