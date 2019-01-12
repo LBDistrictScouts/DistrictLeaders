@@ -1,10 +1,6 @@
 linters:
   phpcs:
-    standard: PSR2
-    fixer: true
-  csslint: {  }
-  shellcheck:
-    shell: bash
+    standard: CakePHP
 files:
   ignore:
     - 'vendor/*'
