@@ -2,7 +2,7 @@
 
 ### Master Branch
 [![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=master)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)
-
+[![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/master/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
 
 ### Development Branch
 
