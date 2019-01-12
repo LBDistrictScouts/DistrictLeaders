@@ -91,6 +91,25 @@ class UsersTableTest extends TestCase
             'admin_scout_group_id' => 1,
             'last_login' => $date,
             'last_login_ip' => '192.168.0.1',
+            'capabilities' => [
+                'user' => [
+                    'LOGIN',
+                    'EDIT_SELF'
+                ],
+                'section' => [
+                    1 => [
+                        'EDIT_USER'
+                    ],
+                    3 => [
+                        'EDIT_USER'
+                    ]
+                ],
+                'group' => [
+                    1 => [
+                        'EDIT_SECT'
+                    ]
+                ]
+            ]
         ];
 
         return $good;
@@ -152,6 +171,7 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
+        debug($new);
         $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
         $required = [
@@ -471,5 +491,41 @@ class UsersTableTest extends TestCase
         $authQuery = $this->Users->find('auth');
 
         $this->assertNotEquals($allQuery, $authQuery);
+    }
+
+    /**
+     * Test Patch Capabilities Method
+     *
+     * @return void
+     */
+    public function testPatchCapabilities()
+    {
+        $user = $this->Users->get(1);
+        $this->assertNull($user->capabilities);
+
+        $this->Users->patchCapabilities($user);
+
+        $user = $this->Users->get(1);
+        $this->assertNotNull($user->capabilities);
+
+        $expected = [
+            'user' => [
+                'OWN_USER',
+                'LOGIN',
+                6 => 'ALL',
+                4 => 'EDIT_GROUP',
+            ],
+            'section' => [
+                1 => [
+                    'EDIT_USER'
+                ],
+            ],
+            'group' => [
+                1 => [
+                    'EDIT_SECT'
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $user->capabilities);
     }
 }

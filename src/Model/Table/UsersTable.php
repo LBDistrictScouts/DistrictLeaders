@@ -3,6 +3,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
+use Cake\Database\Schema\TableSchema;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -51,6 +52,18 @@ class UsersTable extends Table
         $this->hasMany('Roles', [
             'foreignKey' => 'user_id'
         ]);
+    }
+
+    /**
+     * @param TableSchema $schema The Schema to be modified
+     *
+     * @return TableSchema|\Cake\Database\Schema\TableSchema
+     */
+    protected function _initializeSchema(TableSchema $schema)
+    {
+        $schema->setColumnType('capabilities', 'json');
+
+        return $schema;
     }
 
     /**
@@ -132,6 +145,9 @@ class UsersTable extends Table
         $validator
             ->scalar('last_login_ip')
             ->allowEmptyString('last_login_ip');
+
+        $validator
+            ->allowEmptyString('capabilities');
 
         return $validator;
     }
@@ -250,6 +266,22 @@ class UsersTable extends Table
         return Cache::remember('USR_CAP_' . $user->id, function () use ($user) {
             return $this->retrieveAllCapabilities($user);
         }, 'capability');
+    }
+
+
+    /**
+     * Patch User Capabilities
+     *
+     * @param User $user The User to have their capabilities Cache Remembered
+     *
+     * @return \App\Model\Entity\User|bool
+     */
+    public function patchCapabilities(User $user)
+    {
+        $capabilities = $this->retrieveAllCapabilities($user);
+        $user->capabilities = $capabilities;
+
+        return $this->save($user);
     }
 
     /**
