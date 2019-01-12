@@ -72,7 +72,6 @@ class UsersTable extends Table
         $validator
             ->scalar('username')
             ->maxLength('username', 255)
-            ->requirePresence('username', 'create')
             ->allowEmptyString('username', false)
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
@@ -103,8 +102,7 @@ class UsersTable extends Table
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->requirePresence('password', 'create')
-            ->allowEmptyString('password', 'update');
+            ->allowEmptyString('password', false);
 
         $validator
             ->scalar('address_line_1')
@@ -134,6 +132,10 @@ class UsersTable extends Table
         $validator
             ->dateTime('last_login')
             ->allowEmptyDateTime('last_login');
+
+        $validator
+            ->scalar('last_login_ip')
+            ->allowEmptyString('last_login_ip');
 
         return $validator;
     }

@@ -36,7 +36,7 @@ class CampRoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('camp_role_types');
-        $this->setDisplayField('id');
+        $this->setDisplayField('camp_role_type');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

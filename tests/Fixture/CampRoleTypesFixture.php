@@ -37,7 +37,6 @@ class CampRoleTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'created' => 1546807680,
                 'modified' => 1546807680,
                 'camp_role_type' => 'Lorem ipsum dolor sit amet'

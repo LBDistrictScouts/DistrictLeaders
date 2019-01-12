@@ -37,7 +37,7 @@ class CampsTable extends Table
         parent::initialize($config);
 
         $this->setTable('camps');
-        $this->setDisplayField('id');
+        $this->setDisplayField('camp_name');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

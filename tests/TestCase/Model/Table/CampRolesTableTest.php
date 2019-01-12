@@ -35,7 +35,7 @@ class CampRolesTableTest extends TestCase
         'app.Sections',
         'app.SectionTypes',
         'app.ScoutGroups',
-        'app.CampRoles',
+        'app.Audits',
         'app.Roles',
     ];
 
