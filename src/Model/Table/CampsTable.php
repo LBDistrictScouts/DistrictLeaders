@@ -61,27 +61,23 @@ class CampsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
-
-        $validator
-            ->dateTime('deleted')
-            ->allowEmpty('deleted');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('camp_name')
             ->maxLength('camp_name', 255)
             ->requirePresence('camp_name', 'create')
-            ->notEmpty('camp_name');
+            ->allowEmptyString('camp_name', false);
 
         $validator
             ->dateTime('camp_start')
             ->requirePresence('camp_start', 'create')
-            ->notEmpty('camp_start');
+            ->allowEmptyDateTime('camp_start', false);
 
         $validator
             ->dateTime('camp_end')
             ->requirePresence('camp_end', 'create')
-            ->notEmpty('camp_end');
+            ->allowEmptyDateTime('camp_end', false);
 
         return $validator;
     }

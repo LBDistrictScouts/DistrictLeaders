@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\SectionsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Security;
 
 /**
  * App\Model\Table\SectionsTable Test Case
@@ -54,13 +55,56 @@ class SectionsTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     *
+     * @throws
+     */
+    private function getGood()
+    {
+        $good = [
+            'section' => 'Happy Group' . random_int(2, 99) . random_int(0, 930),
+            'section_type_id' => 1,
+            'scout_group_id' => 1,
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $actual = $this->Sections->get(1)->toArray();
+
+        $dates = [
+            'modified',
+            'created',
+            'deleted',
+        ];
+
+        foreach ($dates as $date) {
+            $dateValue = $actual[$date];
+            if (!is_null($dateValue)) {
+                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+            }
+            unset($actual[$date]);
+        }
+
+        $expected = [
+            'id' => 1,
+            'section' => 'Lorem ipsum dolor sit amet',
+            'section_type_id' => 1,
+            'scout_group_id' => 1,
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $count = $this->Sections->find('all')->count();
+        $this->assertEquals(2, $count);
     }
 
     /**
@@ -70,7 +114,52 @@ class SectionsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->Sections->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+
+        $required = [
+            'section',
+        ];
+
+        foreach ($required as $require) {
+            $reqArray = $this->getGood();
+            unset($reqArray[$require]);
+            $new = $this->Sections->newEntity($reqArray);
+            $this->assertFalse($this->Sections->save($new));
+        }
+
+        $notEmpties = [
+            'section',
+        ];
+
+        foreach ($notEmpties as $not_empty) {
+            $reqArray = $this->getGood();
+            $reqArray[$not_empty] = '';
+            $new = $this->Sections->newEntity($reqArray);
+            $this->assertFalse($this->Sections->save($new));
+        }
+
+        $maxLengths = [
+            'section' => 255,
+        ];
+
+        $string = hash('sha512', Security::randomBytes(64));
+        $string .= $string;
+        $string .= $string;
+
+        foreach ($maxLengths as $maxField => $max_length) {
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length);
+            $new = $this->Sections->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
+            $new = $this->Sections->newEntity($reqArray);
+            $this->assertFalse($this->Sections->save($new));
+        }
     }
 
     /**
@@ -80,6 +169,40 @@ class SectionsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Admin Group Exists
+        $values = $this->getGood();
+
+        $groups = $this->Sections->ScoutGroups->find('list')->toArray();
+
+        $group = max(array_keys($groups));
+
+        $values['scout_group_id'] = $group;
+        $new = $this->Sections->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+
+        $values['scout_group_id'] = $group + 1;
+        $new = $this->Sections->newEntity($values);
+        $this->assertFalse($this->Sections->save($new));
+
+        // Is Unique
+        $uniques = [
+            'section' => 'My New Section',
+        ];
+
+        foreach ($uniques as $unqueField => $uniqueValue) {
+            $values = $this->getGood();
+
+            $existing = $this->Sections->get(1)->toArray();
+
+            $values[$unqueField] = $uniqueValue;
+            $new = $this->Sections->newEntity($values);
+            $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+
+            $values = $this->getGood();
+
+            $values[$unqueField] = $existing[$unqueField];
+            $new = $this->Sections->newEntity($values);
+            $this->assertFalse($this->Sections->save($new));
+        }
     }
 }

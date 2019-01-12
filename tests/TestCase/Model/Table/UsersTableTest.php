@@ -477,4 +477,17 @@ class UsersTableTest extends TestCase
         ];
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * Test FindAuth Method
+     *
+     * @return void
+     */
+    public function testFindAuth()
+    {
+        $allQuery = $this->Users->find('all');
+        $authQuery = $this->Users->find('auth');
+
+        $this->assertNotEquals($allQuery, $authQuery);
+    }
 }

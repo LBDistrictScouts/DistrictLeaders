@@ -59,13 +59,56 @@ class RolesTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     */
+    private function getGood()
+    {
+        $good = [
+            'role_type_id' => 1,
+            'section_id' => 2,
+            'user_id' => 2,
+            'role_status_id' => 1,
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $actual = $this->Roles->get(1)->toArray();
+
+        $dates = [
+            'modified',
+            'created',
+            'deleted',
+        ];
+
+        foreach ($dates as $date) {
+            $dateValue = $actual[$date];
+            if (!is_null($dateValue)) {
+                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+            }
+            unset($actual[$date]);
+        }
+
+        $expected = [
+            'id' => 1,
+            'role_type_id' => 1,
+            'section_id' => 1,
+            'user_id' => 1,
+            'role_status_id' => 1,
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $count = $this->Roles->find('all')->count();
+        $this->assertEquals(9, $count);
     }
 
     /**
@@ -75,7 +118,10 @@ class RolesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->Roles->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
     }
 
     /**
@@ -85,6 +131,60 @@ class RolesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Users
+        $values = $this->getGood();
+        $users = $this->Roles->Users->find('list')->toArray();
+
+        $user = max(array_keys($users));
+
+        $values['user_id'] = $user;
+        $new = $this->Roles->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+
+        $values['user_id'] = $user + 1;
+        $new = $this->Roles->newEntity($values);
+        $this->assertFalse($this->Roles->save($new));
+
+        // Sections
+        $values = $this->getGood();
+        $camps = $this->Roles->Sections->find('list')->toArray();
+
+        $camp = max(array_keys($camps));
+
+        $values['section_id'] = $camp;
+        $new = $this->Roles->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+
+        $values['section_id'] = $camp + 1;
+        $new = $this->Roles->newEntity($values);
+        $this->assertFalse($this->Roles->save($new));
+
+        // RoleTypes
+        $values = $this->getGood();
+        $roleTypes = $this->Roles->RoleTypes->find('list')->toArray();
+
+        $roleType = max(array_keys($roleTypes));
+
+        $values['role_type_id'] = $roleType;
+        $new = $this->Roles->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+
+        $values['role_type_id'] = $roleType + 1;
+        $new = $this->Roles->newEntity($values);
+        $this->assertFalse($this->Roles->save($new));
+
+        // RoleStatuses
+        $values = $this->getGood();
+        $roleStatuses = $this->Roles->RoleStatuses->find('list')->toArray();
+
+        $roleStatus = max(array_keys($roleStatuses));
+
+        $values['role_status_id'] = $roleStatus;
+        $new = $this->Roles->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+
+        $values['role_status_id'] = $roleStatus + 1;
+        $new = $this->Roles->newEntity($values);
+        $this->assertFalse($this->Roles->save($new));
     }
 }

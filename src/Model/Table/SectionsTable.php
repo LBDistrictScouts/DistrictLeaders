@@ -38,7 +38,7 @@ class SectionsTable extends Table
         parent::initialize($config);
 
         $this->setTable('sections');
-        $this->setDisplayField('id');
+        $this->setDisplayField('section');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -73,7 +73,7 @@ class SectionsTable extends Table
             ->scalar('section')
             ->maxLength('section', 255)
             ->requirePresence('section', 'create')
-            ->notEmpty('section')
+            ->allowEmptyString('section', false)
             ->add('section', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
