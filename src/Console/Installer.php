@@ -44,6 +44,15 @@ class Installer
     ];
 
     /**
+     * An array of config files
+     */
+    const CONFIG_FILES = [
+        'app',
+        'app_file',
+        'app_db',
+    ];
+
+    /**
      * Does some routine installation tasks so people don't have to.
      *
      * @param \Composer\Script\Event $event The composer event object.
@@ -98,18 +107,15 @@ class Installer
      */
     public static function createAppConfig($dir, $io)
     {
-        $appConfig = $dir . '/config/app.php';
-        $defaultConfig = $dir . '/config/app.default.php';
-        if (!file_exists($appConfig)) {
-            copy($defaultConfig, $appConfig);
-            $io->write('Created `config/app.php` file');
-        }
+        $configDir = $dir . '/config/';
 
-        $appConfig = $dir . '/config/app_db.php';
-        $defaultConfig = $dir . '/config/app_db.default.php';
-        if (!file_exists($appConfig)) {
-            copy($defaultConfig, $appConfig);
-            $io->write('Created `config/app_db.php` file');
+        foreach (static::CONFIG_FILES as $config) {
+            $appConfig = $configDir . $config . '.php';
+            $defaultConfig = $configDir . $config . '.default.php';
+            if (!file_exists($appConfig)) {
+                copy($defaultConfig, $appConfig);
+                $io->write('Created `config/' . $config . '.php` file');
+            }
         }
     }
 
