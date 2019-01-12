@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\AuditsTable;
+use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -32,6 +33,8 @@ class AuditsTableTest extends TestCase
         'app.ScoutGroups',
         'app.Audits',
         'app.Roles',
+        'app.Capabilities',
+        'app.CapabilitiesRoleTypes',
     ];
 
     /**
@@ -44,6 +47,9 @@ class AuditsTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Audits') ? [] : ['className' => AuditsTable::class];
         $this->Audits = TableRegistry::getTableLocator()->get('Audits', $config);
+
+        $now = new Time('2018-12-26 23:22:30');
+        Time::setTestNow($now);
     }
 
     /**
@@ -59,13 +65,49 @@ class AuditsTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     */
+    private function getGood()
+    {
+        $date = Time::getTestNow();
+        $good = [
+            'audit_field' => 'Lorem ipsum dolor sit amet',
+            'audit_table' => 'Lorem ipsum dolor sit amet',
+            'original_value' => 'Lorem ipsum dolor sit amet',
+            'modified_value' => 'Lorem ipsum dolor sit amet',
+            'user_id' => 1,
+            'change_date' => $date,
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $actual = $this->Audits->get(1)->toArray();
+
+        $date = array_pop($actual);
+        $this->assertInstanceOf('Cake\I18n\FrozenTime', $date);
+
+        $expected = [
+            'id' => 1,
+            'audit_field' => 'Lorem ipsum dolor sit amet',
+            'audit_table' => 'Lorem ipsum dolor sit amet',
+            'original_value' => 'Lorem ipsum dolor sit amet',
+            'modified_value' => 'Lorem ipsum dolor sit amet',
+            'user_id' => 1,
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $count = $this->Audits->find('all')->count();
+        $this->assertEquals(1, $count);
     }
 
     /**
@@ -75,7 +117,49 @@ class AuditsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->Audits->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+
+        $required = [
+            'audit_field',
+            'audit_table',
+            'modified_value',
+            'change_date',
+        ];
+
+        foreach ($required as $require) {
+            $reqArray = $good;
+            unset($reqArray[$require]);
+            $new = $this->Audits->newEntity($reqArray);
+            $this->assertFalse($this->Audits->save($new));
+        }
+
+        $empties = [
+            'original_value',
+        ];
+
+        foreach ($empties as $empty) {
+            $reqArray = $good;
+            $reqArray[$empty] = '';
+            $new = $this->Audits->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+        }
+
+        $notEmpties = [
+            'change_date',
+            'modified_value',
+            'audit_table',
+            'audit_field',
+        ];
+
+        foreach ($notEmpties as $not_empty) {
+            $reqArray = $good;
+            $reqArray[$not_empty] = '';
+            $new = $this->Audits->newEntity($reqArray);
+            $this->assertFalse($this->Audits->save($new));
+        }
     }
 
     /**
@@ -85,6 +169,18 @@ class AuditsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $values = $this->getGood();
+
+        $users = $this->Audits->Users->find('list')->toArray();
+
+        $user = max(array_keys($users));
+
+        $values['user_id'] = $user;
+        $new = $this->Audits->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+
+        $values['user_id'] = $user + 1;
+        $new = $this->Audits->newEntity($values);
+        $this->assertFalse($this->Audits->save($new));
     }
 }

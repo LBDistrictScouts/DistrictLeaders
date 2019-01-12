@@ -61,8 +61,6 @@ class CapabilitiesTableTest extends TestCase
     {
         $cap = $this->Capabilities->get(1)->toArray();
 
-        debug($cap);
-
         $expected = [
             'id' => 1,
             'capability_code' => 'ALL',

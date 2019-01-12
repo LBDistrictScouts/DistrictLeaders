@@ -41,11 +41,19 @@ class CampsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'created' => 1546807673,
                 'modified' => 1546807673,
-                'deleted' => 1546807673,
+                'deleted' => null,
                 'camp_name' => 'Lorem ipsum dolor sit amet',
+                'camp_type_id' => 1,
+                'camp_start' => 1546807673,
+                'camp_end' => 1546807673
+            ],
+            [
+                'created' => 1546807673,
+                'modified' => 1546807673,
+                'deleted' => null,
+                'camp_name' => 'Lorem amet',
                 'camp_type_id' => 1,
                 'camp_start' => 1546807673,
                 'camp_end' => 1546807673
