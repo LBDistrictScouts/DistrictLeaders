@@ -23,9 +23,6 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['ScoutGroups']
-        ];
         $users = $this->paginate($this->Users);
 
         $this->set(compact('users'));
@@ -41,7 +38,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['ScoutGroups', 'Audits', 'Roles']
+            'contain' => ['Audits', 'Roles']
         ]);
 
         $this->set('user', $user);
@@ -60,12 +57,11 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'view', $user->get('id')]);
+                return $this->redirect(['action' => 'view', $user->id]);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $scoutGroups = $this->Users->ScoutGroups->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'scoutGroups'));
+        $this->set(compact('user'));
     }
 
     /**
@@ -89,8 +85,7 @@ class UsersController extends AppController
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
-        $scoutGroups = $this->Users->ScoutGroups->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'scoutGroups'));
+        $this->set(compact('user'));
     }
 
     /**

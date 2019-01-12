@@ -39,4 +39,24 @@ class ScoutGroup extends Entity
         'modified' => true,
         'sections' => true
     ];
+
+    /**
+     * @param string $value The Domain
+     *
+     * @return string
+     */
+    protected function _setGroupDomain($value)
+    {
+        if (strlen($value)) {
+            $value = strtolower($value);
+            if (strpos($value, 'www.') !== false) {
+                $value = str_replace('www.', '', $value);
+            }
+            if (!(strpos($value, 'http') !== false)) {
+                $value = 'https://' . $value;
+            }
+        }
+
+        return $value;
+    }
 }

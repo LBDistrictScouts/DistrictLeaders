@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\ScoutGroupsTable|\Cake\ORM\Association\BelongsTo $ScoutGroups
  * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Audits
  * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
@@ -46,9 +45,6 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
 
-        $this->belongsTo('ScoutGroups', [
-            'foreignKey' => 'admin_scout_group_id'
-        ]);
         $this->hasMany('Audits', [
             'foreignKey' => 'user_id'
         ]);
@@ -152,7 +148,6 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['membership_number']));
-        $rules->add($rules->existsIn(['admin_scout_group_id'], 'ScoutGroups'));
 
         return $rules;
     }
@@ -311,7 +306,7 @@ class UsersTable extends Table
     public function findAuth(Query $query, array $options)
     {
         $query
-            ->select(['id', 'username', 'password', 'first_name', 'last_name']);
+            ->where(['username IS NOT NULL']);
 
         return $query;
     }

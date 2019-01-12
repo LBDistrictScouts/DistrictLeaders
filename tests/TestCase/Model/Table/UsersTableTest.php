@@ -132,12 +132,9 @@ class UsersTableTest extends TestCase
             'city' => 'Lorem ipsum dolor sit amet',
             'county' => 'Lorem ipsum dolor sit amet',
             'postcode' => 'Lorem i',
-            'admin_scout_group_id' => 1,
             'last_login_ip' => '192.168.0.1',
             'full_name' => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
-            'capabilities' => [
-                'LOGIN'
-            ],
+            'capabilities' => null,
         ];
         $this->assertEquals($expected, $actual);
 
@@ -259,21 +256,6 @@ class UsersTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        // Admin Group Exists
-        $values = $this->getGood();
-
-        $groups = $this->Users->ScoutGroups->find('list')->toArray();
-
-        $group = max(array_keys($groups));
-
-        $values['user_id'] = $group;
-        $new = $this->Users->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-
-        $values['user_id'] = $group + 1;
-        $new = $this->Users->newEntity($values);
-        $this->assertFalse($this->Users->save($new));
-
         // Is Unique
         $uniques = [
             'username' => 'JacobNew',

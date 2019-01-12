@@ -159,7 +159,7 @@ class ScoutGroupsTableTest extends TestCase
         }
 
         $maxLengths = [
-            'group_domain' => 255,
+            'group_domain' => 247,
             'group_alias' => 30,
             'scout_group' => 255,
         ];
@@ -199,5 +199,49 @@ class ScoutGroupsTableTest extends TestCase
         $values['scout_group'] = $existing['scout_group'];
         $new = $this->ScoutGroups->newEntity($values);
         $this->assertFalse($this->ScoutGroups->save($new));
+    }
+
+    /**
+     * Test setter method
+     *
+     * @return void
+     */
+    public function testSetters()
+    {
+        // WWW. Removal
+        $values = $this->getGood();
+
+        $values['group_domain'] = 'www.4thletchworth.com';
+        $expected = 'https://4thletchworth.com';
+
+        $new = $this->ScoutGroups->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+        $actual = $this->ScoutGroups->get($new->id)->toArray();
+        $this->assertEquals($expected, $actual['group_domain']);
+
+        // Blank Domain
+        $values = $this->getGood();
+
+        $values['group_domain'] = '5thletchworth.com';
+        $expected = 'https://5thletchworth.com';
+
+        $new = $this->ScoutGroups->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+        $actual = $this->ScoutGroups->get($new->id)->toArray();
+        $this->assertEquals($expected, $actual['group_domain']);
+
+        // Blank Domain
+        $values = $this->getGood();
+
+        $values['group_domain'] = 'http://6thletchworth.com';
+        $expected = 'http://6thletchworth.com';
+
+        $new = $this->ScoutGroups->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+        $actual = $this->ScoutGroups->get($new->id)->toArray();
+        $this->assertEquals($expected, $actual['group_domain']);
     }
 }

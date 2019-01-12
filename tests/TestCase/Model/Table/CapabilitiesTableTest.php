@@ -5,6 +5,7 @@ use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Security;
 
 /**
  * App\Model\Table\CapabilitiesTable Test Case
@@ -53,13 +54,31 @@ class CapabilitiesTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     *
+     * @throws
+     */
+    private function getGood()
+    {
+        $good = [
+            'capability_code' => 'NEW' . random_int(0, 999),
+            'capability' => 'Llama Permissions' . random_int(0, 999),
+            'min_level' => random_int(0, 5),
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $cap = $this->Capabilities->get(1)->toArray();
+        $actual = $this->Capabilities->get(1)->toArray();
 
         $expected = [
             'id' => 1,
@@ -67,8 +86,10 @@ class CapabilitiesTableTest extends TestCase
             'capability' => 'SuperUser Permissions',
             'min_level' => 5
         ];
+        $this->assertEquals($expected, $actual);
 
-        $this->assertEquals($expected, $cap);
+        $count = $this->Capabilities->find('all')->count();
+        $this->assertEquals(6, $count);
     }
 
     /**
@@ -78,7 +99,57 @@ class CapabilitiesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->Capabilities->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+
+        $required = [
+            'min_level',
+            'capability_code',
+            'capability',
+        ];
+
+        foreach ($required as $require) {
+            $reqArray = $good;
+            unset($reqArray[$require]);
+            $new = $this->Capabilities->newEntity($reqArray);
+            $this->assertFalse($this->Capabilities->save($new));
+        }
+
+        $notEmpties = [
+            'min_level',
+            'capability_code',
+            'capability',
+        ];
+
+        foreach ($notEmpties as $not_empty) {
+            $reqArray = $good;
+            $reqArray[$not_empty] = '';
+            $new = $this->Capabilities->newEntity($reqArray);
+            $this->assertFalse($this->Capabilities->save($new));
+        }
+
+        $maxLengths = [
+            'capability_code' => 10,
+            'capability' => 255,
+        ];
+
+        $string = hash('sha512', Security::randomBytes(256));
+        $string .= $string;
+        $string .= $string;
+
+        foreach ($maxLengths as $maxField => $max_length) {
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length);
+            $new = $this->Capabilities->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
+            $new = $this->Capabilities->newEntity($reqArray);
+            $this->assertFalse($this->Capabilities->save($new));
+        }
     }
 
     /**
@@ -88,7 +159,27 @@ class CapabilitiesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        // Is Unique
+        $uniques = [
+            'capability_code' => 'FACE',
+            'capability' => 'I LIKE CHEESE',
+        ];
+
+        foreach ($uniques as $unqueField => $uniqueValue) {
+            $values = $this->getGood();
+
+            $existing = $this->Capabilities->get(1)->toArray();
+
+            $values[$unqueField] = $uniqueValue;
+            $new = $this->Capabilities->newEntity($values);
+            $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+
+            $values = $this->getGood();
+
+            $values[$unqueField] = $existing[$unqueField];
+            $new = $this->Capabilities->newEntity($values);
+            $this->assertFalse($this->Capabilities->save($new));
+        }
     }
 
     /**

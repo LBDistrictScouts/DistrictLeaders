@@ -54,26 +54,26 @@ class CapabilitiesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('capability_code')
             ->maxLength('capability_code', 10)
             ->requirePresence('capability_code', 'create')
-            ->notEmpty('capability_code')
+            ->allowEmptyString('capability_code', false)
             ->add('capability_code', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('capability')
             ->maxLength('capability', 255)
             ->requirePresence('capability', 'create')
-            ->notEmpty('capability')
+            ->allowEmptyString('capability', false)
             ->add('capability', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('min_level')
             ->requirePresence('min_level', 'create')
-            ->notEmpty('min_level');
+            ->allowEmptyString('min_level', false);
 
         return $validator;
     }

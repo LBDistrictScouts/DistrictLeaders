@@ -24,11 +24,10 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property \Cake\I18n\FrozenTime|null $last_login
  * @property string|null $last_login_ip
- *
- * @property string $full_name
  * @property array $capabilities
  *
- * @property \App\Model\Entity\ScoutGroup $scout_group
+ * @property string $full_name
+ *
  * @property \App\Model\Entity\Audit[] $audits
  * @property \App\Model\Entity\Role[] $roles
  */
@@ -56,14 +55,14 @@ class User extends Entity
         'city' => true,
         'county' => true,
         'postcode' => true,
-        'admin_scout_group_id' => true,
         'created' => true,
         'modified' => true,
         'last_login' => true,
         'last_login_ip' => true,
         'scout_group' => true,
         'audits' => true,
-        'roles' => true
+        'roles' => true,
+        'capabilities' => true,
     ];
 
     /**
@@ -96,17 +95,7 @@ class User extends Entity
      */
     protected function _getFullName()
     {
-        return $this->_properties['first_name'] . ' ' . $this->_properties['last_name'];
-    }
-
-    /**
-     * Specifies the method for building up a user's full name.
-     *
-     * @return array
-     */
-    protected function _getCapabilities()
-    {
-        return ['LOGIN'];
+        return $this->first_name . ' ' . $this->last_name;
     }
 
     /**
@@ -114,5 +103,5 @@ class User extends Entity
      *
      * @var array
      */
-    protected $_virtual = ['full_name', 'capabilities'];
+    protected $_virtual = ['full_name'];
 }

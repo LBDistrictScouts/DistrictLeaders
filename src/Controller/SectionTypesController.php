@@ -54,7 +54,7 @@ class SectionTypesController extends AppController
             if ($this->SectionTypes->save($sectionType)) {
                 $this->Flash->success(__('The section type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
             }
             $this->Flash->error(__('The section type could not be saved. Please, try again.'));
         }
@@ -78,7 +78,7 @@ class SectionTypesController extends AppController
             if ($this->SectionTypes->save($sectionType)) {
                 $this->Flash->success(__('The section type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
             }
             $this->Flash->error(__('The section type could not be saved. Please, try again.'));
         }

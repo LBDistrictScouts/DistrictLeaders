@@ -39,6 +39,7 @@ class AppView extends View
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
         $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
         $this->loadHelper('Flash');
+        $this->loadHelper('Inflection');
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator', 'templates' => 'paginator_templates']);
         if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
             $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);

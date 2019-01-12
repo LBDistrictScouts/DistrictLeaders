@@ -81,7 +81,7 @@ class ScoutGroupsTable extends Table
 
         $validator
             ->scalar('group_domain')
-            ->maxLength('group_domain', 255)
+            ->maxLength('group_domain', 247)
             ->allowEmptyString('group_domain');
 
         return $validator;

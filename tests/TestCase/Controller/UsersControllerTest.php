@@ -54,6 +54,8 @@ class UsersControllerTest extends TestCase
      * Test view method
      *
      * @return void
+     *
+     * @throws
      */
     public function testView()
     {
@@ -70,6 +72,8 @@ class UsersControllerTest extends TestCase
      * Test add method
      *
      * @return void
+     *
+     * @throws
      */
     public function testAdd()
     {
@@ -93,12 +97,10 @@ class UsersControllerTest extends TestCase
             'controller' => 'Users',
             'action' => 'add'
         ], [
-            'username' => 'TEST_BOB',
             'membership_number' => '12345',
             'first_name' => 'BOB',
             'last_name' => 'ROBERT',
             'email' => 'bob@robert.com',
-            'password' => 'FISH_LLAMA',
             'address_line_1' => 'My House',
             'address_line_2' => '',
             'city' => 'Somewhere',
@@ -115,6 +117,8 @@ class UsersControllerTest extends TestCase
      * Test edit method
      *
      * @return void
+     *
+     * @throws
      */
     public function testEdit()
     {
@@ -143,12 +147,10 @@ class UsersControllerTest extends TestCase
             'action' => 'edit',
             1
         ], [
-            'username' => 'TEST_GOAT',
             'membership_number' => 145921,
             'first_name' => 'Goat',
             'last_name' => 'Fish',
             'email' => 'goat@octopus.com',
-            'password' => 'FishyLlama',
             'address_line_1' => '47 Goat Ave',
             'address_line_2' => '',
             'city' => 'London',

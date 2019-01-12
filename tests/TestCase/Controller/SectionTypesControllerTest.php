@@ -32,49 +32,142 @@ class SectionTypesControllerTest extends TestCase
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'SectionTypes', 'action' => 'index']);
+
+        $this->assertResponseOk();
     }
 
     /**
      * Test view method
      *
      * @return void
+     *
+     * @throws
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'SectionTypes', 'action' => 'view', 1]);
+
+        $this->assertResponseOk();
     }
 
     /**
      * Test add method
      *
      * @return void
+     *
+     * @throws
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'SectionTypes', 'action' => 'add']);
+
+        $this->assertResponseOk();
+
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->post([
+            'controller' => 'SectionTypes',
+            'action' => 'add'
+        ], [
+            'section_type' => 'Llamas'
+        ]);
+
+        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'view', 9]);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The section type has been saved.');
     }
 
     /**
      * Test edit method
      *
      * @return void
+     *
+     * @throws
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'SectionTypes', 'action' => 'edit', 1]);
+
+        $this->assertResponseOk();
+
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->configRequest([
+            'environment' => ['HTTPS' => 'on']
+        ]);
+
+        $this->post([
+            'controller' => 'SectionTypes',
+            'action' => 'edit',
+            1
+        ], [
+            'section_type' => 'Llamas Kids'
+        ]);
+
+        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'view', 1]);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The section type has been saved.');
     }
 
     /**
      * Test delete method
      *
      * @return void
+     *
+     * @throws
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->enableCsrfToken();
+        $this->enableSecurityToken();
+        $this->enableRetainFlashMessages();
+
+        $this->delete([
+            'controller' => 'SectionTypes',
+            'action' => 'delete',
+            8
+        ]);
+
+        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'index']);
+        $this->assertFlashElement('Flash/success');
+        $this->assertFlashMessage('The section type has been deleted.');
     }
 }

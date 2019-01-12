@@ -6,7 +6,7 @@
 ?>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="#">Leaders</a>
+    <?= $this->Html->link('Leaders', ['controller' => 'Pages', 'action' => 'display', 'home'], ['class' => 'navbar-brand'])  ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nToggle" aria-controls="nToggle" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,7 +15,7 @@
         <ul class="navbar-nav">
             <?php if (isset($loggedInUserId)) : ?>
                 <?php
-                $cell = $this->cell('NavBar', [$loggedInUserId], [
+                echo $this->cell('NavBar', [$loggedInUserId], [
                     'cache' => [
                             'config' => 'cell_cache',
                             'key' => 'nav_' . $loggedInUserId
