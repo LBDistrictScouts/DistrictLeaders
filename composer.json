@@ -11,6 +11,8 @@
         "cakephp/plugin-installer": "^1.0",
         "friendsofcake/bootstrap-ui": "^1.4",
         "friendsofcake/search": "@stable",
+        "josbeir/cakephp-filesystem": "^1.0",
+        "league/flysystem-aws-s3-v3": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/trash": "^2.1",
         "xety/cake3-cookieauth": "^1.4"
