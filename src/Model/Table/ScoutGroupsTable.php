@@ -36,7 +36,7 @@ class ScoutGroupsTable extends Table
         parent::initialize($config);
 
         $this->setTable('scout_groups');
-        $this->setDisplayField('id');
+        $this->setDisplayField('group_alias');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -57,32 +57,32 @@ class ScoutGroupsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('scout_group')
             ->maxLength('scout_group', 255)
             ->requirePresence('scout_group', 'create')
-            ->notEmpty('scout_group')
+            ->allowEmptyString('scout_group', false)
             ->add('scout_group', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('group_alias')
-            ->maxLength('group_alias', 255)
-            ->allowEmpty('group_alias');
+            ->maxLength('group_alias', 30)
+            ->allowEmptyString('group_alias');
 
         $validator
             ->integer('number_stripped')
-            ->allowEmpty('number_stripped');
+            ->allowEmptyString('number_stripped');
 
         $validator
             ->integer('charity_number')
-            ->allowEmpty('charity_number');
+            ->allowEmptyString('charity_number');
 
         $validator
             ->scalar('group_domain')
             ->maxLength('group_domain', 255)
-            ->allowEmpty('group_domain');
+            ->allowEmptyString('group_domain');
 
         return $validator;
     }

@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\SectionTypesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Security;
 
 /**
  * App\Model\Table\SectionTypesTable Test Case
@@ -52,13 +53,36 @@ class SectionTypesTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     */
+    private function getGood()
+    {
+        $good = [
+            'section_type' => 'Llamas'
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $actual = $this->SectionTypes->get(1)->toArray();
+
+        $expected = [
+            'id' => 1,
+            'section_type' => 'Beavers'
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $count = $this->SectionTypes->find('all')->count();
+        $this->assertEquals(8, $count);
     }
 
     /**
@@ -68,7 +92,62 @@ class SectionTypesTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->SectionTypes->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+
+        $required = [
+            'section_type',
+        ];
+
+        foreach ($required as $require) {
+            $reqArray = $good;
+            unset($reqArray[$require]);
+            $new = $this->SectionTypes->newEntity($reqArray);
+            $this->assertFalse($this->SectionTypes->save($new));
+        }
+
+        $empties = [
+        ];
+
+        foreach ($empties as $empty) {
+            $reqArray = $good;
+            $reqArray[$empty] = '';
+            $new = $this->SectionTypes->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+        }
+
+        $notEmpties = [
+            'section_type',
+        ];
+
+        foreach ($notEmpties as $not_empty) {
+            $reqArray = $good;
+            $reqArray[$not_empty] = '';
+            $new = $this->SectionTypes->newEntity($reqArray);
+            $this->assertFalse($this->SectionTypes->save($new));
+        }
+
+        $maxLengths = [
+            'section_type' => 255,
+        ];
+
+        $string = hash('sha512', Security::randomBytes(64));
+        $string .= $string;
+        $string .= $string;
+
+        foreach ($maxLengths as $maxField => $max_length) {
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length);
+            $new = $this->SectionTypes->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
+            $new = $this->SectionTypes->newEntity($reqArray);
+            $this->assertFalse($this->SectionTypes->save($new));
+        }
     }
 
     /**
@@ -78,6 +157,16 @@ class SectionTypesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $values = $this->getGood();
+
+        $existing = $this->SectionTypes->get(1)->toArray();
+
+        $values['section_type'] = 'Llamas';
+        $new = $this->SectionTypes->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+
+        $values['section_type'] = $existing['section_type'];
+        $new = $this->SectionTypes->newEntity($values);
+        $this->assertFalse($this->SectionTypes->save($new));
     }
 }

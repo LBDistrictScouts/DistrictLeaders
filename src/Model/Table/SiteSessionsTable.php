@@ -50,17 +50,17 @@ class SiteSessionsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('data')
             ->requirePresence('data', 'create')
-            ->notEmpty('data');
+            ->allowEmptyString('data', false);
 
         $validator
             ->integer('expires')
             ->requirePresence('expires', 'create')
-            ->notEmpty('expires');
+            ->allowEmptyString('expires', false);
 
         return $validator;
     }

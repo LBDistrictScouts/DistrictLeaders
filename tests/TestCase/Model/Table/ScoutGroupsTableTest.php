@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Table\ScoutGroupsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use Cake\Utility\Security;
 
 /**
  * App\Model\Table\ScoutGroupsTable Test Case
@@ -52,13 +53,61 @@ class ScoutGroupsTableTest extends TestCase
     }
 
     /**
+     * Get Good Set Function
+     *
+     * @return array
+     *
+     * @throws
+     */
+    private function getGood()
+    {
+        $number = random_int(1, 256) * random_int(1, 256);
+        $good = [
+            'scout_group' => $number . 'th Llamaworld Sea Scouts',
+            'group_alias' => $number . 'th Llamaworld',
+            'number_stripped' => $number,
+            'charity_number' => 123456,
+            'group_domain' => $number . 'thllamaworld.com',
+        ];
+
+        return $good;
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $actual = $this->ScoutGroups->get(1)->toArray();
+
+        $dates = [
+            'modified',
+            'created',
+            'deleted',
+        ];
+
+        foreach ($dates as $date) {
+            $dateValue = $actual[$date];
+            if (!is_null($dateValue)) {
+                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+            }
+            unset($actual[$date]);
+        }
+
+        $expected = [
+            'id' => 1,
+            'scout_group' => 'Lorem ipsum dolor sit amet',
+            'group_alias' => 'Lorem ipsum dolor sit amet',
+            'number_stripped' => 1,
+            'charity_number' => 1,
+            'group_domain' => 'Lorem ipsum dolor sit amet',
+        ];
+        $this->assertEquals($expected, $actual);
+
+        $count = $this->ScoutGroups->find('all')->count();
+        $this->assertEquals(1, $count);
     }
 
     /**
@@ -68,7 +117,68 @@ class ScoutGroupsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->ScoutGroups->newEntity($good);
+        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+        $required = [
+            'scout_group',
+        ];
+
+        foreach ($required as $require) {
+            $reqArray = $this->getGood();
+            unset($reqArray[$require]);
+            $new = $this->ScoutGroups->newEntity($reqArray);
+            $this->assertFalse($this->ScoutGroups->save($new));
+        }
+
+        $empties = [
+            'group_alias',
+            'number_stripped',
+            'charity_number',
+            'group_domain',
+        ];
+
+        foreach ($empties as $empty) {
+            $reqArray = $this->getGood();
+            $reqArray[$empty] = '';
+            $new = $this->ScoutGroups->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        }
+
+        $notEmpties = [
+            'scout_group',
+        ];
+
+        foreach ($notEmpties as $not_empty) {
+            $reqArray = $this->getGood();
+            $reqArray[$not_empty] = '';
+            $new = $this->ScoutGroups->newEntity($reqArray);
+            $this->assertFalse($this->ScoutGroups->save($new));
+        }
+
+        $maxLengths = [
+            'group_domain' => 255,
+            'group_alias' => 30,
+            'scout_group' => 255,
+        ];
+
+        $string = hash('sha512', Security::randomBytes(64));
+        $string .= $string;
+        $string .= $string;
+
+        foreach ($maxLengths as $maxField => $max_length) {
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length);
+            $new = $this->ScoutGroups->newEntity($reqArray);
+            $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+            $reqArray = $this->getGood();
+            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
+            $new = $this->ScoutGroups->newEntity($reqArray);
+            $this->assertFalse($this->ScoutGroups->save($new));
+        }
     }
 
     /**
@@ -78,6 +188,16 @@ class ScoutGroupsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $values = $this->getGood();
+
+        $existing = $this->ScoutGroups->get(1)->toArray();
+
+        $values['scout_group'] = 'My new Camp Role Type';
+        $new = $this->ScoutGroups->newEntity($values);
+        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+
+        $values['scout_group'] = $existing['scout_group'];
+        $new = $this->ScoutGroups->newEntity($values);
+        $this->assertFalse($this->ScoutGroups->save($new));
     }
 }

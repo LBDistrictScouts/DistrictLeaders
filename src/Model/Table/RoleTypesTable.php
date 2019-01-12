@@ -61,23 +61,23 @@ class RoleTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', 'create');
 
         $validator
             ->scalar('role_type')
             ->maxLength('role_type', 255)
             ->requirePresence('role_type', 'create')
-            ->notEmpty('role_type');
+            ->allowEmptyString('role_type', false);
 
         $validator
             ->scalar('role_abbreviation')
             ->maxLength('role_abbreviation', 32)
-            ->allowEmpty('role_abbreviation');
+            ->allowEmptyString('role_abbreviation');
 
         $validator
             ->integer('level')
             ->requirePresence('level', 'create')
-            ->notEmpty('level');
+            ->allowEmptyString('level', false);
 
         return $validator;
     }
@@ -92,6 +92,8 @@ class RoleTypesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
+        $rules->add($rules->isUnique(['role_type']));
+        $rules->add($rules->isUnique(['role_abbreviation']));
 
         return $rules;
     }

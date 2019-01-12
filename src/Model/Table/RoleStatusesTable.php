@@ -34,7 +34,7 @@ class RoleStatusesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_statuses');
-        $this->setDisplayField('id');
+        $this->setDisplayField('role_status');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Roles', [

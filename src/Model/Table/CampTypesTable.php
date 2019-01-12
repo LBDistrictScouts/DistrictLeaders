@@ -34,7 +34,7 @@ class CampTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('camp_types');
-        $this->setDisplayField('id');
+        $this->setDisplayField('camp_type');
         $this->setPrimaryKey('id');
 
         $this->hasMany('Camps', [
@@ -58,7 +58,7 @@ class CampTypesTable extends Table
             ->scalar('camp_type')
             ->maxLength('camp_type', 30)
             ->requirePresence('camp_type', 'create')
-            ->notEmpty('camp_type')
+            ->allowEmptyString('camp_type', false)
             ->add('camp_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
