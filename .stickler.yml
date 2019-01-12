@@ -1,0 +1,9 @@
+linters:
+  phpcs:
+    standard: CakePHP
+files:
+  ignore:
+    - 'vendor/*'
+    - 'bower_components/*'
+fixers:
+  enable: true
