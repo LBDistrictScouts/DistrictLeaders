@@ -144,8 +144,9 @@ class UsersController extends AppController
 
                 if ($this->request->getData('remember_me')) {
                     $this->Cookie->configKey('CookieAuth', [
-                        'expires' => '+1 year',
-                        'httpOnly' => true
+                        'expires' => '+3 months',
+                        'httpOnly' => true,
+                        'secure' => true,
                     ]);
                     $this->Cookie->write('CookieAuth', [
                         'username' => $this->request->getData('username'),
@@ -157,7 +158,10 @@ class UsersController extends AppController
                 //Last login IP
                 $user->last_login_ip = $this->request->clientIp();
 
-                $this->Users->save($user);
+                $this->Users->patchCapabilities($user);
+
+                $user = $this->Users->get($user['id']);
+                $this->Auth->setUser($user);
 
                 return $this->redirect($this->Auth->redirectUrl());
             }
