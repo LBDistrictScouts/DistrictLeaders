@@ -12,33 +12,32 @@ class SoftDelete extends AbstractMigration
      */
     public function change()
     {
-    	$this
-		    ->table('users')
-		    ->addColumn('deleted', 'datetime', [
-		    	'null' => true,
-		    ])
-		    ->save();
+        $this
+            ->table('users')
+            ->addColumn('deleted', 'datetime', [
+                'null' => true,
+            ])
+            ->save();
 
-	    $this
-		    ->table('scout_groups')
-		    ->addColumn('deleted', 'datetime', [
-			    'null' => true,
-		    ])
-		    ->save();
+        $this
+            ->table('scout_groups')
+            ->addColumn('deleted', 'datetime', [
+                'null' => true,
+            ])
+            ->save();
 
-	    $this
-		    ->table('sections')
-		    ->addColumn('deleted', 'datetime', [
-			    'null' => true,
-		    ])
-		    ->save();
+        $this
+            ->table('sections')
+            ->addColumn('deleted', 'datetime', [
+                'null' => true,
+            ])
+            ->save();
 
-	    $this
-		    ->table('roles')
-		    ->addColumn('deleted', 'datetime', [
-			    'null' => true,
-		    ])
-		    ->save();
-
+        $this
+            ->table('roles')
+            ->addColumn('deleted', 'datetime', [
+                'null' => true,
+            ])
+            ->save();
     }
 }

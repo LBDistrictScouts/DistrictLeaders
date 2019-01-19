@@ -13,11 +13,7 @@
                 <h3><i class="fal <?= $this->fetch('icon') ?> fa-fw"></i> Add <?= $this->Inflection->singleSpace($this->fetch('entity')) ?></h3>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-			            <?= $this->fetch('content') ?>
-                    </table>
-                </div>
+                <?= $this->fetch('content') ?>
             </div>
             <div class="card-footer text-muted">
                 <?= $this->Form->button('Create ' . $this->Inflection->singleSpace($this->fetch('entity')), ['class' => 'btn btn-outline-success btn-lg']) ?>

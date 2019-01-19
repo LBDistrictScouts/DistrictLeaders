@@ -12,13 +12,13 @@ class Authorisation extends AbstractMigration
      */
     public function change()
     {
-    	$this
-		    ->table('users')
-		    ->addColumn('last_login_ip', 'string', [
-		    	'default' => 'null',
-			    'null' => true,
-			    'length' => 255,
-		    ])
-		    ->save();
+        $this
+            ->table('users')
+            ->addColumn('last_login_ip', 'string', [
+                'default' => 'null',
+                'null' => true,
+                'length' => 255,
+            ])
+            ->save();
     }
 }

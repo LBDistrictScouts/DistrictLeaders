@@ -12,15 +12,15 @@ class Sessions extends AbstractMigration
      */
     public function change()
     {
-    	$this
-		    ->table('site_sessions', [ 'id' => false, 'primary_key' => 'id'])
-		    ->addColumn('id', 'string', [
-		    	'length' => 40,
-			    'null' => false,
-		    ])
-		    ->addTimestamps('created', 'modified')
-		    ->addColumn('data', 'text')
-		    ->addColumn('expires', 'integer')
-		    ->create();
+        $this
+            ->table('site_sessions', [ 'id' => false, 'primary_key' => 'id'])
+            ->addColumn('id', 'string', [
+                'length' => 40,
+                'null' => false,
+            ])
+            ->addTimestamps('created', 'modified')
+            ->addColumn('data', 'text')
+            ->addColumn('expires', 'integer')
+            ->create();
     }
 }

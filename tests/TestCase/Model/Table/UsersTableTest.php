@@ -171,7 +171,6 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
-        debug($new);
         $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
         $required = [

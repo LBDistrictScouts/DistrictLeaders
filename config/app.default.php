@@ -140,27 +140,27 @@ return [
         ],
 
         'capability' => [
-	        'className' => 'Cake\Cache\Engine\FileEngine',
-	        'prefix' => 'leaders_cap_',
-	        'path' => CACHE . 'capabilities/',
-	        'serialize' => true,
-	        'duration' => '+30 minutes',
+            'className' => 'Cake\Cache\Engine\FileEngine',
+            'prefix' => 'leaders_cap_',
+            'path' => CACHE . 'capabilities/',
+            'serialize' => true,
+            'duration' => '+30 minutes',
         ],
 
         'cell_cache' => [
-	        'className' => 'Cake\Cache\Engine\FileEngine',
-	        'prefix' => 'cell_',
-	        'path' => CACHE . 'cell/',
-	        'serialize' => true,
-	        'duration' => '+30 minutes',
+            'className' => 'Cake\Cache\Engine\FileEngine',
+            'prefix' => 'cell_',
+            'path' => CACHE . 'cell/',
+            'serialize' => true,
+            'duration' => '+30 minutes',
         ],
 
         'combo' => [
-	        'className' => 'Cake\Cache\Engine\FileEngine',
-	        'prefix' => 'combo_session_',
-	        'path' => CACHE . 'combo/',
-	        'serialize' => true,
-	        'duration' => '+3 hours',
+            'className' => 'Cake\Cache\Engine\FileEngine',
+            'prefix' => 'combo_session_',
+            'path' => CACHE . 'combo/',
+            'serialize' => true,
+            'duration' => '+3 hours',
         ],
     ],
 
@@ -325,17 +325,21 @@ return [
      * To use database sessions, load the SQL file located at config/schema/sessions.sql
      */
     'Session' => [
-	    'defaults' => 'database',
-	    'handler' => [
-		    'engine' => 'ComboSession',
-		    'model' => 'SiteSessions',
-		    'cache' => 'combo'
-	    ]
+        'defaults' => 'database',
+        'handler' => [
+            'engine' => 'ComboSession',
+            'model' => 'SiteSessions',
+            'cache' => 'combo'
+        ]
     ],
 
     'Xety/Cake3CookieAuth.Cookie' => [
-	    'cookie' => [
-		    'name' => 'CookieAuth'
-	    ]
+        'cookie' => [
+            'name' => 'CookieAuth'
+        ]
+    ],
+
+    'GoogleClient' => [
+        'TokenPath' => 'config/token.json',
     ],
 ];

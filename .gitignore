@@ -42,3 +42,5 @@ nbproject/*
 .sass-cache/
 /config/Migrations/schema-dump-default.lock
 /clover.xml
+/config/token.json
+/config/credentials.json

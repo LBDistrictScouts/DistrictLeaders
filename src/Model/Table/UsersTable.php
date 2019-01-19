@@ -268,7 +268,6 @@ class UsersTable extends Table
         }, 'capability');
     }
 
-
     /**
      * Patch User Capabilities
      *
