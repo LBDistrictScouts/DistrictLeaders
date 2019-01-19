@@ -23,9 +23,10 @@ matrix:
 before_script:
   - psql -c 'create database leaders;' -U postgres
   - cp config/app_db.travis.php config/app_db.php
+  - cp config/app_file.travis.php config/app_file.php
+  - cp config/app.travis.php config/app.php
   - composer install
   - composer run-script post-install-cmd --no-interaction
-  - sh -c "bin/cake migrations migrate -p DatabaseLog -c test_database_log"
   - sh -c "bin/cake database build"
   - sh -c "bin/cake database seed"
 

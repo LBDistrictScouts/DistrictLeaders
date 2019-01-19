@@ -39,7 +39,7 @@ class Application extends BaseApplication
     {
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
 
-//        $this->addPlugin('Xety/Cake3CookieAuth');
+        $this->addPlugin('Xety/Cake3CookieAuth');
 
         $this->addPlugin('Muffin/Trash');
 

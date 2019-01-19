@@ -2,4 +2,7 @@
 **/*.md
 **/*.default.php
 config/Migrations/schema-dump-default.lock
+config/app.travis.php
+config/app_db.travis.php
+config/app_file.travis.php
 dummy.png
