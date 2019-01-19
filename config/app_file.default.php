@@ -38,5 +38,15 @@ return [
                 'hashingAlgo' => 'sha1'
             ],
         ],
-    ]
+    ],
+
+    'CloudConvert' => [
+        'api_key' => '__INSERT_CLOUD_CONVERT_API_KEY_HERE__',
+        's3' => [
+            'key' => '__INSERT_CC_S3_IAM_KEY__',
+            'secret' => '__INSERT_CC_S3_IAM_SECRET__',
+            'region' => 'eu-west-1',
+            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__'
+        ]
+    ],
 ];

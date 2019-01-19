@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\UsersTable;
+use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -377,6 +378,7 @@ class UsersTableTest extends TestCase
      */
     public function testRetrieveCapabilities()
     {
+        Cache::clear(false, 'capability');
         $user = $this->Users->get(1);
         $capabilities = $this->Users->retrieveCapabilities($user);
 
@@ -433,6 +435,8 @@ class UsersTableTest extends TestCase
      */
     public function testUserCapability()
     {
+        Cache::clear(false, 'capability');
+
         // Basic Assert Positive
         $user = $this->Users->get(1);
         $cap = 'OWN_USER';

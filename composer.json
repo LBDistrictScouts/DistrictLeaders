@@ -10,6 +10,7 @@
         "cakephp/cakephp": "3.7.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
+        "dereuromark/cakephp-databaselog": "^2.5",
         "friendsofcake/bootstrap-ui": "^1.4",
         "friendsofcake/search": "@stable",
         "google/apiclient": "^2.0",

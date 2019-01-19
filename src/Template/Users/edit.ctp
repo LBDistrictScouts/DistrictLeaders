@@ -38,7 +38,6 @@
             echo $this->Form->control('city');
             echo $this->Form->control('county');
             echo $this->Form->control('postcode');
-            echo $this->Form->control('admin_scout_group_id', ['options' => $scoutGroups, 'empty' => true]);
             echo $this->Form->control('last_login');
         ?>
     </fieldset>

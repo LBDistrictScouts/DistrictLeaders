@@ -260,20 +260,10 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'debug',
-            'url' => env('LOG_DEBUG_URL', null),
-            'scopes' => false,
-            'levels' => ['notice', 'info', 'debug'],
+            'className' => 'DatabaseLog.Database'
         ],
         'error' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'error',
-            'url' => env('LOG_ERROR_URL', null),
-            'scopes' => false,
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+            'className' => 'DatabaseLog.Database'
         ],
         // To enable this dedicated query log, you need set your datasource's log flag to true
         'queries' => [
@@ -283,6 +273,12 @@ return [
             'url' => env('LOG_QUERIES_URL', null),
             'scopes' => ['queriesLog'],
         ],
+    ],
+
+    'DatabaseLog' => [
+        'datasource' => 'database_log',
+        'limit' => 9999,
+        'maxLength' => '-1 year',
     ],
 
     /**
