@@ -338,4 +338,10 @@ return [
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
     ],
+
+    'Muffin/Tokenize', [
+        'lifetime' => '3 days', // Default value
+        'length' => 32, // Default value
+        'table' => 'tokenize_tokens', // Default value
+    ],
 ];

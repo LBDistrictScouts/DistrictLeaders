@@ -37,8 +37,16 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
+        $visibleFields = [
+            'id',
+            'first_name',
+            'last_name',
+            'email',
+        ];
+
         $user = $this->Users->get($id, [
-            'contain' => ['Audits', 'Roles']
+            'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles'],
+            'fields' => $visibleFields,
         ]);
 
         $this->set('user', $user);
@@ -157,10 +165,9 @@ class UsersController extends AppController
                 $user->last_login = new Time();
                 //Last login IP
                 $user->last_login_ip = $this->request->clientIp();
-
+                // Get Capabilities
                 $this->Users->patchCapabilities($user);
 
-                $user = $this->Users->get($user['id']);
                 $this->Auth->setUser($user);
 
                 return $this->redirect($this->Auth->redirectUrl());

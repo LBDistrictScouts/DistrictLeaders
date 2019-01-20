@@ -13,16 +13,17 @@ use Cake\Validation\Validator;
  * Users Model
  *
  * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Changes
  * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
- * @method \App\Model\Entity\User get($primaryKey, $options = [])
- * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
+ * @method User get($primaryKey, $options = [])
+ * @method User newEntity($data = null, array $options = [])
+ * @method User[] newEntities(array $data, array $options = [])
+ * @method User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method User|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method User[] patchEntities($entities, array $data, array $options = [])
+ * @method User findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -45,12 +46,22 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Muffin/Tokenize.Tokenize');
+
+        $this->hasMany('Changes', [
+            'className' => 'Audits',
+            'foreignKey' => 'user_id',
+        ]);
 
         $this->hasMany('Audits', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'audit_record_id',
+            'finder' => 'users',
         ]);
+
         $this->hasMany('Roles', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 
@@ -279,6 +290,7 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveAllCapabilities($user);
         $user->capabilities = $capabilities;
+        $user->setDirty('modified');
 
         return $this->save($user);
     }
@@ -340,5 +352,129 @@ class UsersTable extends Table
             ->where(['username IS NOT NULL']);
 
         return $query;
+    }
+
+    /**
+     * Stores emails as lower case.
+     *
+     * @param \Cake\Event\Event $event The event being processed.
+     * @param User $entity The Entity being processed.
+     *
+     * @return bool
+     */
+    public function beforeRules($event, $entity)
+    {
+        $dirty = $entity->getDirty();
+
+        $entity->email = strtolower($entity->email);
+
+        $entity->first_name = ucwords(strtolower($entity->first_name));
+        $entity->last_name = ucwords(strtolower($entity->last_name));
+
+        $entity->address_line_1 = ucwords(strtolower($entity->address_line_1));
+        $entity->address_line_2 = ucwords(strtolower($entity->address_line_2));
+        $entity->city = ucwords(strtolower($entity->city));
+        $entity->county = ucwords(strtolower($entity->county));
+
+        $entity->postcode = strtoupper($entity->postcode);
+
+        $cleaned = [
+            'email',
+            'first_name', 'last_name',
+            'address_line_1', 'address_line_2', 'city', 'county',
+            'postcode',
+        ];
+
+        foreach ($cleaned as $clean) {
+            if (!in_array($clean, $dirty)) {
+                $entity->setDirty($clean, false);
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * before Save LifeCycle Callback
+     *
+     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param User $entity The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     *
+     * @return bool
+     */
+    public function afterSave($event, $entity, $options)
+    {
+        $dirtyValues = $entity->getDirty();
+
+        $trackedFields = [
+            'username',
+            'membership_number',
+            'first_name',
+            'last_name',
+            'email',
+            'address_line_1',
+            'address_line_2',
+            'city',
+            'county',
+            'postcode',
+        ];
+
+        foreach ($dirtyValues as $dirty_value) {
+            if (in_array($dirty_value, $trackedFields)) {
+                $current = $entity->get($dirty_value);
+                $original = $entity->getOriginal($dirty_value);
+
+                if ($entity->isNew()) {
+                    $original = null;
+                }
+
+                if ($current <> $original) {
+                    $auditData = [
+                        'audit_record_id' => $entity->get('id'),
+                        'audit_field' => $dirty_value,
+                        'audit_table' => 'Users',
+                        'original_value' => $original,
+                        'modified_value' => $current,
+                    ];
+
+                    $audit = $this->Audits->newEntity($auditData);
+                    $this->Audits->save($audit);
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @return \Search\Manager
+     * @uses \Search\Model\Behavior\SearchBehavior
+     */
+    public function searchManager()
+    {
+        $searchManager = $this->behaviors()->Search->searchManager();
+        $searchManager
+            ->add('q_text', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'mode' => 'or',
+                'comparison' => 'ILIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => [
+                    'first_name',
+                    'last_name',
+                    'email',
+                    'preferred_name',
+                    'postcode',
+                    'address_line_1',
+                    'address_line_2',
+                    'city',
+                ],
+                'filterEmpty' => true,
+            ]);
+
+        return $searchManager;
     }
 }

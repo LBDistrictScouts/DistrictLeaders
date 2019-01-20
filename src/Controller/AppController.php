@@ -18,6 +18,7 @@ use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\I18n\Time;
+use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
  * Application Controller
@@ -25,10 +26,14 @@ use Cake\I18n\Time;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
+ * @property \App\Model\Table\UsersTable $Users
+ *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
 {
+
+    use FootprintAwareTrait;
 
     /**
      * Initialization hook method.
@@ -56,8 +61,8 @@ class AppController extends Controller
                         'password' => 'password'
                     ],
                     'finder' => 'auth',
-                    'storage' => 'session',
-                ]
+                ],
+                'Xety/Cake3CookieAuth.Cookie',
             ],
             'loginAction' => [
                 'controller' => 'Users',
@@ -108,8 +113,6 @@ class AppController extends Controller
         if (!$this->Auth->user() && $this->Cookie->read('CookieAuth')) {
             $user = $this->Auth->identify();
             if ($user) {
-                $this->Auth->setUser($user);
-
                 $this->loadModel('Users');
                 $user = $this->Users->get($user['id']);
 
@@ -117,9 +120,10 @@ class AppController extends Controller
                 $user->last_login = new Time();
                 //Last login IP
                 $user->last_login_ip = $this->request->clientIp();
-                //etc...
 
-                $this->Users->save($user);
+                $this->Users->patchCapabilities($user);
+
+                $this->Auth->setUser($user);
             } else {
                 $this->Cookie->delete('CookieAuth');
             }

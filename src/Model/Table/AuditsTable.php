@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
  * Audits Model
  *
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $ChangedUsers
  *
  * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
  * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
@@ -37,6 +38,34 @@ class AuditsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'change_date' => 'new',
+                ],
+            ]
+        ]);
+
+        $this->addBehavior('Muffin/Footprint.Footprint', [
+            'events' => [
+                'Model.afterSave' => [
+                    'user_id' => 'always',
+                ],
+                'Model.beforeSave' => [
+                    'user_id' => 'always',
+                ]
+            ],
+            'propertiesMap' => [
+                'user_id' => '_footprint.id',
+            ],
+        ]);
+
+        $this->belongsTo('ChangedUsers', [
+            'className' => 'Users',
+            'foreignKey' => 'audit_record_id',
+            'strategy' => 'select',
+        ]);
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id'
         ]);
@@ -58,29 +87,29 @@ class AuditsTable extends Table
             ->scalar('audit_field')
             ->maxLength('audit_field', 255)
             ->requirePresence('audit_field', 'create')
-            ->notEmpty('audit_field');
+            ->allowEmptyString('audit_field', false);
 
         $validator
             ->scalar('audit_table')
             ->maxLength('audit_table', 255)
             ->requirePresence('audit_table', 'create')
-            ->notEmpty('audit_table');
+            ->allowEmptyString('audit_table', false);
+
+        $validator
+            ->integer('audit_record_id')
+            ->requirePresence('audit_record_id', 'create')
+            ->allowEmptyString('audit_record_id', false);
 
         $validator
             ->scalar('original_value')
             ->maxLength('original_value', 255)
-            ->allowEmpty('original_value');
+            ->allowEmptyString('original_value');
 
         $validator
             ->scalar('modified_value')
             ->maxLength('modified_value', 255)
             ->requirePresence('modified_value', 'create')
-            ->notEmpty('modified_value');
-
-        $validator
-            ->dateTime('change_date')
-            ->requirePresence('change_date', 'create')
-            ->notEmpty('change_date');
+            ->allowEmptyString('modified_value', false);
 
         return $validator;
     }
@@ -97,5 +126,17 @@ class AuditsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
 
         return $rules;
+    }
+
+    /**
+     * @param Query $query The Query to be modified.
+     *
+     * @return Query
+     */
+    public function findUsers($query)
+    {
+        $query->where(['audit_table' => 'Users']);
+
+        return $query;
     }
 }

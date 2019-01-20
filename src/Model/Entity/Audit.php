@@ -12,9 +12,11 @@ use Cake\ORM\Entity;
  * @property string|null $original_value
  * @property string $modified_value
  * @property int|null $user_id
+ * @property int $audit_record_id
  * @property \Cake\I18n\FrozenTime $change_date
  *
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\User $changed_user
  */
 class Audit extends Entity
 {
@@ -35,6 +37,8 @@ class Audit extends Entity
         'modified_value' => true,
         'user_id' => true,
         'change_date' => true,
-        'user' => true
+        'user' => true,
+        'audit_record_id' => true,
+        'changed_user' => true,
     ];
 }

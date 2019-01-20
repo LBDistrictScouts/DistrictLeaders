@@ -73,10 +73,11 @@ class AuditsTableTest extends TestCase
     {
         $date = Time::getTestNow();
         $good = [
-            'audit_field' => 'Lorem ipsum dolor sit amet',
-            'audit_table' => 'Lorem ipsum dolor sit amet',
-            'original_value' => 'Lorem ipsum dolor sit amet',
-            'modified_value' => 'Lorem ipsum dolor sit amet',
+            'audit_field' => 'last_name',
+            'audit_table' => 'Users',
+            'original_value' => 'old',
+            'modified_value' => 'new',
+            'audit_record_id' => '1',
             'user_id' => 1,
             'change_date' => $date,
         ];
@@ -98,11 +99,12 @@ class AuditsTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'audit_field' => 'Lorem ipsum dolor sit amet',
-            'audit_table' => 'Lorem ipsum dolor sit amet',
-            'original_value' => 'Lorem ipsum dolor sit amet',
-            'modified_value' => 'Lorem ipsum dolor sit amet',
+            'audit_field' => 'first_name',
+            'audit_table' => 'Users',
+            'original_value' => 'old',
+            'modified_value' => 'new',
             'user_id' => 1,
+            'audit_record_id' => 1,
         ];
         $this->assertEquals($expected, $actual);
 
@@ -126,7 +128,6 @@ class AuditsTableTest extends TestCase
             'audit_field',
             'audit_table',
             'modified_value',
-            'change_date',
         ];
 
         foreach ($required as $require) {
@@ -148,7 +149,6 @@ class AuditsTableTest extends TestCase
         }
 
         $notEmpties = [
-            'change_date',
             'modified_value',
             'audit_table',
             'audit_field',

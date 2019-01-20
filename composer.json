@@ -18,6 +18,8 @@
         "josbeir/cakephp-filesystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
+        "muffin/footprint": "^1.2",
+        "muffin/tokenize": "^1.1",
         "muffin/trash": "^2.1",
         "xety/cake3-cookieauth": "^1.4"
     },

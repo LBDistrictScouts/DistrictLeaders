@@ -29,6 +29,7 @@ use Cake\ORM\Entity;
  * @property string $full_name
  *
  * @property \App\Model\Entity\Audit[] $audits
+ * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\Role[] $roles
  */
 class User extends Entity

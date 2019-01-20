@@ -3,57 +3,39 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Audit[]|\Cake\Collection\CollectionInterface $audits
  */
+
+$this->extend('../Layout/CRUD/index');
+
+$this->assign('entity', 'Changes');
+$this->assign('subset', 'Recent');
+$this->assign('icon', 'fa-exchange');
+$this->assign('add', 'No');
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Audit'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="audits index large-9 medium-8 columns content">
-    <h3><?= __('Audits') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('audit_field') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('audit_table') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('original_value') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified_value') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('change_date') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($audits as $audit): ?>
-            <tr>
-                <td><?= $this->Number->format($audit->id) ?></td>
-                <td><?= h($audit->audit_field) ?></td>
-                <td><?= h($audit->audit_table) ?></td>
-                <td><?= h($audit->original_value) ?></td>
-                <td><?= h($audit->modified_value) ?></td>
-                <td><?= $audit->has('user') ? $this->Html->link($audit->user->id, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
-                <td><?= h($audit->change_date) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $audit->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $audit->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $audit->id], ['confirm' => __('Are you sure you want to delete # {0}?', $audit->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-</div>
+
+<thead>
+<tr>
+    <th scope="col"><?= $this->Paginator->sort('changed_user') ?></th>
+    <th scope="col"><?= $this->Paginator->sort('audit_field') ?></th>
+    <th scope="col"><?= $this->Paginator->sort('original_value', 'Old Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort('modified_value', 'New Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort('user_id', 'Changed By') ?></th>
+    <th scope="col"><?= $this->Paginator->sort('change_date') ?></th>
+    <th scope="col" class="actions"><?= __('Actions') ?></th>
+</tr>
+</thead>
+<tbody>
+<?php foreach ($audits as $audit): ?>
+    <tr>
+        <td><?= $audit->has('changed_user') ? $this->Html->link($audit->changed_user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->changed_user->id]) : '' ?></td>
+        <td><?= $this->Inflection->space($audit->audit_field) ?></td>
+        <td><?= h($audit->original_value) ?></td>
+        <td><?= h($audit->modified_value) ?></td>
+        <td><?= $audit->has('user') ? $this->Html->link($audit->user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
+        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+        <td class="actions">
+            <?= $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $audit->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
+        </td>
+    </tr>
+<?php endforeach; ?>
+</tbody>

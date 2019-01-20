@@ -32,13 +32,11 @@
             echo $this->Form->control('first_name');
             echo $this->Form->control('last_name');
             echo $this->Form->control('email');
-            echo $this->Form->control('password');
             echo $this->Form->control('address_line_1');
             echo $this->Form->control('address_line_2');
             echo $this->Form->control('city');
             echo $this->Form->control('county');
             echo $this->Form->control('postcode');
-            echo $this->Form->control('last_login');
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

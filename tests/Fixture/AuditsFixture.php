@@ -23,6 +23,7 @@ class AuditsFixture extends TestFixture
         'original_value' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'modified_value' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'user_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'audit_record_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'change_date' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
@@ -40,11 +41,12 @@ class AuditsFixture extends TestFixture
     {
         $this->records = [
             [
-                'audit_field' => 'Lorem ipsum dolor sit amet',
-                'audit_table' => 'Lorem ipsum dolor sit amet',
-                'original_value' => 'Lorem ipsum dolor sit amet',
-                'modified_value' => 'Lorem ipsum dolor sit amet',
+                'audit_field' => 'first_name',
+                'audit_table' => 'Users',
+                'original_value' => 'old',
+                'modified_value' => 'new',
                 'user_id' => 1,
+                'audit_record_id' => 1,
                 'change_date' => 1545697741
             ],
         ];

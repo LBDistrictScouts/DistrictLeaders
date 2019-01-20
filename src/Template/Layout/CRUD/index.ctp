@@ -20,9 +20,11 @@
                     <div class="col-12 col-md-6">
                         <h3><?= $this->fetch('subset', 'All') ?> <?= $this->Inflection->space($this->fetch('entity')) ?></h3>
                     </div>
-                    <div class="col-12 col-md-6 text-md-right">
-                        <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($this->fetch('entity')) , ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
-                    </div>
+                    <?php if ($this->fetch('add') != 'No') : ?>
+                        <div class="col-12 col-md-6 text-md-right">
+                            <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($this->fetch('entity')) , ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <div class="card-body">

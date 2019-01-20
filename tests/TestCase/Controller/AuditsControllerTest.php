@@ -32,49 +32,35 @@ class AuditsControllerTest extends TestCase
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
+
+        $this->get(['controller' => 'Audits', 'action' => 'index']);
+
+        $this->assertResponseOk();
     }
 
     /**
      * Test view method
      *
      * @return void
+     *
+     * @throws
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        $this->session([
+            'Auth.User.id' => 1,
+        ]);
 
-    /**
-     * Test add method
-     *
-     * @return void
-     */
-    public function testAdd()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
+        $this->get(['controller' => 'Audits', 'action' => 'view', 1]);
 
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->assertRedirect(['controller' => 'Users', 'action' => 'view', 1]);
     }
 }

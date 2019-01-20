@@ -38,6 +38,7 @@ class UsersTableTest extends TestCase
         'app.Roles',
         'app.Capabilities',
         'app.CapabilitiesRoleTypes',
+        'app.TokenizeTokens',
     ];
 
     /**
@@ -459,10 +460,7 @@ class UsersTableTest extends TestCase
         $this->assertArrayHasKey('sections', $result);
 
         $expected = [
-            'sections' => [
-                (int)0 => (int)2,
-                (int)1 => (int)1
-            ],
+            'sections' => [ 2, 1, ],
             'groups' => []
         ];
         $this->assertEquals($expected, $result);
@@ -476,9 +474,7 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'sections' => [],
-            'groups' => [
-                (int)0 => (int)1
-            ]
+            'groups' => [ 1 ]
         ];
         $this->assertEquals($expected, $result);
     }

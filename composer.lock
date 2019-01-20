@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "538283de2d9602ae02cbe5e31d8b9755",
+    "content-hash": "3be10437a747059becfdc8517b99b6c6",
     "packages": [
         {
             "name": "aura/intl",
@@ -54,16 +54,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.85.2",
+            "version": "3.86.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "c113c8008dedb257d1f47770aab1963acf4be092"
+                "reference": "50224232ac7a4e2a6fa4ebbe0281e5b7503acf76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/c113c8008dedb257d1f47770aab1963acf4be092",
-                "reference": "c113c8008dedb257d1f47770aab1963acf4be092",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/50224232ac7a4e2a6fa4ebbe0281e5b7503acf76",
+                "reference": "50224232ac7a4e2a6fa4ebbe0281e5b7503acf76",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-01-14T23:06:17+00:00"
+            "time": "2019-01-18T21:10:44+00:00"
         },
         {
             "name": "cakephp/cakephp",
@@ -1273,6 +1273,119 @@
                 "jsonpath"
             ],
             "time": "2016-12-03T22:08:25+00:00"
+        },
+        {
+            "name": "muffin/footprint",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UseMuffin/Footprint.git",
+                "reference": "8bbb49ac3baac4e6896e2410af07ef77f5d8d459"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UseMuffin/Footprint/zipball/8bbb49ac3baac4e6896e2410af07ef77f5d8d459",
+                "reference": "8bbb49ac3baac4e6896e2410af07ef77f5d8d459",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^3.5"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^3.0",
+                "phpunit/phpunit": "^5.7.14|^6.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Muffin\\Footprint\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/usemuffin/footprint/graphs/contributors"
+                }
+            ],
+            "description": "CakePHP 3.0+ plugin to allow passing currently logged in user to model layer",
+            "homepage": "https://github.com/usemuffin/footprint",
+            "keywords": [
+                "cakephp",
+                "footprint",
+                "muffin"
+            ],
+            "time": "2018-11-23T13:52:42+00:00"
+        },
+        {
+            "name": "muffin/tokenize",
+            "version": "1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UseMuffin/Tokenize.git",
+                "reference": "a7ecf4114782abe12b0ab36e8a32504428fe91ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UseMuffin/Tokenize/zipball/a7ecf4114782abe12b0ab36e8a32504428fe91ec",
+                "reference": "a7ecf4114782abe12b0ab36e8a32504428fe91ec",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^3.5"
+            },
+            "require-dev": {
+                "cakephp/cakephp-codesniffer": "^3.0",
+                "cakephp/migrations": "^1.0",
+                "phpunit/phpunit": "^5.7.14|^6.0"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Muffin\\Tokenize\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/usemuffin/tokenize/graphs/contributors"
+                }
+            ],
+            "description": "Security Tokens",
+            "homepage": "https://github.com/usemuffin/tokenize",
+            "keywords": [
+                "cakephp",
+                "muffin",
+                "tokenize"
+            ],
+            "time": "2018-05-14T16:05:09+00:00"
         },
         {
             "name": "muffin/trash",

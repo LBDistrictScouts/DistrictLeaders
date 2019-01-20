@@ -42,15 +42,23 @@ class ApplicationTest extends IntegrationTestCase
         $app->bootstrap();
         $plugins = $app->getPlugins();
 
-        $this->assertCount(7, $plugins);
+        $expectedPlugins = [
+            'Bake',
+            'Migrations',
+            'DebugKit',
+            'BootstrapUI',
+            'Muffin/Trash',
+            'DatabaseLog',
+            'Xety/Cake3CookieAuth',
+            'Muffin/Tokenize',
+            'Muffin/Footprint',
+        ];
 
-        $this->assertSame('Bake', $plugins->get('Bake')->getName());
-        $this->assertSame('Migrations', $plugins->get('Migrations')->getName());
-        $this->assertSame('DebugKit', $plugins->get('DebugKit')->getName());
-        $this->assertSame('BootstrapUI', $plugins->get('BootstrapUI')->getName());
-        $this->assertSame('Muffin/Trash', $plugins->get('Muffin/Trash')->getName());
-        $this->assertSame('DatabaseLog', $plugins->get('DatabaseLog')->getName());
-        $this->assertSame('Xety/Cake3CookieAuth', $plugins->get('Xety/Cake3CookieAuth')->getName());
+        $this->assertCount(count($expectedPlugins), $plugins);
+
+        foreach ($expectedPlugins as $plugin) {
+            $this->assertSame($plugin, $plugins->get($plugin)->getName());
+        }
     }
 
     /**

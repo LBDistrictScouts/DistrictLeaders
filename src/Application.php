@@ -37,6 +37,10 @@ class Application extends BaseApplication
      */
     public function bootstrap()
     {
+        $this->addPlugin('Muffin/Footprint');
+
+        $this->addPlugin('Muffin/Tokenize', ['routes' => true]);
+
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
 
         $this->addPlugin('Xety/Cake3CookieAuth');
