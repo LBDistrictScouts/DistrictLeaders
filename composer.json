@@ -30,7 +30,8 @@
         "josegonzalez/dotenv": "3.*",
         "phpunit/phpunit": "^5|^6",
         "phpunit/php-code-coverage": "^5.3",
-        "psy/psysh": "@stable"
+        "psy/psysh": "@stable",
+        "phpmd/phpmd" : "@stable"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",

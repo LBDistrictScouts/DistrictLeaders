@@ -232,7 +232,7 @@ class ScoutGroupsTableTest extends TestCase
         $actual = $this->ScoutGroups->get($new->id)->toArray();
         $this->assertEquals($expected, $actual['group_domain']);
 
-        // Blank Domain
+        // HTTP Domain
         $values = $this->getGood();
 
         $values['group_domain'] = 'http://6thletchworth.com';

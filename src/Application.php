@@ -105,11 +105,6 @@ class Application extends BaseApplication
 
         $middlewareQueue->add($securityHeaders);
 
-//      $middlewareQueue->add(new CsrfProtectionMiddleware([
-//          'secure' => true,
-//          'cookieName' => 'leaderCSRF'
-//      ]));
-
         $middlewareQueue->add(new EncryptedCookieMiddleware(
             // Names of cookies to protect
             ['CookieAuth'],
