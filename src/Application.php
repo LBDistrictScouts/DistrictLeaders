@@ -14,6 +14,13 @@
  */
 namespace App;
 
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -23,6 +30,8 @@ use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -30,7 +39,7 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthorizationServiceProviderInterface, AuthenticationServiceProviderInterface
 {
     /**
      * {@inheritDoc}
@@ -42,6 +51,10 @@ class Application extends BaseApplication
         $this->addPlugin('Muffin/Tokenize', ['routes' => true]);
 
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
+
+        $this->addPlugin('Authorization');
+
+        $this->addPlugin('Authentication');
 
         $this->addPlugin('Xety/Cake3CookieAuth');
 
@@ -83,6 +96,12 @@ class Application extends BaseApplication
         // and make an error page/response
         $middlewareQueue->add(new ErrorHandlerMiddleware(null, Configure::read('Error')));
 
+        // Add the authentication middleware to the middleware queue
+        $middlewareQueue->add(new AuthenticationMiddleware($this));
+
+        // Add the Authorisation Middleware to the middleware queue
+        $middlewareQueue->add(new AuthorizationMiddleware($this));
+
         // Handle plugin/theme assets like CakePHP normally does.
         $middlewareQueue->add(new AssetMiddleware([
             'cacheTime' => Configure::read('Asset.cacheTime')
@@ -105,10 +124,10 @@ class Application extends BaseApplication
 
         $middlewareQueue->add($securityHeaders);
 
-//      $middlewareQueue->add(new CsrfProtectionMiddleware([
-//          'secure' => true,
-//          'cookieName' => 'leaderCSRF'
-//      ]));
+        $middlewareQueue->add(new CsrfProtectionMiddleware([
+            'secure' => true,
+            'cookieName' => 'leaderCSRF'
+        ]));
 
         $middlewareQueue->add(new EncryptedCookieMiddleware(
             // Names of cookies to protect
@@ -117,5 +136,47 @@ class Application extends BaseApplication
         ));
 
         return $middlewareQueue;
+    }
+
+    /**
+     * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
+     * @param \Psr\Http\Message\ResponseInterface $response The Response Received
+     *
+     * @return \Authorization\AuthorizationService|\Authorization\AuthorizationServiceInterface
+     */
+    public function getAuthorizationService(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $resolver = new OrmResolver();
+
+        return new AuthorizationService($resolver);
+    }
+
+    /**
+     * Returns a service provider instance.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @param \Psr\Http\Message\ResponseInterface $response Response
+     * @return \Authentication\AuthenticationServiceInterface
+     */
+    public function getAuthenticationService(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $service = new AuthenticationService();
+
+        $fields = [
+            'username' => 'email',
+            'password' => 'password'
+        ];
+
+        // Load identifiers
+        $service->loadIdentifier('Authentication.Password', compact('fields'));
+
+        // Load the authenticators, you want session first
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', [
+            'fields' => $fields,
+            'loginUrl' => '/users/login'
+        ]);
+
+        return $service;
     }
 }

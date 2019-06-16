@@ -7,6 +7,8 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "^1.5",
+        "cakephp/authentication": "^1.1",
+        "cakephp/authorization": "^1.2",
         "cakephp/cakephp": "3.7.*",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",

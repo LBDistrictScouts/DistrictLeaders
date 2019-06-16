@@ -71,7 +71,7 @@ class ApplicationTest extends IntegrationTestCase
         $this->expectException(InvalidArgumentException::class);
 
         $app = $this->getMockBuilder(Application::class)
-            ->setConstructorArgs([ dirname(dirname(__DIR__)) . '/config' ])
+            ->setConstructorArgs([dirname(dirname(__DIR__)) . '/config'])
             ->setMethods(['addPlugin'])
             ->getMock();
 
