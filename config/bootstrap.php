@@ -75,6 +75,7 @@ try {
     Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
     Configure::load('capabilities', 'default', false);
+    Configure::load('functional_areas', 'default', false);
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }

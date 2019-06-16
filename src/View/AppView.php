@@ -14,12 +14,16 @@
 namespace App\View;
 
 use BootstrapUI\View\UIViewTrait;
+use Cake\Core\Configure;
 use Cake\View\View;
 
 /**
  * Application View
  *
  * Your application’s default view class
+ *
+ * @property \App\View\Helper\FunctionalHelper $Functional
+ * @property \App\View\Helper\IconHelper $Icon
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  */
@@ -45,5 +49,11 @@ class AppView extends View
         if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
             $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
         }
+
+        $functionalAreas = Configure::read('functionalAreas');
+        $this->loadHelper('Functional', ['functionalAreas' => $functionalAreas]);
+
+        $this->loadHelper('Icon');
     }
+
 }

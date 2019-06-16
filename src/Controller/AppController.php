@@ -105,11 +105,11 @@ class AppController extends Controller
 //        }
     }
 
-    /**
-     * @param Event $event The CakePHP Event
-     *
-     * @return \Cake\Http\Response|void|null
-     */
+/**
+ * @param Event $event The CakePHP Event
+ *
+ * @return \Cake\Http\Response|void|null
+ */
 //    public function beforeFilter(Event $event)
 //    {
 //        if (!$this->Auth->user() && $this->Cookie->read('CookieAuth')) {

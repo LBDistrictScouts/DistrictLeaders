@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Entity;
 
+use Authorization\AuthorizationServiceInterface;
+use Authorization\IdentityInterface;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
@@ -32,7 +34,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\Role[] $roles
  */
-class User extends Entity
+class User extends Entity implements IdentityInterface
 {
 
     /**
@@ -105,4 +107,38 @@ class User extends Entity
      * @var array
      */
     protected $_virtual = ['full_name'];
+
+    /**
+     * Authorization\IdentityInterface method
+     */
+    public function can($action, $resource)
+    {
+        return $this->authorization->can($this, $action, $resource);
+    }
+
+    /**
+     * Authorization\IdentityInterface method
+     */
+    public function applyScope($action, $resource)
+    {
+        return $this->authorization->applyScope($this, $action, $resource);
+    }
+
+    /**
+     * Authorization\IdentityInterface method
+     */
+    public function getOriginalData()
+    {
+        return $this;
+    }
+
+    /**
+     * Setter to be used by the middleware.
+     */
+    public function setAuthorization($service)
+    {
+        $this->authorization = $service;
+
+        return $this;
+    }
 }

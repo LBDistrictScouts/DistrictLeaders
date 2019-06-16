@@ -14,6 +14,7 @@
  */
 namespace App;
 
+use App\Model\Entity\User;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
@@ -96,11 +97,23 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         // and make an error page/response
         $middlewareQueue->add(new ErrorHandlerMiddleware(null, Configure::read('Error')));
 
+        $middlewareQueue->add(new EncryptedCookieMiddleware(
+            // Names of cookies to protect
+            ['CookieAuth'],
+            Configure::read('Security.cookieKey')
+        ));
+
         // Add the authentication middleware to the middleware queue
         $middlewareQueue->add(new AuthenticationMiddleware($this));
 
         // Add the Authorisation Middleware to the middleware queue
-        $middlewareQueue->add(new AuthorizationMiddleware($this));
+        $middlewareQueue->add(new AuthorizationMiddleware($this, [
+            'identityDecorator' => function ($auth, $user) {
+                /** @var Model\Entity\User $user */
+                return $user->setAuthorization($auth);
+            },
+            'requireAuthorizationCheck' => false,
+        ]));
 
         // Handle plugin/theme assets like CakePHP normally does.
         $middlewareQueue->add(new AssetMiddleware([
@@ -128,12 +141,6 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             'secure' => true,
             'cookieName' => 'leaderCSRF'
         ]));
-
-        $middlewareQueue->add(new EncryptedCookieMiddleware(
-            // Names of cookies to protect
-            ['CookieAuth'],
-            Configure::read('Security.cookieKey')
-        ));
 
         return $middlewareQueue;
     }
