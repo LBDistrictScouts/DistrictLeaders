@@ -34,8 +34,10 @@ class IconHelper extends Helper
 
         $modifierString = '';
 
-        foreach ($modifiers as $modifier) {
-            $modifierString .= ' ' . $modifier;
+        if (!is_null($modifiers)) {
+            foreach ($modifiers as $modifier) {
+                $modifierString .= ' ' . $modifier;
+            }
         }
 
         return $weight . ' ' . $prefix . '-' . $iconName . $modifierString;

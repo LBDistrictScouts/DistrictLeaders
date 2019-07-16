@@ -17,7 +17,7 @@ namespace App\Controller;
 use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -122,7 +122,7 @@ class AppController extends Controller
 //                $user = $this->Users->get($user['id']);
 //
 //                //Last login date
-//                $user->last_login = new Time();
+//                $user->last_login = new FrozenTime();
 //                //Last login IP
 //                $user->last_login_ip = $this->request->clientIp();
 //
@@ -135,13 +135,13 @@ class AppController extends Controller
 //        }
 //    }
 
-    /**
-     * Authorisation Check
+/**
+ * Authorisation Check
 //     *
 //     * @param User $user The Authorised User
 //     *
 //     * @return bool
-//     */
+ */
 //    public function isAuthorized($user)
 //    {
 //        return true;

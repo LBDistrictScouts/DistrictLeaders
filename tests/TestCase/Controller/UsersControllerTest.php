@@ -41,9 +41,9 @@ class UsersControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 1,
+//        ]);
 
         $this->get(['controller' => 'Users', 'action' => 'index']);
 
@@ -59,9 +59,9 @@ class UsersControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 1,
+//        ]);
 
         $this->get(['controller' => 'Users', 'action' => 'view', 1]);
 
@@ -77,9 +77,9 @@ class UsersControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 1,
+//        ]);
 
         $this->get(['controller' => 'Users', 'action' => 'add']);
 
@@ -122,17 +122,17 @@ class UsersControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 1,
+//        ]);
 
         $this->get(['controller' => 'Users', 'action' => 'edit', 1]);
 
         $this->assertResponseOk();
 
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 1,
+//        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -172,9 +172,9 @@ class UsersControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->session([
-            'Auth.User.id' => 2,
-        ]);
+//        $this->session([
+//            'Auth.User.id' => 2,
+//        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();

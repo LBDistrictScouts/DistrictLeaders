@@ -48,6 +48,7 @@ class ApplicationTest extends IntegrationTestCase
             'Authentication',
             'Authorization',
             'Bake',
+            'IdeHelper',
             'Migrations',
             'DebugKit',
             'BootstrapUI',

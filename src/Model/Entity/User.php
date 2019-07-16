@@ -33,6 +33,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $audits
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\Role[] $roles
+ *
+ * @property \Authorization\AuthorizationService $authorization
  */
 class User extends Entity implements IdentityInterface
 {
@@ -80,7 +82,7 @@ class User extends Entity implements IdentityInterface
     /**
      * @param string $value The un-hashed password string
      *
-     * @return bool|string
+     * @return bool|string|void
      */
     protected function _setPassword($value)
     {
@@ -110,6 +112,8 @@ class User extends Entity implements IdentityInterface
 
     /**
      * Authorization\IdentityInterface method
+     *
+     * {@inheritDoc}
      */
     public function can($action, $resource)
     {
@@ -118,6 +122,8 @@ class User extends Entity implements IdentityInterface
 
     /**
      * Authorization\IdentityInterface method
+     *
+     * {@inheritDoc}
      */
     public function applyScope($action, $resource)
     {
@@ -126,6 +132,8 @@ class User extends Entity implements IdentityInterface
 
     /**
      * Authorization\IdentityInterface method
+     *
+     * {@inheritDoc}
      */
     public function getOriginalData()
     {
@@ -134,6 +142,10 @@ class User extends Entity implements IdentityInterface
 
     /**
      * Setter to be used by the middleware.
+     *
+     * @param \Authorization\AuthorizationService $service The Auth Service
+     *
+     * @return \App\Model\Entity\User
      */
     public function setAuthorization($service)
     {

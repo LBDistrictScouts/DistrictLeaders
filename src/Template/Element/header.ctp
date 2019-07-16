@@ -18,7 +18,7 @@
     <section class="features-icons bg-light text-center" style="padding: 0 10px 50px 10px;">
         <div class="container">
             <div class="row">
-                <?php if ($this->Functional->checkFunction('directory')) : ?>
+                <?php if ($this->Functional->checkFunction('directory') && $this->Identity->isLoggedIn()) : ?>
                     <div class="col">
                         <div class="row" style="padding: 25px 0px;">
                             <div class="col">
@@ -33,7 +33,8 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a href="#"><button class="btn btn-primary">Edit Details</button></a>
+
+                                <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'edit', $this->Identity->getId()]) ?>"><button class="btn btn-primary">Edit Details</button></a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +94,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a href="#"><button class="btn btn-primary">Camps</button></a>
+                                <a href="<?= $this->Url->build(['controller' => 'Camps', 'action' => 'index']) ?>"><button class="btn btn-primary">Camps</button></a>
                             </div>
                         </div>
                     </div>

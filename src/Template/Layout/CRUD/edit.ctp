@@ -12,13 +12,13 @@
     <div class="col-12 col-lg-8 offset-lg-2">
         <div class="card">
             <div class="card-header">
-                <h3><?= $this->Icon->iconHtmlEntity($this->fetch('entity', ['fa-fw'])) ?> Add <?= $this->Inflection->singleSpace($this->fetch('entity')) ?></h3>
+                <h3><i class="fal <?= $this->fetch('icon') ?> fa-fw"></i> Edit <?= $this->Inflection->singleSpace($this->fetch('entity')) ?></h3>
             </div>
             <div class="card-body">
                 <?= $this->fetch('content') ?>
             </div>
             <div class="card-footer text-muted">
-                <?= $this->Form->button('Create ' . $this->Inflection->singleSpace($this->fetch('entity')), ['class' => 'btn btn-outline-success btn-lg']) ?>
+                <?= $this->Form->button('Update ' . $this->Inflection->singleSpace($this->fetch('entity')), ['class' => 'btn btn-outline-success btn-lg']) ?>
                 <?= $this->Form->end() ?>
             </div>
         </div>

@@ -21,5 +21,6 @@ return [
         'Directory' => 'address-card',
         'Documents' => 'file-alt',
         'Articles' => 'newspaper',
+        'Users' => 'users'
     ]
 ];

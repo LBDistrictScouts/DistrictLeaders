@@ -87,42 +87,42 @@ class UsersTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', 'An ID must be set.', 'create');
 
         $validator
             ->scalar('username')
             ->maxLength('username', 255)
-            ->allowEmptyString('username', false)
+            ->allowEmptyString('username', 'A username must be set.', false)
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('membership_number')
             ->requirePresence('membership_number', 'create')
-            ->allowEmptyString('membership_number', false)
+            ->allowEmptyString('membership_number', 'A unique, valid TSA membership number is required.', false)
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->allowEmptyString('first_name', false);
+            ->allowEmptyString('first_name', 'A first name is required.', false);
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->allowEmptyString('last_name', false);
+            ->allowEmptyString('last_name', 'A last name is required.', false);
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->allowEmptyString('email', false)
+            ->allowEmptyString('email', 'An email is required.', false)
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->allowEmptyString('password', false);
+            ->allowEmptyString('password', 'A password must be set.', false);
 
         $validator
             ->scalar('address_line_1')

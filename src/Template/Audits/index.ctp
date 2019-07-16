@@ -15,12 +15,12 @@ $this->assign('add', 'No');
 
 <thead>
 <tr>
-    <th scope="col"><?= $this->Paginator->sort('changed_user') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('audit_field') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('original_value', 'Old Value') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('modified_value', 'New Value') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('user_id', 'Changed By') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('change_date') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_CHANGED_USER) ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_AUDIT_FIELD) ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_ORIGINAL_VALUE, 'Old Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_MODIFIED_VALUE, 'New Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_USER_ID, 'Changed By') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_CHANGE_DATE) ?></th>
     <th scope="col" class="actions"><?= __('Actions') ?></th>
 </tr>
 </thead>
@@ -32,7 +32,7 @@ $this->assign('add', 'No');
         <td><?= h($audit->original_value) ?></td>
         <td><?= h($audit->modified_value) ?></td>
         <td><?= $audit->has('user') ? $this->Html->link($audit->user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
-        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
         <td class="actions">
             <?= $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $audit->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
         </td>

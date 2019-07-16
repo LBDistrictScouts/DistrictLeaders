@@ -20,6 +20,9 @@ matrix:
     - name: "PHP 7.2"
       php: 7.2
 
+    - name: "PHP 7.3"
+      php: 7.3
+
 before_script:
   - psql -c 'create database leaders;' -U postgres
   - cp config/app_db.travis.php config/app_db.php

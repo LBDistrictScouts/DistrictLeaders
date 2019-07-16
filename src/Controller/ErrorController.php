@@ -20,8 +20,6 @@ use Cake\Event\Event;
  * Error Handling Controller
  *
  * Controller used by ExceptionRenderer to render error responses.
- *
- * @property \Cake\ORM\Table $Error
  */
 class ErrorController extends AppController
 {
@@ -29,6 +27,7 @@ class ErrorController extends AppController
      * Initialization hook method.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize()
     {

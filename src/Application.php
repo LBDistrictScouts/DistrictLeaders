@@ -82,7 +82,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
          * Debug Kit should not be installed on a production system
          */
         if (Configure::read('debug')) {
-            $this->addPlugin(\DebugKit\Plugin::class);
+            $this->addPlugin('DebugKit', ['bootstrap' => true]);
         }
     }
 
@@ -94,39 +94,6 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function middleware($middlewareQueue)
     {
-        // Catch any exceptions in the lower layers,
-        // and make an error page/response
-        $middlewareQueue->add(new ErrorHandlerMiddleware(null, Configure::read('Error')));
-
-        $middlewareQueue->add(new EncryptedCookieMiddleware(
-            // Names of cookies to protect
-            ['CookieAuth'],
-            Configure::read('Security.cookieKey')
-        ));
-
-        // Add the authentication middleware to the middleware queue
-        $middlewareQueue->add(new AuthenticationMiddleware($this));
-
-        // Add the Authorisation Middleware to the middleware queue
-        $middlewareQueue->add(new AuthorizationMiddleware($this, [
-            'identityDecorator' => function ($auth, $user) {
-                /** @var Model\Entity\User $user */
-                return $user->setAuthorization($auth);
-            },
-            'requireAuthorizationCheck' => false,
-        ]));
-
-        // Handle plugin/theme assets like CakePHP normally does.
-        $middlewareQueue->add(new AssetMiddleware([
-            'cacheTime' => Configure::read('Asset.cacheTime')
-        ]));
-
-        // Add routing middleware.
-        // Routes collection cache enabled by default, to disable route caching
-        // pass null as cacheConfig, example: `new RoutingMiddleware($this)`
-        // you might want to disable this cache in case your routing is extremely simple
-        $middlewareQueue->add(new RoutingMiddleware($this, '_cake_routes_'));
-
         $securityHeaders = new SecurityHeadersMiddleware();
         $securityHeaders
             ->setCrossDomainPolicy()
@@ -135,13 +102,46 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->setXssProtection()
             ->noOpen()
             ->noSniff();
+        // Catch any exceptions in the lower layers,
+        // and make an error page/response
+        $middlewareQueue
+            ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
 
-        $middlewareQueue->add($securityHeaders);
+            ->add(new EncryptedCookieMiddleware(
+                // Names of cookies to protect
+                ['CookieAuth'],
+                Configure::read('Security.cookieKey')
+            ))
 
-        $middlewareQueue->add(new CsrfProtectionMiddleware([
-            'secure' => true,
-            'cookieName' => 'leaderCSRF'
-        ]));
+            // Add the authentication middleware to the middleware queue
+            ->add(new AuthenticationMiddleware($this))
+
+            // Add the Authorisation Middleware to the middleware queue
+            ->add(new AuthorizationMiddleware($this, [
+                'identityDecorator' => function ($auth, $user) {
+                    /** @var Model\Entity\User $user */
+                    return $user->setAuthorization($auth);
+                },
+                'requireAuthorizationCheck' => false,
+            ]))
+
+            // Handle plugin/theme assets like CakePHP normally does.
+            ->add(new AssetMiddleware([
+                'cacheTime' => Configure::read('Asset.cacheTime')
+            ]))
+
+            // Add routing middleware.
+            // Routes collection cache enabled by default, to disable route caching
+            // pass null as cacheConfig, example: `new RoutingMiddleware($this)`
+            // you might want to disable this cache in case your routing is extremely simple
+            ->add(new RoutingMiddleware($this, '_cake_routes_'))
+
+            ->add($securityHeaders)
+
+            ->add(new CsrfProtectionMiddleware([
+                'secure' => true,
+                'cookieName' => 'leaderCSRF'
+            ]));
 
         return $middlewareQueue;
     }

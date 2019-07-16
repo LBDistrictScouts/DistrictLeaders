@@ -7,20 +7,19 @@
 $this->extend('../Layout/CRUD/add');
 
 $this->assign('entity', 'Users');
-$this->assign('icon', 'fa-users');
 
 ?>
 <?= $this->Form->create($user) ?>
 <fieldset>
     <?php
-        echo $this->Form->control('membership_number');
-        echo $this->Form->control('first_name');
-        echo $this->Form->control('last_name');
-        echo $this->Form->control('email');
-        echo $this->Form->control('address_line_1');
-        echo $this->Form->control('address_line_2');
-        echo $this->Form->control('city');
-        echo $this->Form->control('county');
-        echo $this->Form->control('postcode');
+        echo $this->Form->control($user::FIELD_MEMBERSHIP_NUMBER);
+        echo $this->Form->control($user::FIELD_FIRST_NAME);
+        echo $this->Form->control($user::FIELD_LAST_NAME);
+        echo $this->Form->control($user::FIELD_EMAIL);
+        echo $this->Form->control($user::FIELD_ADDRESS_LINE_1);
+        echo $this->Form->control($user::FIELD_ADDRESS_LINE_2);
+        echo $this->Form->control($user::FIELD_CITY);
+        echo $this->Form->control($user::FIELD_COUNTY);
+        echo $this->Form->control($user::FIELD_POSTCODE);
     ?>
 </fieldset>
