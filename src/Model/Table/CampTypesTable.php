@@ -15,14 +15,13 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CampType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampType|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampType findOrCreate($search, callable $callback = null, $options = [])
  */
 class CampTypesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -52,13 +51,13 @@ class CampTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('camp_type')
             ->maxLength('camp_type', 30)
             ->requirePresence('camp_type', 'create')
-            ->allowEmptyString('camp_type', false)
+            ->allowEmptyString('camp_type', null, false)
             ->add('camp_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;

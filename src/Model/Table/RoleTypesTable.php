@@ -10,17 +10,18 @@ use Cake\Validation\Validator;
  * RoleTypes Model
  *
  * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsToMany $Capabilities
  * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\CapabilitiesTable|\Cake\ORM\Association\BelongsToMany $Capabilities
  *
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\RoleType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable|\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class RoleTypesTable extends Table
 {
@@ -46,8 +47,9 @@ class RoleTypesTable extends Table
             'foreignKey' => 'role_type_id'
         ]);
         $this->belongsToMany('Capabilities', [
-            'joinTable' => 'capabilities_role_types',
-
+            'foreignKey' => 'role_type_id',
+            'targetForeignKey' => 'capability_id',
+            'joinTable' => 'capabilities_role_types'
         ]);
     }
 
@@ -61,13 +63,13 @@ class RoleTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('role_type')
             ->maxLength('role_type', 255)
             ->requirePresence('role_type', 'create')
-            ->allowEmptyString('role_type', false);
+            ->allowEmptyString('role_type', null, false);
 
         $validator
             ->scalar('role_abbreviation')
@@ -77,7 +79,7 @@ class RoleTypesTable extends Table
         $validator
             ->integer('level')
             ->requirePresence('level', 'create')
-            ->allowEmptyString('level', false);
+            ->allowEmptyString('level', null, false);
 
         return $validator;
     }

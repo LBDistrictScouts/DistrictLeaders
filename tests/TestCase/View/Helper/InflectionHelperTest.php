@@ -49,8 +49,8 @@ class InflectionHelperTest extends TestCase
      */
     public function testSpace()
     {
-        $this->assertEquals('Scout Group', $this->Inflection->space('ScoutGroup'));
-        $this->assertEquals('Scout Groups', $this->Inflection->space('ScoutGroups'));
+        TestCase::assertEquals('Scout Group', $this->Inflection->space('ScoutGroup'));
+        TestCase::assertEquals('Scout Groups', $this->Inflection->space('ScoutGroups'));
     }
 
     /**
@@ -60,8 +60,8 @@ class InflectionHelperTest extends TestCase
      */
     public function testSinglulariseSpace()
     {
-        $this->assertEquals('Scout Group', $this->Inflection->singleSpace('ScoutGroups'));
-        $this->assertEquals('Group', $this->Inflection->singleSpace('Groups'));
-        $this->assertEquals('User Name', $this->Inflection->singleSpace('User_names'));
+        TestCase::assertEquals('Scout Group', $this->Inflection->singleSpace('ScoutGroups'));
+        TestCase::assertEquals('Group', $this->Inflection->singleSpace('Groups'));
+        TestCase::assertEquals('User Name', $this->Inflection->singleSpace('User_names'));
     }
 }

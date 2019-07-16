@@ -16,10 +16,12 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Audit|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Audit|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Audit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Audit[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Audit findOrCreate($search, callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  */
 class AuditsTable extends Table
 {
@@ -81,24 +83,24 @@ class AuditsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('audit_field')
             ->maxLength('audit_field', 255)
             ->requirePresence('audit_field', 'create')
-            ->allowEmptyString('audit_field', false);
+            ->allowEmptyString('audit_field', null, false);
 
         $validator
             ->scalar('audit_table')
             ->maxLength('audit_table', 255)
             ->requirePresence('audit_table', 'create')
-            ->allowEmptyString('audit_table', false);
+            ->allowEmptyString('audit_table', null, false);
 
         $validator
             ->integer('audit_record_id')
             ->requirePresence('audit_record_id', 'create')
-            ->allowEmptyString('audit_record_id', false);
+            ->allowEmptyString('audit_record_id', null, false);
 
         $validator
             ->scalar('original_value')
@@ -109,7 +111,7 @@ class AuditsTable extends Table
             ->scalar('modified_value')
             ->maxLength('modified_value', 255)
             ->requirePresence('modified_value', 'create')
-            ->allowEmptyString('modified_value', false);
+            ->allowEmptyString('modified_value', null, false);
 
         return $validator;
     }

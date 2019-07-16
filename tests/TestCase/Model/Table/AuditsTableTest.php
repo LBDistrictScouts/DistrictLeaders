@@ -95,7 +95,7 @@ class AuditsTableTest extends TestCase
         $actual = $this->Audits->get(1)->toArray();
 
         $date = array_pop($actual);
-        $this->assertInstanceOf('Cake\I18n\FrozenTime', $date);
+        TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $date);
 
         $expected = [
             'id' => 1,
@@ -106,10 +106,10 @@ class AuditsTableTest extends TestCase
             'user_id' => 1,
             'audit_record_id' => 1,
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Audits->find('all')->count();
-        $this->assertEquals(1, $count);
+        TestCase::assertEquals(1, $count);
     }
 
     /**
@@ -122,7 +122,7 @@ class AuditsTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Audits->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
 
         $required = [
             'audit_field',
@@ -134,7 +134,7 @@ class AuditsTableTest extends TestCase
             $reqArray = $good;
             unset($reqArray[$require]);
             $new = $this->Audits->newEntity($reqArray);
-            $this->assertFalse($this->Audits->save($new));
+            TestCase::assertFalse($this->Audits->save($new));
         }
 
         $empties = [
@@ -145,7 +145,7 @@ class AuditsTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$empty] = '';
             $new = $this->Audits->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
         }
 
         $notEmpties = [
@@ -158,7 +158,7 @@ class AuditsTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$not_empty] = '';
             $new = $this->Audits->newEntity($reqArray);
-            $this->assertFalse($this->Audits->save($new));
+            TestCase::assertFalse($this->Audits->save($new));
         }
     }
 
@@ -177,10 +177,10 @@ class AuditsTableTest extends TestCase
 
         $values['user_id'] = $user;
         $new = $this->Audits->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Audit', $this->Audits->save($new));
 
         $values['user_id'] = $user + 1;
         $new = $this->Audits->newEntity($values);
-        $this->assertFalse($this->Audits->save($new));
+        TestCase::assertFalse($this->Audits->save($new));
     }
 }

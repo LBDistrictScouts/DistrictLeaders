@@ -6,7 +6,7 @@ use Cake\ORM\Entity;
 /**
  * SiteSession Entity
  *
- * @property int $id
+ * @property string $id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property string $data

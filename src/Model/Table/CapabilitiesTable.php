@@ -16,10 +16,11 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Capability newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Capability|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Capability[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Capability findOrCreate($search, callable $callback = null, $options = [])
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable|\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class CapabilitiesTable extends Table
 {
@@ -39,8 +40,9 @@ class CapabilitiesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsToMany('RoleTypes', [
-            'joinTable' => 'capabilities_role_types',
-
+            'foreignKey' => 'capability_id',
+            'targetForeignKey' => 'role_type_id',
+            'joinTable' => 'capabilities_role_types'
         ]);
     }
 
@@ -54,26 +56,26 @@ class CapabilitiesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('capability_code')
             ->maxLength('capability_code', 10)
             ->requirePresence('capability_code', 'create')
-            ->allowEmptyString('capability_code', false)
+            ->allowEmptyString('capability_code', null, false)
             ->add('capability_code', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('capability')
             ->maxLength('capability', 255)
             ->requirePresence('capability', 'create')
-            ->allowEmptyString('capability', false)
+            ->allowEmptyString('capability', null, false)
             ->add('capability', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('min_level')
             ->requirePresence('min_level', 'create')
-            ->allowEmptyString('min_level', false);
+            ->allowEmptyString('min_level', null, false);
 
         return $validator;
     }

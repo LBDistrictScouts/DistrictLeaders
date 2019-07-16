@@ -79,10 +79,10 @@ class RoleStatusesTableTest extends TestCase
             'id' => 1,
             'role_status' => 'Lorem ipsum dolor sit amet'
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->RoleStatuses->find('all')->count();
-        $this->assertEquals(1, $count);
+        TestCase::assertEquals(1, $count);
     }
 
     /**
@@ -95,7 +95,7 @@ class RoleStatusesTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->RoleStatuses->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
 
         $required = [
             'role_status',
@@ -105,7 +105,7 @@ class RoleStatusesTableTest extends TestCase
             $reqArray = $good;
             unset($reqArray[$require]);
             $new = $this->RoleStatuses->newEntity($reqArray);
-            $this->assertFalse($this->RoleStatuses->save($new));
+            TestCase::assertFalse($this->RoleStatuses->save($new));
         }
 
         $empties = [
@@ -115,7 +115,7 @@ class RoleStatusesTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$empty] = '';
             $new = $this->RoleStatuses->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
         }
 
         $notEmpties = [
@@ -126,7 +126,7 @@ class RoleStatusesTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$not_empty] = '';
             $new = $this->RoleStatuses->newEntity($reqArray);
-            $this->assertFalse($this->RoleStatuses->save($new));
+            TestCase::assertFalse($this->RoleStatuses->save($new));
         }
 
         $maxLengths = [
@@ -141,12 +141,12 @@ class RoleStatusesTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->RoleStatuses->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->RoleStatuses->newEntity($reqArray);
-            $this->assertFalse($this->RoleStatuses->save($new));
+            TestCase::assertFalse($this->RoleStatuses->save($new));
         }
     }
 
@@ -163,10 +163,10 @@ class RoleStatusesTableTest extends TestCase
 
         $values['role_status'] = 'My new Camp Role Type';
         $new = $this->RoleStatuses->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\RoleStatus', $this->RoleStatuses->save($new));
 
         $values['role_status'] = $existing['role_status'];
         $new = $this->RoleStatuses->newEntity($values);
-        $this->assertFalse($this->RoleStatuses->save($new));
+        TestCase::assertFalse($this->RoleStatuses->save($new));
     }
 }

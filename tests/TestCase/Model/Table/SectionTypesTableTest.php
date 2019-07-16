@@ -79,10 +79,10 @@ class SectionTypesTableTest extends TestCase
             'id' => 1,
             'section_type' => 'Beavers'
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->SectionTypes->find('all')->count();
-        $this->assertEquals(8, $count);
+        TestCase::assertEquals(8, $count);
     }
 
     /**
@@ -95,7 +95,7 @@ class SectionTypesTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->SectionTypes->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
 
         $required = [
             'section_type',
@@ -105,7 +105,7 @@ class SectionTypesTableTest extends TestCase
             $reqArray = $good;
             unset($reqArray[$require]);
             $new = $this->SectionTypes->newEntity($reqArray);
-            $this->assertFalse($this->SectionTypes->save($new));
+            TestCase::assertFalse($this->SectionTypes->save($new));
         }
 
         $empties = [
@@ -115,7 +115,7 @@ class SectionTypesTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$empty] = '';
             $new = $this->SectionTypes->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
         }
 
         $notEmpties = [
@@ -126,7 +126,7 @@ class SectionTypesTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$not_empty] = '';
             $new = $this->SectionTypes->newEntity($reqArray);
-            $this->assertFalse($this->SectionTypes->save($new));
+            TestCase::assertFalse($this->SectionTypes->save($new));
         }
 
         $maxLengths = [
@@ -141,12 +141,12 @@ class SectionTypesTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->SectionTypes->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->SectionTypes->newEntity($reqArray);
-            $this->assertFalse($this->SectionTypes->save($new));
+            TestCase::assertFalse($this->SectionTypes->save($new));
         }
     }
 
@@ -163,10 +163,10 @@ class SectionTypesTableTest extends TestCase
 
         $values['section_type'] = 'Llamas';
         $new = $this->SectionTypes->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
 
         $values['section_type'] = $existing['section_type'];
         $new = $this->SectionTypes->newEntity($values);
-        $this->assertFalse($this->SectionTypes->save($new));
+        TestCase::assertFalse($this->SectionTypes->save($new));
     }
 }

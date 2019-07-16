@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Section $section
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\RoleStatus $role_status
+ * @property \Cake\I18n\FrozenTime|null $deleted
  */
 class Role extends Entity
 {
@@ -55,4 +56,5 @@ class Role extends Entity
     public const FIELD_SECTION = 'section';
     public const FIELD_USER = 'user';
     public const FIELD_ROLE_STATUS = 'role_status';
+    public const FIELD_DELETED = 'deleted';
 }

@@ -59,6 +59,6 @@ class GoogleClientComponentTest extends TestCase
             'jacob'
         ];
 
-        $this->assertEquals($expected, $out);
+        TestCase::assertEquals($expected, $out);
     }
 }

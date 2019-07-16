@@ -15,14 +15,13 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleStatus newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus findOrCreate($search, callable $callback = null, $options = [])
  */
 class RoleStatusesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -52,13 +51,13 @@ class RoleStatusesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('role_status')
             ->maxLength('role_status', 255)
             ->requirePresence('role_status', 'create')
-            ->notEmpty('role_status')
+            ->notEmptyString('role_status')
             ->add('role_status', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;

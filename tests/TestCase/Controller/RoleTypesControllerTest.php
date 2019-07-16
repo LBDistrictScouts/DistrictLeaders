@@ -52,6 +52,7 @@ class RoleTypesControllerTest extends TestCase
      * Test view method
      *
      * @return void
+     * @throws \PHPUnit\Exception
      */
     public function testView()
     {
@@ -68,6 +69,7 @@ class RoleTypesControllerTest extends TestCase
      * Test add method
      *
      * @return void
+     * @throws \PHPUnit\Exception
      */
     public function testAdd()
     {
@@ -106,6 +108,7 @@ class RoleTypesControllerTest extends TestCase
      * Test edit method
      *
      * @return void
+     * @throws \PHPUnit\Exception
      */
     public function testEdit()
     {

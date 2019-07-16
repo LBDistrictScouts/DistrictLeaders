@@ -25,6 +25,7 @@ use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\TestSuite\IntegrationTestCase;
+use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
 
 /**
@@ -59,10 +60,10 @@ class ApplicationTest extends IntegrationTestCase
             'Muffin/Footprint',
         ];
 
-        $this->assertCount(count($expectedPlugins), $plugins);
+        TestCase::assertCount(count($expectedPlugins), $plugins);
 
         foreach ($expectedPlugins as $plugin) {
-            $this->assertSame($plugin, $plugins->get($plugin)->getName());
+            TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
         }
     }
 
@@ -98,13 +99,13 @@ class ApplicationTest extends IntegrationTestCase
 
         $middleware = $app->middleware($middleware);
 
-        $this->assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
-        $this->assertInstanceOf(EncryptedCookieMiddleware::class, $middleware->get(1));
-        $this->assertInstanceOf(AuthenticationMiddleware::class, $middleware->get(2));
-        $this->assertInstanceOf(AuthorizationMiddleware::class, $middleware->get(3));
-        $this->assertInstanceOf(AssetMiddleware::class, $middleware->get(4));
-        $this->assertInstanceOf(RoutingMiddleware::class, $middleware->get(5));
-        $this->assertInstanceOf(SecurityHeadersMiddleware::class, $middleware->get(6));
-        $this->assertInstanceOf(CsrfProtectionMiddleware::class, $middleware->get(7));
+        TestCase::assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
+        TestCase::assertInstanceOf(EncryptedCookieMiddleware::class, $middleware->get(1));
+        TestCase::assertInstanceOf(AuthenticationMiddleware::class, $middleware->get(2));
+        TestCase::assertInstanceOf(AuthorizationMiddleware::class, $middleware->get(3));
+        TestCase::assertInstanceOf(AssetMiddleware::class, $middleware->get(4));
+        TestCase::assertInstanceOf(RoutingMiddleware::class, $middleware->get(5));
+        TestCase::assertInstanceOf(SecurityHeadersMiddleware::class, $middleware->get(6));
+        TestCase::assertInstanceOf(CsrfProtectionMiddleware::class, $middleware->get(7));
     }
 }

@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\AuditsController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
+use Twig\Test\IntegrationTestCase;
 
 /**
  * App\Controller\AuditsController Test Case

@@ -85,6 +85,6 @@ class NavBarCellTest extends TestCase
 
         $options = $this->NavBar->viewBuilder()->getOptions();
         $expected = [];
-        $this->assertEquals($expected, $options);
+        TestCase::assertEquals($expected, $options);
     }
 }

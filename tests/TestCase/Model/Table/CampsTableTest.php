@@ -109,7 +109,7 @@ class CampsTableTest extends TestCase
         foreach ($dates as $date) {
             $dateValue = $actual[$date];
             if (!is_null($dateValue)) {
-                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
             }
             unset($actual[$date]);
         }
@@ -119,10 +119,10 @@ class CampsTableTest extends TestCase
             'camp_name' => 'Lorem ipsum dolor sit amet',
             'camp_type_id' => 1,
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Camps->find('all')->count();
-        $this->assertEquals(2, $count);
+        TestCase::assertEquals(2, $count);
     }
 
     /**
@@ -135,7 +135,7 @@ class CampsTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Camps->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
 
         $required = [
             'camp_name',
@@ -147,7 +147,7 @@ class CampsTableTest extends TestCase
             $reqArray = $this->getGood();
             unset($reqArray[$require]);
             $new = $this->Camps->newEntity($reqArray);
-            $this->assertFalse($this->Camps->save($new));
+            TestCase::assertFalse($this->Camps->save($new));
         }
 
         $notEmpties = [
@@ -160,7 +160,7 @@ class CampsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$not_empty] = '';
             $new = $this->Camps->newEntity($reqArray);
-            $this->assertFalse($this->Camps->save($new));
+            TestCase::assertFalse($this->Camps->save($new));
         }
 
         $maxLengths = [
@@ -175,12 +175,12 @@ class CampsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->Camps->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->Camps->newEntity($reqArray);
-            $this->assertFalse($this->Camps->save($new));
+            TestCase::assertFalse($this->Camps->save($new));
         }
     }
 
@@ -200,10 +200,10 @@ class CampsTableTest extends TestCase
 
         $values['camp_type_id'] = $type;
         $new = $this->Camps->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Camp', $this->Camps->save($new));
 
         $values['camp_type_id'] = $type + 1;
         $new = $this->Camps->newEntity($values);
-        $this->assertFalse($this->Camps->save($new));
+        TestCase::assertFalse($this->Camps->save($new));
     }
 }

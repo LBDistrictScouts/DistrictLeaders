@@ -86,10 +86,10 @@ class CapabilitiesTableTest extends TestCase
             'capability' => 'SuperUser Permissions',
             'min_level' => 5
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Capabilities->find('all')->count();
-        $this->assertEquals(6, $count);
+        TestCase::assertEquals(6, $count);
     }
 
     /**
@@ -102,7 +102,7 @@ class CapabilitiesTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Capabilities->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
 
         $required = [
             'min_level',
@@ -114,7 +114,7 @@ class CapabilitiesTableTest extends TestCase
             $reqArray = $good;
             unset($reqArray[$require]);
             $new = $this->Capabilities->newEntity($reqArray);
-            $this->assertFalse($this->Capabilities->save($new));
+            TestCase::assertFalse($this->Capabilities->save($new));
         }
 
         $notEmpties = [
@@ -127,7 +127,7 @@ class CapabilitiesTableTest extends TestCase
             $reqArray = $good;
             $reqArray[$not_empty] = '';
             $new = $this->Capabilities->newEntity($reqArray);
-            $this->assertFalse($this->Capabilities->save($new));
+            TestCase::assertFalse($this->Capabilities->save($new));
         }
 
         $maxLengths = [
@@ -143,12 +143,12 @@ class CapabilitiesTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->Capabilities->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->Capabilities->newEntity($reqArray);
-            $this->assertFalse($this->Capabilities->save($new));
+            TestCase::assertFalse($this->Capabilities->save($new));
         }
     }
 
@@ -172,13 +172,13 @@ class CapabilitiesTableTest extends TestCase
 
             $values[$unqueField] = $uniqueValue;
             $new = $this->Capabilities->newEntity($values);
-            $this->assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
 
             $values = $this->getGood();
 
             $values[$unqueField] = $existing[$unqueField];
             $new = $this->Capabilities->newEntity($values);
-            $this->assertFalse($this->Capabilities->save($new));
+            TestCase::assertFalse($this->Capabilities->save($new));
         }
     }
 
@@ -193,12 +193,12 @@ class CapabilitiesTableTest extends TestCase
 
         $installed = $this->Capabilities->installBaseCapabilities();
 
-        $this->assertNotEquals($before, $installed);
-        $this->assertNotEquals(0, $installed);
+        TestCase::assertNotEquals($before, $installed);
+        TestCase::assertNotEquals(0, $installed);
 
         $new = $before + $installed;
         $after = $this->Capabilities->find('all')->count();
 
-        $this->assertEquals($new, $after);
+        TestCase::assertEquals($new, $after);
     }
 }

@@ -85,9 +85,7 @@ class UsersControllerTest extends TestCase
 
         $this->assertResponseOk();
 
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();

@@ -15,7 +15,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampRoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampRoleType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRoleType|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CampRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType findOrCreate($search, callable $callback = null, $options = [])
@@ -56,13 +56,13 @@ class CampRoleTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('camp_role_type')
             ->maxLength('camp_role_type', 30)
             ->requirePresence('camp_role_type', 'create')
-            ->notEmpty('camp_role_type')
+            ->notEmptyString('camp_role_type')
             ->add('camp_role_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;

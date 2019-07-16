@@ -23,10 +23,10 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Section findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class SectionsTable extends Table
 {
-
     /**
      * Initialize method
      *

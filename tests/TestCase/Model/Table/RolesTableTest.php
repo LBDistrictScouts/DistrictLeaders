@@ -93,7 +93,7 @@ class RolesTableTest extends TestCase
         foreach ($dates as $date) {
             $dateValue = $actual[$date];
             if (!is_null($dateValue)) {
-                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
             }
             unset($actual[$date]);
         }
@@ -105,10 +105,10 @@ class RolesTableTest extends TestCase
             'user_id' => 1,
             'role_status_id' => 1,
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Roles->find('all')->count();
-        $this->assertEquals(9, $count);
+        TestCase::assertEquals(9, $count);
     }
 
     /**
@@ -121,7 +121,7 @@ class RolesTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Roles->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
     }
 
     /**
@@ -139,11 +139,11 @@ class RolesTableTest extends TestCase
 
         $values['user_id'] = $user;
         $new = $this->Roles->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
 
         $values['user_id'] = $user + 1;
         $new = $this->Roles->newEntity($values);
-        $this->assertFalse($this->Roles->save($new));
+        TestCase::assertFalse($this->Roles->save($new));
 
         // Sections
         $values = $this->getGood();
@@ -153,11 +153,11 @@ class RolesTableTest extends TestCase
 
         $values['section_id'] = $camp;
         $new = $this->Roles->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
 
         $values['section_id'] = $camp + 1;
         $new = $this->Roles->newEntity($values);
-        $this->assertFalse($this->Roles->save($new));
+        TestCase::assertFalse($this->Roles->save($new));
 
         // RoleTypes
         $values = $this->getGood();
@@ -167,11 +167,11 @@ class RolesTableTest extends TestCase
 
         $values['role_type_id'] = $roleType;
         $new = $this->Roles->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
 
         $values['role_type_id'] = $roleType + 1;
         $new = $this->Roles->newEntity($values);
-        $this->assertFalse($this->Roles->save($new));
+        TestCase::assertFalse($this->Roles->save($new));
 
         // RoleStatuses
         $values = $this->getGood();
@@ -181,10 +181,10 @@ class RolesTableTest extends TestCase
 
         $values['role_status_id'] = $roleStatus;
         $new = $this->Roles->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Role', $this->Roles->save($new));
 
         $values['role_status_id'] = $roleStatus + 1;
         $new = $this->Roles->newEntity($values);
-        $this->assertFalse($this->Roles->save($new));
+        TestCase::assertFalse($this->Roles->save($new));
     }
 }
