@@ -13,8 +13,8 @@
             </div>
             <div class="card-body">
                 <?= $this->Form->create() ?>
-                <?= $this->Form->input('username') ?>
-                <?= $this->Form->input('password') ?>
+                <?= $this->Form->control('username') ?>
+                <?= $this->Form->control('password') ?>
                 <?= $this->Form->checkbox('remember_me') ?> Remember me on this Computer<br/>
             </div>
             <div class="card-footer">

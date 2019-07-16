@@ -9,7 +9,7 @@
         "ext-json": "^1.5",
         "cakephp/authentication": "^1.1",
         "cakephp/authorization": "^1.2",
-        "cakephp/cakephp": "3.7.*",
+        "cakephp/cakephp": "^3.7.0",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
         "dereuromark/cakephp-databaselog": "^2.5",
@@ -32,11 +32,11 @@
         "josegonzalez/dotenv": "3.*",
         "phpunit/phpunit": "^5|^6",
         "phpunit/php-code-coverage": "^5.3",
-        "psy/psysh": "@stable"
+        "psy/psysh": "@stable",
+        "dereuromark/cakephp-ide-helper": "@stable"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",
-        "dereuromark/cakephp-ide-helper": "After baking your code, this keeps your annotations in sync with the code evolving from there on for maximum IDE and PHPStan compatibility."
     },
     "autoload": {
         "psr-4": {

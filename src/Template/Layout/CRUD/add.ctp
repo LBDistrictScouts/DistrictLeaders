@@ -4,6 +4,8 @@
  * User: jacob
  * Date: 2018-12-31
  * Time: 17:36
+ *
+ * @var \App\View\AppView $this
  */
 ?>
 <div class="row">

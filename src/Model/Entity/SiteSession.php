@@ -30,4 +30,10 @@ class SiteSession extends Entity
         'data' => true,
         'expires' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_DATA = 'data';
+    public const FIELD_EXPIRES = 'expires';
 }

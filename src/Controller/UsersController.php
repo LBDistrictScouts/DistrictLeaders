@@ -119,7 +119,7 @@ class UsersController extends AppController
     /**
      * Login method
      *
-     * @return \Cake\Http\Response If Successful - redirects to landing.
+     * @return \Cake\Http\Response|void If Successful - redirects to landing.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
     public function login()
@@ -127,54 +127,18 @@ class UsersController extends AppController
         // Set the layout.
         $this->viewBuilder()->setLayout('landing');
 
-        $session = $this->request->getSession();
+        $result = $this->Authorization;
 
-        if ($session->check('Reset.lgTries')) {
-            $tries = $session->read('Reset.lgTries');
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result) {
+            $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
+
+            return $this->redirect($redirect);
         }
 
-        if (!isset($tries)) {
-            $tries = 0;
-        }
-
-        if (isset($tries) && $tries > 10) {
-            $this->Flash->error('You have failed entry too many times. Please try again later.');
-
-            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'reset']);
-        }
-
-        if ($this->request->is('post')) {
-            $user = $this->Auth->identify();
-            if ($user) {
-                $this->Auth->setUser($user);
-
-                $user = $this->Users->get($user['id']);
-
-                if ($this->request->getData('remember_me')) {
-                    $this->Cookie->configKey('CookieAuth', [
-                        'expires' => '+3 months',
-                        'httpOnly' => true,
-                        'secure' => true,
-                    ]);
-                    $this->Cookie->write('CookieAuth', [
-                        'username' => $this->request->getData('username'),
-                        'password' => $this->request->getData('password')
-                    ]);
-                }
-                //Last login date
-                $user->last_login = new Time();
-                //Last login IP
-                $user->last_login_ip = $this->request->clientIp();
-                // Get Capabilities
-                $this->Users->patchCapabilities($user);
-
-                $this->Auth->setUser($user);
-
-                return $this->redirect($this->Auth->redirectUrl());
-            }
-            $tries = $tries + 1;
-            $this->Flash->error('Your username or password is incorrect. Please try again.');
-            $session->write('Reset.lgTries', $tries);
+        // display error if user submitted and authentication failed
+        if ($this->request->is(['post']) && !$result) {
+            $this->Flash->error('Invalid username or password');
         }
     }
 
@@ -341,28 +305,28 @@ class UsersController extends AppController
         }
     }
 
-    /**
-     * @param Event $event The CakePHP Event
-     *
-     * @return \Cake\Http\Response|void|null
-     */
-    public function beforeFilter(Event $event)
-    {
-        $this->Auth->allow(['login']);
-        $this->Auth->allow(['username']);
-        $this->Auth->allow(['reset']);
-        $this->Auth->allow(['token']);
-    }
-
-    /**
-     * Authorisation Check
-     *
-     * @param User $user The Authorised User
-     *
-     * @return bool
-     */
-    public function isAuthorized($user)
-    {
-        return true;
-    }
+//    /**
+//     * @param Event $event The CakePHP Event
+//     *
+//     * @return \Cake\Http\Response|void|null
+//     */
+//    public function beforeFilter(Event $event)
+//    {
+//        $this->Auth->allow(['login']);
+//        $this->Auth->allow(['username']);
+//        $this->Auth->allow(['reset']);
+//        $this->Auth->allow(['token']);
+//    }
+//
+//    /**
+//     * Authorisation Check
+//     *
+//     * @param User $user The Authorised User
+//     *
+//     * @return bool
+//     */
+//    public function isAuthorized($user)
+//    {
+//        return true;
+//    }
 }

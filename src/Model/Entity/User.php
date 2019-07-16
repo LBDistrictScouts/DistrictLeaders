@@ -141,4 +141,27 @@ class User extends Entity implements IdentityInterface
 
         return $this;
     }
+
+    public const FIELD_ID = 'id';
+    public const FIELD_USERNAME = 'username';
+    public const FIELD_MEMBERSHIP_NUMBER = 'membership_number';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_PASSWORD = 'password';
+    public const FIELD_ADDRESS_LINE_1 = 'address_line_1';
+    public const FIELD_ADDRESS_LINE_2 = 'address_line_2';
+    public const FIELD_CITY = 'city';
+    public const FIELD_COUNTY = 'county';
+    public const FIELD_POSTCODE = 'postcode';
+    public const FIELD_ADMIN_SCOUT_GROUP_ID = 'admin_scout_group_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_LAST_LOGIN = 'last_login';
+    public const FIELD_LAST_LOGIN_IP = 'last_login_ip';
+    public const FIELD_CAPABILITIES = 'capabilities';
+    public const FIELD_FULL_NAME = 'full_name';
+    public const FIELD_AUDITS = 'audits';
+    public const FIELD_CHANGES = 'changes';
+    public const FIELD_ROLES = 'roles';
 }

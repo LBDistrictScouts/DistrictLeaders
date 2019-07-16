@@ -69,6 +69,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         if (PHP_SAPI === 'cli') {
             try {
                 $this->addPlugin('Bake');
+                $this->addPlugin('IdeHelper');
             } catch (MissingPluginException $e) {
                 // Do not halt if the plugin is missing
             }
@@ -170,7 +171,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $service = new AuthenticationService();
 
         $fields = [
-            'username' => 'email',
+            'username' => 'username',
             'password' => 'password'
         ];
 
@@ -181,7 +182,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
-            'loginUrl' => '/users/login'
+            'loginUrl' => [ '/users/login', 'login' ]
         ]);
 
         return $service;

@@ -27,4 +27,8 @@ class RoleStatus extends Entity
         'role_status' => true,
         'roles' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_ROLE_STATUS = 'role_status';
+    public const FIELD_ROLES = 'roles';
 }

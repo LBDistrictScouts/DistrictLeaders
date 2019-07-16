@@ -4,6 +4,8 @@
  * User: jacob
  * Date: 10/12/2017
  * Time: 18:44
+ *
+ * @var \App\View\AppView $this
  */
 
 echo $this->Html->meta('icon');

@@ -59,4 +59,14 @@ class ScoutGroup extends Entity
 
         return $value;
     }
+
+    public const FIELD_ID = 'id';
+    public const FIELD_SCOUT_GROUP = 'scout_group';
+    public const FIELD_GROUP_ALIAS = 'group_alias';
+    public const FIELD_NUMBER_STRIPPED = 'number_stripped';
+    public const FIELD_CHARITY_NUMBER = 'charity_number';
+    public const FIELD_GROUP_DOMAIN = 'group_domain';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_SECTIONS = 'sections';
 }

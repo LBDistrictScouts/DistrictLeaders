@@ -28,6 +28,9 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  *
  * @property \App\Model\Table\UsersTable $Users
  *
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
+ *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller
@@ -134,15 +137,15 @@ class AppController extends Controller
 
     /**
      * Authorisation Check
-     *
-     * @param User $user The Authorised User
-     *
-     * @return bool
-     */
-    public function isAuthorized($user)
-    {
-        return true;
-    }
+//     *
+//     * @param User $user The Authorised User
+//     *
+//     * @return bool
+//     */
+//    public function isAuthorized($user)
+//    {
+//        return true;
+//    }
 
     /**
      * Logout Function
