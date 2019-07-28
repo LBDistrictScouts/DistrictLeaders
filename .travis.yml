@@ -10,10 +10,6 @@ addons:
 
 sudo: false
 
-services:
-  - postgresql
-  - redis-server
-
 matrix:
   fast_finish: true
 
@@ -23,18 +19,27 @@ matrix:
       env:
         - PGPORT=5433
         - DB=postgres
+      services:
+        - postgresql
+        - redis-server
 
     - name: "PHP 7.2"
       php: 7.2
       env:
         - PGPORT=5433
         - DB=postgres
+      services:
+        - postgresql
+        - redis-server
 
     - name: "PHP 7.3"
       php: 7.3
       env:
         - PGPORT=5433
         - DB=postgres
+      services:
+        - postgresql
+        - redis-server
 
 before_script:
   - psql -c 'create database leaders;' -U postgres
