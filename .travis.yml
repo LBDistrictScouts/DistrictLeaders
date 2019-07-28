@@ -22,6 +22,7 @@ matrix:
       services:
         - postgresql
         - redis-server
+      postgresql: "9.6"
 
     - name: "PHP 7.2"
       php: 7.2
@@ -31,6 +32,7 @@ matrix:
       services:
         - postgresql
         - redis-server
+      postgresql: "10"
 
     - name: "PHP 7.3"
       php: 7.3
@@ -40,9 +42,10 @@ matrix:
       services:
         - postgresql
         - redis-server
+      postgresql: "10"
 
 before_script:
-  - psql -c 'create database leaders;' -U postgres -p 5433
+  - psql --command='create database leaders;' --username=postgres --port=5433
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
