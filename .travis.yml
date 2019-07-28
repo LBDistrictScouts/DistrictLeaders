@@ -1,15 +1,11 @@
 language: php
 
-dist: xenial
+dist: bionic
 
 sudo: false
 
 env:
   - DB=postgres
-
-services:
-  - postgresql
-  - redis
 
 matrix:
   fast_finish: true
@@ -17,12 +13,21 @@ matrix:
   include:
     - name: "PHP 7.1"
       php: 7.1
+      services:
+        - postgresql
+        - redis-server
 
     - name: "PHP 7.2"
       php: 7.2
+      services:
+        - postgresql
+        - redis-server
 
     - name: "PHP 7.3"
       php: 7.3
+      services:
+        - postgresql
+        - redis-server
 
 before_script:
   - psql -c 'create database leaders;' -U postgres
