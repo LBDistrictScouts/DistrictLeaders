@@ -47,8 +47,6 @@ class UsersControllerTest extends TestCase
 
         $this->get(['controller' => 'Users', 'action' => 'index']);
 
-        debug($this->_response);
-
         $this->assertResponseOk();
     }
 
