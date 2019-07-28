@@ -1,6 +1,13 @@
 language: php
 
-dist: trusty
+dist: bionic
+addons:
+  apt:
+    sources:
+      - ppa:chris-lea/redis-server
+    packages:
+      - redis-tools
+      - redis-server
 
 sudo: false
 
@@ -9,19 +16,20 @@ env:
 
 services:
   - postgresql
+  - redis
 
 matrix:
   fast_finish: true
 
   include:
     - name: "PHP 7.1"
-      php: 7.1
+      phpenv: 7.1
 
     - name: "PHP 7.2"
-      php: 7.2
+      phpenv: 7.2
 
     - name: "PHP 7.3"
-      php: 7.3
+      phpenv: 7.3
 
 before_script:
   - psql -c 'create database leaders;' -U postgres

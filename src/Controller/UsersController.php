@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
+use App\Model\Entity\User;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\I18n\Time;
 
@@ -12,7 +14,9 @@ use Cake\I18n\Time;
  *
  * @property \App\Model\Table\UsersTable $Users
  *
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
+ *
+ * @property \Cake\ORM\Table $Tokens
  */
 class UsersController extends AppController
 {
