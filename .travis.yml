@@ -35,13 +35,24 @@ before_script:
   - composer run-script post-install-cmd --no-interaction
   - sh -c "bin/cake database build"
   - sh -c "bin/cake database seed"
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - sh -c "bin/cake code_completion generate -d"
 
 script:
+  - composer cs-check
   - composer test
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
+after_script:
+  - ./cc-test-reporter after-build --coverage-input-type clover --id CodeClimateTokenForReplacement --exit-code $TRAVIS_TEST_RESULT
+
 notifications:
   email: false
+
+addons:
+  code_climate:
+    repo_token: CodeClimateTokenForReplacement

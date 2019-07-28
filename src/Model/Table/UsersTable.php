@@ -227,7 +227,7 @@ class UsersTable extends Table
                     }
                     if ($capability->min_level > 1) {
                         array_push($section, $capability->capability_code);
-                        sort($section);
+                        asort($section);
                         $sectionPermissions[$role->section->id] = $section;
                     }
                     if ($capability->min_level <= 1) {
@@ -247,7 +247,7 @@ class UsersTable extends Table
                     }
                     if ($capability->min_level > 1) {
                         array_push($group, $capability->capability_code);
-                        sort($group);
+                        asort($group);
                         $groupPermissions[$role->section->scout_group->id] = array_unique($group);
                     }
                     if ($capability->min_level <= 1) {

@@ -191,7 +191,7 @@ class CampsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        // Admin Group Exists
+        // Camp Type Exists
         $values = $this->getGood();
 
         $types = $this->Camps->CampTypes->find('list')->toArray();
