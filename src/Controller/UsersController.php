@@ -14,7 +14,7 @@ use Cake\I18n\Time;
  *
  * @property \App\Model\Table\UsersTable $Users
  *
- * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  *
  * @property \Cake\ORM\Table $Tokens
  */
