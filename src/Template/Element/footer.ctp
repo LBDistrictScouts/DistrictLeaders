@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <footer class="footer bg-light fixed-bottom">
     <div class="container">
         <div class="row justify-content-center">

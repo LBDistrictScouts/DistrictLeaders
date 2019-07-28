@@ -41,4 +41,15 @@ class Camp extends Entity
         'camp_type' => true,
         'camp_roles' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_CAMP_NAME = 'camp_name';
+    public const FIELD_CAMP_TYPE_ID = 'camp_type_id';
+    public const FIELD_CAMP_START = 'camp_start';
+    public const FIELD_CAMP_END = 'camp_end';
+    public const FIELD_CAMP_TYPE = 'camp_type';
+    public const FIELD_CAMP_ROLES = 'camp_roles';
 }

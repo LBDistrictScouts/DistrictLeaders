@@ -39,4 +39,14 @@ class CampRole extends Entity
         'user' => true,
         'camp_role_type' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_CAMP_ID = 'camp_id';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_CAMP_ROLE_TYPE_ID = 'camp_role_type_id';
+    public const FIELD_CAMP = 'camp';
+    public const FIELD_USER = 'user';
+    public const FIELD_CAMP_ROLE_TYPE = 'camp_role_type';
 }

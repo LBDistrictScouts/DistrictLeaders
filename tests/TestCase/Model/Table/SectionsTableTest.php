@@ -90,7 +90,7 @@ class SectionsTableTest extends TestCase
         foreach ($dates as $date) {
             $dateValue = $actual[$date];
             if (!is_null($dateValue)) {
-                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
             }
             unset($actual[$date]);
         }
@@ -101,10 +101,10 @@ class SectionsTableTest extends TestCase
             'section_type_id' => 1,
             'scout_group_id' => 1,
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Sections->find('all')->count();
-        $this->assertEquals(2, $count);
+        TestCase::assertEquals(2, $count);
     }
 
     /**
@@ -117,7 +117,7 @@ class SectionsTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Sections->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
 
         $required = [
             'section',
@@ -127,7 +127,7 @@ class SectionsTableTest extends TestCase
             $reqArray = $this->getGood();
             unset($reqArray[$require]);
             $new = $this->Sections->newEntity($reqArray);
-            $this->assertFalse($this->Sections->save($new));
+            TestCase::assertFalse($this->Sections->save($new));
         }
 
         $notEmpties = [
@@ -138,7 +138,7 @@ class SectionsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$not_empty] = '';
             $new = $this->Sections->newEntity($reqArray);
-            $this->assertFalse($this->Sections->save($new));
+            TestCase::assertFalse($this->Sections->save($new));
         }
 
         $maxLengths = [
@@ -153,12 +153,12 @@ class SectionsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->Sections->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->Sections->newEntity($reqArray);
-            $this->assertFalse($this->Sections->save($new));
+            TestCase::assertFalse($this->Sections->save($new));
         }
     }
 
@@ -178,11 +178,11 @@ class SectionsTableTest extends TestCase
 
         $values['scout_group_id'] = $group;
         $new = $this->Sections->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
 
         $values['scout_group_id'] = $group + 1;
         $new = $this->Sections->newEntity($values);
-        $this->assertFalse($this->Sections->save($new));
+        TestCase::assertFalse($this->Sections->save($new));
 
         // Is Unique
         $uniques = [
@@ -196,13 +196,13 @@ class SectionsTableTest extends TestCase
 
             $values[$unqueField] = $uniqueValue;
             $new = $this->Sections->newEntity($values);
-            $this->assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\Section', $this->Sections->save($new));
 
             $values = $this->getGood();
 
             $values[$unqueField] = $existing[$unqueField];
             $new = $this->Sections->newEntity($values);
-            $this->assertFalse($this->Sections->save($new));
+            TestCase::assertFalse($this->Sections->save($new));
         }
     }
 }

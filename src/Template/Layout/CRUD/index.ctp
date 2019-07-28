@@ -4,11 +4,15 @@
  * User: jacob
  * Date: 2018-12-31
  * Time: 17:36
+ *
+ * @var \App\View\AppView $this
  */
+
+$entity = $this->fetch('entity');
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1><i class="fal <?= $this->fetch('icon') ?> fa-fw"></i> <?= $this->Inflection->space($this->fetch('entity')) ?></h1>
+        <h1><?= $this->Icon->iconHtmlEntity($entity) ?> <?= $this->Inflection->space($entity) ?></h1>
         <br/>
     </div>
 </div>
@@ -18,11 +22,11 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <h3><?= $this->fetch('subset', 'All') ?> <?= $this->Inflection->space($this->fetch('entity')) ?></h3>
+                        <h3><?= $this->fetch('subset', 'All') ?> <?= $this->Inflection->space($entity) ?></h3>
                     </div>
                     <?php if ($this->fetch('add') != 'No') : ?>
                         <div class="col-12 col-md-6 text-md-right">
-                            <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($this->fetch('entity')) , ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
+                            <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($entity) , ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
                         </div>
                     <?php endif; ?>
                 </div>

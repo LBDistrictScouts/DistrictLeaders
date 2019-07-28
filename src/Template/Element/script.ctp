@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ */
 
 //jQuery v 3.0
 echo $this->Html->script('https://code.jquery.com/jquery-3.3.1.slim.min.js', ['integrity' => 'sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', 'crossorigin' => 'anonymous']);
@@ -29,5 +32,5 @@ echo $this->Html->script('https://cdn.jsdelivr.net/bootstrap.metismenu/1.1.2/js/
 //echo $this->Html->script('sb-admin-2.js');
 
 // Font Awesome CDN
-echo $this->Html->script('https://use.fontawesome.com/releases/v5.0.1/js/all.js' , ['defer' => true]);
+echo $this->Html->script('https://kit.fontawesome.com/e771944051.js' , ['defer' => true, 'integrity' => 'sha384-WAsFbnLEQcpCk8lM1UTWesAf5rGTCvb2Y+8LvyjAAcxK1c3s5c0L+SYOgxvc6PWG', 'crossorigin' => 'anonymous']);
 

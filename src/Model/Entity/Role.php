@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Section $section
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\RoleStatus $role_status
+ * @property \Cake\I18n\FrozenTime|null $deleted
  */
 class Role extends Entity
 {
@@ -43,4 +44,17 @@ class Role extends Entity
         'user' => true,
         'role_status' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_ROLE_TYPE_ID = 'role_type_id';
+    public const FIELD_SECTION_ID = 'section_id';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_ROLE_STATUS_ID = 'role_status_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_ROLE_TYPE = 'role_type';
+    public const FIELD_SECTION = 'section';
+    public const FIELD_USER = 'user';
+    public const FIELD_ROLE_STATUS = 'role_status';
+    public const FIELD_DELETED = 'deleted';
 }

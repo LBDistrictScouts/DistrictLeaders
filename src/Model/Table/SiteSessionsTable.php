@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SiteSession newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\SiteSession[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SiteSession|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SiteSession patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession findOrCreate($search, callable $callback = null, $options = [])
@@ -22,7 +22,6 @@ use Cake\Validation\Validator;
  */
 class SiteSessionsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -49,18 +48,19 @@ class SiteSessionsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->scalar('id')
+            ->maxLength('id', 40)
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('data')
             ->requirePresence('data', 'create')
-            ->allowEmptyString('data', false);
+            ->notEmptyString('data');
 
         $validator
             ->integer('expires')
             ->requirePresence('expires', 'create')
-            ->allowEmptyString('expires', false);
+            ->notEmptyString('expires');
 
         return $validator;
     }

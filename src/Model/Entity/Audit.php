@@ -41,4 +41,15 @@ class Audit extends Entity
         'audit_record_id' => true,
         'changed_user' => true,
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_AUDIT_FIELD = 'audit_field';
+    public const FIELD_AUDIT_TABLE = 'audit_table';
+    public const FIELD_ORIGINAL_VALUE = 'original_value';
+    public const FIELD_MODIFIED_VALUE = 'modified_value';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_AUDIT_RECORD_ID = 'audit_record_id';
+    public const FIELD_CHANGE_DATE = 'change_date';
+    public const FIELD_USER = 'user';
+    public const FIELD_CHANGED_USER = 'changed_user';
 }

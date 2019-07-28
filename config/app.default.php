@@ -329,6 +329,11 @@ return [
         ]
     ],
 
+    'IdeHelper' => [
+        // Always add annotations/meta even if not yet needed
+        'preemptive' => true,
+    ],
+
     'Xety/Cake3CookieAuth.Cookie' => [
         'cookie' => [
             'name' => 'CookieAuth'

@@ -10,6 +10,7 @@ use Cake\TestSuite\TestCase;
  */
 class SectionTypesControllerTest extends TestCase
 {
+    use AppTestTrait;
     use IntegrationTestTrait;
 
     /**
@@ -37,9 +38,7 @@ class SectionTypesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'SectionTypes', 'action' => 'index']);
 
@@ -55,9 +54,7 @@ class SectionTypesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'SectionTypes', 'action' => 'view', 1]);
 
@@ -73,17 +70,11 @@ class SectionTypesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'SectionTypes', 'action' => 'add']);
 
         $this->assertResponseOk();
-
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -110,17 +101,11 @@ class SectionTypesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'SectionTypes', 'action' => 'edit', 1]);
 
         $this->assertResponseOk();
-
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -152,9 +137,7 @@ class SectionTypesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();

@@ -31,4 +31,10 @@ class Capability extends Entity
         'role_types' => true,
         'min_level' => true,
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CAPABILITY_CODE = 'capability_code';
+    public const FIELD_CAPABILITY = 'capability';
+    public const FIELD_MIN_LEVEL = 'min_level';
+    public const FIELD_ROLE_TYPES = 'role_types';
 }

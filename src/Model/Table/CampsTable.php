@@ -16,7 +16,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Camp newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Camp[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Camp|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Camp|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Camp saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Camp patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Camp[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Camp findOrCreate($search, callable $callback = null, $options = [])
@@ -61,23 +61,23 @@ class CampsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('camp_name')
             ->maxLength('camp_name', 255)
             ->requirePresence('camp_name', 'create')
-            ->allowEmptyString('camp_name', false);
+            ->allowEmptyString('camp_name', null, false);
 
         $validator
             ->dateTime('camp_start')
             ->requirePresence('camp_start', 'create')
-            ->allowEmptyDateTime('camp_start', false);
+            ->allowEmptyDateTime('camp_start', null, false);
 
         $validator
             ->dateTime('camp_end')
             ->requirePresence('camp_end', 'create')
-            ->allowEmptyDateTime('camp_end', false);
+            ->allowEmptyDateTime('camp_end', null, false);
 
         return $validator;
     }

@@ -27,4 +27,8 @@ class CampType extends Entity
         'camp_type' => true,
         'camps' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CAMP_TYPE = 'camp_type';
+    public const FIELD_CAMPS = 'camps';
 }

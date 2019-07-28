@@ -16,14 +16,13 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\SectionType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SectionType|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType findOrCreate($search, callable $callback = null, $options = [])
  */
 class SectionTypesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -56,13 +55,13 @@ class SectionTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('section_type')
             ->maxLength('section_type', 255)
             ->requirePresence('section_type', 'create')
-            ->notEmpty('section_type')
+            ->notEmptyString('section_type')
             ->add('section_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;

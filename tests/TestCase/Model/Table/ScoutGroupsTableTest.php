@@ -91,7 +91,7 @@ class ScoutGroupsTableTest extends TestCase
         foreach ($dates as $date) {
             $dateValue = $actual[$date];
             if (!is_null($dateValue)) {
-                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
             }
             unset($actual[$date]);
         }
@@ -104,10 +104,10 @@ class ScoutGroupsTableTest extends TestCase
             'charity_number' => 1,
             'group_domain' => 'Lorem ipsum dolor sit amet',
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->ScoutGroups->find('all')->count();
-        $this->assertEquals(1, $count);
+        TestCase::assertEquals(1, $count);
     }
 
     /**
@@ -120,7 +120,7 @@ class ScoutGroupsTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->ScoutGroups->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
         $required = [
             'scout_group',
@@ -130,7 +130,7 @@ class ScoutGroupsTableTest extends TestCase
             $reqArray = $this->getGood();
             unset($reqArray[$require]);
             $new = $this->ScoutGroups->newEntity($reqArray);
-            $this->assertFalse($this->ScoutGroups->save($new));
+            TestCase::assertFalse($this->ScoutGroups->save($new));
         }
 
         $empties = [
@@ -144,7 +144,7 @@ class ScoutGroupsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$empty] = '';
             $new = $this->ScoutGroups->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
         }
 
         $notEmpties = [
@@ -155,7 +155,7 @@ class ScoutGroupsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$not_empty] = '';
             $new = $this->ScoutGroups->newEntity($reqArray);
-            $this->assertFalse($this->ScoutGroups->save($new));
+            TestCase::assertFalse($this->ScoutGroups->save($new));
         }
 
         $maxLengths = [
@@ -172,12 +172,12 @@ class ScoutGroupsTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->ScoutGroups->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->ScoutGroups->newEntity($reqArray);
-            $this->assertFalse($this->ScoutGroups->save($new));
+            TestCase::assertFalse($this->ScoutGroups->save($new));
         }
     }
 
@@ -194,11 +194,11 @@ class ScoutGroupsTableTest extends TestCase
 
         $values['scout_group'] = 'My new Camp Role Type';
         $new = $this->ScoutGroups->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
         $values['scout_group'] = $existing['scout_group'];
         $new = $this->ScoutGroups->newEntity($values);
-        $this->assertFalse($this->ScoutGroups->save($new));
+        TestCase::assertFalse($this->ScoutGroups->save($new));
     }
 
     /**
@@ -215,10 +215,10 @@ class ScoutGroupsTableTest extends TestCase
         $expected = 'https://4thletchworth.com';
 
         $new = $this->ScoutGroups->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
         $actual = $this->ScoutGroups->get($new->id)->toArray();
-        $this->assertEquals($expected, $actual['group_domain']);
+        TestCase::assertEquals($expected, $actual['group_domain']);
 
         // Blank Domain
         $values = $this->getGood();
@@ -227,10 +227,10 @@ class ScoutGroupsTableTest extends TestCase
         $expected = 'https://5thletchworth.com';
 
         $new = $this->ScoutGroups->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
         $actual = $this->ScoutGroups->get($new->id)->toArray();
-        $this->assertEquals($expected, $actual['group_domain']);
+        TestCase::assertEquals($expected, $actual['group_domain']);
 
         // HTTP Domain
         $values = $this->getGood();
@@ -239,9 +239,9 @@ class ScoutGroupsTableTest extends TestCase
         $expected = 'http://6thletchworth.com';
 
         $new = $this->ScoutGroups->newEntity($values);
-        $this->assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
 
         $actual = $this->ScoutGroups->get($new->id)->toArray();
-        $this->assertEquals($expected, $actual['group_domain']);
+        TestCase::assertEquals($expected, $actual['group_domain']);
     }
 }

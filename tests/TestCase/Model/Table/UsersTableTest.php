@@ -7,7 +7,6 @@ use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
-use mysql_xdevapi\Exception;
 
 /**
  * App\Model\Table\UsersTable Test Case
@@ -136,7 +135,7 @@ class UsersTableTest extends TestCase
         foreach ($dates as $date) {
             $dateValue = $actual[$date];
             if (!is_null($dateValue)) {
-                $this->assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
             }
             unset($actual[$date]);
         }
@@ -157,10 +156,10 @@ class UsersTableTest extends TestCase
             'full_name' => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
             'capabilities' => null,
         ];
-        $this->assertEquals($expected, $actual);
+        TestCase::assertEquals($expected, $actual);
 
         $count = $this->Users->find('all')->count();
-        $this->assertEquals(2, $count);
+        TestCase::assertEquals(2, $count);
     }
 
     /**
@@ -173,7 +172,7 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
         $required = [
             'membership_number',
@@ -186,7 +185,7 @@ class UsersTableTest extends TestCase
             $reqArray = $this->getGood();
             unset($reqArray[$require]);
             $new = $this->Users->newEntity($reqArray);
-            $this->assertFalse($this->Users->save($new));
+            TestCase::assertFalse($this->Users->save($new));
         }
 
         $notRequired = [
@@ -205,7 +204,7 @@ class UsersTableTest extends TestCase
             $reqArray = $this->getGood();
             unset($reqArray[$not_required]);
             $new = $this->Users->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
         }
 
         $empties = [
@@ -216,29 +215,29 @@ class UsersTableTest extends TestCase
             'postcode',
             'last_login',
             'last_login_ip',
+            'password',
+            'username',
         ];
 
         foreach ($empties as $empty) {
             $reqArray = $this->getGood();
             $reqArray[$empty] = '';
             $new = $this->Users->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
         }
 
         $notEmpties = [
-            'username',
             'membership_number',
             'first_name',
             'last_name',
             'email',
-            'password',
         ];
 
         foreach ($notEmpties as $not_empty) {
             $reqArray = $this->getGood();
             $reqArray[$not_empty] = '';
             $new = $this->Users->newEntity($reqArray);
-            $this->assertFalse($this->Users->save($new));
+            TestCase::assertFalse($this->Users->save($new));
         }
 
         $maxLengths = [
@@ -261,12 +260,12 @@ class UsersTableTest extends TestCase
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length);
             $new = $this->Users->newEntity($reqArray);
-            $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
             $reqArray = $this->getGood();
             $reqArray[$maxField] = substr($string, 1, $max_length + 1);
             $new = $this->Users->newEntity($reqArray);
-            $this->assertFalse($this->Users->save($new));
+            TestCase::assertFalse($this->Users->save($new));
         }
     }
 
@@ -291,13 +290,13 @@ class UsersTableTest extends TestCase
 
             $values[$unqueField] = $uniqueValue;
             $new = $this->Users->newEntity($values);
-            $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
             $values = $this->getGood();
 
             $values[$unqueField] = $existing[$unqueField];
             $new = $this->Users->newEntity($values);
-            $this->assertFalse($this->Users->save($new));
+            TestCase::assertFalse($this->Users->save($new));
         }
     }
 
@@ -311,9 +310,9 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
-        $this->assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+        TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
-        $this->assertNotEquals($good['password'], $new->password);
+        TestCase::assertNotEquals($good['password'], $new->password);
     }
 
     /**
@@ -345,7 +344,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $capabilities);
+        TestCase::assertEquals($expected, $capabilities);
 
         $user = $this->Users->get(2);
         $capabilities = $this->Users->retrieveAllCapabilities($user);
@@ -369,7 +368,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $capabilities);
+        TestCase::assertEquals($expected, $capabilities);
     }
 
     /**
@@ -402,7 +401,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $capabilities);
+        TestCase::assertEquals($expected, $capabilities);
 
         $user = $this->Users->get(2);
         $capabilities = $this->Users->retrieveCapabilities($user);
@@ -426,7 +425,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        $this->assertEquals($expected, $capabilities);
+        TestCase::assertEquals($expected, $capabilities);
     }
 
     /**
@@ -443,40 +442,40 @@ class UsersTableTest extends TestCase
         $cap = 'OWN_USER';
 
         $result = $this->Users->userCapability($user, $cap);
-        $this->assertTrue($result);
+        TestCase::assertTrue($result);
 
         // Basic Assert Negative
         $user = $this->Users->get(2);
         $cap = 'OWN_USER';
 
         $result = $this->Users->userCapability($user, $cap);
-        $this->assertFalse($result);
+        TestCase::assertFalse($result);
 
         // Sections
         $user = $this->Users->get(2);
         $cap = 'EDIT_USER';
 
         $result = $this->Users->userCapability($user, $cap);
-        $this->assertArrayHasKey('sections', $result);
+        TestCase::assertArrayHasKey('sections', $result);
 
         $expected = [
             'sections' => [ 2, 1, ],
             'groups' => []
         ];
-        $this->assertEquals($expected, $result);
+        TestCase::assertEquals($expected, $result);
 
         // Groups
         $user = $this->Users->get(2);
         $cap = 'EDIT_SECT';
 
         $result = $this->Users->userCapability($user, $cap);
-        $this->assertArrayHasKey('groups', $result);
+        TestCase::assertArrayHasKey('groups', $result);
 
         $expected = [
             'sections' => [],
             'groups' => [ 1 ]
         ];
-        $this->assertEquals($expected, $result);
+        TestCase::assertEquals($expected, $result);
     }
 
     /**
@@ -489,7 +488,7 @@ class UsersTableTest extends TestCase
         $allQuery = $this->Users->find('all');
         $authQuery = $this->Users->find('auth');
 
-        $this->assertNotEquals($allQuery, $authQuery);
+        TestCase::assertNotEquals($allQuery, $authQuery);
     }
 
     /**
@@ -500,12 +499,12 @@ class UsersTableTest extends TestCase
     public function testPatchCapabilities()
     {
         $user = $this->Users->get(1);
-        $this->assertNull($user->capabilities);
+        TestCase::assertNull($user->capabilities);
 
         $this->Users->patchCapabilities($user);
 
         $user = $this->Users->get(1);
-        $this->assertNotNull($user->capabilities);
+        TestCase::assertNotNull($user->capabilities);
 
         $expected = [
             'user' => [
@@ -525,6 +524,6 @@ class UsersTableTest extends TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $user->capabilities);
+        TestCase::assertEquals($expected, $user->capabilities);
     }
 }

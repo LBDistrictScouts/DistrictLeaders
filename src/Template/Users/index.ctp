@@ -8,18 +8,19 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'Users');
 $this->assign('subset', 'All');
-$this->assign('icon', 'fa-users');
+
+Use App\Model\Entity\User;
 
 ?>
 
 <thead>
     <tr>
-        <th scope="col"><?= $this->Paginator->sort('full_name') ?></th>
+        <th scope="col"><?= $this->Paginator->sort(User::FIELD_FULL_NAME) ?></th>
         <th scope="col" class="actions"><?= __('Actions') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('membership_number') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('last_login') ?></th>
+        <th scope="col"><?= $this->Paginator->sort(User::FIELD_MEMBERSHIP_NUMBER) ?></th>
+        <th scope="col"><?= $this->Paginator->sort(User::FIELD_CREATED) ?></th>
+        <th scope="col"><?= $this->Paginator->sort(User::FIELD_MODIFIED) ?></th>
+        <th scope="col"><?= $this->Paginator->sort(User::FIELD_LAST_LOGIN) ?></th>
     </tr>
 </thead>
 <tbody>
@@ -32,9 +33,9 @@ $this->assign('icon', 'fa-users');
 		    <?= $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
         </td>
         <td><?= $this->Number->format($user->membership_number, ['pattern' => '#######']) ?></td>
-        <td><?= $this->Time->i18nformat($user->created,'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->i18nformat($user->modified,'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->i18nformat($user->last_login,'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->created,'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->modified,'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->last_login,'dd-MMM-yy HH:mm') ?></td>
 
     </tr>
     <?php endforeach; ?>

@@ -37,4 +37,13 @@ class RoleType extends Entity
         'level' => true,
         'capabilities' => true,
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_ROLE_TYPE = 'role_type';
+    public const FIELD_ROLE_ABBREVIATION = 'role_abbreviation';
+    public const FIELD_SECTION_TYPE_ID = 'section_type_id';
+    public const FIELD_LEVEL = 'level';
+    public const FIELD_SECTION_TYPE = 'section_type';
+    public const FIELD_ROLES = 'roles';
+    public const FIELD_CAPABILITIES = 'capabilities';
 }

@@ -3,6 +3,8 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\CampRole[]|\Cake\Collection\CollectionInterface $campRoles
  */
+
+use App\Model\Entity\CampRole;
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
@@ -21,12 +23,12 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('camp_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('camp_role_type_id') ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_ID) ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_CREATED) ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_MODIFIED) ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_CAMP_ID) ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_USER_ID) ?></th>
+                <th scope="col"><?= $this->Paginator->sort(CampRole::FIELD_CAMP_ROLE_TYPE_ID) ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>

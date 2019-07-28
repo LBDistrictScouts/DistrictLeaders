@@ -3,42 +3,25 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $user
  */
+
+$this->extend('../Layout/CRUD/edit');
+
+$this->assign('entity', 'Users');
+$this->assign('icon', 'fa-users');
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Scout Groups'), ['controller' => 'ScoutGroups', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Scout Group'), ['controller' => 'ScoutGroups', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Audits'), ['controller' => 'Audits', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Audit'), ['controller' => 'Audits', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
-    <fieldset>
-        <legend><?= __('Edit User') ?></legend>
-        <?php
-            echo $this->Form->control('username');
-            echo $this->Form->control('membership_number');
-            echo $this->Form->control('first_name');
-            echo $this->Form->control('last_name');
-            echo $this->Form->control('email');
-            echo $this->Form->control('address_line_1');
-            echo $this->Form->control('address_line_2');
-            echo $this->Form->control('city');
-            echo $this->Form->control('county');
-            echo $this->Form->control('postcode');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($user) ?>
+<fieldset>
+    <?php
+        echo $this->Form->control($user::FIELD_USERNAME);
+        echo $this->Form->control($user::FIELD_MEMBERSHIP_NUMBER);
+        echo $this->Form->control($user::FIELD_FIRST_NAME);
+        echo $this->Form->control($user::FIELD_LAST_NAME);
+        echo $this->Form->control($user::FIELD_EMAIL);
+        echo $this->Form->control($user::FIELD_ADDRESS_LINE_1);
+        echo $this->Form->control($user::FIELD_ADDRESS_LINE_2);
+        echo $this->Form->control($user::FIELD_CITY);
+        echo $this->Form->control($user::FIELD_COUNTY);
+        echo $this->Form->control($user::FIELD_POSTCODE);
+    ?>
+</fieldset>

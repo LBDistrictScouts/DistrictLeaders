@@ -14,18 +14,20 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Audits
  * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Changes
+ * @property \App\Model\Table\CampRolesTable|\Cake\ORM\Association\HasMany $CampRoles
  * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
- * @method User get($primaryKey, $options = [])
- * @method User newEntity($data = null, array $options = [])
- * @method User[] newEntities(array $data, array $options = [])
- * @method User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method User|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method User[] patchEntities($entities, array $data, array $options = [])
- * @method User findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\User get($primaryKey, $options = [])
+ * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class UsersTable extends Table
 {
@@ -46,7 +48,6 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
-        $this->addBehavior('Muffin/Tokenize.Tokenize');
 
         $this->hasMany('Changes', [
             'className' => 'Audits',
@@ -56,6 +57,10 @@ class UsersTable extends Table
         $this->hasMany('Audits', [
             'foreignKey' => 'audit_record_id',
             'finder' => 'users',
+        ]);
+
+        $this->hasMany('CampRoles', [
+            'foreignKey' => 'user_id'
         ]);
 
         $this->hasMany('Roles', [
@@ -87,42 +92,42 @@ class UsersTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', 'An ID must be set.', 'create');
 
         $validator
             ->scalar('username')
             ->maxLength('username', 255)
-            ->allowEmptyString('username', false)
+            ->allowEmptyString('username')
             ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('membership_number')
             ->requirePresence('membership_number', 'create')
-            ->allowEmptyString('membership_number', false)
+            ->allowEmptyString('membership_number', 'A unique, valid TSA membership number is required.', false)
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->allowEmptyString('first_name', false);
+            ->allowEmptyString('first_name', 'A first name is required.', false);
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->allowEmptyString('last_name', false);
+            ->allowEmptyString('last_name', 'A last name is required.', false);
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->allowEmptyString('email', false)
+            ->allowEmptyString('email', 'An email is required.', false)
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('password')
             ->maxLength('password', 255)
-            ->allowEmptyString('password', false);
+            ->allowEmptyString('password');
 
         $validator
             ->scalar('address_line_1')
@@ -155,6 +160,7 @@ class UsersTable extends Table
 
         $validator
             ->scalar('last_login_ip')
+            ->maxLength('last_login_ip', 255)
             ->allowEmptyString('last_login_ip');
 
         $validator

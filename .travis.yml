@@ -1,14 +1,17 @@
 language: php
 
-dist: trusty
+dist: bionic
+addons:
+  postgresql: "9.6"
 
 sudo: false
 
-env:
-  - DB=postgres
-
 services:
   - postgresql
+  - redis-server
+
+env:
+  - DB=postgres
 
 matrix:
   fast_finish: true
@@ -20,8 +23,11 @@ matrix:
     - name: "PHP 7.2"
       php: 7.2
 
+    - name: "PHP 7.3"
+      php: 7.3
+
 before_script:
-  - psql -c 'create database leaders;' -U postgres
+  - psql --command='create database leaders;' --username=postgres
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
@@ -32,6 +38,7 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - sh -c "bin/cake code_completion generate -d"
 
 script:
   - composer cs-check

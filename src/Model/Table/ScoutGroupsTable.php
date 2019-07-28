@@ -15,12 +15,13 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class ScoutGroupsTable extends Table
 {
@@ -57,13 +58,13 @@ class ScoutGroupsTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('scout_group')
             ->maxLength('scout_group', 255)
             ->requirePresence('scout_group', 'create')
-            ->allowEmptyString('scout_group', false)
+            ->allowEmptyString('scout_group', null, false)
             ->add('scout_group', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator

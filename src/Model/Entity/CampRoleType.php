@@ -31,4 +31,10 @@ class CampRoleType extends Entity
         'camp_role_type' => true,
         'camp_roles' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_CAMP_ROLE_TYPE = 'camp_role_type';
+    public const FIELD_CAMP_ROLES = 'camp_roles';
 }

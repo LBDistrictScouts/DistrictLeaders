@@ -29,4 +29,9 @@ class SectionType extends Entity
         'role_types' => true,
         'sections' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_SECTION_TYPE = 'section_type';
+    public const FIELD_ROLE_TYPES = 'role_types';
+    public const FIELD_SECTIONS = 'sections';
 }

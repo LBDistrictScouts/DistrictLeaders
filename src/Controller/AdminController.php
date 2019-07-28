@@ -9,6 +9,8 @@ use Cake\Core\Configure;
  * Admin Controller
  *
  * @property \App\Controller\Component\GoogleClientComponent GoogleClient
+ * @property \Cake\ORM\Table $Admin
+ * @method \Cake\ORM\Entity[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AdminController extends AppController
 {

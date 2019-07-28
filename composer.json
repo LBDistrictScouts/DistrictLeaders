@@ -7,7 +7,9 @@
     "require": {
         "php": ">=7.1",
         "ext-json": "^1.5",
-        "cakephp/cakephp": "3.7.*",
+        "cakephp/authentication": "^1.1",
+        "cakephp/authorization": "^1.2",
+        "cakephp/cakephp": "^3.7.0",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
         "dereuromark/cakephp-databaselog": "^2.5",
@@ -19,23 +21,20 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/footprint": "^1.2",
-        "muffin/tokenize": "^1.1",
-        "muffin/trash": "^2.1",
-        "xety/cake3-cookieauth": "^1.4"
+        "muffin/trash": "^2.1"
     },
     "require-dev": {
         "cakephp/bake": "^1.9.0",
         "cakephp/cakephp-codesniffer": "^3.0",
         "cakephp/debug_kit": "^3.17.0",
+        "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
-        "phpunit/phpunit": "^5|^6",
         "phpunit/php-code-coverage": "^5.3",
-        "psy/psysh": "@stable",
-        "phpmd/phpmd" : "@stable"
+        "phpunit/phpunit": "^5|^6",
+        "psy/psysh": "@stable"
     },
     "suggest": {
-        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification.",
-        "dereuromark/cakephp-ide-helper": "After baking your code, this keeps your annotations in sync with the code evolving from there on for maximum IDE and PHPStan compatibility."
+        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."
     },
     "autoload": {
         "psr-4": {

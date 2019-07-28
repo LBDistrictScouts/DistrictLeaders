@@ -17,7 +17,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampRole newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampRole[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CampRole|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRole|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRole saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CampRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampRole[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampRole findOrCreate($search, callable $callback = null, $options = [])
@@ -67,7 +67,7 @@ class CampRolesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         return $validator;
     }

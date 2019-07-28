@@ -14,12 +14,24 @@
 namespace App\View;
 
 use BootstrapUI\View\UIViewTrait;
+use Cake\Core\Configure;
 use Cake\View\View;
 
 /**
  * Application View
  *
  * Your application’s default view class
+ *
+ * @property \App\View\Helper\FunctionalHelper $Functional
+ * @property \App\View\Helper\IconHelper $Icon
+ * @property \App\View\Helper\InflectionHelper $Inflection
+ *
+ * @property \BootstrapUI\View\Helper\BreadcrumbsHelper $Breadcrumbs
+ * @property \BootstrapUI\View\Helper\FormHelper $Form
+ * @property \BootstrapUI\View\Helper\HtmlHelper $Html
+ * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
+ *
+ * @property \Authentication\View\Helper\IdentityHelper $Identity
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  */
@@ -38,11 +50,19 @@ class AppView extends View
     {
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
         $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
-        $this->loadHelper('Flash');
-        $this->loadHelper('Inflection');
         $this->loadHelper('Paginator', ['className' => 'BootstrapUI.Paginator', 'templates' => 'paginator_templates']);
+
         if (class_exists('\Cake\View\Helper\BreadcrumbsHelper')) {
             $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
         }
+
+        $this->loadHelper('Flash');
+        $this->loadHelper('Inflection');
+        $this->loadHelper('Icon');
+
+        $this->loadHelper('Authentication.Identity');
+
+        $functionalAreas = Configure::read('functionalAreas');
+        $this->loadHelper('Functional', ['functionalAreas' => $functionalAreas]);
     }
 }

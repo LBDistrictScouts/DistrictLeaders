@@ -13,12 +13,19 @@
 
     <div class="collapse navbar-collapse" id="nToggle">
         <ul class="navbar-nav">
-            <?php if (isset($loggedInUserId)) : ?>
+            <?php
+            /** @var \Authentication\AuthenticationService $authAttr */
+            $authAttr = $this->getRequest()->getAttribute('authentication');
+            $result = $authAttr->getResult();
+            /** @var \App\Model\Entity\User $identity */
+            $identity = $this->getRequest()->getAttribute('identity');
+
+            if ($result->isValid()) : ?>
                 <?php
-                echo $this->cell('NavBar', [$loggedInUserId], [
+                echo $this->cell('NavBar', [$identity->get('id')], [
                     'cache' => [
                             'config' => 'cell_cache',
-                            'key' => 'nav_' . $loggedInUserId
+                            'key' => 'nav_' . $identity->get('id')
                     ]
                 ]); ?>
             <?php else: ?>

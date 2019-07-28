@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ */
+?>
 <?= $this->element('header'); ?>
 <section class="testimonials text-center bg-light">
     <div class="container">

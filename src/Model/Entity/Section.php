@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\SectionType $section_type
  * @property \App\Model\Entity\ScoutGroup $scout_group
  * @property \App\Model\Entity\Role[] $roles
+ * @property \Cake\I18n\FrozenTime|null $deleted
  */
 class Section extends Entity
 {
@@ -39,4 +40,15 @@ class Section extends Entity
         'scout_group' => true,
         'roles' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_SECTION = 'section';
+    public const FIELD_SECTION_TYPE_ID = 'section_type_id';
+    public const FIELD_SCOUT_GROUP_ID = 'scout_group_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_SECTION_TYPE = 'section_type';
+    public const FIELD_SCOUT_GROUP = 'scout_group';
+    public const FIELD_ROLES = 'roles';
+    public const FIELD_DELETED = 'deleted';
 }
