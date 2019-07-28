@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\UsersController;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -10,6 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class UsersControllerTest extends TestCase
 {
+    use AppTestTrait;
     use IntegrationTestTrait;
 
     /**
@@ -41,11 +43,11 @@ class UsersControllerTest extends TestCase
      */
     public function testIndex()
     {
-//        $this->session([
-//            'Auth.User.id' => 1,
-//        ]);
+        $this->login();
 
         $this->get(['controller' => 'Users', 'action' => 'index']);
+
+        debug($this->_response);
 
         $this->assertResponseOk();
     }
@@ -59,9 +61,7 @@ class UsersControllerTest extends TestCase
      */
     public function testView()
     {
-//        $this->session([
-//            'Auth.User.id' => 1,
-//        ]);
+        $this->login();
 
         $this->get(['controller' => 'Users', 'action' => 'view', 1]);
 
@@ -77,9 +77,7 @@ class UsersControllerTest extends TestCase
      */
     public function testAdd()
     {
-//        $this->session([
-//            'Auth.User.id' => 1,
-//        ]);
+        $this->login();
 
         $this->get(['controller' => 'Users', 'action' => 'add']);
 
@@ -120,17 +118,11 @@ class UsersControllerTest extends TestCase
      */
     public function testEdit()
     {
-//        $this->session([
-//            'Auth.User.id' => 1,
-//        ]);
+        $this->login();
 
         $this->get(['controller' => 'Users', 'action' => 'edit', 1]);
 
         $this->assertResponseOk();
-
-//        $this->session([
-//            'Auth.User.id' => 1,
-//        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -170,9 +162,7 @@ class UsersControllerTest extends TestCase
      */
     public function testDelete()
     {
-//        $this->session([
-//            'Auth.User.id' => 2,
-//        ]);
+        $this->login();
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -187,5 +177,51 @@ class UsersControllerTest extends TestCase
         $this->assertRedirect(['controller' => 'Users', 'action' => 'index']);
         $this->assertFlashElement('Flash/success');
         $this->assertFlashMessage('The user has been deleted.');
+    }
+
+    /**
+     * Test login method
+     *
+     * @return void
+     * @throws \PHPUnit\Exception
+     */
+    public function testLogin()
+    {
+        $this->get([
+            'controller' => 'Users',
+            'action' => 'login',
+        ]);
+
+        $this->assertResponseOk();
+    }
+
+    /**
+     * Test reset method
+     *
+     * @return void
+     */
+    public function testReset()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test username method
+     *
+     * @return void
+     */
+    public function testUsername()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test token method
+     *
+     * @return void
+     */
+    public function testToken()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

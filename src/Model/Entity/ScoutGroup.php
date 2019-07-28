@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  *
  * @property \App\Model\Entity\Section[] $sections
+ * @property \Cake\I18n\FrozenTime|null $deleted
  */
 class ScoutGroup extends Entity
 {

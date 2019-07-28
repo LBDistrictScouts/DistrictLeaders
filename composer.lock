@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a39ffd00cb06d2d600987d5fbbac75f",
+    "content-hash": "9ee43718027c077207d938920f2600b3",
     "packages": [
         {
             "name": "aura/intl",
@@ -54,16 +54,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.107.1",
+            "version": "3.108.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "ccd3d13ae49a45bdf6a394d701f207c276dbf05a"
+                "reference": "df65815065b0195bc374bd17d8cc6884b4870da1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/ccd3d13ae49a45bdf6a394d701f207c276dbf05a",
-                "reference": "ccd3d13ae49a45bdf6a394d701f207c276dbf05a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/df65815065b0195bc374bd17d8cc6884b4870da1",
+                "reference": "df65815065b0195bc374bd17d8cc6884b4870da1",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-07-12T18:07:41+00:00"
+            "time": "2019-07-26T18:22:40+00:00"
         },
         {
             "name": "cakephp/authentication",
@@ -394,23 +394,23 @@
         },
         {
             "name": "cakephp/migrations",
-            "version": "2.1.1",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/migrations.git",
-                "reference": "96e3cc00ede11f28bb8bcefcab95f07c487177cf"
+                "reference": "38fbee62e7f387dbe0dc7ef492aa7dddb8e304fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/migrations/zipball/96e3cc00ede11f28bb8bcefcab95f07c487177cf",
-                "reference": "96e3cc00ede11f28bb8bcefcab95f07c487177cf",
+                "url": "https://api.github.com/repos/cakephp/migrations/zipball/38fbee62e7f387dbe0dc7ef492aa7dddb8e304fc",
+                "reference": "38fbee62e7f387dbe0dc7ef492aa7dddb8e304fc",
                 "shasum": ""
             },
             "require": {
                 "cakephp/cache": "^3.6.0",
                 "cakephp/orm": "^3.6.0",
                 "php": ">=5.6.0",
-                "robmorgan/phinx": "~0.10.3"
+                "robmorgan/phinx": "^0.10.3"
             },
             "require-dev": {
                 "cakephp/bake": "^1.7.0",
@@ -424,7 +424,7 @@
             "type": "cakephp-plugin",
             "autoload": {
                 "psr-4": {
-                    "Migrations\\": "src"
+                    "Migrations\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -443,20 +443,20 @@
                 "cakephp",
                 "migrations"
             ],
-            "time": "2019-02-07T15:20:33+00:00"
+            "time": "2019-07-22T03:02:47+00:00"
         },
         {
             "name": "cakephp/plugin-installer",
-            "version": "1.1.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/plugin-installer.git",
-                "reference": "41373d0678490502f45adc7be88aa22d24ac1843"
+                "reference": "af9711ee5dfbe62a76e8aa86cb348895fab23b50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/41373d0678490502f45adc7be88aa22d24ac1843",
-                "reference": "41373d0678490502f45adc7be88aa22d24ac1843",
+                "url": "https://api.github.com/repos/cakephp/plugin-installer/zipball/af9711ee5dfbe62a76e8aa86cb348895fab23b50",
+                "reference": "af9711ee5dfbe62a76e8aa86cb348895fab23b50",
                 "shasum": ""
             },
             "require-dev": {
@@ -484,20 +484,20 @@
                 }
             ],
             "description": "A composer installer for CakePHP 3.0+ plugins.",
-            "time": "2017-12-24T21:09:29+00:00"
+            "time": "2019-07-25T15:43:38+00:00"
         },
         {
             "name": "dereuromark/cakephp-databaselog",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/CakePHP-DatabaseLog.git",
-                "reference": "5983fd0cdf0c3eaef54c3127b58e0e5e3b17271d"
+                "reference": "4495f5df85298d5e53b9b270d6ecd95fc67d181b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/CakePHP-DatabaseLog/zipball/5983fd0cdf0c3eaef54c3127b58e0e5e3b17271d",
-                "reference": "5983fd0cdf0c3eaef54c3127b58e0e5e3b17271d",
+                "url": "https://api.github.com/repos/dereuromark/CakePHP-DatabaseLog/zipball/4495f5df85298d5e53b9b270d6ecd95fc67d181b",
+                "reference": "4495f5df85298d5e53b9b270d6ecd95fc67d181b",
                 "shasum": ""
             },
             "require": {
@@ -524,17 +524,17 @@
             "authors": [
                 {
                     "name": "Nick Baker",
-                    "homepage": "http://www.webtechnick.com",
-                    "role": "Original author"
+                    "role": "Original author",
+                    "homepage": "http://www.webtechnick.com"
+                },
+                {
+                    "name": "Mark Scherer",
+                    "role": "Maintainer",
+                    "homepage": "https://www.dereuromark.de"
                 },
                 {
                     "name": "Other contributors",
                     "homepage": "https://github.com/dereuromark/CakePHP-DatabaseLog/graphs/contributors"
-                },
-                {
-                    "name": "Mark Scherer",
-                    "homepage": "https://www.dereuromark.de",
-                    "role": "Maintainer"
                 }
             ],
             "description": "CakePHP DatabaseLog Plugin",
@@ -546,7 +546,7 @@
                 "logs",
                 "plugin"
             ],
-            "time": "2019-03-07T15:20:39+00:00"
+            "time": "2019-07-22T16:22:56+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -762,16 +762,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.104",
+            "version": "v0.105",
             "source": {
                 "type": "git",
                 "url": "https://github.com/googleapis/google-api-php-client-services.git",
-                "reference": "d41fea99f90d7935bd57cf654bf271072fe584f1"
+                "reference": "0f87a3d7ce90d7f7b92428c86239b828af92aba0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/d41fea99f90d7935bd57cf654bf271072fe584f1",
-                "reference": "d41fea99f90d7935bd57cf654bf271072fe584f1",
+                "url": "https://api.github.com/repos/googleapis/google-api-php-client-services/zipball/0f87a3d7ce90d7f7b92428c86239b828af92aba0",
+                "reference": "0f87a3d7ce90d7f7b92428c86239b828af92aba0",
                 "shasum": ""
             },
             "require": {
@@ -795,7 +795,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2019-06-23T00:23:39+00:00"
+            "time": "2019-07-23T21:43:24+00:00"
         },
         {
             "name": "google/auth",
@@ -1448,63 +1448,6 @@
             "time": "2018-11-23T13:52:42+00:00"
         },
         {
-            "name": "muffin/tokenize",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/UseMuffin/Tokenize.git",
-                "reference": "a7ecf4114782abe12b0ab36e8a32504428fe91ec"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/UseMuffin/Tokenize/zipball/a7ecf4114782abe12b0ab36e8a32504428fe91ec",
-                "reference": "a7ecf4114782abe12b0ab36e8a32504428fe91ec",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/cakephp": "^3.5"
-            },
-            "require-dev": {
-                "cakephp/cakephp-codesniffer": "^3.0",
-                "cakephp/migrations": "^1.0",
-                "phpunit/phpunit": "^5.7.14|^6.0"
-            },
-            "type": "cakephp-plugin",
-            "autoload": {
-                "psr-4": {
-                    "Muffin\\Tokenize\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jad Bitar",
-                    "homepage": "http://jadb.io",
-                    "role": "Author"
-                },
-                {
-                    "name": "ADmad",
-                    "homepage": "https://github.com/ADmad",
-                    "role": "Author"
-                },
-                {
-                    "name": "Others",
-                    "homepage": "https://github.com/usemuffin/tokenize/graphs/contributors"
-                }
-            ],
-            "description": "Security Tokens",
-            "homepage": "https://github.com/usemuffin/tokenize",
-            "keywords": [
-                "cakephp",
-                "muffin",
-                "tokenize"
-            ],
-            "time": "2018-05-14T16:05:09+00:00"
-        },
-        {
             "name": "muffin/trash",
             "version": "2.1.0",
             "source": {
@@ -1961,16 +1904,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "29a33f66194fbe2ed4555981810f15fd8440e4a8"
+                "reference": "623fd6be3e5d4112d667003488c8c3ec12b66f62"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/29a33f66194fbe2ed4555981810f15fd8440e4a8",
-                "reference": "29a33f66194fbe2ed4555981810f15fd8440e4a8",
+                "url": "https://api.github.com/repos/symfony/config/zipball/623fd6be3e5d4112d667003488c8c3ec12b66f62",
+                "reference": "623fd6be3e5d4112d667003488c8c3ec12b66f62",
                 "shasum": ""
             },
             "require": {
@@ -2021,20 +1964,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-05-30T15:47:52+00:00"
+            "time": "2019-07-17T15:23:18+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c4d2f3529755ffc0be9fb823583b28d8744eeb3d"
+                "reference": "12940f20a816c978860fa4925b3f1bbb27e9ac46"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c4d2f3529755ffc0be9fb823583b28d8744eeb3d",
-                "reference": "c4d2f3529755ffc0be9fb823583b28d8744eeb3d",
+                "url": "https://api.github.com/repos/symfony/console/zipball/12940f20a816c978860fa4925b3f1bbb27e9ac46",
+                "reference": "12940f20a816c978860fa4925b3f1bbb27e9ac46",
                 "shasum": ""
             },
             "require": {
@@ -2093,20 +2036,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-06-05T11:33:52+00:00"
+            "time": "2019-07-24T14:46:41+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
-                "reference": "1172dc1abe44dfadd162239153818b074e6e53bf"
+                "reference": "bc977cb2681d75988ab2d53d14c4245c6c04f82f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/debug/zipball/1172dc1abe44dfadd162239153818b074e6e53bf",
-                "reference": "1172dc1abe44dfadd162239153818b074e6e53bf",
+                "url": "https://api.github.com/repos/symfony/debug/zipball/bc977cb2681d75988ab2d53d14c4245c6c04f82f",
+                "reference": "bc977cb2681d75988ab2d53d14c4245c6c04f82f",
                 "shasum": ""
             },
             "require": {
@@ -2149,11 +2092,11 @@
             ],
             "description": "Symfony Debug Component",
             "homepage": "https://symfony.com",
-            "time": "2019-06-18T21:26:03+00:00"
+            "time": "2019-07-23T08:39:19+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2320,16 +2263,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "212a27b731e5bfb735679d1ffaac82bd6a1dc996"
+                "reference": "051d045c684148060ebfc9affb7e3f5e0899d40b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/212a27b731e5bfb735679d1ffaac82bd6a1dc996",
-                "reference": "212a27b731e5bfb735679d1ffaac82bd6a1dc996",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/051d045c684148060ebfc9affb7e3f5e0899d40b",
+                "reference": "051d045c684148060ebfc9affb7e3f5e0899d40b",
                 "shasum": ""
             },
             "require": {
@@ -2375,59 +2318,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2019-03-25T07:48:46+00:00"
-        },
-        {
-            "name": "xety/cake3-cookieauth",
-            "version": "v1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Xety/Cake3-CookieAuth.git",
-                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Xety/Cake3-CookieAuth/zipball/3fb54c89759dbfbc53c1f921d86855f85befcfc1",
-                "reference": "3fb54c89759dbfbc53c1f921d86855f85befcfc1",
-                "shasum": ""
-            },
-            "require": {
-                "cakephp/cakephp": "~3.0",
-                "php": ">=5.4.16"
-            },
-            "require-dev": {
-                "cakephp/cakephp-codesniffer": "master-dev",
-                "phpunit/phpunit": "4.*"
-            },
-            "type": "cakephp-plugin",
-            "autoload": {
-                "psr-4": {
-                    "Xety\\Cake3CookieAuth\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Xety",
-                    "email": "zoro.fmt@gmail.com",
-                    "homepage": "https://github.com/Xety"
-                }
-            ],
-            "description": "A simple Cake3 plugin to authenticate users with Cookies.",
-            "homepage": "https://github.com/Xety/Cake3-CookieAuth",
-            "keywords": [
-                "auth",
-                "authenticate",
-                "cake3",
-                "cakephp",
-                "cookie",
-                "login",
-                "plugin"
-            ],
-            "time": "2016-10-25T06:10:13+00:00"
+            "time": "2019-07-24T13:01:31+00:00"
         },
         {
             "name": "zendframework/zend-diactoros",
@@ -3123,16 +3014,16 @@
         },
         {
             "name": "dereuromark/cakephp-ide-helper",
-            "version": "0.13.13",
+            "version": "0.13.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-ide-helper.git",
-                "reference": "ec3947bd33bede284f2991e3278d8f53be124b83"
+                "reference": "3e697b17ceca14554e12592d68c8bbf682df4c52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/ec3947bd33bede284f2991e3278d8f53be124b83",
-                "reference": "ec3947bd33bede284f2991e3278d8f53be124b83",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/3e697b17ceca14554e12592d68c8bbf682df4c52",
+                "reference": "3e697b17ceca14554e12592d68c8bbf682df4c52",
                 "shasum": ""
             },
             "require": {
@@ -3143,8 +3034,8 @@
                 "squizlabs/php_codesniffer": "^3.0"
             },
             "require-dev": {
-                "dereuromark/cakephp-shim": "^1.5",
-                "dereuromark/cakephp-tools": "^1.3",
+                "dereuromark/cakephp-shim": "^1.8.3",
+                "dereuromark/cakephp-tools": "^1.9.0",
                 "fig-r/psr2r-sniffer": "dev-master"
             },
             "type": "cakephp-plugin",
@@ -3160,14 +3051,14 @@
             ],
             "authors": [
                 {
-                    "name": "Other contributors",
-                    "homepage": "https://github.com/dereuromark/cakephp-ide-helper/graphs/contributors",
-                    "role": "Developer"
+                    "name": "Mark Scherer",
+                    "role": "Maintainer",
+                    "homepage": "https://www.dereuromark.de"
                 },
                 {
-                    "name": "Mark Scherer",
-                    "homepage": "https://www.dereuromark.de",
-                    "role": "Maintainer"
+                    "name": "Other contributors",
+                    "role": "Developer",
+                    "homepage": "https://github.com/dereuromark/cakephp-ide-helper/graphs/contributors"
                 }
             ],
             "description": "CakePHP IdeHelper Plugin to improve auto-completion",
@@ -3181,7 +3072,7 @@
                 "phpstorm",
                 "plugin"
             ],
-            "time": "2019-06-05T12:22:07+00:00"
+            "time": "2019-07-24T14:51:21+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -5235,16 +5126,16 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "5f80266a729e30bbcc37f8bf0e62c3d5a38c8208"
+                "reference": "1e762fdf73ace6ceb42ba5a6ca280be86082364a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/5f80266a729e30bbcc37f8bf0e62c3d5a38c8208",
-                "reference": "5f80266a729e30bbcc37f8bf0e62c3d5a38c8208",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/1e762fdf73ace6ceb42ba5a6ca280be86082364a",
+                "reference": "1e762fdf73ace6ceb42ba5a6ca280be86082364a",
                 "shasum": ""
             },
             "require": {
@@ -5280,11 +5171,11 @@
             ],
             "description": "Symfony Finder Component",
             "homepage": "https://symfony.com",
-            "time": "2019-05-30T15:47:52+00:00"
+            "time": "2019-06-28T08:02:59+00:00"
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -5333,16 +5224,16 @@
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v3.4.29",
+            "version": "v3.4.30",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "7b92618169c44af4bb226f69dbac42b56b1a7745"
+                "reference": "b6a45abfe961183a4c26fad98a6112c487e983bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/7b92618169c44af4bb226f69dbac42b56b1a7745",
-                "reference": "7b92618169c44af4bb226f69dbac42b56b1a7745",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/b6a45abfe961183a4c26fad98a6112c487e983bf",
+                "reference": "b6a45abfe961183a4c26fad98a6112c487e983bf",
                 "shasum": ""
             },
             "require": {
@@ -5398,7 +5289,7 @@
                 "debug",
                 "dump"
             ],
-            "time": "2019-06-13T16:26:35+00:00"
+            "time": "2019-07-26T11:29:23+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -5661,8 +5552,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "friendsofcake/search": 0,
-        "psy/psysh": 0,
-        "dereuromark/cakephp-ide-helper": 0
+        "dereuromark/cakephp-ide-helper": 0,
+        "psy/psysh": 0
     },
     "prefer-stable": true,
     "prefer-lowest": false,

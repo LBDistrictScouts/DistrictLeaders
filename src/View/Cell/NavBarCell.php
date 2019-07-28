@@ -5,6 +5,8 @@ use Cake\View\Cell;
 
 /**
  * NavBar cell
+ *
+ * @property \App\Model\Table\UsersTable $Users
  */
 class NavBarCell extends Cell
 {

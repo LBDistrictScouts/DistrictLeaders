@@ -33,7 +33,6 @@ use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Core\Plugin;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
@@ -201,7 +200,7 @@ Type::build('timestamp')
  * table, model, controller names or whatever other string is passed to the
  * inflection functions.
  */
-//Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
-//Inflector::rules('irregular', ['red' => 'redlings']);
-//Inflector::rules('uninflected', ['dontinflectme']);
-//Inflector::rules('transliteration', ['/å/' => 'aa']);
+Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
+Inflector::rules('irregular', ['red' => 'redlings']);
+Inflector::rules('uninflected', ['dontinflectme']);
+Inflector::rules('transliteration', ['/å/' => 'aa']);

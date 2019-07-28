@@ -10,6 +10,7 @@ use Cake\TestSuite\TestCase;
  */
 class RoleTypesControllerTest extends TestCase
 {
+    use AppTestTrait;
     use IntegrationTestTrait;
 
     /**
@@ -39,9 +40,7 @@ class RoleTypesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'RoleTypes', 'action' => 'index']);
 
@@ -56,9 +55,7 @@ class RoleTypesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'RoleTypes', 'action' => 'view', 1]);
 
@@ -73,17 +70,11 @@ class RoleTypesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'RoleTypes', 'action' => 'add']);
 
         $this->assertResponseOk();
-
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -112,17 +103,11 @@ class RoleTypesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'RoleTypes', 'action' => 'edit', 1]);
 
         $this->assertResponseOk();
-
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();
@@ -157,9 +142,7 @@ class RoleTypesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->session([
-            'Auth.User.id' => 2,
-        ]);
+        $this->login();
 
         $this->enableCsrfToken();
         $this->enableSecurityToken();

@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use Cake\Event\Event;
 use Cake\I18n\Time;
@@ -127,17 +128,17 @@ class UsersController extends AppController
         // Set the layout.
         $this->viewBuilder()->setLayout('landing');
 
-        $result = $this->Authorization;
+        $result = $this->Authentication->getResult();
 
         // regardless of POST or GET, redirect if user is logged in
-        if ($result) {
+        if ($result->isValid()) {
             $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
             return $this->redirect($redirect);
         }
 
         // display error if user submitted and authentication failed
-        if ($this->request->is(['post']) && !$result) {
+        if ($this->request->is(['post']) && !$result->isValid()) {
             $this->Flash->error('Invalid username or password');
         }
     }
@@ -251,11 +252,11 @@ class UsersController extends AppController
      */
     public function token($token = null)
     {
-        $tokenTable = TableRegistry::get('Tokens');
+        $this->loadModel('Tokens');
 
         $this->viewBuilder()->setLayout('outside');
 
-        $valid = $tokenTable->validateToken($token);
+        $valid = $this->Tokens->validateToken($token);
         if (!$valid) {
             $this->Flash->error('Password Reset Token could not be validated.');
 
@@ -263,7 +264,7 @@ class UsersController extends AppController
         }
 
         if (is_numeric($valid)) {
-            $tokenRow = $tokenTable->get($valid);
+            $tokenRow = $this->Tokens->get($valid);
             $resetUser = $this->Users->get($tokenRow->user_id);
 
             $passwordForm = new PasswordForm();
@@ -305,19 +306,16 @@ class UsersController extends AppController
         }
     }
 
-//    /**
-//     * @param Event $event The CakePHP Event
-//     *
-//     * @return \Cake\Http\Response|void|null
-//     */
-//    public function beforeFilter(Event $event)
-//    {
-//        $this->Auth->allow(['login']);
-//        $this->Auth->allow(['username']);
-//        $this->Auth->allow(['reset']);
-//        $this->Auth->allow(['token']);
-//    }
-//
+    /**
+     * @param Event $event The CakePHP Event
+     *
+     * @return \Cake\Http\Response|void|null
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'reset', 'token']);
+    }
+
 //    /**
 //     * Authorisation Check
 //     *

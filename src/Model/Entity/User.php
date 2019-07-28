@@ -1,8 +1,9 @@
 <?php
 namespace App\Model\Entity;
 
+use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\AuthorizationServiceInterface;
-use Authorization\IdentityInterface;
+use Authorization\IdentityInterface as AuthorizationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 
@@ -38,8 +39,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Role[] $roles
  *
  * @property \Authorization\AuthorizationService $authorization
+ * @property int|null $password_state_id
  */
-class User extends Entity implements IdentityInterface
+class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
 
     /**
@@ -155,6 +157,16 @@ class User extends Entity implements IdentityInterface
         $this->authorization = $service;
 
         return $this;
+    }
+
+    /**
+     * Authentication\IdentityInterface method
+     *
+     * @return int
+     */
+    public function getIdentifier()
+    {
+        return $this->id;
     }
 
     public const FIELD_ID = 'id';

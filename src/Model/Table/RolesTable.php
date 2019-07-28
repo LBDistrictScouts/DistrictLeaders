@@ -24,6 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Role findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class RolesTable extends Table
 {

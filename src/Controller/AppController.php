@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use App\Model\Entity\User;
+use Authentication\AuthenticationService;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
@@ -52,6 +53,23 @@ class AppController extends Controller
     public function initialize()
     {
         parent::initialize();
+
+        $this->loadComponent('Authentication.Authentication');
+
+        // Instantiate the service
+        $service = new AuthenticationService();
+
+        // Load identifiers
+        $service->loadIdentifier('Authentication.Password', [
+            'fields' => [
+                'username' => 'username',
+                'password' => 'password',
+            ]
+        ]);
+
+        // Load the authenticators
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form');
 
         $this->loadComponent('Flash');
         $this->loadComponent('Cookie');

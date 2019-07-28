@@ -14,14 +14,22 @@
  */
 namespace App;
 
-use App\Model\Entity\User;
+use App\Policy\RequestPolicy;
+
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
+
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Exception\ForbiddenException;
+use Authorization\Exception\MissingIdentityException;
 use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Middleware\RequestAuthorizationMiddleware;
+use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
+use Authorization\Policy\ResolverCollection;
+
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -29,8 +37,10 @@ use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
+use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -49,15 +59,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
     {
         $this->addPlugin('Muffin/Footprint');
 
-        $this->addPlugin('Muffin/Tokenize', ['routes' => true]);
-
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
 
         $this->addPlugin('Authorization');
 
         $this->addPlugin('Authentication');
-
-        $this->addPlugin('Xety/Cake3CookieAuth');
 
         $this->addPlugin('Muffin/Trash');
 
@@ -102,28 +108,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->setXssProtection()
             ->noOpen()
             ->noSniff();
+
         // Catch any exceptions in the lower layers,
         // and make an error page/response
         $middlewareQueue
             ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
-
-            ->add(new EncryptedCookieMiddleware(
-                // Names of cookies to protect
-                ['CookieAuth'],
-                Configure::read('Security.cookieKey')
-            ))
-
-            // Add the authentication middleware to the middleware queue
-            ->add(new AuthenticationMiddleware($this))
-
-            // Add the Authorisation Middleware to the middleware queue
-            ->add(new AuthorizationMiddleware($this, [
-                'identityDecorator' => function ($auth, $user) {
-                    /** @var Model\Entity\User $user */
-                    return $user->setAuthorization($auth);
-                },
-                'requireAuthorizationCheck' => false,
-            ]))
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
@@ -136,11 +125,44 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             // you might want to disable this cache in case your routing is extremely simple
             ->add(new RoutingMiddleware($this, '_cake_routes_'))
 
+            ->add(new EncryptedCookieMiddleware(
+                // Names of cookies to protect
+                ['CookieAuth'],
+                Configure::read('Security.cookieKey')
+            ))
+
+            // Add the authentication middleware to the middleware queue
+            ->add(new AuthenticationMiddleware($this, [
+                'unauthenticatedRedirect' => '/users/login',
+                'queryParam' => 'redirect',
+            ]))
+
+            // Add the Authorisation Middleware to the middleware queue
+            ->add(new AuthorizationMiddleware($this, [
+                'identityDecorator' => function ($auth, $user) {
+                    /** @var \App\Model\Entity\User $user */
+                    return $user->setAuthorization($auth);
+                },
+                'unauthorizedHandler' => [
+                    'className' => 'Authorization.Redirect',
+                    'url' => '/users/login',
+                    'queryParam' => 'redirectUrl',
+                    'exceptions' => [
+                        MissingIdentityException::class,
+                        ForbiddenException::class,
+                    ],
+                ],
+                'requireAuthorizationCheck' => false,
+            ]))
+
+            ->add(new RequestAuthorizationMiddleware())
+
             ->add($securityHeaders)
 
             ->add(new CsrfProtectionMiddleware([
                 'secure' => true,
-                'cookieName' => 'leaderCSRF'
+//                'cookieName' => 'leaderCSRF',
+                'httpOnly' => true,
             ]));
 
         return $middlewareQueue;
@@ -154,7 +176,14 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function getAuthorizationService(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $resolver = new OrmResolver();
+        $ormResolver = new OrmResolver();
+        $mapResolver = new MapResolver();
+
+        $mapResolver->map(ServerRequest::class, RequestPolicy::class);
+
+        // Check the map resolver, and fallback to the orm resolver if
+        // a resource is not explicitly mapped.
+        $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
 
         return new AuthorizationService($resolver);
     }
@@ -181,8 +210,12 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         // Load the authenticators, you want session first
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
-            'fields' => $fields,
+            compact('fields'),
             'loginUrl' => [ '/users/login', 'login' ]
+        ]);
+        $service->loadAuthenticator('Authentication.Cookie', [
+            'rememberMeField' => 'remember_me',
+            compact('fields'),
         ]);
 
         return $service;

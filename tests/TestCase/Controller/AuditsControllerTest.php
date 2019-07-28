@@ -11,6 +11,7 @@ use Twig\Test\IntegrationTestCase;
  */
 class AuditsControllerTest extends TestCase
 {
+    use AppTestTrait;
     use IntegrationTestTrait;
 
     /**
@@ -38,9 +39,7 @@ class AuditsControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'Audits', 'action' => 'index']);
 
@@ -56,9 +55,7 @@ class AuditsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->session([
-            'Auth.User.id' => 1,
-        ]);
+        $this->login();
 
         $this->get(['controller' => 'Audits', 'action' => 'view', 1]);
 

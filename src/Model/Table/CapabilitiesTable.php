@@ -98,7 +98,7 @@ class CapabilitiesTable extends Table
     /**
      * install the application config capabilities
      *
-     * @return mixed
+     * @return int
      */
     public function installBaseCapabilities()
     {

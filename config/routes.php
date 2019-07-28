@@ -46,17 +46,6 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 
 Router::scope('/', function (RouteBuilder $routes) {
-    // Register scoped middleware for in scopes.
-    $routes->registerMiddleware('csrf', new CsrfProtectionMiddleware([
-        'httpOnly' => true
-    ]));
-
-    /**
-     * Apply a middleware to the current route scope.
-     * Requires middleware to be registered via `Application::routes()` with `registerMiddleware()`
-     */
-    $routes->applyMiddleware('csrf');
-
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
      * its action called 'display', and we pass a param to select the view file

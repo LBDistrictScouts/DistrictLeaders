@@ -21,6 +21,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class ScoutGroupsTable extends Table
 {
