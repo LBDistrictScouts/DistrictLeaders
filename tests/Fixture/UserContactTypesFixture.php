@@ -33,8 +33,7 @@ class UserContactTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'user_contact_type' => 'Lorem ipsum dolor sit amet',
+                'user_contact_type' => 'Email',
                 'created' => 1564337519,
                 'modified' => 1564337519
             ],

@@ -39,14 +39,13 @@ class UserContactsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'contact_field' => 'Lorem ipsum dolor sit amet',
+                'contact_field' => 'james@peach.com',
                 'user_id' => 1,
                 'user_contact_type_id' => 1,
                 'created' => 1564337533,
                 'modified' => 1564337533,
                 'verified' => 1,
-                'deleted' => 1564337533
+                'deleted' => null
             ],
         ];
         parent::init();

@@ -19,7 +19,19 @@ class UserContactTypesControllerTest extends TestCase
      */
     public $fixtures = [
         'app.UserContactTypes',
-        'app.UserContacts'
+        'app.UserContacts',
+        'app.Users',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.SectionTypes',
+        'app.ScoutGroups',
+        'app.Audits',
+        'app.Roles',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Camps',
+        'app.CampTypes',
     ];
 
     /**

@@ -39,10 +39,11 @@ class UserContactsTable extends Table
         parent::initialize($config);
 
         $this->setTable('user_contacts');
-        $this->setDisplayField('id');
+        $this->setDisplayField('contact_field');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Muffin/Trash.Trash');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
@@ -76,12 +77,16 @@ class UserContactsTable extends Table
             ->notEmptyString('contact_field');
 
         $validator
-            ->boolean('verified')
-            ->notEmptyString('verified');
+            ->requirePresence('user_id', 'create')
+            ->notEmptyString('user_id', 'create');
 
         $validator
-            ->dateTime('deleted')
-            ->allowEmptyDateTime('deleted');
+            ->requirePresence('user_contact_type_id', 'create')
+            ->notEmptyString('user_contact_type_id', 'create');
+
+        $validator
+            ->boolean('verified')
+            ->notEmptyString('verified');
 
         return $validator;
     }
@@ -97,6 +102,8 @@ class UserContactsTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['user_contact_type_id'], 'UserContactTypes'));
+
+        $rules->add($rules->isUnique(['user_id', 'contact_field']));
 
         return $rules;
     }

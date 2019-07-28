@@ -18,9 +18,20 @@ class UserContactsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.UserContactTypes',
         'app.UserContacts',
         'app.Users',
-        'app.Roles'
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.SectionTypes',
+        'app.ScoutGroups',
+        'app.Audits',
+        'app.Roles',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Camps',
+        'app.CampTypes',
     ];
 
     /**

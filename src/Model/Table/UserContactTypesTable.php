@@ -63,8 +63,23 @@ class UserContactTypesTable extends Table
             ->scalar('user_contact_type')
             ->maxLength('user_contact_type', 32)
             ->requirePresence('user_contact_type', 'create')
-            ->notEmptyString('user_contact_type');
+            ->notEmptyString('user_contact_type')
+            ->add('user_contact_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['user_contact_type']));
+
+        return $rules;
     }
 }
