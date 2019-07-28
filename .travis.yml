@@ -3,6 +3,8 @@ language: php
 dist: bionic
 addons:
   postgresql: "9.6"
+  code_climate:
+    repo_token: CodeClimateTokenForReplacement
 
 sudo: false
 
@@ -38,9 +40,9 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
-  - sh -c "bin/cake code_completion generate -d"
 
 script:
+  - sh -c "bin/cake code_completion generate -d"
   - composer cs-check
   - composer test
 
@@ -53,6 +55,3 @@ after_script:
 notifications:
   email: false
 
-addons:
-  code_climate:
-    repo_token: CodeClimateTokenForReplacement
