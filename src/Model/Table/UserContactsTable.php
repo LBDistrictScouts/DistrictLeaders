@@ -1,7 +1,7 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\Token;
+use App\Model\Entity\UserContact;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -9,24 +9,25 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
- * Tokens Model
+ * UserContacts Model
  *
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UserContactTypesTable|\Cake\ORM\Association\BelongsTo $UserContactTypes
+ * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
  *
- * @method Token get($primaryKey, $options = [])
- * @method Token newEntity($data = null, array $options = [])
- * @method Token[] newEntities(array $data, array $options = [])
- * @method Token|bool save(EntityInterface $entity, $options = [])
- * @method Token saveOrFail(EntityInterface $entity, $options = [])
- * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Token[] patchEntities($entities, array $data, array $options = [])
- * @method Token findOrCreate($search, callable $callback = null, $options = [])
+ * @method UserContact get($primaryKey, $options = [])
+ * @method UserContact newEntity($data = null, array $options = [])
+ * @method UserContact[] newEntities(array $data, array $options = [])
+ * @method UserContact|bool save(EntityInterface $entity, $options = [])
+ * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
+ * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
-class TokensTable extends Table
+class UserContactsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -37,7 +38,7 @@ class TokensTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('tokens');
+        $this->setTable('user_contacts');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
@@ -46,6 +47,13 @@ class TokensTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
             'joinType' => 'INNER'
+        ]);
+        $this->belongsTo('UserContactTypes', [
+            'foreignKey' => 'user_contact_type_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('Roles', [
+            'foreignKey' => 'user_contact_id'
         ]);
     }
 
@@ -59,42 +67,21 @@ class TokensTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->scalar('token')
-            ->maxLength('token', 511)
-            ->requirePresence('token', 'create')
-            ->allowEmptyString('token', false);
+            ->scalar('contact_field')
+            ->maxLength('contact_field', 64)
+            ->requirePresence('contact_field', 'create')
+            ->notEmptyString('contact_field');
 
         $validator
-            ->dateTime('expires')
-            ->allowEmptyDateTime('expires');
-
-        $validator
-            ->dateTime('utilised')
-            ->allowEmptyDateTime('utilised');
-
-        $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->allowEmptyString('active', false);
+            ->boolean('verified')
+            ->notEmptyString('verified');
 
         $validator
             ->dateTime('deleted')
             ->allowEmptyDateTime('deleted');
-
-        $validator
-            ->scalar('hash')
-            ->maxLength('hash', 511)
-            ->allowEmptyString('hash');
-
-        $validator
-            ->integer('random_number')
-            ->allowEmptyString('random_number');
-
-        $validator
-            ->allowEmptyString('header');
 
         return $validator;
     }
@@ -109,6 +96,7 @@ class TokensTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['user_contact_type_id'], 'UserContactTypes'));
 
         return $rules;
     }

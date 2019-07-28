@@ -8,7 +8,7 @@ This is a web application for use with District Leaders.
 
 ### Development Branch
 [![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)
-[![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/development/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
+[![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/Development/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
 
 ## Installation
 

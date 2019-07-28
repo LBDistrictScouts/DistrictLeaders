@@ -16,7 +16,7 @@ use Cake\I18n\Time;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  *
- * @property \Cake\ORM\Table $Tokens
+ * @property \App\Model\Table\TokensTable $Tokens
  */
 class UsersController extends AppController
 {

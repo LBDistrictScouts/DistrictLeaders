@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\PasswordState;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -11,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
  *
- * @method \App\Model\Entity\PasswordState get($primaryKey, $options = [])
- * @method \App\Model\Entity\PasswordState newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\PasswordState[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\PasswordState|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\PasswordState|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\PasswordState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\PasswordState[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\PasswordState findOrCreate($search, callable $callback = null, $options = [])
+ * @method PasswordState get($primaryKey, $options = [])
+ * @method PasswordState newEntity($data = null, array $options = [])
+ * @method PasswordState[] newEntities(array $data, array $options = [])
+ * @method PasswordState|bool save(EntityInterface $entity, $options = [])
+ * @method PasswordState saveOrFail(EntityInterface $entity, $options = [])
+ * @method PasswordState patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method PasswordState[] patchEntities($entities, array $data, array $options = [])
+ * @method PasswordState findOrCreate($search, callable $callback = null, $options = [])
  */
 class PasswordStatesTable extends Table
 {

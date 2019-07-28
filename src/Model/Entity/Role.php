@@ -19,6 +19,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\RoleStatus $role_status
  * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property int|null $user_contact_id
  */
 class Role extends Entity
 {
