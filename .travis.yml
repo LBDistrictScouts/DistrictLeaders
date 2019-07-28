@@ -2,13 +2,16 @@ language: php
 
 dist: bionic
 addons:
-  postgresql: "10"
-  apt:
-    packages:
-      - postgresql-10
-      - postgresql-client-10
+  postgresql: "9.6"
 
 sudo: false
+
+services:
+  - postgresql
+  - redis-server
+
+env:
+  - DB=postgres
 
 matrix:
   fast_finish: true
@@ -16,36 +19,15 @@ matrix:
   include:
     - name: "PHP 7.1"
       php: 7.1
-      env:
-        - PGPORT=5433
-        - DB=postgres
-      services:
-        - postgresql
-        - redis-server
-      postgresql: "9.6"
 
     - name: "PHP 7.2"
       php: 7.2
-      env:
-        - PGPORT=5433
-        - DB=postgres
-      services:
-        - postgresql
-        - redis-server
-      postgresql: "10"
 
     - name: "PHP 7.3"
       php: 7.3
-      env:
-        - PGPORT=5433
-        - DB=postgres
-      services:
-        - postgresql
-        - redis-server
-      postgresql: "10"
 
 before_script:
-  - psql --command='create database leaders;' --username=postgres --port=5433
+  - psql --command='create database leaders;' --username=postgres
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
