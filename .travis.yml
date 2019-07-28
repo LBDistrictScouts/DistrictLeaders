@@ -33,7 +33,6 @@ before_script:
   - composer run-script post-install-cmd --no-interaction
   - sh -c "bin/cake database build"
   - sh -c "bin/cake database seed"
-  - sh -c "bin/cake annotations all -v -d --ci"
   - sh -c "bin/cake code_completion generate -d"
 
 script:

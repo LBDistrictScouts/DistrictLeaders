@@ -37,7 +37,6 @@ use Cake\View\View;
  */
 class AppView extends View
 {
-
     /**
      * Initialization hook method.
      *
