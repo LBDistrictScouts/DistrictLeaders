@@ -459,7 +459,7 @@ class UsersTableTest extends TestCase
         TestCase::assertArrayHasKey('sections', $result);
 
         $expected = [
-            'sections' => [ 2, 1, ],
+            'sections' => [ 1, 2, ],
             'groups' => []
         ];
         TestCase::assertEquals($expected, $result);

@@ -17,9 +17,6 @@ $this->assign('icon', 'fa-paw');
     <th scope="col"><?= $this->Paginator->sort('scout_group') ?></th>
     <th scope="col" class="actions"><?= __('Actions') ?></th>
     <th scope="col"><?= $this->Paginator->sort('group_domain') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('charity_number') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-    <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
 </tr>
 </thead>
 <tbody>
@@ -32,9 +29,6 @@ $this->assign('icon', 'fa-paw');
             <?= $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $scoutGroup->id], ['confirm' => __('Are you sure you want to delete # {0}?', $scoutGroup->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
         </td>
         <td><?= $this->Text->autoLinkUrls($scoutGroup->group_domain) ?></td>
-        <td><?= $this->Number->format($scoutGroup->charity_number, ['pattern' => '#######']) ?></td>
-        <td><?= $this->Time->i18nformat($scoutGroup->created,'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->i18nformat($scoutGroup->modified,'dd-MMM-yy HH:mm') ?></td>
     </tr>
 <?php endforeach; ?>
 </tbody>

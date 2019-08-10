@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
+ * @property string|null $clean_domain
+ *
  * @property \App\Model\Entity\Section[] $sections
  * @property \Cake\I18n\FrozenTime|null $deleted
  */
@@ -61,12 +63,30 @@ class ScoutGroup extends Entity
         return $value;
     }
 
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return string
+     */
+    protected function _getCleanDomain()
+    {
+        return str_replace('https://', '', $this->group_domain);
+    }
+
+    /**
+     * Exposed Virtual Properties
+     *
+     * @var array
+     */
+    protected $_virtual = ['clean_domain'];
+
     public const FIELD_ID = 'id';
     public const FIELD_SCOUT_GROUP = 'scout_group';
     public const FIELD_GROUP_ALIAS = 'group_alias';
     public const FIELD_NUMBER_STRIPPED = 'number_stripped';
     public const FIELD_CHARITY_NUMBER = 'charity_number';
     public const FIELD_GROUP_DOMAIN = 'group_domain';
+    public const FIELD_CLEAN_DOMAIN = 'clean_domain';
     public const FIELD_CREATED = 'created';
     public const FIELD_MODIFIED = 'modified';
     public const FIELD_SECTIONS = 'sections';

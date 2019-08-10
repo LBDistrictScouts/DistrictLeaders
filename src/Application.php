@@ -160,8 +160,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->add($securityHeaders)
 
             ->add(new CsrfProtectionMiddleware([
-                'secure' => true,
-//                'cookieName' => 'leaderCSRF',
+                'secure' => !Configure::read('debug'),
                 'httpOnly' => true,
             ]));
 

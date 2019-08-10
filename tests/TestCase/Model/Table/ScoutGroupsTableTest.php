@@ -103,6 +103,7 @@ class ScoutGroupsTableTest extends TestCase
             'number_stripped' => 1,
             'charity_number' => 1,
             'group_domain' => 'Lorem ipsum dolor sit amet',
+            'clean_domain' => 'Lorem ipsum dolor sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

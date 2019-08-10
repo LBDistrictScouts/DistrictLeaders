@@ -148,6 +148,24 @@ class UsersController extends AppController
     }
 
     /**
+     * Logout Function
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function logout()
+    {
+        $logout = $this->Authentication->logout();
+
+        if ($logout != false) {
+            $this->Flash->success('You are now logged out.');
+
+            return $this->redirect($logout);
+        }
+
+        return $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));
+    }
+
+    /**
      * Password Reset Function - Enables Resetting a User's Password via Email
      *
      * @return \Cake\Http\Response
