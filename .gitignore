@@ -40,7 +40,7 @@ nbproject/*
 .vscode
 # Sass preprocessor
 .sass-cache/
-/config/Migrations/schema-dump-default.lock
+/config/Migrations/*.lock
 /clover.xml
 /config/token.json
 /config/credentials.json
