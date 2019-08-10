@@ -457,12 +457,14 @@ class UsersTableTest extends TestCase
 
         $result = $this->Users->userCapability($user, $cap);
         TestCase::assertArrayHasKey('sections', $result);
+        TestCase::assertArrayHasKey('groups', $result);
 
-        $expected = [
-            'sections' => [ 1, 2, ],
-            'groups' => []
-        ];
-        TestCase::assertEquals($expected, $result);
+        $expected = [ 1, 2, ];
+        foreach ($expected as $value) {
+            TestCase::assertTrue(in_array($value, $result['sections']));
+        }
+
+        TestCase::assertEquals(count($expected), count($result['sections']));
 
         // Groups
         $user = $this->Users->get(2);
