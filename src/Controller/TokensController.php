@@ -2,17 +2,18 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Token;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Tokens Controller
  *
  * @property \App\Model\Table\TokensTable $Tokens
  *
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {
-
     /**
      * Index method
      *

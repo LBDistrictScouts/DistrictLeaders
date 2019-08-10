@@ -7,6 +7,8 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TokensController Test Case
+ *
+ * @uses \App\Controller\TokensController
  */
 class TokensControllerTest extends TestCase
 {
@@ -18,8 +20,29 @@ class TokensControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Camps',
+        'app.CampTypes',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
         'app.Tokens',
-        'app.Users'
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
     ];
 
     /**

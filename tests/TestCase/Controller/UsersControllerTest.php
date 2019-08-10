@@ -20,6 +20,7 @@ class UsersControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
         'app.RoleTypes',
         'app.RoleStatuses',
@@ -27,6 +28,8 @@ class UsersControllerTest extends TestCase
         'app.SectionTypes',
         'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
         'app.CampRoleTypes',
         'app.CampRoles',

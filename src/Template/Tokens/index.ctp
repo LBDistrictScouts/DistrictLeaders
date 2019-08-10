@@ -19,7 +19,6 @@
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('token') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('user_id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('expires') ?></th>
@@ -28,7 +27,8 @@
                 <th scope="col"><?= $this->Paginator->sort('deleted') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('hash') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('random_number') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('header') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('token_header') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('email_send_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -37,7 +37,6 @@
             <tr>
                 <td><?= $this->Number->format($token->id) ?></td>
                 <td><?= h($token->token) ?></td>
-                <td><?= $token->has('user') ? $this->Html->link($token->user->username, ['controller' => 'Users', 'action' => 'view', $token->user->id]) : '' ?></td>
                 <td><?= h($token->created) ?></td>
                 <td><?= h($token->modified) ?></td>
                 <td><?= h($token->expires) ?></td>
@@ -46,7 +45,8 @@
                 <td><?= h($token->deleted) ?></td>
                 <td><?= h($token->hash) ?></td>
                 <td><?= $this->Number->format($token->random_number) ?></td>
-                <td><?= h($token->header) ?></td>
+                <td><?= h($token->token_header) ?></td>
+                <td><?= $this->Number->format($token->email_send_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $token->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $token->id]) ?>

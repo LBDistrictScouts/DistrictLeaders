@@ -1,0 +1,69 @@
+<?php
+namespace App\Model\Table;
+
+use App\Model\Entity\EmailResponseType;
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
+use Cake\ORM\Table;
+use Cake\Validation\Validator;
+
+/**
+ * EmailResponseTypes Model
+ *
+ * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
+ *
+ * @method EmailResponseType get($primaryKey, $options = [])
+ * @method EmailResponseType newEntity($data = null, array $options = [])
+ * @method EmailResponseType[] newEntities(array $data, array $options = [])
+ * @method EmailResponseType|false save(EntityInterface $entity, $options = [])
+ * @method EmailResponseType saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailResponseType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailResponseType[] patchEntities($entities, array $data, array $options = [])
+ * @method EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
+ */
+class EmailResponseTypesTable extends Table
+{
+    /**
+     * Initialize method
+     *
+     * @param array $config The configuration for the Table.
+     * @return void
+     */
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+
+        $this->setTable('email_response_types');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
+
+        $this->hasMany('EmailResponses', [
+            'foreignKey' => 'email_response_type_id'
+        ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->integer('id')
+            ->allowEmptyString('id', null, 'create');
+
+        $validator
+            ->scalar('email_response_type')
+            ->maxLength('email_response_type', 255)
+            ->allowEmptyString('email_response_type');
+
+        $validator
+            ->boolean('bounce')
+            ->notEmptyString('bounce');
+
+        return $validator;
+    }
+}

@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TokensFixture
- *
  */
 class TokensFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -19,7 +17,6 @@ class TokensFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
         'token' => ['type' => 'string', 'length' => 511, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'user_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'created' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'modified' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'expires' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
@@ -28,17 +25,17 @@ class TokensFixture extends TestFixture
         'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'hash' => ['type' => 'string', 'length' => 511, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'random_number' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
-        'header' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'token_header' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
+        'email_send_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_indexes' => [
-            'tokens_user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
+            'tokens_email_send_id' => ['type' => 'index', 'columns' => ['email_send_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'tokens_user_id_fkey' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
+            'tokens_email_send_id_fkey' => ['type' => 'foreign', 'columns' => ['email_send_id'], 'references' => ['email_sends', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -50,16 +47,16 @@ class TokensFixture extends TestFixture
             [
                 'id' => 1,
                 'token' => 'Lorem ipsum dolor sit amet',
-                'user_id' => 1,
-                'created' => 1549913967,
-                'modified' => 1549913967,
-                'expires' => 1549913967,
-                'utilised' => 1549913967,
+                'created' => 1565473683,
+                'modified' => 1565473683,
+                'expires' => 1565473683,
+                'utilised' => 1565473683,
                 'active' => 1,
-                'deleted' => 1549913967,
+                'deleted' => 1565473683,
                 'hash' => 'Lorem ipsum dolor sit amet',
                 'random_number' => 1,
-                'header' => ''
+                'token_header' => '',
+                'email_send_id' => 1
             ],
         ];
         parent::init();

@@ -23,16 +23,12 @@
             <td><?= h($token->token) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $token->has('user') ? $this->Html->link($token->user->username, ['controller' => 'Users', 'action' => 'view', $token->user->id]) : '' ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Hash') ?></th>
             <td><?= h($token->hash) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Header') ?></th>
-            <td><?= h($token->header) ?></td>
+            <th scope="row"><?= __('Token Header') ?></th>
+            <td><?= h($token->token_header) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -41,6 +37,10 @@
         <tr>
             <th scope="row"><?= __('Random Number') ?></th>
             <td><?= $this->Number->format($token->random_number) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Email Send Id') ?></th>
+            <td><?= $this->Number->format($token->email_send_id) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>

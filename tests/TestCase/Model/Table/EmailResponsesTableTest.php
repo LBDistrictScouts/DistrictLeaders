@@ -1,21 +1,21 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TokensTable;
+use App\Model\Table\EmailResponsesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TokensTable Test Case
+ * App\Model\Table\EmailResponsesTable Test Case
  */
-class TokensTableTest extends TestCase
+class EmailResponsesTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TokensTable
+     * @var \App\Model\Table\EmailResponsesTable
      */
-    public $Tokens;
+    public $EmailResponses;
 
     /**
      * Fixtures
@@ -56,8 +56,8 @@ class TokensTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Tokens') ? [] : ['className' => TokensTable::class];
-        $this->Tokens = TableRegistry::getTableLocator()->get('Tokens', $config);
+        $config = TableRegistry::getTableLocator()->exists('EmailResponses') ? [] : ['className' => EmailResponsesTable::class];
+        $this->EmailResponses = TableRegistry::getTableLocator()->get('EmailResponses', $config);
     }
 
     /**
@@ -67,7 +67,7 @@ class TokensTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Tokens);
+        unset($this->EmailResponses);
 
         parent::tearDown();
     }

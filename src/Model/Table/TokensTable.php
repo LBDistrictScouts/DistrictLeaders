@@ -11,12 +11,12 @@ use Cake\Validation\Validator;
 /**
  * Tokens Model
  *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
+ * @property &\Cake\ORM\Association\BelongsTo $EmailSends
  *
  * @method Token get($primaryKey, $options = [])
  * @method Token newEntity($data = null, array $options = [])
  * @method Token[] newEntities(array $data, array $options = [])
- * @method Token|bool save(EntityInterface $entity, $options = [])
+ * @method Token|false save(EntityInterface $entity, $options = [])
  * @method Token saveOrFail(EntityInterface $entity, $options = [])
  * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
  * @method Token[] patchEntities($entities, array $data, array $options = [])
@@ -26,7 +26,6 @@ use Cake\Validation\Validator;
  */
 class TokensTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -43,8 +42,8 @@ class TokensTable extends Table
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
+        $this->belongsTo('EmailSends', [
+            'foreignKey' => 'email_send_id',
             'joinType' => 'INNER'
         ]);
     }
@@ -59,13 +58,13 @@ class TokensTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('token')
             ->maxLength('token', 511)
             ->requirePresence('token', 'create')
-            ->allowEmptyString('token', false);
+            ->notEmptyString('token');
 
         $validator
             ->dateTime('expires')
@@ -77,8 +76,7 @@ class TokensTable extends Table
 
         $validator
             ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->allowEmptyString('active', false);
+            ->notEmptyString('active');
 
         $validator
             ->dateTime('deleted')
@@ -94,7 +92,7 @@ class TokensTable extends Table
             ->allowEmptyString('random_number');
 
         $validator
-            ->allowEmptyString('header');
+            ->allowEmptyString('token_header');
 
         return $validator;
     }
@@ -108,7 +106,7 @@ class TokensTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
+        $rules->add($rules->existsIn(['email_send_id'], 'EmailSends'));
 
         return $rules;
     }

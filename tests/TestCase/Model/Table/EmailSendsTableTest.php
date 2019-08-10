@@ -1,21 +1,21 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\TokensTable;
+use App\Model\Table\EmailSendsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\TokensTable Test Case
+ * App\Model\Table\EmailSendsTable Test Case
  */
-class TokensTableTest extends TestCase
+class EmailSendsTableTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Table\TokensTable
+     * @var \App\Model\Table\EmailSendsTable
      */
-    public $Tokens;
+    public $EmailSends;
 
     /**
      * Fixtures
@@ -23,29 +23,23 @@ class TokensTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.EmailSends',
         'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailResponses',
+        'app.EmailResponseTypes',
+        'app.Users',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
+        'app.SectionTypes',
+        'app.ScoutGroups',
         'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
         'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
+        'app.Capabilities',
+        'app.CapabilitiesRoleTypes',
         'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
     ];
 
     /**
@@ -56,8 +50,8 @@ class TokensTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Tokens') ? [] : ['className' => TokensTable::class];
-        $this->Tokens = TableRegistry::getTableLocator()->get('Tokens', $config);
+        $config = TableRegistry::getTableLocator()->exists('EmailSends') ? [] : ['className' => EmailSendsTable::class];
+        $this->EmailSends = TableRegistry::getTableLocator()->get('EmailSends', $config);
     }
 
     /**
@@ -67,7 +61,7 @@ class TokensTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->Tokens);
+        unset($this->EmailSends);
 
         parent::tearDown();
     }
