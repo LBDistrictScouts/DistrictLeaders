@@ -27,6 +27,7 @@ class UserContactsTableTest extends TestCase
     public $fixtures = [
         'app.UserContacts',
         'app.UserContactTypes',
+        'app.PasswordStates',
         'app.Users',
         'app.RoleTypes',
         'app.RoleStatuses',

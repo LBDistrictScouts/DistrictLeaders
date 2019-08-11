@@ -2,17 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\AuditsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
-use Twig\Test\IntegrationTestCase;
 
 /**
  * App\Controller\AuditsController Test Case
+ *
+ * @uses \App\Controller\AuditsController
  */
 class AuditsControllerTest extends TestCase
 {
     use AppTestTrait;
-    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -20,30 +19,34 @@ class AuditsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'Audits';
 
     /**
      * Test index method
      *
      * @return void
-     *
-     * @throws
      */
     public function testIndex()
     {
-        $this->login();
-
-        $this->get(['controller' => 'Audits', 'action' => 'index']);
-
-        $this->assertResponseOk();
+        $this->tryIndexGet($this->controller);
     }
 
     /**

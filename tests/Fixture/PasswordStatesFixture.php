@@ -36,10 +36,9 @@ class PasswordStatesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'password_state' => 'Lorem ipsum dolor sit amet',
-                'active' => 1,
-                'expired' => 1
+                'active' => true,
+                'expired' => false
             ],
         ];
         parent::init();

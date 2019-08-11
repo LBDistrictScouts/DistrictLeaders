@@ -2,16 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\RoleTypesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\RoleTypesController Test Case
+ *
+ * @uses \App\Controller\RoleTypesController
  */
 class RoleTypesControllerTest extends TestCase
 {
     use AppTestTrait;
-    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -19,143 +19,108 @@ class RoleTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
-        'app.Capabilities',
-        'app.CapabilitiesRoleTypes',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'RoleTypes';
 
     /**
      * Test index method
      *
      * @return void
-     *
-     * @throws
      */
     public function testIndex()
     {
-        $this->login();
-
-        $this->get(['controller' => 'RoleTypes', 'action' => 'index']);
-
-        $this->assertResponseOk();
+        $this->tryIndexGet($this->controller);
     }
 
     /**
      * Test view method
      *
      * @return void
-     * @throws \PHPUnit\Exception
      */
     public function testView()
     {
-        $this->login();
-
-        $this->get(['controller' => 'RoleTypes', 'action' => 'view', 1]);
-
-        $this->assertResponseOk();
+        $this->tryViewGet($this->controller);
     }
 
     /**
      * Test add method
      *
      * @return void
-     * @throws \PHPUnit\Exception
      */
     public function testAdd()
     {
-        $this->login();
+        $this->tryAddGet($this->controller);
 
-        $this->get(['controller' => 'RoleTypes', 'action' => 'add']);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->post([
-            'controller' => 'RoleTypes',
-            'action' => 'add'
-        ], [
-            'role_type' => 'Assistant District Commissioner',
-            'role_abbreviation' => 'ADC',
-            'section_type_id' => 2,
-            'level' => 3,
-        ]);
-
-        $this->assertRedirect(['controller' => 'RoleTypes', 'action' => 'view', 8]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The role type has been saved.');
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'role_type' => 'Assistant Goat Commissioner',
+                'role_abbreviation' => 'AGC',
+                'section_type_id' => 1,
+                'level' => 4,
+            ],
+            8
+        );
     }
 
     /**
      * Test edit method
      *
      * @return void
-     * @throws \PHPUnit\Exception
      */
     public function testEdit()
     {
-        $this->login();
+        $this->tryEditGet($this->controller);
 
-        $this->get(['controller' => 'RoleTypes', 'action' => 'edit', 1]);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->configRequest([
-            'environment' => ['HTTPS' => 'on']
-        ]);
-
-        $this->post([
-            'controller' => 'RoleTypes',
-            'action' => 'edit',
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'role_type' => 'District Commissioner',
+                'role_abbreviation' => 'DC',
+                'section_type_id' => 1,
+                'level' => 1,
+            ],
             1
-        ], [
-            'role_type' => 'District Commissioner',
-            'role_abbreviation' => 'DC',
-            'section_type_id' => 1,
-            'level' => 1,
-        ]);
-
-        $this->assertRedirect(['controller' => 'RoleTypes', 'action' => 'view', 1]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The role type has been saved.');
+        );
     }
 
     /**
      * Test delete method
      *
      * @return void
-     *
-     * @throws
      */
     public function testDelete()
     {
-        $this->login();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->delete([
-            'controller' => 'RoleTypes',
-            'action' => 'delete',
-            7
-        ]);
-
-        $this->assertRedirect(['controller' => 'RoleTypes', 'action' => 'index']);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The role type has been deleted.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'role_type' => 'Assistant District Commissioner',
+                'role_abbreviation' => 'ADC',
+                'section_type_id' => 2,
+                'level' => 3,
+            ],
+            8
+        );
     }
 }

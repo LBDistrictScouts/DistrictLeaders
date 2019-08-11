@@ -11,16 +11,16 @@ use Cake\Validation\Validator;
 /**
  * PasswordStates Model
  *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
- * @method PasswordState get($primaryKey, $options = [])
- * @method PasswordState newEntity($data = null, array $options = [])
- * @method PasswordState[] newEntities(array $data, array $options = [])
- * @method PasswordState|bool save(EntityInterface $entity, $options = [])
- * @method PasswordState saveOrFail(EntityInterface $entity, $options = [])
- * @method PasswordState patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method PasswordState[] patchEntities($entities, array $data, array $options = [])
- * @method PasswordState findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\PasswordState get($primaryKey, $options = [])
+ * @method \App\Model\Entity\PasswordState newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\PasswordState[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\PasswordState|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PasswordState saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PasswordState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\PasswordState[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\PasswordState findOrCreate($search, callable $callback = null, $options = [])
  */
 class PasswordStatesTable extends Table
 {
@@ -54,23 +54,23 @@ class PasswordStatesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('password_state')
             ->maxLength('password_state', 255)
             ->requirePresence('password_state', 'create')
-            ->allowEmptyString('password_state', false);
+            ->notEmptyString('password_state');
 
         $validator
             ->boolean('active')
             ->requirePresence('active', 'create')
-            ->allowEmptyString('active', false);
+            ->notEmptyString('active');
 
         $validator
             ->boolean('expired')
             ->requirePresence('expired', 'create')
-            ->allowEmptyString('expired', false);
+            ->notEmptyString('expired');
 
         return $validator;
     }

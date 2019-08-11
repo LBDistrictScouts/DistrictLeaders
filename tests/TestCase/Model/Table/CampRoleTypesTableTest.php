@@ -29,6 +29,7 @@ class CampRoleTypesTableTest extends TestCase
         'app.CampRoles',
         'app.Camps',
         'app.CampTypes',
+        'app.PasswordStates',
         'app.Users',
         'app.RoleTypes',
         'app.RoleStatuses',

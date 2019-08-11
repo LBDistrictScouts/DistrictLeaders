@@ -7,6 +7,8 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\CampTypesController Test Case
+ *
+ * @uses \App\Controller\CampTypesController
  */
 class CampTypesControllerTest extends TestCase
 {

@@ -1,7 +1,9 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Capability;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -10,17 +12,17 @@ use Cake\Validation\Validator;
 /**
  * Capabilities Model
  *
- * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsToMany $RoleTypes
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
  *
- * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
- * @method \App\Model\Entity\Capability newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Capability|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Capability[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Capability findOrCreate($search, callable $callback = null, $options = [])
- * @property \App\Model\Table\CapabilitiesRoleTypesTable|\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
+ * @method Capability get($primaryKey, $options = [])
+ * @method Capability newEntity($data = null, array $options = [])
+ * @method Capability[] newEntities(array $data, array $options = [])
+ * @method Capability|false save(EntityInterface $entity, $options = [])
+ * @method Capability saveOrFail(EntityInterface $entity, $options = [])
+ * @method Capability patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Capability[] patchEntities($entities, array $data, array $options = [])
+ * @method Capability findOrCreate($search, callable $callback = null, $options = [])
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class CapabilitiesTable extends Table
 {
@@ -62,20 +64,20 @@ class CapabilitiesTable extends Table
             ->scalar('capability_code')
             ->maxLength('capability_code', 10)
             ->requirePresence('capability_code', 'create')
-            ->allowEmptyString('capability_code', null, false)
+            ->notEmptyString('capability_code')
             ->add('capability_code', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('capability')
             ->maxLength('capability', 255)
             ->requirePresence('capability', 'create')
-            ->allowEmptyString('capability', null, false)
+            ->notEmptyString('capability')
             ->add('capability', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->integer('min_level')
             ->requirePresence('min_level', 'create')
-            ->allowEmptyString('min_level', null, false);
+            ->notEmptyString('min_level');
 
         return $validator;
     }

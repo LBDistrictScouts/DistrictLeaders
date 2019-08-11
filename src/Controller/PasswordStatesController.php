@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\PasswordState;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * PasswordStates Controller
  *
  * @property \App\Model\Table\PasswordStatesTable $PasswordStates
  *
- * @method \App\Model\Entity\PasswordState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method PasswordState[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PasswordStatesController extends AppController
 {
@@ -54,7 +56,7 @@ class PasswordStatesController extends AppController
             if ($this->PasswordStates->save($passwordState)) {
                 $this->Flash->success(__('The password state has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $passwordState->get('id')]);
             }
             $this->Flash->error(__('The password state could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class PasswordStatesController extends AppController
             if ($this->PasswordStates->save($passwordState)) {
                 $this->Flash->success(__('The password state has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $passwordState->get('id')]);
             }
             $this->Flash->error(__('The password state could not be saved. Please, try again.'));
         }

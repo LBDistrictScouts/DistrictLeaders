@@ -22,8 +22,8 @@ use Cake\ORM\Entity;
  * @property string|null $friendly_from
  * @property int|null $notification_id
  *
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Notification $notification
+ * @property \App\Model\Entity\User|null $user
+ * @property \App\Model\Entity\Notification|null $notification
  * @property \App\Model\Entity\EmailResponse[] $email_responses
  * @property \App\Model\Entity\Token[] $tokens
  */

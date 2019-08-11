@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Section;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,18 +11,18 @@ use Cake\Validation\Validator;
 /**
  * Sections Model
  *
- * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\ScoutGroupsTable|\Cake\ORM\Association\BelongsTo $ScoutGroups
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
+ * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ScoutGroups
+ * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method \App\Model\Entity\Section get($primaryKey, $options = [])
- * @method \App\Model\Entity\Section newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Section|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Section[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Section findOrCreate($search, callable $callback = null, $options = [])
+ * @method Section get($primaryKey, $options = [])
+ * @method Section newEntity($data = null, array $options = [])
+ * @method Section[] newEntities(array $data, array $options = [])
+ * @method Section|false save(EntityInterface $entity, $options = [])
+ * @method Section saveOrFail(EntityInterface $entity, $options = [])
+ * @method Section patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Section[] patchEntities($entities, array $data, array $options = [])
+ * @method Section findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior

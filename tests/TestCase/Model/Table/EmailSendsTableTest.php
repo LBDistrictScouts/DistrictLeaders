@@ -24,7 +24,7 @@ class EmailSendsTableTest extends TestCase
      */
     public $fixtures = [
         'app.EmailSends',
-        'app.Users',
+        'app.PasswordStates',
         'app.Notifications',
         'app.NotificationTypes',
         'app.EmailResponses',

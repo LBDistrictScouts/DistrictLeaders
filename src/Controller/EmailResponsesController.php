@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\EmailResponsesTable $EmailResponses
  *
- * @method EmailResponse[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailResponsesController extends AppController
 {

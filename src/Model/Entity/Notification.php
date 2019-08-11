@@ -21,9 +21,9 @@ use Cake\ORM\Entity;
  * @property string|null $link_action
  * @property \Cake\I18n\FrozenTime|null $deleted
  *
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\NotificationType $notification_type
- * @property \App\Model\Entity\Link $link
+ * @property \App\Model\Entity\User|null $user
+ * @property \App\Model\Entity\NotificationType|null $notification_type
+ * @property \Cake\ORM\Entity|null $link
  * @property \App\Model\Entity\EmailSend[] $email_sends
  */
 class Notification extends Entity

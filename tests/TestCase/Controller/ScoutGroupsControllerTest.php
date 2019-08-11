@@ -1,17 +1,16 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\ScoutGroupsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\ScoutGroupsController Test Case
+ *
+ * @uses \App\Controller\ScoutGroupsController
  */
 class ScoutGroupsControllerTest extends TestCase
 {
     use AppTestTrait;
-    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -19,7 +18,10 @@ class ScoutGroupsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -30,6 +32,11 @@ class ScoutGroupsControllerTest extends TestCase
     ];
 
     /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'ScoutGroups';
+
+    /**
      * Test index method
      *
      * @return void
@@ -38,11 +45,7 @@ class ScoutGroupsControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->login();
-
-        $this->get(['controller' => 'ScoutGroups', 'action' => 'index']);
-
-        $this->assertResponseOk();
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -54,11 +57,7 @@ class ScoutGroupsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->login();
-
-        $this->get(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
-
-        $this->assertResponseOk();
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -70,30 +69,19 @@ class ScoutGroupsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->login();
+        $this->tryAddGet($this->controller);
 
-        $this->get(['controller' => 'ScoutGroups', 'action' => 'add']);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->post([
-            'controller' => 'ScoutGroups',
-            'action' => 'add'
-        ], [
-            'scout_group' => '4th Goatville',
-            'group_alias' => '4th Goat',
-            'number_stripped' => 4,
-            'charity_number' => 12345,
-            'group_domain' => 'https://4thgoat.com',
-        ]);
-
-        $this->assertRedirect(['controller' => 'ScoutGroups', 'action' => 'view', 2]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The scout group has been saved.');
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'scout_group' => '4th Goatville',
+                'group_alias' => '4th Goat',
+                'number_stripped' => 4,
+                'charity_number' => 12345,
+                'group_domain' => 'https://4thgoat.com',
+            ],
+            2
+        );
     }
 
     /**
@@ -105,35 +93,19 @@ class ScoutGroupsControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->login();
+        $this->tryEditGet($this->controller);
 
-        $this->get(['controller' => 'ScoutGroups', 'action' => 'edit', 1]);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->configRequest([
-            'environment' => ['HTTPS' => 'on']
-        ]);
-
-        $this->post([
-            'controller' => 'ScoutGroups',
-            'action' => 'edit',
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'scout_group' => '4th Goatville',
+                'group_alias' => '4th Goat',
+                'number_stripped' => 4,
+                'charity_number' => 12345,
+                'group_domain' => 'https://4thgoat.com',
+            ],
             1
-        ], [
-            'scout_group' => '4th Goatville',
-            'group_alias' => '4th Goat',
-            'number_stripped' => 4,
-            'charity_number' => 12345,
-            'group_domain' => 'https://4thgoat.com',
-        ]);
-
-        $this->assertRedirect(['controller' => 'ScoutGroups', 'action' => 'view', 1]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The scout group has been saved.');
+        );
     }
 
     /**
@@ -145,32 +117,16 @@ class ScoutGroupsControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->login();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        /** Setup the thing to be deleted. */
-        $this->post([
-            'controller' => 'ScoutGroups',
-            'action' => 'add'
-        ], [
-            'scout_group' => '9th Goatville',
-            'group_alias' => '9th Goat',
-            'number_stripped' => 9,
-            'charity_number' => 897,
-            'group_domain' => 'https://9th.com',
-        ]);
-
-        $this->delete([
-            'controller' => 'ScoutGroups',
-            'action' => 'delete',
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'scout_group' => '4th Goatville',
+                'group_alias' => '4th Goat',
+                'number_stripped' => 4,
+                'charity_number' => 12345,
+                'group_domain' => 'https://4thgoat.com',
+            ],
             2
-        ]);
-
-        $this->assertRedirect(['controller' => 'ScoutGroups', 'action' => 'index']);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The scout group has been deleted.');
+        );
     }
 }

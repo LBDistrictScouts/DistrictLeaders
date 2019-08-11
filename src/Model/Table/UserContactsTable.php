@@ -11,20 +11,21 @@ use Cake\Validation\Validator;
 /**
  * UserContacts Model
  *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UserContactTypesTable|\Cake\ORM\Association\BelongsTo $UserContactTypes
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
+ * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method UserContact get($primaryKey, $options = [])
- * @method UserContact newEntity($data = null, array $options = [])
- * @method UserContact[] newEntities(array $data, array $options = [])
- * @method UserContact|bool save(EntityInterface $entity, $options = [])
- * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContact[] patchEntities($entities, array $data, array $options = [])
- * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class UserContactsTable extends Table
 {

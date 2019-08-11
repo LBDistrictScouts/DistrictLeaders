@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
  *
- * @method ScoutGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ScoutGroupsController extends AppController
 {

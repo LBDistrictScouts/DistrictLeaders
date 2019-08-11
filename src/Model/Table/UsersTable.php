@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -12,17 +13,21 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Audits
- * @property \App\Model\Table\AuditsTable|\Cake\ORM\Association\HasMany $Changes
- * @property \App\Model\Table\CampRolesTable|\Cake\ORM\Association\HasMany $CampRoles
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\PasswordStatesTable&\Cake\ORM\Association\BelongsTo $PasswordStates
+ * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Changes
+ * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
+ * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
+ * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
+ * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User|false save(EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  *
@@ -49,6 +54,10 @@ class UsersTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
 
+        $this->belongsTo('PasswordStates', [
+            'foreignKey' => 'password_state_id'
+        ]);
+
         $this->hasMany('Changes', [
             'className' => 'Audits',
             'foreignKey' => 'user_id',
@@ -62,11 +71,19 @@ class UsersTable extends Table
         $this->hasMany('CampRoles', [
             'foreignKey' => 'user_id'
         ]);
-
+        $this->hasMany('EmailSends', [
+            'foreignKey' => 'user_id'
+        ]);
+        $this->hasMany('Notifications', [
+            'foreignKey' => 'user_id'
+        ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_id',
             'dependent' => true,
             'cascadeCallbacks' => true,
+        ]);
+        $this->hasMany('UserContacts', [
+            'foreignKey' => 'user_id'
         ]);
     }
 
@@ -103,25 +120,25 @@ class UsersTable extends Table
         $validator
             ->integer('membership_number')
             ->requirePresence('membership_number', 'create')
-            ->allowEmptyString('membership_number', 'A unique, valid TSA membership number is required.', false)
+            ->notEmptyString('membership_number', 'A unique, valid TSA membership number is required.')
             ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->allowEmptyString('first_name', 'A first name is required.', false);
+            ->notEmptyString('first_name', 'A first name is required.');
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->allowEmptyString('last_name', 'A last name is required.', false);
+            ->notEmptyString('last_name', 'A last name is required.');
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->allowEmptyString('email', 'An email is required.', false)
+            ->notEmptyString('email', 'An email is required.')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
@@ -181,6 +198,7 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['membership_number']));
+        $rules->add($rules->existsIn(['password_state_id'], 'PasswordStates'));
 
         return $rules;
     }

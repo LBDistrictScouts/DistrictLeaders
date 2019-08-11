@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
  * @property \App\Model\Table\EmailResponseTypesTable&\Cake\ORM\Association\BelongsTo $EmailResponseTypes
  *
- * @method EmailResponse get($primaryKey, $options = [])
- * @method EmailResponse newEntity($data = null, array $options = [])
- * @method EmailResponse[] newEntities(array $data, array $options = [])
- * @method EmailResponse|false save(EntityInterface $entity, $options = [])
- * @method EmailResponse saveOrFail(EntityInterface $entity, $options = [])
- * @method EmailResponse patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method EmailResponse[] patchEntities($entities, array $data, array $options = [])
- * @method EmailResponse findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailResponse get($primaryKey, $options = [])
+ * @method \App\Model\Entity\EmailResponse newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EmailResponse[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

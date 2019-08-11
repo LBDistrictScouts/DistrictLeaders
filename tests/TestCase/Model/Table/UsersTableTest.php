@@ -27,7 +27,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Users',
+        'app.PasswordStates', 'app.Users',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -154,6 +154,7 @@ class UsersTableTest extends TestCase
             'last_login_ip' => '192.168.0.1',
             'full_name' => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
             'capabilities' => null,
+            'password_state_id' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

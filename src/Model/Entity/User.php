@@ -37,9 +37,14 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\CampRole[] $camp_roles
  * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\PasswordState|null $password_state
+ * @property \App\Model\Entity\EmailSend[] $email_sends
+ * @property \App\Model\Entity\Notification[] $notifications
+ * @property \App\Model\Entity\UserContact[] $user_contacts
+ *
+ * @property int|null $password_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
- * @property int|null $password_state_id
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -69,10 +74,12 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'modified' => true,
         'last_login' => true,
         'last_login_ip' => true,
-        'scout_group' => true,
-        'audits' => true,
-        'roles' => true,
         'capabilities' => true,
+        'password_state_id' => true,
+        'changes' => true,
+        'audits' => true,
+        'camp_roles' => true,
+        'roles' => true
     ];
 
     /**

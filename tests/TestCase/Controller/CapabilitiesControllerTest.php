@@ -7,6 +7,8 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\CapabilitiesController Test Case
+ *
+ * @uses \App\Controller\CapabilitiesController
  */
 class CapabilitiesControllerTest extends TestCase
 {

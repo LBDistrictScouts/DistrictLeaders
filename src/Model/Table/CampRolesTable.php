@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\CampRole;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,18 +11,18 @@ use Cake\Validation\Validator;
 /**
  * CampRoles Model
  *
- * @property \App\Model\Table\CampsTable|\Cake\ORM\Association\BelongsTo $Camps
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\CampRoleTypesTable|\Cake\ORM\Association\BelongsTo $CampRoleTypes
+ * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\BelongsTo $Camps
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
+ * @property \App\Model\Table\CampRoleTypesTable&\Cake\ORM\Association\BelongsTo $CampRoleTypes
  *
- * @method \App\Model\Entity\CampRole get($primaryKey, $options = [])
- * @method \App\Model\Entity\CampRole newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\CampRole[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CampRole|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRole saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CampRole[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CampRole findOrCreate($search, callable $callback = null, $options = [])
+ * @method CampRole get($primaryKey, $options = [])
+ * @method CampRole newEntity($data = null, array $options = [])
+ * @method CampRole[] newEntities(array $data, array $options = [])
+ * @method CampRole|false save(EntityInterface $entity, $options = [])
+ * @method CampRole saveOrFail(EntityInterface $entity, $options = [])
+ * @method CampRole patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method CampRole[] patchEntities($entities, array $data, array $options = [])
+ * @method CampRole findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

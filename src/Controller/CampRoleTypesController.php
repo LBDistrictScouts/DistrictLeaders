@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\CampRoleType;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * CampRoleTypes Controller
  *
  * @property \App\Model\Table\CampRoleTypesTable $CampRoleTypes
  *
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method CampRoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRoleTypesController extends AppController
 {
@@ -54,7 +56,7 @@ class CampRoleTypesController extends AppController
             if ($this->CampRoleTypes->save($campRoleType)) {
                 $this->Flash->success(__('The camp role type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRoleType->get('id')]);
             }
             $this->Flash->error(__('The camp role type could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class CampRoleTypesController extends AppController
             if ($this->CampRoleTypes->save($campRoleType)) {
                 $this->Flash->success(__('The camp role type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRoleType->get('id')]);
             }
             $this->Flash->error(__('The camp role type could not be saved. Please, try again.'));
         }

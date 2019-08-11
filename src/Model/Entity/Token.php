@@ -20,6 +20,7 @@ use Cake\ORM\Entity;
  * @property int $email_send_id
  *
  * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\EmailSend $email_send
  */
 class Token extends Entity
 {

@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\RoleType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,19 +11,19 @@ use Cake\Validation\Validator;
 /**
  * RoleTypes Model
  *
- * @property \App\Model\Table\SectionTypesTable|\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\RolesTable|\Cake\ORM\Association\HasMany $Roles
- * @property \App\Model\Table\CapabilitiesTable|\Cake\ORM\Association\BelongsToMany $Capabilities
+ * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
+ * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
  *
- * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
- * @property \App\Model\Table\CapabilitiesRoleTypesTable|\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
+ * @method RoleType get($primaryKey, $options = [])
+ * @method RoleType newEntity($data = null, array $options = [])
+ * @method RoleType[] newEntities(array $data, array $options = [])
+ * @method RoleType|false save(EntityInterface $entity, $options = [])
+ * @method RoleType saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleType[] patchEntities($entities, array $data, array $options = [])
+ * @method RoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class RoleTypesTable extends Table
 {
@@ -63,13 +65,13 @@ class RoleTypesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->allowEmptyString('id');
 
         $validator
             ->scalar('role_type')
             ->maxLength('role_type', 255)
             ->requirePresence('role_type', 'create')
-            ->allowEmptyString('role_type', null, false);
+            ->notEmptyString('role_type');
 
         $validator
             ->scalar('role_abbreviation')
@@ -79,7 +81,7 @@ class RoleTypesTable extends Table
         $validator
             ->integer('level')
             ->requirePresence('level', 'create')
-            ->allowEmptyString('level', null, false);
+            ->notEmptyString('level');
 
         return $validator;
     }

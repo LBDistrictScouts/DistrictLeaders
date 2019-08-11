@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property string|null $clean_domain
+ * @property string $clean_domain
  *
  * @property \App\Model\Entity\Section[] $sections
  * @property \Cake\I18n\FrozenTime|null $deleted

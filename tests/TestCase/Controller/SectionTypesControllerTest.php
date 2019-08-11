@@ -2,16 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\SectionTypesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\SectionTypesController Test Case
+ *
+ * @uses \App\Controller\SectionTypesController
  */
 class SectionTypesControllerTest extends TestCase
 {
     use AppTestTrait;
-    use IntegrationTestTrait;
 
     /**
      * Fixtures
@@ -19,138 +19,95 @@ class SectionTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'SectionTypes';
 
     /**
      * Test index method
      *
      * @return void
-     *
-     * @throws
      */
     public function testIndex()
     {
-        $this->login();
-
-        $this->get(['controller' => 'SectionTypes', 'action' => 'index']);
-
-        $this->assertResponseOk();
+        $this->tryIndexGet($this->controller);
     }
 
     /**
      * Test view method
      *
      * @return void
-     *
-     * @throws
      */
     public function testView()
     {
-        $this->login();
-
-        $this->get(['controller' => 'SectionTypes', 'action' => 'view', 1]);
-
-        $this->assertResponseOk();
+        $this->tryViewGet($this->controller);
     }
 
     /**
      * Test add method
      *
      * @return void
-     *
-     * @throws
      */
     public function testAdd()
     {
-        $this->login();
+        $this->tryAddGet($this->controller);
 
-        $this->get(['controller' => 'SectionTypes', 'action' => 'add']);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->post([
-            'controller' => 'SectionTypes',
-            'action' => 'add'
-        ], [
-            'section_type' => 'Llamas'
-        ]);
-
-        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'view', 9]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The section type has been saved.');
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'section_type' => 'Llamas'
+            ],
+            9
+        );
     }
 
     /**
      * Test edit method
      *
      * @return void
-     *
-     * @throws
      */
     public function testEdit()
     {
-        $this->login();
+        $this->tryEditGet($this->controller);
 
-        $this->get(['controller' => 'SectionTypes', 'action' => 'edit', 1]);
-
-        $this->assertResponseOk();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->configRequest([
-            'environment' => ['HTTPS' => 'on']
-        ]);
-
-        $this->post([
-            'controller' => 'SectionTypes',
-            'action' => 'edit',
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'section_type' => 'Llamas Kids'
+            ],
             1
-        ], [
-            'section_type' => 'Llamas Kids'
-        ]);
-
-        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'view', 1]);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The section type has been saved.');
+        );
     }
 
     /**
      * Test delete method
      *
      * @return void
-     *
-     * @throws
      */
     public function testDelete()
     {
-        $this->login();
-
-        $this->enableCsrfToken();
-        $this->enableSecurityToken();
-        $this->enableRetainFlashMessages();
-
-        $this->delete([
-            'controller' => 'SectionTypes',
-            'action' => 'delete',
-            8
-        ]);
-
-        $this->assertRedirect(['controller' => 'SectionTypes', 'action' => 'index']);
-        $this->assertFlashElement('Flash/success');
-        $this->assertFlashMessage('The section type has been deleted.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'section_type' => 'Llamas'
+            ],
+            9
+        );
     }
 }

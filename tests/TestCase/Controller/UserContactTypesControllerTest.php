@@ -7,6 +7,8 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\UserContactTypesController Test Case
+ *
+ * @uses \App\Controller\UserContactTypesController
  */
 class UserContactTypesControllerTest extends TestCase
 {
@@ -18,20 +20,18 @@ class UserContactTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.UserContactTypes',
-        'app.UserContacts',
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
-        'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
+        'app.UserContactTypes',
+        'app.UserContacts',
     ];
 
     /**
