@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Section;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Sections Controller
  *
  * @property \App\Model\Table\SectionsTable $Sections
  *
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Section[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
@@ -57,7 +59,7 @@ class SectionsController extends AppController
             if ($this->Sections->save($section)) {
                 $this->Flash->success(__('The section has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $section->get('id')]);
             }
             $this->Flash->error(__('The section could not be saved. Please, try again.'));
         }
@@ -83,7 +85,7 @@ class SectionsController extends AppController
             if ($this->Sections->save($section)) {
                 $this->Flash->success(__('The section has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $section->get('id')]);
             }
             $this->Flash->error(__('The section could not be saved. Please, try again.'));
         }

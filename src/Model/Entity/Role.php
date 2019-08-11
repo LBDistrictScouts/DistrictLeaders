@@ -13,17 +13,17 @@ use Cake\ORM\Entity;
  * @property int $role_status_id
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property int|null $user_contact_id
  *
  * @property \App\Model\Entity\RoleType $role_type
  * @property \App\Model\Entity\Section $section
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\RoleStatus $role_status
- * @property \Cake\I18n\FrozenTime|null $deleted
- * @property int|null $user_contact_id
+ * @property \App\Model\Entity\UserContact|null $user_contact
  */
 class Role extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -40,6 +40,8 @@ class Role extends Entity
         'role_status_id' => true,
         'created' => true,
         'modified' => true,
+        'deleted' => true,
+        'user_contact_id' => true,
         'role_type' => true,
         'section' => true,
         'user' => true,

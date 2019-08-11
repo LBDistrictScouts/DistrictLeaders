@@ -24,6 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailResponse findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class EmailResponsesTable extends Table
 {
@@ -41,7 +42,18 @@ class EmailResponsesTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->addBehavior('Timestamp');
+        $this->addBehavior('Timestamp', [
+            'events' => [
+                'Model.beforeSave' => [
+                    'created' => 'new',
+                    'modified' => 'always',
+                ]
+            ]
+        ]);
+
+        $this->addBehavior('Muffin/Trash.Trash', [
+            'field' => 'deleted'
+        ]);
 
         $this->belongsTo('EmailSends', [
             'foreignKey' => 'email_send_id',
@@ -66,12 +78,18 @@ class EmailResponsesTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
-            ->dateTime('deleted')
-            ->allowEmptyDateTime('deleted');
+            ->integer('email_send_id')
+            ->requirePresence('email_send_id')
+            ->notEmptyString('email_send_id');
+
+        $validator
+            ->integer('email_response_type_id')
+            ->requirePresence('email_response_type_id')
+            ->notEmptyString('email_response_type_id');
 
         $validator
             ->dateTime('received')
-            ->allowEmptyDateTime('received');
+            ->notEmptyDateTime('received');
 
         $validator
             ->scalar('link_clicked')

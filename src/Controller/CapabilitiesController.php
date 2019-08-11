@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Capability;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Capabilities Controller
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
  *
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Capability[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
 {
@@ -54,7 +56,7 @@ class CapabilitiesController extends AppController
             if ($this->Capabilities->save($capability)) {
                 $this->Flash->success(__('The capability has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $capability->get('id')]);
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class CapabilitiesController extends AppController
             if ($this->Capabilities->save($capability)) {
                 $this->Flash->success(__('The capability has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $capability->get('id')]);
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }

@@ -2,7 +2,6 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\UserContactsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,7 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class UserContactsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -32,6 +31,21 @@ class UserContactsControllerTest extends TestCase
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
+        'app.Roles',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'UserContacts';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'contact_field' => 'james@mushroom.com',
+        'user_id' => 2,
+        'user_contact_type_id' => 1,
     ];
 
     /**
@@ -41,7 +55,7 @@ class UserContactsControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -51,7 +65,7 @@ class UserContactsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -61,7 +75,13 @@ class UserContactsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -71,7 +91,13 @@ class UserContactsControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -81,6 +107,10 @@ class UserContactsControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

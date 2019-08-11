@@ -15,15 +15,16 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $Sections
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $RoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $UserContacts
  *
- * @method \App\Model\Entity\Role get($primaryKey, $options = [])
- * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Role|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Role saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Role patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Role[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Role findOrCreate($search, callable $callback = null, $options = [])
+ * @method Role get($primaryKey, $options = [])
+ * @method Role newEntity($data = null, array $options = [])
+ * @method Role[] newEntities(array $data, array $options = [])
+ * @method Role|false save(EntityInterface $entity, $options = [])
+ * @method Role saveOrFail(EntityInterface $entity, $options = [])
+ * @method Role patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Role[] patchEntities($entities, array $data, array $options = [])
+ * @method Role findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -63,6 +64,9 @@ class RolesTable extends Table
             'foreignKey' => 'role_status_id',
             'joinType' => 'INNER'
         ]);
+        $this->belongsTo('UserContacts', [
+            'foreignKey' => 'user_contact_id'
+        ]);
     }
 
     /**
@@ -76,6 +80,10 @@ class RolesTable extends Table
         $validator
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
+
+        $validator
+            ->dateTime('deleted')
+            ->allowEmptyDateTime('deleted');
 
         return $validator;
     }
@@ -93,6 +101,7 @@ class RolesTable extends Table
         $rules->add($rules->existsIn(['section_id'], 'Sections'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['role_status_id'], 'RoleStatuses'));
+        $rules->add($rules->existsIn(['user_contact_id'], 'UserContacts'));
 
         return $rules;
     }

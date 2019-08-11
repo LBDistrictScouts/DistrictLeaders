@@ -45,16 +45,15 @@ class EmailResponsesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'email_send_id' => 1,
-                'deleted' => 1565473837,
                 'email_response_type_id' => 1,
-                'created' => 1565473837,
-                'received' => 1565473837,
+                'created' => 1554028717,
+                'received' => 1554028717,
                 'link_clicked' => 'Lorem ipsum dolor sit amet',
                 'ip_address' => 'Lorem ipsum dolor sit amet',
                 'bounce_reason' => 'Lorem ipsum dolor sit amet',
-                'message_size' => 1
+                'message_size' => 1,
+                'deleted' => null
             ],
         ];
         parent::init();

@@ -57,7 +57,7 @@ class UserContactTypesController extends AppController
             if ($this->UserContactTypes->save($userContactType)) {
                 $this->Flash->success(__('The user contact type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $userContactType->get('id')]);
             }
             $this->Flash->error(__('The user contact type could not be saved. Please, try again.'));
         }
@@ -81,7 +81,7 @@ class UserContactTypesController extends AppController
             if ($this->UserContactTypes->save($userContactType)) {
                 $this->Flash->success(__('The user contact type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $userContactType->get('id')]);
             }
             $this->Flash->error(__('The user contact type could not be saved. Please, try again.'));
         }

@@ -60,7 +60,7 @@ class UserContactsController extends AppController
             if ($this->UserContacts->save($userContact)) {
                 $this->Flash->success(__('The user contact has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $userContact->get('id')]);
             }
             $this->Flash->error(__('The user contact could not be saved. Please, try again.'));
         }
@@ -85,7 +85,7 @@ class UserContactsController extends AppController
             if ($this->UserContacts->save($userContact)) {
                 $this->Flash->success(__('The user contact has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $userContact->get('id')]);
             }
             $this->Flash->error(__('The user contact could not be saved. Please, try again.'));
         }

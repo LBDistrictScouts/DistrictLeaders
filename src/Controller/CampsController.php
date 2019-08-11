@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Camp;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Camps Controller
  *
  * @property \App\Model\Table\CampsTable $Camps
  *
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Camp[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampsController extends AppController
 {
@@ -54,10 +56,11 @@ class CampsController extends AppController
         $camp = $this->Camps->newEntity();
         if ($this->request->is('post')) {
             $camp = $this->Camps->patchEntity($camp, $this->request->getData());
+            debug($camp);
             if ($this->Camps->save($camp)) {
                 $this->Flash->success(__('The camp has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $camp->get('id')]);
             }
             $this->Flash->error(__('The camp could not be saved. Please, try again.'));
         }
@@ -82,7 +85,7 @@ class CampsController extends AppController
             if ($this->Camps->save($camp)) {
                 $this->Flash->success(__('The camp has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $camp->get('id')]);
             }
             $this->Flash->error(__('The camp could not be saved. Please, try again.'));
         }
