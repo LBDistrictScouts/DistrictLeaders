@@ -2,7 +2,6 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\CampRolesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,7 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class CampRolesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -40,13 +39,18 @@ class CampRolesControllerTest extends TestCase
     ];
 
     /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'CampRoles';
+
+    /**
      * Test index method
      *
      * @return void
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -56,7 +60,7 @@ class CampRolesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -66,7 +70,17 @@ class CampRolesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'camp_id' => 1,
+                'user_id' => 2,
+                'camp_role_type_id' => 1
+            ],
+            2
+        );
     }
 
     /**
@@ -76,7 +90,17 @@ class CampRolesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'camp_id' => 1,
+                'user_id' => 2,
+                'camp_role_type_id' => 1
+            ],
+            1
+        );
     }
 
     /**
@@ -86,6 +110,14 @@ class CampRolesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'camp_id' => 1,
+                'user_id' => 2,
+                'camp_role_type_id' => 1
+            ],
+            2
+        );
     }
 }

@@ -3,6 +3,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\EmailSend;
 use Cake\Datasource\EntityInterface;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -133,6 +134,238 @@ class EmailSendsTable extends Table
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['notification_id'], 'Notifications'));
 
+        $rules->add($rules->isUnique(['email_generation_code']));
+        $rules->add($rules->isUnique(['message_send_code']));
+
         return $rules;
+    }
+
+    /**
+     * Is a finder which will return a query with non-live (pre-release & archive) events only.
+     *
+     * @param \Cake\ORM\Query $query The original query to be modified.
+     * @return \Cake\ORM\Query The modified query.
+     */
+    public function findUnsent($query)
+    {
+        return $query->where(function ($exp) {
+            /** @var \Cake\Database\Expression\QueryExpression $exp */
+            return $exp->isNull('sent');
+        });
+    }
+
+    /**
+     * Hashes the password before save
+     *
+     * @param string $emailGenerationCode The Type & SubType of Token to Make
+     *
+     * @return false|int
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+     */
+    public function make($emailGenerationCode)
+    {
+        $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
+
+        $generationArray = explode('-', $emailGenerationCode, 3);
+
+        $type = $generationArray[0];
+        $entityId = $generationArray[1];
+        $subType = $generationArray[2];
+
+        $existExempt = ['USR-PWD'];
+        $notiTypeCode = $type . '-' . $subType;
+        if ($exists && !in_array($notiTypeCode, $existExempt)) {
+            return false;
+        }
+
+        if (in_array($notiTypeCode, $existExempt)) {
+            $iterationNum = 0;
+            $newCode = $emailGenerationCode;
+
+            while ($exists) {
+                $iterationNum += 1;
+                $newCode = $emailGenerationCode . '-' . $iterationNum;
+                $exists = $this->exists(['email_generation_code' => $newCode]);
+            }
+            $emailGenerationCode = $newCode;
+        }
+
+        $includeToken = true;
+        $includeNotification = true;
+
+        switch ($type) {
+            case 'USR':
+                $user = $this->Users->get($entityId);
+                $userId = $entityId;
+                $authenticate = true;
+
+                switch ($subType) {
+                    case 'PWD':
+                        $layout = 'password_reset';
+                        $subject = 'Password Reset for ' . $user->full_name;
+                        $source = 'User';
+
+                        $redirect = [
+                            'controller' => 'Users',
+                            'action' => 'token',
+                            'prefix' => false,
+                        ];
+                        break;
+                    case 'NEW':
+                        $layout = 'new_user';
+                        $subject = 'Welcome to Site ' . $user->full_name;
+                        $source = 'User';
+
+                        $redirect = [
+                            'controller' => 'Users',
+                            'action' => 'token',
+                            'prefix' => false,
+                        ];
+                        break;
+                    default:
+                        return false;
+                }
+
+                break;
+            default:
+                return false;
+        }
+
+        $data = [
+            'email_generation_code' => $emailGenerationCode,
+            'sent' => null,
+            'user_id' => $userId,
+            'subject' => $subject,
+            'email_template' => $layout,
+            'include_token' => $includeToken,
+        ];
+
+        if ($includeNotification) {
+            $notificationTypeID = $this->Notifications->NotificationTypes->getTypeCode($type, $subType);
+            $notificationData = [
+                'notification' => [
+                    'notification_header' => $subject,
+                    'notification_type_id' => $notificationTypeID,
+                    'user_id' => $userId,
+                    'new' => true,
+                    'notification_source' => $source,
+                ],
+            ];
+            $data = array_merge($data, $notificationData);
+        }
+
+        if ($includeToken) {
+            $tokenData = [
+                'tokens' => [
+                    [
+                        'token' => 'Token for ' . $subject,
+                        'token_header' => [
+                            'redirect' => $redirect,
+                            'authenticate' => $authenticate,
+                        ]
+                    ]
+                ]
+            ];
+            $data = array_merge($data, $tokenData);
+        }
+
+        $sendEntity = $this->newEntity($data);
+
+        if ($this->save($sendEntity, ['associated' => ['Tokens', 'Notifications']])) {
+            return $sendEntity->id;
+        }
+    }
+
+    /**
+     * Dispatches the Email using the Mailer
+     *
+     * @param int $emailSendId The ID of the Email Send
+     *
+     * @return bool
+     */
+    public function send($emailSendId)
+    {
+        if (!$this->exists(['id' => $emailSendId])) {
+            return false;
+        }
+        $email = $this->get($emailSendId, ['contain' => ['Tokens', 'Users']]);
+
+        $token = null;
+
+        if ($email->include_token) {
+            $token = $email->tokens[0];
+            $token = $this->Tokens->buildToken($token->id);
+        }
+
+        $generationArray = explode('-', $email->email_generation_code);
+
+        $type = $generationArray[0];
+        $entityId = $generationArray[1];
+
+        switch ($type) {
+            case 'USR':
+                $entity = $this->Users->get($entityId);
+                break;
+            default:
+                $entity = null;
+        }
+
+        /** @var \App\Mailer\BasicMailer $mailer */
+        $mailer = $this->getMailer('Basic');
+        $mailer->send('basic', [$email, $token, $entity]);
+
+        $email->set('sent', FrozenTime::now());
+        $this->save($email, ['validate' => false]);
+
+        return true;
+    }
+
+    /**
+     * Makes an Email Dispatch Event and then despatches it.
+     *
+     * @param string $emailGenerationCode The Type & SubType of Token to Make
+     *
+     * @return bool
+     */
+    public function makeAndSend($emailGenerationCode)
+    {
+        $emailSend = $this->make($emailGenerationCode);
+
+        if ($emailSend == false) {
+            return false;
+        }
+
+        if ($this->send($emailSend)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Makes an Email Dispatch Event and then dispatches it.
+     *
+     * @param \stdClass $results The Returned Results Array
+     * @param array $sendHeaders The Send Headers
+     *
+     * @return bool
+     */
+    public function sendRegister($results, $sendHeaders)
+    {
+        if (!key_exists('X-Gen-ID', $sendHeaders)) {
+            $emailSend = $this->newEntity();
+        } else {
+            $emailSend = $this->get($sendHeaders['X-Gen-ID']);
+        }
+
+        $emailSend->set('message_send_code', $results->id);
+        $emailSend->set('sent', FrozenTime::now());
+
+        $this->save($emailSend);
+
+        return true;
     }
 }

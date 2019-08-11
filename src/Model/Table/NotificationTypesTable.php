@@ -2,6 +2,7 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\NotificationType;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -58,7 +59,7 @@ class NotificationTypesTable extends Table
         $validator
             ->scalar('notification_type')
             ->maxLength('notification_type', 45)
-            ->allowEmptyString('notification_type');
+            ->notEmptyString('notification_type');
 
         $validator
             ->scalar('notification_description')
@@ -76,5 +77,65 @@ class NotificationTypesTable extends Table
             ->notEmptyString('type_code');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['notification_type']));
+        $rules->add($rules->isUnique(['type_code']));
+
+        return $rules;
+    }
+
+    /**
+     * install the application status config
+     *
+     * @return mixed
+     */
+    public function installBaseTypes()
+    {
+        $base = Configure::read('notificationTypes');
+
+        $total = 0;
+
+        foreach ($base as $baseType) {
+            $query = $this->find()->where(['notification_type' => $baseType['notification_type']]);
+            $status = $this->newEntity();
+            if ($query->count() > 0) {
+                $status = $query->first();
+            }
+            $this->patchEntity($status, $baseType);
+            if ($this->save($status)) {
+                $total += 1;
+            };
+        }
+
+        return $total;
+    }
+
+    /**
+     * install the application status config
+     *
+     * @param string $type The Type of the Notification
+     * @param string $subtype The SubType
+     *
+     * @return mixed
+     */
+    public function getTypeCode($type, $subtype)
+    {
+        $code = $type . '-' . $subtype;
+
+        if ($this->exists(['type_code' => $code])) {
+            return $this->find()->where(['type_code' => $code])->first()->id;
+        }
+
+        return $this->find()->where(['type_code' => 'GEN-NOT'])->first()->id;
     }
 }

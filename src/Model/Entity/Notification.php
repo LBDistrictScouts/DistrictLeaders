@@ -23,7 +23,6 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\NotificationType|null $notification_type
- * @property \Cake\ORM\Entity|null $link
  * @property \App\Model\Entity\EmailSend[] $email_sends
  */
 class Notification extends Entity
@@ -53,7 +52,6 @@ class Notification extends Entity
         'deleted' => true,
         'user' => true,
         'notification_type' => true,
-        'link' => true,
         'email_sends' => true
     ];
 }

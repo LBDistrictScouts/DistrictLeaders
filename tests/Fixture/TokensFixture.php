@@ -45,18 +45,25 @@ class TokensFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'token' => 'Lorem ipsum dolor sit amet',
-                'created' => 1565473683,
-                'modified' => 1565473683,
-                'expires' => 1565473683,
-                'utilised' => 1565473683,
-                'active' => 1,
-                'deleted' => 1565473683,
-                'hash' => 'Lorem ipsum dolor sit amet',
-                'random_number' => 1,
-                'token_header' => '',
-                'email_send_id' => 1
+                'token' => 'Password Reset Token for Jacob Tyler',
+                'email_send_id' => 1,
+                'created' => '2019-03-31 11:26:44',
+                'modified' => '2019-03-31 11:26:44',
+                'expires' => '2019-04-30 11:26:44',
+                'utilised' => null,
+                'active' => true,
+                'deleted' => null,
+                'hash' => 'de3fcc4b18f723440bda95f40ef791e9953b0c03044b3a736065759800861012',
+                'random_number' => 54498,
+                'token_header' => [
+                    'authenticate' => false,
+                    'redirect' => [
+                        'controller' => 'Applications',
+                        'action' => 'view',
+                        'prefix' => false,
+                        1,
+                    ]
+                ]
             ],
         ];
         parent::init();

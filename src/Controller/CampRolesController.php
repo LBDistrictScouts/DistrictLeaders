@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\CampRole;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * CampRoles Controller
  *
  * @property \App\Model\Table\CampRolesTable $CampRoles
  *
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method CampRole[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRolesController extends AppController
 {
@@ -57,7 +59,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }
@@ -84,7 +86,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }

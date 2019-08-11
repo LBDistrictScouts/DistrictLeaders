@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\NotificationTypesTable&\Cake\ORM\Association\BelongsTo $NotificationTypes
- * @property \Cake\ORM\Table&\Cake\ORM\Association\BelongsTo $Links
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
  *
  * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
@@ -50,9 +49,6 @@ class NotificationsTable extends Table
         ]);
         $this->belongsTo('NotificationTypes', [
             'foreignKey' => 'notification_type_id'
-        ]);
-        $this->belongsTo('Links', [
-            'foreignKey' => 'link_id'
         ]);
         $this->hasMany('EmailSends', [
             'foreignKey' => 'notification_id'
@@ -95,6 +91,10 @@ class NotificationsTable extends Table
             ->allowEmptyString('notification_source');
 
         $validator
+            ->numeric('link_id')
+            ->allowEmptyString('link_controller');
+
+        $validator
             ->scalar('link_controller')
             ->maxLength('link_controller', 45)
             ->allowEmptyString('link_controller');
@@ -127,7 +127,6 @@ class NotificationsTable extends Table
     {
         $rules->add($rules->existsIn(['user_id'], 'Users'));
         $rules->add($rules->existsIn(['notification_type_id'], 'NotificationTypes'));
-        $rules->add($rules->existsIn(['link_id'], 'Links'));
 
         return $rules;
     }

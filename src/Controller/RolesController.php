@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Role;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Roles Controller
  *
  * @property \App\Model\Table\RolesTable $Roles
  *
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
@@ -57,7 +59,7 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $role->get('id')]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
@@ -85,7 +87,7 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $role->get('id')]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }

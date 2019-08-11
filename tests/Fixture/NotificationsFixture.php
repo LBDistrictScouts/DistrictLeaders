@@ -47,20 +47,19 @@ class NotificationsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'user_id' => 1,
                 'notification_type_id' => 1,
-                'new' => 1,
-                'notification_header' => 'Lorem ipsum dolor sit amet',
-                'text' => 'Lorem ipsum dolor sit amet',
-                'created' => 1565473856,
-                'read_date' => 1565473856,
-                'notification_source' => 'Lorem ipsum dolor sit amet',
-                'link_id' => 1,
-                'link_controller' => 'Lorem ipsum dolor sit amet',
-                'link_prefix' => 'Lorem ipsum dolor sit amet',
-                'link_action' => 'Lorem ipsum dolor sit amet',
-                'deleted' => 1565473856
+                'new' => false,
+                'notification_header' => 'A payment has been recorded.',
+                'text' => 'We have received a payment and have recorded it against your invoice. Please check that everything is in order.',
+                'created' => '2018-02-25 15:56:43',
+                'read_date' => '2018-02-25 15:58:04',
+                'notification_source' => 'System Generated',
+                'link_id' => 2,
+                'link_controller' => 'Invoices',
+                'link_prefix' => null,
+                'link_action' => 'view',
+                'deleted' => null
             ],
         ];
         parent::init();

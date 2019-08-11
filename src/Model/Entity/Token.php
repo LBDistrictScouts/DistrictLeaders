@@ -8,6 +8,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $token
+ * @property int $email_send_id
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property \Cake\I18n\FrozenTime|null $expires
@@ -17,10 +18,10 @@ use Cake\ORM\Entity;
  * @property string|null $hash
  * @property int|null $random_number
  * @property array|null $token_header
- * @property int $email_send_id
  *
- * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\EmailSend $email_send
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Token extends Entity
 {
@@ -35,6 +36,7 @@ class Token extends Entity
      */
     protected $_accessible = [
         'token' => true,
+        'email_send_id' => true,
         'created' => true,
         'modified' => true,
         'expires' => true,
@@ -44,8 +46,7 @@ class Token extends Entity
         'hash' => true,
         'random_number' => true,
         'token_header' => true,
-        'email_send_id' => true,
-        'user' => true
+        'email_send' => true
     ];
 
     /**
@@ -54,6 +55,6 @@ class Token extends Entity
      * @var array
      */
     protected $_hidden = [
-        'token'
+        'hash', 'token'
     ];
 }

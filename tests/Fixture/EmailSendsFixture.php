@@ -51,21 +51,20 @@ class EmailSendsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'email_generation_code' => 'Lorem ipsum dolor sit amet',
-                'email_template' => 'Lorem ipsum dolor sit amet',
+                'email_generation_code' => 'RSV-2-5DR',
+                'email_template' => 'reservation',
                 'include_token' => 1,
-                'created' => 1565473672,
-                'modified' => 1565473672,
-                'deleted' => 1565473672,
-                'sent' => 1565473672,
-                'message_send_code' => 'Lorem ipsum dolor sit amet',
+                'created' => 1558196079,
+                'modified' => 1558196079,
+                'sent' => 1558196079,
+                'message_send_code' => 'PSJs821sxa928as219SMZX9',
                 'user_id' => 1,
                 'subject' => 'Lorem ipsum dolor sit amet',
                 'routing_domain' => 'Lorem ipsum dolor sit amet',
                 'from_address' => 'Lorem ipsum dolor sit amet',
                 'friendly_from' => 'Lorem ipsum dolor sit amet',
-                'notification_id' => 1
+                'notification_id' => 1,
+                'deleted' => null,
             ],
         ];
         parent::init();

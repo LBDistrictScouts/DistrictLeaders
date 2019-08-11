@@ -116,6 +116,7 @@ trait AppTestTrait
             assertTrue(false, 'Exception Emitted for POST Request.');
         }
 
+        $this->assertRedirect();
         $this->assertRedirect($expectedRedirect);
     }
 

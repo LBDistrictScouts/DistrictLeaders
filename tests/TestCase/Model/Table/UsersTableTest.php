@@ -316,6 +316,52 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * @param array $expected Array of Expected Capabilities
+     * @param array $actual Actual Array
+     */
+    private function validateCapabilityArray($expected, $actual)
+    {
+        if (key_exists('user', $expected)) {
+            TestCase::assertArrayHasKey('user', $actual);
+            TestCase::assertEquals(count($expected['user']), count($actual['user']));
+
+            foreach ($expected['user'] as $value) {
+                TestCase::assertTrue(in_array($value, $actual['user']));
+            }
+        }
+
+        if (key_exists('group', $expected)) {
+            TestCase::assertArrayHasKey('group', $actual);
+
+            TestCase::assertEquals(count($expected['group']), count($actual['group']));
+
+            foreach ($expected['group'] as $idx => $value) {
+                TestCase::assertTrue(in_array($value, $actual['group']));
+                TestCase::assertEquals(count($expected['group'][$idx]), count($actual['group'][$idx]));
+
+                foreach ($expected['group'][$idx] as $innerValue) {
+                    TestCase::assertTrue(in_array($innerValue, $actual['group'][$idx]));
+                }
+            }
+        }
+
+        if (key_exists('section', $expected)) {
+            TestCase::assertArrayHasKey('section', $actual);
+
+            TestCase::assertEquals(count($expected['section']), count($actual['section']));
+
+            foreach ($expected['section'] as $idx => $value) {
+                TestCase::assertTrue(in_array($value, $actual['section']));
+                TestCase::assertEquals(count($expected['section'][$idx]), count($actual['section'][$idx]));
+
+                foreach ($expected['section'][$idx] as $innerValue) {
+                    TestCase::assertTrue(in_array($innerValue, $actual['section'][$idx]));
+                }
+            }
+        }
+    }
+
+    /**
      * Test retrieveCapabilities method
      *
      * @return void
@@ -344,7 +390,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        TestCase::assertEquals($expected, $capabilities);
+        $this->validateCapabilityArray($expected, $capabilities);
 
         $user = $this->Users->get(2);
         $capabilities = $this->Users->retrieveAllCapabilities($user);
@@ -368,7 +414,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        TestCase::assertEquals($expected, $capabilities);
+        $this->validateCapabilityArray($expected, $capabilities);
     }
 
     /**
@@ -401,7 +447,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        TestCase::assertEquals($expected, $capabilities);
+        $this->validateCapabilityArray($expected, $capabilities);
 
         $user = $this->Users->get(2);
         $capabilities = $this->Users->retrieveCapabilities($user);
@@ -425,7 +471,7 @@ class UsersTableTest extends TestCase
             ]
         ];
 
-        TestCase::assertEquals($expected, $capabilities);
+        $this->validateCapabilityArray($expected, $capabilities);
     }
 
     /**
@@ -526,6 +572,6 @@ class UsersTableTest extends TestCase
                 ]
             ]
         ];
-        TestCase::assertEquals($expected, $user->capabilities);
+        $this->validateCapabilityArray($expected, $user->capabilities);
     }
 }
