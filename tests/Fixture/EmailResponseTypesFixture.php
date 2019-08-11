@@ -32,9 +32,8 @@ class EmailResponseTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'email_response_type' => 'Lorem ipsum dolor sit amet',
-                'bounce' => 1
+                'email_response_type' => 'Email Open',
+                'bounce' => true,
             ],
         ];
         parent::init();

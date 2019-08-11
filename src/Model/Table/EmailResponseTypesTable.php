@@ -57,13 +57,29 @@ class EmailResponseTypesTable extends Table
 
         $validator
             ->scalar('email_response_type')
+            ->requirePresence('email_response_type', 'create')
             ->maxLength('email_response_type', 255)
-            ->allowEmptyString('email_response_type');
+            ->notEmptyString('email_response_type');
 
         $validator
             ->boolean('bounce')
+            ->requirePresence('bounce', 'create')
             ->notEmptyString('bounce');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['email_response_type']));
+
+        return $rules;
     }
 }
