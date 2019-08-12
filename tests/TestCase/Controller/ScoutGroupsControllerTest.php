@@ -22,12 +22,14 @@ class ScoutGroupsControllerTest extends TestCase
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
     ];
 
@@ -35,6 +37,17 @@ class ScoutGroupsControllerTest extends TestCase
      * @var string $controller The Name of the controller being interrogated.
      */
     private $controller = 'ScoutGroups';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'scout_group' => '4th Goatville',
+        'group_alias' => '4th Goat',
+        'number_stripped' => 4,
+        'charity_number' => 12345,
+        'group_domain' => 'https://4thgoat.com',
+    ];
 
     /**
      * Test index method
@@ -73,13 +86,7 @@ class ScoutGroupsControllerTest extends TestCase
 
         $this->tryAddPost(
             $this->controller,
-            [
-                'scout_group' => '4th Goatville',
-                'group_alias' => '4th Goat',
-                'number_stripped' => 4,
-                'charity_number' => 12345,
-                'group_domain' => 'https://4thgoat.com',
-            ],
+            $this->validEntityData,
             2
         );
     }
@@ -97,13 +104,7 @@ class ScoutGroupsControllerTest extends TestCase
 
         $this->tryEditPost(
             $this->controller,
-            [
-                'scout_group' => '4th Goatville',
-                'group_alias' => '4th Goat',
-                'number_stripped' => 4,
-                'charity_number' => 12345,
-                'group_domain' => 'https://4thgoat.com',
-            ],
+            $this->validEntityData,
             1
         );
     }
@@ -119,13 +120,7 @@ class ScoutGroupsControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            [
-                'scout_group' => '4th Goatville',
-                'group_alias' => '4th Goat',
-                'number_stripped' => 4,
-                'charity_number' => 12345,
-                'group_domain' => 'https://4thgoat.com',
-            ],
+            $this->validEntityData,
             2
         );
     }

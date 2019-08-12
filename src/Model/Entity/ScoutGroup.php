@@ -90,4 +90,5 @@ class ScoutGroup extends Entity
     public const FIELD_CREATED = 'created';
     public const FIELD_MODIFIED = 'modified';
     public const FIELD_SECTIONS = 'sections';
+    public const FIELD_DELETED = 'deleted';
 }

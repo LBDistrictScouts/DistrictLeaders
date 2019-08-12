@@ -60,4 +60,6 @@ class Role extends Entity
     public const FIELD_USER = 'user';
     public const FIELD_ROLE_STATUS = 'role_status';
     public const FIELD_DELETED = 'deleted';
+    public const FIELD_USER_CONTACT_ID = 'user_contact_id';
+    public const FIELD_USER_CONTACT = 'user_contact';
 }

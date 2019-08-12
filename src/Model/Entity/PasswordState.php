@@ -31,4 +31,10 @@ class PasswordState extends Entity
         'expired' => true,
         'users' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_ACTIVE = 'active';
+    public const FIELD_EXPIRED = 'expired';
+    public const FIELD_USERS = 'users';
 }

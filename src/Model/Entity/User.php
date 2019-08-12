@@ -201,4 +201,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_AUTHORIZATION = 'authorization';
     public const FIELD_DELETED = 'deleted';
     public const FIELD_CAMP_ROLES = 'camp_roles';
+    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_EMAIL_SENDS = 'email_sends';
+    public const FIELD_NOTIFICATIONS = 'notifications';
+    public const FIELD_USER_CONTACTS = 'user_contacts';
+    public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
 }

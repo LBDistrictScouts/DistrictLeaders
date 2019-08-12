@@ -38,7 +38,6 @@ class UserContactsTableTest extends TestCase
         'app.Roles',
         'app.Capabilities',
         'app.CapabilitiesRoleTypes',
-        'app.TokenizeTokens',
     ];
 
     /**

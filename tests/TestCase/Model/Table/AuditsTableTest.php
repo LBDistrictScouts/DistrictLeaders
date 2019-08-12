@@ -27,15 +27,17 @@ class AuditsTableTest extends TestCase
     public $fixtures = [
         'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
-        'app.Capabilities',
-        'app.CapabilitiesRoleTypes',
     ];
 
     /**

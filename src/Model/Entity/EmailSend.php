@@ -58,4 +58,24 @@ class EmailSend extends Entity
         'email_responses' => true,
         'tokens' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_EMAIL_GENERATION_CODE = 'email_generation_code';
+    public const FIELD_EMAIL_TEMPLATE = 'email_template';
+    public const FIELD_INCLUDE_TOKEN = 'include_token';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_SENT = 'sent';
+    public const FIELD_MESSAGE_SEND_CODE = 'message_send_code';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_SUBJECT = 'subject';
+    public const FIELD_ROUTING_DOMAIN = 'routing_domain';
+    public const FIELD_FROM_ADDRESS = 'from_address';
+    public const FIELD_FRIENDLY_FROM = 'friendly_from';
+    public const FIELD_NOTIFICATION_ID = 'notification_id';
+    public const FIELD_USER = 'user';
+    public const FIELD_NOTIFICATION = 'notification';
+    public const FIELD_EMAIL_RESPONSES = 'email_responses';
+    public const FIELD_TOKENS = 'tokens';
 }

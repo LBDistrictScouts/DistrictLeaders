@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\SectionsTable $Sections
  *
- * @method Section[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {

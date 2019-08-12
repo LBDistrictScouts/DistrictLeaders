@@ -41,4 +41,16 @@ class UserContact extends Entity
         'user' => true,
         'roles' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_CONTACT_FIELD = 'contact_field';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_USER_CONTACT_TYPE_ID = 'user_contact_type_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_VERIFIED = 'verified';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_USER = 'user';
+    public const FIELD_ROLES = 'roles';
+    public const FIELD_USER_CONTACT_TYPE = 'user_contact_type';
 }

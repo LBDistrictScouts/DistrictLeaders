@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
  *
- * @method Capability[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
 {

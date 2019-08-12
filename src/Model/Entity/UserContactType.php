@@ -30,4 +30,10 @@ class UserContactType extends Entity
         'modified' => true,
         'user_contacts' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_USER_CONTACT_TYPE = 'user_contact_type';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_USER_CONTACTS = 'user_contacts';
 }

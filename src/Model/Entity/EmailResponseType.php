@@ -28,4 +28,9 @@ class EmailResponseType extends Entity
         'bounce' => true,
         'email_responses' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_EMAIL_RESPONSE_TYPE = 'email_response_type';
+    public const FIELD_BOUNCE = 'bounce';
+    public const FIELD_EMAIL_RESPONSES = 'email_responses';
 }

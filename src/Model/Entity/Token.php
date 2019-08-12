@@ -57,4 +57,18 @@ class Token extends Entity
     protected $_hidden = [
         'hash', 'token'
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_TOKEN = 'token';
+    public const FIELD_EMAIL_SEND_ID = 'email_send_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_MODIFIED = 'modified';
+    public const FIELD_EXPIRES = 'expires';
+    public const FIELD_UTILISED = 'utilised';
+    public const FIELD_ACTIVE = 'active';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_HASH = 'hash';
+    public const FIELD_RANDOM_NUMBER = 'random_number';
+    public const FIELD_TOKEN_HEADER = 'token_header';
+    public const FIELD_EMAIL_SEND = 'email_send';
 }

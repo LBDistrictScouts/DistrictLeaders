@@ -24,23 +24,29 @@ class EmailSendsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.EmailSends',
         'app.PasswordStates',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailResponses',
-        'app.EmailResponseTypes',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
-        'app.Capabilities',
-        'app.CapabilitiesRoleTypes',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
         'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
     ];
 
     /**

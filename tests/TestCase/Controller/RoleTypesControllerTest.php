@@ -44,6 +44,16 @@ class RoleTypesControllerTest extends TestCase
     private $controller = 'RoleTypes';
 
     /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'role_type' => 'Assistant Goat Commissioner',
+        'role_abbreviation' => 'AGC',
+        'section_type_id' => 1,
+        'level' => 4,
+    ];
+
+    /**
      * Test index method
      *
      * @return void
@@ -74,12 +84,7 @@ class RoleTypesControllerTest extends TestCase
 
         $this->tryAddPost(
             $this->controller,
-            [
-                'role_type' => 'Assistant Goat Commissioner',
-                'role_abbreviation' => 'AGC',
-                'section_type_id' => 1,
-                'level' => 4,
-            ],
+            $this->validEntityData,
             8
         );
     }
@@ -95,12 +100,7 @@ class RoleTypesControllerTest extends TestCase
 
         $this->tryEditPost(
             $this->controller,
-            [
-                'role_type' => 'District Commissioner',
-                'role_abbreviation' => 'DC',
-                'section_type_id' => 1,
-                'level' => 1,
-            ],
+            $this->validEntityData,
             1
         );
     }
@@ -114,12 +114,7 @@ class RoleTypesControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            [
-                'role_type' => 'Assistant District Commissioner',
-                'role_abbreviation' => 'ADC',
-                'section_type_id' => 2,
-                'level' => 3,
-            ],
+            $this->validEntityData,
             8
         );
     }

@@ -54,4 +54,22 @@ class Notification extends Entity
         'notification_type' => true,
         'email_sends' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_USER_ID = 'user_id';
+    public const FIELD_NOTIFICATION_TYPE_ID = 'notification_type_id';
+    public const FIELD_NEW = 'new';
+    public const FIELD_NOTIFICATION_HEADER = 'notification_header';
+    public const FIELD_TEXT = 'text';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_READ_DATE = 'read_date';
+    public const FIELD_NOTIFICATION_SOURCE = 'notification_source';
+    public const FIELD_LINK_ID = 'link_id';
+    public const FIELD_LINK_CONTROLLER = 'link_controller';
+    public const FIELD_LINK_PREFIX = 'link_prefix';
+    public const FIELD_LINK_ACTION = 'link_action';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_USER = 'user';
+    public const FIELD_NOTIFICATION_TYPE = 'notification_type';
+    public const FIELD_EMAIL_SENDS = 'email_sends';
 }

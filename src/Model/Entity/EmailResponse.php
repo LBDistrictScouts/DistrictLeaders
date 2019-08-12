@@ -44,4 +44,17 @@ class EmailResponse extends Entity
         'email_send' => true,
         'email_response_type' => true
     ];
+
+    public const FIELD_ID = 'id';
+    public const FIELD_EMAIL_SEND_ID = 'email_send_id';
+    public const FIELD_DELETED = 'deleted';
+    public const FIELD_EMAIL_RESPONSE_TYPE_ID = 'email_response_type_id';
+    public const FIELD_CREATED = 'created';
+    public const FIELD_RECEIVED = 'received';
+    public const FIELD_LINK_CLICKED = 'link_clicked';
+    public const FIELD_IP_ADDRESS = 'ip_address';
+    public const FIELD_BOUNCE_REASON = 'bounce_reason';
+    public const FIELD_MESSAGE_SIZE = 'message_size';
+    public const FIELD_EMAIL_SEND = 'email_send';
+    public const FIELD_EMAIL_RESPONSE_TYPE = 'email_response_type';
 }
