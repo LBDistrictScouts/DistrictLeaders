@@ -21,20 +21,4 @@ class UsersPolicy implements BeforePolicyInterface
     {
         return $query->where(['Users.id' => $user->getIdentifier()]);
     }
-
-    /**
-     * @param \App\Model\Entity\User|null $user The User being authorized
-     * @param mixed $resource The resource checked
-     * @param string $action the Action
-     *
-     * @return \Authorization\Policy\ResultInterface|bool|void
-     */
-    public function before($user, $resource, $action)
-    {
-        $userCapabilities = $user->getOriginalData()->capabilities['user'];
-        if (in_array('ALL', $userCapabilities)) {
-            return true;
-        }
-        // fall through
-    }
 }

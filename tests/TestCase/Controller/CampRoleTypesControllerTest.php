@@ -1,16 +1,16 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CampRoleTypesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\CampRoleTypesController Test Case
+ *
+ * @uses \App\Controller\CampRoleTypesController
  */
 class CampRoleTypesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,19 +18,29 @@ class CampRoleTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'CampRoleTypes';
 
     /**
      * Test index method
@@ -39,7 +49,7 @@ class CampRoleTypesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -49,7 +59,7 @@ class CampRoleTypesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -59,7 +69,15 @@ class CampRoleTypesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'camp_role_type' => 'Camp Leader'
+            ],
+            2
+        );
     }
 
     /**
@@ -69,7 +87,15 @@ class CampRoleTypesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'camp_role_type' => 'First Aider'
+            ],
+            1
+        );
     }
 
     /**
@@ -79,6 +105,12 @@ class CampRoleTypesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'camp_role_type' => 'Cook'
+            ],
+            2
+        );
     }
 }

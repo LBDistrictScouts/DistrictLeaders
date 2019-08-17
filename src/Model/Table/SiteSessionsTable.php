@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\SiteSession;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -12,7 +14,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SiteSession get($primaryKey, $options = [])
  * @method \App\Model\Entity\SiteSession newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\SiteSession[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SiteSession|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SiteSession saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SiteSession patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession[] patchEntities($entities, array $data, array $options = [])

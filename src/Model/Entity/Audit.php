@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property int $audit_record_id
  * @property \Cake\I18n\FrozenTime $change_date
  *
- * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\User $changed_user
  */
 class Audit extends Entity

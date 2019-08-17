@@ -57,7 +57,6 @@
                 <th scope="col"><?= __('Last Login') ?></th>
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col"><?= __('Last Login Ip') ?></th>
-                <th scope="col"><?= __('Capabilities') ?></th>
                 <th scope="col"><?= __('Password State Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -80,7 +79,6 @@
                 <td><?= h($users->last_login) ?></td>
                 <td><?= h($users->deleted) ?></td>
                 <td><?= h($users->last_login_ip) ?></td>
-                <td><?= h($users->capabilities) ?></td>
                 <td><?= h($users->password_state_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>

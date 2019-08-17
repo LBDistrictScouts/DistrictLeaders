@@ -2,15 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\CampTypesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\CampTypesController Test Case
+ *
+ * @uses \App\Controller\CampTypesController
  */
 class CampTypesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,8 +19,35 @@ class CampTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
         'app.CampTypes',
-        'app.Camps'
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'CampTypes';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'camp_type' => 'New Camp Type'
     ];
 
     /**
@@ -29,7 +57,7 @@ class CampTypesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -39,7 +67,7 @@ class CampTypesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -49,7 +77,13 @@ class CampTypesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -59,7 +93,13 @@ class CampTypesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -69,6 +109,10 @@ class CampTypesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

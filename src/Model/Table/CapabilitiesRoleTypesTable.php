@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\CapabilitiesRoleType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,13 +11,13 @@ use Cake\Validation\Validator;
 /**
  * CapabilitiesRoleTypes Model
  *
- * @property \App\Model\Table\CapabilitiesTable|\Cake\ORM\Association\BelongsTo $Capabilities
- * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\BelongsTo $RoleTypes
+ * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsTo $Capabilities
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
  *
  * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities($entities, array $data, array $options = [])

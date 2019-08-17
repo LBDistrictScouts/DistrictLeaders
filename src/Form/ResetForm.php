@@ -39,19 +39,19 @@ class ResetForm extends Form
     {
         $validator
             ->requirePresence('membership_number')
-            ->allowEmptyString('membership_number', false);
+            ->notEmptyString('membership_number');
 
         $validator
             ->email('email', 'valid')
-            ->allowEmptyString('email', false);
+            ->notEmptyString('email');
 
         $validator
             ->scalar('first_name')
-            ->allowEmptyString('first_name', false);
+            ->notEmptyString('first_name');
 
         $validator
             ->scalar('last_name')
-            ->allowEmptyString('last_name', false);
+            ->notEmptyString('last_name');
 
         return $validator;
     }

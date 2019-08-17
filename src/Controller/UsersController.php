@@ -16,7 +16,7 @@ use Cake\I18n\Time;
  *
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  *
- * @property \Cake\ORM\Table $Tokens
+ * @property \App\Model\Table\TokensTable $Tokens
  */
 class UsersController extends AppController
 {
@@ -53,6 +53,8 @@ class UsersController extends AppController
             'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles'],
             'fields' => $visibleFields,
         ]);
+
+        $this->Authorization->can($user, 'view');
 
         $this->set('user', $user);
     }
@@ -145,6 +147,24 @@ class UsersController extends AppController
         if ($this->request->is(['post']) && !$result->isValid()) {
             $this->Flash->error('Invalid username or password');
         }
+    }
+
+    /**
+     * Logout Function
+     *
+     * @return \Cake\Http\Response|null
+     */
+    public function logout()
+    {
+        $logout = $this->Authentication->logout();
+
+        if ($logout != false) {
+            $this->Flash->success('You are now logged out.');
+
+            return $this->redirect($logout);
+        }
+
+        return $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));
     }
 
     /**

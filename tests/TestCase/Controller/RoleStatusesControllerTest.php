@@ -2,15 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\RoleStatusesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\RoleStatusesController Test Case
+ *
+ * @uses \App\Controller\RoleStatusesController
  */
 class RoleStatusesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,15 +19,29 @@ class RoleStatusesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'RoleStatuses';
 
     /**
      * Test index method
@@ -35,7 +50,7 @@ class RoleStatusesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -45,7 +60,7 @@ class RoleStatusesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -55,7 +70,15 @@ class RoleStatusesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'role_status' => 'New'
+            ],
+            2
+        );
     }
 
     /**
@@ -65,7 +88,15 @@ class RoleStatusesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'role_status' => 'Changed',
+            ],
+            1
+        );
     }
 
     /**
@@ -75,6 +106,12 @@ class RoleStatusesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'role_status' => 'Deleted'
+            ],
+            2
+        );
     }
 }

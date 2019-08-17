@@ -1,16 +1,16 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\PasswordStatesController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\PasswordStatesController Test Case
+ *
+ * @uses \App\Controller\PasswordStatesController
  */
 class PasswordStatesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -19,56 +19,110 @@ class PasswordStatesControllerTest extends TestCase
      */
     public $fixtures = [
         'app.PasswordStates',
-        'app.Users'
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
     ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'PasswordStates';
 
     /**
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
      * Test view method
      *
      * @return void
+     *
+     * @throws
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
      * Test add method
      *
      * @return void
+     *
+     * @throws
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            [
+                'password_state' => 'New',
+                'active' => true,
+                'expired' => false
+            ],
+            2
+        );
     }
 
     /**
      * Test edit method
      *
      * @return void
+     *
+     * @throws
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            [
+                'password_state' => 'Edited',
+                'active' => true,
+                'expired' => false
+            ],
+            1
+        );
     }
 
     /**
      * Test delete method
      *
      * @return void
+     *
+     * @throws
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            [
+                'password_state' => 'For Deletion',
+                'active' => true,
+                'expired' => false
+            ],
+            2
+        );
     }
 }

@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property int|null $section_type_id
  * @property int $level
  *
- * @property \App\Model\Entity\SectionType $section_type
+ * @property \App\Model\Entity\SectionType|null $section_type
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\Capability[] $capabilities
  */

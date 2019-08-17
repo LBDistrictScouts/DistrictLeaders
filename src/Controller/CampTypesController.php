@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\CampType;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * CampTypes Controller
@@ -54,7 +56,7 @@ class CampTypesController extends AppController
             if ($this->CampTypes->save($campType)) {
                 $this->Flash->success(__('The camp type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campType->get('id')]);
             }
             $this->Flash->error(__('The camp type could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class CampTypesController extends AppController
             if ($this->CampTypes->save($campType)) {
                 $this->Flash->success(__('The camp type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campType->get('id')]);
             }
             $this->Flash->error(__('The camp type could not be saved. Please, try again.'));
         }

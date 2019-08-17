@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\PasswordState;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,13 +11,13 @@ use Cake\Validation\Validator;
 /**
  * PasswordStates Model
  *
- * @property \App\Model\Table\UsersTable|\Cake\ORM\Association\HasMany $Users
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  *
  * @method \App\Model\Entity\PasswordState get($primaryKey, $options = [])
  * @method \App\Model\Entity\PasswordState newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\PasswordState[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\PasswordState|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\PasswordState|bool saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PasswordState|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\PasswordState saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\PasswordState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\PasswordState[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\PasswordState findOrCreate($search, callable $callback = null, $options = [])
@@ -52,24 +54,38 @@ class PasswordStatesTable extends Table
     {
         $validator
             ->integer('id')
-            ->allowEmptyString('id', 'create');
+            ->allowEmptyString('id', null, 'create');
 
         $validator
             ->scalar('password_state')
             ->maxLength('password_state', 255)
             ->requirePresence('password_state', 'create')
-            ->allowEmptyString('password_state', false);
+            ->notEmptyString('password_state');
 
         $validator
             ->boolean('active')
             ->requirePresence('active', 'create')
-            ->allowEmptyString('active', false);
+            ->notEmptyString('active');
 
         $validator
             ->boolean('expired')
             ->requirePresence('expired', 'create')
-            ->allowEmptyString('expired', false);
+            ->notEmptyString('expired');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->isUnique(['password_state']));
+
+        return $rules;
     }
 }

@@ -2,15 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\CampsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\CampsController Test Case
+ *
+ * @uses \App\Controller\CampsController
  */
 class CampsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,18 +19,50 @@ class CampsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'Camps';
+
+    /**
+     * @var array $campData Valid creation Data.
+     */
+    private $campData = [
+        'camp_name' => 'Test New Camp',
+        'camp_type_id' => 1,
+        'camp_start' => [
+            'year' => 2019,
+            'month' => 8,
+            'day' => 12,
+            'hour' => 9,
+            'minute' => 53,
+        ],
+        'camp_end' => [
+            'year' => 2019,
+            'month' => 8,
+            'day' => 11,
+            'hour' => 9,
+            'minute' => 53,
+        ]
     ];
 
     /**
@@ -39,7 +72,7 @@ class CampsControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -49,7 +82,7 @@ class CampsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -59,7 +92,13 @@ class CampsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->campData,
+            3
+        );
     }
 
     /**
@@ -69,7 +108,13 @@ class CampsControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->campData,
+            1
+        );
     }
 
     /**
@@ -79,6 +124,10 @@ class CampsControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->campData,
+            3
+        );
     }
 }

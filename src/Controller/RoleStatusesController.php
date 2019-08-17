@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\RoleStatus;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * RoleStatuses Controller
@@ -54,7 +56,7 @@ class RoleStatusesController extends AppController
             if ($this->RoleStatuses->save($roleStatus)) {
                 $this->Flash->success(__('The role status has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $roleStatus->get('id')]);
             }
             $this->Flash->error(__('The role status could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class RoleStatusesController extends AppController
             if ($this->RoleStatuses->save($roleStatus)) {
                 $this->Flash->success(__('The role status has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $roleStatus->get('id')]);
             }
             $this->Flash->error(__('The role status could not be saved. Please, try again.'));
         }

@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\ScoutGroup;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * ScoutGroups Controller
@@ -54,7 +56,7 @@ class ScoutGroupsController extends AppController
             if ($this->ScoutGroups->save($scoutGroup)) {
                 $this->Flash->success(__('The scout group has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $scoutGroup->get('id')]);
             }
             $this->Flash->error(__('The scout group could not be saved. Please, try again.'));
         }
@@ -78,7 +80,7 @@ class ScoutGroupsController extends AppController
             if ($this->ScoutGroups->save($scoutGroup)) {
                 $this->Flash->success(__('The scout group has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $scoutGroup->get('id')]);
             }
             $this->Flash->error(__('The scout group could not be saved. Please, try again.'));
         }

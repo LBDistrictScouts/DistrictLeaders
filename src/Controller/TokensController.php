@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Token;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Tokens Controller
@@ -12,7 +14,6 @@ use App\Controller\AppController;
  */
 class TokensController extends AppController
 {
-
     /**
      * Index method
      *
@@ -21,7 +22,7 @@ class TokensController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users']
+            'contain' => ['EmailSends']
         ];
         $tokens = $this->paginate($this->Tokens);
 
@@ -38,7 +39,7 @@ class TokensController extends AppController
     public function view($id = null)
     {
         $token = $this->Tokens->get($id, [
-            'contain' => ['Users']
+            'contain' => ['EmailSends']
         ]);
 
         $this->set('token', $token);
@@ -47,7 +48,7 @@ class TokensController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -57,19 +58,19 @@ class TokensController extends AppController
             if ($this->Tokens->save($token)) {
                 $this->Flash->success(__('The token has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $token->get('id')]);
             }
             $this->Flash->error(__('The token could not be saved. Please, try again.'));
         }
-        $users = $this->Tokens->Users->find('list', ['limit' => 200]);
-        $this->set(compact('token', 'users'));
+        $emailSends = $this->Tokens->EmailSends->find('list', ['limit' => 200]);
+        $this->set(compact('token', 'emailSends'));
     }
 
     /**
      * Edit method
      *
      * @param string|null $id Token id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($id = null)
@@ -82,19 +83,19 @@ class TokensController extends AppController
             if ($this->Tokens->save($token)) {
                 $this->Flash->success(__('The token has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $token->get('id')]);
             }
             $this->Flash->error(__('The token could not be saved. Please, try again.'));
         }
-        $users = $this->Tokens->Users->find('list', ['limit' => 200]);
-        $this->set(compact('token', 'users'));
+        $emailSends = $this->Tokens->EmailSends->find('list', ['limit' => 200]);
+        $this->set(compact('token', 'emailSends'));
     }
 
     /**
      * Delete method
      *
      * @param string|null $id Token id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return \Cake\Http\Response|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function delete($id = null)

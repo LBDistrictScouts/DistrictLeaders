@@ -1,16 +1,16 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\ScoutGroupsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\ScoutGroupsController Test Case
+ *
+ * @uses \App\Controller\ScoutGroupsController
  */
 class ScoutGroupsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,63 +18,110 @@ class ScoutGroupsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'ScoutGroups';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'scout_group' => '4th Goatville',
+        'group_alias' => '4th Goat',
+        'number_stripped' => 4,
+        'charity_number' => 12345,
+        'group_domain' => 'https://4thgoat.com',
     ];
 
     /**
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
      * Test view method
      *
      * @return void
+     *
+     * @throws
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
      * Test add method
      *
      * @return void
+     *
+     * @throws
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
      * Test edit method
      *
      * @return void
+     *
+     * @throws
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
      * Test delete method
      *
      * @return void
+     *
+     * @throws
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

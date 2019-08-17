@@ -4,6 +4,12 @@
  */
 ?>
 <header>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">District Leader Information System</h1>
+            <p class="lead">Application for District Digital Functions.</p>
+        </div>
+    </div>
     <?php if ($this->Functional->checkFunction('search')) : ?>
         <section class="masthead text-white text-center" style="background: url(<?= $this->Url->image('bg-masthead.jpg') ?>)no-repeat center center;background-size: cover;padding: 100px 0px;">
             <div class="overlay" style="height: 100px;"></div>

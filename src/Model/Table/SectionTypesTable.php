@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\SectionType;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,13 +11,13 @@ use Cake\Validation\Validator;
 /**
  * SectionTypes Model
  *
- * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Association\HasMany $RoleTypes
- * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\HasMany $Sections
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  *
  * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
  * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SectionType|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])

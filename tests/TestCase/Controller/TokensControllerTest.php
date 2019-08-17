@@ -2,15 +2,16 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TokensController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\TokensController Test Case
+ *
+ * @uses \App\Controller\TokensController
  */
 class TokensControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -18,8 +19,53 @@ class TokensControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
         'app.Tokens',
-        'app.Users'
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'Tokens';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'token' => 'Password Reset for Jacob',
+        'email_send_id' => 1,
+        'active' => true,
+        'random_number' => 1789,
+        'token_header' => [
+            'redirect' => [
+                'controller' => 'Applications',
+                'action' => 'view',
+                'prefix' => false,
+                1
+            ],
+            'authenticate' => true,
+        ]
     ];
 
     /**
@@ -29,7 +75,7 @@ class TokensControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -39,7 +85,7 @@ class TokensControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -49,7 +95,13 @@ class TokensControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -59,7 +111,13 @@ class TokensControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -69,6 +127,10 @@ class TokensControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

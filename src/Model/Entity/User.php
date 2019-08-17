@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use App\Form\PasswordForm;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityInterface as AuthorizationIdentity;
@@ -37,9 +38,14 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\CampRole[] $camp_roles
  * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\PasswordState|null $password_state
+ * @property \App\Model\Entity\EmailSend[] $email_sends
+ * @property \App\Model\Entity\Notification[] $notifications
+ * @property \App\Model\Entity\UserContact[] $user_contacts
+ *
+ * @property int|null $password_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
- * @property int|null $password_state_id
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -69,10 +75,12 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'modified' => true,
         'last_login' => true,
         'last_login_ip' => true,
-        'scout_group' => true,
-        'audits' => true,
-        'roles' => true,
         'capabilities' => true,
+        'password_state_id' => true,
+        'changes' => true,
+        'audits' => true,
+        'camp_roles' => true,
+        'roles' => true
     ];
 
     /**
@@ -169,6 +177,69 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         return $this->id;
     }
 
+    /**
+     * Function to Check Capability Exists
+     *
+     * @param string $capability The Capability being checked.
+     * @param int|null $group A Group ID if applicable
+     * @param int|null $section A Section ID if applicable
+     *
+     * @return bool
+     */
+    public function checkCapability($capability, $group = null, $section = null)
+    {
+        if (!is_array($this->capabilities)) {
+            return false;
+        }
+
+        // User Check
+        if (key_exists('user', $this->capabilities)) {
+            $capabilities = $this->capabilities['user'];
+
+            if (in_array($capability, $capabilities)) {
+                return true;
+            }
+        }
+
+        // Group Check
+        if ($this->subSetCapabilityCheck($capability, 'group', $group)) {
+            return true;
+        }
+
+        // Section Check
+        if ($this->subSetCapabilityCheck($capability, 'section', $section)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check for Subset of Capabilities Array.
+     *
+     * @param string $capability The Capability being Verified
+     * @param string $subset The Authorisation Subset
+     * @param int $entityID The Entity ID
+     *
+     * @return bool
+     */
+    private function subSetCapabilityCheck($capability, $subset, $entityID)
+    {
+        if (key_exists($subset, $this->capabilities)) {
+            $subsetCapabilities = $this->capabilities[$subset];
+
+            if (key_exists($entityID, $subsetCapabilities)) {
+                foreach ($subsetCapabilities as $idx => $set) {
+                    if (in_array($capability, $set) && $idx == $entityID) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public const FIELD_ID = 'id';
     public const FIELD_USERNAME = 'username';
     public const FIELD_MEMBERSHIP_NUMBER = 'membership_number';
@@ -194,4 +265,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_AUTHORIZATION = 'authorization';
     public const FIELD_DELETED = 'deleted';
     public const FIELD_CAMP_ROLES = 'camp_roles';
+    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_EMAIL_SENDS = 'email_sends';
+    public const FIELD_NOTIFICATIONS = 'notifications';
+    public const FIELD_USER_CONTACTS = 'user_contacts';
+    public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
 }

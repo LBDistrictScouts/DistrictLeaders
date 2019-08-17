@@ -14,6 +14,8 @@
  */
 namespace App;
 
+use Ajax\Middleware\AjaxMiddleware;
+
 use App\Policy\RequestPolicy;
 
 use Authentication\AuthenticationService;
@@ -57,6 +59,10 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
+        $this->addPlugin('Queue', ['routes' => true]);
+
+        $this->addPlugin('Ajax', ['bootstrap' => true]);
+
         $this->addPlugin('Muffin/Footprint');
 
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
@@ -160,10 +166,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->add($securityHeaders)
 
             ->add(new CsrfProtectionMiddleware([
-                'secure' => true,
-//                'cookieName' => 'leaderCSRF',
+                'secure' => !Configure::read('debug'),
                 'httpOnly' => true,
-            ]));
+            ]))
+
+            ->add(AjaxMiddleware::class);
 
         return $middlewareQueue;
     }
@@ -183,7 +190,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         // Check the map resolver, and fallback to the orm resolver if
         // a resource is not explicitly mapped.
-        $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
+        $resolver = new ResolverCollection([$ormResolver, $mapResolver]);
 
         return new AuthorizationService($resolver);
     }

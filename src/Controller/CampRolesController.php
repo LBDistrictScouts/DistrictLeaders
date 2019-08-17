@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\CampRole;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * CampRoles Controller
@@ -57,7 +59,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }
@@ -84,7 +86,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }

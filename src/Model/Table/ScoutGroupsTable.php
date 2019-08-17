@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\ScoutGroup;
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -9,12 +11,12 @@ use Cake\Validation\Validator;
 /**
  * ScoutGroups Model
  *
- * @property \App\Model\Table\SectionsTable|\Cake\ORM\Association\HasMany $Sections
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  *
  * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup|bool save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
@@ -100,5 +102,45 @@ class ScoutGroupsTable extends Table
         $rules->add($rules->isUnique(['scout_group']));
 
         return $rules;
+    }
+
+    /**
+     * A function to Return all the stored Clean Domains. Used for Domain Verification.
+     *
+     * @return array
+     */
+    public function getDomains()
+    {
+        $groups = $this->find('all');
+        $cleanDomains = [];
+
+        foreach ($groups as $group) {
+            /** @var \App\Model\Entity\ScoutGroup $group */
+            array_push($cleanDomains, $group->get('clean_domain'));
+        }
+
+        return $cleanDomains;
+    }
+
+    /**
+     * A Loop function to validate an email address against recorded domains.
+     *
+     * @param string $emailAddress The Email Address to be verified
+     *
+     * @return bool
+     */
+    public function domainVerify($emailAddress)
+    {
+        $domains = $this->getDomains();
+        $emailAddress = strtolower($emailAddress);
+        $results = 0;
+
+        foreach ($domains as $domain) {
+            if (strpos($emailAddress, $domain) !== false) {
+                $results += 1;
+            }
+        }
+
+        return $results >= 1;
     }
 }

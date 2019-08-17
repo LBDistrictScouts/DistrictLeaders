@@ -24,13 +24,18 @@ class RolesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
+        'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
     ];
 
@@ -104,6 +109,7 @@ class RolesTableTest extends TestCase
             'section_id' => 1,
             'user_id' => 1,
             'role_status_id' => 1,
+            'user_contact_id' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

@@ -47,6 +47,8 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
+            'Queue',
+            'Ajax',
             'Authentication',
             'Authorization',
             'Bake',

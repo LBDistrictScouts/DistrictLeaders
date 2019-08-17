@@ -45,6 +45,11 @@ return [
             'min_level' => 2 // Section Level
         ],
         [
+            'capability_code' => 'DIRECTORY',
+            'capability' => 'Use the District Directory',
+            'min_level' => 1 // Section Level
+        ],
+        [
             'capability_code' => 'OWN_USER',
             'capability' => 'Edit Own User',
             'min_level' => 1 // User Level

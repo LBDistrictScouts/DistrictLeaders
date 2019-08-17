@@ -164,19 +164,4 @@ class AppController extends Controller
 //    {
 //        return true;
 //    }
-
-    /**
-     * Logout Function
-     *
-     * @return \Cake\Http\Response|null
-     */
-    public function logout()
-    {
-        $session = $this->request->getSession();
-        $session->delete('OSM.Secret');
-
-        $this->Flash->success('You are now logged out.');
-
-        return $this->redirect($this->Auth->logout());
-    }
 }
