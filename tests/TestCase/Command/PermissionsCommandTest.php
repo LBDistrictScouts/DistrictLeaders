@@ -9,6 +9,7 @@ use Cake\TestSuite\TestCase;
  * Class PermissionsCommandTest
  *
  * @package App\Test\TestCase\Command
+ * @uses \App\Command\PermissionsCommand
  */
 class PermissionsCommandTest extends TestCase
 {

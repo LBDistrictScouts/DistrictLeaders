@@ -53,7 +53,8 @@
     "scripts": {
         "post-install-cmd": [
             "@console-install",
-            "@migrate"
+            "@migrate",
+            "@symlink"
         ],
         "post-create-project-cmd": "@console-install",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
@@ -83,10 +84,13 @@
         "test": "phpunit --colors=always",
         "migrate": [
             "@migrate-app",
-            "@migrate-queue"
+            "@migrate-queue",
+            "@migrate-database-log"
         ],
         "migrate-app": "bin/cake migrations migrate",
-        "migrate-queue": "bin/cake migrations migrate -p Queue"
+        "migrate-queue": "bin/cake migrations migrate -p Queue",
+        "migrate-database-log": "bin/cake migrations migrate -p DatabaseLog -c database_log --no-lock",
+        "symlink": "bin/cake plugin assets symlink"
     },
     "prefer-stable": true,
     "config": {

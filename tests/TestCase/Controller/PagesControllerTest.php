@@ -15,15 +15,13 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\PagesController;
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
-use Cake\View\Exception\MissingTemplateException;
 
 /**
  * PagesControllerTest class
+ *
+ * @uses \App\Controller\PagesController
  */
 class PagesControllerTest extends TestCase
 {
