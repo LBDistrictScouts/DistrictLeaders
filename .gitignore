@@ -45,5 +45,5 @@ nbproject/*
 /config/token.json
 /config/credentials.json
 
-/webroot/bootstrap_u_i/*
-/webroot/debug_kit/*
+/webroot/bootstrap_u_i
+/webroot/debug_kit
