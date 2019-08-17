@@ -6,11 +6,11 @@ use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * Class InstallBaseCommandTest
+ * Class PermissionsCommandTest
  *
  * @package App\Test\TestCase\Command
  */
-class InstallBaseCommandTest extends TestCase
+class PermissionsCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
 
@@ -20,7 +20,19 @@ class InstallBaseCommandTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Capabilities'
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
     ];
 
     /**
@@ -39,7 +51,7 @@ class InstallBaseCommandTest extends TestCase
      */
     public function testDescriptionOutput()
     {
-        $this->exec('install_base --help');
+        $this->exec('permissions --help');
         $this->assertOutputContains('Install Configuration Options.');
     }
 
@@ -50,9 +62,9 @@ class InstallBaseCommandTest extends TestCase
      */
     public function testInstallCapabilities()
     {
-        $this->exec('install_base -c');
+        $this->exec('permissions -c');
         $this->assertExitCode(Command::CODE_SUCCESS);
 
-        $this->assertOutputContains('Capabilities Installed:');
+        $this->assertOutputContains('User Capabilities Patched:');
     }
 }

@@ -33,7 +33,7 @@ class PermissionsCommand extends Command
      */
     protected function buildOptionParser(ConsoleOptionParser $parser)
     {
-        $parser->setDescription('Install Configuration Options.');
+        $parser->setDescription('Update the Permissions for Users.');
 
         $parser
             ->addOption('all', [
