@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\TokensTable $Tokens
  *
- * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {

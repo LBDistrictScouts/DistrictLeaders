@@ -14,6 +14,7 @@
         "cakephp/plugin-installer": "^1.0",
         "dereuromark/cakephp-ajax": "^1.4",
         "dereuromark/cakephp-databaselog": "^2.5",
+        "dereuromark/cakephp-queue": "^4.0",
         "friendsofcake/bootstrap-ui": "^1.4",
         "friendsofcake/search": "@stable",
         "google/apiclient": "^2.0",
@@ -50,12 +51,17 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "App\\Console\\Installer::postInstall",
-        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-install-cmd": [
+            "@console-install",
+            "@migrate"
+        ],
+        "post-create-project-cmd": "@console-install",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
+        "console-install": "App\\Console\\Installer::postInstall",
         "check": [
             "@test",
-            "@cs-check"
+            "@cs-check",
+            "@phpstan"
         ],
         "fix": [
             "@cs-fix",
@@ -65,10 +71,22 @@
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ config/",
+        "phpstan": [
+            "@phpstan-setup",
+            "@phpstan-test"
+        ],
+        "phpstan-test": "phpstan analyse -c tests/phpstan.neon -l 5 src/",
+        "phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan && mv composer.backup composer.json",
         "annotate": "bin/cake annotations all && bin/cake illuminator illuminate",
         "phpstorm": "bin/cake phpstorm generate",
         "code-complete": "bin/cake code_completion generate",
-        "test": "phpunit --colors=always"
+        "test": "phpunit --colors=always",
+        "migrate": [
+            "@migrate-app",
+            "@migrate-queue"
+        ],
+        "migrate-app": "bin/cake migrations migrate",
+        "migrate-queue": "bin/cake migrations migrate -p Queue"
     },
     "prefer-stable": true,
     "config": {

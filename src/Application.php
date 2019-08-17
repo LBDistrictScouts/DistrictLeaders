@@ -59,6 +59,8 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
+        $this->addPlugin('Queue', ['routes' => true]);
+
         $this->addPlugin('Ajax', ['bootstrap' => true]);
 
         $this->addPlugin('Muffin/Footprint');

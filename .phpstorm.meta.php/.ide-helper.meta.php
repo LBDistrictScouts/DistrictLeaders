@@ -36,6 +36,7 @@ namespace PHPSTORM_META {
 			'Migrations' => \Cake\Http\BaseApplication::class,
 			'Muffin/Footprint' => \Cake\Http\BaseApplication::class,
 			'Muffin/Trash' => \Cake\Http\BaseApplication::class,
+			'Queue' => \Cake\Http\BaseApplication::class,
 			'Search' => \Cake\Http\BaseApplication::class,
 			'WyriHaximus/TwigView' => \Cake\Http\BaseApplication::class,
 		])
@@ -95,6 +96,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \DatabaseLog\Model\Table\DatabaseLogsTable::class,
 			'DebugKit.Panels' => \DebugKit\Model\Table\PanelsTable::class,
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
+			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
+			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 		])
 	);
 
@@ -110,6 +113,8 @@ namespace PHPSTORM_META {
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
+			'active' => \Cake\ORM\Query::class,
+			'queued' => \Cake\ORM\Query::class,
 		])
 	);
 
@@ -125,6 +130,8 @@ namespace PHPSTORM_META {
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
+			'active' => \Cake\ORM\Query::class,
+			'queued' => \Cake\ORM\Query::class,
 		])
 	);
 
@@ -159,6 +166,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \DatabaseLog\Model\Table\DatabaseLogsTable::class,
 			'DebugKit.Panels' => \DebugKit\Model\Table\PanelsTable::class,
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
+			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
+			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 		])
 	);
 
@@ -206,6 +215,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \Cake\ORM\Association\BelongsToMany::class,
 			'DebugKit.Panels' => \Cake\ORM\Association\BelongsToMany::class,
 			'DebugKit.Requests' => \Cake\ORM\Association\BelongsToMany::class,
+			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsToMany::class,
+			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsToMany::class,
 		])
 	);
 
@@ -240,6 +251,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \Cake\ORM\Association\BelongsTo::class,
 			'DebugKit.Panels' => \Cake\ORM\Association\BelongsTo::class,
 			'DebugKit.Requests' => \Cake\ORM\Association\BelongsTo::class,
+			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsTo::class,
+			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsTo::class,
 		])
 	);
 
@@ -255,6 +268,8 @@ namespace PHPSTORM_META {
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
+			'active' => \Cake\ORM\Query::class,
+			'queued' => \Cake\ORM\Query::class,
 		])
 	);
 
@@ -289,6 +304,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \Cake\ORM\Association\HasMany::class,
 			'DebugKit.Panels' => \Cake\ORM\Association\HasMany::class,
 			'DebugKit.Requests' => \Cake\ORM\Association\HasMany::class,
+			'Queue.QueueProcesses' => \Cake\ORM\Association\HasMany::class,
+			'Queue.QueuedJobs' => \Cake\ORM\Association\HasMany::class,
 		])
 	);
 
@@ -323,6 +340,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \Cake\ORM\Association\HasOne::class,
 			'DebugKit.Panels' => \Cake\ORM\Association\HasOne::class,
 			'DebugKit.Requests' => \Cake\ORM\Association\HasOne::class,
+			'Queue.QueueProcesses' => \Cake\ORM\Association\HasOne::class,
+			'Queue.QueuedJobs' => \Cake\ORM\Association\HasOne::class,
 		])
 	);
 
@@ -357,6 +376,8 @@ namespace PHPSTORM_META {
 			'DatabaseLog.DatabaseLogs' => \DatabaseLog\Model\Table\DatabaseLogsTable::class,
 			'DebugKit.Panels' => \DebugKit\Model\Table\PanelsTable::class,
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
+			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
+			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 		])
 	);
 
@@ -384,6 +405,7 @@ namespace PHPSTORM_META {
 			'Flash/default' => \Cake\View\View::class,
 			'Flash/error' => \Cake\View\View::class,
 			'Flash/success' => \Cake\View\View::class,
+			'Queue.search' => \Cake\View\View::class,
 			'WyriHaximus/TwigView.twig_panel' => \Cake\View\View::class,
 			'footer' => \Cake\View\View::class,
 			'header' => \Cake\View\View::class,
@@ -425,6 +447,23 @@ namespace PHPSTORM_META {
 			'DebugKit.Toolbar' => \DebugKit\View\Helper\ToolbarHelper::class,
 			'IdeHelper.DocBlock' => \IdeHelper\View\Helper\DocBlockHelper::class,
 			'Migrations.Migration' => \Migrations\View\Helper\MigrationHelper::class,
+			'Queue.QueueProgress' => \Queue\View\Helper\QueueProgressHelper::class,
+		])
+	);
+
+	override(
+		\Queue\Model\Table\QueuedJobsTable::createJob(0),
+		map([
+			'CostsExample' => \Queue\Shell\Task\QueueCostsExampleTask::class,
+			'Email' => \Queue\Shell\Task\QueueEmailTask::class,
+			'Example' => \Queue\Shell\Task\QueueExampleTask::class,
+			'ExceptionExample' => \Queue\Shell\Task\QueueExceptionExampleTask::class,
+			'Execute' => \Queue\Shell\Task\QueueExecuteTask::class,
+			'MonitorExample' => \Queue\Shell\Task\QueueMonitorExampleTask::class,
+			'ProgressExample' => \Queue\Shell\Task\QueueProgressExampleTask::class,
+			'RetryExample' => \Queue\Shell\Task\QueueRetryExampleTask::class,
+			'SuperExample' => \Queue\Shell\Task\QueueSuperExampleTask::class,
+			'UniqueExample' => \Queue\Shell\Task\QueueUniqueExampleTask::class,
 		])
 	);
 

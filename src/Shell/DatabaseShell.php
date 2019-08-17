@@ -66,9 +66,9 @@ class DatabaseShell extends Shell
      */
     public function password()
     {
-        $users = TableRegistry::get('Users');
+        $users = TableRegistry::getTableLocator()->get('Users');
 
-        $default = $users->findByUsername('Jacob')->first();
+        $default = $users->find()->where(['username' => 'Jacob'])->first();
         $default->password = 'TestMe';
 
         if (!$users->save($default)) {
