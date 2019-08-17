@@ -53,7 +53,7 @@ class PermissionsCommandTest extends TestCase
     public function testDescriptionOutput()
     {
         $this->exec('permissions --help');
-        $this->assertOutputContains('Install Configuration Options.');
+        $this->assertOutputContains('Update the Permissions for Users.');
     }
 
     /**
