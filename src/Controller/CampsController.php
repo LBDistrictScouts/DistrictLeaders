@@ -56,7 +56,6 @@ class CampsController extends AppController
         $camp = $this->Camps->newEntity();
         if ($this->request->is('post')) {
             $camp = $this->Camps->patchEntity($camp, $this->request->getData());
-            debug($camp);
             if ($this->Camps->save($camp)) {
                 $this->Flash->success(__('The camp has been saved.'));
 

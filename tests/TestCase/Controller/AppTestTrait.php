@@ -34,6 +34,11 @@ trait AppTestTrait
     {
         $users = TableRegistry::getTableLocator()->get('Users');
         $user = $users->get($userId);
+
+        // Add the Capabilities retrieval method
+        $users->patchCapabilities($user);
+        $user = $users->get($userId);
+
         $this->session(['Auth' => $user]);
     }
 

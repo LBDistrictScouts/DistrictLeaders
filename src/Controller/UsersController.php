@@ -54,6 +54,8 @@ class UsersController extends AppController
             'fields' => $visibleFields,
         ]);
 
+        $this->Authorization->can($user, 'view');
+
         $this->set('user', $user);
     }
 

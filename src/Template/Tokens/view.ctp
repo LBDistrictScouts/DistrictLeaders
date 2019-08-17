@@ -23,14 +23,6 @@
             <td><?= h($token->token) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Hash') ?></th>
-            <td><?= h($token->hash) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Token Header') ?></th>
-            <td><?= h($token->token_header) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($token->id) ?></td>
         </tr>
@@ -57,10 +49,6 @@
         <tr>
             <th scope="row"><?= __('Utilised') ?></th>
             <td><?= h($token->utilised) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Deleted') ?></th>
-            <td><?= h($token->deleted) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Active') ?></th>

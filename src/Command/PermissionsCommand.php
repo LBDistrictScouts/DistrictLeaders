@@ -1,0 +1,79 @@
+<?php
+namespace App\Command;
+
+use Cake\Console\Arguments;
+use Cake\Console\Command;
+use Cake\Console\ConsoleIo;
+use Cake\Console\ConsoleOptionParser;
+
+/**
+ * Class PasswordCommand
+ *
+ * @package App\Command
+ *
+ * @property \App\Model\Table\UsersTable $Users
+ */
+class PermissionsCommand extends Command
+{
+    /**
+     * Initialise method
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadModel('Users');
+    }
+
+    /**
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     *
+     * @return \Cake\Console\ConsoleOptionParser
+     */
+    protected function buildOptionParser(ConsoleOptionParser $parser)
+    {
+        $parser->setDescription('Install Configuration Options.');
+
+        $parser
+            ->addOption('all', [
+                'short' => 'a',
+                'help' => 'All Schedules',
+                'boolean' => true,
+            ])
+            ->addOption('capabilities', [
+                'short' => 'c',
+                'help' => 'Capabilities',
+                'boolean' => true,
+            ]);
+
+        return $parser;
+    }
+
+    /**
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $io The IO
+     *
+     * @return int|void|null
+     *
+     * @throws \Exception
+     *
+     * @SuppressWarnings(PHPMD.ShortVariable)
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function execute(Arguments $args, ConsoleIo $io)
+    {
+        if ($args->getOption('all') || $args->getOption('capabilities')) {
+            $users = $this->Users->find('all');
+            $happenings = 0;
+
+            foreach ($users as $user) {
+                if ($this->Users->patchCapabilities($user)) {
+                    $happenings += 1;
+                }
+            }
+
+            $io->info('User Capabilities Patched: ' . $happenings);
+        }
+    }
+}

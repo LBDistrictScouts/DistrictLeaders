@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Entity;
 
+use App\Form\PasswordForm;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityInterface as AuthorizationIdentity;
@@ -174,6 +175,69 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public function getIdentifier()
     {
         return $this->id;
+    }
+
+    /**
+     * Function to Check Capability Exists
+     *
+     * @param string $capability The Capability being checked.
+     * @param int|null $group A Group ID if applicable
+     * @param int|null $section A Section ID if applicable
+     *
+     * @return bool
+     */
+    public function checkCapability($capability, $group = null, $section = null)
+    {
+        if (!is_array($this->capabilities)) {
+            return false;
+        }
+
+        // User Check
+        if (key_exists('user', $this->capabilities)) {
+            $capabilities = $this->capabilities['user'];
+
+            if (in_array($capability, $capabilities)) {
+                return true;
+            }
+        }
+
+        // Group Check
+        if ($this->subSetCapabilityCheck($capability, 'group', $group)) {
+            return true;
+        }
+
+        // Section Check
+        if ($this->subSetCapabilityCheck($capability, 'section', $section)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check for Subset of Capabilities Array.
+     *
+     * @param string $capability The Capability being Verified
+     * @param string $subset The Authorisation Subset
+     * @param int $entityID The Entity ID
+     *
+     * @return bool
+     */
+    private function subSetCapabilityCheck($capability, $subset, $entityID)
+    {
+        if (key_exists($subset, $this->capabilities)) {
+            $subsetCapabilities = $this->capabilities[$subset];
+
+            if (key_exists($entityID, $subsetCapabilities)) {
+                foreach ($subsetCapabilities as $idx => $set) {
+                    if (in_array($capability, $set) && $idx == $entityID) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public const FIELD_ID = 'id';

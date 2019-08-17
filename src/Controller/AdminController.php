@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property \App\Controller\Component\GoogleClientComponent GoogleClient
  * @property \Cake\ORM\Table $Admin
  *
- * @method Entity[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \Cake\ORM\Entity[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AdminController extends AppController
 {

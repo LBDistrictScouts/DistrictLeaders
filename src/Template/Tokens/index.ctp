@@ -24,10 +24,6 @@
                 <th scope="col"><?= $this->Paginator->sort('expires') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('utilised') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('active') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('deleted') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('hash') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('random_number') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('token_header') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email_send_id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -42,10 +38,6 @@
                 <td><?= h($token->expires) ?></td>
                 <td><?= h($token->utilised) ?></td>
                 <td><?= h($token->active) ?></td>
-                <td><?= h($token->deleted) ?></td>
-                <td><?= h($token->hash) ?></td>
-                <td><?= $this->Number->format($token->random_number) ?></td>
-                <td><?= h($token->token_header) ?></td>
                 <td><?= $this->Number->format($token->email_send_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $token->id]) ?>
