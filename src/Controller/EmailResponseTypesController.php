@@ -55,7 +55,7 @@ class EmailResponseTypesController extends AppController
             if ($this->EmailResponseTypes->save($emailResponseType)) {
                 $this->Flash->success(__('The email response type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $emailResponseType->get('id')]);
             }
             $this->Flash->error(__('The email response type could not be saved. Please, try again.'));
         }
@@ -79,7 +79,7 @@ class EmailResponseTypesController extends AppController
             if ($this->EmailResponseTypes->save($emailResponseType)) {
                 $this->Flash->success(__('The email response type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $emailResponseType->get('id')]);
             }
             $this->Flash->error(__('The email response type could not be saved. Please, try again.'));
         }

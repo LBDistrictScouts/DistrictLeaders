@@ -2,7 +2,6 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\AdminController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,23 +11,53 @@ use Cake\TestSuite\TestCase;
  */
 class AdminControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [];
+    public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+    ];
+
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'Admin';
 
     /**
      * Test index method
      *
      * @return void
      */
-    public function testIndex()
+    public function testStatus()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        TestCase::markTestIncomplete();
+        $this->tryGet(['controller' => $this->controller, 'action' => 'status']);
     }
 
     /**
@@ -36,38 +65,9 @@ class AdminControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testGoogle()
     {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test add method
-     *
-     * @return void
-     */
-    public function testAdd()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+        TestCase::markTestIncomplete();
+        $this->tryGet(['controller' => $this->controller, 'action' => 'google']);
     }
 }

@@ -14,6 +14,8 @@
  */
 namespace App;
 
+use Ajax\Middleware\AjaxMiddleware;
+
 use App\Policy\RequestPolicy;
 
 use Authentication\AuthenticationService;
@@ -57,6 +59,8 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
+        $this->addPlugin('Ajax', ['bootstrap' => true]);
+
         $this->addPlugin('Muffin/Footprint');
 
         $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
@@ -162,7 +166,9 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ->add(new CsrfProtectionMiddleware([
                 'secure' => !Configure::read('debug'),
                 'httpOnly' => true,
-            ]));
+            ]))
+
+            ->add(AjaxMiddleware::class);
 
         return $middlewareQueue;
     }

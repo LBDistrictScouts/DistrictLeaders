@@ -2,7 +2,6 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\EmailSendsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,7 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class EmailSendsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -46,13 +45,35 @@ class EmailSendsControllerTest extends TestCase
     ];
 
     /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'EmailSends';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'email_generation_code' => 'USR-1-NEW',
+        'email_template' => 'welcome',
+        'include_token' => true,
+        'sent' => null,
+        'message_send_code' => 'PSJs821sxa928bs219SMZX9',
+        'user_id' => 1,
+        'subject' => 'Welcome User 1',
+        'routing_domain' => 'routing.domain',
+        'from_address' => 'hello@goat.com',
+        'friendly_from' => 'The United Goat Federation',
+        'notification_id' => 1,
+    ];
+
+    /**
      * Test index method
      *
      * @return void
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -62,7 +83,7 @@ class EmailSendsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -72,7 +93,13 @@ class EmailSendsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -82,7 +109,13 @@ class EmailSendsControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -92,6 +125,10 @@ class EmailSendsControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

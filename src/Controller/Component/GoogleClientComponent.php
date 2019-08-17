@@ -32,7 +32,7 @@ class GoogleClientComponent extends Component
         $client = new Google_Client();
         $client->setApplicationName('G Suite Directory API PHP Quickstart');
         $client->setScopes(Google_Service_Directory::ADMIN_DIRECTORY_USER_READONLY);
-        $client->setAuthConfig('credentials.json');
+        $client->setAuthConfig('config/credentials.json');
         $client->setAccessType('offline');
         $client->setPrompt('select_account consent');
 

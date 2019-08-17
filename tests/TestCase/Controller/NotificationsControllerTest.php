@@ -2,7 +2,6 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\NotificationsController;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,7 +11,7 @@ use Cake\TestSuite\TestCase;
  */
 class NotificationsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Fixtures
@@ -46,13 +45,36 @@ class NotificationsControllerTest extends TestCase
     ];
 
     /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'Notifications';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        'user_id' => 1,
+        'notification_type_id' => 1,
+        'new' => false,
+        'notification_header' => 'A payment has been recorded.',
+        'text' => 'We have received a payment and have recorded it against your invoice. Please check that everything is in order.',
+        'created' => '2018-02-25 15:56:43',
+        'read_date' => '2018-02-25 15:58:04',
+        'notification_source' => 'System Generated',
+        'link_id' => 2,
+        'link_controller' => 'Invoices',
+        'link_prefix' => null,
+        'link_action' => 'view',
+    ];
+
+    /**
      * Test index method
      *
      * @return void
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -62,7 +84,7 @@ class NotificationsControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -72,7 +94,13 @@ class NotificationsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -82,7 +110,13 @@ class NotificationsControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -92,6 +126,10 @@ class NotificationsControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

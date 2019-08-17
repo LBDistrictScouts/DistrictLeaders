@@ -58,7 +58,7 @@ class EmailResponsesController extends AppController
             if ($this->EmailResponses->save($emailResponse)) {
                 $this->Flash->success(__('The email response has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $emailResponse->get('id')]);
             }
             $this->Flash->error(__('The email response could not be saved. Please, try again.'));
         }
@@ -84,7 +84,7 @@ class EmailResponsesController extends AppController
             if ($this->EmailResponses->save($emailResponse)) {
                 $this->Flash->success(__('The email response has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $emailResponse->get('id')]);
             }
             $this->Flash->error(__('The email response could not be saved. Please, try again.'));
         }

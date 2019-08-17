@@ -14,6 +14,7 @@ namespace PHPSTORM_META {
 			'Security' => \Cake\Controller\Component\SecurityComponent::class,
 			'CloudConvertClient' => \App\Controller\Component\CloudConvertClientComponent::class,
 			'GoogleClient' => \App\Controller\Component\GoogleClientComponent::class,
+			'Ajax.Ajax' => \Ajax\Controller\Component\AjaxComponent::class,
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,
 			'DebugKit.Toolbar' => \DebugKit\Controller\Component\ToolbarComponent::class,
@@ -23,6 +24,7 @@ namespace PHPSTORM_META {
 	override(
 		\Cake\Core\PluginApplicationInterface::addPlugin(0),
 		map([
+			'Ajax' => \Cake\Http\BaseApplication::class,
 			'Authentication' => \Cake\Http\BaseApplication::class,
 			'Authorization' => \Cake\Http\BaseApplication::class,
 			'Bake' => \Cake\Http\BaseApplication::class,

@@ -55,7 +55,7 @@ class NotificationTypesController extends AppController
             if ($this->NotificationTypes->save($notificationType)) {
                 $this->Flash->success(__('The notification type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $notificationType->get('id')]);
             }
             $this->Flash->error(__('The notification type could not be saved. Please, try again.'));
         }
@@ -79,7 +79,7 @@ class NotificationTypesController extends AppController
             if ($this->NotificationTypes->save($notificationType)) {
                 $this->Flash->success(__('The notification type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $notificationType->get('id')]);
             }
             $this->Flash->error(__('The notification type could not be saved. Please, try again.'));
         }

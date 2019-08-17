@@ -22,7 +22,7 @@ class NotificationsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'NotificationTypes', 'Links']
+            'contain' => ['Users', 'NotificationTypes']
         ];
         $notifications = $this->paginate($this->Notifications);
 
@@ -39,7 +39,7 @@ class NotificationsController extends AppController
     public function view($id = null)
     {
         $notification = $this->Notifications->get($id, [
-            'contain' => ['Users', 'NotificationTypes', 'Links', 'EmailSends']
+            'contain' => ['Users', 'NotificationTypes', 'EmailSends']
         ]);
 
         $this->set('notification', $notification);
@@ -58,14 +58,13 @@ class NotificationsController extends AppController
             if ($this->Notifications->save($notification)) {
                 $this->Flash->success(__('The notification has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $notification->get('id')]);
             }
             $this->Flash->error(__('The notification could not be saved. Please, try again.'));
         }
         $users = $this->Notifications->Users->find('list', ['limit' => 200]);
         $notificationTypes = $this->Notifications->NotificationTypes->find('list', ['limit' => 200]);
-        $links = $this->Notifications->Links->find('list', ['limit' => 200]);
-        $this->set(compact('notification', 'users', 'notificationTypes', 'links'));
+        $this->set(compact('notification', 'users', 'notificationTypes'));
     }
 
     /**
@@ -85,14 +84,13 @@ class NotificationsController extends AppController
             if ($this->Notifications->save($notification)) {
                 $this->Flash->success(__('The notification has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $notification->get('id')]);
             }
             $this->Flash->error(__('The notification could not be saved. Please, try again.'));
         }
         $users = $this->Notifications->Users->find('list', ['limit' => 200]);
         $notificationTypes = $this->Notifications->NotificationTypes->find('list', ['limit' => 200]);
-        $links = $this->Notifications->Links->find('list', ['limit' => 200]);
-        $this->set(compact('notification', 'users', 'notificationTypes', 'links'));
+        $this->set(compact('notification', 'users', 'notificationTypes'));
     }
 
     /**
