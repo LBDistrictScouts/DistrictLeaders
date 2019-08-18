@@ -15,6 +15,7 @@
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Cake\Event\Event;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\View\Exception\MissingTemplateException;
@@ -68,5 +69,15 @@ class PagesController extends AppController
         }
 
         $this->viewBuilder()->setLayout('landing');
+    }
+
+    /**
+     * @param Event $event The CakePHP Event
+     *
+     * @return \Cake\Http\Response|void|null
+     */
+    public function beforeFilter(Event $event)
+    {
+        $this->Authentication->allowUnauthenticated(['display']);
     }
 }

@@ -54,10 +54,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Application extends BaseApplication implements AuthorizationServiceProviderInterface, AuthenticationServiceProviderInterface
 {
-    /**
-     * @var string $loginUrl The Url for login
-     */
-    protected $loginUrl = '/users/login';
+    protected const LOGIN_URL = '/users/login';
 
     /**
      * {@inheritDoc}
@@ -150,7 +147,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
             // Add the authentication middleware to the middleware queue
             ->add(new AuthenticationMiddleware($this, [
-                'unauthenticatedRedirect' => $this->loginUrl,
+                'unauthenticatedRedirect' => self::LOGIN_URL,
                 'queryParam' => 'redirect',
             ]))
 
@@ -162,7 +159,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
                 },
                 'unauthorizedHandler' => [
                     'className' => 'Authorization.Redirect',
-                    'url' => $this->loginUrl,
+                    'url' => self::LOGIN_URL,
                     'queryParam' => 'redirectUrl',
                     'exceptions' => [
                         MissingIdentityException::class,
@@ -229,7 +226,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             compact('fields'),
-            'loginUrl' => [ $this->loginUrl, 'login' ]
+            'loginUrl' => [ self::LOGIN_URL, 'login' ]
         ]);
         $service->loadAuthenticator('Authentication.Cookie', [
             'rememberMeField' => 'remember_me',

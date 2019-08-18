@@ -20,7 +20,7 @@
         "friendsofcake/bootstrap-ui": "^1.4",
         "friendsofcake/search": "^5.3",
         "google/apiclient": "^2.0",
-        "guzzlehttp/psr7": "1.5.2",
+        "guzzlehttp/psr7": "^1.5.2",
         "josbeir/cakephp-filesystem": "^1.0",
         "league/flysystem-aws-s3-v3": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
@@ -34,6 +34,7 @@
         "cakephp/debug_kit": "^3.17.0",
         "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
+        "phan/phan": "^2.2",
         "phpunit/php-code-coverage": "^5.3",
         "phpunit/phpunit": "^5|^6",
         "psy/psysh": "@stable"
@@ -64,6 +65,7 @@
         "check": [
             "@test",
             "@cs-check",
+            "@validate",
             "@phpstan"
         ],
         "fix": [

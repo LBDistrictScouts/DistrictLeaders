@@ -174,7 +174,7 @@ class UsersController extends AppController
      *
      * @throws \Exception
      */
-    public function reset()
+    public function forgot()
     {
         $this->viewBuilder()->setLayout('landing');
 
@@ -249,12 +249,14 @@ class UsersController extends AppController
         $this->set(compact('resForm'));
 
         if ($this->request->is('post')) {
-            $found = $this->Users->find('all')
-                                 ->where([
-                                    'membership_number' => $this->request->getData('membership_number'),
-                                    'first_name' => $this->request->getData('first_name'),
-                                    'last_name' => $this->request->getData('last_name')
-                                 ]);
+            $found = $this
+                ->Users
+                ->find('all')
+                ->where([
+                    'membership_number' => $this->request->getData('membership_number'),
+                    'first_name' => $this->request->getData('first_name'),
+                    'last_name' => $this->request->getData('last_name')
+                ]);
 
             $count = $found->count();
             $user = $found->first();
@@ -267,68 +269,78 @@ class UsersController extends AppController
         }
     }
 
+    protected const CHANGE_TYPE_UNAUTHORIZED = 0;
+    protected const CHANGE_TYPE_RESET = 1;
+    protected const CHANGE_TYPE_UPDATE = 2;
+
     /**
      * Token - Completes Password Reset Function
      *
      * @param string $token The String to Be Validated
      *
-     * @return void
-//     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|void
      */
-    public function token($token = null)
+    public function password($token = null)
     {
-//        $this->loadModel('Tokens');
-
+        $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
         $this->viewBuilder()->setLayout('outside');
+        $this->loadModel('Tokens');
 
-//        $valid = $this->Tokens->validateToken($token);
-//        if (!$valid) {
-//            $this->Flash->error('Password Reset Token could not be validated.');
-//
-//            return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
-//        }
-//
-//        if (is_numeric($valid)) {
-//            $tokenRow = $this->Tokens->get($valid);
-//            $resetUser = $this->Users->get($tokenRow->user_id);
-//
-//            $passwordForm = new PasswordForm();
-//            $this->set(compact('passwordForm'));
-//
-//            if ($this->request->is('post')) {
-//                $fmPassword = $this->request->getData('newpw');
-//                $fmConfirm = $this->request->getData('confirm');
-//
-//                if ($fmConfirm == $fmPassword) {
-//                    $fmPostcode = $this->request->getData('postcode');
-//                    $fmPostcode = str_replace(" ", "", strtoupper($fmPostcode));
-//
-//                    $usPostcode = $resetUser->postcode;
-//                    $usPostcode = str_replace(" ", "", strtoupper($usPostcode));
-//
-//                    if ($usPostcode == $fmPostcode) {
-//                        $newPw = [
-//                            'password' => $fmPassword,
-//                            'reset' => 'No Longer Active'
-//                        ];
-//
-//                        $resetUser = $this->Users->patchEntity($resetUser, $newPw, [ 'fields' => ['password'], 'validate' => false ]);
-//
-//                        if ($this->Users->save($resetUser)) {
-//                            $this->Flash->success('Your password was saved successfully.');
-//
-//                            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
-//                        } else {
-//                            $this->Flash->error(__('The user could not be saved. Please try again.'));
-//                        }
-//                    } else {
-//                        $this->Flash->error(__('Your postcode could not be validated. Please try again.'));
-//                    }
-//                } else {
-//                    $this->Flash->error(__('The passwords you have entered do not match. Please try again.'));
-//                }
-//            }
-//        }
+        $valid = $this->Tokens->validateToken($token);
+        if (!$valid) {
+            $changeType = self::CHANGE_TYPE_RESET;
+            /** @var \App\Model\Entity\Token $tokenRow */
+            $tokenRow = $this->Tokens->get($valid, ['contain' => 'EmailSends.Users']);
+            $resetUser = $tokenRow->email_send->user;
+        }
+
+        $identity = $this->Authentication->getIdentity();
+        if (is_null($identity)) {
+            $changeType = self::CHANGE_TYPE_UPDATE;
+            $resetUser = $identity;
+        }
+
+        if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
+            $this->Flash->error('Password Reset Token could not be validated.');
+
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+        }
+
+        if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && isset($resetUser) && $resetUser instanceof User) {
+            $passwordForm = new PasswordForm();
+            $this->set(compact('passwordForm'));
+
+            if ($this->request->is('post')) {
+                $fmPassword = $this->request->getData('newpw');
+                $fmConfirm = $this->request->getData('confirm');
+
+                if ($fmConfirm == $fmPassword) {
+                    $fmPostcode = str_replace(" ", "", strtoupper($this->request->getData('postcode')));
+                    $usPostcode = str_replace(" ", "", strtoupper($resetUser->postcode));
+
+                    if ($usPostcode == $fmPostcode) {
+                        $newPw = [
+                            'password' => $fmPassword,
+                            'reset' => 'No Longer Active'
+                        ];
+
+                        $resetUser = $this->Users->patchEntity($resetUser, $newPw, [ 'fields' => ['password'], 'validate' => false ]);
+
+                        if ($this->Users->save($resetUser)) {
+                            $this->Flash->success('Your password was saved successfully.');
+
+                            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                        } else {
+                            $this->Flash->error(__('The user could not be saved. Please try again.'));
+                        }
+                    } else {
+                        $this->Flash->error(__('Your postcode could not be validated. Please try again.'));
+                    }
+                } else {
+                    $this->Flash->error(__('The passwords you have entered do not match. Please try again.'));
+                }
+            }
+        }
     }
 
     /**
@@ -338,18 +350,6 @@ class UsersController extends AppController
      */
     public function beforeFilter(Event $event)
     {
-        $this->Authentication->allowUnauthenticated(['login', 'username', 'reset', 'token']);
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
     }
-
-//    /**
-//     * Authorisation Check
-//     *
-//     * @param User $user The Authorised User
-//     *
-//     * @return bool
-//     */
-//    public function isAuthorized($user)
-//    {
-//        return true;
-//    }
 }
