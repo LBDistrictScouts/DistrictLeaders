@@ -18,6 +18,10 @@ namespace PHPSTORM_META {
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,
 			'DebugKit.Toolbar' => \DebugKit\Controller\Component\ToolbarComponent::class,
+			'Search.Prg' => \Search\Controller\Component\PrgComponent::class,
+			'Tools.Common' => \Tools\Controller\Component\CommonComponent::class,
+			'Tools.Mobile' => \Tools\Controller\Component\MobileComponent::class,
+			'Tools.Url' => \Tools\Controller\Component\UrlComponent::class,
 		])
 	);
 
@@ -29,6 +33,7 @@ namespace PHPSTORM_META {
 			'Authorization' => \Cake\Http\BaseApplication::class,
 			'Bake' => \Cake\Http\BaseApplication::class,
 			'BootstrapUI' => \Cake\Http\BaseApplication::class,
+			'CakeDto' => \Cake\Http\BaseApplication::class,
 			'DatabaseLog' => \Cake\Http\BaseApplication::class,
 			'DebugKit' => \Cake\Http\BaseApplication::class,
 			'IdeHelper' => \Cake\Http\BaseApplication::class,
@@ -38,6 +43,8 @@ namespace PHPSTORM_META {
 			'Muffin/Trash' => \Cake\Http\BaseApplication::class,
 			'Queue' => \Cake\Http\BaseApplication::class,
 			'Search' => \Cake\Http\BaseApplication::class,
+			'Shim' => \Cake\Http\BaseApplication::class,
+			'Tools' => \Cake\Http\BaseApplication::class,
 			'WyriHaximus/TwigView' => \Cake\Http\BaseApplication::class,
 		])
 	);
@@ -98,6 +105,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
+			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 		])
 	);
 
@@ -112,6 +120,7 @@ namespace PHPSTORM_META {
 			'withtrashed' => \Cake\ORM\Query::class,
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'search' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
 			'active' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -129,6 +138,7 @@ namespace PHPSTORM_META {
 			'withtrashed' => \Cake\ORM\Query::class,
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'search' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
 			'active' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -168,6 +178,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
+			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 		])
 	);
 
@@ -178,7 +189,20 @@ namespace PHPSTORM_META {
 			'DebugKit.Timed' => \Cake\ORM\Table::class,
 			'Muffin/Footprint.Footprint' => \Cake\ORM\Table::class,
 			'Muffin/Trash.Trash' => \Cake\ORM\Table::class,
+			'Search.Search' => \Cake\ORM\Table::class,
 			'Timestamp' => \Cake\ORM\Table::class,
+			'Tools.AfterSave' => \Cake\ORM\Table::class,
+			'Tools.Bitmasked' => \Cake\ORM\Table::class,
+			'Tools.Confirmable' => \Cake\ORM\Table::class,
+			'Tools.Jsonable' => \Cake\ORM\Table::class,
+			'Tools.Neighbor' => \Cake\ORM\Table::class,
+			'Tools.Passwordable' => \Cake\ORM\Table::class,
+			'Tools.Reset' => \Cake\ORM\Table::class,
+			'Tools.Slugged' => \Cake\ORM\Table::class,
+			'Tools.String' => \Cake\ORM\Table::class,
+			'Tools.Toggle' => \Cake\ORM\Table::class,
+			'Tools.TypeMap' => \Cake\ORM\Table::class,
+			'Tools.Typographic' => \Cake\ORM\Table::class,
 			'Translate' => \Cake\ORM\Table::class,
 			'Tree' => \Cake\ORM\Table::class,
 		])
@@ -217,6 +241,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \Cake\ORM\Association\BelongsToMany::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsToMany::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsToMany::class,
+			'Tools.Tokens' => \Cake\ORM\Association\BelongsToMany::class,
 		])
 	);
 
@@ -253,6 +278,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \Cake\ORM\Association\BelongsTo::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsTo::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsTo::class,
+			'Tools.Tokens' => \Cake\ORM\Association\BelongsTo::class,
 		])
 	);
 
@@ -267,6 +293,7 @@ namespace PHPSTORM_META {
 			'withtrashed' => \Cake\ORM\Query::class,
 			'unsent' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'search' => \Cake\ORM\Query::class,
 			'recent' => \Cake\ORM\Query::class,
 			'active' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -306,6 +333,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \Cake\ORM\Association\HasMany::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\HasMany::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\HasMany::class,
+			'Tools.Tokens' => \Cake\ORM\Association\HasMany::class,
 		])
 	);
 
@@ -342,6 +370,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \Cake\ORM\Association\HasOne::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\HasOne::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\HasOne::class,
+			'Tools.Tokens' => \Cake\ORM\Association\HasOne::class,
 		])
 	);
 
@@ -378,6 +407,7 @@ namespace PHPSTORM_META {
 			'DebugKit.Requests' => \DebugKit\Model\Table\RequestsTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
+			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 		])
 	);
 
@@ -406,6 +436,7 @@ namespace PHPSTORM_META {
 			'Flash/error' => \Cake\View\View::class,
 			'Flash/success' => \Cake\View\View::class,
 			'Queue.search' => \Cake\View\View::class,
+			'Tools.pagination' => \Cake\View\View::class,
 			'WyriHaximus/TwigView.twig_panel' => \Cake\View\View::class,
 			'footer' => \Cake\View\View::class,
 			'header' => \Cake\View\View::class,
@@ -440,6 +471,7 @@ namespace PHPSTORM_META {
 			'BootstrapUI.Form' => \BootstrapUI\View\Helper\FormHelper::class,
 			'BootstrapUI.Html' => \BootstrapUI\View\Helper\HtmlHelper::class,
 			'BootstrapUI.Paginator' => \BootstrapUI\View\Helper\PaginatorHelper::class,
+			'CakeDto.Template' => \CakeDto\View\Helper\TemplateHelper::class,
 			'DatabaseLog.Log' => \DatabaseLog\View\Helper\LogHelper::class,
 			'DebugKit.Credentials' => \DebugKit\View\Helper\CredentialsHelper::class,
 			'DebugKit.SimpleGraph' => \DebugKit\View\Helper\SimpleGraphHelper::class,
@@ -448,6 +480,22 @@ namespace PHPSTORM_META {
 			'IdeHelper.DocBlock' => \IdeHelper\View\Helper\DocBlockHelper::class,
 			'Migrations.Migration' => \Migrations\View\Helper\MigrationHelper::class,
 			'Queue.QueueProgress' => \Queue\View\Helper\QueueProgressHelper::class,
+			'Search.Search' => \Search\View\Helper\SearchHelper::class,
+			'Tools.Common' => \Tools\View\Helper\CommonHelper::class,
+			'Tools.Form' => \Tools\View\Helper\FormHelper::class,
+			'Tools.Format' => \Tools\View\Helper\FormatHelper::class,
+			'Tools.Gravatar' => \Tools\View\Helper\GravatarHelper::class,
+			'Tools.Html' => \Tools\View\Helper\HtmlHelper::class,
+			'Tools.Number' => \Tools\View\Helper\NumberHelper::class,
+			'Tools.Obfuscate' => \Tools\View\Helper\ObfuscateHelper::class,
+			'Tools.Progress' => \Tools\View\Helper\ProgressHelper::class,
+			'Tools.QrCode' => \Tools\View\Helper\QrCodeHelper::class,
+			'Tools.Text' => \Tools\View\Helper\TextHelper::class,
+			'Tools.Time' => \Tools\View\Helper\TimeHelper::class,
+			'Tools.Timeline' => \Tools\View\Helper\TimelineHelper::class,
+			'Tools.Tree' => \Tools\View\Helper\TreeHelper::class,
+			'Tools.Typography' => \Tools\View\Helper\TypographyHelper::class,
+			'Tools.Url' => \Tools\View\Helper\UrlHelper::class,
 		])
 	);
 
