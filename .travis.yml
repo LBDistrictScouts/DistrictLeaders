@@ -11,7 +11,7 @@ sudo: false
 cache:
   directories:
     - $HOME/.composer/cache
-    - $HOME/.cache/phan-ast/build
+    - vendor
 
 services:
   - postgresql
@@ -37,7 +37,6 @@ before_install:
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
-  - ./tests/setup.sh
 
 install:
   - psql --command='create database leaders;' --username=postgres
@@ -51,7 +50,6 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - composer create-project phan/phan=1.2.1 ~/phan-install; ~/phan-install/phan
   - sh -c "bin/cake code_completion generate -d"
   - composer cs-check
   - composer test
