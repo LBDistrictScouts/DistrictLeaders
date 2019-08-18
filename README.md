@@ -5,6 +5,7 @@ This is a web application for use with District Leaders.
 ### Master Branch
 [![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=master)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)
 [![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/master/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
+[![Maintainability](https://api.codeclimate.com/v1/badges/7785e44f399b4d7c04c4/maintainability)](https://codeclimate.com/github/LBDistrictScouts/DistrictLeaders/maintainability)
 
 ### Development Branch
 [![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)

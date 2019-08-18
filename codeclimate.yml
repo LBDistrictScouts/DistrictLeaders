@@ -1,0 +1,76 @@
+version: "3"         # required to adjust maintainability checks
+
+checks:
+  argument-count:
+    config:
+      threshold: 4
+  complex-logic:
+    config:
+      threshold: 4
+  file-lines:
+    config:
+      threshold: 250
+  method-complexity:
+    config:
+      threshold: 20
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 150
+  nested-control-flow:
+    config:
+      threshold: 4
+  return-statements:
+    config:
+      threshold: 4
+  similar-code:
+    enabled: false
+  identical-code:
+    config:
+      threshold: 40 # language-specific defaults. an override will affect all languages.
+
+plugins:
+  csslint:
+    enabled: false
+    duplication:
+      enabled: true
+      config:
+        languages:
+          - php
+
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+  phan:
+    enabled: true
+    config:
+      file_extensions: "php"
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+      standard: "vendor/cakephp/cakephp-codesniffer/CakePHP"
+  markdownlint:
+    enabled: true
+  editorconfig:
+    enabled: true
+  sonar-php:
+    enabled: true
+    config:
+      tests_patterns:
+        - src/test/**
+        - app/src/test/**
+
+ratings:
+  paths:
+    - "**.php"
+
+exclude_patterns:
+  - "**/config/"
+  - "**/spec/"
+  - "**/vendor/"
