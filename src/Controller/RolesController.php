@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RolesTable $Roles
  *
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
@@ -67,6 +67,7 @@ class RolesController extends AppController
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
         $users = $this->Roles->Users->find('list', ['limit' => 200]);
         $roleStatuses = $this->Roles->RoleStatuses->find('list', ['limit' => 200]);
+
         $this->set(compact('role', 'roleTypes', 'sections', 'users', 'roleStatuses'));
     }
 
@@ -95,6 +96,7 @@ class RolesController extends AppController
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
         $users = $this->Roles->Users->find('list', ['limit' => 200]);
         $roleStatuses = $this->Roles->RoleStatuses->find('list', ['limit' => 200]);
+
         $this->set(compact('role', 'roleTypes', 'sections', 'users', 'roleStatuses'));
     }
 
