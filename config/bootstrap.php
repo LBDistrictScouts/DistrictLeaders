@@ -29,7 +29,8 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
-use App\Event\UserEvent;
+use App\Listener\RoleListener;
+use App\Listener\UserListener;
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
@@ -193,4 +194,5 @@ Type::build('timestamp')
 //Inflector::rules('uninflected', ['dontinflectme']);
 //Inflector::rules('transliteration', ['/å/' => 'aa']);
 
-EventManager::instance()->on(new UserEvent());
+EventManager::instance()->on(new UserListener());
+EventManager::instance()->on(new RoleListener());

@@ -1,5 +1,5 @@
 <?php
-namespace App\Event;
+namespace App\Listener;
 
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
@@ -8,11 +8,11 @@ use Cake\ORM\TableRegistry;
 /**
  * Class LoginEvent
  *
- * @package App\Event
+ * @package App\Listener
  *
  * @property \App\Model\Table\UsersTable $Users
  */
-class RoleEvent implements EventListenerInterface
+class UserListener implements EventListenerInterface
 {
     /**
      * @return array
@@ -20,7 +20,7 @@ class RoleEvent implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Model.Role.afterSave' => 'newRole',
+            'Model.User.login' => 'updateLogin',
         ];
     }
 
@@ -29,22 +29,15 @@ class RoleEvent implements EventListenerInterface
      *
      * @return void
      */
-    public function newRole($event)
+    public function updateLogin($event)
     {
         /** @var \App\Model\Entity\User $user */
         $user = $event->getData('user');
-
-        $this->updateCapabilities($user);
-    }
-
-    /**
-     * @param \App\Model\Entity\User $user The user with a new Role
-     *
-     * @return void
-     */
-    public function updateCapabilities($user)
-    {
         $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $this->Users->patchCapabilities($user);
+
+        $user->set('last_login', FrozenTime::now());
+        $user->setDirty('modified', true);
+
+        $this->Users->save($user);
     }
 }

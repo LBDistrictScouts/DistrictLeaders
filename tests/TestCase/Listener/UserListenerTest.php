@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Test\TestCase\Event;
+namespace App\Test\TestCase\Listener;
 
 //use App\Model\Table\OrdersTable;
 use App\Model\Entity\User;
@@ -14,14 +14,14 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * Class UserEventTest
+ * Class UserListenerTest
  *
- * @package App\Test\TestCase\Event
+ * @package App\Test\TestCase\Listener
  *
  * @property \App\Model\Table\UsersTable $Users
  * @property EventManager $EventManager
  */
-class UserEventTest extends TestCase
+class UserListenerTest extends TestCase
 {
     use AppTestTrait;
 
@@ -52,7 +52,7 @@ class UserEventTest extends TestCase
 
     public function testUpdateLogin()
     {
-        $now = new Time('2018-12-26 23:22:30');
+        $now = new Time('2018-12-25 23:22:30');
         FrozenTime::setTestNow($now);
 
         $testPassword = 'ThisTestPassword';
@@ -62,6 +62,9 @@ class UserEventTest extends TestCase
 
         $user->set(User::FIELD_PASSWORD, $testPassword);
         TestCase::assertNotFalse($this->Users->save($user));
+
+        $now = new Time('2018-12-28 23:22:30');
+        FrozenTime::setTestNow($now);
 
         $redirect = [
             'controller' => 'Pages',
@@ -85,5 +88,6 @@ class UserEventTest extends TestCase
         $afterUser = $this->Users->get(1);
 
         TestCase::assertEquals($now, $afterUser->last_login);
+        TestCase::assertNotEquals($now, $afterUser->modified);
     }
 }

@@ -14,13 +14,10 @@
  */
 namespace App\Controller;
 
-use App\Event\UserEvent;
-use App\Model\Entity\User;
-use App\Test\TestCase\Command\PasswordCommandTest;
+use App\Listener\RoleListener;
+use App\Listener\UserListener;
 use Authentication\AuthenticationService;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
-use Cake\I18n\FrozenTime;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -116,6 +113,7 @@ class AppController extends Controller
      */
     private function eventListeners()
     {
-        $this->getEventManager()->on(new UserEvent());
+        $this->getEventManager()->on(new UserListener());
+        $this->getEventManager()->on(new RoleListener());
     }
 }
