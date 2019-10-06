@@ -2,6 +2,7 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\UsersController;
+use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -9,6 +10,8 @@ use Cake\TestSuite\TestCase;
  * App\Controller\UsersController Test Case
  *
  * @uses \App\Controller\UsersController
+ *
+ * @property \App\Model\Table\UsersTable $Users
  */
 class UsersControllerTest extends TestCase
 {
@@ -159,7 +162,33 @@ class UsersControllerTest extends TestCase
             'action' => 'login',
         ]);
 
+        $this->assertResponseContains('Leader Login');
         $this->assertResponseOk();
+
+        // Logging In
+        $testPassword = 'ThisTestPassword';
+
+        $this->Users = TableRegistry::getTableLocator()->get('Users');
+        $user = $this->Users->get(1);
+
+        $user->set(User::FIELD_PASSWORD, $testPassword);
+        TestCase::assertNotFalse($this->Users->save($user));
+
+        $redirect = [
+            'controller' => 'Pages',
+            'action' => 'display',
+            'home',
+        ];
+
+        $this->tryPost([
+            'controller' => 'Users',
+            'action' => 'login',
+        ], [
+            'username' => $user->username,
+            'password' => $testPassword,
+        ], $redirect);
+
+        $this->assertRedirect($redirect);
     }
 
     /**

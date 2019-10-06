@@ -29,6 +29,7 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+use App\Event\UserEvent;
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
@@ -36,6 +37,7 @@ use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorHandler;
+use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
@@ -61,7 +63,7 @@ try {
     Configure::load('functional_areas', 'default', false);
     Configure::load('known_entities', 'default', false);
     Configure::load('settings', 'default', false);
-} catch (\Exception $e) {
+} catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
 
@@ -186,7 +188,9 @@ Type::build('timestamp')
  * table, model, controller names or whatever other string is passed to the
  * inflection functions.
  */
-Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
-Inflector::rules('irregular', ['red' => 'redlings']);
-Inflector::rules('uninflected', ['dontinflectme']);
-Inflector::rules('transliteration', ['/å/' => 'aa']);
+//Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
+//Inflector::rules('irregular', ['red' => 'redlings']);
+//Inflector::rules('uninflected', ['dontinflectme']);
+//Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+EventManager::instance()->on(new UserEvent());

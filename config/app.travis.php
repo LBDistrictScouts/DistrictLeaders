@@ -344,4 +344,12 @@ return [
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
     ],
+
+    'defaultAdmin' => [
+        'username' => 'admin',
+        'email' => 'webmaster@admin.co.uk',
+        'first_name' => 'Admin',
+        'last_name' => 'MrFace',
+        'membership_number' => 000123,
+    ],
 ];

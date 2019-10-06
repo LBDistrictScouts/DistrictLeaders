@@ -14,7 +14,7 @@ use Cake\I18n\Time;
  *
  * @property \App\Model\Table\UsersTable $Users
  *
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
  *
  * @property \App\Model\Table\TokensTable $Tokens
  */
@@ -138,6 +138,11 @@ class UsersController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
+            $event = new Event('Model.User.login', $this, [
+                'user' => $this->request->getAttribute('identity')->getOriginalData()
+            ]);
+            $this->getEventManager()->dispatch($event);
+
             $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
             return $this->redirect($redirect);

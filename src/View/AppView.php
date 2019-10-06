@@ -34,6 +34,8 @@ use Cake\View\View;
  * @property \Authentication\View\Helper\IdentityHelper $Identity
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
+ * @property \Tools\View\Helper\TimeHelper $Time
+ * @property \Tools\View\Helper\FormatHelper $Format
  */
 class AppView extends View
 {

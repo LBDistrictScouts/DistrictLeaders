@@ -355,4 +355,12 @@ return [
         'length' => 32, // Default value
         'table' => 'tokenize_tokens', // Default value
     ],
+
+    'defaultAdmin' => [
+        'username' => 'admin',
+        'email' => 'webmaster@admin.co.uk',
+        'first_name' => 'Admin',
+        'last_name' => 'MrFace',
+        'membership_number' => 000123,
+    ],
 ];

@@ -3,22 +3,20 @@ namespace App\Shell\Task;
 
 use Queue\Model\QueueException;
 use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
 
 /**
- * Class QueueWelcomeTask
+ * Class QueueMailingListTask
  *
  * @package App\Shell\Task
- *
- * @property \App\Model\Table\EmailSendsTable EmailSends
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
-class QueueWelcomeTask extends QueueTask implements QueueTaskInterface
+class QueueMailingListTask extends QueueTask
 {
 
     /**
      * @var int
      */
-    public $timeout = 20;
+    public $timeout = 300;
 
     /**
      * @var int
@@ -32,13 +30,13 @@ class QueueWelcomeTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId)
     {
-        if (!key_exists('user_id', $data)) {
-            throw new QueueException('No User ID specified.');
+        if (!key_exists('email_generation_code', $data)) {
+            throw new QueueException('Email generation code not specified.');
         }
 
         $this->loadModel('EmailSends');
 
-        if (!$this->EmailSends->makeAndSend('USR-' . $data['user_id'] . '-NEW')) {
+        if (!$this->EmailSends->makeAndSend($data['email_generation_code'])) {
             throw new QueueException('Make & Send Failed.');
         }
     }
