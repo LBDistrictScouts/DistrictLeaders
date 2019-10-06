@@ -146,10 +146,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ))
 
             // Add the authentication middleware to the middleware queue
-            ->add(new AuthenticationMiddleware($this, [
-                'unauthenticatedRedirect' => self::LOGIN_URL,
-                'queryParam' => 'redirect',
-            ]))
+            ->add(new AuthenticationMiddleware($this))
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [
@@ -218,6 +215,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             'username' => 'username',
             'password' => 'password'
         ];
+
+        $service->setConfig([
+            'unauthenticatedRedirect' => self::LOGIN_URL,
+            'queryParam' => 'redirect',
+        ]);
 
         // Load identifiers
         $service->loadIdentifier('Authentication.Password', compact('fields'));

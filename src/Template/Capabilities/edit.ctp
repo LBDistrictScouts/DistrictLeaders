@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Capability $capability
+ * @var mixed $roleTypes
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">

@@ -70,6 +70,7 @@ class PagesControllerTest extends TestCase
         $this->tryGet('/');
         $this->assertResponseOk();
     }
+
     /**
      * testDisplay method
      *

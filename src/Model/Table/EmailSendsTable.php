@@ -155,6 +155,59 @@ class EmailSendsTable extends Table
     }
 
     /**
+     * @param string $emailGenerationCode The Email Generation Code
+     *
+     * @return array
+     */
+    private function codeSplitter($emailGenerationCode)
+    {
+        $generationArray = explode('-', $emailGenerationCode, 3);
+
+        $splitArray['type'] = $generationArray[0];
+        $splitArray['entityId'] = $generationArray[1];
+        $splitArray['subType'] = $generationArray[2];
+
+        return $splitArray;
+    }
+
+    /**
+     * @param string $emailGenerationCode The Code provided to generate the email
+     * @param array $existExempt An override array for exist Overrides
+     *
+     * @return false|string
+     */
+    private function codeExistValidator($emailGenerationCode, $existExempt)
+    {
+        $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
+
+        /**
+         * @var string $type
+         * @var string $subType
+         */
+        extract($this->codeSplitter($emailGenerationCode));
+
+        $notificationTypeCode = $type . '-' . $subType;
+        if ($exists && !in_array($notificationTypeCode, $existExempt)) {
+            return false;
+        }
+
+        if (in_array($notificationTypeCode, $existExempt)) {
+            $iterationNum = 0;
+            $newCode = $emailGenerationCode;
+
+            while ($exists) {
+                $iterationNum += 1;
+                $newCode = $emailGenerationCode . '-' . $iterationNum;
+                $exists = $this->exists(['email_generation_code' => $newCode]);
+            }
+
+            return $newCode;
+        }
+
+        return $emailGenerationCode;
+    }
+
+    /**
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
@@ -167,29 +220,19 @@ class EmailSendsTable extends Table
      */
     public function make($emailGenerationCode)
     {
-        $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
-
-        $generationArray = explode('-', $emailGenerationCode, 3);
-
-        $type = $generationArray[0];
-        $entityId = $generationArray[1];
-        $subType = $generationArray[2];
+        /**
+         * @var string $type
+         * @var int $entityId
+         * @var string $subType
+         */
+        extract($this->codeSplitter($emailGenerationCode));
 
         $existExempt = ['USR-PWD'];
-        $notiTypeCode = $type . '-' . $subType;
-        if ($exists && !in_array($notiTypeCode, $existExempt)) {
+        $newCode = $this->codeExistValidator($emailGenerationCode, $existExempt);
+
+        if (!$newCode) {
             return false;
-        }
-
-        if (in_array($notiTypeCode, $existExempt)) {
-            $iterationNum = 0;
-            $newCode = $emailGenerationCode;
-
-            while ($exists) {
-                $iterationNum += 1;
-                $newCode = $emailGenerationCode . '-' . $iterationNum;
-                $exists = $this->exists(['email_generation_code' => $newCode]);
-            }
+        } elseif ($newCode != $emailGenerationCode) {
             $emailGenerationCode = $newCode;
         }
 

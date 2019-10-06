@@ -11,6 +11,8 @@ use Authorization\Policy\BeforePolicyInterface;
  */
 class UsersPolicy implements BeforePolicyInterface
 {
+    use AppPolicyTrait;
+
     /**
      * @param \App\Model\Entity\User $user The User being authorized.
      * @param \Cake\ORM\Query $query The Query object to be limited.

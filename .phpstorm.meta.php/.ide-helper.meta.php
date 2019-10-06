@@ -21,6 +21,7 @@ namespace PHPSTORM_META {
 			'Search.Prg' => \Search\Controller\Component\PrgComponent::class,
 			'Tools.Common' => \Tools\Controller\Component\CommonComponent::class,
 			'Tools.Mobile' => \Tools\Controller\Component\MobileComponent::class,
+			'Tools.RefererRedirect' => \Tools\Controller\Component\RefererRedirectComponent::class,
 			'Tools.Url' => \Tools\Controller\Component\UrlComponent::class,
 		])
 	);
@@ -486,6 +487,7 @@ namespace PHPSTORM_META {
 			'Tools.Format' => \Tools\View\Helper\FormatHelper::class,
 			'Tools.Gravatar' => \Tools\View\Helper\GravatarHelper::class,
 			'Tools.Html' => \Tools\View\Helper\HtmlHelper::class,
+			'Tools.Meter' => \Tools\View\Helper\MeterHelper::class,
 			'Tools.Number' => \Tools\View\Helper\NumberHelper::class,
 			'Tools.Obfuscate' => \Tools\View\Helper\ObfuscateHelper::class,
 			'Tools.Progress' => \Tools\View\Helper\ProgressHelper::class,
