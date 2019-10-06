@@ -56,6 +56,9 @@ class AppView extends View
             $this->loadHelper('Breadcrumbs', ['className' => 'BootstrapUI.Breadcrumbs']);
         }
 
+        $this->loadHelper('Time', ['className' => 'Tools.Time']);
+        $this->loadHelper('Format', ['className' => 'Tools.Format']);
+
         $this->loadHelper('Flash');
         $this->loadHelper('Inflection');
         $this->loadHelper('Icon');

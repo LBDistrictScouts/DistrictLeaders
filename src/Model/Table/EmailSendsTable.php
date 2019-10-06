@@ -17,14 +17,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  *
- * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailSend newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
+ * @method EmailSend get($primaryKey, $options = [])
+ * @method EmailSend newEntity($data = null, array $options = [])
+ * @method EmailSend[] newEntities(array $data, array $options = [])
+ * @method EmailSend|false save(EntityInterface $entity, $options = [])
+ * @method EmailSend saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailSend patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailSend[] patchEntities($entities, array $data, array $options = [])
+ * @method EmailSend findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -247,7 +247,7 @@ class EmailSendsTable extends Table
 
                 switch ($subType) {
                     case 'PWD':
-                        $layout = 'password_reset';
+                        $emailTemplate = 'password_reset';
                         $subject = 'Password Reset for ' . $user->full_name;
                         $source = 'User';
 
@@ -258,7 +258,7 @@ class EmailSendsTable extends Table
                         ];
                         break;
                     case 'NEW':
-                        $layout = 'new_user';
+                        $emailTemplate = 'new_user';
                         $subject = 'Welcome to Site ' . $user->full_name;
                         $source = 'User';
 
@@ -282,7 +282,7 @@ class EmailSendsTable extends Table
             'sent' => null,
             'user_id' => $userId,
             'subject' => $subject,
-            'email_template' => $layout,
+            'email_template' => $emailTemplate,
             'include_token' => $includeToken,
         ];
 

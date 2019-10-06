@@ -265,6 +265,12 @@ return [
         'error' => [
             'className' => 'DatabaseLog.Database'
         ],
+        'queue' => [
+            'className' => 'DatabaseLog.Database',
+            'type' => 'queue',
+            'levels' => ['info'],
+            'scopes' => ['queue'],
+        ],
         // To enable this dedicated query log, you need set your datasource's log flag to true
         'queries' => [
             'className' => 'Cake\Log\Engine\FileLog',

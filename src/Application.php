@@ -63,11 +63,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
     {
         $this->addPlugin('CakeDto', ['bootstrap' => true]);
 
-        $this->addPlugin('Tools');
+        $this->addPlugin('Tools', ['bootstrap' => true]);
 
         $this->addPlugin('Search');
 
-        $this->addPlugin('Queue', ['routes' => true]);
+        $this->addPlugin('Queue', ['routes' => true, 'bootstrap' => true]);
 
         $this->addPlugin('Ajax', ['bootstrap' => true]);
 
