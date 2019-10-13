@@ -80,6 +80,6 @@ class EmailTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        TestCase::assertEquals(0, $job->get('failed'));
+        TestCase::assertEquals(0, $job->failed);
     }
 }

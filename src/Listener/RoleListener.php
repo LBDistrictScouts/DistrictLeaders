@@ -57,7 +57,7 @@ class RoleListener implements EventListenerInterface
         $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Email',
-            ['email_generation_code' => 'ROL-' . $role->id . '-NEW']
+            ['email_generation_code' => 'ROL-' . $role->id . '-CNG']
         );
     }
 }

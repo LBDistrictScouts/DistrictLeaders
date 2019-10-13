@@ -129,8 +129,6 @@ class RolesTable extends Table
         $user = $this->Users->get($entity->get(Role::FIELD_USER_ID));
         $this->Users->patchCapabilities($user);
 
-        debug($entity);
-
         if ($entity->isNew()) {
             // Do Task
             $this->getEventManager()->dispatch(new Event(
