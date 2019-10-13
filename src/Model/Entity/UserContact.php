@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\UserContactType $user_contact_type
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class UserContact extends Entity
 {
@@ -53,4 +54,5 @@ class UserContact extends Entity
     public const FIELD_USER = 'user';
     public const FIELD_ROLES = 'roles';
     public const FIELD_USER_CONTACT_TYPE = 'user_contact_type';
+    public const FIELD_AUDITS = 'audits';
 }

@@ -345,7 +345,6 @@ class UsersTableTest extends TestCase
 
         if (key_exists('group', $expected)) {
             TestCase::assertArrayHasKey('group', $actual);
-
             TestCase::assertEquals(count($expected['group']), count($actual['group']));
 
             foreach ($expected['group'] as $idx => $value) {

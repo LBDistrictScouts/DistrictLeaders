@@ -80,7 +80,7 @@ class UserContactsControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 
@@ -110,7 +110,7 @@ class UserContactsControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 }

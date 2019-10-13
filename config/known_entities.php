@@ -30,6 +30,18 @@ return [
             NT::FIELD_TYPE_CODE => 'USR-PWD',
         ],
         [
+            NT::FIELD_NOTIFICATION_TYPE => 'Capabilities Change',
+            NT::FIELD_NOTIFICATION_DESCRIPTION => 'Permissions / capabilities in the system have changed.',
+            NT::FIELD_ICON => 'fa-key',
+            NT::FIELD_TYPE_CODE => 'USR-CCH',
+        ],
+        [
+            NT::FIELD_NOTIFICATION_TYPE => 'New Role Added',
+            NT::FIELD_NOTIFICATION_DESCRIPTION => 'A new role has been added in the system.',
+            NT::FIELD_ICON => 'fa-hierarchy',
+            NT::FIELD_TYPE_CODE => 'ROL-NEW',
+        ],
+        [
             NT::FIELD_NOTIFICATION_TYPE => 'New Payment Received',
             NT::FIELD_NOTIFICATION_DESCRIPTION => 'Notification that a payment has been recorded by an administrator.',
             NT::FIELD_ICON => 'fa-receipt',

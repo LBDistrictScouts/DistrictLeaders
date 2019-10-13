@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $ChangedUsers
  *
- * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
- * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Audit|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Audit saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Audit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Audit[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Audit findOrCreate($search, callable $callback = null, $options = [])
+ * @method Audit get($primaryKey, $options = [])
+ * @method Audit newEntity($data = null, array $options = [])
+ * @method Audit[] newEntities(array $data, array $options = [])
+ * @method Audit|false save(EntityInterface $entity, $options = [])
+ * @method Audit saveOrFail(EntityInterface $entity, $options = [])
+ * @method Audit patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Audit[] patchEntities($entities, array $data, array $options = [])
+ * @method Audit findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  */
@@ -140,6 +140,30 @@ class AuditsTable extends Table
     public function findUsers($query)
     {
         $query->where(['audit_table' => 'Users']);
+
+        return $query;
+    }
+
+    /**
+     * @param Query $query The Query to be modified.
+     *
+     * @return Query
+     */
+    public function findRoles($query)
+    {
+        $query->where(['audit_table' => 'Roles']);
+
+        return $query;
+    }
+
+    /**
+     * @param Query $query The Query to be modified.
+     *
+     * @return Query
+     */
+    public function findContacts($query)
+    {
+        $query->where(['audit_table' => 'UserContacts']);
 
         return $query;
     }

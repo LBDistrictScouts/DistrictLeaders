@@ -11,6 +11,7 @@ use Cake\ORM\TableRegistry;
  * @package App\Listener
  *
  * @property \App\Model\Table\UsersTable $Users
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class UserListener implements EventListenerInterface
 {
@@ -21,6 +22,7 @@ class UserListener implements EventListenerInterface
     {
         return [
             'Model.User.login' => 'updateLogin',
+            'Model.User.capabilityChange' => 'capChange',
         ];
     }
 
@@ -39,5 +41,23 @@ class UserListener implements EventListenerInterface
         $user->setDirty('modified', true);
 
         $this->Users->save($user);
+    }
+
+    /**
+     * @param \Cake\Event\Event $event The event being processed.
+     *
+     * @return void
+     */
+    public function capChange($event)
+    {
+        /** @var \App\Model\Entity\User $user */
+        $user = $event->getData('user');
+
+        // Dispatch ASync Notification Task
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs->createJob(
+            'Email',
+            ['email_generation_code' => 'USR-' . $user->id . '-CCH']
+        );
     }
 }

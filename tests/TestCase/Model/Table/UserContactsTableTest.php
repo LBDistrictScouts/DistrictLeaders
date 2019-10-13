@@ -118,7 +118,7 @@ class UserContactsTableTest extends TestCase
         TestCase::assertEquals($expected, $actual);
 
         $count = $this->UserContacts->find('all')->count();
-        TestCase::assertEquals(1, $count);
+        TestCase::assertEquals(2, $count);
     }
 
     /**

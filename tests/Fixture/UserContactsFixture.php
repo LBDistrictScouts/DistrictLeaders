@@ -47,6 +47,15 @@ class UserContactsFixture extends TestFixture
                 'verified' => 1,
                 'deleted' => null
             ],
+            [
+                'contact_field' => 'james@goat.com',
+                'user_id' => 1,
+                'user_contact_type_id' => 1,
+                'created' => 1564337533,
+                'modified' => 1564337533,
+                'verified' => false,
+                'deleted' => null
+            ],
         ];
         parent::init();
     }

@@ -15,17 +15,20 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
- * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
+ * @method UserContact get($primaryKey, $options = [])
+ * @method UserContact newEntity($data = null, array $options = [])
+ * @method UserContact[] newEntities(array $data, array $options = [])
+ * @method UserContact|false save(EntityInterface $entity, $options = [])
+ * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
+ * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class UserContactsTable extends Table
 {
@@ -45,6 +48,23 @@ class UserContactsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+
+        $this->addBehavior('Caseable', [
+            'case_columns' => [
+                'contact_field' => 'l',
+            ]
+        ]);
+
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                'contact_field'
+            ]
+        ]);
+
+        $this->hasMany('Audits', [
+            'foreignKey' => 'audit_record_id',
+            'finder' => 'contacts',
+        ]);
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',

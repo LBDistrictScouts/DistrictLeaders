@@ -1,6 +1,7 @@
 <?php
 namespace App\Listener;
 
+use App\Model\Entity\Role;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
@@ -11,6 +12,7 @@ use Cake\ORM\TableRegistry;
  * @package App\Listener
  *
  * @property \App\Model\Table\UsersTable $Users
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class RoleListener implements EventListenerInterface
 {
@@ -20,7 +22,8 @@ class RoleListener implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Model.Role.afterSave' => 'newRole',
+            'Model.Role.roleAdded' => 'newRole',
+            'Model.Role.newAudits' => 'roleChange',
         ];
     }
 
@@ -31,20 +34,30 @@ class RoleListener implements EventListenerInterface
      */
     public function newRole($event)
     {
-        /** @var \App\Model\Entity\User $user */
-        $user = $event->getData('user');
+        /** @var \App\Model\Entity\Role $role */
+        $role = $event->getData('role');
 
-        $this->updateCapabilities($user);
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs->createJob(
+            'Email',
+            ['email_generation_code' => 'ROL-' . $role->id . '-NEW']
+        );
     }
 
     /**
-     * @param \App\Model\Entity\User $user The user with a new Role
+     * @param \Cake\Event\Event $event The event being processed.
      *
      * @return void
      */
-    public function updateCapabilities($user)
+    public function roleChange($event)
     {
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $this->Users->patchCapabilities($user);
+        /** @var \App\Model\Entity\Role $role */
+        $role = $event->getData('role');
+
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs->createJob(
+            'Email',
+            ['email_generation_code' => 'ROL-' . $role->id . '-NEW']
+        );
     }
 }

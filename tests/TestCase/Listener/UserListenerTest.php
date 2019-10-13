@@ -4,6 +4,7 @@
 namespace App\Test\TestCase\Listener;
 
 //use App\Model\Table\OrdersTable;
+use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\Event\EventList;
@@ -19,7 +20,9 @@ use Cake\TestSuite\TestCase;
  * @package App\Test\TestCase\Listener
  *
  * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\RolesTable $Roles
  * @property EventManager $EventManager
+ * @property EventManager $RoleEvents
  */
 class UserListenerTest extends TestCase
 {
@@ -45,9 +48,14 @@ class UserListenerTest extends TestCase
     {
         parent::setUp();
         $this->Users = TableRegistry::getTableLocator()->get('Users');
+        $this->Roles = TableRegistry::getTableLocator()->get('Roles');
+
         // enable event tracking
         $this->EventManager = EventManager::instance();
         $this->EventManager->setEventList(new EventList());
+
+        $this->RoleEvents = $this->Roles->getEventManager();
+        $this->RoleEvents->setEventList(new EventList());
     }
 
     public function testUpdateLogin()
@@ -56,8 +64,6 @@ class UserListenerTest extends TestCase
         FrozenTime::setTestNow($now);
 
         $testPassword = 'ThisTestPassword';
-
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
         $user = $this->Users->get(1);
 
         $user->set(User::FIELD_PASSWORD, $testPassword);
@@ -89,5 +95,14 @@ class UserListenerTest extends TestCase
 
         TestCase::assertEquals($now, $afterUser->last_login);
         TestCase::assertNotEquals($now, $afterUser->modified);
+    }
+
+    public function testRolePatch()
+    {
+        $role = $this->Roles->get(1);
+        $role->set(Role::FIELD_USER_CONTACT_ID, 2);
+        TestCase::assertNotFalse($this->Roles->save($role));
+
+        $this->assertEventFired('Model.User.capabilityChange', $this->EventManager);
     }
 }

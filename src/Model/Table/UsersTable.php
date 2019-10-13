@@ -5,6 +5,7 @@ use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -33,6 +34,8 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class UsersTable extends Table
 {
@@ -53,6 +56,34 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+
+        $this->addBehavior('Caseable', [
+            'case_columns' => [
+                'email' => 'l',
+                'postcode' => 'u',
+                'first_name' => 't',
+                'last_name' => 't',
+                'address_line_1' => 't',
+                'address_line_2' => 't',
+                'city' => 't',
+                'county' => 't',
+            ]
+        ]);
+
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                'username',
+                'membership_number',
+                'first_name',
+                'last_name',
+                'email',
+                'address_line_1',
+                'address_line_2',
+                'city',
+                'county',
+                'postcode',
+            ]
+        ]);
 
         $this->belongsTo('PasswordStates', [
             'foreignKey' => 'password_state_id'
@@ -379,46 +410,6 @@ class UsersTable extends Table
     }
 
     /**
-     * Stores emails as lower case.
-     *
-     * @param \Cake\Event\Event $event The event being processed.
-     * @param User $entity The Entity being processed.
-     *
-     * @return bool
-     */
-    public function beforeRules($event, $entity)
-    {
-        $dirty = $entity->getDirty();
-
-        $entity->email = strtolower($entity->email);
-
-        $entity->first_name = ucwords(strtolower($entity->first_name));
-        $entity->last_name = ucwords(strtolower($entity->last_name));
-
-        $entity->address_line_1 = ucwords(strtolower($entity->address_line_1));
-        $entity->address_line_2 = ucwords(strtolower($entity->address_line_2));
-        $entity->city = ucwords(strtolower($entity->city));
-        $entity->county = ucwords(strtolower($entity->county));
-
-        $entity->postcode = strtoupper($entity->postcode);
-
-        $cleaned = [
-            'email',
-            'first_name', 'last_name',
-            'address_line_1', 'address_line_2', 'city', 'county',
-            'postcode',
-        ];
-
-        foreach ($cleaned as $clean) {
-            if (!in_array($clean, $dirty)) {
-                $entity->setDirty($clean, false);
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * before Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
@@ -427,45 +418,14 @@ class UsersTable extends Table
      *
      * @return bool
      */
-    public function afterSave($event, $entity, $options)
+    public function beforeSave($event, $entity, $options)
     {
-        $dirtyValues = $entity->getDirty();
-
-        $trackedFields = [
-            'username',
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'postcode',
-        ];
-
-        foreach ($dirtyValues as $dirty_value) {
-            if (in_array($dirty_value, $trackedFields)) {
-                $current = $entity->get($dirty_value);
-                $original = $entity->getOriginal($dirty_value);
-
-                if ($entity->isNew()) {
-                    $original = null;
-                }
-
-                if ($current <> $original) {
-                    $auditData = [
-                        'audit_record_id' => $entity->get('id'),
-                        'audit_field' => $dirty_value,
-                        'audit_table' => 'Users',
-                        'original_value' => $original,
-                        'modified_value' => $current,
-                    ];
-
-                    $audit = $this->Audits->newEntity($auditData);
-                    $this->Audits->save($audit);
-                }
-            }
+        if ($entity->getOriginal('capabilities') != $entity->capabilities) {
+            $this->getEventManager()->dispatch(new Event(
+                'Model.User.capabilityChange',
+                $this,
+                ['user' => $entity]
+            ));
         }
 
         return true;

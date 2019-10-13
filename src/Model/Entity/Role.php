@@ -21,6 +21,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\RoleStatus $role_status
  * @property \App\Model\Entity\UserContact|null $user_contact
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class Role extends Entity
 {
@@ -62,4 +63,5 @@ class Role extends Entity
     public const FIELD_DELETED = 'deleted';
     public const FIELD_USER_CONTACT_ID = 'user_contact_id';
     public const FIELD_USER_CONTACT = 'user_contact';
+    public const FIELD_AUDITS = 'audits';
 }
