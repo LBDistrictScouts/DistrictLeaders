@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use App\Model\Entity\EmailSend;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\FrozenTime;
+use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -30,6 +31,8 @@ use Cake\Validation\Validator;
  */
 class EmailSendsTable extends Table
 {
+    use MailerAwareTrait;
+
     /**
      * Initialize method
      *
@@ -343,10 +346,11 @@ class EmailSendsTable extends Table
             $token = $this->Tokens->buildToken($token->id);
         }
 
-        $generationArray = explode('-', $email->email_generation_code);
-
-        $type = $generationArray[0];
-        $entityId = $generationArray[1];
+        /**
+         * @var string $type
+         * @var int $entityId
+         */
+        extract($this->codeSplitter($email->email_generation_code));
 
         switch ($type) {
             case 'USR':
@@ -391,7 +395,7 @@ class EmailSendsTable extends Table
     /**
      * Makes an Email Dispatch Event and then dispatches it.
      *
-     * @param \stdClass $results The Returned Results Array
+     * @param array $results The Returned Results Array
      * @param array $sendHeaders The Send Headers
      *
      * @return bool

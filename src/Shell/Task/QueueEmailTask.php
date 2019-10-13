@@ -38,7 +38,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
 
         $this->loadModel('EmailSends');
 
-        if (!$this->EmailSends->makeAndSend($data['email_generation_code'])) {
+        if (!$this->EmailSends->make($data['email_generation_code'])) {
             throw new QueueException('Make & Send Failed.');
         }
     }

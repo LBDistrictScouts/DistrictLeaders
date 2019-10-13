@@ -26,6 +26,8 @@
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/footprint": "^1.2",
         "muffin/trash": "^2.1",
+        "php-http/guzzle6-adapter": "^2.0",
+        "sparkpost/sparkpost": "^2.2",
         "twilio/sdk": "^5.34"
     },
     "require-dev": {
