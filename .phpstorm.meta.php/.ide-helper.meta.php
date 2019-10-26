@@ -14,6 +14,7 @@ namespace PHPSTORM_META {
 			'Security' => \Cake\Controller\Component\SecurityComponent::class,
 			'CloudConvertClient' => \App\Controller\Component\CloudConvertClientComponent::class,
 			'GoogleClient' => \App\Controller\Component\GoogleClientComponent::class,
+			'Password' => \App\Controller\Component\PasswordComponent::class,
 			'Ajax.Ajax' => \Ajax\Controller\Component\AjaxComponent::class,
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,

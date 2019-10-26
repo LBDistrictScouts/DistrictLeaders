@@ -23,16 +23,16 @@ class BasicMailer extends Mailer
     {
         $this
             ->setTo($emailSend->user->email, $emailSend->user->full_name)
-            ->setLayout('default')
-            ->setTransport('sparkpost')
+            ->setTransport('default')
             ->setEmailFormat('both')
-            ->setSender(Configure::readOrFail('Email.default.from'), Configure::readOrFail('App.who.system'))
+            ->setSender(Configure::readOrFail('App.who.email'), Configure::readOrFail('App.who.system'))
             ->setHelpers(['Html', 'Text', 'Time'])
             ->addHeaders([
                 'X-Email-Gen-Code' => $emailSend->email_generation_code,
                 'X-Gen-ID' => $emailSend->id,
             ])
             ->setTemplate($emailSend->email_template)
+            ->setLayout('default')
             ->setSubject($emailSend->subject);
 
         $viewVars = ['emailSend' => $emailSend];

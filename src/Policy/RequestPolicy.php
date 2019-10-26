@@ -35,6 +35,11 @@ class RequestPolicy implements RequestPolicyInterface
             return true;
         }
 
+        // Token Validation
+        if ($request->getParam('controller') === 'Tokens' && $request->getParam('action') === 'validate') {
+            return true;
+        }
+
         // User controller allow
         $userActions = ['login', 'logout', 'username', 'token', 'password', 'forgot'];
         if ($request->getParam('controller') === 'Users' && in_array($request->getParam('action'), $userActions)) {

@@ -31,7 +31,7 @@ trait AppPolicyTrait
             return false;
         }
 
-        if ($user->checkCapability('ALL')) {
+        if ($user->checkCapability('ALLT')) {
             return true;
         }
         // fall through

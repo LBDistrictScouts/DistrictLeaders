@@ -17,9 +17,28 @@ use Cake\I18n\Time;
  * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
  *
  * @property \App\Model\Table\TokensTable $Tokens
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
 class UsersController extends AppController
 {
+    /**
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
+
+        $this->Authorization->mapActions([
+            'index' => 'list',
+            'delete' => 'remove',
+            'edit' => 'update',
+            'add' => 'insert',
+        ]);
+    }
 
     /**
      * Index method
@@ -28,8 +47,15 @@ class UsersController extends AppController
      */
     public function index()
     {
-        $users = $this->paginate($this->Users);
+        /** @var User $user */
+        $user = $this->request->getAttribute('identity')->getOriginalData();
 
+        if (!$user->checkCapability('DIRECTORY')) {
+            $this->Flash->error('Results limited due to user permissions.');
+        }
+
+        $query = $this->Users->find();
+        $users = $this->paginate($this->Authorization->applyScope($query));
         $this->set(compact('users'));
     }
 
@@ -50,10 +76,19 @@ class UsersController extends AppController
         ];
 
         $user = $this->Users->get($id, [
-            'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles'],
+            'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles' => [
+                'RoleTypes',
+                'Sections' => [
+                    'ScoutGroups',
+                    'SectionTypes',
+                ],
+                'RoleStatuses',
+                'UserContacts',
+            ]],
             'fields' => $visibleFields,
         ]);
 
+        $this->Authorization->authorize($user);
         $this->Authorization->can($user, 'view');
 
         $this->set('user', $user);
@@ -91,6 +126,7 @@ class UsersController extends AppController
         $user = $this->Users->get($id, [
             'contain' => []
         ]);
+        $this->Authorization->authorize($user);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -217,9 +253,10 @@ class UsersController extends AppController
                     $session->delete('Reset.lgTries');
                     $session->delete('Reset.rsTries');
 
-                    $this->loadComponent('Password');
+                    $sendCode = 'USR-' . $user->id . '-PWD';
+                    $this->loadModel('EmailSends');
 
-                    if ($this->Password->sendReset($user->id)) {
+                    if ($this->EmailSends->makeAndSend($sendCode)) {
                         $this->Flash->success('We have sent a password reset token to your email. This is valid for a short period of time.');
 
                         return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
@@ -346,15 +383,5 @@ class UsersController extends AppController
                 }
             }
         }
-    }
-
-    /**
-     * @param Event $event The CakePHP Event
-     *
-     * @return \Cake\Http\Response|void|null
-     */
-    public function beforeFilter(Event $event)
-    {
-        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
     }
 }

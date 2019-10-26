@@ -241,6 +241,7 @@ class EmailSendsTable extends Table
 
         $includeToken = true;
         $includeNotification = true;
+        $source = 'User';
 
         switch ($type) {
             case 'USR':
@@ -252,18 +253,16 @@ class EmailSendsTable extends Table
                     case 'PWD':
                         $emailTemplate = 'password_reset';
                         $subject = 'Password Reset for ' . $user->full_name;
-                        $source = 'User';
 
                         $redirect = [
                             'controller' => 'Users',
-                            'action' => 'token',
+                            'action' => 'password',
                             'prefix' => false,
                         ];
                         break;
                     case 'NEW':
                         $emailTemplate = 'new_user';
                         $subject = 'Welcome to Site ' . $user->full_name;
-                        $source = 'User';
 
                         $redirect = [
                             'controller' => 'Users',
@@ -362,7 +361,7 @@ class EmailSendsTable extends Table
 
         /** @var \App\Mailer\BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
-        $mailer->send('basic', [$email, $token, $entity]);
+        $mailer->send('doSend', [$email, $token, $entity]);
 
         $email->set('sent', FrozenTime::now());
         $this->save($email, ['validate' => false]);
@@ -381,7 +380,7 @@ class EmailSendsTable extends Table
     {
         $emailSend = $this->make($emailGenerationCode);
 
-        if ($emailSend == false) {
+        if (is_int($emailSend) && !is_bool($emailSend)) {
             return false;
         }
 

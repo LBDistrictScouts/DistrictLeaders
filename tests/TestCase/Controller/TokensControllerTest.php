@@ -2,6 +2,8 @@
 namespace App\Test\TestCase\Controller;
 
 use App\Controller\TokensController;
+use App\Model\Entity\Token;
+use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -72,65 +74,77 @@ class TokensControllerTest extends TestCase
      * Test index method
      *
      * @return void
+     *
+     * @throws
      */
-    public function testIndex()
+    public function testValidate()
     {
-        $this->tryIndexGet($this->controller);
+        /** @var \App\Model\Table\TokensTable $tokens */
+        $tokens = TableRegistry::getTableLocator()->get('Tokens');
+
+        $token = $tokens->prepareToken(1);
+
+        $this->get([
+            'controller' => 'Tokens',
+            'action' => 'validate',
+            'prefix' => false,
+            $token
+        ]);
+
+        $this->assertRedirect([
+            'controller' => 'Applications',
+            'action' => 'view',
+            'prefix' => false,
+            1,
+            '?' => [
+                'token_id' => 1,
+                'token' => $token,
+            ]
+        ]);
     }
 
     /**
-     * Test view method
+     * Test index method
      *
      * @return void
-     */
-    public function testView()
-    {
-        $this->tryViewGet($this->controller);
-    }
-
-    /**
-     * Test add method
      *
-     * @return void
+     * @throws
      */
-    public function testAdd()
+    public function testValidateAndAuthenticate()
     {
-        $this->tryAddGet($this->controller);
+        /** @var \App\Model\Table\TokensTable $tokens */
+        $tokens = TableRegistry::getTableLocator()->get('Tokens');
 
-        $this->tryAddPost(
-            $this->controller,
-            $this->validEntityData,
-            2
-        );
-    }
+        $tokenRow = $tokens->get(1);
+        $tokenRow->set(Token::FIELD_TOKEN_HEADER, [
+            'authenticate' => true,
+            'redirect' => [
+                'controller' => 'Users',
+                'action' => 'view',
+                'prefix' => false,
+                1,
+            ]
+        ]);
+        TestCase::assertNotFalse($tokens->save($tokenRow));
 
-    /**
-     * Test edit method
-     *
-     * @return void
-     */
-    public function testEdit()
-    {
-        $this->tryEditGet($this->controller);
+        $token = $tokens->prepareToken(1);
 
-        $this->tryEditPost(
-            $this->controller,
-            $this->validEntityData,
-            1
-        );
-    }
+        $this->get([
+            'controller' => 'Tokens',
+            'action' => 'validate',
+            'prefix' => false,
+            $token
+        ]);
 
-    /**
-     * Test delete method
-     *
-     * @return void
-     */
-    public function testDelete()
-    {
-        $this->tryDeletePost(
-            $this->controller,
-            $this->validEntityData,
-            2
-        );
+        $this->assertRedirect([
+            'controller' => 'Users',
+            'action' => 'view',
+            'prefix' => false,
+            1,
+            '?' => [
+                'token_id' => 1,
+                'token' => $token,
+            ]
+        ]);
     }
 }

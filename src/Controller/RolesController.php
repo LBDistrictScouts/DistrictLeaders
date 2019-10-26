@@ -94,10 +94,10 @@ class RolesController extends AppController
         }
         $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
-        $users = $this->Roles->Users->find('list', ['limit' => 200]);
         $roleStatuses = $this->Roles->RoleStatuses->find('list', ['limit' => 200]);
+        $userContacts = $this->Roles->UserContacts->find('list', ['limit' => 200])->where(['user_id' => $role->user_id]);
 
-        $this->set(compact('role', 'roleTypes', 'sections', 'users', 'roleStatuses'));
+        $this->set(compact('role', 'roleTypes', 'sections', 'userContacts', 'roleStatuses'));
     }
 
     /**

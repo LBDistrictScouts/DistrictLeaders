@@ -340,12 +340,6 @@ return [
         'preemptive' => true,
     ],
 
-    'Xety/Cake3CookieAuth.Cookie' => [
-        'cookie' => [
-            'name' => 'CookieAuth'
-        ]
-    ],
-
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
     ],
@@ -354,6 +348,12 @@ return [
         'lifetime' => '3 days', // Default value
         'length' => 32, // Default value
         'table' => 'tokenize_tokens', // Default value
+    ],
+
+    'SparkPost' => [
+        'Api' => [
+            'key' => '__API_KEY__'
+        ]
     ],
 
     'defaultAdmin' => [

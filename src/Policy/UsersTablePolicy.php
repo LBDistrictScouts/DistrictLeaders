@@ -9,7 +9,7 @@ use Authorization\Policy\BeforePolicyInterface;
  *
  * @package App\Policy
  */
-class UsersPolicy implements BeforePolicyInterface
+class UsersTablePolicy implements BeforePolicyInterface
 {
     use AppPolicyTrait;
 
@@ -19,8 +19,12 @@ class UsersPolicy implements BeforePolicyInterface
      *
      * @return mixed
      */
-    public function scopeIndex($user, $query)
+    public function scopeList($user, $query)
     {
+        if ($user->checkCapability('ALL') || $user->checkCapability('DIRECTORY')) {
+            return $query;
+        }
+
         return $query->where(['Users.id' => $user->getIdentifier()]);
     }
 }

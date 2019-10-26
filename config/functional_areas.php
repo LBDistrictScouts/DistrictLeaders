@@ -10,10 +10,10 @@ return [
 
     'functionalAreas' => [
         'directory' => true,
-        'camps' => true,
-        'documents' => true,
+        'camps' => false,
+        'documents' => false,
         'articles' => false,
-        'search' => false,
+        'search' => true,
     ],
 
     'iconStandards' => [

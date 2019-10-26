@@ -163,7 +163,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
                         ForbiddenException::class,
                     ],
                 ],
-                'requireAuthorizationCheck' => false,
+                'requireAuthorizationCheck' => true,
             ]))
 
             ->add(new RequestAuthorizationMiddleware())

@@ -13,6 +13,7 @@ use Cake\Mailer\MailerAwareTrait;
  * @package App\Command
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
+ * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
  */
 class InstallBaseCommand extends Command
 {
@@ -27,6 +28,7 @@ class InstallBaseCommand extends Command
     {
         parent::initialize();
         $this->loadModel('Capabilities');
+        $this->loadModel('NotificationTypes');
     }
 
     /**
@@ -41,12 +43,17 @@ class InstallBaseCommand extends Command
         $parser
             ->addOption('all', [
                 'short' => 'a',
-                'help' => 'All Schedules',
+                'help' => 'All Base Objects',
                 'boolean' => true,
             ])
             ->addOption('capabilities', [
                 'short' => 'c',
                 'help' => 'Capabilities',
+                'boolean' => true,
+            ])
+            ->addOption('notification_types', [
+                'short' => 'n',
+                'help' => 'Notification Types',
                 'boolean' => true,
             ]);
 
@@ -70,6 +77,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->Capabilities->installBaseCapabilities();
 
             $io->info('Capabilities Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('notification_types')) {
+            $happenings = $this->NotificationTypes->installBaseTypes();
+
+            $io->info('Notification Types Installed: ' . $happenings);
         }
     }
 }

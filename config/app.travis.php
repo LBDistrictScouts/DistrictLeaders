@@ -335,9 +335,9 @@ return [
         ]
     ],
 
-    'Xety/Cake3CookieAuth.Cookie' => [
-        'cookie' => [
-            'name' => 'CookieAuth'
+    'SparkPost' => [
+        'Api' => [
+            'key' => ''
         ]
     ],
 

@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Token;
 use App\Model\Table\TokensTable;
 use App\Utility\TextSafe;
 use Cake\I18n\FrozenTime;
@@ -263,6 +264,9 @@ class TokensTableTest extends TestCase
         TestCase::assertTrue(is_numeric($token->random_number));
     }
 
+    /**
+     * Test Before Save Function
+     */
     public function testBeforeSave()
     {
         $goodData = [
@@ -323,6 +327,9 @@ class TokensTableTest extends TestCase
         TestCase::assertTrue($result['active']);
     }
 
+    /**
+     * Test validate Token Function
+     */
     public function testValidateToken()
     {
         $goodData = [
@@ -386,5 +393,75 @@ class TokensTableTest extends TestCase
 
         TestCase::assertFalse($result);
         TestCase::assertNotTrue(is_numeric($result));
+    }
+
+    /**
+     * Test Clean Token Function
+     */
+    public function testCleanToken()
+    {
+        $now = new FrozenTime('2019-01-01 00:01:00');
+        FrozenTime::setTestNow($now);
+
+        $expected = new FrozenTime('2019-04-30 11:26:44');
+        $token = $this->Tokens->get(1);
+        TestCase::assertEquals($expected, $token->get(Token::FIELD_EXPIRES));
+
+        $result = $this->Tokens->cleanToken($token);
+        TestCase::assertEquals(TokensTable::CLEAN_NO_CLEAN, $result);
+
+        $now = $expected->addMonth()->addDay();
+        FrozenTime::setTestNow($now);
+
+        $result = $this->Tokens->cleanToken($token);
+        TestCase::assertEquals(TokensTable::CLEAN_DEACTIVATE, $result);
+
+        $token = $this->Tokens->get(1);
+        TestCase::assertFalse($token->get(Token::FIELD_ACTIVE));
+
+        $now = $now->addMonth();
+        FrozenTime::setTestNow($now);
+
+        $result = $this->Tokens->cleanToken($token);
+        TestCase::assertEquals(TokensTable::CLEAN_DELETED, $result);
+
+        $this->expectException('Cake\Datasource\Exception\RecordNotFoundException');
+        $this->Tokens->get(1);
+    }
+
+    public function testCleanAllTokens()
+    {
+        $now = new FrozenTime('2019-01-01 00:01:00');
+        FrozenTime::setTestNow($now);
+
+        $requiredReturn = [
+            'no_change' => 1,
+            'deactivated' => 0,
+            'deleted' => 0,
+        ];
+        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+
+        $expected = new FrozenTime('2019-04-30 11:26:44');
+        $now = $expected->addMonth()->addDay();
+        FrozenTime::setTestNow($now);
+
+        $requiredReturn = [
+            'no_change' => 0,
+            'deactivated' => 1,
+            'deleted' => 0,
+        ];
+        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+
+        $now = $now->addMonth();
+        FrozenTime::setTestNow($now);
+
+        $requiredReturn = [
+            'no_change' => 0,
+            'deactivated' => 0,
+            'deleted' => 1,
+        ];
+        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+
+        TestCase::assertEquals(0, $this->Tokens->find()->count());
     }
 }
