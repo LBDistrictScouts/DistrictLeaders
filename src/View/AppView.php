@@ -36,6 +36,7 @@ use Cake\View\View;
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  * @property \Tools\View\Helper\TimeHelper $Time
  * @property \Tools\View\Helper\FormatHelper $Format
+ * @property \Flash\View\Helper\FlashHelper $Flash
  */
 class AppView extends View
 {
@@ -61,7 +62,7 @@ class AppView extends View
         $this->loadHelper('Time', ['className' => 'Tools.Time']);
         $this->loadHelper('Format', ['className' => 'Tools.Format']);
 
-        $this->loadHelper('Flash');
+        $this->loadHelper('Flash.Flash');
         $this->loadHelper('Inflection');
         $this->loadHelper('Icon');
 

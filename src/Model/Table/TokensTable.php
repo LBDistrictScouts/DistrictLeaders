@@ -343,4 +343,30 @@ class TokensTable extends Table
             'deleted' => $deleted,
         ];
     }
+
+    /**
+     * @param array $requestQueryParams Request Query Params
+     *
+     * @return false|\App\Model\Entity\Token
+     */
+    public function validateTokenRequest($requestQueryParams)
+    {
+        if (key_exists('token', $requestQueryParams)) {
+            $token = $requestQueryParams['token'];
+        }
+        if (key_exists('token', $requestQueryParams)) {
+            $tokenId = $requestQueryParams['token_id'];
+        }
+
+        if (isset($token) && isset($tokenId)) {
+            $valid = $this->validateToken($token);
+
+            if ($valid && $valid == $tokenId) {
+                /** @var \App\Model\Entity\Token $tokenRow */
+                return $this->get($valid, ['contain' => 'EmailSends.Users']);
+            }
+        }
+
+        return false;
+    }
 }

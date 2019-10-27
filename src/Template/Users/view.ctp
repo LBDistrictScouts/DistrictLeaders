@@ -6,6 +6,18 @@
  */
 ?>
 <div class="users view large-9 medium-8 columns content">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item'])  ?>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+
+
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
         <?php if ($user->has('username')) : ?>

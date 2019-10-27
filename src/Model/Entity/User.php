@@ -273,4 +273,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_USER_CONTACTS = 'user_contacts';
     public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
+
+    public const MINIMUM_PASSWORD_LENGTH = 8;
 }

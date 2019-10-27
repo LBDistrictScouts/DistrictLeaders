@@ -31,6 +31,27 @@ class ProfileCellTest extends TestCase
     public $Profile;
 
     /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -72,6 +93,10 @@ class ProfileCellTest extends TestCase
      */
     public function testDisplay()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->Profile->display(1);
+
+        $options = $this->Profile->viewBuilder()->getOptions();
+        $expected = [];
+        TestCase::assertEquals($expected, $options);
     }
 }

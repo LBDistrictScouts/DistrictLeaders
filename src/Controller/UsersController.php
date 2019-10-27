@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
+use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
@@ -318,28 +319,28 @@ class UsersController extends AppController
     /**
      * Token - Completes Password Reset Function
      *
-     * @param string $token The String to Be Validated
-     *
      * @return \Cake\Http\Response|void
      */
-    public function password($token = null)
+    public function password()
     {
         $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
-        $this->viewBuilder()->setLayout('outside');
         $this->loadModel('Tokens');
 
-        $valid = $this->Tokens->validateToken($token);
-        if (!$valid) {
-            $changeType = self::CHANGE_TYPE_RESET;
-            /** @var \App\Model\Entity\Token $tokenRow */
-            $tokenRow = $this->Tokens->get($valid, ['contain' => 'EmailSends.Users']);
-            $resetUser = $tokenRow->email_send->user;
+        $resetToken = $this->Tokens->validateTokenRequest($this->request->getQueryParams());
+
+        if ($resetToken instanceof Token) {
+            $resetUser = $resetToken->email_send->user;
+            if ($resetUser instanceof User) {
+                $changeType = self::CHANGE_TYPE_RESET;
+            }
         }
 
-        $identity = $this->Authentication->getIdentity();
-        if (is_null($identity)) {
-            $changeType = self::CHANGE_TYPE_UPDATE;
-            $resetUser = $identity;
+        if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
+            $identity = $this->Authentication->getIdentity();
+            if ($identity instanceof User) {
+                $changeType = self::CHANGE_TYPE_UPDATE;
+                $resetUser = $identity;
+            }
         }
 
         if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
@@ -348,40 +349,25 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
-        if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && isset($resetUser) && $resetUser instanceof User) {
-            $passwordForm = new PasswordForm();
-            $this->set(compact('passwordForm'));
+        $passwordForm = new PasswordForm();
 
-            if ($this->request->is('post')) {
-                $fmPassword = $this->request->getData('newpw');
-                $fmConfirm = $this->request->getData('confirm');
+        if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && isset($resetUser) && $resetUser instanceof User && $this->request->is('post')) {
+            if (!$passwordForm->validate($this->request->getData())) {
+                $this->Flash->error(__('The data provided has errors.'));
+            } else {
+                if ($passwordForm->execute([
+                    'request' => $this->request->getData(),
+                    'user' => $resetUser
+                ])) {
+                    $this->Flash->success('Your password was saved successfully.');
 
-                if ($fmConfirm == $fmPassword) {
-                    $fmPostcode = str_replace(" ", "", strtoupper($this->request->getData('postcode')));
-                    $usPostcode = str_replace(" ", "", strtoupper($resetUser->postcode));
-
-                    if ($usPostcode == $fmPostcode) {
-                        $newPw = [
-                            'password' => $fmPassword,
-                            'reset' => 'No Longer Active'
-                        ];
-
-                        $resetUser = $this->Users->patchEntity($resetUser, $newPw, [ 'fields' => ['password'], 'validate' => false ]);
-
-                        if ($this->Users->save($resetUser)) {
-                            $this->Flash->success('Your password was saved successfully.');
-
-                            return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
-                        } else {
-                            $this->Flash->error(__('The user could not be saved. Please try again.'));
-                        }
-                    } else {
-                        $this->Flash->error(__('Your postcode could not be validated. Please try again.'));
-                    }
-                } else {
-                    $this->Flash->error(__('The passwords you have entered do not match. Please try again.'));
+                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
                 }
+
+                $this->Flash->error(__('The password security could not  be validated. Is your postcode correct?'));
             }
         }
+
+        $this->set(compact('passwordForm'));
     }
 }

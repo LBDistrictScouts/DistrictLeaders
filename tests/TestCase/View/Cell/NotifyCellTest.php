@@ -31,6 +31,37 @@ class NotifyCellTest extends TestCase
     public $Notify;
 
     /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -72,6 +103,10 @@ class NotifyCellTest extends TestCase
      */
     public function testDisplay()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->Notify->display(1);
+
+        $options = $this->Notify->viewBuilder()->getOptions();
+        $expected = [];
+        TestCase::assertEquals($expected, $options);
     }
 }

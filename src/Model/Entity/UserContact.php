@@ -39,7 +39,9 @@ class UserContact extends Entity
         'modified' => true,
         'verified' => true,
         'deleted' => true,
+        'audits' => true,
         'user' => true,
+        'user_contact_type' => true,
         'roles' => true
     ];
 

@@ -14,6 +14,7 @@
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
             <?= $this->Html->link('Edit Details', ['controller' => 'Users', 'action' => 'edit', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+            <?= $this->Html->link('Change Password', ['controller' => 'Users', 'action' => 'password', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
             <?= $this->Html->link('Logout', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item'])  ?>
         </div>
     </div>
