@@ -64,6 +64,7 @@ try {
     Configure::load('functional_areas', 'default', false);
     Configure::load('known_entities', 'default', false);
     Configure::load('settings', 'default', false);
+    Configure::load('webservices', 'default', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -141,6 +142,7 @@ if (!Configure::read('App.fullBaseUrl')) {
 
 Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
+ConnectionManager::setConfig(Configure::consume('Webservices'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Email::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));

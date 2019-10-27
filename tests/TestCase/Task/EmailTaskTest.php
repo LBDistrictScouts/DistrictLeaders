@@ -82,4 +82,60 @@ class EmailTaskTest extends TestCase
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
         TestCase::assertEquals(0, $job->failed);
     }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testEmailQueueJobCodeException()
+    {
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $originalJobCount = $this->QueuedJobs->find('all')->count();
+
+        $this->QueuedJobs->createJob(
+            'Email',
+            []
+        );
+
+        $resultingJobCount = $this->QueuedJobs->find('all')->count();
+
+        TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
+        TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
+
+        $this->useCommandRunner();
+        $this->exec('queue runworker');
+
+        /** @var \Queue\Model\Entity\QueuedJob $job */
+        $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        TestCase::assertEquals(1, $job->failed);
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testEmailQueueJobSendException()
+    {
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $originalJobCount = $this->QueuedJobs->find('all')->count();
+
+        $this->QueuedJobs->createJob(
+            'Email',
+            ['email_generation_code' => 'BRO-9-EXE']
+        );
+
+        $resultingJobCount = $this->QueuedJobs->find('all')->count();
+
+        TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
+        TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
+
+        $this->useCommandRunner();
+        $this->exec('queue runworker');
+
+        /** @var \Queue\Model\Entity\QueuedJob $job */
+        $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        TestCase::assertEquals(1, $job->failed);
+    }
 }

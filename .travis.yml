@@ -1,12 +1,13 @@
 language: php
 
 dist: bionic
+
+os: linux
+
 addons:
   postgresql: "9.6"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
-
-sudo: false
 
 cache:
   directories:
@@ -20,9 +21,7 @@ services:
 env:
   - DB=postgres
 
-matrix:
-  fast_finish: true
-
+jobs:
   include:
     - name: "PHP 7.2"
       php: 7.2

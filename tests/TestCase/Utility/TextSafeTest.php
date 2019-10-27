@@ -12,44 +12,71 @@ use Cake\TestSuite\TestCase;
 class TextSafeTest extends TestCase
 {
     /**
+     * @return array
+     */
+    public function providerEncodeData()
+    {
+        return [
+            ['Jacob=Llama+Goat/Fish', 'Jacob~Llama-Goat_Fish'],
+            ['Octopus==Random/+Monkey/+Boat', 'Octopus~~Random_-Monkey_-Boat']
+        ];
+    }
+
+    /**
      * Test encode()
      *
+     * @param string $string String to be encoded
+     * @param string $expected String expected after encoding
+     *
      * @return void
+     *
+     * @dataProvider providerEncodeData
      */
-    public function testEncode()
+    public function testEncode($string, $expected)
     {
-        $string = 'Jacob=Llama+Goat/Fish';
-        $expected = 'Jacob~Llama-Goat_Fish';
-
-        $this->assertEquals($expected, TextSafe::encode($string));
+        TestCase::assertEquals($expected, TextSafe::encode($string));
     }
 
     /**
      * Test decode()
      *
+     * @param string $expected String expected after encoding
+     * @param string $string String to be encoded
+     *
+     * @dataProvider providerEncodeData
+     *
      * @return void
      */
-    public function testDecode()
+    public function testDecode($expected, $string)
     {
-        $expected = 'Jacob=Llama+Goat/Fish';
-        $string = 'Jacob~Llama-Goat_Fish';
+        TestCase::assertEquals($expected, TextSafe::decode($string));
+    }
 
-        $this->assertEquals($expected, TextSafe::decode($string));
+    /**
+     * @return array
+     */
+    public function providerShuffleData()
+    {
+        return [
+            [3],
+            [20],
+            [99],
+            [40],
+            [2]
+        ];
     }
 
     /**
      * Test decode()
      *
+     * @param int $expected The length of the expected string
+     *
+     * @dataProvider providerShuffleData
+     *
      * @return void
      */
-    public function testShuffle()
+    public function testShuffle($expected)
     {
-        $expected = 3;
-
-        $this->assertEquals($expected, strlen(TextSafe::shuffle($expected)));
-
-        $expected = 20;
-
-        $this->assertEquals($expected, strlen(TextSafe::shuffle($expected)));
+        TestCase::assertEquals($expected, strlen(TextSafe::shuffle($expected)));
     }
 }

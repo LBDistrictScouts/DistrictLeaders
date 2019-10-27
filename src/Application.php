@@ -61,6 +61,8 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
+        $this->addPlugin('Flash');
+
         $this->addPlugin('CakeDto', ['bootstrap' => true]);
 
         $this->addPlugin('Tools', ['bootstrap' => true]);

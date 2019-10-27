@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13a45c089a6c89a7969ec49e2fd551e7",
+    "content-hash": "411b4c95bc02e05a98e0aaba98767960",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -710,6 +710,49 @@
             "time": "2019-04-09T12:31:48+00:00"
         },
         {
+            "name": "cvo-technologies/cakephp-github",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CVO-Technologies/cakephp-github.git",
+                "reference": "43647e53fd87a3ab93fe2f24ce3686b594d36241"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CVO-Technologies/cakephp-github/zipball/43647e53fd87a3ab93fe2f24ce3686b594d36241",
+                "reference": "43647e53fd87a3ab93fe2f24ce3686b594d36241",
+                "shasum": ""
+            },
+            "require": {
+                "muffin/webservice": "^1.0"
+            },
+            "require-dev": {
+                "cakephp/cakephp": "^3.2",
+                "cakephp/cakephp-codesniffer": "^2.1",
+                "cvo-technologies/stream-emulation": "^1.0",
+                "phpunit/phpunit": "^5.5"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "CvoTechnologies\\GitHub\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Marlin Cremers",
+                    "email": "m.cremers@cvo-technologies.com",
+                    "homepage": "https://cvo-technologies.com/"
+                }
+            ],
+            "description": "CakePHP webservice implementation for GitHub",
+            "time": "2016-08-08T00:12:21+00:00"
+        },
+        {
             "name": "dereuromark/cakephp-ajax",
             "version": "1.4.1",
             "source": {
@@ -886,6 +929,54 @@
                 "plugin"
             ],
             "time": "2019-05-17T21:25:36+00:00"
+        },
+        {
+            "name": "dereuromark/cakephp-flash",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-flash.git",
+                "reference": "e8a1a65bc1803c5b66987f28254fc788859e75e8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-flash/zipball/e8a1a65bc1803c5b66987f28254fc788859e75e8",
+                "reference": "e8a1a65bc1803c5b66987f28254fc788859e75e8",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^3.7",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "fig-r/psr2r-sniffer": "dev-master"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Flash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "https://www.dereuromark.de",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A CakePHP plugin around powerful flash message handling.",
+            "homepage": "https://github.com/dereuromark/cakephp-flash",
+            "keywords": [
+                "cakephp",
+                "flash",
+                "messages",
+                "plugin"
+            ],
+            "time": "2019-03-28T14:48:08+00:00"
         },
         {
             "name": "dereuromark/cakephp-queue",
@@ -2086,6 +2177,73 @@
                 "trash"
             ],
             "time": "2018-04-17T21:27:44+00:00"
+        },
+        {
+            "name": "muffin/webservice",
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UseMuffin/Webservice.git",
+                "reference": "675d087f814aaffaa3243aea89166d2f443ae673"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UseMuffin/Webservice/zipball/675d087f814aaffaa3243aea89166d2f443ae673",
+                "reference": "675d087f814aaffaa3243aea89166d2f443ae673",
+                "shasum": ""
+            },
+            "require-dev": {
+                "cakephp/cakephp": "^3.6",
+                "cakephp/cakephp-codesniffer": "^3.0",
+                "phpunit/phpunit": "5.7.14|^6.0"
+            },
+            "type": "cakephp-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Muffin\\Webservice\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/usemuffin/webservice/graphs/contributors"
+                },
+                {
+                    "name": "Marlin Cremers",
+                    "email": "m.cremers@cvo-technologies.com",
+                    "homepage": "https://cvo-technologies.com",
+                    "role": "Author"
+                }
+            ],
+            "description": "Extremely simplistic webservices for CakePHP 3",
+            "homepage": "https://github.com/usemuffin/webservice",
+            "keywords": [
+                "api",
+                "cakephp",
+                "muffin",
+                "orm",
+                "webservice"
+            ],
+            "time": "2019-04-08T07:02:33+00:00"
         },
         {
             "name": "php-http/discovery",
