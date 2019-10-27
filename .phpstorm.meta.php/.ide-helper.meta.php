@@ -440,6 +440,7 @@ namespace PHPSTORM_META {
 			'header' => \Cake\View\View::class,
 			'navbar' => \Cake\View\View::class,
 			'script' => \Cake\View\View::class,
+			'search' => \Cake\View\View::class,
 			'style' => \Cake\View\View::class,
 		])
 	);

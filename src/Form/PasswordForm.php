@@ -73,7 +73,7 @@ class PasswordForm extends Form
             return false;
         }
 
-        if (key_exists('user', $data) && key_exists('postcode', $requestData)) {
+        if (key_exists('user', $data) && key_exists(self::FIELD_POSTCODE, $requestData)) {
             /** @var \App\Model\Entity\User $user */
             $user = $data['user'];
 

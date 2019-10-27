@@ -68,7 +68,6 @@ class AppView extends View
 
         $this->loadHelper('Authentication.Identity');
 
-        $functionalAreas = Configure::read('functionalAreas');
-        $this->loadHelper('Functional', ['functionalAreas' => $functionalAreas]);
+        $this->loadHelper('Functional');
     }
 }

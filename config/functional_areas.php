@@ -22,5 +22,9 @@ return [
         'Documents' => 'file-alt',
         'Articles' => 'newspaper',
         'Users' => 'users'
+    ],
+
+    'searchConfigured' => [
+        'Users' => true,
     ]
 ];

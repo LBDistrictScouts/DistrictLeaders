@@ -20,11 +20,11 @@ class BasicMailerTest extends TestCase
     public $Basic;
 
     /**
-     * Test initial setup
+     * Test doSend method
      *
      * @return void
      */
-    public function testInitialization()
+    public function testDoSend()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
