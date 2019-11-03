@@ -73,9 +73,10 @@ class PasswordCommand extends Command
             User::FIELD_USERNAME => $adminUser['username'],
             User::FIELD_EMAIL => $adminUser['email']
         ])->first();
-
-        if (!$user) {
+        debug($user);
+        if (!($user instanceof User)) {
             $user = $this->Users->newEntity($adminUser);
+
             if (!$this->Users->save($user)) {
                 $io->error('User could not be saved.');
                 $this->abort();

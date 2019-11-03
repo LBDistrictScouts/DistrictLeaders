@@ -200,7 +200,8 @@ class UsersTable extends Table
         $validator
             ->scalar('postcode')
             ->maxLength('postcode', 9)
-            ->allowEmptyString('postcode');
+            ->requirePresence('postcode', 'create')
+            ->notEmptyString('postcode', 'A postcode is required.');
 
         $validator
             ->dateTime('last_login')

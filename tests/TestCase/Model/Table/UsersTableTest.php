@@ -192,6 +192,7 @@ class UsersTableTest extends TestCase
             'first_name',
             'last_name',
             'email',
+            'postcode',
         ];
 
         foreach ($required as $require) {
@@ -208,7 +209,6 @@ class UsersTableTest extends TestCase
             'address_line_2',
             'city',
             'county',
-            'postcode',
             'last_login',
             'last_login_ip',
         ];
@@ -225,7 +225,6 @@ class UsersTableTest extends TestCase
             'address_line_2',
             'city',
             'county',
-            'postcode',
             'last_login',
             'last_login_ip',
             'password',
@@ -244,6 +243,7 @@ class UsersTableTest extends TestCase
             'first_name',
             'last_name',
             'email',
+            'postcode',
         ];
 
         foreach ($notEmpties as $not_empty) {

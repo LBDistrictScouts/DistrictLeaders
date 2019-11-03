@@ -362,5 +362,6 @@ return [
         'first_name' => 'Admin',
         'last_name' => 'MrFace',
         'membership_number' => 000123,
+        'postcode' => 'POS COD',
     ],
 ];

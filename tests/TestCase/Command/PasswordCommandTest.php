@@ -9,7 +9,6 @@ use Cake\TestSuite\TestCase;
  * Class InstallBaseCommandTest
  *
  * @package App\Test\TestCase\Command
- * @uses \App\Command\InstallBaseCommand
  * @uses \App\Command\PasswordCommand
  */
 class PasswordCommandTest extends TestCase
@@ -36,10 +35,13 @@ class PasswordCommandTest extends TestCase
 
     /**
      * Setup Function
+     *
+     * @throws \Exception
      */
     public function setUp()
     {
         parent::setUp();
+        $this->loadFixtures();
         $this->useCommandRunner();
     }
 
