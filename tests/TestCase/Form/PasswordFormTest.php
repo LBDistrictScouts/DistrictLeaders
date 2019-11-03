@@ -161,17 +161,16 @@ class PasswordFormTest extends TestCase
      */
     public function provideExecuteData()
     {
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $user2 = $this->Users->get(2);
+        $postcode = 'LN9 0II';
 
         return [
             [ // 0 - Correct Data Pass
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'MyNewPassword',
-                        PasswordForm::FIELD_POSTCODE => $user2->get(User::FIELD_POSTCODE),
+                        PasswordForm::FIELD_POSTCODE => $postcode,
                     ],
                 ], // Execute Request Array
                 [
@@ -180,11 +179,11 @@ class PasswordFormTest extends TestCase
             ],
             [ // 1 - Pass for lower case Postcode
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'MyNewPassword',
-                        PasswordForm::FIELD_POSTCODE => strtolower($user2->get(User::FIELD_POSTCODE)),
+                        PasswordForm::FIELD_POSTCODE => strtolower($postcode),
                     ],
                 ], // Execute Request Array
                 [
@@ -193,11 +192,11 @@ class PasswordFormTest extends TestCase
             ],
             [ // 2 - Fail unmatched password
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'Goat',
-                        PasswordForm::FIELD_POSTCODE => $user2->get(User::FIELD_POSTCODE),
+                        PasswordForm::FIELD_POSTCODE => $postcode,
                     ],
                 ], // Execute Request Array
                 [
@@ -206,7 +205,7 @@ class PasswordFormTest extends TestCase
             ],
             [ // 3 - Missing Request
                 [
-                    'user' => $user2,
+                    'user' => true,
                 ], // Execute Request Array
                 [
                     'execute_pass' => false
@@ -217,7 +216,7 @@ class PasswordFormTest extends TestCase
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'MyNewPassword',
-                        PasswordForm::FIELD_POSTCODE => $user2->get(User::FIELD_POSTCODE),
+                        PasswordForm::FIELD_POSTCODE => $postcode,
                     ],
                 ], // Execute Request Array
                 [
@@ -226,10 +225,10 @@ class PasswordFormTest extends TestCase
             ],
             [ // 5 - Missing New Password
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'MyNewPassword',
-                        PasswordForm::FIELD_POSTCODE => $user2->get(User::FIELD_POSTCODE),
+                        PasswordForm::FIELD_POSTCODE => $postcode,
                     ],
                 ], // Execute Request Array
                 [
@@ -238,10 +237,10 @@ class PasswordFormTest extends TestCase
             ],
             [ // 6 - Missing Confirm Password
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
-                        PasswordForm::FIELD_POSTCODE => $user2->get(User::FIELD_POSTCODE),
+                        PasswordForm::FIELD_POSTCODE => $postcode,
                     ],
                 ], // Execute Request Array
                 [
@@ -250,7 +249,7 @@ class PasswordFormTest extends TestCase
             ],
             [ // 7 - Missing Postcode
                 [
-                    'user' => $user2,
+                    'user' => true,
                     'request' => [
                         PasswordForm::FIELD_NEW_PASSWORD => 'MyNewPassword',
                         PasswordForm::FIELD_CONFIRM_PASSWORD => 'Goat',
@@ -275,6 +274,12 @@ class PasswordFormTest extends TestCase
      */
     public function testExecute($requestArray, $outcomeArray)
     {
+        if (key_exists('user', $requestArray) && $requestArray['user']) {
+            $this->Users = TableRegistry::getTableLocator()->get('Users');
+            $user = $this->Users->get(2);
+            $requestArray['user'] = $user;
+        }
+
         $result = $this->Password->execute($requestArray);
 
         TestCase::assertEquals($outcomeArray['execute_pass'], $result);
