@@ -59,29 +59,29 @@ class UsersTable extends Table
 
         $this->addBehavior('Caseable', [
             'case_columns' => [
-                'email' => 'l',
-                'postcode' => 'u',
-                'first_name' => 't',
-                'last_name' => 't',
-                'address_line_1' => 't',
-                'address_line_2' => 't',
-                'city' => 't',
-                'county' => 't',
+                User::FIELD_EMAIL => 'l',
+                User::FIELD_POSTCODE => 'u',
+                User::FIELD_FIRST_NAME => 't',
+                User::FIELD_LAST_NAME => 't',
+                User::FIELD_ADDRESS_LINE_1 => 't',
+                User::FIELD_ADDRESS_LINE_2 => 't',
+                User::FIELD_CITY => 't',
+                User::FIELD_COUNTY => 't',
             ]
         ]);
 
         $this->addBehavior('Auditable', [
             'tracked_fields' => [
-                'username',
-                'membership_number',
-                'first_name',
-                'last_name',
-                'email',
-                'address_line_1',
-                'address_line_2',
-                'city',
-                'county',
-                'postcode',
+                User::FIELD_USERNAME,
+                User::FIELD_MEMBERSHIP_NUMBER,
+                User::FIELD_FIRST_NAME,
+                User::FIELD_LAST_NAME,
+                User::FIELD_EMAIL,
+                User::FIELD_ADDRESS_LINE_1,
+                User::FIELD_ADDRESS_LINE_2,
+                User::FIELD_CITY,
+                User::FIELD_COUNTY,
+                User::FIELD_POSTCODE,
             ]
         ]);
 
@@ -125,7 +125,7 @@ class UsersTable extends Table
      */
     protected function _initializeSchema(TableSchema $schema)
     {
-        $schema->setColumnType('capabilities', 'json');
+        $schema->setColumnType(User::FIELD_CAPABILITIES, 'json');
 
         return $schema;
     }

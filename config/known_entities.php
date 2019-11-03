@@ -7,6 +7,7 @@
  */
 
 use App\Model\Entity\NotificationType as NT;
+use App\Model\Entity\FileType as FT;
 
 return [
 
@@ -70,6 +71,25 @@ return [
             NT::FIELD_NOTIFICATION_DESCRIPTION => 'Notification of an Invoice where the deposit is past due.',
             NT::FIELD_ICON => 'fa-clock',
             NT::FIELD_TYPE_CODE => 'INV-DEP',
+        ],
+    ],
+
+    'fileTypes' => [
+        [
+            FT::FIELD_FILE_TYPE => 'Word',
+            FT::FIELD_FILE_EXTENSION => 'docx',
+        ],
+        [
+            FT::FIELD_FILE_TYPE => 'PDF',
+            FT::FIELD_FILE_EXTENSION => 'pdf',
+        ],
+        [
+            FT::FIELD_FILE_TYPE => 'Old Word',
+            FT::FIELD_FILE_EXTENSION => 'doc',
+        ],
+        [
+            FT::FIELD_FILE_TYPE => 'Comma Separated Value',
+            FT::FIELD_FILE_EXTENSION => 'csv',
         ],
     ]
 ];

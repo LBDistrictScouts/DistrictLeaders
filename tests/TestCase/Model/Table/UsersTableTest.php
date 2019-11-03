@@ -1,18 +1,20 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
+use App\Utility\TextSafe;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\UsersTable Test Case
  */
 class UsersTableTest extends TestCase
 {
+    use ModelTestTrait;
 
     /**
      * Test subject
@@ -90,7 +92,7 @@ class UsersTableTest extends TestCase
     {
         $date = Time::getTestNow();
         $good = [
-            'username' => 'Jacob' . random_int(0, 999) . random_int(0, 999),
+            'username' => TextSafe::shuffle(10),
             'membership_number' => random_int(0, 99999) + random_int(0, 99999),
             'first_name' => 'Jacob',
             'last_name' => 'Tyler',
@@ -105,22 +107,13 @@ class UsersTableTest extends TestCase
             'last_login' => $date,
             'last_login_ip' => '192.168.0.1',
             'capabilities' => [
-                'user' => [
-                    'LOGIN',
-                    'EDIT_SELF'
-                ],
+                'user' => ['LOGIN', 'EDIT_SELF'],
                 'section' => [
-                    1 => [
-                        'EDIT_USER'
-                    ],
-                    3 => [
-                        'EDIT_USER'
-                    ]
+                    1 => ['EDIT_USER'],
+                    3 => ['EDIT_USER'],
                 ],
                 'group' => [
-                    1 => [
-                        'EDIT_SECT'
-                    ]
+                    1 => ['EDIT_SECT'],
                 ]
             ]
         ];
@@ -135,22 +128,12 @@ class UsersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->Users->get(1)->toArray();
-
         $dates = [
             'modified',
             'created',
             'deleted',
             'last_login',
         ];
-
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
-            }
-            unset($actual[$date]);
-        }
 
         $expected = [
             'id' => 1,
@@ -169,10 +152,8 @@ class UsersTableTest extends TestCase
             'capabilities' => null,
             'password_state_id' => 1,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->Users->find('all')->count();
-        TestCase::assertEquals(2, $count);
+        $this->validateInitialise($expected, $this->Users, 2, $dates);
     }
 
     /**
@@ -188,19 +169,14 @@ class UsersTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
         $required = [
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
-            'postcode',
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+            User::FIELD_POSTCODE,
         ];
 
-        foreach ($required as $require) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$require]);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateRequired($required, $this->Users, [$this, 'getGood']);
 
         $notRequired = [
             'username',
@@ -213,12 +189,7 @@ class UsersTableTest extends TestCase
             'last_login_ip',
         ];
 
-        foreach ($notRequired as $not_required) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$not_required]);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-        }
+        $this->validateNotRequired($notRequired, $this->Users, [$this, 'getGood']);
 
         $empties = [
             'address_line_1',
@@ -231,12 +202,7 @@ class UsersTableTest extends TestCase
             'username',
         ];
 
-        foreach ($empties as $empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$empty] = '';
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-        }
+        $this->validateEmpties($empties, $this->Users, [$this, 'getGood']);
 
         $notEmpties = [
             'membership_number',
@@ -246,12 +212,7 @@ class UsersTableTest extends TestCase
             'postcode',
         ];
 
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$not_empty] = '';
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->Users, [$this, 'getGood']);
 
         $maxLengths = [
             'username' => 255,
@@ -265,21 +226,7 @@ class UsersTableTest extends TestCase
             'postcode' => 9,
         ];
 
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->Users, [$this, 'getGood']);
     }
 
     /**
@@ -291,26 +238,12 @@ class UsersTableTest extends TestCase
     {
         // Is Unique
         $uniques = [
-            'username' => 'JacobNew',
-            'membership_number' => 210210210,
-            'email' => 'my@unique.email',
+            'username',
+            'membership_number',
+            'email',
         ];
 
-        foreach ($uniques as $unqueField => $uniqueValue) {
-            $values = $this->getGood();
-
-            $existing = $this->Users->get(1)->toArray();
-
-            $values[$unqueField] = $uniqueValue;
-            $new = $this->Users->newEntity($values);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-
-            $values = $this->getGood();
-
-            $values[$unqueField] = $existing[$unqueField];
-            $new = $this->Users->newEntity($values);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateUniqueRules($uniques, $this->Users, [$this, 'getGood']);
     }
 
     /**

@@ -22,3 +22,9 @@
 'app.EmailResponseTypes',
 'app.EmailResponses',
 
+'app.FileTypes',
+'app.DocumentTypes',
+'app.Documents',
+'app.DocumentVersions',
+'app.DocumentEditions',
+

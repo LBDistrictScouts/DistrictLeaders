@@ -113,7 +113,7 @@ class TokensControllerTest extends TestCase
     public function testValidateAndAuthenticate()
     {
         /** @var \App\Model\Table\TokensTable $tokens */
-        $tokens = TableRegistry::getTableLocator()->get('Tokens');
+        $tokens = TableRegistry::getTableLocator()->get($this->controller);
 
         $tokenRow = $tokens->get(1);
         $tokenRow->set(Token::FIELD_TOKEN_HEADER, [
