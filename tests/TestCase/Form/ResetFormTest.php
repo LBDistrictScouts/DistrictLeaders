@@ -18,6 +18,37 @@ class ResetFormTest extends TestCase
     public $Reset;
 
     /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.Camps',
+        'app.CampTypes',
+        'app.Notifications',
+        'app.NotificationTypes',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+    ];
+
+    /**
      * setUp method
      *
      * @return void
@@ -173,7 +204,6 @@ class ResetFormTest extends TestCase
 
         if (!$results) {
             $errors = $this->Reset->getErrors();
-            debug($errors);
 
             // Test Error Field
             $errorField = $outcome['errorFieldName'];

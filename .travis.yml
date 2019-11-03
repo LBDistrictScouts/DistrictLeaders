@@ -4,6 +4,8 @@ dist: bionic
 
 os: linux
 
+version: ~> 1.0
+
 addons:
   postgresql: "9.6"
   code_climate:
@@ -16,7 +18,7 @@ cache:
 
 services:
   - postgresql
-  - redis-server
+  - redis
 
 env:
   - DB=postgres
