@@ -4,6 +4,7 @@ namespace App\Test\TestCase\Form;
 use App\Form\PasswordForm;
 use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -11,6 +12,8 @@ use Cake\TestSuite\TestCase;
  */
 class PasswordFormTest extends TestCase
 {
+    use IntegrationTestTrait;
+
     /**
      * Test subject
      *
