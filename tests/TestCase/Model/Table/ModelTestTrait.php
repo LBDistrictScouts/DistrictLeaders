@@ -17,15 +17,17 @@ trait ModelTestTrait
      * @param array $requiredFields Required Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
      *
      * @return void
      */
-    protected function validateRequired($requiredFields, $table, $good)
+    protected function validateRequired($requiredFields, $table, $good, $validator = 'default')
     {
         foreach ($requiredFields as $require) {
             $requiredArray = call_user_func($good);
             unset($requiredArray[$require]);
-            $new = $table->newEntity($requiredArray);
+            $new = $table->newEntity($requiredArray, ['validate' => $validator]);
+            TestCase::assertSame('This field is required', $new->getError($require)['_required']);
             TestCase::assertFalse($table->save($new));
         }
     }
@@ -34,15 +36,16 @@ trait ModelTestTrait
      * @param array $notRequiredFields Required Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
      *
      * @return void
      */
-    protected function validateNotRequired($notRequiredFields, $table, $good)
+    protected function validateNotRequired($notRequiredFields, $table, $good, $validator = 'default')
     {
         foreach ($notRequiredFields as $notRequired) {
             $notRequiredArray = call_user_func($good);
             unset($notRequiredArray[$notRequired]);
-            $new = $table->newEntity($notRequiredArray);
+            $new = $table->newEntity($notRequiredArray, ['validate' => $validator]);
             TestCase::assertInstanceOf($table->getEntityClass(), $table->save($new));
         }
     }
@@ -51,16 +54,32 @@ trait ModelTestTrait
      * @param array $notEmptyFields Not Empty Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
+     * @param string $message The Output Message Expected
      *
      * @return void
      */
-    protected function validateNotEmpties($notEmptyFields, $table, $good)
+    protected function validateNotEmpty($field, $table, $good, $validator = 'default', $message = 'This field cannot be left empty')
+    {
+        $notEmptyArray = call_user_func($good);
+        $notEmptyArray[$field] = '';
+        $new = $table->newEntity($notEmptyArray, ['validate' => $validator]);
+        TestCase::assertSame($message, $new->getError($field)['_empty']);
+        TestCase::assertFalse($table->save($new));
+    }
+
+    /**
+     * @param array $notEmptyFields Not Empty Fields Array
+     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
+     *
+     * @return void
+     */
+    protected function validateNotEmpties($notEmptyFields, $table, $good, $validator = 'default')
     {
         foreach ($notEmptyFields as $notEmpty) {
-            $notEmptyArray = call_user_func($good);
-            $notEmptyArray[$notEmpty] = '';
-            $new = $table->newEntity($notEmptyArray);
-            TestCase::assertFalse($table->save($new));
+            $this->validateNotEmpty($notEmpty, $table, $good, $validator);
         }
     }
 
@@ -68,15 +87,16 @@ trait ModelTestTrait
      * @param array $emptyFields Not Empty Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
      *
      * @return void
      */
-    protected function validateEmpties($emptyFields, $table, $good)
+    protected function validateEmpties($emptyFields, $table, $good, $validator = 'default')
     {
         foreach ($emptyFields as $empty) {
             $emptyArray = call_user_func($good);
             $emptyArray[$empty] = '';
-            $new = $table->newEntity($emptyArray);
+            $new = $table->newEntity($emptyArray, ['validate' => $validator]);
             TestCase::assertInstanceOf($table->getEntityClass(), $table->save($new));
         }
     }
@@ -85,10 +105,11 @@ trait ModelTestTrait
      * @param array $maxLengthFields Associative Max Length Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
      *
      * @return void
      */
-    protected function validateMaxLengths($maxLengthFields, $table, $good)
+    protected function validateMaxLengths($maxLengthFields, $table, $good, $validator = 'default')
     {
         $instance = $table->getEntityClass();
 
@@ -100,12 +121,13 @@ trait ModelTestTrait
         foreach ($maxLengthFields as $maxField => $maxLength) {
             $maxLengthArray = call_user_func($good);
             $maxLengthArray[$maxField] = substr($string, 1, $maxLength);
-            $new = $table->newEntity($maxLengthArray);
+            $new = $table->newEntity($maxLengthArray, ['validate' => $validator]);
             TestCase::assertInstanceOf($instance, $table->save($new));
 
             $newMaxLengthArray = call_user_func($good);
             $newMaxLengthArray[$maxField] = substr($string, 1, $maxLength + 1);
-            $new = $table->newEntity($newMaxLengthArray);
+            $new = $table->newEntity($newMaxLengthArray, ['validate' => $validator]);
+            TestCase::assertSame('The provided value is invalid', $new->getError($maxField)['maxLength']);
             TestCase::assertFalse($table->save($new));
         }
     }
@@ -147,6 +169,48 @@ trait ModelTestTrait
     }
 
     /**
+     * @param string $field Field Name
+     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param \Cake\ORM\Table $association The Associated Table to be tested
+     * @param callable $good The Good Generation Function
+     *
+     * @return void
+     */
+    protected function validateExistsRule($field, $table, $association, $good)
+    {
+        $values = call_user_func($good);
+        $instance = $table->getEntityClass();
+
+        $types = $association->find('list')->toArray();
+
+        $fKey = max(array_keys($types));
+
+        $values[$field] = $fKey;
+        $new = $table->newEntity($values);
+        TestCase::assertInstanceOf($instance, $table->save($new));
+
+        $values = call_user_func($good);
+
+        $values[$field] = $fKey + 1;
+        $new = $table->newEntity($values);
+        TestCase::assertFalse($table->save($new));
+    }
+
+    /**
+     * @param array $keyAndAssociatedTable Array of Foreign Key Names & Associated Tables
+     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param callable $good The Good Generation Function
+     *
+     * @return void
+     */
+    protected function validateExistsRules($keyAndAssociatedTable, $table, $good)
+    {
+        foreach ($keyAndAssociatedTable as $foreignKey => $associated) {
+            $this->validateExistsRule($foreignKey, $table, $associated, $good);
+        }
+    }
+
+    /**
      * @param \Cake\ORM\Table $table The Table to be tested
      */
     protected function validateInstallBase($table)
@@ -172,12 +236,14 @@ trait ModelTestTrait
     {
         $actual = $table->get(1)->toArray();
 
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+        if (!is_null($dates)) {
+            foreach ($dates as $date) {
+                $dateValue = $actual[$date];
+                if (!is_null($dateValue)) {
+                    TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
+                }
+                unset($actual[$date]);
             }
-            unset($actual[$date]);
         }
 
         TestCase::assertEquals($expected, $actual);

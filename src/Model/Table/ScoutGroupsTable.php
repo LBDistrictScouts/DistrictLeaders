@@ -13,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  *
- * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
- * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
+ * @method ScoutGroup get($primaryKey, $options = [])
+ * @method ScoutGroup newEntity($data = null, array $options = [])
+ * @method ScoutGroup[] newEntities(array $data, array $options = [])
+ * @method ScoutGroup|false save(EntityInterface $entity, $options = [])
+ * @method ScoutGroup saveOrFail(EntityInterface $entity, $options = [])
+ * @method ScoutGroup patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method ScoutGroup[] patchEntities($entities, array $data, array $options = [])
+ * @method ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -132,15 +132,8 @@ class ScoutGroupsTable extends Table
     public function domainVerify($emailAddress)
     {
         $domains = $this->getDomains();
-        $emailAddress = strtolower($emailAddress);
-        $results = 0;
+        $emailDomain = strtolower(explode('@', $emailAddress)[1]);
 
-        foreach ($domains as $domain) {
-            if (strpos($emailAddress, $domain) !== false) {
-                $results += 1;
-            }
-        }
-
-        return $results >= 1;
+        return in_array($emailDomain, $domains, true);
     }
 }

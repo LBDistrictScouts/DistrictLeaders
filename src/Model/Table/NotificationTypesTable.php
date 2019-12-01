@@ -53,28 +53,32 @@ class NotificationTypesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(NotificationType::FIELD_ID)
+            ->allowEmptyString(NotificationType::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('notification_type')
-            ->maxLength('notification_type', 45)
-            ->notEmptyString('notification_type');
+            ->scalar(NotificationType::FIELD_NOTIFICATION_TYPE)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_TYPE)
+            ->maxLength(NotificationType::FIELD_NOTIFICATION_TYPE, 45)
+            ->notEmptyString(NotificationType::FIELD_NOTIFICATION_TYPE);
 
         $validator
-            ->scalar('notification_description')
-            ->maxLength('notification_description', 255)
-            ->allowEmptyString('notification_description');
+            ->scalar(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
+            ->maxLength(NotificationType::FIELD_NOTIFICATION_DESCRIPTION, 255)
+            ->notEmptyString(NotificationType::FIELD_NOTIFICATION_DESCRIPTION);
 
         $validator
-            ->scalar('icon')
-            ->maxLength('icon', 45)
-            ->allowEmptyString('icon');
+            ->scalar(NotificationType::FIELD_ICON)
+            ->requirePresence(NotificationType::FIELD_ICON)
+            ->maxLength(NotificationType::FIELD_ICON, 45)
+            ->notEmptyString(NotificationType::FIELD_ICON);
 
         $validator
-            ->scalar('type_code')
-            ->maxLength('type_code', 7)
-            ->notEmptyString('type_code');
+            ->scalar(NotificationType::FIELD_TYPE_CODE)
+            ->requirePresence(NotificationType::FIELD_TYPE_CODE)
+            ->maxLength(NotificationType::FIELD_TYPE_CODE, 7)
+            ->notEmptyString(NotificationType::FIELD_TYPE_CODE);
 
         return $validator;
     }

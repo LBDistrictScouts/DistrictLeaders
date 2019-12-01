@@ -43,21 +43,21 @@ class UserContactsTable extends Table
         parent::initialize($config);
 
         $this->setTable('user_contacts');
-        $this->setDisplayField('contact_field');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(UserContact::FIELD_CONTACT_FIELD);
+        $this->setPrimaryKey(UserContact::FIELD_ID);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [
-                'contact_field' => 'l',
+                UserContact::FIELD_CONTACT_FIELD => 'l',
             ]
         ]);
 
         $this->addBehavior('Auditable', [
             'tracked_fields' => [
-                'contact_field'
+                UserContact::FIELD_CONTACT_FIELD
             ]
         ]);
 
@@ -67,11 +67,11 @@ class UserContactsTable extends Table
         ]);
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id',
+            'foreignKey' => UserContact::FIELD_USER_ID,
             'joinType' => 'INNER'
         ]);
         $this->belongsTo('UserContactTypes', [
-            'foreignKey' => 'user_contact_type_id',
+            'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
             'joinType' => 'INNER'
         ]);
         $this->hasMany('Roles', [
@@ -88,26 +88,47 @@ class UserContactsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(UserContact::FIELD_ID)
+            ->allowEmptyString(UserContact::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('contact_field')
-            ->maxLength('contact_field', 64)
-            ->requirePresence('contact_field', 'create')
-            ->notEmptyString('contact_field');
+            ->scalar(UserContact::FIELD_CONTACT_FIELD)
+            ->maxLength(UserContact::FIELD_CONTACT_FIELD, 64)
+            ->requirePresence(UserContact::FIELD_CONTACT_FIELD, 'create')
+            ->notEmptyString(UserContact::FIELD_CONTACT_FIELD);
 
         $validator
-            ->requirePresence('user_id', 'create')
-            ->notEmptyString('user_id', 'create');
+            ->requirePresence(UserContact::FIELD_USER_ID, 'create')
+            ->notEmptyString(UserContact::FIELD_USER_ID);
 
         $validator
-            ->requirePresence('user_contact_type_id', 'create')
-            ->notEmptyString('user_contact_type_id', 'create');
+            ->requirePresence(UserContact::FIELD_USER_CONTACT_TYPE_ID, 'create')
+            ->notEmptyString(UserContact::FIELD_USER_CONTACT_TYPE_ID);
 
         $validator
-            ->boolean('verified')
-            ->notEmptyString('verified');
+            ->boolean(UserContact::FIELD_VERIFIED)
+            ->notEmptyString(UserContact::FIELD_VERIFIED);
+
+        return $validator;
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationEmail(Validator $validator)
+    {
+        $validator = $this->validationDefault($validator);
+
+        $validator
+            ->email(UserContact::FIELD_CONTACT_FIELD)
+            ->add(UserContact::FIELD_CONTACT_FIELD, 'validDomainEmail', [
+                'rule' => 'isValidDomainEmail',
+                'message' => __('You must use a Scouting Email Address'),
+                'provider' => 'table',
+            ]);
 
         return $validator;
     }
@@ -121,11 +142,22 @@ class UserContactsTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['user_id'], 'Users'));
-        $rules->add($rules->existsIn(['user_contact_type_id'], 'UserContactTypes'));
+        $rules->add($rules->existsIn([UserContact::FIELD_USER_ID], 'Users'));
+        $rules->add($rules->existsIn([UserContact::FIELD_USER_CONTACT_TYPE_ID], 'UserContactTypes'));
 
-        $rules->add($rules->isUnique(['user_id', 'contact_field']));
+        $rules->add($rules->isUnique([UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD]));
 
         return $rules;
+    }
+
+    /**
+     * @param string $value The Entity Value to be validated
+     * @param array $context The Validation Context
+     *
+     * @return bool
+     */
+    public function isValidDomainEmail($value, $context)
+    {
+        return $this->Users->Roles->Sections->ScoutGroups->domainVerify($value);
     }
 }

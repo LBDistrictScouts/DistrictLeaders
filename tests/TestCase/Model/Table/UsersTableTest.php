@@ -205,14 +205,21 @@ class UsersTableTest extends TestCase
         $this->validateEmpties($empties, $this->Users, [$this, 'getGood']);
 
         $notEmpties = [
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
-            'postcode',
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+            User::FIELD_POSTCODE,
         ];
 
         $this->validateNotEmpties($notEmpties, $this->Users, [$this, 'getGood']);
+
+        $this->validateNotEmpty(
+            User::FIELD_MEMBERSHIP_NUMBER,
+            $this->Users,
+            [$this, 'getGood'],
+            'default',
+            'A unique, valid TSA membership number is required.'
+        );
 
         $maxLengths = [
             'username' => 255,

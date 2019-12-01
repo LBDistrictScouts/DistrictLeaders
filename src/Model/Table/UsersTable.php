@@ -158,18 +158,18 @@ class UsersTable extends Table
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->notEmptyString('first_name', 'A first name is required.');
+            ->notEmptyString('first_name');
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->notEmptyString('last_name', 'A last name is required.');
+            ->notEmptyString('last_name');
 
         $validator
             ->email('email')
             ->requirePresence('email', 'create')
-            ->notEmptyString('email', 'An email is required.')
+            ->notEmptyString('email')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
@@ -201,7 +201,7 @@ class UsersTable extends Table
             ->scalar('postcode')
             ->maxLength('postcode', 9)
             ->requirePresence('postcode', 'create')
-            ->notEmptyString('postcode', 'A postcode is required.');
+            ->notEmptyString('postcode');
 
         $validator
             ->dateTime('last_login')

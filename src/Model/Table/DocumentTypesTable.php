@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
@@ -35,11 +36,11 @@ class DocumentTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('document_types');
-        $this->setDisplayField('document_type');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(DocumentType::FIELD_DOCUMENT_TYPE);
+        $this->setPrimaryKey(DocumentType::FIELD_ID);
 
         $this->hasMany('Documents', [
-            'foreignKey' => 'document_type_id'
+            'foreignKey' => Document::FIELD_DOCUMENT_TYPE_ID
         ]);
     }
 
@@ -52,14 +53,15 @@ class DocumentTypesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(DocumentType::FIELD_ID)
+            ->allowEmptyString(DocumentType::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('document_type')
-            ->maxLength('document_type', 31)
-            ->notEmptyString('document_type')
-            ->add('document_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(DocumentType::FIELD_DOCUMENT_TYPE)
+            ->maxLength(DocumentType::FIELD_DOCUMENT_TYPE, 31)
+            ->notEmptyString(DocumentType::FIELD_DOCUMENT_TYPE)
+            ->requirePresence(DocumentType::FIELD_DOCUMENT_TYPE)
+            ->add(DocumentType::FIELD_DOCUMENT_TYPE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
@@ -73,7 +75,7 @@ class DocumentTypesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['document_type']));
+        $rules->add($rules->isUnique([DocumentType::FIELD_DOCUMENT_TYPE]));
 
         return $rules;
     }
