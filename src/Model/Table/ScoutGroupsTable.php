@@ -132,8 +132,12 @@ class ScoutGroupsTable extends Table
     public function domainVerify($emailAddress)
     {
         $domains = $this->getDomains();
-        $emailDomain = strtolower(explode('@', $emailAddress)[1]);
+        if (strpos($emailAddress, '@') !== false) {
+            $emailDomain = strtolower(explode('@', $emailAddress)[1]);
 
-        return in_array($emailDomain, $domains, true);
+            return in_array($emailDomain, $domains, true);
+        }
+
+        return false;
     }
 }

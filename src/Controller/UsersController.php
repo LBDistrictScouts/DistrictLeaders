@@ -355,10 +355,12 @@ class UsersController extends AppController
             if (!$passwordForm->validate($this->request->getData())) {
                 $this->Flash->error(__('The data provided has errors.'));
             } else {
-                if ($passwordForm->execute([
+                if (
+                    $passwordForm->execute([
                     'request' => $this->request->getData(),
                     'user' => $resetUser
-                ])) {
+                    ])
+                ) {
                     $this->Flash->success('Your password was saved successfully.');
 
                     return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);

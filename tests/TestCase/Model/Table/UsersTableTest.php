@@ -92,21 +92,20 @@ class UsersTableTest extends TestCase
     {
         $date = Time::getTestNow();
         $good = [
-            'username' => TextSafe::shuffle(10),
-            'membership_number' => random_int(0, 99999) + random_int(0, 99999),
-            'first_name' => 'Jacob',
-            'last_name' => 'Tyler',
-            'email' => 'myfake' . random_int(0, 9999) . '@email' . random_int(0, 9999) . '.com',
-            'password' => 'Not Telling You',
-            'address_line_1' => 'New Landing Cottage',
-            'address_line_2' => '',
-            'city' => 'Helicopter Place',
-            'county' => 'Hertfordshire',
-            'postcode' => 'SG6 KKS',
-            'admin_scout_group_id' => 1,
-            'last_login' => $date,
-            'last_login_ip' => '192.168.0.1',
-            'capabilities' => [
+            User::FIELD_USERNAME => TextSafe::shuffle(10),
+            User::FIELD_MEMBERSHIP_NUMBER => random_int(0, 99999) + random_int(0, 99999),
+            User::FIELD_FIRST_NAME => 'Jacob',
+            User::FIELD_LAST_NAME => 'Tyler',
+            User::FIELD_EMAIL => 'my' . random_int(0, 9999) . 'fake' . random_int(0, 9999) . '@4thgoat.org.uk',
+            User::FIELD_PASSWORD => 'Not Telling You',
+            User::FIELD_ADDRESS_LINE_1 => 'New Landing Cottage',
+            User::FIELD_ADDRESS_LINE_2 => '',
+            User::FIELD_CITY => 'Helicopter Place',
+            User::FIELD_COUNTY => 'Hertfordshire',
+            User::FIELD_POSTCODE => 'SG6 KKS',
+            User::FIELD_LAST_LOGIN => $date,
+            User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
+            User::FIELD_CAPABILITIES => [
                 'user' => ['LOGIN', 'EDIT_SELF'],
                 'section' => [
                     1 => ['EDIT_USER'],
@@ -129,28 +128,28 @@ class UsersTableTest extends TestCase
     public function testInitialize()
     {
         $dates = [
-            'modified',
-            'created',
-            'deleted',
-            'last_login',
+            User::FIELD_MODIFIED,
+            User::FIELD_CREATED,
+            User::FIELD_DELETED,
+            User::FIELD_LAST_LOGIN,
         ];
 
         $expected = [
-            'id' => 1,
-            'username' => 'Lorem ipsum dolor sit amet',
-            'membership_number' => 1,
-            'first_name' => 'Lorem ipsum dolor sit amet',
-            'last_name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
-            'address_line_1' => 'Lorem ipsum dolor sit amet',
-            'address_line_2' => 'Lorem ipsum dolor sit amet',
-            'city' => 'Lorem ipsum dolor sit amet',
-            'county' => 'Lorem ipsum dolor sit amet',
-            'postcode' => 'Lorem i',
-            'last_login_ip' => '192.168.0.1',
-            'full_name' => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
-            'capabilities' => null,
-            'password_state_id' => 1,
+            User::FIELD_ID => 1,
+            User::FIELD_USERNAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_MEMBERSHIP_NUMBER => 1,
+            User::FIELD_FIRST_NAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_LAST_NAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_EMAIL => 'fish@4thgoat.org.uk',
+            User::FIELD_ADDRESS_LINE_1 => 'Lorem ipsum dolor sit amet',
+            User::FIELD_ADDRESS_LINE_2 => 'Lorem ipsum dolor sit amet',
+            User::FIELD_CITY => 'Lorem ipsum dolor sit amet',
+            User::FIELD_COUNTY => 'Lorem ipsum dolor sit amet',
+            User::FIELD_POSTCODE => 'Lorem i',
+            User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
+            User::FIELD_FULL_NAME => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
+            User::FIELD_CAPABILITIES => null,
+            User::FIELD_PASSWORD_STATE_ID => 1,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);
@@ -179,27 +178,27 @@ class UsersTableTest extends TestCase
         $this->validateRequired($required, $this->Users, [$this, 'getGood']);
 
         $notRequired = [
-            'username',
-            'password',
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'last_login',
-            'last_login_ip',
+            User::FIELD_USERNAME,
+            User::FIELD_PASSWORD,
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
         ];
 
         $this->validateNotRequired($notRequired, $this->Users, [$this, 'getGood']);
 
         $empties = [
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'last_login',
-            'last_login_ip',
-            'password',
-            'username',
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
+            User::FIELD_PASSWORD,
+            User::FIELD_USERNAME,
         ];
 
         $this->validateEmpties($empties, $this->Users, [$this, 'getGood']);
@@ -222,18 +221,20 @@ class UsersTableTest extends TestCase
         );
 
         $maxLengths = [
-            'username' => 255,
-            'first_name' => 255,
-            'last_name' => 255,
-            'password' => 255,
-            'address_line_1' => 255,
-            'address_line_2' => 255,
-            'city' => 255,
-            'county' => 255,
-            'postcode' => 9,
+            User::FIELD_USERNAME => 255,
+            User::FIELD_FIRST_NAME => 255,
+            User::FIELD_LAST_NAME => 255,
+            User::FIELD_PASSWORD => 255,
+            User::FIELD_ADDRESS_LINE_1 => 255,
+            User::FIELD_ADDRESS_LINE_2 => 255,
+            User::FIELD_CITY => 255,
+            User::FIELD_COUNTY => 255,
+            User::FIELD_POSTCODE => 9,
         ];
 
         $this->validateMaxLengths($maxLengths, $this->Users, [$this, 'getGood']);
+
+        $this->validateEmail(User::FIELD_EMAIL, $this->Users, [$this, 'getGood']);
     }
 
     /**
@@ -245,9 +246,9 @@ class UsersTableTest extends TestCase
     {
         // Is Unique
         $uniques = [
-            'username',
-            'membership_number',
-            'email',
+            User::FIELD_USERNAME,
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_EMAIL,
         ];
 
         $this->validateUniqueRules($uniques, $this->Users, [$this, 'getGood']);
@@ -263,9 +264,9 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
-        TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+        TestCase::assertInstanceOf($this->Users->getEntityClass(), $this->Users->save($new));
 
-        TestCase::assertNotEquals($good['password'], $new->password);
+        TestCase::assertNotEquals($good[User::FIELD_PASSWORD], $new->password);
     }
 
     /**
@@ -525,5 +526,17 @@ class UsersTableTest extends TestCase
             ]
         ];
         $this->validateCapabilityArray($expected, $user->capabilities);
+    }
+
+    /**
+     * Test case for IsValidDomainEmail method
+     *
+     * @return void
+     */
+    public function testIsValidDomainEmail()
+    {
+        TestCase::assertFalse($this->Users->isValidDomainEmail('cheese@buttons.com', []));
+
+        TestCase::assertTrue($this->Users->isValidDomainEmail('jacob@4thgoat.org.uk', []));
     }
 }

@@ -347,7 +347,7 @@ return [
 
     'defaultAdmin' => [
         'username' => 'admin',
-        'email' => 'webmaster@admin.co.uk',
+        'email' => 'webmaster@4thgoat.org.uk',
         'first_name' => 'Admin',
         'last_name' => 'MrFace',
         'membership_number' => 000123,

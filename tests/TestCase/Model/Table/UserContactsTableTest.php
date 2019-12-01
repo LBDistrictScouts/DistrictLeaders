@@ -170,14 +170,8 @@ class UserContactsTableTest extends TestCase
         ];
         $this->validateNotEmpties($notEmpties, $this->UserContacts, [$this, 'getGood'], 'email');
 
-        // Good Email
-        $good = $this->getGood();
-
         // Bad Email
-        $good = $this->getGood();
-
-        // Bad Domain
-        $good = $this->getGood();
+        $this->validateEmail(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood'], 'email');
     }
 
     /**

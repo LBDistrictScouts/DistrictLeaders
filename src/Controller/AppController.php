@@ -36,7 +36,6 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  */
 class AppController extends Controller
 {
-
     use FootprintAwareTrait {
         _setCurrentUser as _footprintSetCurrentUser;
     }

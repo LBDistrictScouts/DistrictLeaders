@@ -61,8 +61,10 @@ class PasswordForm extends Form
         }
 
         // Check passwords Match
-        if (key_exists(self::FIELD_NEW_PASSWORD, $requestData)
-            && key_exists(self::FIELD_CONFIRM_PASSWORD, $requestData)) {
+        if (
+            key_exists(self::FIELD_NEW_PASSWORD, $requestData)
+            && key_exists(self::FIELD_CONFIRM_PASSWORD, $requestData)
+        ) {
             $newPassword = $requestData[self::FIELD_NEW_PASSWORD];
             $confirm = $requestData[self::FIELD_CONFIRM_PASSWORD];
 

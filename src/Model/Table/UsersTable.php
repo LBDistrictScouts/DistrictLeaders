@@ -168,6 +168,11 @@ class UsersTable extends Table
 
         $validator
             ->email('email')
+            ->add(User::FIELD_EMAIL, 'validDomainEmail', [
+                'rule' => 'isValidDomainEmail',
+                'message' => __('You must use a Scouting Email Address'),
+                'provider' => 'table',
+            ])
             ->requirePresence('email', 'create')
             ->notEmptyString('email')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
@@ -461,5 +466,16 @@ class UsersTable extends Table
             ]);
 
         return $searchManager;
+    }
+
+    /**
+     * @param string $value The Entity Value to be validated
+     * @param array $context The Validation Context
+     *
+     * @return bool
+     */
+    public function isValidDomainEmail($value, $context)
+    {
+        return $this->Roles->Sections->ScoutGroups->domainVerify($value);
     }
 }

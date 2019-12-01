@@ -51,7 +51,7 @@ trait ModelTestTrait
     }
 
     /**
-     * @param array $notEmptyFields Not Empty Fields Array
+     * @param string $field Not Empty Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
@@ -130,6 +130,39 @@ trait ModelTestTrait
             TestCase::assertSame('The provided value is invalid', $new->getError($maxField)['maxLength']);
             TestCase::assertFalse($table->save($new));
         }
+    }
+
+    /**
+     * @param string $field Not Empty Fields Array
+     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param callable $good The Good Generation Function
+     * @param string $validator The Validator to be tested
+     * @param string $message The Output Message Expected
+     *
+     * @return void
+     */
+    protected function validateEmail($field, $table, $good, $validator = 'default', $message = 'You must use a Scouting Email Address')
+    {
+        // Bad Email
+        $newEntityArray = call_user_func($good);
+        $newEntityArray[$field] = 'jacob@ll';
+        $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
+        TestCase::assertSame('The provided value is invalid', $new->getError($field)['email']);
+        TestCase::assertSame($message, $new->getError($field)['validDomainEmail']);
+        TestCase::assertFalse($table->save($new));
+
+        $newEntityArray = call_user_func($good);
+        $newEntityArray[$field] = 'jacob@button.com';
+        $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
+        TestCase::assertNotContains('email', $new->getErrors());
+        TestCase::assertSame($message, $new->getError($field)['validDomainEmail']);
+        TestCase::assertFalse($table->save($new));
+
+        $newEntityArray = call_user_func($good);
+        $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
+        TestCase::assertNotContains('email', $new->getErrors());
+        TestCase::assertNotContains('validDomainEmail', $new->getErrors());
+        TestCase::assertInstanceOf($table->getEntityClass(), $table->save($new));
     }
 
     /**

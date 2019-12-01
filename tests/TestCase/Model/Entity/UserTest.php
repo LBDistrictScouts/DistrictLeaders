@@ -78,7 +78,7 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        $this->User = new User;
+        $this->User = new User();
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
 
         $this->Users = TableRegistry::getTableLocator()->get('Users');
@@ -169,7 +169,7 @@ class UserTest extends TestCase
             'id' => 1
         ]);
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
-        $request = (new ServerRequest)->withAttribute('identity', $identity);
+        $request = (new ServerRequest())->withAttribute('identity', $identity);
         $response = new Response();
         $next = function ($request) {
             return $request;

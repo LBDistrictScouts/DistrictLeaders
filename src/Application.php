@@ -15,13 +15,10 @@
 namespace App;
 
 use Ajax\Middleware\AjaxMiddleware;
-
 use App\Policy\RequestPolicy;
-
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
-
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceProviderInterface;
 use Authorization\Exception\ForbiddenException;
@@ -31,7 +28,6 @@ use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
 use Authorization\Policy\ResolverCollection;
-
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -42,7 +38,6 @@ use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
