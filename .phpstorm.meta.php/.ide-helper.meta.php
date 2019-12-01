@@ -444,6 +444,13 @@ namespace PHPSTORM_META {
 		])
 	);
 
+	expectedArguments(
+		\Cake\Validation\Validator::requirePresence(),
+		1,
+		'create',
+		'update'
+	);
+
 	override(
 		\Cake\View\View::element(0),
 		map([
