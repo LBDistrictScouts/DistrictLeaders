@@ -1,6 +1,8 @@
 <?php
 namespace App\Model\Table;
 
+use App\Model\Entity\CapabilitiesRoleType;
+use App\Model\Entity\Role;
 use App\Model\Entity\RoleType;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
@@ -12,22 +14,22 @@ use Cake\Validation\Validator;
  * RoleTypes Model
  *
  * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
+ * @property \App\Model\Table\RoleTemplatesTable&\Cake\ORM\Association\BelongsTo $RoleTemplates
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
  *
- * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method RoleType get($primaryKey, $options = [])
+ * @method RoleType newEntity($data = null, array $options = [])
+ * @method RoleType[] newEntities(array $data, array $options = [])
+ * @method RoleType|false save(EntityInterface $entity, $options = [])
+ * @method RoleType saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleType[] patchEntities($entities, array $data, array $options = [])
+ * @method RoleType findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class RoleTypesTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -39,18 +41,21 @@ class RoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_types');
-        $this->setDisplayField('role_abbreviation');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(RoleType::FIELD_ROLE_ABBREVIATION);
+        $this->setPrimaryKey(RoleType::FIELD_ID);
 
         $this->belongsTo('SectionTypes', [
-            'foreignKey' => 'section_type_id'
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+        ]);
+        $this->belongsTo('RoleTemplates', [
+            'foreignKey' => RoleType::FIELD_ROLE_TEMPLATE_ID
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'role_type_id'
+            'foreignKey' => Role::FIELD_ROLE_TYPE_ID
         ]);
         $this->belongsToMany('Capabilities', [
-            'foreignKey' => 'role_type_id',
-            'targetForeignKey' => 'capability_id',
+            'foreignKey' => CapabilitiesRoleType::FIELD_ROLE_TYPE_ID,
+            'targetForeignKey' => CapabilitiesRoleType::FIELD_CAPABILITY_ID,
             'joinTable' => 'capabilities_role_types'
         ]);
     }
@@ -64,24 +69,24 @@ class RoleTypesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id');
+            ->integer(RoleType::FIELD_ID)
+            ->allowEmptyString(RoleType::FIELD_ID);
 
         $validator
-            ->scalar('role_type')
-            ->maxLength('role_type', 255)
-            ->requirePresence('role_type', 'create')
-            ->notEmptyString('role_type');
+            ->scalar(RoleType::FIELD_ROLE_TYPE)
+            ->maxLength(RoleType::FIELD_ROLE_TYPE, 255)
+            ->requirePresence(RoleType::FIELD_ROLE_TYPE, 'create')
+            ->notEmptyString(RoleType::FIELD_ROLE_TYPE);
 
         $validator
-            ->scalar('role_abbreviation')
-            ->maxLength('role_abbreviation', 32)
-            ->allowEmptyString('role_abbreviation');
+            ->scalar(RoleType::FIELD_ROLE_ABBREVIATION)
+            ->maxLength(RoleType::FIELD_ROLE_ABBREVIATION, 32)
+            ->allowEmptyString(RoleType::FIELD_ROLE_ABBREVIATION);
 
         $validator
-            ->integer('level')
-            ->requirePresence('level', 'create')
-            ->notEmptyString('level');
+            ->integer(RoleType::FIELD_LEVEL)
+            ->requirePresence(RoleType::FIELD_LEVEL, 'create')
+            ->notEmptyString(RoleType::FIELD_LEVEL);
 
         return $validator;
     }
@@ -95,9 +100,10 @@ class RoleTypesTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));
-        $rules->add($rules->isUnique(['role_type']));
-        $rules->add($rules->isUnique(['role_abbreviation']));
+        $rules->add($rules->existsIn([RoleType::FIELD_SECTION_TYPE_ID], 'SectionTypes'));
+        $rules->add($rules->existsIn([RoleType::FIELD_ROLE_TEMPLATE_ID], 'RoleTemplates'));
+        $rules->add($rules->isUnique([RoleType::FIELD_ROLE_TYPE]));
+        $rules->add($rules->isUnique([RoleType::FIELD_ROLE_ABBREVIATION]));
 
         return $rules;
     }

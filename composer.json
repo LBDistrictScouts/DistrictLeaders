@@ -33,15 +33,16 @@
         "twilio/sdk": "^5.34"
     },
     "require-dev": {
-        "cakephp/bake": "^1.9.0",
-        "cakephp/cakephp-codesniffer": "^3.0",
-        "cakephp/debug_kit": "^3.17.0",
+        "cakephp/bake": "@stable",
+        "cakephp/cakephp-codesniffer": "@stable",
+        "cakephp/debug_kit": "@stable",
         "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
-        "phpunit/php-code-coverage": "^5.3",
+        "phpunit/php-code-coverage": "@stable",
         "phpunit/phpunit": "^5|^6",
-        "psy/psysh": "@stable"
+        "psy/psysh": "@stable",
+        "phpmd/phpmd" : "@stable"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."

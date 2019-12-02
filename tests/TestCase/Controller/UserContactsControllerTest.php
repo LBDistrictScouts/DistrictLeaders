@@ -25,6 +25,7 @@ class UserContactsControllerTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -32,6 +33,16 @@ class UserContactsControllerTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
     ];
 
     /**
@@ -43,7 +54,7 @@ class UserContactsControllerTest extends TestCase
      * @var array $validEntityData Valid creation Data.
      */
     private $validEntityData = [
-        'contact_field' => 'james@mushroom.com',
+        'contact_field' => 'james@4thgoat.org.uk',
         'user_id' => 2,
         'user_contact_type_id' => 1,
     ];

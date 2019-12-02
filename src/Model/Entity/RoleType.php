@@ -11,14 +11,15 @@ use Cake\ORM\Entity;
  * @property string|null $role_abbreviation
  * @property int|null $section_type_id
  * @property int $level
+ * @property int|null $role_template_id
  *
  * @property \App\Model\Entity\SectionType|null $section_type
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\Capability[] $capabilities
+ * @property \App\Model\Entity\RoleTemplate|null $role_template
  */
 class RoleType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -32,10 +33,11 @@ class RoleType extends Entity
         'role_type' => true,
         'role_abbreviation' => true,
         'section_type_id' => true,
+        'level' => true,
+        'role_template_id' => true,
         'section_type' => true,
         'roles' => true,
-        'level' => true,
-        'capabilities' => true,
+        'capabilities' => true
     ];
 
     public const FIELD_ID = 'id';
@@ -46,4 +48,6 @@ class RoleType extends Entity
     public const FIELD_SECTION_TYPE = 'section_type';
     public const FIELD_ROLES = 'roles';
     public const FIELD_CAPABILITIES = 'capabilities';
+    public const FIELD_ROLE_TEMPLATE_ID = 'role_template_id';
+    public const FIELD_ROLE_TEMPLATE = 'role_template';
 }

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "411b4c95bc02e05a98e0aaba98767960",
+    "content-hash": "9c6375b7031460f90b9700755ca7fb09",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -225,16 +225,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.123.0",
+            "version": "3.124.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "3bf671629a3b2a5a5694f8dfee15686e586b33b6"
+                "reference": "6a8e621ac13b89a2cac8e36e7a1f29d396fba971"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/3bf671629a3b2a5a5694f8dfee15686e586b33b6",
-                "reference": "3bf671629a3b2a5a5694f8dfee15686e586b33b6",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/6a8e621ac13b89a2cac8e36e7a1f29d396fba971",
+                "reference": "6a8e621ac13b89a2cac8e36e7a1f29d396fba971",
                 "shasum": ""
             },
             "require": {
@@ -304,7 +304,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2019-11-26T19:08:40+00:00"
+            "time": "2019-12-02T08:26:20+00:00"
         },
         {
             "name": "cakephp/authentication",
@@ -4419,16 +4419,16 @@
         },
         {
             "name": "dereuromark/cakephp-ide-helper",
-            "version": "0.14.0",
+            "version": "0.14.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-ide-helper.git",
-                "reference": "b32c3d9e2a84ddff057b085b9c9d01bc47d8dcd2"
+                "reference": "721846a60e04d3f73cfa65804abd6712b79b86c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/b32c3d9e2a84ddff057b085b9c9d01bc47d8dcd2",
-                "reference": "b32c3d9e2a84ddff057b085b9c9d01bc47d8dcd2",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-ide-helper/zipball/721846a60e04d3f73cfa65804abd6712b79b86c7",
+                "reference": "721846a60e04d3f73cfa65804abd6712b79b86c7",
                 "shasum": ""
             },
             "require": {
@@ -4443,7 +4443,7 @@
                 "dereuromark/cakephp-tools": "^1.9.0",
                 "fig-r/psr2r-sniffer": "dev-master",
                 "phpunit/phpunit": "^5.7.14|^6.0",
-                "squizlabs/php_codesniffer": "^3.4.2"
+                "squizlabs/php_codesniffer": "^3.5.2"
             },
             "type": "cakephp-plugin",
             "autoload": {
@@ -4479,7 +4479,7 @@
                 "phpstorm",
                 "plugin"
             ],
-            "time": "2019-10-30T16:51:39+00:00"
+            "time": "2019-11-29T00:36:59+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -5114,6 +5114,46 @@
             "time": "2019-11-08T13:50:10+00:00"
         },
         {
+            "name": "pdepend/pdepend",
+            "version": "2.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pdepend/pdepend.git",
+                "reference": "9daf26d0368d4a12bed1cacae1a9f3a6f0adf239"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/9daf26d0368d4a12bed1cacae1a9f3a6f0adf239",
+                "reference": "9daf26d0368d4a12bed1cacae1a9f3a6f0adf239",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.7",
+                "symfony/config": "^2.3.0|^3|^4",
+                "symfony/dependency-injection": "^2.3.0|^3|^4",
+                "symfony/filesystem": "^2.3.0|^3|^4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8|^5.7",
+                "squizlabs/php_codesniffer": "^2.0.0"
+            },
+            "bin": [
+                "src/bin/pdepend"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PDepend\\": "src/main/php/PDepend"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Official version of pdepend to be handled with Composer",
+            "time": "2017-12-13T13:21:38+00:00"
+        },
+        {
             "name": "phan/phan",
             "version": "2.4.4",
             "source": {
@@ -5437,6 +5477,74 @@
             ],
             "description": "A PSR-5 based resolver of Class names, Types and Structural Element Names",
             "time": "2019-08-22T18:11:29+00:00"
+        },
+        {
+            "name": "phpmd/phpmd",
+            "version": "2.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpmd/phpmd.git",
+                "reference": "a05a999c644f4bc9a204846017db7bb7809fbe4c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/a05a999c644f4bc9a204846017db7bb7809fbe4c",
+                "reference": "a05a999c644f4bc9a204846017db7bb7809fbe4c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-xml": "*",
+                "pdepend/pdepend": "^2.5",
+                "php": ">=5.3.9"
+            },
+            "require-dev": {
+                "gregwar/rst": "^1.0",
+                "mikey179/vfsstream": "^1.6.4",
+                "phpunit/phpunit": "^4.8.36 || ^5.7.27",
+                "squizlabs/php_codesniffer": "^2.0"
+            },
+            "bin": [
+                "src/bin/phpmd"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "PHPMD\\": "src/main/php"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Manuel Pichler",
+                    "email": "github@manuel-pichler.de",
+                    "homepage": "https://github.com/manuelpichler",
+                    "role": "Project Founder"
+                },
+                {
+                    "name": "Marc Würth",
+                    "email": "ravage@bluewin.ch",
+                    "homepage": "https://github.com/ravage84",
+                    "role": "Project Maintainer"
+                },
+                {
+                    "name": "Other contributors",
+                    "homepage": "https://github.com/phpmd/phpmd/graphs/contributors",
+                    "role": "Contributors"
+                }
+            ],
+            "description": "PHPMD is a spin-off project of PHP Depend and aims to be a PHP equivalent of the well known Java tool PMD.",
+            "homepage": "https://phpmd.org/",
+            "keywords": [
+                "mess detection",
+                "mess detector",
+                "pdepend",
+                "phpmd",
+                "pmd"
+            ],
+            "time": "2019-07-30T21:13:32+00:00"
         },
         {
             "name": "phpspec/prophecy",
@@ -6680,6 +6788,79 @@
             "time": "2019-10-28T04:36:32+00:00"
         },
         {
+            "name": "symfony/dependency-injection",
+            "version": "v4.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/dependency-injection.git",
+                "reference": "ad46a4def1325befab696b49c839dffea3fc92bd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/ad46a4def1325befab696b49c839dffea3fc92bd",
+                "reference": "ad46a4def1325befab696b49c839dffea3fc92bd",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "psr/container": "^1.0",
+                "symfony/service-contracts": "^1.1.6|^2"
+            },
+            "conflict": {
+                "symfony/config": "<4.3|>=5.0",
+                "symfony/finder": "<3.4",
+                "symfony/proxy-manager-bridge": "<3.4",
+                "symfony/yaml": "<3.4"
+            },
+            "provide": {
+                "psr/container-implementation": "1.0",
+                "symfony/service-implementation": "1.0"
+            },
+            "require-dev": {
+                "symfony/config": "^4.3",
+                "symfony/expression-language": "^3.4|^4.0|^5.0",
+                "symfony/yaml": "^3.4|^4.0|^5.0"
+            },
+            "suggest": {
+                "symfony/config": "",
+                "symfony/expression-language": "For using expressions in service container configuration",
+                "symfony/finder": "For using double-star glob patterns or when GLOB_BRACE portability is required",
+                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.4-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\DependencyInjection\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony DependencyInjection Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-12-01T10:19:36+00:00"
+        },
+        {
             "name": "symfony/finder",
             "version": "v4.4.1",
             "source": {
@@ -6944,8 +7125,13 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "cakephp/bake": 0,
+        "cakephp/cakephp-codesniffer": 0,
+        "cakephp/debug_kit": 0,
         "dereuromark/cakephp-ide-helper": 0,
-        "psy/psysh": 0
+        "phpunit/php-code-coverage": 0,
+        "psy/psysh": 0,
+        "phpmd/phpmd": 0
     },
     "prefer-stable": true,
     "prefer-lowest": false,

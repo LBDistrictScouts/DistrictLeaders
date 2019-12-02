@@ -51,8 +51,8 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('full_name');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(User::FIELD_FULL_NAME);
+        $this->setPrimaryKey(User::FIELD_ID);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
@@ -122,6 +122,8 @@ class UsersTable extends Table
      * @param TableSchema $schema The Schema to be modified
      *
      * @return TableSchema|\Cake\Database\Schema\TableSchema
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchema $schema)
     {
@@ -139,8 +141,8 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', 'An ID must be set.', 'create');
+            ->integer(User::FIELD_ID)
+            ->allowEmptyString(User::FIELD_ID, 'An ID must be set.', 'create');
 
         $validator
             ->scalar('username')
@@ -244,6 +246,9 @@ class UsersTable extends Table
      * @param User $user UserEntity
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function retrieveAllCapabilities(User $user)
     {
@@ -406,6 +411,8 @@ class UsersTable extends Table
      * @param array $options The Options passed
      *
      * @return Query
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function findAuth(Query $query, array $options)
     {
@@ -423,6 +430,8 @@ class UsersTable extends Table
      * @param array $options Options Values
      *
      * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeSave($event, $entity, $options)
     {
@@ -473,6 +482,8 @@ class UsersTable extends Table
      * @param array $context The Validation Context
      *
      * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function isValidDomainEmail($value, $context)
     {

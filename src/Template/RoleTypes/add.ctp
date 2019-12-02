@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\RoleType $roleType
+ * @var mixed $capabilities
  * @var mixed $sectionTypes
  */
 ?>
@@ -13,6 +14,8 @@
         <li><?= $this->Html->link(__('New Section Type'), ['controller' => 'SectionTypes', 'action' => 'add']) ?></li>
         <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
+        <li><?= $this->Html->link(__('List Capabilities'), ['controller' => 'Capabilities', 'action' => 'index']) ?></li>
+        <li><?= $this->Html->link(__('New Capability'), ['controller' => 'Capabilities', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="roleTypes form large-9 medium-8 columns content">
@@ -22,8 +25,10 @@
         <?php
             echo $this->Form->control('role_type');
             echo $this->Form->control('role_abbreviation');
-            echo $this->Form->control('level');
             echo $this->Form->control('section_type_id', ['options' => $sectionTypes, 'empty' => true]);
+            echo $this->Form->control('level');
+            echo $this->Form->control('role_template_id');
+            echo $this->Form->control('capabilities._ids', ['options' => $capabilities]);
         ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')) ?>

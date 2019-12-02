@@ -189,7 +189,7 @@
                                         <td><?= h($audit->original_value) ?></td>
                                         <td><?= h($audit->modified_value) ?></td>
                                         <td><?= $audit->has('user') ? $this->Html->link($audit->user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
-                                        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+                                        <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy HH:mm') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -221,7 +221,7 @@
                                         <td><?= $this->Inflection->space($audit->audit_field) ?></td>
                                         <td><?= h($audit->original_value) ?></td>
                                         <td><?= h($audit->modified_value) ?></td>
-                                        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+                                        <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy HH:mm') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>

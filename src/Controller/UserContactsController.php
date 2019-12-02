@@ -85,7 +85,20 @@ class UserContactsController extends AppController
         }
 
         if ($this->request->is('post')) {
-            $userContact = $this->UserContacts->patchEntity($userContact, $this->request->getData());
+            $data = $this->request->getData();
+            if (!key_exists(UserContact::FIELD_USER_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_ID))) {
+                $data[UserContact::FIELD_USER_ID] = $userContact->get(UserContact::FIELD_USER_ID);
+            }
+            if (!key_exists(UserContact::FIELD_USER_CONTACT_TYPE_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID))) {
+                $data[UserContact::FIELD_USER_CONTACT_TYPE_ID] = $userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID);
+            }
+
+            $validator = 'default';
+            if (isset($contactType) && $contactType == 'email') {
+                $validator = $contactType;
+            }
+
+            $userContact = $this->UserContacts->patchEntity($userContact, $data, ['validate' => $validator]);
             if ($this->UserContacts->save($userContact)) {
                 $this->Flash->success(__('The user contact has been saved.'));
 

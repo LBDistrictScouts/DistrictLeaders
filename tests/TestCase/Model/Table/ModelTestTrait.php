@@ -206,10 +206,11 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param \Cake\ORM\Table $association The Associated Table to be tested
      * @param callable $good The Good Generation Function
+     * @param array|null $options Options Array for Save Entity
      *
      * @return void
      */
-    protected function validateExistsRule($field, $table, $association, $good)
+    protected function validateExistsRule($field, $table, $association, $good, $options = [])
     {
         $values = call_user_func($good);
         $instance = $table->getEntityClass();
@@ -219,13 +220,15 @@ trait ModelTestTrait
         $fKey = max(array_keys($types));
 
         $values[$field] = $fKey;
-        $new = $table->newEntity($values);
+        $new = $table->newEntity($values, $options);
         TestCase::assertInstanceOf($instance, $table->save($new));
 
         $values = call_user_func($good);
+        $types = $association->find('list')->toArray();
+        $fKey = max(array_keys($types));
 
         $values[$field] = $fKey + 1;
-        $new = $table->newEntity($values);
+        $new = $table->newEntity($values, $options);
         TestCase::assertFalse($table->save($new));
     }
 
@@ -264,10 +267,15 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table being Validated
      * @param integer $count Number of Items Expected
      * @param array|null $dates Date Fields to be omitted
+     * @param int|array|null $get The Get Value
      */
-    protected function validateInitialise($expected, $table, $count, $dates = null)
+    protected function validateInitialise($expected, $table, $count, $dates = null, $get = 1)
     {
-        $actual = $table->get(1)->toArray();
+        if (is_array($get)) {
+            $actual = $table->find('all')->where($get)->first()->toArray();
+        } else {
+            $actual = $table->get($get)->toArray();
+        }
 
         if (!is_null($dates)) {
             foreach ($dates as $date) {

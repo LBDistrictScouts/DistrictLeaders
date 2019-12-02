@@ -28,19 +28,20 @@ class UserContactsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.UserContacts',
-        'app.UserContactTypes',
         'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
-        'app.Capabilities',
-        'app.CapabilitiesRoleTypes',
     ];
 
     /**
@@ -126,8 +127,6 @@ class UserContactsTableTest extends TestCase
 
         $required = [
             UserContact::FIELD_CONTACT_FIELD,
-            UserContact::FIELD_USER_ID,
-            UserContact::FIELD_USER_CONTACT_TYPE_ID,
         ];
         $this->validateRequired($required, $this->UserContacts, [$this, 'getGood']);
 

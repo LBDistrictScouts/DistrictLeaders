@@ -1,16 +1,17 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\DocumentsController;
-use App\Model\Entity\Document;
+use App\Controller\RoleTemplatesController;
+use App\Model\Entity\RoleTemplate;
+use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\DocumentsController Test Case
+ * App\Controller\RoleTemplatesController Test Case
  *
- * @uses \App\Controller\DocumentsController
+ * @uses \App\Controller\RoleTemplatesController
  */
-class DocumentsControllerTest extends TestCase
+class RoleTemplatesControllerTest extends TestCase
 {
     use AppTestTrait;
 
@@ -38,31 +39,12 @@ class DocumentsControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
     ];
 
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Documents';
-
-    /**
-     * @var array $validEntityData Valid creation Data.
-     */
-    private $validEntityData = [
-        Document::FIELD_DOCUMENT => 'My new document',
-        Document::FIELD_DOCUMENT_TYPE_ID => 1,
-    ];
+    private $controller = 'RoleTemplates';
 
     /**
      * Test index method
@@ -95,7 +77,11 @@ class DocumentsControllerTest extends TestCase
 
         $this->tryAddPost(
             $this->controller,
-            $this->validEntityData,
+            [
+                RoleTemplate::FIELD_ROLE_TEMPLATE => 'NEW TEMPLATE',
+                RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => ['ALL'],
+                RoleTemplate::FIELD_INDICATIVE_LEVEL => 2,
+            ],
             2
         );
     }
@@ -111,7 +97,11 @@ class DocumentsControllerTest extends TestCase
 
         $this->tryEditPost(
             $this->controller,
-            $this->validEntityData,
+            [
+                RoleTemplate::FIELD_ROLE_TEMPLATE => 'CHANGED TEMPLATE',
+                RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => ['ALL'],
+                RoleTemplate::FIELD_INDICATIVE_LEVEL => 2,
+            ],
             1
         );
     }
@@ -125,7 +115,11 @@ class DocumentsControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            $this->validEntityData,
+            [
+                RoleTemplate::FIELD_ROLE_TEMPLATE => 'NEW TEMPLATE',
+                RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => ['ALL'],
+                RoleTemplate::FIELD_INDICATIVE_LEVEL => 2,
+            ],
             2
         );
     }
