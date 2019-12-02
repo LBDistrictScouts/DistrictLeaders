@@ -10,104 +10,68 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\TokensTable $Tokens
  *
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {
     /**
-     * Index method
+     * @throws \Exception
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function initialize()
     {
-        $this->paginate = [
-            'contain' => ['EmailSends']
-        ];
-        $tokens = $this->paginate($this->Tokens);
+        parent::initialize();
 
-        $this->set(compact('tokens'));
+        $this->Authentication->allowUnauthenticated(['validate']);
     }
 
     /**
-     * View method
+     * Validation of a Token
      *
-     * @param string|null $id Token id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null)
-    {
-        $token = $this->Tokens->get($id, [
-            'contain' => ['EmailSends']
-        ]);
-
-        $this->set('token', $token);
-    }
-
-    /**
-     * Add method
+     * @param string $token The Token for deciphering.
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null
      */
-    public function add()
+    public function validate($token = null)
     {
-        $token = $this->Tokens->newEntity();
-        if ($this->request->is('post')) {
-            $token = $this->Tokens->patchEntity($token, $this->request->getData());
-            if ($this->Tokens->save($token)) {
-                $this->Flash->success(__('The token has been saved.'));
+        // Kick if no Token
+        if (is_null($token)) {
+            return $this->redirect($this->referer('/'));
+        }
 
-                return $this->redirect(['action' => 'view', $token->get('id')]);
+        // Validate Token
+        $validated = $this->Tokens->validateToken($token);
+
+        if (!is_numeric($validated) || (!$validated && is_bool($validated))) {
+            $this->Flash->error('This Token is Invalid');
+
+            return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+        }
+
+        if (is_numeric($validated)) {
+            $tokenRow = $this->Tokens->get($validated, ['contain' => 'EmailSends']);
+            $header = $tokenRow->get('token_header');
+
+            if (key_exists('authenticate', $header) && $header['authenticate']) {
+                $transactor = $this->Tokens->EmailSends->Users->get($tokenRow->email_send->user_id);
+                $this->Authentication->setIdentity($transactor);
             }
-            $this->Flash->error(__('The token could not be saved. Please, try again.'));
-        }
-        $emailSends = $this->Tokens->EmailSends->find('list', ['limit' => 200]);
-        $this->set(compact('token', 'emailSends'));
-    }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Token id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function edit($id = null)
-    {
-        $token = $this->Tokens->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $token = $this->Tokens->patchEntity($token, $this->request->getData());
-            if ($this->Tokens->save($token)) {
-                $this->Flash->success(__('The token has been saved.'));
+            if (key_exists('redirect', $header)) {
+                $location = $header['redirect'];
+                $tokenReData = [
+                    '?' => [
+                        'token_id' => $validated,
+                        'token' => urldecode($token),
+                    ]
+                ];
+                $redirect = array_merge($location, $tokenReData);
 
-                return $this->redirect(['action' => 'view', $token->get('id')]);
+                return $this->redirect($redirect);
             }
-            $this->Flash->error(__('The token could not be saved. Please, try again.'));
-        }
-        $emailSends = $this->Tokens->EmailSends->find('list', ['limit' => 200]);
-        $this->set(compact('token', 'emailSends'));
-    }
-
-    /**
-     * Delete method
-     *
-     * @param string|null $id Token id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null)
-    {
-        $this->request->allowMethod(['post', 'delete']);
-        $token = $this->Tokens->get($id);
-        if ($this->Tokens->delete($token)) {
-            $this->Flash->success(__('The token has been deleted.'));
-        } else {
-            $this->Flash->error(__('The token could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
     }
 }

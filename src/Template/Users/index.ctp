@@ -3,13 +3,20 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
  */
+use App\Model\Entity\User;
+
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
+ * @var \App\Model\Entity\User $authUser
+ */
+
+$authUser = $this->request->getAttribute('identity');
 
 $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'Users');
 $this->assign('subset', 'All');
-
-Use App\Model\Entity\User;
 
 ?>
 
@@ -28,14 +35,14 @@ Use App\Model\Entity\User;
     <tr>
         <td><?= h($user->full_name) ?></td>
         <td class="actions">
-		    <?= $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $user->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
+		    <?= $authUser->checkCapability('DIRECTORY') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $user->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
 		    <?= $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $user->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
 		    <?= $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
         </td>
         <td><?= $this->Number->format($user->membership_number, ['pattern' => '#######']) ?></td>
-        <td><?= $this->Time->format($user->created,'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->format($user->modified,'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->format($user->last_login,'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->created, 'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->modified, 'dd-MMM-yy HH:mm') ?></td>
+        <td><?= $this->Time->format($user->last_login, 'dd-MMM-yy HH:mm') ?></td>
 
     </tr>
     <?php endforeach; ?>

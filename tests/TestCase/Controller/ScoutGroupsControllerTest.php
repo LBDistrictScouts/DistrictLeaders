@@ -24,6 +24,7 @@ class ScoutGroupsControllerTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -87,7 +88,7 @@ class ScoutGroupsControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 
@@ -121,7 +122,7 @@ class ScoutGroupsControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 }

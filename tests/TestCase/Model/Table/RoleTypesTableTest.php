@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
@@ -12,6 +13,7 @@ use Cake\Utility\Security;
  */
 class RoleTypesTableTest extends TestCase
 {
+    use ModelTestTrait;
 
     /**
      * Test subject
@@ -26,8 +28,20 @@ class RoleTypesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.RoleTypes',
+        'app.PasswordStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
     ];
 
     /**
@@ -61,16 +75,14 @@ class RoleTypesTableTest extends TestCase
      *
      * @throws
      */
-    private function getGood()
+    public function getGood()
     {
-        $good = [
-            'role_type' => 'My Role ' . random_int(1, 999) . random_int(1, 99),
-            'role_abbreviation' => 'Go Go' . random_int(1, 999) . random_int(1, 99),
-            'section_type_id' => 1,
-            'level' => 1,
+        return [
+            RoleType::FIELD_ROLE_TYPE => 'My Role ' . random_int(1, 999) . random_int(1, 99),
+            RoleType::FIELD_ROLE_ABBREVIATION => 'Go Go' . random_int(1, 999) . random_int(1, 99),
+            RoleType::FIELD_SECTION_TYPE_ID => 1,
+            RoleType::FIELD_LEVEL => 1,
         ];
-
-        return $good;
     }
 
     /**
@@ -80,19 +92,16 @@ class RoleTypesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->RoleTypes->get(1)->toArray();
-
         $expected = [
-            'id' => 1,
-            'role_type' => 'Lorem ipsum dolor sit amet',
-            'role_abbreviation' => 'Lorem ipsum dolor sit amet',
-            'section_type_id' => 1,
-            'level' => 1,
+            RoleType::FIELD_ID => 1,
+            RoleType::FIELD_ROLE_TYPE => 'Lorem ipsum dolor sit amet',
+            RoleType::FIELD_ROLE_ABBREVIATION => 'Lorem ipsum dolor sit amet',
+            RoleType::FIELD_SECTION_TYPE_ID => 1,
+            RoleType::FIELD_LEVEL => 1,
+            RoleType::FIELD_ROLE_TEMPLATE_ID => 1,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->RoleTypes->find('all')->count();
-        TestCase::assertEquals(7, $count);
+        $this->validateInitialise($expected, $this->RoleTypes, 7);
     }
 
     /**
@@ -108,71 +117,37 @@ class RoleTypesTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
 
         $required = [
-            'role_type',
-            'level',
+            RoleType::FIELD_ROLE_TYPE,
+            RoleType::FIELD_LEVEL,
         ];
 
-        foreach ($required as $require) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$require]);
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->RoleTypes->save($new));
-        }
+        $this->validateRequired($required, $this->RoleTypes, [$this, 'getGood']);
 
         $notRequired = [
-            'role_abbreviation',
+            RoleType::FIELD_ROLE_ABBREVIATION,
         ];
 
-        foreach ($notRequired as $not_required) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$not_required]);
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-        }
+        $this->validateNotRequired($notRequired, $this->RoleTypes, [$this, 'getGood']);
 
         $empties = [
-            'role_abbreviation',
+            RoleType::FIELD_ROLE_ABBREVIATION,
         ];
 
-        foreach ($empties as $empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$empty] = '';
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-        }
+        $this->validateEmpties($empties, $this->RoleTypes, [$this, 'getGood']);
 
         $notEmpties = [
-            'role_type',
-            'level',
+            RoleType::FIELD_ROLE_TYPE,
+            RoleType::FIELD_LEVEL,
         ];
 
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$not_empty] = '';
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->RoleTypes->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->RoleTypes, [$this, 'getGood']);
 
         $maxLengths = [
-            'role_type' => 255,
-            'role_abbreviation' => 32,
+            RoleType::FIELD_ROLE_TYPE => 255,
+            RoleType::FIELD_ROLE_ABBREVIATION => 32,
         ];
 
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->RoleTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->RoleTypes->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->RoleTypes, [$this, 'getGood']);
     }
 
     /**
@@ -182,44 +157,16 @@ class RoleTypesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        // Role Type
-        $values = $this->getGood();
+        $foreignKeys = [
+            RoleType::FIELD_SECTION_TYPE_ID => $this->RoleTypes->SectionTypes,
+            RoleType::FIELD_ROLE_TEMPLATE_ID => $this->RoleTypes->RoleTemplates
+        ];
+        $this->validateExistsRules($foreignKeys, $this->RoleTypes, [$this, 'getGood']);
 
-        $existing = $this->RoleTypes->get(1)->toArray();
-
-        $values['role_type'] = 'My new Role Type';
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-
-        $values['role_type'] = $existing['role_type'];
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertFalse($this->RoleTypes->save($new));
-
-        // Abbreviation
-        $values = $this->getGood();
-
-        $existing = $this->RoleTypes->get(1)->toArray();
-
-        $values['role_abbreviation'] = 'My new Role Abbr';
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-
-        $values['role_abbreviation'] = $existing['role_abbreviation'];
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertFalse($this->RoleTypes->save($new));
-
-        // Users
-        $values = $this->getGood();
-        $users = $this->RoleTypes->SectionTypes->find('list')->toArray();
-
-        $user = max(array_keys($users));
-
-        $values['section_type_id'] = $user;
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\RoleType', $this->RoleTypes->save($new));
-
-        $values['section_type_id'] = $user + 1;
-        $new = $this->RoleTypes->newEntity($values);
-        TestCase::assertFalse($this->RoleTypes->save($new));
+        $uniques = [
+            RoleType::FIELD_ROLE_ABBREVIATION,
+            RoleType::FIELD_ROLE_TYPE,
+        ];
+        $this->validateUniqueRules($uniques, $this->RoleTypes, [$this, 'getGood']);
     }
 }

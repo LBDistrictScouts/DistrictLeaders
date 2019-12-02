@@ -265,6 +265,12 @@ return [
         'error' => [
             'className' => 'DatabaseLog.Database'
         ],
+        'queue' => [
+            'className' => 'DatabaseLog.Database',
+            'type' => 'queue',
+            'levels' => ['info'],
+            'scopes' => ['queue'],
+        ],
         // To enable this dedicated query log, you need set your datasource's log flag to true
         'queries' => [
             'className' => 'Cake\Log\Engine\FileLog',
@@ -334,12 +340,6 @@ return [
         'preemptive' => true,
     ],
 
-    'Xety/Cake3CookieAuth.Cookie' => [
-        'cookie' => [
-            'name' => 'CookieAuth'
-        ]
-    ],
-
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
     ],
@@ -348,5 +348,20 @@ return [
         'lifetime' => '3 days', // Default value
         'length' => 32, // Default value
         'table' => 'tokenize_tokens', // Default value
+    ],
+
+    'SparkPost' => [
+        'Api' => [
+            'key' => '__API_KEY__'
+        ]
+    ],
+
+    'defaultAdmin' => [
+        'username' => 'admin',
+        'email' => 'webmaster@4thgoat.org.uk',
+        'first_name' => 'Admin',
+        'last_name' => 'MrFace',
+        'membership_number' => 000123,
+        'postcode' => 'POS COD',
     ],
 ];

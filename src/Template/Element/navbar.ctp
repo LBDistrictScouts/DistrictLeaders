@@ -6,7 +6,7 @@
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <?= $this->Html->link('Leaders', ['controller' => 'Pages', 'action' => 'display', 'home'], ['class' => 'navbar-brand'])  ?>
+    <?= $this->Html->link('Leaders', ['controller' => 'Pages', 'plugin' => false, 'prefix' => false, 'action' => 'display', 'home'], ['class' => 'navbar-brand'])  ?>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nToggle" aria-controls="nToggle" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -20,13 +20,21 @@
         $identity = $this->getRequest()->getAttribute('identity');
 
         if ($result->isValid()) : ?>
-            <?php
-            echo $this->cell('NavBar', [$identity->get('id')], [
+            <?= $this->cell('NavBar', [$identity->get('id')], [
                 'cache' => [
                     'config' => 'cell_cache',
                     'key' => 'nav_' . $identity->get('id')
                 ]
-            ]); ?>
+            ]) ?>
+            <ul class="navbar-nav move-right mt-2 mt-lg-0">
+                <?= $this->cell('Notify', [$identity->get('id')]) ?>
+                <?= $this->cell('Profile', [$identity->get('id')], [
+                    'cache' => [
+                        'config' => 'cell_cache',
+                        'key' => 'profile_' . $identity->get('id')
+                    ]
+                ]) ?>
+            </ul>
         <?php else: ?>
             <ul class="navbar-nav">
                 <li class="nav-item">

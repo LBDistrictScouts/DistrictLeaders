@@ -43,25 +43,59 @@ class InflectionHelperTest extends TestCase
     }
 
     /**
-     * Test initial setup
+     * Provide data for Space Test
      *
-     * @return void
+     * @return array
      */
-    public function testSpace()
+    public function provideSpaceData()
     {
-        TestCase::assertEquals('Scout Group', $this->Inflection->space('ScoutGroup'));
-        TestCase::assertEquals('Scout Groups', $this->Inflection->space('ScoutGroups'));
+        return [
+            ['Scout Group', 'ScoutGroup'],
+            ['Scout Groups', 'ScoutGroups'],
+        ];
     }
 
     /**
      * Test initial setup
      *
+     * @param string $expected The Value Expected
+     * @param string $provided The Value Provided
+     *
+     * @dataProvider provideSpaceData
+     *
      * @return void
      */
-    public function testSinglulariseSpace()
+    public function testSpace($expected, $provided)
     {
-        TestCase::assertEquals('Scout Group', $this->Inflection->singleSpace('ScoutGroups'));
-        TestCase::assertEquals('Group', $this->Inflection->singleSpace('Groups'));
-        TestCase::assertEquals('User Name', $this->Inflection->singleSpace('User_names'));
+        TestCase::assertEquals($expected, $this->Inflection->space($provided));
+    }
+
+    /**
+     * Provide data for Space Test
+     *
+     * @return array
+     */
+    public function provideSpaceSingluarData()
+    {
+        return [
+            ['Scout Group', 'ScoutGroups'],
+            ['Group', 'Groups'],
+            ['User Name', 'User_names'],
+        ];
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @param string $expected The Value Expected
+     * @param string $provided The Value Provided
+     *
+     * @dataProvider provideSpaceSingluarData
+     *
+     * @return void
+     */
+    public function testSinglulariseSpace($expected, $provided)
+    {
+        TestCase::assertEquals($expected, $this->Inflection->singleSpace($provided));
     }
 }

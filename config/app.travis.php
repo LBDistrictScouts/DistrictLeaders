@@ -194,7 +194,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL,
+        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -271,6 +271,12 @@ return [
             'file' => 'error',
             'url' => env('LOG_ERROR_URL', null),
         ],
+        'queue' => [
+            'className' => 'DatabaseLog.Database',
+            'type' => 'queue',
+            'levels' => ['info'],
+            'scopes' => ['queue'],
+        ],
         // To enable this dedicated query log, you need set your datasource's log flag to true
         'queries' => [
             'className' => 'Cake\Log\Engine\FileLog',
@@ -329,13 +335,22 @@ return [
         ]
     ],
 
-    'Xety/Cake3CookieAuth.Cookie' => [
-        'cookie' => [
-            'name' => 'CookieAuth'
+    'SparkPost' => [
+        'Api' => [
+            'key' => ''
         ]
     ],
 
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
+    ],
+
+    'defaultAdmin' => [
+        'username' => 'admin',
+        'email' => 'webmaster@4thgoat.org.uk',
+        'first_name' => 'Admin',
+        'last_name' => 'MrFace',
+        'membership_number' => 000123,
+        'postcode' => 'POS COD',
     ],
 ];

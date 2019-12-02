@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\NotificationType;
 use App\Model\Table\NotificationTypesTable;
 use App\Utility\TextSafe;
 use Cake\ORM\TableRegistry;
@@ -12,6 +13,8 @@ use Cake\Utility\Security;
  */
 class NotificationTypesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -61,14 +64,12 @@ class NotificationTypesTableTest extends TestCase
      */
     private function getGood()
     {
-        $good = [
-            'notification_type' => 'Notification ' . random_int(11111, 99999) . ' dolor ' . random_int(11111, 99999) . ' amet',
-            'notification_description' => 'Balance Outstanding on Invoice',
-            'icon' => 'fa-clock',
-            'type_code' => TextSafe::shuffle(3) . '-' . TextSafe::shuffle(3),
+        return [
+            NotificationType::FIELD_NOTIFICATION_TYPE => 'Notification ' . random_int(11111, 99999) . ' dolor ' . random_int(11111, 99999) . ' amet',
+            NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 'Balance Outstanding on Invoice',
+            NotificationType::FIELD_ICON => 'fa-clock',
+            NotificationType::FIELD_TYPE_CODE => TextSafe::shuffle(3) . '-' . TextSafe::shuffle(3),
         ];
-
-        return $good;
     }
 
     /**
@@ -78,19 +79,15 @@ class NotificationTypesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->NotificationTypes->get(1)->toArray();
-
         $expected = [
-            'id' => 1,
-            'notification_type' => 'Generic',
-            'notification_description' => 'Generic Notification.',
-            'icon' => 'fa-envelope',
-            'type_code' => 'GEN-NOT',
+            NotificationType::FIELD_ID => 1,
+            NotificationType::FIELD_NOTIFICATION_TYPE => 'Generic',
+            NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 'Generic Notification.',
+            NotificationType::FIELD_ICON => 'fa-envelope',
+            NotificationType::FIELD_TYPE_CODE => 'GEN-NOT',
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->NotificationTypes->find('all')->count();
-        TestCase::assertEquals(7, $count);
+        $this->validateInitialise($expected, $this->NotificationTypes, 7);
     }
 
     /**
@@ -106,42 +103,22 @@ class NotificationTypesTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\NotificationType', $this->NotificationTypes->save($new));
 
         $required = [
-            'notification_type',
-            'icon',
-            'notification_description',
-            'type_code',
+            NotificationType::FIELD_NOTIFICATION_TYPE,
+            NotificationType::FIELD_ICON,
+            NotificationType::FIELD_NOTIFICATION_DESCRIPTION,
+            NotificationType::FIELD_TYPE_CODE,
         ];
 
-        foreach ($required as $require) {
-            $reqArray = $good;
-            unset($reqArray[$require]);
-            $new = $this->NotificationTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->NotificationTypes->save($new));
-        }
-
-        $empties = [
-        ];
-
-        foreach ($empties as $empty) {
-            $reqArray = $good;
-            $reqArray[$empty] = '';
-            $new = $this->NotificationTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\NotificationType', $this->NotificationTypes->save($new));
-        }
+        $this->validateRequired($required, $this->NotificationTypes, [$this, 'getGood']);
 
         $notEmpties = [
-            'notification_type',
-            'icon',
-            'notification_description',
-            'type_code',
+            NotificationType::FIELD_NOTIFICATION_TYPE,
+            NotificationType::FIELD_ICON,
+            NotificationType::FIELD_NOTIFICATION_DESCRIPTION,
+            NotificationType::FIELD_TYPE_CODE,
         ];
 
-        foreach ($notEmpties as $notEmpty) {
-            $reqArray = $good;
-            $reqArray[$notEmpty] = '';
-            $new = $this->NotificationTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->NotificationTypes->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->NotificationTypes, [$this, 'getGood']);
 
         $maxLengths = [
             'notification_description' => 255,
@@ -150,21 +127,7 @@ class NotificationTypesTableTest extends TestCase
             'type_code' => 7,
         ];
 
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $maxLength) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $maxLength);
-            $new = $this->NotificationTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\NotificationType', $this->NotificationTypes->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $maxLength + 1);
-            $new = $this->NotificationTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->NotificationTypes->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->NotificationTypes, [$this, 'getGood']);
     }
 
     /**
@@ -174,29 +137,17 @@ class NotificationTypesTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $values = $this->getGood();
+        $this->validateUniqueRule(
+            NotificationType::FIELD_NOTIFICATION_TYPE,
+            $this->NotificationTypes,
+            [$this, 'getGood']
+        );
 
-        $existing = $this->NotificationTypes->get(1)->toArray();
-
-        $values['notification_type'] = 'My new Camp Role Type';
-        $new = $this->NotificationTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\NotificationType', $this->NotificationTypes->save($new));
-
-        $values['notification_type'] = $existing['notification_type'];
-        $new = $this->NotificationTypes->newEntity($values);
-        TestCase::assertFalse($this->NotificationTypes->save($new));
-
-        $values = $this->getGood();
-
-        $existing = $this->NotificationTypes->get(1)->toArray();
-
-        $values['type_code'] = TextSafe::shuffle(3) . '-' . TextSafe::shuffle(3);
-        $new = $this->NotificationTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\NotificationType', $this->NotificationTypes->save($new));
-
-        $values['type_code'] = $existing['type_code'];
-        $new = $this->NotificationTypes->newEntity($values);
-        TestCase::assertFalse($this->NotificationTypes->save($new));
+        $this->validateUniqueRule(
+            NotificationType::FIELD_TYPE_CODE,
+            $this->NotificationTypes,
+            [$this, 'getGood']
+        );
     }
 
     /**
@@ -206,15 +157,7 @@ class NotificationTypesTableTest extends TestCase
      */
     public function testInstallBaseTypes()
     {
-        $before = $this->NotificationTypes->find('all')->count();
-
-        $installed = $this->NotificationTypes->installBaseTypes();
-
-        TestCase::assertNotEquals($before, $installed);
-        TestCase::assertNotEquals(0, $installed);
-
-        $after = $this->NotificationTypes->find('all')->count();
-        TestCase::assertTrue($after > $before);
+        $this->validateInstallBase($this->NotificationTypes);
     }
 
     /**

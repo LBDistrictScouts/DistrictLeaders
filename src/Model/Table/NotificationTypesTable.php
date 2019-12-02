@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
  *
- * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
- * @method \App\Model\Entity\NotificationType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\NotificationType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType findOrCreate($search, callable $callback = null, $options = [])
+ * @method NotificationType get($primaryKey, $options = [])
+ * @method NotificationType newEntity($data = null, array $options = [])
+ * @method NotificationType[] newEntities(array $data, array $options = [])
+ * @method NotificationType|false save(EntityInterface $entity, $options = [])
+ * @method NotificationType saveOrFail(EntityInterface $entity, $options = [])
+ * @method NotificationType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method NotificationType[] patchEntities($entities, array $data, array $options = [])
+ * @method NotificationType findOrCreate($search, callable $callback = null, $options = [])
  */
 class NotificationTypesTable extends Table
 {
@@ -53,28 +53,32 @@ class NotificationTypesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(NotificationType::FIELD_ID)
+            ->allowEmptyString(NotificationType::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('notification_type')
-            ->maxLength('notification_type', 45)
-            ->notEmptyString('notification_type');
+            ->scalar(NotificationType::FIELD_NOTIFICATION_TYPE)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_TYPE)
+            ->maxLength(NotificationType::FIELD_NOTIFICATION_TYPE, 45)
+            ->notEmptyString(NotificationType::FIELD_NOTIFICATION_TYPE);
 
         $validator
-            ->scalar('notification_description')
-            ->maxLength('notification_description', 255)
-            ->allowEmptyString('notification_description');
+            ->scalar(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
+            ->maxLength(NotificationType::FIELD_NOTIFICATION_DESCRIPTION, 255)
+            ->notEmptyString(NotificationType::FIELD_NOTIFICATION_DESCRIPTION);
 
         $validator
-            ->scalar('icon')
-            ->maxLength('icon', 45)
-            ->allowEmptyString('icon');
+            ->scalar(NotificationType::FIELD_ICON)
+            ->requirePresence(NotificationType::FIELD_ICON)
+            ->maxLength(NotificationType::FIELD_ICON, 45)
+            ->notEmptyString(NotificationType::FIELD_ICON);
 
         $validator
-            ->scalar('type_code')
-            ->maxLength('type_code', 7)
-            ->notEmptyString('type_code');
+            ->scalar(NotificationType::FIELD_TYPE_CODE)
+            ->requirePresence(NotificationType::FIELD_TYPE_CODE)
+            ->maxLength(NotificationType::FIELD_TYPE_CODE, 7)
+            ->notEmptyString(NotificationType::FIELD_TYPE_CODE);
 
         return $validator;
     }
@@ -106,7 +110,9 @@ class NotificationTypesTable extends Table
         $total = 0;
 
         foreach ($base as $baseType) {
-            $query = $this->find()->where(['notification_type' => $baseType['notification_type']]);
+            $query = $this->find()->where([
+                NotificationType::FIELD_NOTIFICATION_TYPE => $baseType[NotificationType::FIELD_NOTIFICATION_TYPE]
+            ]);
             $status = $this->newEntity();
             if ($query->count() > 0) {
                 $status = $query->first();
@@ -114,7 +120,7 @@ class NotificationTypesTable extends Table
             $this->patchEntity($status, $baseType);
             if ($this->save($status)) {
                 $total += 1;
-            };
+            }
         }
 
         return $total;

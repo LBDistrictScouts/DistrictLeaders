@@ -22,7 +22,7 @@ class RequestPolicy implements RequestPolicyInterface
     public function canAccess($identity, ServerRequest $request)
     {
         // Prevent DebugKit from infinitely looping
-        if (($request->getParam('plugin') === 'DebugKit')) {
+        if ($request->getParam('plugin') === 'DebugKit') {
             return true;
         }
 
@@ -31,16 +31,19 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         // Baseline Access
-        if ($request->getParam('controller') === 'Pages') {
-            if ($request->getParam('action') === 'display') {
-                return true;
-            }
+        if ($request->getParam('controller') === 'Pages' && $request->getParam('action') === 'display') {
+            return true;
         }
 
-        if ($request->getParam('controller') === 'Users') {
-            if (in_array($request->getParam('action'), ['login', 'logout'])) {
-                return true;
-            }
+        // Token Validation
+        if ($request->getParam('controller') === 'Tokens' && $request->getParam('action') === 'validate') {
+            return true;
+        }
+
+        // User controller allow
+        $userActions = ['login', 'logout', 'username', 'token', 'password', 'forgot'];
+        if ($request->getParam('controller') === 'Users' && in_array($request->getParam('action'), $userActions)) {
+            return true;
         }
 
         return false;

@@ -42,11 +42,21 @@ class ScoutGroupsFixture extends TestFixture
     {
         $this->records = [
             [
-                'scout_group' => 'Lorem ipsum dolor sit amet',
-                'group_alias' => 'Lorem ipsum dolor sit amet',
-                'number_stripped' => 1,
-                'charity_number' => 1,
-                'group_domain' => 'Lorem ipsum dolor sit amet',
+                'scout_group' => '4th Goat Town',
+                'group_alias' => '4th Goat',
+                'number_stripped' => 4,
+                'charity_number' => 134,
+                'group_domain' => '4thgoat.org.uk',
+                'created' => 1545697609,
+                'modified' => 1545697609,
+                'deleted' => null,
+            ],
+            [
+                'scout_group' => '8th FishTown Substantial',
+                'group_alias' => '8th Fish',
+                'number_stripped' => 8,
+                'charity_number' => 187,
+                'group_domain' => '8thfish.co.uk',
                 'created' => 1545697609,
                 'modified' => 1545697609,
                 'deleted' => null,

@@ -14,11 +14,10 @@
  */
 namespace App\Controller;
 
-use App\Model\Entity\User;
+use App\Listener\RoleListener;
+use App\Listener\UserListener;
 use Authentication\AuthenticationService;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
-use Cake\I18n\FrozenTime;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -33,11 +32,35 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
+ * @property \Flash\Controller\Component\FlashComponent $Flash
  */
 class AppController extends Controller
 {
+    use FootprintAwareTrait {
+        _setCurrentUser as _footprintSetCurrentUser;
+    }
 
-    use FootprintAwareTrait;
+    /**
+     * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
+     *
+     * @param null $user The Footprint User
+     *
+     * @return bool|\Cake\ORM\Entity
+     */
+    protected function _setCurrentUser($user = null)
+    {
+        if (!$user) {
+            $user = $this->request->getAttribute('identity');
+
+            if (is_null($user)) {
+                return null;
+            }
+
+            $user = $user->getOriginalData();
+        }
+
+        return $this->_footprintSetCurrentUser($user);
+    }
 
     /**
      * Initialization hook method.
@@ -71,97 +94,26 @@ class AppController extends Controller
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form');
 
-        $this->loadComponent('Flash');
+        $this->loadComponent('Flash.Flash');
         $this->loadComponent('Cookie');
 
         $this->loadComponent('Authorization.Authorization');
-
-//        $this->loadComponent('Auth', [
-//            'authenticate' => [
-//                'Form' => [
-//                    'fields' => [
-//                        'username' => 'username',
-//                        'password' => 'password'
-//                    ],
-//                    'finder' => 'auth',
-//                ],
-//                'Xety/Cake3CookieAuth.Cookie',
-//            ],
-//            'loginAction' => [
-//                'controller' => 'Users',
-//                'action' => 'login'
-//            ],
-//            'loginRedirect' => [
-//                'controller' => 'Pages',
-//                'action' => 'home'
-//            ],
-//            'logoutRedirect' => [
-//                'controller' => 'Users',
-//                'action' => 'login'
-//            ],
-//            //use isAuthorized in Controllers
-//            'authorize' => ['Controller'],
-//            // If unauthorized, return them to page they were just on
-//            'unauthorizedRedirect' => $this->referer()
-//        ]);
-//
-//        // Allow the display action so our PagesController
-//        // continues to work. Also enable the read only actions.
-//        $this->Auth->allow(['display']);
-
-//      $this->loadComponent('csrf');
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
         ]);
 
-        /*
-         * Enable the following component for recommended CakePHP security settings.
-         * see https://book.cakephp.org/3.0/en/controllers/components/security.html
-         */
-        //$this->loadComponent('Security');
-
-//        if (null !== $this->Auth->user()) {
-//            $this->set('loggedInUserId', $this->Auth->user('id'));
-//        }
+        $this->eventListeners();
     }
 
-/**
- * @param Event $event The CakePHP Event
- *
- * @return \Cake\Http\Response|void|null
- */
-//    public function beforeFilter(Event $event)
-//    {
-//        if (!$this->Auth->user() && $this->Cookie->read('CookieAuth')) {
-//            $user = $this->Auth->identify();
-//            if ($user) {
-//                $this->loadModel('Users');
-//                $user = $this->Users->get($user['id']);
-//
-//                //Last login date
-//                $user->last_login = new FrozenTime();
-//                //Last login IP
-//                $user->last_login_ip = $this->request->clientIp();
-//
-//                $this->Users->patchCapabilities($user);
-//
-//                $this->Auth->setUser($user);
-//            } else {
-//                $this->Cookie->delete('CookieAuth');
-//            }
-//        }
-//    }
-
-/**
- * Authorisation Check
-//     *
-//     * @param User $user The Authorised User
-//     *
-//     * @return bool
- */
-//    public function isAuthorized($user)
-//    {
-//        return true;
-//    }
+    /**
+     * Function to attach Event Listeners
+     *
+     * @return void
+     */
+    private function eventListeners()
+    {
+        $this->getEventManager()->on(new UserListener());
+        $this->getEventManager()->on(new RoleListener());
+    }
 }

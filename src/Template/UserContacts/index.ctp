@@ -4,16 +4,6 @@
  * @var \App\Model\Entity\UserContact[]|\Cake\Collection\CollectionInterface $userContacts
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New User Contact'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
 <div class="userContacts index large-9 medium-8 columns content">
     <h3><?= __('User Contacts') ?></h3>
     <table cellpadding="0" cellspacing="0">
@@ -36,7 +26,7 @@
                 <td><?= $this->Number->format($userContact->id) ?></td>
                 <td><?= h($userContact->contact_field) ?></td>
                 <td><?= $userContact->has('user') ? $this->Html->link($userContact->user->username, ['controller' => 'Users', 'action' => 'view', $userContact->user->id]) : '' ?></td>
-                <td><?= $this->Number->format($userContact->user_contact_type_id) ?></td>
+                <td><?= $userContact->has('user_contact_type') ? $this->Html->link($userContact->user_contact_type->id, ['controller' => 'UserContactTypes', 'action' => 'view', $userContact->user_contact_type->id]) : '' ?></td>
                 <td><?= h($userContact->created) ?></td>
                 <td><?= h($userContact->modified) ?></td>
                 <td><?= h($userContact->verified) ?></td>

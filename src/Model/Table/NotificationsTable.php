@@ -73,6 +73,7 @@ class NotificationsTable extends Table
 
         $validator
             ->scalar('notification_header')
+            ->requirePresence('notification_header')
             ->maxLength('notification_header', 45)
             ->allowEmptyString('notification_header');
 
@@ -92,12 +93,12 @@ class NotificationsTable extends Table
 
         $validator
             ->numeric('link_id')
-            ->allowEmptyString('link_controller');
+            ->allowEmptyString('link_id');
 
         $validator
             ->scalar('link_controller')
             ->maxLength('link_controller', 45)
-            ->allowEmptyString('link_controller');
+            ->notEmptyString('link_controller');
 
         $validator
             ->scalar('link_prefix')
@@ -107,7 +108,7 @@ class NotificationsTable extends Table
         $validator
             ->scalar('link_action')
             ->maxLength('link_action', 45)
-            ->allowEmptyString('link_action');
+            ->notEmptyString('link_action');
 
         $validator
             ->dateTime('deleted')

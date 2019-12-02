@@ -1,39 +1,48 @@
 language: php
 
 dist: bionic
+
+os: linux
+
+version: ~> 1.0
+
 addons:
   postgresql: "9.6"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
-sudo: false
+cache:
+  directories:
+    - $HOME/.composer/cache
+    - vendor
 
 services:
   - postgresql
-  - redis-server
+  - redis
 
 env:
   - DB=postgres
 
-matrix:
-  fast_finish: true
-
+jobs:
   include:
-    - name: "PHP 7.1"
-      php: 7.1
-
     - name: "PHP 7.2"
       php: 7.2
 
     - name: "PHP 7.3"
       php: 7.3
 
-before_script:
-  - psql --command='create database leaders;' --username=postgres
+before_install:
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
+  - cp config/app_queue.travis.php config/app_queue.php
+
+install:
+  - psql --command='create database leaders;' --username=postgres
   - composer install
+  - composer validate
+
+before_script:
   - composer run-script post-install-cmd --no-interaction
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter

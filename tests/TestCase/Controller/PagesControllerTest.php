@@ -39,6 +39,7 @@ class PagesControllerTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -70,6 +71,7 @@ class PagesControllerTest extends TestCase
         $this->tryGet('/');
         $this->assertResponseOk();
     }
+
     /**
      * testDisplay method
      *

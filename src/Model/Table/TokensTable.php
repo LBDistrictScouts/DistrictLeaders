@@ -6,6 +6,7 @@ use App\Utility\TextSafe;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
+use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -18,16 +19,16 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
  *
- * @method \App\Model\Entity\Token get($primaryKey, $options = [])
- * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Token[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
+ * @method Token get($primaryKey, $options = [])
+ * @method Token newEntity($data = null, array $options = [])
+ * @method Token[] newEntities(array $data, array $options = [])
+ * @method Token|false save(EntityInterface $entity, $options = [])
+ * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Token[] patchEntities($entities, array $data, array $options = [])
+ * @method Token findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method Token saveOrFail(EntityInterface $entity, $options = [])
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class TokensTable extends Table
@@ -267,6 +268,103 @@ class TokensTable extends Table
 
         if ($testHash == $tokenRowHash) {
             return $token->id;
+        }
+
+        return false;
+    }
+
+    public const CLEAN_NO_CLEAN = 0;
+    public const CLEAN_DEACTIVATE = 1;
+    public const CLEAN_DELETED = 2;
+
+    /**
+     * @param Token $token The token to be cleaned.
+     *
+     * @return int
+     */
+    public function cleanToken($token)
+    {
+        /** @var FrozenTime $expiry */
+        $expiry = $token->get(Token::FIELD_EXPIRES);
+        /** @var bool $active */
+        $active = $token->get(Token::FIELD_ACTIVE);
+
+        if (!$expiry->isFuture() && $active) {
+            $token->set(Token::FIELD_ACTIVE, false);
+            $this->save($token);
+
+            return self::CLEAN_DEACTIVATE;
+        }
+
+        $now = FrozenTime::now();
+        $monthAgo = $now->subMonth();
+
+        if (!$active && $expiry->lt($monthAgo)) {
+            $this->delete($token);
+
+            return self::CLEAN_DELETED;
+        }
+
+        return self::CLEAN_NO_CLEAN;
+    }
+
+    /**
+     * Clean Tokens
+     *
+     * @return array
+     */
+    public function cleanAllTokens()
+    {
+        $noChange = 0;
+        $deactivated = 0;
+        $deleted = 0;
+
+        $tokens = $this->find('all');
+
+        foreach ($tokens as $token) {
+            $response = $this->cleanToken($token);
+
+            switch ($response) {
+                case self::CLEAN_NO_CLEAN:
+                    $noChange += 1;
+                    break;
+                case self::CLEAN_DEACTIVATE:
+                    $deactivated += 1;
+                    break;
+                case self::CLEAN_DELETED:
+                    $deleted += 1;
+                    break;
+            }
+        }
+
+        return [
+            'no_change' => $noChange,
+            'deactivated' => $deactivated,
+            'deleted' => $deleted,
+        ];
+    }
+
+    /**
+     * @param array $requestQueryParams Request Query Params
+     *
+     * @return false|\App\Model\Entity\Token
+     */
+    public function validateTokenRequest($requestQueryParams)
+    {
+        if (key_exists('token', $requestQueryParams)) {
+            $token = $requestQueryParams['token'];
+        }
+        if (key_exists('token', $requestQueryParams)) {
+            $tokenId = $requestQueryParams['token_id'];
+        }
+
+        if (isset($token) && isset($tokenId)) {
+            $valid = $this->validateToken($token);
+
+            if ($valid && $valid == $tokenId) {
+                /** @var \App\Model\Entity\Token $tokenRow */
+                return $this->get($valid, ['contain' => 'EmailSends.Users']);
+            }
         }
 
         return false;

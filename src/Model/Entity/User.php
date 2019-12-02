@@ -196,6 +196,10 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         if (key_exists('user', $this->capabilities)) {
             $capabilities = $this->capabilities['user'];
 
+            if (in_array('ALL', $capabilities)) {
+                return true;
+            }
+
             if (in_array($capability, $capabilities)) {
                 return true;
             }
@@ -252,7 +256,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_CITY = 'city';
     public const FIELD_COUNTY = 'county';
     public const FIELD_POSTCODE = 'postcode';
-    public const FIELD_ADMIN_SCOUT_GROUP_ID = 'admin_scout_group_id';
     public const FIELD_CREATED = 'created';
     public const FIELD_MODIFIED = 'modified';
     public const FIELD_LAST_LOGIN = 'last_login';
@@ -270,4 +273,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_USER_CONTACTS = 'user_contacts';
     public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
+
+    public const MINIMUM_PASSWORD_LENGTH = 8;
 }

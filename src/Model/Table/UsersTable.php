@@ -5,6 +5,7 @@ use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
 use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -22,17 +23,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  *
- * @method \App\Model\Entity\User get($primaryKey, $options = [])
- * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
+ * @method User get($primaryKey, $options = [])
+ * @method User newEntity($data = null, array $options = [])
+ * @method User[] newEntities(array $data, array $options = [])
+ * @method User|false save(EntityInterface $entity, $options = [])
+ * @method User saveOrFail(EntityInterface $entity, $options = [])
+ * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method User[] patchEntities($entities, array $data, array $options = [])
+ * @method User findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class UsersTable extends Table
 {
@@ -48,11 +51,39 @@ class UsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('users');
-        $this->setDisplayField('username');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(User::FIELD_FULL_NAME);
+        $this->setPrimaryKey(User::FIELD_ID);
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+
+        $this->addBehavior('Caseable', [
+            'case_columns' => [
+                User::FIELD_EMAIL => 'l',
+                User::FIELD_POSTCODE => 'u',
+                User::FIELD_FIRST_NAME => 't',
+                User::FIELD_LAST_NAME => 't',
+                User::FIELD_ADDRESS_LINE_1 => 't',
+                User::FIELD_ADDRESS_LINE_2 => 't',
+                User::FIELD_CITY => 't',
+                User::FIELD_COUNTY => 't',
+            ]
+        ]);
+
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                User::FIELD_USERNAME,
+                User::FIELD_MEMBERSHIP_NUMBER,
+                User::FIELD_FIRST_NAME,
+                User::FIELD_LAST_NAME,
+                User::FIELD_EMAIL,
+                User::FIELD_ADDRESS_LINE_1,
+                User::FIELD_ADDRESS_LINE_2,
+                User::FIELD_CITY,
+                User::FIELD_COUNTY,
+                User::FIELD_POSTCODE,
+            ]
+        ]);
 
         $this->belongsTo('PasswordStates', [
             'foreignKey' => 'password_state_id'
@@ -91,10 +122,12 @@ class UsersTable extends Table
      * @param TableSchema $schema The Schema to be modified
      *
      * @return TableSchema|\Cake\Database\Schema\TableSchema
+     *
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchema $schema)
     {
-        $schema->setColumnType('capabilities', 'json');
+        $schema->setColumnType(User::FIELD_CAPABILITIES, 'json');
 
         return $schema;
     }
@@ -108,8 +141,8 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', 'An ID must be set.', 'create');
+            ->integer(User::FIELD_ID)
+            ->allowEmptyString(User::FIELD_ID, 'An ID must be set.', 'create');
 
         $validator
             ->scalar('username')
@@ -127,18 +160,23 @@ class UsersTable extends Table
             ->scalar('first_name')
             ->maxLength('first_name', 255)
             ->requirePresence('first_name', 'create')
-            ->notEmptyString('first_name', 'A first name is required.');
+            ->notEmptyString('first_name');
 
         $validator
             ->scalar('last_name')
             ->maxLength('last_name', 255)
             ->requirePresence('last_name', 'create')
-            ->notEmptyString('last_name', 'A last name is required.');
+            ->notEmptyString('last_name');
 
         $validator
             ->email('email')
+            ->add(User::FIELD_EMAIL, 'validDomainEmail', [
+                'rule' => 'isValidDomainEmail',
+                'message' => __('You must use a Scouting Email Address'),
+                'provider' => 'table',
+            ])
             ->requirePresence('email', 'create')
-            ->notEmptyString('email', 'An email is required.')
+            ->notEmptyString('email')
             ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
@@ -169,7 +207,8 @@ class UsersTable extends Table
         $validator
             ->scalar('postcode')
             ->maxLength('postcode', 9)
-            ->allowEmptyString('postcode');
+            ->requirePresence('postcode', 'create')
+            ->notEmptyString('postcode');
 
         $validator
             ->dateTime('last_login')
@@ -207,6 +246,9 @@ class UsersTable extends Table
      * @param User $user UserEntity
      *
      * @return array
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function retrieveAllCapabilities(User $user)
     {
@@ -314,7 +356,7 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveAllCapabilities($user);
         $user->capabilities = $capabilities;
-        $user->setDirty('modified');
+        $user->setDirty('modified', true);
 
         return $this->save($user);
     }
@@ -369,6 +411,8 @@ class UsersTable extends Table
      * @param array $options The Options passed
      *
      * @return Query
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function findAuth(Query $query, array $options)
     {
@@ -379,46 +423,6 @@ class UsersTable extends Table
     }
 
     /**
-     * Stores emails as lower case.
-     *
-     * @param \Cake\Event\Event $event The event being processed.
-     * @param User $entity The Entity being processed.
-     *
-     * @return bool
-     */
-    public function beforeRules($event, $entity)
-    {
-        $dirty = $entity->getDirty();
-
-        $entity->email = strtolower($entity->email);
-
-        $entity->first_name = ucwords(strtolower($entity->first_name));
-        $entity->last_name = ucwords(strtolower($entity->last_name));
-
-        $entity->address_line_1 = ucwords(strtolower($entity->address_line_1));
-        $entity->address_line_2 = ucwords(strtolower($entity->address_line_2));
-        $entity->city = ucwords(strtolower($entity->city));
-        $entity->county = ucwords(strtolower($entity->county));
-
-        $entity->postcode = strtoupper($entity->postcode);
-
-        $cleaned = [
-            'email',
-            'first_name', 'last_name',
-            'address_line_1', 'address_line_2', 'city', 'county',
-            'postcode',
-        ];
-
-        foreach ($cleaned as $clean) {
-            if (!in_array($clean, $dirty)) {
-                $entity->setDirty($clean, false);
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * before Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
@@ -426,46 +430,17 @@ class UsersTable extends Table
      * @param array $options Options Values
      *
      * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterSave($event, $entity, $options)
+    public function beforeSave($event, $entity, $options)
     {
-        $dirtyValues = $entity->getDirty();
-
-        $trackedFields = [
-            'username',
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'postcode',
-        ];
-
-        foreach ($dirtyValues as $dirty_value) {
-            if (in_array($dirty_value, $trackedFields)) {
-                $current = $entity->get($dirty_value);
-                $original = $entity->getOriginal($dirty_value);
-
-                if ($entity->isNew()) {
-                    $original = null;
-                }
-
-                if ($current <> $original) {
-                    $auditData = [
-                        'audit_record_id' => $entity->get('id'),
-                        'audit_field' => $dirty_value,
-                        'audit_table' => 'Users',
-                        'original_value' => $original,
-                        'modified_value' => $current,
-                    ];
-
-                    $audit = $this->Audits->newEntity($auditData);
-                    $this->Audits->save($audit);
-                }
-            }
+        if ($entity->getOriginal('capabilities') != $entity->capabilities) {
+            $this->getEventManager()->dispatch(new Event(
+                'Model.User.capabilityChange',
+                $this,
+                ['user' => $entity]
+            ));
         }
 
         return true;
@@ -500,5 +475,18 @@ class UsersTable extends Table
             ]);
 
         return $searchManager;
+    }
+
+    /**
+     * @param string $value The Entity Value to be validated
+     * @param array $context The Validation Context
+     *
+     * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function isValidDomainEmail($value, $context)
+    {
+        return $this->Roles->Sections->ScoutGroups->domainVerify($value);
     }
 }

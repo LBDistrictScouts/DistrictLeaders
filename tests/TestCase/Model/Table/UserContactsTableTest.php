@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\UserContact;
 use App\Model\Table\UserContactsTable;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
@@ -12,6 +13,8 @@ use Cake\Utility\Security;
  */
 class UserContactsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -25,19 +28,20 @@ class UserContactsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.UserContacts',
-        'app.UserContactTypes',
         'app.PasswordStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
         'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
         'app.Roles',
-        'app.Capabilities',
-        'app.CapabilitiesRoleTypes',
     ];
 
     /**
@@ -79,7 +83,7 @@ class UserContactsTableTest extends TestCase
         $good = [
             'user_id' => 1,
             'user_contact_type_id' => 1,
-            'contact_field' => random_int(111, 999) . 'jacob.llama' . random_int(111, 999) . '@fishing.com',
+            'contact_field' => random_int(111, 999) . 'jacob.llama' . random_int(111, 999) . '@4thgoat.org.uk',
         ];
 
         return $good;
@@ -92,33 +96,21 @@ class UserContactsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->UserContacts->get(1)->toArray();
-
         $dates = [
-            'modified',
-            'created',
-            'deleted',
+            UserContact::FIELD_MODIFIED,
+            UserContact::FIELD_CREATED,
+            UserContact::FIELD_DELETED,
         ];
-
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
-            }
-            unset($actual[$date]);
-        }
 
         $expected = [
-            'id' => 1,
-            'contact_field' => 'james@peach.com',
-            'user_id' => 1,
-            'user_contact_type_id' => 1,
-            'verified' => 1,
+            UserContact::FIELD_ID => 1,
+            UserContact::FIELD_CONTACT_FIELD => 'james@peach.com',
+            UserContact::FIELD_USER_ID => 1,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
+            UserContact::FIELD_VERIFIED => 1,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->UserContacts->find('all')->count();
-        TestCase::assertEquals(1, $count);
+        $this->validateInitialise($expected, $this->UserContacts, 2, $dates);
     }
 
     /**
@@ -134,50 +126,51 @@ class UserContactsTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
 
         $required = [
-            'contact_field',
-            'user_id',
-            'user_contact_type_id',
+            UserContact::FIELD_CONTACT_FIELD,
         ];
-
-        foreach ($required as $require) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$require]);
-            $new = $this->UserContacts->newEntity($reqArray);
-            TestCase::assertFalse($this->UserContacts->save($new));
-        }
+        $this->validateRequired($required, $this->UserContacts, [$this, 'getGood']);
 
         $notEmpties = [
-            'contact_field',
-            'user_id',
-            'user_contact_type_id',
+            UserContact::FIELD_CONTACT_FIELD,
+            UserContact::FIELD_USER_ID,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID,
         ];
-
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$not_empty] = '';
-            $new = $this->UserContacts->newEntity($reqArray);
-            TestCase::assertFalse($this->UserContacts->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->UserContacts, [$this, 'getGood']);
 
         $maxLengths = [
-            'contact_field' => '64',
+            UserContact::FIELD_CONTACT_FIELD => '64',
         ];
+        $this->validateMaxLengths($maxLengths, $this->UserContacts, [$this, 'getGood']);
+    }
 
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
+    /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
+    public function testValidationEmail()
+    {
+        $good = $this->getGood();
 
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->UserContacts->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
+        $new = $this->UserContacts->newEntity($good, ['validate' => 'email']);
+        TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
 
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->UserContacts->newEntity($reqArray);
-            TestCase::assertFalse($this->UserContacts->save($new));
-        }
+        $required = [
+            UserContact::FIELD_CONTACT_FIELD,
+            UserContact::FIELD_USER_ID,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID,
+        ];
+        $this->validateRequired($required, $this->UserContacts, [$this, 'getGood'], 'email');
+
+        $notEmpties = [
+            UserContact::FIELD_CONTACT_FIELD,
+            UserContact::FIELD_USER_ID,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID,
+        ];
+        $this->validateNotEmpties($notEmpties, $this->UserContacts, [$this, 'getGood'], 'email');
+
+        // Bad Email
+        $this->validateEmail(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood'], 'email');
     }
 
     /**
@@ -187,55 +180,24 @@ class UserContactsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        // Is Unique
-        $uniques = [
-            'contact_field' => 'james.llama@giant.peach',
-        ];
-
-        foreach ($uniques as $unqueField => $uniqueValue) {
-            $values = $this->getGood();
-
-            $existing = $this->UserContacts->get(1)->toArray();
-
-            $values[$unqueField] = $uniqueValue;
-            $new = $this->UserContacts->newEntity($values);
-            TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
-
-            $values = $this->getGood();
-
-            $values[$unqueField] = $existing[$unqueField];
-            $new = $this->UserContacts->newEntity($values);
-            TestCase::assertFalse($this->UserContacts->save($new));
-        }
+        $this->validateUniqueRule(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood']);
 
         // User Contact Type Exists
-        $values = $this->getGood();
-
-        $types = $this->UserContacts->UserContactTypes->find('list')->toArray();
-
-        $type = max(array_keys($types));
-
-        $values['user_contact_type_id'] = $type;
-        $new = $this->UserContacts->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
-
-        $values['user_contact_type_id'] = $type + 1;
-        $new = $this->UserContacts->newEntity($values);
-        TestCase::assertFalse($this->UserContacts->save($new));
+        $this->validateExistsRule(UserContact::FIELD_USER_CONTACT_TYPE_ID, $this->UserContacts, $this->UserContacts->UserContactTypes, [$this, 'getGood']);
 
         // User Exists
-        $values = $this->getGood();
+        $this->validateExistsRule(UserContact::FIELD_USER_ID, $this->UserContacts, $this->UserContacts->Users, [$this, 'getGood']);
+    }
 
-        $types = $this->UserContacts->Users->find('list')->toArray();
+    /**
+     * Test case for IsValidDomainEmail method
+     *
+     * @return void
+     */
+    public function testIsValidDomainEmail()
+    {
+        TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com', []));
 
-        $type = max(array_keys($types));
-
-        $values['user_id'] = $type;
-        $new = $this->UserContacts->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\UserContact', $this->UserContacts->save($new));
-
-        $values['user_id'] = $type + 1;
-        $new = $this->UserContacts->newEntity($values);
-        TestCase::assertFalse($this->UserContacts->save($new));
+        TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk', []));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Entity;
 
+use App\Model\Entity\Capability;
 use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationServiceInterface;
@@ -16,6 +17,8 @@ use Psr\Http\Message\RequestInterface;
 
 /**
  * App\Model\Entity\User Test Case
+ *
+ * @property \App\Model\Table\UsersTable $Users
  */
 class UserTest extends TestCase
 {
@@ -47,6 +50,7 @@ class UserTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -75,8 +79,10 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        $this->User = new User;
+        $this->User = new User();
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
+
+        $this->Users = TableRegistry::getTableLocator()->get('Users');
     }
 
     /**
@@ -164,7 +170,7 @@ class UserTest extends TestCase
             'id' => 1
         ]);
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
-        $request = (new ServerRequest)->withAttribute('identity', $identity);
+        $request = (new ServerRequest())->withAttribute('identity', $identity);
         $response = new Response();
         $next = function ($request) {
             return $request;
@@ -199,19 +205,40 @@ class UserTest extends TestCase
     }
 
     /**
+     * @param User $user The user to be altered.
+     *
+     * @return User
+     */
+    private function notAll($user)
+    {
+        $roleTypes = TableRegistry::getTableLocator()->get('RoleTypes');
+        $superUser = $roleTypes->get(5, ['contain' => ['Capabilities']]);
+
+        $allPermission = $roleTypes->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])->toList();
+        $roleTypes->Capabilities->unlink($superUser, $allPermission);
+
+        $this->Users->patchCapabilities($user);
+
+        return $this->Users->get($user->get(User::FIELD_ID));
+    }
+
+    /**
      * Test checkCapability method
      *
      * @return void
      */
     public function testCheckCapability()
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
-        $testUser = $users->get(1);
+        $testUser = $this->Users->get(1);
 
-        $users->patchCapabilities($testUser);
-        $testUser = $users->get(1);
+        $this->Users->patchCapabilities($testUser);
+        $testUser = $this->Users->get(1);
 
         TestCase::assertTrue($testUser->checkCapability('ALL'));
+
+        $this->notAll($testUser);
+        TestCase::assertFalse($testUser->checkCapability('ALL'));
+
         TestCase::assertTrue($testUser->checkCapability('OWN_USER'));
 
         TestCase::assertFalse($testUser->checkCapability('GOAT'));
@@ -224,19 +251,23 @@ class UserTest extends TestCase
      */
     public function testSubSetCapabilityCheck()
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
-        $testUser = $users->get(1);
+        $testUser = $this->Users->get(1);
 
-        $users->patchCapabilities($testUser);
-        $testUser = $users->get(1);
+        $this->Users->patchCapabilities($testUser);
+        $testUser = $this->Users->get(1);
+
+        // All Capability
+        TestCase::assertTrue($testUser->checkCapability('ALL', 1));
+        TestCase::assertTrue($testUser->checkCapability('ALL', null, 1));
+        $this->notAll($testUser);
+        TestCase::assertFalse($testUser->checkCapability('ALL', 1));
+        TestCase::assertFalse($testUser->checkCapability('ALL', null, 1));
 
         // Group Check
-        TestCase::assertTrue($testUser->checkCapability('ALL', 1));
         TestCase::assertTrue($testUser->checkCapability('EDIT_SECT', 1));
         TestCase::assertFalse($testUser->checkCapability('EDIT_SECT', 2));
 
         // Section Check
-        TestCase::assertTrue($testUser->checkCapability('ALL', null, 1));
         TestCase::assertTrue($testUser->checkCapability('EDIT_USER', null, 1));
         TestCase::assertFalse($testUser->checkCapability('EDIT_USER', null, 2));
     }

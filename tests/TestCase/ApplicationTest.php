@@ -47,6 +47,9 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
+            'CakeDto',
+            'Tools',
+            'Search',
             'Queue',
             'Ajax',
             'Authentication',
@@ -59,6 +62,7 @@ class ApplicationTest extends IntegrationTestCase
             'Muffin/Trash',
             'DatabaseLog',
             'Muffin/Footprint',
+            'Flash',
         ];
 
         TestCase::assertCount(count($expectedPlugins), $plugins);
@@ -69,11 +73,11 @@ class ApplicationTest extends IntegrationTestCase
     }
 
     /**
-     * testBootstrapPluginWitoutHalt
+     * testBootstrapPluginWithoutHalt
      *
      * @return void
      */
-    public function testBootstrapPluginWitoutHalt()
+    public function testBootstrapPluginWithoutHalt()
     {
         $this->expectException(InvalidArgumentException::class);
 

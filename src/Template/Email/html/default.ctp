@@ -14,8 +14,15 @@
  * @var \App\View\AppView $this
  */
 
-$content = explode("\n", $content);
+$content = explode("\n", $content); ?>
 
+<h2>Hertfordshire Cubs Booking System - Password Reset</h2>
+
+<?php
+echo '<h1>I like Cheese</h1>';
 foreach ($content as $line) :
     echo '<p> ' . $line . "</p>\n";
 endforeach;
+echo '<p>default layout</p>';
+
+?>

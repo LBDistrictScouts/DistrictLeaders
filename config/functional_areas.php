@@ -10,10 +10,10 @@ return [
 
     'functionalAreas' => [
         'directory' => true,
-        'camps' => true,
-        'documents' => true,
+        'camps' => false,
+        'documents' => false,
         'articles' => false,
-        'search' => false,
+        'search' => true,
     ],
 
     'iconStandards' => [
@@ -22,5 +22,9 @@ return [
         'Documents' => 'file-alt',
         'Articles' => 'newspaper',
         'Users' => 'users'
+    ],
+
+    'searchConfigured' => [
+        'Users' => true,
     ]
 ];

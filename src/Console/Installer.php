@@ -50,6 +50,7 @@ class Installer
         'app',
         'app_file',
         'app_db',
+        'app_queue'
     ];
 
     /**

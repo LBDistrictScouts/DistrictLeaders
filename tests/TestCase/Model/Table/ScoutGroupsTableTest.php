@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\ScoutGroup;
 use App\Model\Table\ScoutGroupsTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -11,6 +12,7 @@ use Cake\Utility\Security;
  */
 class ScoutGroupsTableTest extends TestCase
 {
+    use ModelTestTrait;
 
     /**
      * Test subject
@@ -80,35 +82,23 @@ class ScoutGroupsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->ScoutGroups->get(1)->toArray();
-
         $dates = [
-            'modified',
-            'created',
-            'deleted',
+            ScoutGroup::FIELD_MODIFIED,
+            ScoutGroup::FIELD_CREATED,
+            ScoutGroup::FIELD_DELETED,
         ];
-
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
-            }
-            unset($actual[$date]);
-        }
 
         $expected = [
-            'id' => 1,
-            'scout_group' => 'Lorem ipsum dolor sit amet',
-            'group_alias' => 'Lorem ipsum dolor sit amet',
-            'number_stripped' => 1,
-            'charity_number' => 1,
-            'group_domain' => 'Lorem ipsum dolor sit amet',
-            'clean_domain' => 'Lorem ipsum dolor sit amet',
+            ScoutGroup::FIELD_ID => 1,
+            ScoutGroup::FIELD_SCOUT_GROUP => '4th Goat Town',
+            ScoutGroup::FIELD_GROUP_ALIAS => '4th Goat',
+            ScoutGroup::FIELD_NUMBER_STRIPPED => 4,
+            ScoutGroup::FIELD_CHARITY_NUMBER => 134,
+            ScoutGroup::FIELD_GROUP_DOMAIN => '4thgoat.org.uk',
+            ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk'
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->ScoutGroups->find('all')->count();
-        TestCase::assertEquals(1, $count);
+        $this->validateInitialise($expected, $this->ScoutGroups, 2, $dates);
     }
 
     /**
@@ -244,5 +234,49 @@ class ScoutGroupsTableTest extends TestCase
 
         $actual = $this->ScoutGroups->get($new->id)->toArray();
         TestCase::assertEquals($expected, $actual['group_domain']);
+    }
+
+    /**
+     * Test Get Domains method
+     *
+     * @return void
+     */
+    public function testGetDomains()
+    {
+        $expected = [
+            '4thgoat.org.uk',
+            '8thfish.co.uk'
+        ];
+        $actual = $this->ScoutGroups->getDomains();
+        TestCase::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerDomainVerifyData()
+    {
+        return [
+            ['4thgoat.org.uk', true],
+            ['8thfish.co.uk', true],
+            ['buttons.com', false],
+            ['bad.goat', false],
+        ];
+    }
+
+    /**
+     * Test Domain Verification method
+     *
+     * @param string $emailString String to be encoded
+     * @param bool $expected Expected Result
+     *
+     * @return void
+     *
+     * @dataProvider providerDomainVerifyData
+     */
+    public function testDomainVerify($emailString, $expected)
+    {
+        $email = 'jacob@' . $emailString;
+        TestCase::assertEquals($expected, $this->ScoutGroups->domainVerify($email));
     }
 }

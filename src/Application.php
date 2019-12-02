@@ -15,13 +15,10 @@
 namespace App;
 
 use Ajax\Middleware\AjaxMiddleware;
-
 use App\Policy\RequestPolicy;
-
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
-
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceProviderInterface;
 use Authorization\Exception\ForbiddenException;
@@ -31,7 +28,6 @@ use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
 use Authorization\Policy\ResolverCollection;
-
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
@@ -42,7 +38,6 @@ use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -54,12 +49,22 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Application extends BaseApplication implements AuthorizationServiceProviderInterface, AuthenticationServiceProviderInterface
 {
+    protected const LOGIN_URL = '/users/login';
+
     /**
      * {@inheritDoc}
      */
     public function bootstrap()
     {
-        $this->addPlugin('Queue', ['routes' => true]);
+        $this->addPlugin('Flash');
+
+        $this->addPlugin('CakeDto', ['bootstrap' => true]);
+
+        $this->addPlugin('Tools', ['bootstrap' => true]);
+
+        $this->addPlugin('Search');
+
+        $this->addPlugin('Queue', ['routes' => true, 'bootstrap' => true]);
 
         $this->addPlugin('Ajax', ['bootstrap' => true]);
 
@@ -138,10 +143,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             ))
 
             // Add the authentication middleware to the middleware queue
-            ->add(new AuthenticationMiddleware($this, [
-                'unauthenticatedRedirect' => '/users/login',
-                'queryParam' => 'redirect',
-            ]))
+            ->add(new AuthenticationMiddleware($this))
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [
@@ -151,14 +153,14 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
                 },
                 'unauthorizedHandler' => [
                     'className' => 'Authorization.Redirect',
-                    'url' => '/users/login',
+                    'url' => self::LOGIN_URL,
                     'queryParam' => 'redirectUrl',
                     'exceptions' => [
                         MissingIdentityException::class,
                         ForbiddenException::class,
                     ],
                 ],
-                'requireAuthorizationCheck' => false,
+                'requireAuthorizationCheck' => true,
             ]))
 
             ->add(new RequestAuthorizationMiddleware())
@@ -211,6 +213,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
             'password' => 'password'
         ];
 
+        $service->setConfig([
+            'unauthenticatedRedirect' => self::LOGIN_URL,
+            'queryParam' => 'redirect',
+        ]);
+
         // Load identifiers
         $service->loadIdentifier('Authentication.Password', compact('fields'));
 
@@ -218,7 +225,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             compact('fields'),
-            'loginUrl' => [ '/users/login', 'login' ]
+            'loginUrl' => [ self::LOGIN_URL, 'login' ]
         ]);
         $service->loadAuthenticator('Authentication.Cookie', [
             'rememberMeField' => 'remember_me',

@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use App\Model\Entity\EmailSend;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\FrozenTime;
+use Cake\Mailer\MailerAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -17,19 +18,21 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  *
- * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailSend newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
+ * @method EmailSend get($primaryKey, $options = [])
+ * @method EmailSend newEntity($data = null, array $options = [])
+ * @method EmailSend[] newEntities(array $data, array $options = [])
+ * @method EmailSend|false save(EntityInterface $entity, $options = [])
+ * @method EmailSend saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailSend patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailSend[] patchEntities($entities, array $data, array $options = [])
+ * @method EmailSend findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class EmailSendsTable extends Table
 {
+    use MailerAwareTrait;
+
     /**
      * Initialize method
      *
@@ -155,6 +158,59 @@ class EmailSendsTable extends Table
     }
 
     /**
+     * @param string $emailGenerationCode The Email Generation Code
+     *
+     * @return array
+     */
+    private function codeSplitter($emailGenerationCode)
+    {
+        $generationArray = explode('-', $emailGenerationCode, 3);
+
+        $splitArray['type'] = $generationArray[0];
+        $splitArray['entityId'] = $generationArray[1];
+        $splitArray['subType'] = $generationArray[2];
+
+        return $splitArray;
+    }
+
+    /**
+     * @param string $emailGenerationCode The Code provided to generate the email
+     * @param array $existExempt An override array for exist Overrides
+     *
+     * @return false|string
+     */
+    private function codeExistValidator($emailGenerationCode, $existExempt)
+    {
+        $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
+
+        /**
+         * @var string $type
+         * @var string $subType
+         */
+        extract($this->codeSplitter($emailGenerationCode));
+
+        $notificationTypeCode = $type . '-' . $subType;
+        if ($exists && !in_array($notificationTypeCode, $existExempt)) {
+            return false;
+        }
+
+        if (in_array($notificationTypeCode, $existExempt)) {
+            $iterationNum = 0;
+            $newCode = $emailGenerationCode;
+
+            while ($exists) {
+                $iterationNum += 1;
+                $newCode = $emailGenerationCode . '-' . $iterationNum;
+                $exists = $this->exists(['email_generation_code' => $newCode]);
+            }
+
+            return $newCode;
+        }
+
+        return $emailGenerationCode;
+    }
+
+    /**
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
@@ -167,34 +223,25 @@ class EmailSendsTable extends Table
      */
     public function make($emailGenerationCode)
     {
-        $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
-
-        $generationArray = explode('-', $emailGenerationCode, 3);
-
-        $type = $generationArray[0];
-        $entityId = $generationArray[1];
-        $subType = $generationArray[2];
+        /**
+         * @var string $type
+         * @var int $entityId
+         * @var string $subType
+         */
+        extract($this->codeSplitter($emailGenerationCode));
 
         $existExempt = ['USR-PWD'];
-        $notiTypeCode = $type . '-' . $subType;
-        if ($exists && !in_array($notiTypeCode, $existExempt)) {
+        $newCode = $this->codeExistValidator($emailGenerationCode, $existExempt);
+
+        if (!$newCode) {
             return false;
-        }
-
-        if (in_array($notiTypeCode, $existExempt)) {
-            $iterationNum = 0;
-            $newCode = $emailGenerationCode;
-
-            while ($exists) {
-                $iterationNum += 1;
-                $newCode = $emailGenerationCode . '-' . $iterationNum;
-                $exists = $this->exists(['email_generation_code' => $newCode]);
-            }
+        } elseif ($newCode != $emailGenerationCode) {
             $emailGenerationCode = $newCode;
         }
 
         $includeToken = true;
         $includeNotification = true;
+        $source = 'User';
 
         switch ($type) {
             case 'USR':
@@ -204,20 +251,18 @@ class EmailSendsTable extends Table
 
                 switch ($subType) {
                     case 'PWD':
-                        $layout = 'password_reset';
+                        $emailTemplate = 'password_reset';
                         $subject = 'Password Reset for ' . $user->full_name;
-                        $source = 'User';
 
                         $redirect = [
                             'controller' => 'Users',
-                            'action' => 'token',
+                            'action' => 'password',
                             'prefix' => false,
                         ];
                         break;
                     case 'NEW':
-                        $layout = 'new_user';
+                        $emailTemplate = 'new_user';
                         $subject = 'Welcome to Site ' . $user->full_name;
-                        $source = 'User';
 
                         $redirect = [
                             'controller' => 'Users',
@@ -239,7 +284,7 @@ class EmailSendsTable extends Table
             'sent' => null,
             'user_id' => $userId,
             'subject' => $subject,
-            'email_template' => $layout,
+            'email_template' => $emailTemplate,
             'include_token' => $includeToken,
         ];
 
@@ -300,10 +345,11 @@ class EmailSendsTable extends Table
             $token = $this->Tokens->buildToken($token->id);
         }
 
-        $generationArray = explode('-', $email->email_generation_code);
-
-        $type = $generationArray[0];
-        $entityId = $generationArray[1];
+        /**
+         * @var string $type
+         * @var int $entityId
+         */
+        extract($this->codeSplitter($email->email_generation_code));
 
         switch ($type) {
             case 'USR':
@@ -315,7 +361,7 @@ class EmailSendsTable extends Table
 
         /** @var \App\Mailer\BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
-        $mailer->send('basic', [$email, $token, $entity]);
+        $mailer->send('doSend', [$email, $token, $entity]);
 
         $email->set('sent', FrozenTime::now());
         $this->save($email, ['validate' => false]);
@@ -334,7 +380,7 @@ class EmailSendsTable extends Table
     {
         $emailSend = $this->make($emailGenerationCode);
 
-        if ($emailSend == false) {
+        if (is_int($emailSend) && !is_bool($emailSend)) {
             return false;
         }
 
@@ -348,7 +394,7 @@ class EmailSendsTable extends Table
     /**
      * Makes an Email Dispatch Event and then dispatches it.
      *
-     * @param \stdClass $results The Returned Results Array
+     * @param array $results The Returned Results Array
      * @param array $sendHeaders The Send Headers
      *
      * @return bool

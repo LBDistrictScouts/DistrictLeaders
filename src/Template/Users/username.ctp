@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Form\ResetForm $resForm
  * @var string username
+ * @var mixed $username
  */
 ?>
 
@@ -29,7 +30,7 @@
                         <div class="col-md-6 col-12">
                             <a href="<?php echo $this->Url->build([
 			                    'controller' => 'Users',
-			                    'action' => 'reset',
+			                    'action' => 'forgot',
 			                    'prefix' => false],['_full']); ?>">
                                 <button type="button" class="btn btn-default btn-block float-md-right">Forgot Password</button></a>
                         </div>

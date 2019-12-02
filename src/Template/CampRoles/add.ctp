@@ -2,6 +2,9 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\CampRole $campRole
+ * @var mixed $campRoleTypes
+ * @var mixed $camps
+ * @var mixed $users
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">

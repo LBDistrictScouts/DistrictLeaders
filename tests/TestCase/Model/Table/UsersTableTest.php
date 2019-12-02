@@ -1,18 +1,20 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
+use App\Utility\TextSafe;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\UsersTable Test Case
  */
 class UsersTableTest extends TestCase
 {
+    use ModelTestTrait;
 
     /**
      * Test subject
@@ -33,6 +35,7 @@ class UsersTableTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
         'app.Sections',
@@ -90,37 +93,27 @@ class UsersTableTest extends TestCase
     {
         $date = Time::getTestNow();
         $good = [
-            'username' => 'Jacob' . random_int(0, 999) . random_int(0, 999),
-            'membership_number' => random_int(0, 99999) + random_int(0, 99999),
-            'first_name' => 'Jacob',
-            'last_name' => 'Tyler',
-            'email' => 'myfake' . random_int(0, 9999) . '@email' . random_int(0, 9999) . '.com',
-            'password' => 'Not Telling You',
-            'address_line_1' => 'New Landing Cottage',
-            'address_line_2' => '',
-            'city' => 'Helicopter Place',
-            'county' => 'Hertfordshire',
-            'postcode' => 'SG6 KKS',
-            'admin_scout_group_id' => 1,
-            'last_login' => $date,
-            'last_login_ip' => '192.168.0.1',
-            'capabilities' => [
-                'user' => [
-                    'LOGIN',
-                    'EDIT_SELF'
-                ],
+            User::FIELD_USERNAME => TextSafe::shuffle(10),
+            User::FIELD_MEMBERSHIP_NUMBER => random_int(0, 99999) + random_int(0, 99999),
+            User::FIELD_FIRST_NAME => 'Jacob',
+            User::FIELD_LAST_NAME => 'Tyler',
+            User::FIELD_EMAIL => 'my' . random_int(0, 9999) . 'fake' . random_int(0, 9999) . '@4thgoat.org.uk',
+            User::FIELD_PASSWORD => 'Not Telling You',
+            User::FIELD_ADDRESS_LINE_1 => 'New Landing Cottage',
+            User::FIELD_ADDRESS_LINE_2 => '',
+            User::FIELD_CITY => 'Helicopter Place',
+            User::FIELD_COUNTY => 'Hertfordshire',
+            User::FIELD_POSTCODE => 'SG6 KKS',
+            User::FIELD_LAST_LOGIN => $date,
+            User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
+            User::FIELD_CAPABILITIES => [
+                'user' => ['LOGIN', 'EDIT_SELF'],
                 'section' => [
-                    1 => [
-                        'EDIT_USER'
-                    ],
-                    3 => [
-                        'EDIT_USER'
-                    ]
+                    1 => ['EDIT_USER'],
+                    3 => ['EDIT_USER'],
                 ],
                 'group' => [
-                    1 => [
-                        'EDIT_SECT'
-                    ]
+                    1 => ['EDIT_SECT'],
                 ]
             ]
         ];
@@ -135,44 +128,32 @@ class UsersTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->Users->get(1)->toArray();
-
         $dates = [
-            'modified',
-            'created',
-            'deleted',
-            'last_login',
+            User::FIELD_MODIFIED,
+            User::FIELD_CREATED,
+            User::FIELD_DELETED,
+            User::FIELD_LAST_LOGIN,
         ];
-
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
-            }
-            unset($actual[$date]);
-        }
 
         $expected = [
-            'id' => 1,
-            'username' => 'Lorem ipsum dolor sit amet',
-            'membership_number' => 1,
-            'first_name' => 'Lorem ipsum dolor sit amet',
-            'last_name' => 'Lorem ipsum dolor sit amet',
-            'email' => 'Lorem ipsum dolor sit amet',
-            'address_line_1' => 'Lorem ipsum dolor sit amet',
-            'address_line_2' => 'Lorem ipsum dolor sit amet',
-            'city' => 'Lorem ipsum dolor sit amet',
-            'county' => 'Lorem ipsum dolor sit amet',
-            'postcode' => 'Lorem i',
-            'last_login_ip' => '192.168.0.1',
-            'full_name' => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
-            'capabilities' => null,
-            'password_state_id' => 1,
+            User::FIELD_ID => 1,
+            User::FIELD_USERNAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_MEMBERSHIP_NUMBER => 1,
+            User::FIELD_FIRST_NAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_LAST_NAME => 'Lorem ipsum dolor sit amet',
+            User::FIELD_EMAIL => 'fish@4thgoat.org.uk',
+            User::FIELD_ADDRESS_LINE_1 => 'Lorem ipsum dolor sit amet',
+            User::FIELD_ADDRESS_LINE_2 => 'Lorem ipsum dolor sit amet',
+            User::FIELD_CITY => 'Lorem ipsum dolor sit amet',
+            User::FIELD_COUNTY => 'Lorem ipsum dolor sit amet',
+            User::FIELD_POSTCODE => 'Lorem i',
+            User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
+            User::FIELD_FULL_NAME => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
+            User::FIELD_CAPABILITIES => null,
+            User::FIELD_PASSWORD_STATE_ID => 1,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->Users->find('all')->count();
-        TestCase::assertEquals(2, $count);
+        $this->validateInitialise($expected, $this->Users, 2, $dates);
     }
 
     /**
@@ -188,98 +169,73 @@ class UsersTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
 
         $required = [
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+            User::FIELD_POSTCODE,
         ];
 
-        foreach ($required as $require) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$require]);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateRequired($required, $this->Users, [$this, 'getGood']);
 
         $notRequired = [
-            'username',
-            'password',
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'postcode',
-            'last_login',
-            'last_login_ip',
+            User::FIELD_USERNAME,
+            User::FIELD_PASSWORD,
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
         ];
 
-        foreach ($notRequired as $not_required) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$not_required]);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-        }
+        $this->validateNotRequired($notRequired, $this->Users, [$this, 'getGood']);
 
         $empties = [
-            'address_line_1',
-            'address_line_2',
-            'city',
-            'county',
-            'postcode',
-            'last_login',
-            'last_login_ip',
-            'password',
-            'username',
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
+            User::FIELD_PASSWORD,
+            User::FIELD_USERNAME,
         ];
 
-        foreach ($empties as $empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$empty] = '';
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-        }
+        $this->validateEmpties($empties, $this->Users, [$this, 'getGood']);
 
         $notEmpties = [
-            'membership_number',
-            'first_name',
-            'last_name',
-            'email',
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+            User::FIELD_POSTCODE,
         ];
 
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$not_empty] = '';
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->Users, [$this, 'getGood']);
+
+        $this->validateNotEmpty(
+            User::FIELD_MEMBERSHIP_NUMBER,
+            $this->Users,
+            [$this, 'getGood'],
+            'default',
+            'A unique, valid TSA membership number is required.'
+        );
 
         $maxLengths = [
-            'username' => 255,
-            'first_name' => 255,
-            'last_name' => 255,
-            'password' => 255,
-            'address_line_1' => 255,
-            'address_line_2' => 255,
-            'city' => 255,
-            'county' => 255,
-            'postcode' => 9,
+            User::FIELD_USERNAME => 255,
+            User::FIELD_FIRST_NAME => 255,
+            User::FIELD_LAST_NAME => 255,
+            User::FIELD_PASSWORD => 255,
+            User::FIELD_ADDRESS_LINE_1 => 255,
+            User::FIELD_ADDRESS_LINE_2 => 255,
+            User::FIELD_CITY => 255,
+            User::FIELD_COUNTY => 255,
+            User::FIELD_POSTCODE => 9,
         ];
 
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
+        $this->validateMaxLengths($maxLengths, $this->Users, [$this, 'getGood']);
 
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->Users->newEntity($reqArray);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateEmail(User::FIELD_EMAIL, $this->Users, [$this, 'getGood']);
     }
 
     /**
@@ -291,26 +247,12 @@ class UsersTableTest extends TestCase
     {
         // Is Unique
         $uniques = [
-            'username' => 'JacobNew',
-            'membership_number' => 210210210,
-            'email' => 'my@unique.email',
+            User::FIELD_USERNAME,
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_EMAIL,
         ];
 
-        foreach ($uniques as $unqueField => $uniqueValue) {
-            $values = $this->getGood();
-
-            $existing = $this->Users->get(1)->toArray();
-
-            $values[$unqueField] = $uniqueValue;
-            $new = $this->Users->newEntity($values);
-            TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
-
-            $values = $this->getGood();
-
-            $values[$unqueField] = $existing[$unqueField];
-            $new = $this->Users->newEntity($values);
-            TestCase::assertFalse($this->Users->save($new));
-        }
+        $this->validateUniqueRules($uniques, $this->Users, [$this, 'getGood']);
     }
 
     /**
@@ -323,9 +265,9 @@ class UsersTableTest extends TestCase
         $good = $this->getGood();
 
         $new = $this->Users->newEntity($good);
-        TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+        TestCase::assertInstanceOf($this->Users->getEntityClass(), $this->Users->save($new));
 
-        TestCase::assertNotEquals($good['password'], $new->password);
+        TestCase::assertNotEquals($good[User::FIELD_PASSWORD], $new->password);
     }
 
     /**
@@ -345,7 +287,6 @@ class UsersTableTest extends TestCase
 
         if (key_exists('group', $expected)) {
             TestCase::assertArrayHasKey('group', $actual);
-
             TestCase::assertEquals(count($expected['group']), count($actual['group']));
 
             foreach ($expected['group'] as $idx => $value) {
@@ -586,5 +527,17 @@ class UsersTableTest extends TestCase
             ]
         ];
         $this->validateCapabilityArray($expected, $user->capabilities);
+    }
+
+    /**
+     * Test case for IsValidDomainEmail method
+     *
+     * @return void
+     */
+    public function testIsValidDomainEmail()
+    {
+        TestCase::assertFalse($this->Users->isValidDomainEmail('cheese@buttons.com', []));
+
+        TestCase::assertTrue($this->Users->isValidDomainEmail('jacob@4thgoat.org.uk', []));
     }
 }

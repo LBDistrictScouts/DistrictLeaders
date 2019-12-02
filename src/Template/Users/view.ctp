@@ -6,6 +6,18 @@
  */
 ?>
 <div class="users view large-9 medium-8 columns content">
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown button
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item'])  ?>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+    </div>
+
+
     <h3><?= h($user->id) ?></h3>
     <table class="vertical-table">
         <?php if ($user->has('username')) : ?>
@@ -127,23 +139,21 @@
                             <table class="table table-hover">
                                 <tr>
                                     <th scope="col"><?= __('Id') ?></th>
-                                    <th scope="col"><?= __('Role Type Id') ?></th>
-                                    <th scope="col"><?= __('Section Id') ?></th>
-                                    <th scope="col"><?= __('User Id') ?></th>
-                                    <th scope="col"><?= __('Role Status Id') ?></th>
-                                    <th scope="col"><?= __('Created') ?></th>
-                                    <th scope="col"><?= __('Modified') ?></th>
+                                    <th scope="col"><?= __('Role Type') ?></th>
+                                    <th scope="col"><?= __('Section Type') ?></th>
+                                    <th scope="col"><?= __('Group') ?></th>
+                                    <th scope="col"><?= __('Role Status') ?></th>
+                                    <th scope="col"><?= __('Role Contact') ?></th>
                                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                                 </tr>
                                 <?php foreach ($user->roles as $roles): ?>
                                     <tr>
                                         <td><?= h($roles->id) ?></td>
-                                        <td><?= h($roles->role_type_id) ?></td>
-                                        <td><?= h($roles->section_id) ?></td>
-                                        <td><?= h($roles->user_id) ?></td>
-                                        <td><?= h($roles->role_status_id) ?></td>
-                                        <td><?= h($roles->created) ?></td>
-                                        <td><?= h($roles->modified) ?></td>
+                                        <td><?= $roles->has('role_type') ? h($roles->role_type->role_abbreviation) : '' ?></td>
+                                        <td><?= $roles->has('section') ? h($roles->section->section_type->section_type) : '' ?></td>
+                                        <td><?= $roles->has('section') ? h($roles->section->scout_group->scout_group) : '' ?></td>
+                                        <td><?= $roles->has('role_status') ? h($roles->role_status->role_status) : '' ?></td>
+                                        <td><?= $roles->has('user_contact') ? $this->Text->autoLinkEmails($roles->user_contact->contact_field) : '' ?></td>
                                         <td class="actions">
                                             <?= $this->Html->link(__('View'), ['controller' => 'Roles', 'action' => 'view', $roles->id]) ?>
                                             <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>
@@ -179,7 +189,7 @@
                                         <td><?= h($audit->original_value) ?></td>
                                         <td><?= h($audit->modified_value) ?></td>
                                         <td><?= $audit->has('user') ? $this->Html->link($audit->user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->user->id]) : '' ?></td>
-                                        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+                                        <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy HH:mm') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>
@@ -211,7 +221,7 @@
                                         <td><?= $this->Inflection->space($audit->audit_field) ?></td>
                                         <td><?= h($audit->original_value) ?></td>
                                         <td><?= h($audit->modified_value) ?></td>
-                                        <td><?= $this->Time->i18nformat($audit->change_date,'dd-MMM-yy HH:mm') ?></td>
+                                        <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy HH:mm') ?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </table>

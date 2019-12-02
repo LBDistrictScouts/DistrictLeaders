@@ -1,6 +1,7 @@
 <?php
 namespace App\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\Helper;
 use Cake\View\View;
 
@@ -17,12 +18,28 @@ class FunctionalHelper extends Helper
     ];
 
     /**
+     * Configuration Value
+     *
+     * @var array
+     */
+    public $FunctionalAreas;
+
+    /**
+     * Configuration Value
+     *
+     * @var array
+     */
+    public $SearchConfigured;
+
+    /**
      * @param array $config The Config Array
      *
      * @return void
      */
     public function initialize(array $config)
     {
+        $this->FunctionalAreas = Configure::read('functionalAreas');
+        $this->SearchConfigured = Configure::read('searchConfigured');
     }
 
     /**
@@ -34,10 +51,24 @@ class FunctionalHelper extends Helper
      */
     public function checkFunction($function)
     {
-        $areas = $this->getConfig('functionalAreas');
+        if (key_exists($function, $this->FunctionalAreas)) {
+            return (bool)$this->FunctionalAreas[$function];
+        }
 
-        if (key_exists($function, $areas)) {
-            return (bool)$areas[$function];
+        return false;
+    }
+
+    /**
+     * Set Functional Areas Values
+     *
+     * @param string $searchModel The Function to be Checked
+     *
+     * @return bool
+     */
+    public function checkSearchConfigured($searchModel)
+    {
+        if (key_exists($searchModel, $this->SearchConfigured)) {
+            return (bool)$this->SearchConfigured[$searchModel];
         }
 
         return false;

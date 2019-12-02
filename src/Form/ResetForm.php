@@ -20,10 +20,10 @@ class ResetForm extends Form
     protected function _buildSchema(Schema $schema)
     {
         $schema
-            ->addField('membership_number', 'integer')
-            ->addField('first_name', 'varchar')
-            ->addField('last_name', 'varchar')
-            ->addField('email', 'varchar');
+            ->addField(self::FIELD_MEMBERSHIP_NUMBER, 'integer')
+            ->addField(self::FIELD_FIRST_NAME, 'varchar')
+            ->addField(self::FIELD_LAST_NAME, 'varchar')
+            ->addField(self::FIELD_EMAIL, 'varchar');
 
         return $schema;
     }
@@ -38,21 +38,28 @@ class ResetForm extends Form
     protected function _buildValidator(Validator $validator)
     {
         $validator
-            ->requirePresence('membership_number')
-            ->notEmptyString('membership_number');
+            ->requirePresence(self::FIELD_MEMBERSHIP_NUMBER)
+            ->integer(self::FIELD_MEMBERSHIP_NUMBER, 'Please enter a valid TSA Membership Number.')
+            ->notEmptyString(self::FIELD_MEMBERSHIP_NUMBER);
 
         $validator
-            ->email('email', 'valid')
-            ->notEmptyString('email');
+            ->requirePresence(self::FIELD_EMAIL)
+            ->email(self::FIELD_EMAIL, 'valid', 'Please Enter Valid Email Address.')
+            ->notEmptyString(self::FIELD_EMAIL);
 
         $validator
-            ->scalar('first_name')
-            ->notEmptyString('first_name');
+            ->scalar(self::FIELD_FIRST_NAME)
+            ->notEmptyString(self::FIELD_FIRST_NAME);
 
         $validator
-            ->scalar('last_name')
-            ->notEmptyString('last_name');
+            ->scalar(self::FIELD_LAST_NAME)
+            ->notEmptyString(self::FIELD_LAST_NAME);
 
         return $validator;
     }
+
+    public const FIELD_MEMBERSHIP_NUMBER = 'membership_number';
+    public const FIELD_EMAIL = 'email';
+    public const FIELD_FIRST_NAME = 'first_name';
+    public const FIELD_LAST_NAME = 'last_name';
 }

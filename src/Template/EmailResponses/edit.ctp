@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\EmailResponse $emailResponse
+ * @var mixed $emailResponseTypes
+ * @var mixed $emailSends
  */
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">

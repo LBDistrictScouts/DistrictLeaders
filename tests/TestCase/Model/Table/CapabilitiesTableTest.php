@@ -60,7 +60,7 @@ class CapabilitiesTableTest extends TestCase
      *
      * @throws
      */
-    private function getGood()
+    public function getGood()
     {
         $good = [
             'capability_code' => 'NEW' . random_int(0, 999),
