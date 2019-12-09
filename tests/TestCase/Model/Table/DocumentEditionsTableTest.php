@@ -3,7 +3,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\DocumentEdition;
 use App\Model\Table\DocumentEditionsTable;
-use App\Utility\TextSafe;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -83,6 +82,8 @@ class DocumentEditionsTableTest extends TestCase
             DocumentEdition::FIELD_ID => 1,
             DocumentEdition::FIELD_DOCUMENT_VERSION_ID => 1,
             DocumentEdition::FIELD_FILE_TYPE_ID => 1,
+            DocumentEdition::FIELD_MD5_HASH => 'Lorem ipsum dolor sit amet',
+            DocumentEdition::FIELD_FILE_PATH => 'Lorem ipsum dolor sit amet',
         ];
         $dates = [
             DocumentEdition::FIELD_CREATED,
@@ -108,6 +109,16 @@ class DocumentEditionsTableTest extends TestCase
      * @return void
      */
     public function testBuildRules()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test getFilesystem method
+     *
+     * @return void
+     */
+    public function testGetFilesystem()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

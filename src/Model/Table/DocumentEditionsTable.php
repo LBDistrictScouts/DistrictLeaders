@@ -68,6 +68,16 @@ class DocumentEditionsTable extends Table
             ->integer('id')
             ->allowEmptyString('id', null, 'create');
 
+        $validator
+            ->scalar('md5_hash')
+            ->maxLength('md5_hash', 32)
+            ->allowEmptyString('md5_hash');
+
+        $validator
+            ->scalar('file_path')
+            ->maxLength('file_path', 255)
+            ->allowEmptyFile('file_path');
+
         return $validator;
     }
 

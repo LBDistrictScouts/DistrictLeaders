@@ -13,11 +13,11 @@ use Josbeir\Filesystem\FileEntityInterface;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int $document_version_id
  * @property int $file_type_id
+ * @property string|null $md5_hash
+ * @property string|null $file_path
  *
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property \App\Model\Entity\FileType $file_type
- * @property string|null $md5_hash
- * @property string|null $file_path
  */
 class DocumentEdition extends Entity implements FileEntityInterface
 {
@@ -36,6 +36,8 @@ class DocumentEdition extends Entity implements FileEntityInterface
         'deleted' => true,
         'document_version_id' => true,
         'file_type_id' => true,
+        'md5_hash' => true,
+        'file_path' => true,
         'document_version' => true,
         'file_type' => true
     ];
