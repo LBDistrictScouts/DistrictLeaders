@@ -97,6 +97,7 @@ class CapabilitiesRoleTypesTableTest extends TestCase
         $expected = [
             CapabilitiesRoleType::FIELD_CAPABILITY_ID => 1,
             CapabilitiesRoleType::FIELD_ROLE_TYPE_ID => 5,
+            CapabilitiesRoleType::FIELD_TEMPLATE => false,
         ];
         $this->validateInitialise($expected, $this->CapabilitiesRoleTypes, 10, null, $expected);
     }

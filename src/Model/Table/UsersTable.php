@@ -437,7 +437,7 @@ class UsersTable extends Table
     {
         if ($entity->getOriginal('capabilities') != $entity->capabilities) {
             $this->getEventManager()->dispatch(new Event(
-                'Model.User.capabilityChange',
+                'Model.Users.capabilityChange',
                 $this,
                 ['user' => $entity]
             ));

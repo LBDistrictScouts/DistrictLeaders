@@ -22,8 +22,8 @@ class RoleListener implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Model.Role.roleAdded' => 'newRole',
-            'Model.Role.newAudits' => 'roleChange',
+            'Model.Roles.roleAdded' => 'newRole',
+            'Model.Roles.newAudits' => 'roleChange',
         ];
     }
 

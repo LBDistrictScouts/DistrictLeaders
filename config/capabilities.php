@@ -59,5 +59,10 @@ return [
             'capability' => 'Login',
             'min_level' => 0 // Base Level
         ],
+    ],
+
+    'allCapabilities' => [
+        'LOGIN',
+        'OWN_USER',
     ]
 ];

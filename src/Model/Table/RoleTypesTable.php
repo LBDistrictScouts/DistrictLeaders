@@ -2,8 +2,10 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\CapabilitiesRoleType;
+use App\Model\Entity\Capability;
 use App\Model\Entity\Role;
 use App\Model\Entity\RoleType;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -56,7 +58,7 @@ class RoleTypesTable extends Table
         $this->belongsToMany('Capabilities', [
             'foreignKey' => CapabilitiesRoleType::FIELD_ROLE_TYPE_ID,
             'targetForeignKey' => CapabilitiesRoleType::FIELD_CAPABILITY_ID,
-            'joinTable' => 'capabilities_role_types'
+            'through' => 'CapabilitiesRoleTypes'
         ]);
     }
 
@@ -106,5 +108,30 @@ class RoleTypesTable extends Table
         $rules->add($rules->isUnique([RoleType::FIELD_ROLE_ABBREVIATION]));
 
         return $rules;
+    }
+
+    /**
+     * @param RoleType $roleType The Entity to be Patched.
+     *
+     * @return RoleType
+     */
+    public function patchTemplateCapabilities($roleType)
+    {
+        $templateId = $roleType->get(RoleType::FIELD_ROLE_TEMPLATE_ID);
+        $template = $this->RoleTemplates->get($templateId);
+
+        $baseCapabilities = Configure::readOrFail('allCapabilities');
+        $capabilities = $baseCapabilities;
+        if (!empty($template->template_capabilities)) {
+            $capabilities = array_merge($capabilities, $template->template_capabilities);
+        }
+
+        foreach ($capabilities as $capability) {
+            $roleCapability = $this->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => $capability])->first();
+            $roleCapability->_joinData = new CapabilitiesRoleType([CapabilitiesRoleType::FIELD_TEMPLATE => true], ['markNew' => true]);
+            $this->Capabilities->link($roleType, [$roleCapability]);
+        }
+
+        return $roleType;
     }
 }
