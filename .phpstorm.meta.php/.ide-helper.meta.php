@@ -552,6 +552,7 @@ namespace PHPSTORM_META {
 	override(
 		\Queue\Model\Table\QueuedJobsTable::createJob(0),
 		map([
+			'Capability' => \App\Shell\Task\QueueCapabilityTask::class,
 			'CostsExample' => \Queue\Shell\Task\QueueCostsExampleTask::class,
 			'Email' => \App\Shell\Task\QueueEmailTask::class,
 			'Example' => \Queue\Shell\Task\QueueExampleTask::class,

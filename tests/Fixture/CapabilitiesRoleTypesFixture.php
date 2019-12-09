@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * CapabilitiesRoleTypesFixture
- *
  */
 class CapabilitiesRoleTypesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -19,6 +17,7 @@ class CapabilitiesRoleTypesFixture extends TestFixture
     public $fields = [
         'capability_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'role_type_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'template' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['capability_id', 'role_type_id'], 'length' => []],
             'capabilities_role_types_capability_id_fkey' => ['type' => 'foreign', 'columns' => ['capability_id'], 'references' => ['capabilities', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
@@ -26,7 +25,6 @@ class CapabilitiesRoleTypesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -37,43 +35,53 @@ class CapabilitiesRoleTypesFixture extends TestFixture
         $this->records = [
             [
                 'capability_id' => 1, // Level 5
-                'role_type_id' => 5
+                'role_type_id' => 5,
+                'template' => false,
             ],
             [
                 'capability_id' => 2, // Level 4
-                'role_type_id' => 4
+                'role_type_id' => 4,
+                'template' => false,
             ],
             [
                 'capability_id' => 3, // Level 3
-                'role_type_id' => 3
+                'role_type_id' => 3,
+                'template' => false,
             ],
             [
                 'capability_id' => 4, // Level 2
-                'role_type_id' => 2
+                'role_type_id' => 2,
+                'template' => false,
             ],
             [
                 'capability_id' => 5, // Level 1
-                'role_type_id' => 1
+                'role_type_id' => 1,
+                'template' => false,
             ],
             [
                 'capability_id' => 6, // Level 0
-                'role_type_id' => 5
+                'role_type_id' => 5,
+                'template' => false,
             ],
             [
                 'capability_id' => 6, // Level 0
-                'role_type_id' => 4
+                'role_type_id' => 4,
+                'template' => false,
             ],
             [
                 'capability_id' => 6, // Level 0
-                'role_type_id' => 3
+                'role_type_id' => 3,
+                'template' => false,
             ],
             [
                 'capability_id' => 6, // Level 0
-                'role_type_id' => 2
+                'role_type_id' => 2,
+                'template' => false,
             ],
             [
                 'capability_id' => 6, // Level 0
-                'role_type_id' => 1
+                'role_type_id' => 1,
+                'template' => false,
             ],
         ];
         parent::init();

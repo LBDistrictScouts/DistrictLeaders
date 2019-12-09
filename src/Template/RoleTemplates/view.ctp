@@ -1,4 +1,8 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\RoleTemplate $roleTemplate
+ */
 use App\Model\Entity\RoleTemplate;
 
 /**

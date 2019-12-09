@@ -13,7 +13,7 @@ return [
         'camps' => false,
         'documents' => false,
         'articles' => false,
-        'search' => true,
+        'search' => false,
     ],
 
     'iconStandards' => [

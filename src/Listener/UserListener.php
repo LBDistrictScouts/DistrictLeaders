@@ -21,8 +21,8 @@ class UserListener implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Model.User.login' => 'updateLogin',
-            'Model.User.capabilityChange' => 'capChange',
+            'Model.Users.login' => 'updateLogin',
+            'Model.Users.capabilityChange' => 'capChange',
         ];
     }
 

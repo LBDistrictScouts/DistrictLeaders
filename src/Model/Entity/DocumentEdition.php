@@ -2,6 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Josbeir\Filesystem\FileEntityInterface;
 
 /**
  * DocumentEdition Entity
@@ -15,8 +16,10 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property \App\Model\Entity\FileType $file_type
+ * @property string|null $md5_hash
+ * @property string|null $file_path
  */
-class DocumentEdition extends Entity
+class DocumentEdition extends Entity implements FileEntityInterface
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -37,6 +40,26 @@ class DocumentEdition extends Entity
         'file_type' => true
     ];
 
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path The Path to be set
+     *
+     * @return \Josbeir\Filesystem\FileEntityInterface
+     */
+    public function setPath(string $path): FileEntityInterface
+    {
+        $this->set('path', $path);
+
+        return $this;
+    }
+
     public const FIELD_ID = 'id';
     public const FIELD_CREATED = 'created';
     public const FIELD_MODIFIED = 'modified';
@@ -45,4 +68,6 @@ class DocumentEdition extends Entity
     public const FIELD_FILE_TYPE_ID = 'file_type_id';
     public const FIELD_DOCUMENT_VERSION = 'document_version';
     public const FIELD_FILE_TYPE = 'file_type';
+    public const FIELD_MD5_HASH = 'md5_hash';
+    public const FIELD_FILE_PATH = 'file_path';
 }

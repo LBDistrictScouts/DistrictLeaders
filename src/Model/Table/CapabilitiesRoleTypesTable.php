@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsTo $Capabilities
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
  *
- * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method CapabilitiesRoleType get($primaryKey, $options = [])
+ * @method CapabilitiesRoleType newEntity($data = null, array $options = [])
+ * @method CapabilitiesRoleType[] newEntities(array $data, array $options = [])
+ * @method CapabilitiesRoleType|false save(EntityInterface $entity, $options = [])
+ * @method CapabilitiesRoleType saveOrFail(EntityInterface $entity, $options = [])
+ * @method CapabilitiesRoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method CapabilitiesRoleType[] patchEntities($entities, array $data, array $options = [])
+ * @method CapabilitiesRoleType findOrCreate($search, callable $callback = null, $options = [])
  */
 class CapabilitiesRoleTypesTable extends Table
 {
@@ -47,6 +47,21 @@ class CapabilitiesRoleTypesTable extends Table
             'foreignKey' => 'role_type_id',
             'joinType' => 'INNER'
         ]);
+    }
+
+    /**
+     * Default validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationDefault(Validator $validator)
+    {
+        $validator
+            ->boolean('template')
+            ->notEmptyString('template');
+
+        return $validator;
     }
 
     /**

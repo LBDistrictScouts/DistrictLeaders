@@ -50,15 +50,16 @@ class DocumentEditionsController extends AppController
      *
      * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function upload()
     {
         $documentEdition = $this->DocumentEditions->newEntity();
         if ($this->request->is('post')) {
+            debug($this->request->getData());
             $documentEdition = $this->DocumentEditions->patchEntity($documentEdition, $this->request->getData());
             if ($this->DocumentEditions->save($documentEdition)) {
                 $this->Flash->success(__('The document edition has been saved.'));
 
-                return $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
+//                return $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }

@@ -7,6 +7,7 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
  * DocumentEditions Model
@@ -27,6 +28,8 @@ use Cake\Validation\Validator;
  */
 class DocumentEditionsTable extends Table
 {
+    use FilesystemAwareTrait;
+
     /**
      * Initialize method
      *

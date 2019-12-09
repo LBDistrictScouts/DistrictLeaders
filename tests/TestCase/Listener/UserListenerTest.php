@@ -90,7 +90,7 @@ class UserListenerTest extends TestCase
         $this->assertRedirect($redirect);
         TestCase::assertArrayHasKey('Auth', $this->_session);
 
-        $this->assertEventFired('Model.User.login', $this->EventManager);
+        $this->assertEventFired('Model.Users.login', $this->EventManager);
 
         $afterUser = $this->Users->get(1);
 
@@ -104,6 +104,6 @@ class UserListenerTest extends TestCase
         $role->set(Role::FIELD_USER_CONTACT_ID, 2);
         TestCase::assertNotFalse($this->Roles->save($role));
 
-        $this->assertEventFired('Model.User.capabilityChange', $this->EventManager);
+        $this->assertEventFired('Model.Users.capabilityChange', $this->EventManager);
     }
 }

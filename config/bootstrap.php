@@ -29,11 +29,13 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
 use Cake\Cache\Cache;
 use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
+use Cake\Core\Configure\Engine\JsonConfig;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
@@ -57,9 +59,11 @@ use Detection\MobileDetect;
  */
 try {
     Configure::config('default', new PhpConfig());
+    Configure::config('json', new JsonConfig());
     Configure::load('app', 'default', false);
     Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
+    Configure::load('app_queue', 'default', false);
     Configure::load('capabilities', 'default', false);
     Configure::load('functional_areas', 'default', false);
     Configure::load('known_entities', 'default', false);
@@ -198,3 +202,4 @@ Type::build('timestamp')
 
 EventManager::instance()->on(new UserListener());
 EventManager::instance()->on(new RoleListener());
+EventManager::instance()->on(new CapabilityListener());

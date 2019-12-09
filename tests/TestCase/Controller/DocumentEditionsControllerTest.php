@@ -91,12 +91,22 @@ class DocumentEditionsControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->tryAddGet($this->controller);
+        TestCase::markTestIncomplete();
+        $this->tryGet([
+            'controller' => $this->controller,
+            'action' => 'upload',
+        ]);
 
-        $this->tryAddPost(
-            $this->controller,
+        $this->tryPost(
+            [
+                'controller' => $this->controller,
+                'action' => 'upload',
+            ],
             $this->validEntityData,
-            2
+            [
+                'controller' => $this->controller,
+                'action' => 'index',
+            ]
         );
     }
 
@@ -123,6 +133,7 @@ class DocumentEditionsControllerTest extends TestCase
      */
     public function testDelete()
     {
+        TestCase::markTestIncomplete();
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,

@@ -3,6 +3,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
+use Cake\Core\Configure;
 use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -168,5 +169,30 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_ROLE_TYPE,
         ];
         $this->validateUniqueRules($uniques, $this->RoleTypes, [$this, 'getGood']);
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchTemplateCapabilities()
+    {
+        $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
+        TestCase::assertInstanceOf(RoleType::class, $this->RoleTypes->save($roleType));
+
+        $roleType = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        TestCase::assertNotSame($roleTypeOriginal->capabilities, $roleType->capabilities);
+
+        $expectedCaps = [
+            'LOGIN' => true,
+            'OWN_USER' => true,
+        ];
+
+        foreach ($roleType->capabilities as $capability) {
+            TestCase::assertTrue(key_exists($capability->capability_code, $expectedCaps));
+            TestCase::assertSame($capability->_joinData->template, $expectedCaps[$capability->capability_code]);
+        }
     }
 }

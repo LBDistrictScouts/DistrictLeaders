@@ -14,6 +14,7 @@ use Cake\Mailer\MailerAwareTrait;
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
+ * @property \App\Model\Table\FileTypesTable $FileTypes
  */
 class InstallBaseCommand extends Command
 {
@@ -29,6 +30,7 @@ class InstallBaseCommand extends Command
         parent::initialize();
         $this->loadModel('Capabilities');
         $this->loadModel('NotificationTypes');
+        $this->loadModel('FileTypes');
     }
 
     /**
@@ -49,6 +51,11 @@ class InstallBaseCommand extends Command
             ->addOption('capabilities', [
                 'short' => 'c',
                 'help' => 'Capabilities',
+                'boolean' => true,
+            ])
+            ->addOption('file_types', [
+                'short' => 'f',
+                'help' => 'File Types',
                 'boolean' => true,
             ])
             ->addOption('notification_types', [
@@ -83,6 +90,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->NotificationTypes->installBaseTypes();
 
             $io->info('Notification Types Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('file_types')) {
+            $happenings = $this->FileTypes->installBaseTypes();
+
+            $io->info('File Types Installed: ' . $happenings);
         }
     }
 }
