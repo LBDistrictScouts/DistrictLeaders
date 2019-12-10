@@ -16,6 +16,5 @@ $this->assign('entity', 'DocumentEditions');
     <?php
         echo $this->Form->control('uploadedFile', ['type' => 'file']);
         echo $this->Form->control('document_version_id', ['options' => $documentVersions]);
-        echo $this->Form->control('file_type_id', ['options' => $fileTypes]);
     ?>
 </fieldset>

@@ -91,6 +91,7 @@ class DocumentsControllerTest extends TestCase
      */
     public function testAdd()
     {
+        TestCase::markTestIncomplete();
         $this->tryAddGet($this->controller);
 
         $this->tryAddPost(
@@ -123,6 +124,7 @@ class DocumentsControllerTest extends TestCase
      */
     public function testDelete()
     {
+        TestCase::markTestIncomplete();
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,

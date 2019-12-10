@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use App\Model\Entity\Document;
+use App\Model\Entity\DocumentType;
 use Cake\Datasource\ResultSetInterface;
 
 /**
@@ -21,12 +22,26 @@ class DocumentsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['DocumentTypes']
-        ];
-        $documents = $this->paginate($this->Documents);
+        $urlFilters = $this->getRequest()->getQueryParams();
+        $appliedFilters = [];
+        $appliedFilterIds = [];
+        foreach ($urlFilters as $filter => $active) {
+            if ($active) {
+                $docType = $this->Documents->DocumentTypes->find()->where([DocumentType::FIELD_DOCUMENT_TYPE => $filter])->firstOrFail();
+                array_push($appliedFilterIds, $docType->get(DocumentType::FIELD_ID));
+                array_push($appliedFilters, $filter);
+            }
+        }
 
-        $this->set(compact('documents'));
+        $query = $this->Documents->find()->contain(['DocumentTypes']);
+        if (!empty($appliedFilterIds)) {
+            $query = $query->where(['document_type_id IN' => $appliedFilterIds]);
+        }
+        $documents = $this->paginate($query);
+
+        $filterArray = $this->Documents->DocumentTypes->find('list');
+
+        $this->set(compact('documents', 'filterArray', 'appliedFilters'));
     }
 
     /**
@@ -54,7 +69,13 @@ class DocumentsController extends AppController
     {
         $document = $this->Documents->newEntity();
         if ($this->request->is('post')) {
-            $document = $this->Documents->patchEntity($document, $this->request->getData());
+            $document = $this->Documents->uploadDocument($this->request->getData(), $document);
+
+            $document = $this->Documents->patchEntity(
+                $document,
+                $this->request->getData(),
+                ['fields' => [Document::FIELD_DOCUMENT_TYPE_ID]]
+            );
             if ($this->Documents->save($document)) {
                 $this->Flash->success(__('The document has been saved.'));
 

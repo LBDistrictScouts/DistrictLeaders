@@ -17,6 +17,7 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'Users');
 $this->assign('subset', 'All');
+$this->assign('add', $authUser->checkCapability('ADD_USER'))
 
 ?>
 

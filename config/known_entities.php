@@ -78,18 +78,22 @@ return [
         [
             FT::FIELD_FILE_TYPE => 'Word',
             FT::FIELD_FILE_EXTENSION => 'docx',
+            FT::FIELD_MIME => 'application/docx'
         ],
         [
             FT::FIELD_FILE_TYPE => 'PDF',
             FT::FIELD_FILE_EXTENSION => 'pdf',
+            FT::FIELD_MIME => 'application/pdf',
         ],
         [
             FT::FIELD_FILE_TYPE => 'Old Word',
             FT::FIELD_FILE_EXTENSION => 'doc',
+            FT::FIELD_MIME => 'application/doc',
         ],
         [
             FT::FIELD_FILE_TYPE => 'Comma Separated Value',
             FT::FIELD_FILE_EXTENSION => 'csv',
+            FT::FIELD_MIME => 'application/csv',
         ],
     ]
 ];

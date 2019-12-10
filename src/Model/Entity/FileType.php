@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $file_type
  * @property string $file_extension
+ * @property string|null $mime
  *
  * @property \App\Model\Entity\DocumentEdition[] $document_editions
  */
@@ -26,6 +27,7 @@ class FileType extends Entity
     protected $_accessible = [
         'file_type' => true,
         'file_extension' => true,
+        'mime' => true,
         'document_editions' => true
     ];
 
@@ -33,4 +35,5 @@ class FileType extends Entity
     public const FIELD_FILE_TYPE = 'file_type';
     public const FIELD_FILE_EXTENSION = 'file_extension';
     public const FIELD_DOCUMENT_EDITIONS = 'document_editions';
+    public const FIELD_MIME = 'mime';
 }

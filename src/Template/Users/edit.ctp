@@ -7,7 +7,6 @@
 $this->extend('../Layout/CRUD/edit');
 
 $this->assign('entity', 'Users');
-$this->assign('icon', 'fa-users');
 
 ?>
 <?= $this->Form->create($user) ?>

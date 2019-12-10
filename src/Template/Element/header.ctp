@@ -71,7 +71,7 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <a href="#"><button class="btn btn-primary">District Documents</button></a>
+                                <a href="<?= $this->Url->build(['controller' => 'Documents', 'action' => 'index']) ?>"><button class="btn btn-primary">District Documents</button></a>
                             </div>
                         </div>
                     </div>

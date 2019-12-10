@@ -21,8 +21,10 @@ class DocumentEditionsFixture extends TestFixture
         'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'document_version_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'file_type_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'file_path' => ['type' => 'string', 'length' => 32, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'filename' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'size' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'md5_hash' => ['type' => 'string', 'length' => 32, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'file_path' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'document_editions_file_type_id_document_version_id' => ['type' => 'unique', 'columns' => ['document_version_id', 'file_type_id'], 'length' => []],
@@ -40,13 +42,15 @@ class DocumentEditionsFixture extends TestFixture
     {
         $this->records = [
             [
-                'created' => 1575921169,
-                'modified' => 1575921169,
+                'created' => 1575923177,
+                'modified' => 1575923177,
                 'deleted' => null,
                 'document_version_id' => 1,
                 'file_type_id' => 1,
                 'md5_hash' => 'Lorem ipsum dolor sit amet',
-                'file_path' => 'Lorem ipsum dolor sit amet'
+                'file_path' => 'Lorem ipsum dolor sit amet',
+                'filename' => 'Lorem ipsum dolor sit amet',
+                'size' => 1,
             ],
         ];
         parent::init();

@@ -2,7 +2,9 @@
 namespace App\Model\Table;
 
 use App\Model\Entity\DocumentEdition;
+use App\Model\Entity\FileType;
 use Cake\Datasource\EntityInterface;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -69,14 +71,23 @@ class DocumentEditionsTable extends Table
             ->allowEmptyString('id', null, 'create');
 
         $validator
+            ->scalar('file_path')
+            ->maxLength('file_path', 255)
+            ->allowEmptyString('file_path');
+
+        $validator
+            ->scalar('filename')
+            ->maxLength('filename', 255)
+            ->allowEmptyString('filename');
+
+        $validator
+            ->integer('size')
+            ->allowEmptyString('size');
+
+        $validator
             ->scalar('md5_hash')
             ->maxLength('md5_hash', 32)
             ->allowEmptyString('md5_hash');
-
-        $validator
-            ->scalar('file_path')
-            ->maxLength('file_path', 255)
-            ->allowEmptyFile('file_path');
 
         return $validator;
     }
@@ -96,5 +107,35 @@ class DocumentEditionsTable extends Table
         $rules->add($rules->isUnique(['file_type_id', 'document_version_id']));
 
         return $rules;
+    }
+
+    /**
+     * @param array $postData Post Request Data (file upload array)
+     *
+     * @return \Cake\Datasource\EntityInterface|bool
+     */
+    public function uploadDocument($postData)
+    {
+        if (!key_exists('uploadedFile', $postData)) {
+            return false;
+        }
+
+        /** @var \Cake\Datasource\EntityInterface $fileEntity */
+        $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
+
+        try {
+            $fileType = $this->FileTypes->find()->where([FileType::FIELD_MIME => $fileEntity->get('mime')])->firstOrFail();
+        } catch (RecordNotFoundException $exception) {
+            return false;
+        }
+
+        $this->patchEntity($fileEntity, [
+            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
+            DocumentEdition::FIELD_DOCUMENT_VERSION_ID => $postData[DocumentEdition::FIELD_DOCUMENT_VERSION_ID],
+            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
+            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
+        ]);
+
+        return $fileEntity;
     }
 }

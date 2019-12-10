@@ -12,7 +12,7 @@
     <div class="col-12 col-lg-8 offset-lg-2">
         <div class="card">
             <div class="card-header">
-                <h3><i class="fal <?= $this->fetch('icon') ?> fa-fw"></i> Edit <?= $this->Inflection->singleSpace($this->fetch('entity')) ?></h3>
+                <h3><?= $this->Icon->iconHtmlEntity($this->fetch('entity', ['fa-fw'])) ?> Edit <?= $this->Inflection->singleSpace($this->fetch('entity')) ?></h3>
             </div>
             <div class="card-body">
                 <?= $this->fetch('content') ?>

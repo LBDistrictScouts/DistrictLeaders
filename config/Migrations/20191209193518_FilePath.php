@@ -14,12 +14,27 @@ class FilePath extends AbstractMigration
     {
         $this
             ->table('document_editions')
+            ->addColumn('file_path', 'string', [
+                'limit' => 32,
+                'null' => true,
+            ])
+            ->addColumn('filename', 'string', [
+                'limit' => 255,
+                'null' => true,
+            ])
+            ->addColumn('size', 'integer', [
+                'null' => true,
+            ])
             ->addColumn('md5_hash', 'string', [
                 'limit' => 32,
                 'null' => true,
             ])
-            ->addColumn('file_path', 'string', [
-                'limit' => 255,
+            ->save();
+
+        $this
+            ->table('file_types')
+            ->addColumn('mime', 'string', [
+                'limit' => 32,
                 'null' => true,
             ])
             ->save();

@@ -5,7 +5,6 @@ namespace PHPSTORM_META {
 	override(
 		\Cake\Controller\Controller::loadComponent(0),
 		map([
-			'Ajax.Ajax' => \Ajax\Controller\Component\AjaxComponent::class,
 			'Auth' => \Cake\Controller\Component\AuthComponent::class,
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,

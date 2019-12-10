@@ -11,7 +11,7 @@ return [
     'functionalAreas' => [
         'directory' => true,
         'camps' => false,
-        'documents' => false,
+        'documents' => true,
         'articles' => false,
         'search' => false,
     ],

@@ -6,6 +6,8 @@
  * Time: 17:36
  *
  * @var \App\View\AppView $this
+ * @var \Cake\ORM\ResultSet $filterArray
+ * @var array $appliedFilters
  */
 
 $entity = $this->fetch('entity');
@@ -22,14 +24,46 @@ $entity = $this->fetch('entity');
             <div class="card-header">
                 <div class="row">
                     <div class="col-12 col-md-6">
-                        <h3><?= $this->fetch('subset', 'All') ?> <?= $this->Inflection->space($entity) ?></h3>
+                        <?php
+                        $subset = $this->fetch('subset', 'All');
+                        if (!empty($appliedFilters)) {
+                            $subset = $this->Text->toList($appliedFilters);
+                        } ?>
+                        <h3><?= h($subset) ?> <?= $this->Inflection->space($entity) ?></h3>
                     </div>
-                    <?php if ($this->fetch('add') != 'No') : ?>
+                    <?php if ($this->fetch('add')) : ?>
                         <div class="col-12 col-md-6 text-md-right">
-                            <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($entity) , ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
+                            <?= $this->Html->link('Add New '. $this->Inflection->singleSpace($entity), ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
                         </div>
                     <?php endif; ?>
                 </div>
+                <?php if (isset($filterArray)) : ?>
+                <div class="row">
+                    <div class="col">
+                        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                            <div class="btn-group mr-2" role="group" aria-label="First group">
+                                <?php
+                                /** @var string $filterItem */
+                                foreach ($filterArray as $id => $filterItem) :
+                                    $urlQuery = $this->getRequest()->getQueryParams();
+                                    if (key_exists($filterItem, $urlQuery)) {
+                                        $active = $urlQuery[$filterItem];
+                                    } else {
+                                        $active = false;
+                                    }
+                                    $onlyActive = in_array($filterItem, $appliedFilters) && count($appliedFilters) == 1;
+                                    $outputQuery = $urlQuery;
+                                    $outputQuery[$filterItem] = !$active;
+                                ?>
+                                    <a href="<?= $this->Html->Url->build(['?' => $outputQuery]) ?>" class="btn btn-<?= $active ? 'success' : 'secondary' ?>">
+                                        <?= h($filterItem) ?> <span class="badge"><?= $onlyActive ? 'ONLY' : '' ?></span>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
             </div>
             <?= $this->element('search') ?>
             <div class="card-body">
