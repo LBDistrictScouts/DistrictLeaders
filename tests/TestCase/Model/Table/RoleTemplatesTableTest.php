@@ -80,7 +80,7 @@ class RoleTemplatesTableTest extends TestCase
             RoleTemplate::FIELD_ID => 1,
             RoleTemplate::FIELD_ROLE_TEMPLATE => 'Lorem ipsum dolor sit amet',
             RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => '',
-            RoleTemplate::FIELD_INDICATIVE_LEVEL => 1
+            RoleTemplate::FIELD_INDICATIVE_LEVEL => 1,
         ];
         $this->validateInitialise($expected, $this->RoleTemplates, 1);
     }
@@ -116,7 +116,7 @@ class RoleTemplatesTableTest extends TestCase
         $this->validateEmpties($empties, $this->RoleTemplates, [$this, 'getGood']);
 
         $maxLengths = [
-            RoleTemplate::FIELD_ROLE_TEMPLATE => 63
+            RoleTemplate::FIELD_ROLE_TEMPLATE => 63,
         ];
         $this->validateMaxLengths($maxLengths, $this->RoleTemplates, [$this, 'getGood']);
     }

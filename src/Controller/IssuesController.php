@@ -55,7 +55,7 @@ class IssuesController extends Controller
     public function view($id = null)
     {
         $issue = $this->Issues->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
 
         $this->set('issue', $issue);
@@ -91,7 +91,7 @@ class IssuesController extends Controller
     public function edit($id = null)
     {
         $issue = $this->Issues->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());

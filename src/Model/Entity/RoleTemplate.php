@@ -28,7 +28,7 @@ class RoleTemplate extends Entity
         'role_template' => true,
         'template_capabilities' => true,
         'indicative_level' => true,
-        'role_types' => true
+        'role_types' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
  *
- * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
- * @method \App\Model\Entity\Capability newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Capability|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Capability[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Capability findOrCreate($search, callable $callback = null, $options = [])
+ * @method Capability get($primaryKey, $options = [])
+ * @method Capability newEntity($data = null, array $options = [])
+ * @method Capability[] newEntities(array $data, array $options = [])
+ * @method Capability|false save(EntityInterface $entity, $options = [])
+ * @method Capability saveOrFail(EntityInterface $entity, $options = [])
+ * @method Capability patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Capability[] patchEntities($entities, array $data, array $options = [])
+ * @method Capability findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class CapabilitiesTable extends Table
@@ -44,7 +44,7 @@ class CapabilitiesTable extends Table
         $this->belongsToMany('RoleTypes', [
             'foreignKey' => 'capability_id',
             'targetForeignKey' => 'role_type_id',
-            'joinTable' => 'capabilities_role_types'
+            'joinTable' => 'capabilities_role_types',
         ]);
     }
 
@@ -112,7 +112,7 @@ class CapabilitiesTable extends Table
             $capability = $this->newEntity($baseCapability);
             if ($this->save($capability)) {
                 $total += 1;
-            };
+            }
         }
 
         return $total;

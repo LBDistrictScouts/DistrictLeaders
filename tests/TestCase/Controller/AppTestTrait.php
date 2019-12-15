@@ -157,12 +157,12 @@ trait AppTestTrait
     {
         $url = [
             'controller' => $controller,
-            'action' => 'add'
+            'action' => 'add',
         ];
         $expectedRedirect = [
             'controller' => $controller,
             'action' => 'view',
-            $newEntityId
+            $newEntityId,
         ];
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
@@ -180,12 +180,12 @@ trait AppTestTrait
         $url = [
             'controller' => $controller,
             'action' => 'edit',
-            $entityId
+            $entityId,
         ];
         $expectedRedirect = [
             'controller' => $controller,
             'action' => 'view',
-            $entityId
+            $entityId,
         ];
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
@@ -205,11 +205,11 @@ trait AppTestTrait
         $url = [
             'controller' => $controller,
             'action' => 'delete',
-            $newEntityId
+            $newEntityId,
         ];
         $expectedRedirect = [
             'controller' => $controller,
-            'action' => 'index'
+            'action' => 'index',
         ];
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);

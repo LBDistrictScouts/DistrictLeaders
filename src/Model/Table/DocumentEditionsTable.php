@@ -50,11 +50,11 @@ class DocumentEditionsTable extends Table
 
         $this->belongsTo('DocumentVersions', [
             'foreignKey' => 'document_version_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('FileTypes', [
             'foreignKey' => 'file_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 

@@ -39,7 +39,7 @@ class RoleTemplatesTable extends Table
         $this->setPrimaryKey(RoleTemplate::FIELD_ID);
 
         $this->hasMany('RoleTypes', [
-            'foreignKey' => 'role_template_id'
+            'foreignKey' => 'role_template_id',
         ]);
     }
 

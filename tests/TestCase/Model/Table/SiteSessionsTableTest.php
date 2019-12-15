@@ -25,7 +25,7 @@ class SiteSessionsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.SiteSessions'
+        'app.SiteSessions',
     ];
 
     /**
@@ -64,7 +64,7 @@ class SiteSessionsTableTest extends TestCase
     {
         $good = [
             'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'expires' => 1
+            'expires' => 1,
         ];
 
         return $good;
@@ -95,7 +95,7 @@ class SiteSessionsTableTest extends TestCase
         $expected = [
             'id' => 1,
             'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'expires' => 1
+            'expires' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

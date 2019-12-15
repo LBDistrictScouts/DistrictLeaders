@@ -55,7 +55,7 @@ class TokenizeTokensFixture extends TestFixture
                 'status' => 1,
                 'expired' => 1547918030,
                 'created' => 1547918030,
-                'modified' => 1547918030
+                'modified' => 1547918030,
             ],
         ];
         parent::init();

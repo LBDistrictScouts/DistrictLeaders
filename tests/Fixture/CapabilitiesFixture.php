@@ -40,32 +40,32 @@ class CapabilitiesFixture extends TestFixture
             [
                 'capability_code' => 'ALL',
                 'capability' => 'SuperUser Permissions',
-                'min_level' => 5 // Config Level
+                'min_level' => 5, // Config Level
             ],
             [
                 'capability_code' => 'EDIT_GROUP',
                 'capability' => 'Edit Group',
-                'min_level' => 4 // District Level
+                'min_level' => 4, // District Level
             ],
             [
                 'capability_code' => 'EDIT_SECT',
                 'capability' => 'Edit Section',
-                'min_level' => 3 // Group Level
+                'min_level' => 3, // Group Level
             ],
             [
                 'capability_code' => 'EDIT_USER',
                 'capability' => 'Edit User',
-                'min_level' => 2 // Section Level
+                'min_level' => 2, // Section Level
             ],
             [
                 'capability_code' => 'OWN_USER',
                 'capability' => 'Edit Own User',
-                'min_level' => 1 // User Level
+                'min_level' => 1, // User Level
             ],
             [
                 'capability_code' => 'LOGIN',
                 'capability' => 'Login',
-                'min_level' => 0 // Base Level
+                'min_level' => 0, // Base Level
             ],
         ];
         parent::init();

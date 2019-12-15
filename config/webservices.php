@@ -6,5 +6,5 @@ return [
             'className' => 'Muffin\Webservice\Connection',
             'service' => 'CvoTechnologies/GitHub.GitHub',
         ],
-    ]
+    ],
 ];

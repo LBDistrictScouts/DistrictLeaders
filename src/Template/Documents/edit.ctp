@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Document $document
+ * @var mixed $documentTypes
  */
 
 $this->extend('../Layout/CRUD/edit');

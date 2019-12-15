@@ -24,7 +24,7 @@ class UserContactsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'UserContactTypes']
+            'contain' => ['Users', 'UserContactTypes'],
         ];
         $userContacts = $this->paginate($this->UserContacts);
 
@@ -43,7 +43,7 @@ class UserContactsController extends AppController
     public function view($id = null)
     {
         $userContact = $this->UserContacts->get($id, [
-            'contain' => ['Users', 'UserContactTypes', 'Audits', 'Roles']
+            'contain' => ['Users', 'UserContactTypes', 'Audits', 'Roles'],
         ]);
 
         $this->set('userContact', $userContact);
@@ -131,7 +131,7 @@ class UserContactsController extends AppController
     public function edit($id = null)
     {
         $userContact = $this->UserContacts->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userContact = $this->UserContacts->patchEntity($userContact, $this->request->getData());

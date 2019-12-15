@@ -40,7 +40,7 @@ class NotificationTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Notifications', [
-            'foreignKey' => 'notification_type_id'
+            'foreignKey' => 'notification_type_id',
         ]);
     }
 
@@ -111,7 +111,7 @@ class NotificationTypesTable extends Table
 
         foreach ($base as $baseType) {
             $query = $this->find()->where([
-                NotificationType::FIELD_NOTIFICATION_TYPE => $baseType[NotificationType::FIELD_NOTIFICATION_TYPE]
+                NotificationType::FIELD_NOTIFICATION_TYPE => $baseType[NotificationType::FIELD_NOTIFICATION_TYPE],
             ]);
             $status = $this->newEntity();
             if ($query->count() > 0) {

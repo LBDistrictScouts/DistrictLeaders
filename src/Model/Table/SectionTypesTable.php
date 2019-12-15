@@ -42,10 +42,10 @@ class SectionTypesTable extends Table
         $this->setPrimaryKey(SectionType::FIELD_ID);
 
         $this->hasMany('RoleTypes', [
-            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID,
         ]);
         $this->hasMany('Sections', [
-            'foreignKey' => Section::FIELD_SECTION_TYPE_ID
+            'foreignKey' => Section::FIELD_SECTION_TYPE_ID,
         ]);
     }
 

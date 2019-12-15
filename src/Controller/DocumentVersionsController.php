@@ -24,8 +24,8 @@ class DocumentVersionsController extends AppController
         $this->paginate = [
             'contain' => [
                 'Documents.DocumentTypes',
-                'DocumentEditions.FileTypes'
-            ]
+                'DocumentEditions.FileTypes',
+            ],
         ];
         $documentVersions = $this->paginate($this->DocumentVersions);
 
@@ -42,7 +42,7 @@ class DocumentVersionsController extends AppController
     public function view($id = null)
     {
         $documentVersion = $this->DocumentVersions->get($id, [
-            'contain' => ['Documents', 'DocumentEditions']
+            'contain' => ['Documents', 'DocumentEditions'],
         ]);
 
         $this->set('documentVersion', $documentVersion);
@@ -79,7 +79,7 @@ class DocumentVersionsController extends AppController
     public function edit($id = null)
     {
         $documentVersion = $this->DocumentVersions->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentVersion = $this->DocumentVersions->patchEntity($documentVersion, $this->request->getData());

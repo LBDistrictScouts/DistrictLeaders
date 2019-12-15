@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\CampTypesTable $CampTypes
  *
- * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method CampType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampTypesController extends AppController
 {
@@ -37,7 +37,7 @@ class CampTypesController extends AppController
     public function view($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => ['Camps']
+            'contain' => ['Camps'],
         ]);
 
         $this->set('campType', $campType);
@@ -73,7 +73,7 @@ class CampTypesController extends AppController
     public function edit($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $campType = $this->CampTypes->patchEntity($campType, $this->request->getData());

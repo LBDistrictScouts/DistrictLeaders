@@ -190,7 +190,7 @@ class ResetFormTest extends TestCase
     {
         $resultArray = [
             ResetForm::FIELD_MEMBERSHIP_NUMBER => $membershipNumber,
-            ResetForm::FIELD_EMAIL => $email
+            ResetForm::FIELD_EMAIL => $email,
         ];
 
         if (!is_null($firstName)) {

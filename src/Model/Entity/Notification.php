@@ -52,7 +52,7 @@ class Notification extends Entity
         'deleted' => true,
         'user' => true,
         'notification_type' => true,
-        'email_sends' => true
+        'email_sends' => true,
     ];
 
     public const FIELD_ID = 'id';

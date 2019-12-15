@@ -40,7 +40,7 @@ class FileTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('DocumentEditions', [
-            'foreignKey' => 'file_type_id'
+            'foreignKey' => 'file_type_id',
         ]);
     }
 

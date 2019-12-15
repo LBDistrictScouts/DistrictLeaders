@@ -30,7 +30,7 @@ class NotificationType extends Entity
         'notification_description' => true,
         'icon' => true,
         'type_code' => true,
-        'notifications' => true
+        'notifications' => true,
     ];
 
     public const FIELD_ID = 'id';

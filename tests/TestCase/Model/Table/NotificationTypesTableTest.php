@@ -28,7 +28,7 @@ class NotificationTypesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.NotificationTypes'
+        'app.NotificationTypes',
     ];
 
     /**

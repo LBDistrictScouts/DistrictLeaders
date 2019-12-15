@@ -21,7 +21,7 @@ class InstallBaseCommandTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.Capabilities'
+        'app.Capabilities',
     ];
 
     /**

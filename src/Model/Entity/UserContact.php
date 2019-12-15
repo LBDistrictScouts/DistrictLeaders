@@ -42,7 +42,7 @@ class UserContact extends Entity
         'audits' => true,
         'user' => true,
         'user_contact_type' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     public const FIELD_ID = 'id';

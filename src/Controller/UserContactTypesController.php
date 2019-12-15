@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  *
- * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method UserContactType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
 {
@@ -38,7 +38,7 @@ class UserContactTypesController extends AppController
     public function view($id = null)
     {
         $userContactType = $this->UserContactTypes->get($id, [
-            'contain' => ['UserContacts']
+            'contain' => ['UserContacts'],
         ]);
 
         $this->set('userContactType', $userContactType);
@@ -74,7 +74,7 @@ class UserContactTypesController extends AppController
     public function edit($id = null)
     {
         $userContactType = $this->UserContactTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userContactType = $this->UserContactTypes->patchEntity($userContactType, $this->request->getData());

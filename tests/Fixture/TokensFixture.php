@@ -62,8 +62,8 @@ class TokensFixture extends TestFixture
                         'action' => 'view',
                         'prefix' => false,
                         1,
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
         parent::init();

@@ -65,10 +65,10 @@ class TokensControllerTest extends TestCase
                 'controller' => 'Applications',
                 'action' => 'view',
                 'prefix' => false,
-                1
+                1,
             ],
             'authenticate' => true,
-        ]
+        ],
     ];
 
     /**
@@ -89,7 +89,7 @@ class TokensControllerTest extends TestCase
             'controller' => 'Tokens',
             'action' => 'validate',
             'prefix' => false,
-            $token
+            $token,
         ]);
 
         $this->assertRedirect([
@@ -100,7 +100,7 @@ class TokensControllerTest extends TestCase
             '?' => [
                 'token_id' => 1,
                 'token' => $token,
-            ]
+            ],
         ]);
     }
 
@@ -124,7 +124,7 @@ class TokensControllerTest extends TestCase
                 'action' => 'view',
                 'prefix' => false,
                 1,
-            ]
+            ],
         ]);
         TestCase::assertNotFalse($tokens->save($tokenRow));
 
@@ -134,7 +134,7 @@ class TokensControllerTest extends TestCase
             'controller' => 'Tokens',
             'action' => 'validate',
             'prefix' => false,
-            $token
+            $token,
         ]);
 
         $this->assertRedirect([
@@ -145,7 +145,7 @@ class TokensControllerTest extends TestCase
             '?' => [
                 'token_id' => 1,
                 'token' => $token,
-            ]
+            ],
         ]);
     }
 }

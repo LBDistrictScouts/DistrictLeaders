@@ -56,7 +56,7 @@ class EmailSend extends Entity
         'user' => true,
         'notification' => true,
         'email_responses' => true,
-        'tokens' => true
+        'tokens' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -60,7 +60,7 @@ class SectionTypesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'section_type' => 'Llamas'
+            'section_type' => 'Llamas',
         ];
 
         return $good;
@@ -77,7 +77,7 @@ class SectionTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'section_type' => 'Beavers'
+            'section_type' => 'Beavers',
         ];
         TestCase::assertEquals($expected, $actual);
 

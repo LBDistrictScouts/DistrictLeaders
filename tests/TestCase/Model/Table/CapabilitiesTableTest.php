@@ -84,7 +84,7 @@ class CapabilitiesTableTest extends TestCase
             'id' => 1,
             'capability_code' => 'ALL',
             'capability' => 'SuperUser Permissions',
-            'min_level' => 5
+            'min_level' => 5,
         ];
         TestCase::assertEquals($expected, $actual);
 

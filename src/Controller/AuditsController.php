@@ -2,13 +2,15 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use App\Model\Entity\Audit;
+use Cake\Datasource\ResultSetInterface;
 
 /**
  * Audits Controller
  *
  * @property \App\Model\Table\AuditsTable $Audits
  *
- * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Audit[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AuditsController extends AppController
 {
@@ -21,7 +23,7 @@ class AuditsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'ChangedUsers']
+            'contain' => ['Users', 'ChangedUsers'],
         ];
         $audits = $this->paginate($this->Audits);
 

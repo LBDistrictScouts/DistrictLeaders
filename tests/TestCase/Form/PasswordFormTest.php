@@ -135,7 +135,7 @@ class PasswordFormTest extends TestCase
         $validationResult = $this->Password->validate([
             PasswordForm::FIELD_NEW_PASSWORD => $newPassword,
             PasswordForm::FIELD_CONFIRM_PASSWORD => $confirmPassword,
-            PasswordForm::FIELD_POSTCODE => $postcode
+            PasswordForm::FIELD_POSTCODE => $postcode,
         ]);
 
         if (!$outcome['passValidation']) {
@@ -175,7 +175,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => true
+                    'execute_pass' => true,
                 ], // Outcome Array
             ],
             [ // 1 - Pass for lower case Postcode
@@ -188,7 +188,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => true
+                    'execute_pass' => true,
                 ], // Outcome Array
             ],
             [ // 2 - Fail unmatched password
@@ -201,7 +201,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
             [ // 3 - Missing Request
@@ -209,7 +209,7 @@ class PasswordFormTest extends TestCase
                     'user' => true,
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
             [ // 4 - Missing User
@@ -221,7 +221,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
             [ // 5 - Missing New Password
@@ -233,7 +233,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
             [ // 6 - Missing Confirm Password
@@ -245,7 +245,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
             [ // 7 - Missing Postcode
@@ -257,7 +257,7 @@ class PasswordFormTest extends TestCase
                     ],
                 ], // Execute Request Array
                 [
-                    'execute_pass' => false
+                    'execute_pass' => false,
                 ], // Outcome Array
             ],
         ];

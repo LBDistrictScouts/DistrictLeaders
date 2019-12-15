@@ -57,15 +57,15 @@ class DocumentsTable extends Table
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 Document::FIELD_DOCUMENT => 't',
-            ]
+            ],
         ]);
 
         $this->belongsTo('DocumentTypes', [
             'foreignKey' => 'document_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('DocumentVersions', [
-            'foreignKey' => 'document_id'
+            'foreignKey' => 'document_id',
         ]);
     }
 
@@ -122,7 +122,7 @@ class DocumentsTable extends Table
 
         try {
             $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
-                FileType::FIELD_MIME => $fileEntity->get(FileType::FIELD_MIME)
+                FileType::FIELD_MIME => $fileEntity->get(FileType::FIELD_MIME),
             ])->firstOrFail();
         } catch (RecordNotFoundException $exception) {
             return false;
@@ -144,11 +144,11 @@ class DocumentsTable extends Table
                     DocumentVersion::FIELD_VERSION_NUMBER => 1,
                     DocumentVersion::FIELD_DOCUMENT_EDITIONS => [
                         [
-                            $fileEntity
-                        ]
-                    ]
+                            $fileEntity,
+                        ],
+                    ],
                 ],
-            ]
+            ],
         ];
 
         return $this->patchEntity($documentEntity, $documentData, ['associated' => ['DocumentVersions' => ['DocumentEditions']]]);

@@ -47,18 +47,18 @@ class RoleTypesTable extends Table
         $this->setPrimaryKey(RoleType::FIELD_ID);
 
         $this->belongsTo('SectionTypes', [
-            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID,
         ]);
         $this->belongsTo('RoleTemplates', [
-            'foreignKey' => RoleType::FIELD_ROLE_TEMPLATE_ID
+            'foreignKey' => RoleType::FIELD_ROLE_TEMPLATE_ID,
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => Role::FIELD_ROLE_TYPE_ID
+            'foreignKey' => Role::FIELD_ROLE_TYPE_ID,
         ]);
         $this->belongsToMany('Capabilities', [
             'foreignKey' => CapabilitiesRoleType::FIELD_ROLE_TYPE_ID,
             'targetForeignKey' => CapabilitiesRoleType::FIELD_CAPABILITY_ID,
-            'through' => 'CapabilitiesRoleTypes'
+            'through' => 'CapabilitiesRoleTypes',
         ]);
     }
 

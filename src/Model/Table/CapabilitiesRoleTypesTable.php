@@ -41,11 +41,11 @@ class CapabilitiesRoleTypesTable extends Table
 
         $this->belongsTo('Capabilities', [
             'foreignKey' => 'capability_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('RoleTypes', [
             'foreignKey' => 'role_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 

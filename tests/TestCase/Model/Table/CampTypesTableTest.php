@@ -26,7 +26,7 @@ class CampTypesTableTest extends TestCase
      */
     public $fixtures = [
         'app.CampTypes',
-        'app.Camps'
+        'app.Camps',
     ];
 
     /**
@@ -61,7 +61,7 @@ class CampTypesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'camp_type' => 'Lorem ipsum amet'
+            'camp_type' => 'Lorem ipsum amet',
         ];
 
         return $good;
@@ -78,7 +78,7 @@ class CampTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'camp_type' => 'Lorem ipsum sit amet'
+            'camp_type' => 'Lorem ipsum sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

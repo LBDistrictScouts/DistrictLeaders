@@ -43,7 +43,7 @@ class UserContactTypesTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->hasMany('UserContacts', [
-            'foreignKey' => 'user_contact_type_id'
+            'foreignKey' => 'user_contact_type_id',
         ]);
     }
 

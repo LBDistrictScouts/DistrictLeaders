@@ -35,7 +35,7 @@ class RoleStatusesFixture extends TestFixture
     {
         $this->records = [
             [
-                'role_status' => 'Lorem ipsum dolor sit amet'
+                'role_status' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

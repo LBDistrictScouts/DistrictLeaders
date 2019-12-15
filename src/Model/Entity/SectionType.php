@@ -27,7 +27,7 @@ class SectionType extends Entity
     protected $_accessible = [
         'section_type' => true,
         'role_types' => true,
-        'sections' => true
+        'sections' => true,
     ];
 
     public const FIELD_ID = 'id';

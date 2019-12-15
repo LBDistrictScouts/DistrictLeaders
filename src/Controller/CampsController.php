@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\CampsTable $Camps
  *
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Camp[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampsController extends AppController
 {
@@ -23,7 +23,7 @@ class CampsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['CampTypes']
+            'contain' => ['CampTypes'],
         ];
         $camps = $this->paginate($this->Camps);
 
@@ -40,7 +40,7 @@ class CampsController extends AppController
     public function view($id = null)
     {
         $camp = $this->Camps->get($id, [
-            'contain' => ['CampTypes', 'CampRoles']
+            'contain' => ['CampTypes', 'CampRoles'],
         ]);
 
         $this->set('camp', $camp);
@@ -77,7 +77,7 @@ class CampsController extends AppController
     public function edit($id = null)
     {
         $camp = $this->Camps->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $camp = $this->Camps->patchEntity($camp, $this->request->getData());

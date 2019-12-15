@@ -47,7 +47,7 @@ class AuditsTable extends Table
                 'Model.beforeSave' => [
                     'change_date' => 'new',
                 ],
-            ]
+            ],
         ]);
 
         $this->addBehavior('Muffin/Footprint.Footprint', [
@@ -57,7 +57,7 @@ class AuditsTable extends Table
                 ],
                 'Model.beforeSave' => [
                     'user_id' => 'always',
-                ]
+                ],
             ],
             'propertiesMap' => [
                 'user_id' => '_footprint.id',
@@ -71,7 +71,7 @@ class AuditsTable extends Table
         ]);
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
     }
 

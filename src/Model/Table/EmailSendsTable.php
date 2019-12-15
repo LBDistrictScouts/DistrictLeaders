@@ -50,16 +50,16 @@ class EmailSendsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->belongsTo('Notifications', [
-            'foreignKey' => 'notification_id'
+            'foreignKey' => 'notification_id',
         ]);
         $this->hasMany('EmailResponses', [
-            'foreignKey' => 'email_send_id'
+            'foreignKey' => 'email_send_id',
         ]);
         $this->hasMany('Tokens', [
-            'foreignKey' => 'email_send_id'
+            'foreignKey' => 'email_send_id',
         ]);
     }
 
@@ -310,9 +310,9 @@ class EmailSendsTable extends Table
                         'token_header' => [
                             'redirect' => $redirect,
                             'authenticate' => $authenticate,
-                        ]
-                    ]
-                ]
+                        ],
+                    ],
+                ],
             ];
             $data = array_merge($data, $tokenData);
         }

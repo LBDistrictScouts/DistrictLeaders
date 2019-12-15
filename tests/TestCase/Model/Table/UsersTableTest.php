@@ -114,8 +114,8 @@ class UsersTableTest extends TestCase
                 ],
                 'group' => [
                     1 => ['EDIT_SECT'],
-                ]
-            ]
+                ],
+            ],
         ];
 
         return $good;
@@ -330,18 +330,18 @@ class UsersTableTest extends TestCase
                 (int)6 => 'ALL',
                 (int)4 => 'EDIT_GROUP',
                 (int)1 => 'LOGIN',
-                (int)0 => 'OWN_USER'
+                (int)0 => 'OWN_USER',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -351,21 +351,21 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'user' => [
-                (int)0 => 'LOGIN'
+                (int)0 => 'LOGIN',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)2 => [
-                    (int)0 => 'EDIT_USER'
+                    (int)0 => 'EDIT_USER',
                 ],
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -387,18 +387,18 @@ class UsersTableTest extends TestCase
                 (int)6 => 'ALL',
                 (int)4 => 'EDIT_GROUP',
                 (int)1 => 'LOGIN',
-                (int)0 => 'OWN_USER'
+                (int)0 => 'OWN_USER',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -408,21 +408,21 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'user' => [
-                (int)0 => 'LOGIN'
+                (int)0 => 'LOGIN',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)2 => [
-                    (int)0 => 'EDIT_USER'
+                    (int)0 => 'EDIT_USER',
                 ],
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -475,7 +475,7 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'sections' => [],
-            'groups' => [ 1 ]
+            'groups' => [ 1 ],
         ];
         TestCase::assertEquals($expected, $result);
     }
@@ -517,14 +517,14 @@ class UsersTableTest extends TestCase
             ],
             'section' => [
                 1 => [
-                    'EDIT_USER'
+                    'EDIT_USER',
                 ],
             ],
             'group' => [
                 1 => [
-                    'EDIT_SECT'
-                ]
-            ]
+                    'EDIT_SECT',
+                ],
+            ],
         ];
         $this->validateCapabilityArray($expected, $user->capabilities);
     }

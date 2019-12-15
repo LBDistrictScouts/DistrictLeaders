@@ -45,10 +45,10 @@ class DocumentVersionsTable extends Table
 
         $this->belongsTo('Documents', [
             'foreignKey' => 'document_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('DocumentEditions', [
-            'foreignKey' => 'document_version_id'
+            'foreignKey' => 'document_version_id',
         ]);
     }
 

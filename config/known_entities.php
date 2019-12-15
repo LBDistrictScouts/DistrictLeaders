@@ -78,7 +78,7 @@ return [
         [
             FT::FIELD_FILE_TYPE => 'Word',
             FT::FIELD_FILE_EXTENSION => 'docx',
-            FT::FIELD_MIME => 'application/docx'
+            FT::FIELD_MIME => 'application/docx',
         ],
         [
             FT::FIELD_FILE_TYPE => 'PDF',
@@ -95,5 +95,5 @@ return [
             FT::FIELD_FILE_EXTENSION => 'csv',
             FT::FIELD_MIME => 'application/csv',
         ],
-    ]
+    ],
 ];

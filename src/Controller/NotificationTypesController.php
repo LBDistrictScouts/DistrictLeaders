@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
  *
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method NotificationType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationTypesController extends AppController
 {
@@ -36,7 +36,7 @@ class NotificationTypesController extends AppController
     public function view($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => ['Notifications']
+            'contain' => ['Notifications'],
         ]);
 
         $this->set('notificationType', $notificationType);
@@ -72,7 +72,7 @@ class NotificationTypesController extends AppController
     public function edit($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notificationType = $this->NotificationTypes->patchEntity($notificationType, $this->request->getData());

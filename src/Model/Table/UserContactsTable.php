@@ -52,13 +52,13 @@ class UserContactsTable extends Table
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 UserContact::FIELD_CONTACT_FIELD => 'l',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
             'tracked_fields' => [
-                UserContact::FIELD_CONTACT_FIELD
-            ]
+                UserContact::FIELD_CONTACT_FIELD,
+            ],
         ]);
 
         $this->hasMany('Audits', [
@@ -68,14 +68,14 @@ class UserContactsTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => UserContact::FIELD_USER_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('UserContactTypes', [
             'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'user_contact_id'
+            'foreignKey' => 'user_contact_id',
         ]);
     }
 

@@ -12,5 +12,5 @@ return [
         'field' => 'password',
         'confirm' => true,
         'require' => true,
-    ]
+    ],
 ];

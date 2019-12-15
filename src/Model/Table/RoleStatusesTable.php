@@ -13,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method \App\Model\Entity\RoleStatus get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleStatus newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus findOrCreate($search, callable $callback = null, $options = [])
+ * @method RoleStatus get($primaryKey, $options = [])
+ * @method RoleStatus newEntity($data = null, array $options = [])
+ * @method RoleStatus[] newEntities(array $data, array $options = [])
+ * @method RoleStatus|false save(EntityInterface $entity, $options = [])
+ * @method RoleStatus saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleStatus patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleStatus[] patchEntities($entities, array $data, array $options = [])
+ * @method RoleStatus findOrCreate($search, callable $callback = null, $options = [])
  */
 class RoleStatusesTable extends Table
 {
@@ -39,7 +39,7 @@ class RoleStatusesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Roles', [
-            'foreignKey' => 'role_status_id'
+            'foreignKey' => 'role_status_id',
         ]);
     }
 

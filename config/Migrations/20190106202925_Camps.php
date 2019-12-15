@@ -19,7 +19,7 @@ class Camps extends AbstractMigration
                 'null' => false,
             ])
             ->addIndex('camp_type', [
-                'unique' => true
+                'unique' => true,
             ])
             ->create();
 

@@ -13,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\HasMany $Camps
  *
- * @method \App\Model\Entity\CampType get($primaryKey, $options = [])
- * @method \App\Model\Entity\CampType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CampType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CampType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CampType findOrCreate($search, callable $callback = null, $options = [])
+ * @method CampType get($primaryKey, $options = [])
+ * @method CampType newEntity($data = null, array $options = [])
+ * @method CampType[] newEntities(array $data, array $options = [])
+ * @method CampType|false save(EntityInterface $entity, $options = [])
+ * @method CampType saveOrFail(EntityInterface $entity, $options = [])
+ * @method CampType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method CampType[] patchEntities($entities, array $data, array $options = [])
+ * @method CampType findOrCreate($search, callable $callback = null, $options = [])
  */
 class CampTypesTable extends Table
 {
@@ -39,7 +39,7 @@ class CampTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Camps', [
-            'foreignKey' => 'camp_type_id'
+            'foreignKey' => 'camp_type_id',
         ]);
     }
 

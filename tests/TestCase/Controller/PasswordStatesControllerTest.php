@@ -79,7 +79,7 @@ class PasswordStatesControllerTest extends TestCase
             [
                 'password_state' => 'New',
                 'active' => true,
-                'expired' => false
+                'expired' => false,
             ],
             2
         );
@@ -101,7 +101,7 @@ class PasswordStatesControllerTest extends TestCase
             [
                 'password_state' => 'Edited',
                 'active' => true,
-                'expired' => false
+                'expired' => false,
             ],
             1
         );
@@ -121,7 +121,7 @@ class PasswordStatesControllerTest extends TestCase
             [
                 'password_state' => 'For Deletion',
                 'active' => true,
-                'expired' => false
+                'expired' => false,
             ],
             2
         );

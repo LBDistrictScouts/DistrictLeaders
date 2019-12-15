@@ -24,7 +24,7 @@ class DocumentType extends Entity
      */
     protected $_accessible = [
         'document_type' => true,
-        'documents' => true
+        'documents' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -125,7 +125,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         $this->Authorization->authorize($user);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -176,7 +176,7 @@ class UsersController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $event = new Event('Model.Users.login', $this, [
-                'user' => $this->request->getAttribute('identity')->getOriginalData()
+                'user' => $this->request->getAttribute('identity')->getOriginalData(),
             ]);
             $this->getEventManager()->dispatch($event);
 
@@ -298,7 +298,7 @@ class UsersController extends AppController
                 ->where([
                     'membership_number' => $this->request->getData('membership_number'),
                     'first_name' => $this->request->getData('first_name'),
-                    'last_name' => $this->request->getData('last_name')
+                    'last_name' => $this->request->getData('last_name'),
                 ]);
 
             $count = $found->count();
@@ -358,7 +358,7 @@ class UsersController extends AppController
                 if (
                     $passwordForm->execute([
                     'request' => $this->request->getData(),
-                    'user' => $resetUser
+                    'user' => $resetUser,
                     ])
                 ) {
                     $this->Flash->success('Your password was saved successfully.');

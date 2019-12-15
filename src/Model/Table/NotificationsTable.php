@@ -15,14 +15,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\NotificationTypesTable&\Cake\ORM\Association\BelongsTo $NotificationTypes
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
  *
- * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
- * @method \App\Model\Entity\Notification newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Notification[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Notification|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Notification[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Notification findOrCreate($search, callable $callback = null, $options = [])
+ * @method Notification get($primaryKey, $options = [])
+ * @method Notification newEntity($data = null, array $options = [])
+ * @method Notification[] newEntities(array $data, array $options = [])
+ * @method Notification|false save(EntityInterface $entity, $options = [])
+ * @method Notification saveOrFail(EntityInterface $entity, $options = [])
+ * @method Notification patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Notification[] patchEntities($entities, array $data, array $options = [])
+ * @method Notification findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
@@ -45,13 +45,13 @@ class NotificationsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->belongsTo('NotificationTypes', [
-            'foreignKey' => 'notification_type_id'
+            'foreignKey' => 'notification_type_id',
         ]);
         $this->hasMany('EmailSends', [
-            'foreignKey' => 'notification_id'
+            'foreignKey' => 'notification_id',
         ]);
     }
 

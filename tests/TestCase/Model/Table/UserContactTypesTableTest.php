@@ -91,7 +91,7 @@ class UserContactTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'user_contact_type' => 'Email'
+            'user_contact_type' => 'Email',
         ];
         TestCase::assertEquals($expected, $actual);
 

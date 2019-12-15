@@ -67,7 +67,7 @@ class UsersTable extends Table
                 User::FIELD_ADDRESS_LINE_2 => 't',
                 User::FIELD_CITY => 't',
                 User::FIELD_COUNTY => 't',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
@@ -82,11 +82,11 @@ class UsersTable extends Table
                 User::FIELD_CITY,
                 User::FIELD_COUNTY,
                 User::FIELD_POSTCODE,
-            ]
+            ],
         ]);
 
         $this->belongsTo('PasswordStates', [
-            'foreignKey' => 'password_state_id'
+            'foreignKey' => 'password_state_id',
         ]);
 
         $this->hasMany('Changes', [
@@ -100,13 +100,13 @@ class UsersTable extends Table
         ]);
 
         $this->hasMany('CampRoles', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('EmailSends', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Notifications', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_id',
@@ -114,7 +114,7 @@ class UsersTable extends Table
             'cascadeCallbacks' => true,
         ]);
         $this->hasMany('UserContacts', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
     }
 
@@ -256,9 +256,9 @@ class UsersTable extends Table
             'contain' => [
                 'Roles' => [
                     'RoleTypes.Capabilities',
-                    'Sections.ScoutGroups'
-                ]
-            ]
+                    'Sections.ScoutGroups',
+                ],
+            ],
         ]);
 
         $permissions = [];
@@ -417,7 +417,7 @@ class UsersTable extends Table
     public function findAuth(Query $query, array $options)
     {
         $query
-            ->where(['username IS NOT NULL']);
+            ->where([User::FIELD_USERNAME . ' IS NOT NULL']);
 
         return $query;
     }

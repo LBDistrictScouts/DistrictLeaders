@@ -98,10 +98,10 @@ class TokensTableTest extends TestCase
                     'controller' => 'Applications',
                     'action' => 'view',
                     'prefix' => false,
-                    1
+                    1,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
     }
 
@@ -140,10 +140,10 @@ class TokensTableTest extends TestCase
                     'controller' => 'Applications',
                     'action' => 'view',
                     'prefix' => false,
-                    1
+                    1,
                 ],
                 'authenticate' => false,
-            ]
+            ],
         ];
         TestCase::assertEquals($expected, $actual);
 
@@ -281,7 +281,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $expected = [
@@ -295,7 +295,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $goodEntity = $this->Tokens->newEntity($goodData);
@@ -308,7 +308,7 @@ class TokensTableTest extends TestCase
                 'email_send_id',
                 'active',
                 'token_header',
-            ]
+            ],
         ]);
 
         $result = $query->toArray();
@@ -318,8 +318,8 @@ class TokensTableTest extends TestCase
         $query = $this->Tokens->get(2, [
             'fields' => [
                 'random_number',
-                'active'
-            ]
+                'active',
+            ],
         ]);
 
         $result = $query->toArray();
@@ -344,7 +344,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $expected = [
@@ -362,7 +362,7 @@ class TokensTableTest extends TestCase
                 'id',
                 'email_send_id',
                 'active',
-            ]
+            ],
         ]);
 
         $result = $query->toArray();
@@ -372,8 +372,8 @@ class TokensTableTest extends TestCase
         $query = $this->Tokens->get(2, [
             'fields' => [
                 'random_number',
-                'active'
-            ]
+                'active',
+            ],
         ]);
 
         $result = $query->toArray();

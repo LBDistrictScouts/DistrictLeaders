@@ -56,6 +56,8 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
+        $this->addPlugin('Cake/ElasticSearch', ['bootstrap' => true]);
+
         $this->addPlugin('Flash');
 
         $this->addPlugin('CakeDto', ['bootstrap' => true]);
@@ -127,7 +129,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
-                'cacheTime' => Configure::read('Asset.cacheTime')
+                'cacheTime' => Configure::read('Asset.cacheTime'),
             ]))
 
             // Add routing middleware.
@@ -210,7 +212,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         $fields = [
             'username' => 'username',
-            'password' => 'password'
+            'password' => 'password',
         ];
 
         $service->setConfig([
@@ -225,7 +227,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
         $service->loadAuthenticator('Authentication.Session');
         $service->loadAuthenticator('Authentication.Form', [
             compact('fields'),
-            'loginUrl' => [ self::LOGIN_URL, 'login' ]
+            'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
         $service->loadAuthenticator('Authentication.Cookie', [
             'rememberMeField' => 'remember_me',

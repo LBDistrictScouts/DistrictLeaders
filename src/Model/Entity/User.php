@@ -80,7 +80,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'changes' => true,
         'audits' => true,
         'camp_roles' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     /**
@@ -89,7 +89,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @var array
      */
     protected $_hidden = [
-        'password'
+        'password',
     ];
 
     /**

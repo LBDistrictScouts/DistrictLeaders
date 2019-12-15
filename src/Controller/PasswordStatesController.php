@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\PasswordStatesTable $PasswordStates
  *
- * @method \App\Model\Entity\PasswordState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method PasswordState[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PasswordStatesController extends AppController
 {
@@ -37,7 +37,7 @@ class PasswordStatesController extends AppController
     public function view($id = null)
     {
         $passwordState = $this->PasswordStates->get($id, [
-            'contain' => ['Users']
+            'contain' => ['Users'],
         ]);
 
         $this->set('passwordState', $passwordState);
@@ -73,7 +73,7 @@ class PasswordStatesController extends AppController
     public function edit($id = null)
     {
         $passwordState = $this->PasswordStates->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $passwordState = $this->PasswordStates->patchEntity($passwordState, $this->request->getData());

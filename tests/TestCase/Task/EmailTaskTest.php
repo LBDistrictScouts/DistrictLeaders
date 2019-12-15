@@ -53,7 +53,7 @@ class EmailTaskTest extends TestCase
         'app.EmailResponseTypes',
         'app.EmailResponses',
         'plugin.Queue.QueuedJobs',
-        'plugin.Queue.QueueProcesses'
+        'plugin.Queue.QueueProcesses',
     ];
 
     /**

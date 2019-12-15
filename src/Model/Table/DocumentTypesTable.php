@@ -40,7 +40,7 @@ class DocumentTypesTable extends Table
         $this->setPrimaryKey(DocumentType::FIELD_ID);
 
         $this->hasMany('Documents', [
-            'foreignKey' => Document::FIELD_DOCUMENT_TYPE_ID
+            'foreignKey' => Document::FIELD_DOCUMENT_TYPE_ID,
         ]);
     }
 

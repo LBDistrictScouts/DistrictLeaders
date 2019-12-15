@@ -85,7 +85,7 @@ class DocumentEditionsTableTest extends TestCase
             DocumentEdition::FIELD_MD5_HASH => 'Lorem ipsum dolor sit amet',
             DocumentEdition::FIELD_FILE_PATH => 'Lorem ipsum dolor sit amet',
             DocumentEdition::FIELD_FILENAME => 'Lorem ipsum dolor sit amet',
-            DocumentEdition::FIELD_SIZE => 1
+            DocumentEdition::FIELD_SIZE => 1,
         ];
         $dates = [
             DocumentEdition::FIELD_CREATED,
@@ -133,7 +133,7 @@ class DocumentEditionsTableTest extends TestCase
             'filename' => 'Group_Camp_2020_Poster.pdf',
             'size' => 1477920,
             'mime' => 'application/pdf',
-            'hash' => '8f9ae3cb199ea95cc4f2594cd4fd6033'
+            'hash' => '8f9ae3cb199ea95cc4f2594cd4fd6033',
         ];
 
         $entityClass = $this->DocumentEditions->getEntityClass();

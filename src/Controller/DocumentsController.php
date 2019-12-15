@@ -51,7 +51,7 @@ class DocumentsController extends AppController
     public function view($id = null)
     {
         $document = $this->Documents->get($id, [
-            'contain' => ['DocumentTypes', 'DocumentVersions']
+            'contain' => ['DocumentTypes', 'DocumentVersions'],
         ]);
 
         $this->set('document', $document);
@@ -94,7 +94,7 @@ class DocumentsController extends AppController
     public function edit($id = null)
     {
         $document = $this->Documents->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $document = $this->Documents->patchEntity($document, $this->request->getData());

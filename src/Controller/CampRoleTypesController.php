@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\CampRoleTypesTable $CampRoleTypes
  *
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method CampRoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRoleTypesController extends AppController
 {
@@ -37,7 +37,7 @@ class CampRoleTypesController extends AppController
     public function view($id = null)
     {
         $campRoleType = $this->CampRoleTypes->get($id, [
-            'contain' => ['CampRoles']
+            'contain' => ['CampRoles'],
         ]);
 
         $this->set('campRoleType', $campRoleType);
@@ -73,7 +73,7 @@ class CampRoleTypesController extends AppController
     public function edit($id = null)
     {
         $campRoleType = $this->CampRoleTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $campRoleType = $this->CampRoleTypes->patchEntity($campRoleType, $this->request->getData());

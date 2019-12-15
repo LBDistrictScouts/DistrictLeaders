@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\User $loggedInUser
+ * @var mixed $identity
  */
 ?>
 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

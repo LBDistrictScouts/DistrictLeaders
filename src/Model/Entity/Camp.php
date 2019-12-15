@@ -39,7 +39,7 @@ class Camp extends Entity
         'camp_start' => true,
         'camp_end' => true,
         'camp_type' => true,
-        'camp_roles' => true
+        'camp_roles' => true,
     ];
 
     public const FIELD_ID = 'id';

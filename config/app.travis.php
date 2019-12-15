@@ -331,14 +331,14 @@ return [
         'handler' => [
             'engine' => 'ComboSession',
             'model' => 'SiteSessions',
-            'cache' => 'combo'
-        ]
+            'cache' => 'combo',
+        ],
     ],
 
     'SparkPost' => [
         'Api' => [
-            'key' => ''
-        ]
+            'key' => '',
+        ],
     ],
 
     'GoogleClient' => [

@@ -46,7 +46,7 @@ class CapabilitiesControllerTest extends TestCase
     private $validEntityData = [
         'capability_code' => 'TEST_NEW',
         'capability' => 'My Test Permissions',
-        'min_level' => 5 // Config Level
+        'min_level' => 5, // Config Level
     ];
 
     /**

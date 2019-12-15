@@ -71,7 +71,7 @@ class PasswordCommand extends Command
 
         $user = $this->Users->find()->where([
             User::FIELD_USERNAME => $adminUser['username'],
-            User::FIELD_EMAIL => $adminUser['email']
+            User::FIELD_EMAIL => $adminUser['email'],
         ])->first();
 
         if (!($user instanceof User)) {

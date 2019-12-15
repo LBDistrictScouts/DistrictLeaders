@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
  *
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Notification[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController
 {
@@ -22,7 +22,7 @@ class NotificationsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'NotificationTypes']
+            'contain' => ['Users', 'NotificationTypes'],
         ];
         $notifications = $this->paginate($this->Notifications);
 
@@ -39,7 +39,7 @@ class NotificationsController extends AppController
     public function view($id = null)
     {
         $notification = $this->Notifications->get($id, [
-            'contain' => ['Users', 'NotificationTypes', 'EmailSends']
+            'contain' => ['Users', 'NotificationTypes', 'EmailSends'],
         ]);
 
         $this->set('notification', $notification);
@@ -77,7 +77,7 @@ class NotificationsController extends AppController
     public function edit($id = null)
     {
         $notification = $this->Notifications->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notification = $this->Notifications->patchEntity($notification, $this->request->getData());

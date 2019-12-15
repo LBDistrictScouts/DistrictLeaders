@@ -46,7 +46,7 @@ class ScoutGroupsTable extends Table
         $this->addBehavior('Muffin/Trash.Trash');
 
         $this->hasMany('Sections', [
-            'foreignKey' => 'scout_group_id'
+            'foreignKey' => 'scout_group_id',
         ]);
     }
 

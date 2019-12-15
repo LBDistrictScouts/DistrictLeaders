@@ -44,7 +44,7 @@ class Documents extends AbstractMigration
             ])
             ->addForeignKey('document_type_id', 'document_types', ['id'], [
                 'delete' => 'RESTRICT',
-                'update' => 'RESTRICT'
+                'update' => 'RESTRICT',
             ])
             ->addTimestamps('created', 'modified', true)
             ->addColumn('deleted', 'datetime', [
@@ -65,7 +65,7 @@ class Documents extends AbstractMigration
             ])
             ->addForeignKey('document_id', 'documents', ['id'], [
                 'delete' => 'CASCADE',
-                'update' => 'CASCADE'
+                'update' => 'CASCADE',
             ])
             ->addTimestamps('created', 'modified', true)
             ->addColumn('deleted', 'datetime', [
@@ -88,14 +88,14 @@ class Documents extends AbstractMigration
             ])
             ->addForeignKey('document_version_id', 'document_versions', ['id'], [
                 'delete' => 'CASCADE',
-                'update' => 'CASCADE'
+                'update' => 'CASCADE',
             ])
             ->addColumn('file_type_id', 'integer', [
                 'null' => false,
             ])
             ->addForeignKey('file_type_id', 'file_types', ['id'], [
                 'delete' => 'RESTRICT',
-                'update' => 'RESTRICT'
+                'update' => 'RESTRICT',
             ])
             ->addIndex(['file_type_id', 'document_version_id'], ['unique' => true])
             ->save();

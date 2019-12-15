@@ -83,7 +83,7 @@ class PasswordStatesTableTest extends TestCase
             'id' => 1,
             'password_state' => 'Lorem ipsum dolor sit amet',
             'active' => true,
-            'expired' => false
+            'expired' => false,
         ];
         TestCase::assertEquals($expected, $actual);
 

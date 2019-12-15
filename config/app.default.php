@@ -260,10 +260,10 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => 'DatabaseLog.Database'
+            'className' => 'DatabaseLog.Database',
         ],
         'error' => [
-            'className' => 'DatabaseLog.Database'
+            'className' => 'DatabaseLog.Database',
         ],
         'queue' => [
             'className' => 'DatabaseLog.Database',
@@ -331,8 +331,8 @@ return [
         'handler' => [
             'engine' => 'ComboSession',
             'model' => 'SiteSessions',
-            'cache' => 'combo'
-        ]
+            'cache' => 'combo',
+        ],
     ],
 
     'IdeHelper' => [
@@ -352,8 +352,8 @@ return [
 
     'SparkPost' => [
         'Api' => [
-            'key' => '__API_KEY__'
-        ]
+            'key' => '__API_KEY__',
+        ],
     ],
 
     'defaultAdmin' => [

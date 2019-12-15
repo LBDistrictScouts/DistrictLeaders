@@ -78,7 +78,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             2
         );
@@ -98,7 +98,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             1
         );
@@ -116,7 +116,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             2
         );

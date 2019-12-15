@@ -56,7 +56,7 @@ class GoogleClientComponentTest extends TestCase
         $out = $this->GoogleClient->getList();
 
         $expected = [
-            'jacob'
+            'jacob',
         ];
 
         TestCase::assertEquals($expected, $out);

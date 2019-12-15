@@ -68,7 +68,7 @@ class GoogleClientComponent extends Component
             } else {
                 return $this->_registry->getController()->redirect([
                     'controller' => 'admin',
-                    'action' => 'google'
+                    'action' => 'google',
                 ]);
             }
             $this->saveToken($client);

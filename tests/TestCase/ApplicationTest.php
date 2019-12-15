@@ -47,6 +47,7 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
+            'Cake/ElasticSearch',
             'CakeDto',
             'Tools',
             'Search',

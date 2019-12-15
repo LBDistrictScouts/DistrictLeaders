@@ -59,7 +59,7 @@ class NotificationsFixture extends TestFixture
                 'link_controller' => 'Invoices',
                 'link_prefix' => null,
                 'link_action' => 'view',
-                'deleted' => null
+                'deleted' => null,
             ],
         ];
         parent::init();

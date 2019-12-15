@@ -67,12 +67,12 @@ class SparkPostTransport extends AbstractTransport
             'from' => $sender,
             'html' => empty($email->message('html')) ? $email->message('text') : $email->message('html'),
             'text' => $email->message('text'),
-            'subject' => $email->getSubject()
+            'subject' => $email->getSubject(),
         ];
 
         $body = [
             'content' => $message,
-            'recipients' => $recipients
+            'recipients' => $recipients,
         ];
 
         $promise = $sparky->transmissions->post($body);
