@@ -53,7 +53,7 @@ class FunctionalHelperTest extends TestCase
         $data = [];
 
         foreach (Configure::read('functionalAreas') as $item => $value) {
-            array_push($data, [$value, $item]);
+            array_push($data, [$value['enabled'], $item]);
         }
 
         array_push($data, [false, 'Cheeses']);

@@ -7,7 +7,7 @@ os: linux
 version: ~> 1.0
 
 addons:
-  postgresql: "9.6"
+  postgresql: "10"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 

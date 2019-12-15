@@ -20,20 +20,20 @@
         $identity = $this->getRequest()->getAttribute('identity');
 
         if ($result->isValid()) : ?>
-            <?= $this->cell('NavBar', [$identity->get('id')], [
+            <?= $this->cell('NavBar', [$identity], [
                 'cache' => [
                     'config' => 'cell_cache',
                     'key' => 'nav_' . $identity->get('id')
                 ]
-            ]) ?>
+            ])->render() ?>
             <ul class="navbar-nav move-right mt-2 mt-lg-0">
-                <?= $this->cell('Notify', [$identity->get('id')]) ?>
+                <?= $this->cell('Notify', [$identity->get('id')])->render() ?>
                 <?= $this->cell('Profile', [$identity->get('id')], [
                     'cache' => [
                         'config' => 'cell_cache',
                         'key' => 'profile_' . $identity->get('id')
                     ]
-                ]) ?>
+                ])->render() ?>
             </ul>
         <?php else: ?>
             <ul class="navbar-nav">

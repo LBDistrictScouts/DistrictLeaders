@@ -5,11 +5,15 @@ use App\Controller\AppController;
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
 use Cake\Datasource\ResultSetInterface;
+use Cake\Utility\Hash;
+use Exception;
 
 /**
  * Documents Controller
  *
  * @property \App\Model\Table\DocumentsTable $Documents
+ *
+ * @property \App\Controller\Component\FilterComponent $Filter
  *
  * @method Document[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
@@ -22,26 +26,19 @@ class DocumentsController extends AppController
      */
     public function index()
     {
-        $urlFilters = $this->getRequest()->getQueryParams();
-        $appliedFilters = [];
-        $appliedFilterIds = [];
-        foreach ($urlFilters as $filter => $active) {
-            if ($active) {
-                $docType = $this->Documents->DocumentTypes->find()->where([DocumentType::FIELD_DOCUMENT_TYPE => $filter])->firstOrFail();
-                array_push($appliedFilterIds, $docType->get(DocumentType::FIELD_ID));
-                array_push($appliedFilters, $filter);
-            }
+        try {
+            $this->loadComponent('Filter');
+            $query = $this->Filter->indexFilters(
+                $this->Documents->getAssociation('DocumentTypes'),
+                $this->getRequest()->getQueryParams()
+            );
+        } catch (Exception $exception) {
+            $query = $this->Documents->find()->contain(['DocumentTypes']);
         }
 
-        $query = $this->Documents->find()->contain(['DocumentTypes']);
-        if (!empty($appliedFilterIds)) {
-            $query = $query->where(['document_type_id IN' => $appliedFilterIds]);
-        }
         $documents = $this->paginate($query);
 
-        $filterArray = $this->Documents->DocumentTypes->find('list');
-
-        $this->set(compact('documents', 'filterArray', 'appliedFilters'));
+        $this->set(compact('documents'));
     }
 
     /**

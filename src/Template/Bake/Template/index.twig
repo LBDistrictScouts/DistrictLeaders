@@ -1,0 +1,76 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+<?php
+/**
+ * @var \{{ namespace }}\View\AppView $this
+ * @var \{{ entityClass }}[]|\Cake\Collection\CollectionInterface ${{ pluralVar }}
+ * @var \App\Model\Entity\User $authUser
+ */
+
+$authUser = $this->request->getAttribute('identity');
+
+$this->extend('../Layout/CRUD/index');
+
+$this->assign('entity', '{{ pluralHumanName }}');
+$this->assign('subset', 'All');
+$this->assign('add', $authUser->checkCapability('ADD_{{ pluralHumanName|singularize|upper }}'));
+
+?>
+{% set fields = Bake.filterFields(fields, schema, modelObject, indexColumns, ['binary', 'text']) %}
+{% set fields = fields|filter(v => v != 'deleted') %}
+{% set fields = fields|filter(v => v != 'id') %}
+{% set fields = fields|filter(v => v != displayField) %}
+<thead>
+    <tr>
+        <th scope="col"><?= $this->Paginator->sort('{{ displayField }}') ?></th>
+        <th scope="col" class="actions"><?= __('Actions') ?></th>
+{% for field in fields %}
+        <th scope="col"><?= $this->Paginator->sort('{{ field }}') ?></th>
+{% endfor %}
+    </tr>
+</thead>
+<tbody>
+    <?php foreach (${{ pluralVar }} as ${{ singularVar }}): ?>
+    <tr>
+        <td><?= h(${{ singularVar }}->{{ displayField }}) ?></td>
+        {% set pk = '$' ~ singularVar ~ '->' ~ primaryKey[0] %}
+        <td class="actions">
+            <?= $authUser->checkCapability('VIEW_{{ pluralHumanName|singularize|upper }}') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', {{ pk|raw }}], ['title' => __('View {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('EDIT_{{ pluralHumanName|singularize|upper }}') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', {{ pk|raw }}], ['title' => __('Edit {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('DELETE_{{ pluralHumanName|singularize|upper }}') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', {{ pk|raw }}], ['confirm' => __('Are you sure you want to delete # {0}?', {{ pk|raw }}), 'title' => __('Delete {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+        </td>
+{% for field in fields %}
+{% set isKey = false %}
+{% if associations.BelongsTo %}
+{% for alias, details in associations.BelongsTo if field == details.foreignKey %}
+{% set isKey = true %}
+        <td><?= ${{ singularVar }}->has('{{ details.property }}') ? $this->Html->link(${{ singularVar }}->{{ details.property }}->{{ details.displayField }}, ['controller' => '{{ details.controller }}', 'action' => 'view', ${{ singularVar }}->{{ details.property }}->{{ details.primaryKey[0] }}]) : '' ?></td>
+{% endfor %}
+{% endif %}
+{% if isKey is not same as(true) %}
+{% set columnData = Bake.columnData(field, schema) %}
+{% if columnData.type in ['datetime', 'date', 'timestamp']  %}
+        <td><?= $this->Time->format(${{ singularVar }}->{{ field }}, 'dd-MMM-yy HH:mm') ?></td>
+{% elseif columnData.type in ['integer', 'float', 'decimal', 'biginteger', 'smallinteger', 'tinyinteger'] %}
+        <td><?= $this->Number->format(${{ singularVar }}->{{ field }}) ?></td>
+{% else %}
+        <td><?= h(${{ singularVar }}->{{ field }}) ?></td>
+{% endif %}
+{% endif %}
+{% endfor %}
+    </tr>
+    <?php endforeach; ?>
+</tbody>

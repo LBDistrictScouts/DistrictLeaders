@@ -31,17 +31,12 @@ class NavBarCell extends Cell
     /**
      * Default display method.
      *
-     * @param int $loggedInUserId The Id of the Authenticated User
+     * @param \App\Model\Entity\User $identity The Authenticated User
      *
      * @return void
      */
-    public function display($loggedInUserId)
+    public function display($identity)
     {
-        $this->loadModel('Users');
-
-        $name = $this->Users->get($loggedInUserId)->full_name;
-        $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
-
-        $this->set(compact('capabilities', 'loggedInUserId', 'name'));
+        $this->set(compact('identity'));
     }
 }

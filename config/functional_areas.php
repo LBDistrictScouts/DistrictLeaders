@@ -9,11 +9,36 @@
 return [
 
     'functionalAreas' => [
-        'directory' => true,
-        'camps' => false,
-        'documents' => true,
-        'articles' => false,
-        'search' => false,
+        'directory' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'DIRECTORY',
+            ],
+        ],
+        'camps' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'CAMPS',
+            ],
+        ],
+        'documents' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'DOCUMENTS',
+            ],
+        ],
+        'articles' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'ARTICLES',
+            ],
+        ],
+        'search' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'LOGIN',
+            ],
+        ],
     ],
 
     'iconStandards' => [

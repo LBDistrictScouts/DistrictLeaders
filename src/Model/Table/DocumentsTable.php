@@ -48,7 +48,7 @@ class DocumentsTable extends Table
         parent::initialize($config);
 
         $this->setTable('documents');
-        $this->setDisplayField('id');
+        $this->setDisplayField('document');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');

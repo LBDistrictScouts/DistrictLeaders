@@ -1,0 +1,52 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{% set fields = Bake.filterFields(fields, schema, modelObject) %}
+<?= $this->Form->create(${{ singularVar }}) ?>
+<fieldset>
+    <?php
+{% for field in fields if field not in primaryKey %}
+{%- if keyFields[field] %}
+    {%- set fieldData = Bake.columnData(field, schema) %}
+        /** @var array ${{ keyFields[field] }} The {{ field|humanize }} List */
+        {{- "\n" }}
+    {%- if fieldData.null %}
+        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}, 'empty' => true]);
+        {{- "\n" }}
+    {%- else %}
+        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}]);
+        {{- "\n" }}
+    {%- endif %}
+{%- elseif field not in ['created', 'modified', 'updated', 'deleted'] %}
+    {%- set fieldData = Bake.columnData(field, schema) %}
+    {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
+        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['empty' => true]);
+        {{- "\n" }}
+    {%- else %}
+        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }});
+        {{- "\n" }}
+    {%- endif %}
+{%- endif %}
+{%- endfor %}
+
+{%- if associations.BelongsToMany %}
+{%- for assocName, assocData in associations.BelongsToMany %}
+        /** @var array ${{ assocData.variable }} The {{ assocName }} List */
+        echo $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]);
+        {{- "\n" }}
+{%- endfor %}
+{% endif %}
+    ?>
+</fieldset>
