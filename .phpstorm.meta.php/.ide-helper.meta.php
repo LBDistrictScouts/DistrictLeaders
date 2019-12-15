@@ -36,6 +36,7 @@ namespace PHPSTORM_META {
 			'Authorization' => \Cake\Http\BaseApplication::class,
 			'Bake' => \Cake\Http\BaseApplication::class,
 			'BootstrapUI' => \Cake\Http\BaseApplication::class,
+			'Cake/ElasticSearch' => \Cake\Http\BaseApplication::class,
 			'CakeDto' => \Cake\Http\BaseApplication::class,
 			'CvoTechnologies/GitHub' => \Cake\Http\BaseApplication::class,
 			'DatabaseLog' => \Cake\Http\BaseApplication::class,

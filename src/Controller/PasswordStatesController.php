@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\PasswordStatesTable $PasswordStates
  *
- * @method \App\Model\Entity\PasswordState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method PasswordState[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PasswordStatesController extends AppController
 {

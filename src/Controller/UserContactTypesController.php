@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  *
- * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method UserContactType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
 {

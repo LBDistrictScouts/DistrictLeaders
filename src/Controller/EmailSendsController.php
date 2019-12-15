@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  *
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method EmailSend[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailSendsController extends AppController
 {

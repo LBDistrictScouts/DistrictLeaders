@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\CampsTable $Camps
  *
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Camp[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampsController extends AppController
 {

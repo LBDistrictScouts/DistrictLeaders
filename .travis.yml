@@ -18,7 +18,8 @@ cache:
 
 services:
   - postgresql
-  - redis
+  - redis-server
+  - elasticsearch
 
 env:
   - DB=postgres

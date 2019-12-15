@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CampTypesTable&\Cake\ORM\Association\BelongsTo $CampTypes
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
  *
- * @method \App\Model\Entity\Camp get($primaryKey, $options = [])
- * @method \App\Model\Entity\Camp newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\Camp[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Camp|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Camp saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Camp patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Camp[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Camp findOrCreate($search, callable $callback = null, $options = [])
+ * @method Camp get($primaryKey, $options = [])
+ * @method Camp newEntity($data = null, array $options = [])
+ * @method Camp[] newEntities(array $data, array $options = [])
+ * @method Camp|false save(EntityInterface $entity, $options = [])
+ * @method Camp saveOrFail(EntityInterface $entity, $options = [])
+ * @method Camp patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Camp[] patchEntities($entities, array $data, array $options = [])
+ * @method Camp findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

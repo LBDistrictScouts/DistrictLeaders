@@ -417,7 +417,7 @@ class UsersTable extends Table
     public function findAuth(Query $query, array $options)
     {
         $query
-            ->where(['username IS NOT NULL']);
+            ->where([User::FIELD_USERNAME . ' IS NOT NULL']);
 
         return $query;
     }

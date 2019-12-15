@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
  *
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method Notification[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController
 {
