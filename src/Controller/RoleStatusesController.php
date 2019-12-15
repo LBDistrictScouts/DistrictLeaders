@@ -37,7 +37,7 @@ class RoleStatusesController extends AppController
     public function view($id = null)
     {
         $roleStatus = $this->RoleStatuses->get($id, [
-            'contain' => ['Roles']
+            'contain' => ['Roles'],
         ]);
 
         $this->set('roleStatus', $roleStatus);
@@ -73,7 +73,7 @@ class RoleStatusesController extends AppController
     public function edit($id = null)
     {
         $roleStatus = $this->RoleStatuses->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleStatus = $this->RoleStatuses->patchEntity($roleStatus, $this->request->getData());

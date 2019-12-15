@@ -32,7 +32,7 @@ class UserContacts extends AbstractMigration
             ])
             ->addForeignKey('user_id', 'users', ['id'], [
                 'delete' => 'CASCADE',
-                'update' => 'CASCADE'
+                'update' => 'CASCADE',
             ])
             ->addColumn('user_contact_type_id', 'integer', [
                 'null' => false,

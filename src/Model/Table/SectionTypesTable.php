@@ -16,14 +16,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  *
- * @method SectionType get($primaryKey, $options = [])
- * @method SectionType newEntity($data = null, array $options = [])
- * @method SectionType[] newEntities(array $data, array $options = [])
- * @method SectionType|false save(EntityInterface $entity, $options = [])
- * @method SectionType saveOrFail(EntityInterface $entity, $options = [])
- * @method SectionType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method SectionType[] patchEntities($entities, array $data, array $options = [])
- * @method SectionType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType findOrCreate($search, callable $callback = null, $options = [])
  */
 class SectionTypesTable extends Table
 {
@@ -42,10 +42,10 @@ class SectionTypesTable extends Table
         $this->setPrimaryKey(SectionType::FIELD_ID);
 
         $this->hasMany('RoleTypes', [
-            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID,
         ]);
         $this->hasMany('Sections', [
-            'foreignKey' => Section::FIELD_SECTION_TYPE_ID
+            'foreignKey' => Section::FIELD_SECTION_TYPE_ID,
         ]);
     }
 

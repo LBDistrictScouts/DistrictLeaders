@@ -25,7 +25,7 @@ class RoleStatus extends Entity
      */
     protected $_accessible = [
         'role_status' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     public const FIELD_ID = 'id';

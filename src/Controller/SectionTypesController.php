@@ -35,7 +35,7 @@ class SectionTypesController extends AppController
     public function view($id = null)
     {
         $sectionType = $this->SectionTypes->get($id, [
-            'contain' => ['RoleTypes', 'Sections']
+            'contain' => ['RoleTypes', 'Sections'],
         ]);
 
         $this->set('sectionType', $sectionType);
@@ -71,7 +71,7 @@ class SectionTypesController extends AppController
     public function edit($id = null)
     {
         $sectionType = $this->SectionTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $sectionType = $this->SectionTypes->patchEntity($sectionType, $this->request->getData());

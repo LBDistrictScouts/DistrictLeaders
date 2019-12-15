@@ -95,7 +95,7 @@ class ScoutGroupsTableTest extends TestCase
             ScoutGroup::FIELD_NUMBER_STRIPPED => 4,
             ScoutGroup::FIELD_CHARITY_NUMBER => 134,
             ScoutGroup::FIELD_GROUP_DOMAIN => '4thgoat.org.uk',
-            ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk'
+            ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk',
         ];
 
         $this->validateInitialise($expected, $this->ScoutGroups, 2, $dates);
@@ -245,7 +245,7 @@ class ScoutGroupsTableTest extends TestCase
     {
         $expected = [
             '4thgoat.org.uk',
-            '8thfish.co.uk'
+            '8thfish.co.uk',
         ];
         $actual = $this->ScoutGroups->getDomains();
         TestCase::assertSame($expected, $actual);

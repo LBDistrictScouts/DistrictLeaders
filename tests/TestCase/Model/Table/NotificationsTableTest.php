@@ -96,7 +96,7 @@ class NotificationsTableTest extends TestCase
             'link_controller' => 'Invoices',
             'link_prefix' => null,
             'link_action' => 'view',
-            'deleted' => null
+            'deleted' => null,
         ];
 
         return $good;

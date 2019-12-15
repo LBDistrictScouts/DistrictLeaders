@@ -20,14 +20,14 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @property \App\Model\Table\DocumentTypesTable&\Cake\ORM\Association\BelongsTo $DocumentTypes
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\HasMany $DocumentVersions
  *
- * @method Document get($primaryKey, $options = [])
- * @method Document newEntity($data = null, array $options = [])
- * @method Document[] newEntities(array $data, array $options = [])
- * @method Document|false save(EntityInterface $entity, $options = [])
- * @method Document saveOrFail(EntityInterface $entity, $options = [])
- * @method Document patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Document[] patchEntities($entities, array $data, array $options = [])
- * @method Document findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Document get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Document newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Document|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Document[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Document findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -57,15 +57,15 @@ class DocumentsTable extends Table
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 Document::FIELD_DOCUMENT => 't',
-            ]
+            ],
         ]);
 
         $this->belongsTo('DocumentTypes', [
             'foreignKey' => 'document_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('DocumentVersions', [
-            'foreignKey' => 'document_id'
+            'foreignKey' => 'document_id',
         ]);
     }
 
@@ -122,7 +122,7 @@ class DocumentsTable extends Table
 
         try {
             $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
-                FileType::FIELD_MIME => $fileEntity->get(FileType::FIELD_MIME)
+                FileType::FIELD_MIME => $fileEntity->get(FileType::FIELD_MIME),
             ])->firstOrFail();
         } catch (RecordNotFoundException $exception) {
             return false;
@@ -144,11 +144,11 @@ class DocumentsTable extends Table
                     DocumentVersion::FIELD_VERSION_NUMBER => 1,
                     DocumentVersion::FIELD_DOCUMENT_EDITIONS => [
                         [
-                            $fileEntity
-                        ]
-                    ]
+                            $fileEntity,
+                        ],
+                    ],
                 ],
-            ]
+            ],
         ];
 
         return $this->patchEntity($documentEntity, $documentData, ['associated' => ['DocumentVersions' => ['DocumentEditions']]]);

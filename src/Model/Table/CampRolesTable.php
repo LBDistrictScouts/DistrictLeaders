@@ -47,15 +47,15 @@ class CampRolesTable extends Table
 
         $this->belongsTo('Camps', [
             'foreignKey' => 'camp_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('CampRoleTypes', [
             'foreignKey' => 'camp_role_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 

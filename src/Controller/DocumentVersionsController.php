@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  *
- * @method DocumentVersion[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
 {
@@ -24,8 +24,8 @@ class DocumentVersionsController extends AppController
         $this->paginate = [
             'contain' => [
                 'Documents.DocumentTypes',
-                'DocumentEditions.FileTypes'
-            ]
+                'DocumentEditions.FileTypes',
+            ],
         ];
         $documentVersions = $this->paginate($this->DocumentVersions);
 
@@ -42,7 +42,7 @@ class DocumentVersionsController extends AppController
     public function view($id = null)
     {
         $documentVersion = $this->DocumentVersions->get($id, [
-            'contain' => ['Documents', 'DocumentEditions']
+            'contain' => ['Documents', 'DocumentEditions'],
         ]);
 
         $this->set('documentVersion', $documentVersion);
@@ -79,7 +79,7 @@ class DocumentVersionsController extends AppController
     public function edit($id = null)
     {
         $documentVersion = $this->DocumentVersions->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentVersion = $this->DocumentVersions->patchEntity($documentVersion, $this->request->getData());

@@ -20,14 +20,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
  *
- * @method RoleType get($primaryKey, $options = [])
- * @method RoleType newEntity($data = null, array $options = [])
- * @method RoleType[] newEntities(array $data, array $options = [])
- * @method RoleType|false save(EntityInterface $entity, $options = [])
- * @method RoleType saveOrFail(EntityInterface $entity, $options = [])
- * @method RoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method RoleType[] patchEntities($entities, array $data, array $options = [])
- * @method RoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  */
 class RoleTypesTable extends Table
@@ -47,18 +47,18 @@ class RoleTypesTable extends Table
         $this->setPrimaryKey(RoleType::FIELD_ID);
 
         $this->belongsTo('SectionTypes', [
-            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID,
         ]);
         $this->belongsTo('RoleTemplates', [
-            'foreignKey' => RoleType::FIELD_ROLE_TEMPLATE_ID
+            'foreignKey' => RoleType::FIELD_ROLE_TEMPLATE_ID,
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => Role::FIELD_ROLE_TYPE_ID
+            'foreignKey' => Role::FIELD_ROLE_TYPE_ID,
         ]);
         $this->belongsToMany('Capabilities', [
             'foreignKey' => CapabilitiesRoleType::FIELD_ROLE_TYPE_ID,
             'targetForeignKey' => CapabilitiesRoleType::FIELD_CAPABILITY_ID,
-            'through' => 'CapabilitiesRoleTypes'
+            'through' => 'CapabilitiesRoleTypes',
         ]);
     }
 

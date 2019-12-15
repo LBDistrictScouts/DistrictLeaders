@@ -37,7 +37,7 @@ class CampTypesController extends AppController
     public function view($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => ['Camps']
+            'contain' => ['Camps'],
         ]);
 
         $this->set('campType', $campType);
@@ -73,7 +73,7 @@ class CampTypesController extends AppController
     public function edit($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $campType = $this->CampTypes->patchEntity($campType, $this->request->getData());

@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RolesTable $Roles
  *
- * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
@@ -23,7 +23,7 @@ class RolesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses']
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
         ];
         $roles = $this->paginate($this->Roles);
 
@@ -40,7 +40,7 @@ class RolesController extends AppController
     public function view($id = null)
     {
         $role = $this->Roles->get($id, [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses']
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
         ]);
 
         $this->set('role', $role);
@@ -81,7 +81,7 @@ class RolesController extends AppController
     public function edit($id = null)
     {
         $role = $this->Roles->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $role = $this->Roles->patchEntity($role, $this->request->getData());

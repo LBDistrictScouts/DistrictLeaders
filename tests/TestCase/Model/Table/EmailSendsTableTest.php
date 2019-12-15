@@ -138,7 +138,7 @@ class EmailSendsTableTest extends TestCase
                         ],
                         'authenticate' => true,
                     ],
-                ]
+                ],
             ],
             'notification' => [
                 'notification_header' => 'Welcome to Site Llama Fish',
@@ -300,7 +300,7 @@ class EmailSendsTableTest extends TestCase
         $actual = $this->EmailSends->get(2, [
             'contain' => [
                 'Notifications',
-                'Tokens'
+                'Tokens',
             ]])->toArray();
 
         $dates = [

@@ -60,7 +60,7 @@ class RoleStatusesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'role_status' => 'Lorem dolor sit amet'
+            'role_status' => 'Lorem dolor sit amet',
         ];
 
         return $good;
@@ -77,7 +77,7 @@ class RoleStatusesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'role_status' => 'Lorem ipsum dolor sit amet'
+            'role_status' => 'Lorem ipsum dolor sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

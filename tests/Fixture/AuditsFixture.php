@@ -47,7 +47,7 @@ class AuditsFixture extends TestFixture
                 'modified_value' => 'new',
                 'user_id' => 1,
                 'audit_record_id' => 1,
-                'change_date' => 1545697741
+                'change_date' => 1545697741,
             ],
         ];
         parent::init();

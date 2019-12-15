@@ -22,7 +22,7 @@ class EmailSendsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'Notifications']
+            'contain' => ['Users', 'Notifications'],
         ];
         $emailSends = $this->paginate($this->EmailSends);
 
@@ -39,7 +39,7 @@ class EmailSendsController extends AppController
     public function view($id = null)
     {
         $emailSend = $this->EmailSends->get($id, [
-            'contain' => ['Users', 'Notifications', 'EmailResponses', 'Tokens']
+            'contain' => ['Users', 'Notifications', 'EmailResponses', 'Tokens'],
         ]);
 
         $this->set('emailSend', $emailSend);
@@ -77,7 +77,7 @@ class EmailSendsController extends AppController
     public function edit($id = null)
     {
         $emailSend = $this->EmailSends->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $emailSend = $this->EmailSends->patchEntity($emailSend, $this->request->getData());

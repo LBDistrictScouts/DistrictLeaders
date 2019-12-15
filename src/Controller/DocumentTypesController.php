@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
  *
- * @method DocumentType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {
@@ -36,7 +36,7 @@ class DocumentTypesController extends AppController
     public function view($id = null)
     {
         $documentType = $this->DocumentTypes->get($id, [
-            'contain' => ['Documents']
+            'contain' => ['Documents'],
         ]);
 
         $this->set('documentType', $documentType);
@@ -72,7 +72,7 @@ class DocumentTypesController extends AppController
     public function edit($id = null)
     {
         $documentType = $this->DocumentTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentType = $this->DocumentTypes->patchEntity($documentType, $this->request->getData());

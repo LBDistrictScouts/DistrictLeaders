@@ -35,7 +35,7 @@ class CampTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'camp_type' => 'Lorem ipsum sit amet'
+                'camp_type' => 'Lorem ipsum sit amet',
             ],
         ];
         parent::init();

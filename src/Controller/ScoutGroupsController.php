@@ -37,7 +37,7 @@ class ScoutGroupsController extends AppController
     public function view($id = null)
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
-            'contain' => ['Sections']
+            'contain' => ['Sections'],
         ]);
 
         $this->set('scoutGroup', $scoutGroup);
@@ -73,7 +73,7 @@ class ScoutGroupsController extends AppController
     public function edit($id = null)
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $scoutGroup = $this->ScoutGroups->patchEntity($scoutGroup, $this->request->getData());

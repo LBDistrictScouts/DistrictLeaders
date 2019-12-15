@@ -38,7 +38,7 @@ class Section extends Entity
         'modified' => true,
         'section_type' => true,
         'scout_group' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     public const FIELD_ID = 'id';

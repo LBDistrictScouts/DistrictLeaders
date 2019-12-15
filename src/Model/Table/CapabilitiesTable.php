@@ -44,7 +44,7 @@ class CapabilitiesTable extends Table
         $this->belongsToMany('RoleTypes', [
             'foreignKey' => 'capability_id',
             'targetForeignKey' => 'role_type_id',
-            'joinTable' => 'capabilities_role_types'
+            'joinTable' => 'capabilities_role_types',
         ]);
     }
 

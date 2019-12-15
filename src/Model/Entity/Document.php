@@ -34,7 +34,7 @@ class Document extends Entity
         'deleted' => true,
         'document' => true,
         'document_type' => true,
-        'document_versions' => true
+        'document_versions' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -40,7 +40,7 @@ class ScoutGroup extends Entity
         'group_domain' => true,
         'created' => true,
         'modified' => true,
-        'sections' => true
+        'sections' => true,
     ];
 
     /**

@@ -44,7 +44,7 @@ class CampRoleTypesTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->hasMany('CampRoles', [
-            'foreignKey' => 'camp_role_type_id'
+            'foreignKey' => 'camp_role_type_id',
         ]);
     }
 

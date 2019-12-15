@@ -35,7 +35,7 @@ class RoleTemplatesFixture extends TestFixture
             [
                 'role_template' => 'Lorem ipsum dolor sit amet',
                 'template_capabilities' => '',
-                'indicative_level' => 1
+                'indicative_level' => 1,
             ],
         ];
         parent::init();

@@ -160,7 +160,7 @@ class RoleTypesTableTest extends TestCase
     {
         $foreignKeys = [
             RoleType::FIELD_SECTION_TYPE_ID => $this->RoleTypes->SectionTypes,
-            RoleType::FIELD_ROLE_TEMPLATE_ID => $this->RoleTypes->RoleTemplates
+            RoleType::FIELD_ROLE_TEMPLATE_ID => $this->RoleTypes->RoleTemplates,
         ];
         $this->validateExistsRules($foreignKeys, $this->RoleTypes, [$this, 'getGood']);
 

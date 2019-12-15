@@ -18,7 +18,7 @@ class TextSafeTest extends TestCase
     {
         return [
             ['Jacob=Llama+Goat/Fish', 'Jacob~Llama-Goat_Fish'],
-            ['Octopus==Random/+Monkey/+Boat', 'Octopus~~Random_-Monkey_-Boat']
+            ['Octopus==Random/+Monkey/+Boat', 'Octopus~~Random_-Monkey_-Boat'],
         ];
     }
 
@@ -62,7 +62,7 @@ class TextSafeTest extends TestCase
             [20],
             [99],
             [40],
-            [2]
+            [2],
         ];
     }
 

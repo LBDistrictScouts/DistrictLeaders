@@ -40,7 +40,7 @@ class PasswordStatesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Users', [
-            'foreignKey' => 'password_state_id'
+            'foreignKey' => 'password_state_id',
         ]);
     }
 

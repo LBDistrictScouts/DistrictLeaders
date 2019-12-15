@@ -36,7 +36,7 @@ class EmailResponseTypesController extends AppController
     public function view($id = null)
     {
         $emailResponseType = $this->EmailResponseTypes->get($id, [
-            'contain' => ['EmailResponses']
+            'contain' => ['EmailResponses'],
         ]);
 
         $this->set('emailResponseType', $emailResponseType);
@@ -72,7 +72,7 @@ class EmailResponseTypesController extends AppController
     public function edit($id = null)
     {
         $emailResponseType = $this->EmailResponseTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $emailResponseType = $this->EmailResponseTypes->patchEntity($emailResponseType, $this->request->getData());

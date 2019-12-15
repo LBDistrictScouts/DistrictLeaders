@@ -46,7 +46,7 @@ class Token extends Entity
         'hash' => true,
         'random_number' => true,
         'token_header' => true,
-        'email_send' => true
+        'email_send' => true,
     ];
 
     /**
@@ -55,7 +55,7 @@ class Token extends Entity
      * @var array
      */
     protected $_hidden = [
-        'hash', 'token'
+        'hash', 'token',
     ];
 
     public const FIELD_ID = 'id';

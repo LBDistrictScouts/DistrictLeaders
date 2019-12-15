@@ -77,7 +77,7 @@ class CampRoleTypesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'camp_role_type' => 'Lorem ipsum sit amet'
+            'camp_role_type' => 'Lorem ipsum sit amet',
         ];
 
         return $good;
@@ -105,7 +105,7 @@ class CampRoleTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'camp_role_type' => 'Lorem ipsum dolor sit amet'
+            'camp_role_type' => 'Lorem ipsum dolor sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

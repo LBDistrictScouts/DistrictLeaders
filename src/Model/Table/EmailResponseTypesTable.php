@@ -39,7 +39,7 @@ class EmailResponseTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('EmailResponses', [
-            'foreignKey' => 'email_response_type_id'
+            'foreignKey' => 'email_response_type_id',
         ]);
     }
 

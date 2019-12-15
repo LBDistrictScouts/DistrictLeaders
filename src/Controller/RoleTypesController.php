@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  *
- * @method RoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController
 {
@@ -22,7 +22,7 @@ class RoleTypesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes']
+            'contain' => ['SectionTypes'],
         ];
         $roleTypes = $this->paginate($this->RoleTypes);
 
@@ -39,7 +39,7 @@ class RoleTypesController extends AppController
     public function view($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['SectionTypes', 'Capabilities', 'Roles']
+            'contain' => ['SectionTypes', 'Capabilities', 'Roles'],
         ]);
 
         $this->set('roleType', $roleType);
@@ -78,7 +78,7 @@ class RoleTypesController extends AppController
     public function edit($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['Capabilities']
+            'contain' => ['Capabilities'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleType = $this->RoleTypes->patchEntity($roleType, $this->request->getData());

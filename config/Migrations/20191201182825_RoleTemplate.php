@@ -34,7 +34,7 @@ class RoleTemplate extends AbstractMigration
             ])
             ->addForeignKey('role_template_id', 'role_templates', 'id', [
                 'delete' => 'SET_NULL',
-                'update' => 'SET_NULL'
+                'update' => 'SET_NULL',
             ])
             ->save();
     }

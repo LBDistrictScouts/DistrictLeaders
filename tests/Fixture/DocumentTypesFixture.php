@@ -32,7 +32,7 @@ class DocumentTypesFixture extends TestFixture
     {
         $this->records = [
             [
-                'document_type' => 'Lorem ipsum dolor sit amet'
+                'document_type' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

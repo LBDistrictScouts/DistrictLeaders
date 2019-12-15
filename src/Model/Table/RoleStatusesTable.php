@@ -39,7 +39,7 @@ class RoleStatusesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Roles', [
-            'foreignKey' => 'role_status_id'
+            'foreignKey' => 'role_status_id',
         ]);
     }
 

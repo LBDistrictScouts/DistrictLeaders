@@ -45,7 +45,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
         'size' => true,
         'md5_hash' => true,
         'document_version' => true,
-        'file_type' => true
+        'file_type' => true,
     ];
 
     /**

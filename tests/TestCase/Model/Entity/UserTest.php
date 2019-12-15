@@ -167,7 +167,7 @@ class UserTest extends TestCase
     {
         /** @var \App\Model\Entity\User $identity */
         $identity = new User([
-            'id' => 1
+            'id' => 1,
         ]);
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
         $request = (new ServerRequest())->withAttribute('identity', $identity);

@@ -39,7 +39,7 @@ class CampTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Camps', [
-            'foreignKey' => 'camp_type_id'
+            'foreignKey' => 'camp_type_id',
         ]);
     }
 

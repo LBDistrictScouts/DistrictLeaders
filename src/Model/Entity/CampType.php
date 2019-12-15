@@ -25,7 +25,7 @@ class CampType extends Entity
      */
     protected $_accessible = [
         'camp_type' => true,
-        'camps' => true
+        'camps' => true,
     ];
 
     public const FIELD_ID = 'id';

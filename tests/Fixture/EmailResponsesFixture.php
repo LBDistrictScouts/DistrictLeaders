@@ -53,7 +53,7 @@ class EmailResponsesFixture extends TestFixture
                 'ip_address' => 'Lorem ipsum dolor sit amet',
                 'bounce_reason' => 'Lorem ipsum dolor sit amet',
                 'message_size' => 1,
-                'deleted' => null
+                'deleted' => null,
             ],
         ];
         parent::init();

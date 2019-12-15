@@ -28,7 +28,7 @@ class FileType extends Entity
         'file_type' => true,
         'file_extension' => true,
         'mime' => true,
-        'document_editions' => true
+        'document_editions' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -72,7 +72,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'section_type' => 'Llamas'
+                'section_type' => 'Llamas',
             ],
             9
         );
@@ -90,7 +90,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryEditPost(
             $this->controller,
             [
-                'section_type' => 'Llamas Kids'
+                'section_type' => 'Llamas Kids',
             ],
             1
         );
@@ -106,7 +106,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'section_type' => 'Llamas'
+                'section_type' => 'Llamas',
             ],
             9
         );

@@ -16,7 +16,7 @@ return [
             'adapter' => 'Local', // default
             'adapterArguments' => [ WWW_ROOT . 'files' ],
             'normalizer' => [
-                'hashingAlgo' => 'sha1'
+                'hashingAlgo' => 'sha1',
             ],
         ],
         'other' => [
@@ -25,7 +25,7 @@ return [
             'entityClass' => '\My\Cool\EntityClass',
             'formatter' => '\My\Cool\Formatter',
             'normalizer' => [
-                'hashingAlgo' => 'sha1'
+                'hashingAlgo' => 'sha1',
             ],
         ],
         's3' => [
@@ -35,7 +35,7 @@ return [
                 'your-bucket-name',
             ],
             'normalizer' => [
-                'hashingAlgo' => 'sha1'
+                'hashingAlgo' => 'sha1',
             ],
         ],
     ],
@@ -46,7 +46,7 @@ return [
             'key' => '__INSERT_CC_S3_IAM_KEY__',
             'secret' => '__INSERT_CC_S3_IAM_SECRET__',
             'region' => 'eu-west-1',
-            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__'
-        ]
+            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__',
+        ],
     ],
 ];

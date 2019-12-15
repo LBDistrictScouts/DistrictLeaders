@@ -36,7 +36,7 @@ class NotificationTypesController extends AppController
     public function view($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => ['Notifications']
+            'contain' => ['Notifications'],
         ]);
 
         $this->set('notificationType', $notificationType);
@@ -72,7 +72,7 @@ class NotificationTypesController extends AppController
     public function edit($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notificationType = $this->NotificationTypes->patchEntity($notificationType, $this->request->getData());

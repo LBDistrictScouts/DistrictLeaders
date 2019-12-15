@@ -40,7 +40,7 @@ class Installer
         'tmp/cache/persistent',
         'tmp/cache/views',
         'tmp/sessions',
-        'tmp/tests'
+        'tmp/tests',
     ];
 
     /**
@@ -50,7 +50,7 @@ class Installer
         'app',
         'app_file',
         'app_db',
-        'app_queue'
+        'app_queue',
     ];
 
     /**

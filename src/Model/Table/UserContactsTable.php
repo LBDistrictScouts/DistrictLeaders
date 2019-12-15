@@ -15,14 +15,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method UserContact get($primaryKey, $options = [])
- * @method UserContact newEntity($data = null, array $options = [])
- * @method UserContact[] newEntities(array $data, array $options = [])
- * @method UserContact|false save(EntityInterface $entity, $options = [])
- * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContact[] patchEntities($entities, array $data, array $options = [])
- * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -52,13 +52,13 @@ class UserContactsTable extends Table
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 UserContact::FIELD_CONTACT_FIELD => 'l',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
             'tracked_fields' => [
-                UserContact::FIELD_CONTACT_FIELD
-            ]
+                UserContact::FIELD_CONTACT_FIELD,
+            ],
         ]);
 
         $this->hasMany('Audits', [
@@ -68,14 +68,14 @@ class UserContactsTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => UserContact::FIELD_USER_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('UserContactTypes', [
             'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'user_contact_id'
+            'foreignKey' => 'user_contact_id',
         ]);
     }
 

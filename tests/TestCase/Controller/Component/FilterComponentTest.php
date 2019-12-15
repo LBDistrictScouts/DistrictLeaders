@@ -190,7 +190,7 @@ class FilterComponentTest extends TestCase
                 'value' => 1,
                 'type' => 'integer',
                 'placeholder' => 'c0',
-            ]
+            ],
         ];
         TestCase::assertSame($expected, $returnedQuery->getValueBinder()->bindings());
 
@@ -230,7 +230,7 @@ class FilterComponentTest extends TestCase
                 'value' => 7,
                 'type' => 'integer',
                 'placeholder' => 'c0',
-            ]
+            ],
         ];
         TestCase::assertSame($expected, $returnedQuery->getValueBinder()->bindings());
     }

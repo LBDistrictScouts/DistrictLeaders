@@ -32,7 +32,7 @@ class Notifications extends AbstractMigration
             ->addColumn('type_code', 'string', [
                 'limit' => 7,
                 'null' => false,
-                'default' => 'ABC-DEF'
+                'default' => 'ABC-DEF',
             ])
             ->save();
 
@@ -191,7 +191,7 @@ class Notifications extends AbstractMigration
                 ['id'],
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->addForeignKey(
@@ -200,7 +200,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();
@@ -271,7 +271,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->addForeignKey(
@@ -280,7 +280,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();
@@ -340,7 +340,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();

@@ -23,7 +23,7 @@ class SectionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes', 'ScoutGroups']
+            'contain' => ['SectionTypes', 'ScoutGroups'],
         ];
         $sections = $this->paginate($this->Sections);
 
@@ -40,7 +40,7 @@ class SectionsController extends AppController
     public function view($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => ['SectionTypes', 'ScoutGroups', 'Roles']
+            'contain' => ['SectionTypes', 'ScoutGroups', 'Roles'],
         ]);
 
         $this->set('section', $section);
@@ -78,7 +78,7 @@ class SectionsController extends AppController
     public function edit($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $section = $this->Sections->patchEntity($section, $this->request->getData());

@@ -41,7 +41,7 @@ class DocumentsFixture extends TestFixture
                 'created' => 1572792427,
                 'modified' => 1572792427,
                 'deleted' => null,
-                'document' => 'Lorem ip'
+                'document' => 'Lorem ip',
             ],
         ];
         parent::init();

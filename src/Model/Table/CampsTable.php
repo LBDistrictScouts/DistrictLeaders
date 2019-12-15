@@ -46,10 +46,10 @@ class CampsTable extends Table
 
         $this->belongsTo('CampTypes', [
             'foreignKey' => 'camp_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('CampRoles', [
-            'foreignKey' => 'camp_id'
+            'foreignKey' => 'camp_id',
         ]);
     }
 

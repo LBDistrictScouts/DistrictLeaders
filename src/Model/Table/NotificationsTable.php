@@ -45,13 +45,13 @@ class NotificationsTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Users', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->belongsTo('NotificationTypes', [
-            'foreignKey' => 'notification_type_id'
+            'foreignKey' => 'notification_type_id',
         ]);
         $this->hasMany('EmailSends', [
-            'foreignKey' => 'notification_id'
+            'foreignKey' => 'notification_id',
         ]);
     }
 

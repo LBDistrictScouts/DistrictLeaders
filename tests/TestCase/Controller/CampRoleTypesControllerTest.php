@@ -75,7 +75,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'camp_role_type' => 'Camp Leader'
+                'camp_role_type' => 'Camp Leader',
             ],
             2
         );
@@ -93,7 +93,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryEditPost(
             $this->controller,
             [
-                'camp_role_type' => 'First Aider'
+                'camp_role_type' => 'First Aider',
             ],
             1
         );
@@ -109,7 +109,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'camp_role_type' => 'Cook'
+                'camp_role_type' => 'Cook',
             ],
             2
         );

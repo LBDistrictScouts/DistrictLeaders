@@ -85,7 +85,7 @@ class CampRolesTableTest extends TestCase
             'modified' => $date,
             'camp_id' => 1,
             'user_id' => 1,
-            'camp_role_type_id' => 1
+            'camp_role_type_id' => 1,
         ];
 
         return $good;
@@ -115,7 +115,7 @@ class CampRolesTableTest extends TestCase
             'id' => 1,
             'camp_id' => 1,
             'user_id' => 1,
-            'camp_role_type_id' => 1
+            'camp_role_type_id' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

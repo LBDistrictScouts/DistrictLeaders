@@ -48,14 +48,14 @@ class SectionsTable extends Table
 
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('ScoutGroups', [
             'foreignKey' => 'scout_group_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'section_id'
+            'foreignKey' => 'section_id',
         ]);
     }
 

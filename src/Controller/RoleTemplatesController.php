@@ -11,7 +11,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  *
- * @method RoleTemplate[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTemplatesController extends AppController
 {
@@ -38,7 +38,7 @@ class RoleTemplatesController extends AppController
     public function view($templateId = null)
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
-            'contain' => ['RoleTypes']
+            'contain' => ['RoleTypes'],
         ]);
 
         $this->set('roleTemplate', $roleTemplate);
@@ -80,7 +80,7 @@ class RoleTemplatesController extends AppController
     public function edit($templateId = null)
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleTemplate = $this->RoleTemplates->patchEntity($roleTemplate, $this->request->getData());

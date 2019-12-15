@@ -63,7 +63,7 @@ class CampsControllerTest extends TestCase
             'day' => 11,
             'hour' => 9,
             'minute' => 53,
-        ]
+        ],
     ];
 
     /**

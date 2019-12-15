@@ -28,7 +28,7 @@ class SiteSession extends Entity
         'created' => true,
         'modified' => true,
         'data' => true,
-        'expires' => true
+        'expires' => true,
     ];
 
     public const FIELD_ID = 'id';

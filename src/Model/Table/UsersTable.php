@@ -23,14 +23,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  *
- * @method User get($primaryKey, $options = [])
- * @method User newEntity($data = null, array $options = [])
- * @method User[] newEntities(array $data, array $options = [])
- * @method User|false save(EntityInterface $entity, $options = [])
- * @method User saveOrFail(EntityInterface $entity, $options = [])
- * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method User[] patchEntities($entities, array $data, array $options = [])
- * @method User findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\User get($primaryKey, $options = [])
+ * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -67,7 +67,7 @@ class UsersTable extends Table
                 User::FIELD_ADDRESS_LINE_2 => 't',
                 User::FIELD_CITY => 't',
                 User::FIELD_COUNTY => 't',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
@@ -82,11 +82,11 @@ class UsersTable extends Table
                 User::FIELD_CITY,
                 User::FIELD_COUNTY,
                 User::FIELD_POSTCODE,
-            ]
+            ],
         ]);
 
         $this->belongsTo('PasswordStates', [
-            'foreignKey' => 'password_state_id'
+            'foreignKey' => 'password_state_id',
         ]);
 
         $this->hasMany('Changes', [
@@ -100,13 +100,13 @@ class UsersTable extends Table
         ]);
 
         $this->hasMany('CampRoles', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('EmailSends', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Notifications', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_id',
@@ -114,7 +114,7 @@ class UsersTable extends Table
             'cascadeCallbacks' => true,
         ]);
         $this->hasMany('UserContacts', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
     }
 
@@ -256,9 +256,9 @@ class UsersTable extends Table
             'contain' => [
                 'Roles' => [
                     'RoleTypes.Capabilities',
-                    'Sections.ScoutGroups'
-                ]
-            ]
+                    'Sections.ScoutGroups',
+                ],
+            ],
         ]);
 
         $permissions = [];

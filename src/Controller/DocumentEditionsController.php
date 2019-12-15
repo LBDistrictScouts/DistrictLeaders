@@ -11,7 +11,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
  *
- * @method DocumentEdition[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {
@@ -25,7 +25,7 @@ class DocumentEditionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['DocumentVersions', 'FileTypes']
+            'contain' => ['DocumentVersions', 'FileTypes'],
         ];
         $documentEditions = $this->paginate($this->DocumentEditions);
 
@@ -42,7 +42,7 @@ class DocumentEditionsController extends AppController
     public function view($id = null)
     {
         $documentEdition = $this->DocumentEditions->get($id, [
-            'contain' => ['DocumentVersions', 'FileTypes']
+            'contain' => ['DocumentVersions', 'FileTypes'],
         ]);
 
         $this->set('documentEdition', $documentEdition);
@@ -85,7 +85,7 @@ class DocumentEditionsController extends AppController
     public function edit($id = null)
     {
         $documentEdition = $this->DocumentEditions->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentEdition = $this->DocumentEditions->patchEntity($documentEdition, $this->request->getData());

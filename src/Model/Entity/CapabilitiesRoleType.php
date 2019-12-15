@@ -27,7 +27,7 @@ class CapabilitiesRoleType extends Entity
     protected $_accessible = [
         'template' => true,
         'capability' => true,
-        'role_type' => true
+        'role_type' => true,
     ];
 
     public const FIELD_CAPABILITY_ID = 'capability_id';

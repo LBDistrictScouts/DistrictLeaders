@@ -48,7 +48,7 @@ class CampTypesControllerTest extends TestCase
      * @var array $validEntityData Valid creation Data.
      */
     private $validEntityData = [
-        'camp_type' => 'New Camp Type'
+        'camp_type' => 'New Camp Type',
     ];
 
     /**

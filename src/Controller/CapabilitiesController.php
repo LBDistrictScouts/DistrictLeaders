@@ -37,7 +37,7 @@ class CapabilitiesController extends AppController
     public function view($id = null)
     {
         $capability = $this->Capabilities->get($id, [
-            'contain' => ['RoleTypes']
+            'contain' => ['RoleTypes'],
         ]);
 
         $this->set('capability', $capability);
@@ -73,7 +73,7 @@ class CapabilitiesController extends AppController
     public function edit($id = null)
     {
         $capability = $this->Capabilities->get($id, [
-            'contain' => ['RoleTypes']
+            'contain' => ['RoleTypes'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $capability = $this->Capabilities->patchEntity($capability, $this->request->getData());
@@ -86,7 +86,7 @@ class CapabilitiesController extends AppController
         }
         $roleTypes = $this->Capabilities->RoleTypes->find('list', [
             'conditions' => [
-                'level >=' => $capability->min_level
+                'level >=' => $capability->min_level,
             ],
             'keyField' => 'id',
             'valueField' => 'role_abbreviation',
