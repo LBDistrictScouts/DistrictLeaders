@@ -19,16 +19,16 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
  *
- * @method Token get($primaryKey, $options = [])
- * @method Token newEntity($data = null, array $options = [])
- * @method Token[] newEntities(array $data, array $options = [])
- * @method Token|false save(EntityInterface $entity, $options = [])
- * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Token[] patchEntities($entities, array $data, array $options = [])
- * @method Token findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Token get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Token[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method Token saveOrFail(EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class TokensTable extends Table

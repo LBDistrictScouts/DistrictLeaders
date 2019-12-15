@@ -11,7 +11,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
  *
- * @method DocumentEdition[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {

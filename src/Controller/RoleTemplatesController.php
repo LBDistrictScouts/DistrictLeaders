@@ -11,7 +11,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  *
- * @method RoleTemplate[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTemplatesController extends AppController
 {

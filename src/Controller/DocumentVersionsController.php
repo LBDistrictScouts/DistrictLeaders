@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  *
- * @method DocumentVersion[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
 {
