@@ -17,14 +17,14 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
  * @property \App\Model\Table\FileTypesTable&\Cake\ORM\Association\BelongsTo $FileTypes
  *
- * @method \App\Model\Entity\DocumentEdition get($primaryKey, $options = [])
- * @method \App\Model\Entity\DocumentEdition newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DocumentEdition[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DocumentEdition|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentEdition saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentEdition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentEdition[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
+ * @method DocumentEdition get($primaryKey, $options = [])
+ * @method DocumentEdition newEntity($data = null, array $options = [])
+ * @method DocumentEdition[] newEntities(array $data, array $options = [])
+ * @method DocumentEdition|false save(EntityInterface $entity, $options = [])
+ * @method DocumentEdition saveOrFail(EntityInterface $entity, $options = [])
+ * @method DocumentEdition patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method DocumentEdition[] patchEntities($entities, array $data, array $options = [])
+ * @method DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

@@ -10,7 +10,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  *
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method RoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController
 {

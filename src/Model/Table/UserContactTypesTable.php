@@ -13,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  *
- * @method \App\Model\Entity\UserContactType get($primaryKey, $options = [])
- * @method \App\Model\Entity\UserContactType newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\UserContactType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UserContactType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContactType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContactType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\UserContactType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\UserContactType findOrCreate($search, callable $callback = null, $options = [])
+ * @method UserContactType get($primaryKey, $options = [])
+ * @method UserContactType newEntity($data = null, array $options = [])
+ * @method UserContactType[] newEntities(array $data, array $options = [])
+ * @method UserContactType|false save(EntityInterface $entity, $options = [])
+ * @method UserContactType saveOrFail(EntityInterface $entity, $options = [])
+ * @method UserContactType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method UserContactType[] patchEntities($entities, array $data, array $options = [])
+ * @method UserContactType findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

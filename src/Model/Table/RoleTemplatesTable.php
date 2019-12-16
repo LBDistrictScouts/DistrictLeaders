@@ -13,14 +13,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  *
- * @method \App\Model\Entity\RoleTemplate get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleTemplate newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\RoleTemplate[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleTemplate saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleTemplate patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate findOrCreate($search, callable $callback = null, $options = [])
+ * @method RoleTemplate get($primaryKey, $options = [])
+ * @method RoleTemplate newEntity($data = null, array $options = [])
+ * @method RoleTemplate[] newEntities(array $data, array $options = [])
+ * @method RoleTemplate|false save(EntityInterface $entity, $options = [])
+ * @method RoleTemplate saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleTemplate patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleTemplate[] patchEntities($entities, array $data, array $options = [])
+ * @method RoleTemplate findOrCreate($search, callable $callback = null, $options = [])
  */
 class RoleTemplatesTable extends Table
 {

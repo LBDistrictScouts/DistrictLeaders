@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\BelongsTo $Documents
  * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
  *
- * @method \App\Model\Entity\DocumentVersion get($primaryKey, $options = [])
- * @method \App\Model\Entity\DocumentVersion newEntity($data = null, array $options = [])
- * @method \App\Model\Entity\DocumentVersion[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
+ * @method DocumentVersion get($primaryKey, $options = [])
+ * @method DocumentVersion newEntity($data = null, array $options = [])
+ * @method DocumentVersion[] newEntities(array $data, array $options = [])
+ * @method DocumentVersion|false save(EntityInterface $entity, $options = [])
+ * @method DocumentVersion saveOrFail(EntityInterface $entity, $options = [])
+ * @method DocumentVersion patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method DocumentVersion[] patchEntities($entities, array $data, array $options = [])
+ * @method DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
