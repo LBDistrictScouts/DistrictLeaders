@@ -12,7 +12,7 @@ use Cake\Datasource\ResultSetInterface;
  *
  * @property \App\Model\Table\UserContactsTable $UserContacts
  *
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method UserContact[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactsController extends AppController
 {
