@@ -13,31 +13,28 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 #}
-{% set belongsTo = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
-{% set belongsToMany = Bake.aliasExtractor(modelObj, 'belongsToMany') %}
 {% set compact = ["'#{singularName}'"] %}
     /**
-     * Edit method
+     * Add method
      *
-     * @param string|null $id {{ singularHumanName }} id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function edit($id = null)
+    public function add()
     {
-        ${{ singularName }} = $this->{{ currentModelName }}->get($id, [
-            'contain' => [{{ Bake.stringifyList(belongsToMany, {'indent': false})|raw }}]
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        ${{ singularName }} = $this->{{ currentModelName }}->newEmptyEntity();
+        if ($this->request->is('post')) {
             ${{ singularName }} = $this->{{ currentModelName }}->patchEntity(${{ singularName }}, $this->request->getData());
             if ($this->{{ currentModelName }}->save(${{ singularName }})) {
                 $this->Flash->success(__('The {{ singularHumanName|lower }} has been saved.'));
 
-                return $this->redirect(['action' => 'view', ${{ singularName }}->get({{ modelName|singularize }}::FIELD_ID)]);
+                return $this->redirect(['action' => 'view', ${{ singularName }}->get({{ currentModelName|singularize }}::FIELD_ID)]);
             }
             $this->Flash->error(__('The {{ singularHumanName|lower }} could not be saved. Please, try again.'));
         }
-{% for assoc in belongsTo|merge(belongsToMany) %}
+{% set associations = Bake.aliasExtractor(modelObj, 'BelongsTo') %}
+{% set associations = associations|merge(Bake.aliasExtractor(modelObj, 'BelongsToMany')) %}
+
+{%- for assoc in associations %}
     {%- set otherName = Bake.getAssociatedTableAlias(modelObj, assoc) %}
     {%- set otherPlural = otherName|variable %}
         ${{ otherPlural }} = $this->{{ currentModelName }}->{{ otherName }}->find('list', ['limit' => 200]);

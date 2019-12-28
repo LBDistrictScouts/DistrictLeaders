@@ -21,7 +21,6 @@
 
 $this->extend('../Layout/CRUD/edit');
 
-$this->assign('entity', '{{ pluralHumanName }}');
-
+$this->assign('entity', '{{ pluralVar|camelize }}');
 ?>
 {% element 'form' %}

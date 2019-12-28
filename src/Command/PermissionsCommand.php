@@ -22,7 +22,7 @@ class PermissionsCommand extends Command
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadModel('Users');
@@ -33,7 +33,7 @@ class PermissionsCommand extends Command
      *
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         $parser->setDescription('Update the Permissions for Users.');
 

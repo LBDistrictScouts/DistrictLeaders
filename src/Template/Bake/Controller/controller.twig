@@ -18,11 +18,14 @@
  */
 #}
 <?php
+declare(strict_types=1);
+
 namespace {{ namespace }}\Controller{{ prefix }};
 
+{% if prefix %}
 use {{ namespace }}\Controller\AppController;
-use {{ entityClass }};
-
+{% endif %}
+use {{ namespace }}\Model\Entity\{{ entityClassName }};
 /**
  * {{ name }} Controller
  *
@@ -42,24 +45,27 @@ use {{ entityClass }};
  */
 class {{ name }}Controller extends AppController
 {
-{% set helpers = Bake.arrayProperty('helpers', helpers, {'indent': false})|raw %}
-{% if helpers|trim %}
-    {{- helpers|raw }}
-{% if components %}
+{% if components or helpers %}
+    /**
+     * Initialize controller
+     *
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
 
+{% for component in components %}
+        $this->loadComponent('{{ component }}');
+{% endfor %}
+{% if helpers %}
+        $this->viewBuilder()->setHelpers([{{ Bake.stringifyList(helpers, {'indent': false})|raw }}]);
 {% endif %}
-{% endif %}
-{%- set components = Bake.arrayProperty('components', components, {'indent': false})|raw %}
-{% if components|trim %}
-    {{- components|raw }}
-{% if actions %}
-
-{% endif %}
+    }
+{% if actions|length %}{{ "\n" }}{% endif %}
 {% endif %}
 {%- for action in actions %}
-{% if loop.index > 1 %}
-
-{% endif %}
+{% if loop.index > 1 %}{{ "\n" }}{% endif %}
     {%- element 'Controller/' ~ action %}
 {% endfor %}
 }

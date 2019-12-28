@@ -20,13 +20,13 @@
  * @var \App\Model\Entity\User $authUser
  */
 
-$authUser = $this->request->getAttribute('identity');
+$authUser = $this->getRequest()->getAttribute('identity');
 
 $this->extend('../Layout/CRUD/index');
 
-$this->assign('entity', '{{ pluralHumanName }}');
+$this->assign('entity', '{{ pluralVar|camelize }}');
 $this->assign('subset', 'All');
-$this->assign('add', $authUser->checkCapability('ADD_{{ pluralHumanName|singularize|upper }}'));
+$this->assign('add', $authUser->checkCapability('CREATE_{{ pluralVar|underscore|singularize|upper }}'));
 
 ?>
 {% set fields = Bake.filterFields(fields, schema, modelObject, indexColumns, ['binary', 'text']) %}
@@ -48,9 +48,9 @@ $this->assign('add', $authUser->checkCapability('ADD_{{ pluralHumanName|singular
         <td><?= h(${{ singularVar }}->{{ displayField }}) ?></td>
         {% set pk = '$' ~ singularVar ~ '->' ~ primaryKey[0] %}
         <td class="actions">
-            <?= $authUser->checkCapability('VIEW_{{ pluralHumanName|singularize|upper }}') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', {{ pk|raw }}], ['title' => __('View {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('EDIT_{{ pluralHumanName|singularize|upper }}') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', {{ pk|raw }}], ['title' => __('Edit {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('DELETE_{{ pluralHumanName|singularize|upper }}') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', {{ pk|raw }}], ['confirm' => __('Are you sure you want to delete # {0}?', {{ pk|raw }}), 'title' => __('Delete {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('VIEW_{{ pluralVar|underscore|singularize|upper }}') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', {{ pk|raw }}], ['title' => __('View {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('UPDATE_{{ pluralVar|underscore|singularize|upper }}') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', {{ pk|raw }}], ['title' => __('Edit {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('DELETE_{{ pluralVar|underscore|singularize|upper }}') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', {{ pk|raw }}], ['confirm' => __('Are you sure you want to delete # {0}?', {{ pk|raw }}), 'title' => __('Delete {{ singularHumanName }}'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
 {% for field in fields %}
 {% set isKey = false %}

@@ -18,5 +18,9 @@
  * @var \{{ namespace }}\View\AppView $this
  * @var \{{ entityClass }} ${{ singularVar }}
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', '{{ pluralVar|camelize }}');
 ?>
 {% element 'form' %}

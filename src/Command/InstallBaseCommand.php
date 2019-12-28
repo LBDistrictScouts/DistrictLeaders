@@ -27,7 +27,7 @@ class InstallBaseCommand extends Command
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
         $this->loadModel('Capabilities');
@@ -40,7 +40,7 @@ class InstallBaseCommand extends Command
      *
      * @return \Cake\Console\ConsoleOptionParser
      */
-    protected function buildOptionParser(ConsoleOptionParser $parser)
+    protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
         $parser->setDescription('Install Configuration Options.');
 

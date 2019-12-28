@@ -71,6 +71,11 @@ define('TMP', ROOT . DS . 'tmp' . DS);
 define('LOGS', ROOT . DS . 'logs' . DS);
 
 /**
+ * Path to the resources directory.
+ */
+define('RESOURCES', ROOT . DS . 'resources' . DS);
+
+/**
  * Path to the cache files directory. It can be shared between hosts in a multi-server setup.
  */
 define('CACHE', TMP . 'cache' . DS);
