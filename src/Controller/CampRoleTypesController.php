@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\CampRoleType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * CampRoleTypes Controller
  *
  * @property \App\Model\Table\CampRoleTypesTable $CampRoleTypes
  *
- * @method CampRoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRoleTypesController extends AppController
 {
-
     /**
      * Index method
      *

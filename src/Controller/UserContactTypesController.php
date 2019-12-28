@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\UserContactType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * UserContactTypes Controller
  *
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  *
- * @method UserContactType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
 {

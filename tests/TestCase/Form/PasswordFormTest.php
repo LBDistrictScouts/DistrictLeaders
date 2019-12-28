@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Form;
 
 use App\Form\PasswordForm;
-use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;

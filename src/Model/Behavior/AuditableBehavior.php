@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Behavior;
 
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Exception\MissingBehaviorException;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 

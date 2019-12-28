@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\DocumentEdition;
-use Cake\Datasource\ResultSetInterface;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
@@ -11,7 +11,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
  *
- * @method DocumentEdition[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {

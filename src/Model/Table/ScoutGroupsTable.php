@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\ScoutGroup;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,21 +12,20 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  *
- * @method ScoutGroup get($primaryKey, $options = [])
- * @method ScoutGroup newEntity($data = null, array $options = [])
- * @method ScoutGroup[] newEntities(array $data, array $options = [])
- * @method ScoutGroup|false save(EntityInterface $entity, $options = [])
- * @method ScoutGroup saveOrFail(EntityInterface $entity, $options = [])
- * @method ScoutGroup patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method ScoutGroup[] patchEntities($entities, array $data, array $options = [])
- * @method ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class ScoutGroupsTable extends Table
 {
-
     /**
      * Initialize method
      *

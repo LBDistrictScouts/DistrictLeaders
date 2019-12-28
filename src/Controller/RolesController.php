@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Role;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Roles Controller
  *
  * @property \App\Model\Table\RolesTable $Roles
  *
- * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
-
     /**
      * Index method
      *

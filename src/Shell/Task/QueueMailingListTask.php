@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Shell\Task;
 
 use Queue\Model\QueueException;
@@ -12,7 +14,6 @@ use Queue\Shell\Task\QueueTask;
  */
 class QueueMailingListTask extends QueueTask
 {
-
     /**
      * @var int
      */

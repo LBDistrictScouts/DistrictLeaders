@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Shell\Task;
 
-use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
-use Cake\ORM\TableRegistry;
-use Queue\Model\QueueException;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -18,7 +17,6 @@ use Queue\Shell\Task\QueueTaskInterface;
  */
 class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
 {
-
     /**
      * @var int
      */

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\RoleStatusesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class RoleStatusesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *

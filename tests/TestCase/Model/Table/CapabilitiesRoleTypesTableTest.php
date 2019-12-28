@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\CapabilitiesRoleType;
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleType;
 use App\Model\Table\CapabilitiesRoleTypesTable;
-use App\Test\TestCase\Model\Table\CapabilitiesTableTest as CTT;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 

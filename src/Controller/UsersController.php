@@ -1,21 +1,20 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
-use Cake\I18n\Time;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
  *
- * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  *
  * @property \App\Model\Table\TokensTable $Tokens
  * @property \App\Model\Table\EmailSendsTable $EmailSends
@@ -48,7 +47,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
         if (!$user->checkCapability('DIRECTORY')) {

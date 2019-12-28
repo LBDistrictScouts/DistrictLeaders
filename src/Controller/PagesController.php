@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -30,7 +32,6 @@ use Cake\View\Exception\MissingTemplateException;
  */
 class PagesController extends AppController
 {
-
     /**
      * Displays a view
      *
@@ -72,7 +73,7 @@ class PagesController extends AppController
     }
 
     /**
-     * @param Event $event The CakePHP Event
+     * @param \Cake\Event\Event $event The CakePHP Event
      *
      * @return \Cake\Http\Response|void|null
      */

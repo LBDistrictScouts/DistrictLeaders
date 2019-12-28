@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\NotificationType;
@@ -6,7 +8,6 @@ use App\Model\Table\NotificationTypesTable;
 use App\Utility\TextSafe;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\NotificationTypesTable Test Case

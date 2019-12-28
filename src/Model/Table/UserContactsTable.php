@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\UserContact;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -15,14 +15,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  *
- * @method UserContact get($primaryKey, $options = [])
- * @method UserContact newEntity($data = null, array $options = [])
- * @method UserContact[] newEntities(array $data, array $options = [])
- * @method UserContact|false save(EntityInterface $entity, $options = [])
- * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContact[] patchEntities($entities, array $data, array $options = [])
- * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior

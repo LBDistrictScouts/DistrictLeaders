@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Behavior;
 
-use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
 use Cake\Event\EventList;

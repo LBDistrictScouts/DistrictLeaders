@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -13,8 +15,6 @@
  */
 namespace App\View;
 
-use BootstrapUI\View\UIViewTrait;
-use Cake\Core\Configure;
 use Cake\View\View;
 
 /**

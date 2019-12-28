@@ -1,15 +1,14 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
 //use App\Model\Table\OrdersTable;
-use App\Model\Entity\Role;
+
+
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 

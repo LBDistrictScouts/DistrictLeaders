@@ -1,11 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Form\GoogleAuthForm;
-use Cake\Core\Configure;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Entity;
 
 /**
  * Admin Controller

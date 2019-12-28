@@ -1,13 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
-use Cake\Core\Configure;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\RoleTypesTable Test Case

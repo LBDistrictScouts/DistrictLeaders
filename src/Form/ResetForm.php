@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Cake\Form\Form;
@@ -13,9 +15,9 @@ class ResetForm extends Form
     /**
      * Build the Schema of the form.
      *
-     * @param Schema $schema The basic Schema to be Extended
+     * @param \Cake\Form\Schema $schema The basic Schema to be Extended
      *
-     * @return Schema $schema
+     * @return \Cake\Form\Schema $schema
      */
     protected function _buildSchema(Schema $schema)
     {
@@ -31,9 +33,9 @@ class ResetForm extends Form
     /**
      * Function to Validate the Form
      *
-     * @param Validator $validator The basic Validation to be extended.
+     * @param \Cake\Validation\Validator $validator The basic Validation to be extended.
      *
-     * @return Validator $validator
+     * @return \Cake\Validation\Validator $validator
      */
     protected function _buildValidator(Validator $validator)
     {

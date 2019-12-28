@@ -1,11 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\EmailSend;
-use Cake\Datasource\EntityInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Mailer\MailerAwareTrait;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -18,14 +17,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  *
- * @method EmailSend get($primaryKey, $options = [])
- * @method EmailSend newEntity($data = null, array $options = [])
- * @method EmailSend[] newEntities(array $data, array $options = [])
- * @method EmailSend|false save(EntityInterface $entity, $options = [])
- * @method EmailSend saveOrFail(EntityInterface $entity, $options = [])
- * @method EmailSend patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method EmailSend[] patchEntities($entities, array $data, array $options = [])
- * @method EmailSend findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
+ * @method \App\Model\Entity\EmailSend newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailSend[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */

@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Google_Client;
 use Google_Service_Directory;
@@ -12,7 +13,6 @@ use Google_Service_Directory;
  */
 class GoogleClientComponent extends Component
 {
-
     /**
      * Default configuration.
      *
@@ -25,7 +25,7 @@ class GoogleClientComponent extends Component
      *
      * @throws \Google_Exception
      *
-     * @return Google_Client
+     * @return \Google_Client
      */
     public function newClient()
     {
@@ -42,7 +42,7 @@ class GoogleClientComponent extends Component
     /**
      * Get Client for Google
      *
-     * @return \Cake\Http\Response|Google_Client
+     * @return \Cake\Http\Response|\Google_Client
      *
      * @throws \Google_Exception
      */

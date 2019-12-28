@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\UsersController;
 use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;

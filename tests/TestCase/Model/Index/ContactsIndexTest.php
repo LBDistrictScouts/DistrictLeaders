@@ -1,15 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Index;
 
 use App\Model\Entity\User;
 use App\Model\Index\ContactsIndex;
-use App\Model\Table\UsersTable;
 use App\Test\TestCase\Model\Table\ModelTestTrait;
 use App\Utility\TextSafe;
-use Cake\Cache\Cache;
 use Cake\ElasticSearch\IndexRegistry;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -68,8 +67,8 @@ class ContactsIndexTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = IndexRegistry::exists('Contacts') ? [] : ['className' => ContactsIndex::class];
-        $this->Contacts = IndexRegistry::get('Contacts', $config);
+//        $config = IndexRegistry::exists('Contacts') ? [] : ['className' => ContactsIndex::class];
+//        $this->Contacts = IndexRegistry::get('Contacts', $config);
 
         $now = new Time('2018-12-26 23:22:30');
         Time::setTestNow($now);

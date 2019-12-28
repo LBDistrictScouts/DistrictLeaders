@@ -1,12 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Command;
 
-use App\Model\Entity\User;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
 
 /**

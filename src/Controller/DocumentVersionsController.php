@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\DocumentVersion;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * DocumentVersions Controller
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  *
- * @method DocumentVersion[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
 {

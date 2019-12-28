@@ -1,13 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -20,14 +20,14 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @property \App\Model\Table\DocumentTypesTable&\Cake\ORM\Association\BelongsTo $DocumentTypes
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\HasMany $DocumentVersions
  *
- * @method Document get($primaryKey, $options = [])
- * @method Document newEntity($data = null, array $options = [])
- * @method Document[] newEntities(array $data, array $options = [])
- * @method Document|false save(EntityInterface $entity, $options = [])
- * @method Document saveOrFail(EntityInterface $entity, $options = [])
- * @method Document patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Document[] patchEntities($entities, array $data, array $options = [])
- * @method Document findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Document get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Document newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Document|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Document[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Document findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -107,7 +107,7 @@ class DocumentsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     * @param Document $documentEntity The Document Entity
+     * @param \App\Model\Entity\Document $documentEntity The Document Entity
      *
      * @return \Cake\Datasource\EntityInterface|bool
      */

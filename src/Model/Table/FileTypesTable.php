@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\FileType;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
  *
- * @method FileType get($primaryKey, $options = [])
- * @method FileType newEntity($data = null, array $options = [])
- * @method FileType[] newEntities(array $data, array $options = [])
- * @method FileType|false save(EntityInterface $entity, $options = [])
- * @method FileType saveOrFail(EntityInterface $entity, $options = [])
- * @method FileType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method FileType[] patchEntities($entities, array $data, array $options = [])
- * @method FileType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\FileType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\FileType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\FileType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\FileType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\FileType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\FileType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\FileType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\FileType findOrCreate($search, callable $callback = null, $options = [])
  */
 class FileTypesTable extends Table
 {

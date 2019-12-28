@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\EmailResponseType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,14 +12,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  *
- * @method EmailResponseType get($primaryKey, $options = [])
- * @method EmailResponseType newEntity($data = null, array $options = [])
- * @method EmailResponseType[] newEntities(array $data, array $options = [])
- * @method EmailResponseType|false save(EntityInterface $entity, $options = [])
- * @method EmailResponseType saveOrFail(EntityInterface $entity, $options = [])
- * @method EmailResponseType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method EmailResponseType[] patchEntities($entities, array $data, array $options = [])
- * @method EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\EmailResponseType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponseType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {

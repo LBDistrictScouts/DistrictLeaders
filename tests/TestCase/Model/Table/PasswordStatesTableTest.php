@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\PasswordStatesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class PasswordStatesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *

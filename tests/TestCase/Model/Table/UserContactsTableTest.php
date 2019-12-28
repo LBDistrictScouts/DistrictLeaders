@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\UserContact;
@@ -6,7 +8,6 @@ use App\Model\Table\UserContactsTable;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\UserContactsTable Test Case
@@ -138,7 +139,7 @@ class UserContactsTableTest extends TestCase
         $this->validateNotEmpties($notEmpties, $this->UserContacts, [$this, 'getGood']);
 
         $maxLengths = [
-            UserContact::FIELD_CONTACT_FIELD => '64',
+            UserContact::FIELD_CONTACT_FIELD => 64,
         ];
         $this->validateMaxLengths($maxLengths, $this->UserContacts, [$this, 'getGood']);
     }

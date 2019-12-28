@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Audit;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Audits Controller
  *
  * @property \App\Model\Table\AuditsTable $Audits
  *
- * @method Audit[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AuditsController extends AppController
 {
-
     /**
      * Index method
      *

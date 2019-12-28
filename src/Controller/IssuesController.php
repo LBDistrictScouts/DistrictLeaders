@@ -1,17 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Model\Entity\Issue;
 use Cake\Controller\Controller;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 
 /**
  * Issues Controller
  *
  *
- * @method Issue[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Issue[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  *
  * @property \Cake\ORM\Table $Issues
  */

@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -12,7 +13,6 @@ use Cake\Utility\Security;
  */
 class CapabilitiesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *

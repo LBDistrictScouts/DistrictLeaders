@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\Audit;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,20 +13,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $ChangedUsers
  *
- * @method Audit get($primaryKey, $options = [])
- * @method Audit newEntity($data = null, array $options = [])
- * @method Audit[] newEntities(array $data, array $options = [])
- * @method Audit|false save(EntityInterface $entity, $options = [])
- * @method Audit saveOrFail(EntityInterface $entity, $options = [])
- * @method Audit patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Audit[] patchEntities($entities, array $data, array $options = [])
- * @method Audit findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Audit|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Audit[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Audit findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  */
 class AuditsTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -133,9 +131,9 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
+     * @param \Cake\ORM\Query $query The Query to be modified.
      *
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     public function findUsers($query)
     {
@@ -145,9 +143,9 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
+     * @param \Cake\ORM\Query $query The Query to be modified.
      *
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     public function findRoles($query)
     {
@@ -157,9 +155,9 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
+     * @param \Cake\ORM\Query $query The Query to be modified.
      *
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     public function findContacts($query)
     {

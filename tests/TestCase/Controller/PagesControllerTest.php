@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -14,7 +16,6 @@
  */
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\PagesController;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 

@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\DocumentsController;
 use App\Model\Entity\Document;
 use Cake\TestSuite\TestCase;
 

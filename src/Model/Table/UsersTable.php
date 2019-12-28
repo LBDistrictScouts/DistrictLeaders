@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -23,14 +24,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  *
- * @method User get($primaryKey, $options = [])
- * @method User newEntity($data = null, array $options = [])
- * @method User[] newEntities(array $data, array $options = [])
- * @method User|false save(EntityInterface $entity, $options = [])
- * @method User saveOrFail(EntityInterface $entity, $options = [])
- * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method User[] patchEntities($entities, array $data, array $options = [])
- * @method User findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\User get($primaryKey, $options = [])
+ * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -39,7 +40,6 @@ use Cake\Validation\Validator;
  */
 class UsersTable extends Table
 {
-
     /**
      * Initialize method
      *
@@ -119,9 +119,9 @@ class UsersTable extends Table
     }
 
     /**
-     * @param TableSchema $schema The Schema to be modified
+     * @param \Cake\Database\Schema\TableSchema $schema The Schema to be modified
      *
-     * @return TableSchema|\Cake\Database\Schema\TableSchema
+     * @return \Cake\Database\Schema\TableSchema
      *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
@@ -243,7 +243,7 @@ class UsersTable extends Table
     }
 
     /**
-     * @param User $user UserEntity
+     * @param \App\Model\Entity\User $user UserEntity
      *
      * @return array
      *
@@ -334,7 +334,7 @@ class UsersTable extends Table
     /**
      * Retrieve User Capabilities
      *
-     * @param User $user The User to have their capabilities Cache Remembered
+     * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      *
      * @return array
      */
@@ -348,7 +348,7 @@ class UsersTable extends Table
     /**
      * Patch User Capabilities
      *
-     * @param User $user The User to have their capabilities Cache Remembered
+     * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      *
      * @return \App\Model\Entity\User|bool
      */
@@ -364,7 +364,7 @@ class UsersTable extends Table
     /**
      * Check for a User Specific Capability
      *
-     * @param User $user The User to be checked
+     * @param \App\Model\Entity\User $user The User to be checked
      * @param string $capability The Capability to be found
      *
      * @return bool|array
@@ -407,10 +407,10 @@ class UsersTable extends Table
     /**
      * Finder Method for
      *
-     * @param Query $query The Query to be Modified
+     * @param \Cake\ORM\Query $query The Query to be Modified
      * @param array $options The Options passed
      *
-     * @return Query
+     * @return \Cake\ORM\Query
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -426,7 +426,7 @@ class UsersTable extends Table
      * before Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
-     * @param User $entity The Entity on which the Save is being Called.
+     * @param \App\Model\Entity\User $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      *
      * @return bool

@@ -1,14 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Role;
-use App\Model\Entity\User;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -20,14 +18,14 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $RoleStatuses
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $UserContacts
  *
- * @method Role get($primaryKey, $options = [])
- * @method Role newEntity($data = null, array $options = [])
- * @method Role[] newEntities(array $data, array $options = [])
- * @method Role|false save(EntityInterface $entity, $options = [])
- * @method Role saveOrFail(EntityInterface $entity, $options = [])
- * @method Role patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Role[] patchEntities($entities, array $data, array $options = [])
- * @method Role findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Role get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Role|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Role[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Role findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -119,7 +117,7 @@ class RolesTable extends Table
      * after Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
-     * @param Role $entity The Entity on which the Save is being Called.
+     * @param \App\Model\Entity\Role $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      *
      * @return bool

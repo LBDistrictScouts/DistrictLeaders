@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\FunctionalHelper;
@@ -11,7 +13,6 @@ use Cake\View\View;
  */
 class FunctionalHelperTest extends TestCase
 {
-
     /**
      * Test subject
      *

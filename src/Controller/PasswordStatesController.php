@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\PasswordState;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * PasswordStates Controller
  *
  * @property \App\Model\Table\PasswordStatesTable $PasswordStates
  *
- * @method PasswordState[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\PasswordState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class PasswordStatesController extends AppController
 {
-
     /**
      * Index method
      *

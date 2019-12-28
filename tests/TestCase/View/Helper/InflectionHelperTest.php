@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\InflectionHelper;
@@ -10,7 +12,6 @@ use Cake\View\View;
  */
 class InflectionHelperTest extends TestCase
 {
-
     /**
      * Test subject
      *

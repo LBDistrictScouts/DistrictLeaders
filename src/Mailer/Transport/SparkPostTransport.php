@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 /*
  * Copyright (c) 2015 Syntax Era Development Studio
@@ -18,12 +19,9 @@
 namespace App\Mailer\Transport;
 
 use Cake\Core\Configure;
-use Cake\Http\Client;
-use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Email;
-use Cake\Network\Exception\BadRequestException;
 use Cake\ORM\TableRegistry;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
@@ -82,7 +80,7 @@ class SparkPostTransport extends AbstractTransport
 
             /** @var \SparkPost\SparkPostResponse $response */
             $results = $response->getBody();
-            /** @var Email $email */
+            /** @var \Cake\Mailer\Email $email */
             $sendHeaders = $email->getHeaders(['X-Email-Gen-Code', 'X-Gen-ID']);
 
             $this->EmailSends = TableRegistry::getTableLocator()->get('EmailSends');

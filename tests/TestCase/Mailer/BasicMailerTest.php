@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Mailer;
 
-use App\Mailer\BasicMailer;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestCase;
 

@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\ScoutGroup;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * ScoutGroups Controller
  *
  * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
  *
- * @method ScoutGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ScoutGroupsController extends AppController
 {
-
     /**
      * Index method
      *

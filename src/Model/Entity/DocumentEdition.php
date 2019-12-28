@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -75,7 +77,6 @@ class DocumentEdition extends Entity implements FileEntityInterface
 //    public function _getHash(): string
 //    {
 //        // phpcs:enable
-//
 //        return $this->md5_hash;
 //    }
 //
@@ -100,7 +101,6 @@ class DocumentEdition extends Entity implements FileEntityInterface
 //    public function _getPath(): string
 //    {
 //        // phpcs:enable
-//
 //        return $this->file_path;
 //    }
 //

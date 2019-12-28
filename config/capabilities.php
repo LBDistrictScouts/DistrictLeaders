@@ -5,6 +5,7 @@
  * Date: 2019-01-03
  * Time: 20:55
  */
+
 use App\Model\Entity\Capability as CAP;
 
 return [

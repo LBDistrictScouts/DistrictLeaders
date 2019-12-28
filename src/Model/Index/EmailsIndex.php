@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Index;
 
 use App\Model\Document\EmailDocument;

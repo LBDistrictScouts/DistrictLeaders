@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\GoogleClientComponent;
@@ -10,7 +12,6 @@ use Cake\TestSuite\TestCase;
  */
 class GoogleClientComponentTest extends TestCase
 {
-
     /**
      * Test subject
      *

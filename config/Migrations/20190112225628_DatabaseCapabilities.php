@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class DatabaseCapabilities extends AbstractMigration

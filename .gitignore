@@ -49,3 +49,5 @@ nbproject/*
 /webroot/bootstrap_u_i
 /webroot/debug_kit
 /.php_cs.cache
+/.phpunit.result.cache
+/config/app4.php

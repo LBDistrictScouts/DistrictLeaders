@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\SectionType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * SectionTypes Controller
  *
  * @property \App\Model\Table\SectionTypesTable $SectionTypes
  *
- * @method SectionType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionTypesController extends AppController
 {
-
     /**
      * Index method
      *

@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\NotificationType;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
  *
- * @method NotificationType get($primaryKey, $options = [])
- * @method NotificationType newEntity($data = null, array $options = [])
- * @method NotificationType[] newEntities(array $data, array $options = [])
- * @method NotificationType|false save(EntityInterface $entity, $options = [])
- * @method NotificationType saveOrFail(EntityInterface $entity, $options = [])
- * @method NotificationType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method NotificationType[] patchEntities($entities, array $data, array $options = [])
- * @method NotificationType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\NotificationType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType findOrCreate($search, callable $callback = null, $options = [])
  */
 class NotificationTypesTable extends Table
 {

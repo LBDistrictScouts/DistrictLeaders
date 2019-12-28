@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
@@ -265,7 +265,7 @@ trait ModelTestTrait
     /**
      * @param array $expected Array of Expected Value
      * @param \Cake\ORM\Table $table The Table being Validated
-     * @param integer $count Number of Items Expected
+     * @param int $count Number of Items Expected
      * @param array|null $dates Date Fields to be omitted
      * @param int|array|null $get The Get Value
      */

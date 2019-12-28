@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\NotificationType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * NotificationTypes Controller
  *
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
  *
- * @method NotificationType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationTypesController extends AppController
 {

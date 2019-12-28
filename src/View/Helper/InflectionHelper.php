@@ -1,16 +1,16 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Helper;
 
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\View\View;
 
 /**
  * Inflection helper
  */
 class InflectionHelper extends Helper
 {
-
     /**
      * Default configuration.
      *

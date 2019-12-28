@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -56,8 +58,6 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      */
     public function bootstrap()
     {
-        $this->addPlugin('Cake/ElasticSearch', ['bootstrap' => true]);
-
         $this->addPlugin('Flash');
 
         $this->addPlugin('CakeDto', ['bootstrap' => true]);

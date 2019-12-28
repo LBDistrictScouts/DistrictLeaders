@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\EmailSend;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * EmailSends Controller
  *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  *
- * @method EmailSend[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailSendsController extends AppController
 {

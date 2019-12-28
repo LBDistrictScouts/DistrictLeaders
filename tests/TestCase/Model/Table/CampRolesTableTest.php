@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampRolesTable;
@@ -11,7 +13,6 @@ use Cake\TestSuite\TestCase;
  */
 class CampRolesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *

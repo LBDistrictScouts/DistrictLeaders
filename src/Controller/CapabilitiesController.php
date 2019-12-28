@@ -1,20 +1,17 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Capability;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Capabilities Controller
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
  *
- * @method Capability[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
 {
-
     /**
      * Index method
      *

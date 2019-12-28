@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\NotificationsController;
 use Cake\TestSuite\TestCase;
 
 /**

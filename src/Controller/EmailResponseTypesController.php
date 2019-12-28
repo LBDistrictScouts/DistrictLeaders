@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\EmailResponseType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * EmailResponseTypes Controller
  *
  * @property \App\Model\Table\EmailResponseTypesTable $EmailResponseTypes
  *
- * @method EmailResponseType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailResponseTypesController extends AppController
 {

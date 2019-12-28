@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Token;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Tokens Controller
  *
  * @property \App\Model\Table\TokensTable $Tokens
  *
- * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Token[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {

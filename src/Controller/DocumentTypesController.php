@@ -1,16 +1,14 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\DocumentType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * DocumentTypes Controller
  *
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
  *
- * @method DocumentType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {

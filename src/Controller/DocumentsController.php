@@ -1,11 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\Document;
-use App\Model\Entity\DocumentType;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Utility\Hash;
 use Exception;
 
 /**
@@ -15,7 +13,7 @@ use Exception;
  *
  * @property \App\Controller\Component\FilterComponent $Filter
  *
- * @method Document[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentsController extends AppController
 {

@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\CampRoleType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,20 +12,19 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
  *
- * @method CampRoleType get($primaryKey, $options = [])
- * @method CampRoleType newEntity($data = null, array $options = [])
- * @method CampRoleType[] newEntities(array $data, array $options = [])
- * @method CampRoleType|false save(EntityInterface $entity, $options = [])
- * @method CampRoleType saveOrFail(EntityInterface $entity, $options = [])
- * @method CampRoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method CampRoleType[] patchEntities($entities, array $data, array $options = [])
- * @method CampRoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CampRoleType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CampRoleType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CampRoleType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CampRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CampRoleType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CampRoleType findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CampRoleTypesTable extends Table
 {
-
     /**
      * Initialize method
      *

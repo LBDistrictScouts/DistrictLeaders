@@ -6,8 +6,8 @@
  * Time: 20:55
  */
 
-use App\Model\Entity\NotificationType as NT;
 use App\Model\Entity\FileType as FT;
+use App\Model\Entity\NotificationType as NT;
 
 return [
 

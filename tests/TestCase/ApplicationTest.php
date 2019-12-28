@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -34,7 +36,6 @@ use InvalidArgumentException;
  */
 class ApplicationTest extends IntegrationTestCase
 {
-
     /**
      * testBootstrap
      *
@@ -47,7 +48,6 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
-            'Cake/ElasticSearch',
             'CakeDto',
             'Tools',
             'Search',

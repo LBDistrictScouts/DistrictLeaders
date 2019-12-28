@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\CloudConvertClientComponent;
@@ -10,7 +12,6 @@ use Cake\TestSuite\TestCase;
  */
 class CloudConvertClientComponentTest extends TestCase
 {
-
     /**
      * Test subject
      *

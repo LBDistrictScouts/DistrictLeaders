@@ -1,11 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\ORM\Table;
 
 /**
  * Caseable behavior
+ *
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class CaseableBehavior extends Behavior
 {
@@ -25,6 +28,8 @@ class CaseableBehavior extends Behavior
      * @param \Cake\ORM\Entity $entity The Entity being processed.
      *
      * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeRules($event, $entity)
     {
@@ -32,22 +37,24 @@ class CaseableBehavior extends Behavior
         $columns = $this->_config['case_columns'];
 
         foreach ($columns as $column => $case) {
-            switch ($case) {
-                case 'l':
-                    $changed = strtolower($entity->get($column));
-                    break;
-                case 't':
-                    $changed = ucwords(strtolower($entity->get($column)));
-                    break;
-                case 'u':
-                    $changed = strtoupper($entity->get($column));
-                    break;
-                default:
-                    $changed = $entity->get($column);
-                    break;
+            $value = $entity->get($column);
+            if (!is_null($value)) {
+                switch ($case) {
+                    case 'l':
+                        $changed = strtolower($value);
+                        break;
+                    case 't':
+                        $changed = ucwords(strtolower($value));
+                        break;
+                    case 'u':
+                        $changed = strtoupper($value);
+                        break;
+                    default:
+                        $changed = $value;
+                        break;
+                }
+                $entity->set($column, $changed);
             }
-
-            $entity->set($column, $changed);
         }
 
         $cleaned = array_keys($columns);

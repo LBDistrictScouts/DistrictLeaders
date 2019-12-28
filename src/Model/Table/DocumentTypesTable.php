@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,14 +14,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\HasMany $Documents
  *
- * @method DocumentType get($primaryKey, $options = [])
- * @method DocumentType newEntity($data = null, array $options = [])
- * @method DocumentType[] newEntities(array $data, array $options = [])
- * @method DocumentType|false save(EntityInterface $entity, $options = [])
- * @method DocumentType saveOrFail(EntityInterface $entity, $options = [])
- * @method DocumentType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DocumentType[] patchEntities($entities, array $data, array $options = [])
- * @method DocumentType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DocumentType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DocumentType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType findOrCreate($search, callable $callback = null, $options = [])
  */
 class DocumentTypesTable extends Table
 {

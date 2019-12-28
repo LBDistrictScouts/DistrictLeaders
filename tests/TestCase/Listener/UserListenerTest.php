@@ -1,9 +1,11 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
 //use App\Model\Table\OrdersTable;
+
+
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;

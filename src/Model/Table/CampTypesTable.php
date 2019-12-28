@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\CampType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,14 +12,14 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\HasMany $Camps
  *
- * @method CampType get($primaryKey, $options = [])
- * @method CampType newEntity($data = null, array $options = [])
- * @method CampType[] newEntities(array $data, array $options = [])
- * @method CampType|false save(EntityInterface $entity, $options = [])
- * @method CampType saveOrFail(EntityInterface $entity, $options = [])
- * @method CampType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method CampType[] patchEntities($entities, array $data, array $options = [])
- * @method CampType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CampType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CampType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CampType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CampType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CampType findOrCreate($search, callable $callback = null, $options = [])
  */
 class CampTypesTable extends Table
 {

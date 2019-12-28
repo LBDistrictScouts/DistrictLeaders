@@ -9,8 +9,7 @@
         "ext-json": "^1.5",
         "cakephp/authentication": "^1.1",
         "cakephp/authorization": "^1.2",
-        "cakephp/cakephp": "^3.7.0",
-        "icex/elastic-search": "dev-master#1b6d04f76cdf79b8c04574339d56cdfbbc0feffc",
+        "cakephp/cakephp": "^3.8.0",
         "cakephp/migrations": "^2.0.0",
         "cakephp/plugin-installer": "^1.0",
         "cvo-technologies/cakephp-github": "^1.1",
@@ -30,13 +29,12 @@
         "muffin/footprint": "^1.2",
         "muffin/trash": "^2.1",
         "php-http/guzzle6-adapter": "^2.0",
-        "ruflin/elastica": "7.0.0-beta2 as 6.1.1",
         "sparkpost/sparkpost": "^2.2",
         "twilio/sdk": "^5.34"
     },
     "require-dev": {
         "cakephp/bake": "@stable",
-        "cakephp/cakephp-codesniffer": "@stable",
+        "cakephp/cakephp-codesniffer": "^3.3.0",
         "cakephp/debug_kit": "@stable",
         "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
@@ -107,11 +105,5 @@
     "prefer-stable": true,
     "config": {
         "sort-packages": true
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/icex/elastic-search"
-        }
-    ]
+    }
 }

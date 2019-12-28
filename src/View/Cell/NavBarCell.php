@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Cell;
 
 use Cake\View\Cell;
@@ -10,7 +12,6 @@ use Cake\View\Cell;
  */
 class NavBarCell extends Cell
 {
-
     /**
      * List of valid options that can be passed into this
      * cell's constructor.
