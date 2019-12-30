@@ -127,7 +127,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * {@inheritDoc}
      */
-    public function can($action, $resource)
+    public function can($action, $resource): bool
     {
         return $this->authorization->can($this, $action, $resource);
     }

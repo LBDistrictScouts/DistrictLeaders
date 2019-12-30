@@ -38,6 +38,7 @@ class CaseableBehavior extends Behavior
 
         foreach ($columns as $column => $case) {
             $value = $entity->get($column);
+
             if (!is_null($value)) {
                 switch ($case) {
                     case 'l':

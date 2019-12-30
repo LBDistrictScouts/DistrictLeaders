@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Shell\Task;
 
+use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
@@ -40,12 +41,10 @@ class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
         $passed = 0;
         $idx = 0;
 
-        $query = $this->RoleTypes->find('all')->contain('Capabilities');
+        $query = $this->RoleTypes->find('all')->contain(['Capabilities', 'RoleTemplates']);
 
-        if (key_exists('role_template', $data)) {
-            /** @var int $roleTemplate */
-            $roleTemplateId = $data['role_template_id'];
-            $query = $query->where([RoleType::FIELD_ROLE_TEMPLATE_ID => $roleTemplateId]);
+        if (key_exists('role_template_id', $data) && is_numeric($data['role_template_id'])) {
+            $query = $query->where([RoleType::FIELD_ROLE_TEMPLATE_ID => $data['role_template_id']]);
         }
 
         $totalRecords = $query->count();

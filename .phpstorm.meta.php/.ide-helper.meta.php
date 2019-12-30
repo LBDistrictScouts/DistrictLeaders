@@ -126,6 +126,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -141,6 +142,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -313,6 +315,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,

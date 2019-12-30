@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Document;
+use App\Model\Entity\DocumentVersion;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -32,13 +35,13 @@ class DocumentVersionsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->setTable('document_versions');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(DocumentVersion::FIELD_VERSION_NUMBER);
+        $this->setPrimaryKey(DocumentVersion::FIELD_ID);
 
         $this->addBehavior('Timestamp');
 
@@ -57,7 +60,7 @@ class DocumentVersionsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -72,13 +75,35 @@ class DocumentVersionsTable extends Table
     }
 
     /**
+     * Finder Method for
+     *
+     * @param \Cake\ORM\Query $query The Query to be Modified
+     * @param array $options The Options passed
+     *
+     * @return \Cake\ORM\Query
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.CamelCaseVariableName)
+     */
+    public function findDocumentList(Query $query, array $options)
+    {
+        return $query->contain('Documents')
+            ->find('list', array_merge($options, [
+                'valueField' => function ($document_version) {
+                    /** @var \App\Model\Entity\DocumentVersion $document_version */
+                    return $document_version->document->get(Document::FIELD_DOCUMENT) . ' - ' . $document_version->get(DocumentVersion::FIELD_VERSION_NUMBER);
+                },
+            ]));
+    }
+
+    /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['document_id'], 'Documents'));
 

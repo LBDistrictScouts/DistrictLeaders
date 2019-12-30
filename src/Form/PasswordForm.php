@@ -22,7 +22,7 @@ class PasswordForm extends Form
      * @param \Cake\Form\Schema $schema From schema
      * @return \Cake\Form\Schema
      */
-    protected function _buildSchema(Schema $schema)
+    protected function _buildSchema(Schema $schema): Schema
     {
         $schema->addField(self::FIELD_NEW_PASSWORD, 'string')
             ->addField(self::FIELD_CONFIRM_PASSWORD, 'string')
@@ -37,7 +37,7 @@ class PasswordForm extends Form
      * @param \Cake\Validation\Validator $validator to use against the form
      * @return \Cake\Validation\Validator
      */
-    protected function _buildValidator(Validator $validator)
+    protected function _buildValidator(Validator $validator): Validator
     {
         $validator->minLength(self::FIELD_POSTCODE, 6, 'Postcode is too Short.')
             ->minLength(self::FIELD_NEW_PASSWORD, User::MINIMUM_PASSWORD_LENGTH, 'Password is too short.')
@@ -53,7 +53,7 @@ class PasswordForm extends Form
      *
      * @return bool
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): bool
     {
         // Check Request is included
         if (key_exists('request', $data)) {

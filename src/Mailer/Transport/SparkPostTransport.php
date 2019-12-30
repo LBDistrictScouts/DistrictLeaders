@@ -46,7 +46,7 @@ class SparkPostTransport extends AbstractTransport
      *
      * @return void
      */
-    public function send(Email $email)
+    public function send(Email $email): void
     {
         // Load SparkPost configuration settings
         $apiKey = Configure::read('SparkPost.Api.key');

@@ -34,6 +34,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\MiddlewareQueue;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
@@ -56,7 +57,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
     /**
      * {@inheritDoc}
      */
-    public function bootstrap()
+    public function bootstrap(): void
     {
         $this->addPlugin('Flash');
 
@@ -111,7 +112,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
-    public function middleware($middlewareQueue)
+    public function middleware($middlewareQueue): MiddlewareQueue
     {
         $securityHeaders = new SecurityHeadersMiddleware();
         $securityHeaders
@@ -183,9 +184,11 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
      * @param \Psr\Http\Message\ResponseInterface $response The Response Received
      *
-     * @return \Authorization\AuthorizationService|\Authorization\AuthorizationServiceInterface
+     * @return \Authorization\AuthorizationService
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthorizationService(ServerRequestInterface $request, ResponseInterface $response)
+    public function getAuthorizationService(ServerRequestInterface $request, ResponseInterface $response): AuthorizationService
     {
         $ormResolver = new OrmResolver();
         $mapResolver = new MapResolver();
@@ -204,9 +207,12 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
      * @param \Psr\Http\Message\ResponseInterface $response Response
-     * @return \Authentication\AuthenticationServiceInterface
+     *
+     * @return \Authentication\AuthenticationService
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthenticationService(ServerRequestInterface $request, ResponseInterface $response)
+    public function getAuthenticationService(ServerRequestInterface $request, ResponseInterface $response): AuthenticationService
     {
         $service = new AuthenticationService();
 

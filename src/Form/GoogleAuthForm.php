@@ -18,7 +18,7 @@ class GoogleAuthForm extends Form
      * @param \Cake\Form\Schema $schema From schema
      * @return \Cake\Form\Schema
      */
-    protected function _buildSchema(Schema $schema)
+    protected function _buildSchema(Schema $schema): Schema
     {
         $schema->addField('auth_code', 'string');
 
@@ -26,23 +26,12 @@ class GoogleAuthForm extends Form
     }
 
     /**
-     * Form validation builder
-     *
-     * @param \Cake\Validation\Validator $validator to use against the form
-     * @return \Cake\Validation\Validator
-     */
-    protected function _buildValidator(Validator $validator)
-    {
-        return $validator;
-    }
-
-    /**
-     * Defines what to execute once the From is being processed
+     * Defines what to execute once the Form is processed
      *
      * @param array $data Form data.
      * @return bool
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): bool
     {
         return true;
     }

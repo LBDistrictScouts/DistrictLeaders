@@ -20,7 +20,7 @@ class UserListener implements EventListenerInterface
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Model.Users.login' => 'updateLogin',

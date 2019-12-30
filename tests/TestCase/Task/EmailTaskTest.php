@@ -82,7 +82,9 @@ class EmailTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        TestCase::assertEquals(0, $job->failed);
+        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
+            TestCase::assertEquals(0, $job->get('failed'));
+        }
     }
 
     /**
@@ -110,7 +112,9 @@ class EmailTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        TestCase::assertInstanceOf('\Queue\Model\Entity\QueuedJob', $job);
         TestCase::assertEquals(1, $job->failed);
+        TestCase::assertEquals('Queue\Model\QueueException: Email generation code not specified.', $job->failure_message);
     }
 
     /**
@@ -138,6 +142,8 @@ class EmailTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        TestCase::assertInstanceOf('\Queue\Model\Entity\QueuedJob', $job);
         TestCase::assertEquals(1, $job->failed);
+        TestCase::assertEquals('Queue\Model\QueueException: Make & Send Failed.', $job->failure_message);
     }
 }

@@ -11,7 +11,7 @@ use Cake\ORM\TableRegistry;
  *
  * @package App\Listener
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class CapabilityListener implements EventListenerInterface
@@ -19,7 +19,7 @@ class CapabilityListener implements EventListenerInterface
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Model.RoleTemplates.templateChange' => 'templateChange',

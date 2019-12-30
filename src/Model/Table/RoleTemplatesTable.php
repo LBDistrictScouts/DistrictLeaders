@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\RoleTemplate;
+use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -29,7 +30,7 @@ class RoleTemplatesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -48,7 +49,7 @@ class RoleTemplatesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(RoleTemplate::FIELD_ID)
@@ -71,5 +72,29 @@ class RoleTemplatesTable extends Table
             ->notEmptyString(RoleTemplate::FIELD_INDICATIVE_LEVEL);
 
         return $validator;
+    }
+
+    /**
+     * before Save LifeCycle Callback
+     *
+     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     *
+     * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function beforeSave($event, $entity, $options)
+    {
+        if ($entity->getOriginal(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES) != $entity->template_capabilities) {
+            $this->getEventManager()->dispatch(new Event(
+                'Model.RoleTemplates.templateChange',
+                $this,
+                ['role_template' => $entity]
+            ));
+        }
+
+        return true;
     }
 }

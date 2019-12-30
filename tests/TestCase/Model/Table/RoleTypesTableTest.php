@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
 use Cake\ORM\TableRegistry;
@@ -175,7 +176,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testPatchTemplateCapabilities()
+    public function testPatchAllTemplateCapabilities()
     {
         $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
         $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
@@ -187,6 +188,38 @@ class RoleTypesTableTest extends TestCase
         $expectedCaps = [
             'LOGIN' => true,
             'OWN_USER' => true,
+        ];
+
+        foreach ($roleType->capabilities as $capability) {
+            TestCase::assertTrue(key_exists($capability->capability_code, $expectedCaps));
+            TestCase::assertSame($capability->_joinData->template, $expectedCaps[$capability->capability_code]);
+        }
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchTemplateCapabilities()
+    {
+        $roleTemplate = $this->RoleTypes->RoleTemplates->get(1);
+        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['DIRECTORY', 'CH_DOCTYPE']);
+        $roleTemplate = $this->RoleTypes->RoleTemplates->save($roleTemplate);
+        TestCase::assertInstanceOf($this->RoleTypes->RoleTemplates->getEntityClass(), $roleTemplate);
+
+        $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
+        TestCase::assertInstanceOf(RoleType::class, $this->RoleTypes->save($roleType));
+
+        $roleType = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        TestCase::assertNotSame($roleTypeOriginal->capabilities, $roleType->capabilities);
+
+        $expectedCaps = [
+            'LOGIN' => true,
+            'OWN_USER' => true,
+            'DIRECTORY' => true,
+            'CH_DOCTYPE' => true,
         ];
 
         foreach ($roleType->capabilities as $capability) {

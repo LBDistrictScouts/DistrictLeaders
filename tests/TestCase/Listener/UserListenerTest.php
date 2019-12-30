@@ -100,7 +100,7 @@ class UserListenerTest extends TestCase
         TestCase::assertNotEquals($now, $afterUser->modified);
     }
 
-    public function testRolePatch()
+    public function testCapabilityChange()
     {
         $role = $this->Roles->get(1);
         $role->set(Role::FIELD_USER_CONTACT_ID, 2);

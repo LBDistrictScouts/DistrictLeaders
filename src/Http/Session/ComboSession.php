@@ -31,9 +31,10 @@ class ComboSession extends DatabaseSession
      * Method used to read from a database session.
      *
      * @param string|int $id ID that uniquely identifies session in database.
+     *
      * @return string Session data or empty string if it does not exist.
      */
-    public function read($id)
+    public function read($id): string
     {
         $result = Cache::read($id, $this->cacheKey);
         if ($result) {
@@ -48,9 +49,10 @@ class ComboSession extends DatabaseSession
      *
      * @param string|int $id ID that uniquely identifies session in database.
      * @param mixed $data The data to be saved.
+     *
      * @return bool True for successful write, false otherwise.
      */
-    public function write($id, $data)
+    public function write($id, $data): bool
     {
         Cache::write($id, $data, $this->cacheKey);
 
@@ -61,9 +63,10 @@ class ComboSession extends DatabaseSession
      * Method called on the destruction of a database session.
      *
      * @param string|int $id ID that uniquely identifies session in database.
+     *
      * @return bool True for successful delete, false otherwise.
      */
-    public function destroy($id)
+    public function destroy($id): bool
     {
         Cache::delete($id, $this->cacheKey);
 
@@ -75,7 +78,7 @@ class ComboSession extends DatabaseSession
      *
      * @return bool True on success, false on failure.
      */
-    public function gc($expires = null)
+    public function gc($expires = null): bool
     {
         return Cache::gc($this->cacheKey) && parent::gc($expires);
     }

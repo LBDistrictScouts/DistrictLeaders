@@ -38,7 +38,7 @@ class RoleTypesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -68,7 +68,7 @@ class RoleTypesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(RoleType::FIELD_ID)
@@ -100,7 +100,7 @@ class RoleTypesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn([RoleType::FIELD_SECTION_TYPE_ID], 'SectionTypes'));
         $rules->add($rules->existsIn([RoleType::FIELD_ROLE_TEMPLATE_ID], 'RoleTemplates'));
@@ -117,6 +117,8 @@ class RoleTypesTable extends Table
      */
     public function patchTemplateCapabilities($roleType)
     {
+        $this->Capabilities->installBaseCapabilities();
+
         $templateId = $roleType->get(RoleType::FIELD_ROLE_TEMPLATE_ID);
         $template = $this->RoleTemplates->get($templateId);
 

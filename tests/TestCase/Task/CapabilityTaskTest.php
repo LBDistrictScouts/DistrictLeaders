@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
 
+use App\Model\Entity\RoleTemplate;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -11,7 +12,7 @@ use Cake\TestSuite\TestCase;
  * App\Mailer\BasicMailer Test Case
  *
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
- * @property \App\Model\Table\RoleTypesTable $RoleTypes
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  */
 class CapabilityTaskTest extends TestCase
 {
@@ -66,14 +67,11 @@ class CapabilityTaskTest extends TestCase
     public function testCapabilityQueueJob()
     {
         $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
-        $this->RoleTypes = TableRegistry::getTableLocator()->get('RoleTypes');
         $originalJobCount = $this->QueuedJobs->find('all')->count();
-
-        $roleType = $this->RoleTypes->get(1);
 
         $this->QueuedJobs->createJob(
             'Capability',
-            ['role_template_id' => $roleType->role_template_id]
+            ['role_template_id' => 1]
         );
 
         $resultingJobCount = $this->QueuedJobs->find('all')->count();
@@ -86,7 +84,49 @@ class CapabilityTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        TestCase::assertEquals(0, $job->failed);
+        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
+            TestCase::assertEquals(0, $job->get('failed'));
+        }
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testWholeCapabilityQueueJob()
+    {
+        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->RoleTemplates = TableRegistry::getTableLocator()->get('RoleTemplates');
+        $originalJobCount = $this->QueuedJobs->find('all')->count();
+        $originalRoleType = $this->RoleTemplates->RoleTypes->get(1, ['contain' => 'Capabilities']);
+
+        $roleTemplate = $this->RoleTemplates->get(1);
+        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['LOGIN', 'ADD_GROUP', 'EDIT_GROUP']);
+        $roleTemplate = $this->RoleTemplates->save($roleTemplate);
+        TestCase::assertInstanceOf($this->RoleTemplates->getEntityClass(), $roleTemplate);
+
+        $this->QueuedJobs->createJob(
+            'Capability',
+            ['role_template_id' => 1]
+        );
+
+        $resultingJobCount = $this->QueuedJobs->find('all')->count();
+
+        TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
+        TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
+
+        $this->useCommandRunner();
+        $this->exec('queue runworker');
+
+        /** @var \Queue\Model\Entity\QueuedJob $job */
+        $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
+            TestCase::assertEquals(0, $job->get('failed'));
+        }
+
+        $updatedRoleType = $this->RoleTemplates->RoleTypes->get(1, ['contain' => 'Capabilities']);
+        TestCase::assertNotSame($originalRoleType, $updatedRoleType);
     }
 
     /**
@@ -114,6 +154,8 @@ class CapabilityTaskTest extends TestCase
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        TestCase::assertEquals(0, $job->failed);
+        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
+            TestCase::assertEquals(0, $job->get('failed'));
+        }
     }
 }
