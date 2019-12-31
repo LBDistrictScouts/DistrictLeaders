@@ -55,7 +55,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
      */
     public function getPath(): string
     {
-        return $this->file_path;
+        return $this->file_path ?? $this->get('path');
     }
 
     /**

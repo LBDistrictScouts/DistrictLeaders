@@ -63,15 +63,10 @@ class DocumentsController extends AppController
     public function add()
     {
         $document = $this->Documents->newEntity();
-        if ($this->request->is('post')) {
-            $document = $this->Documents->uploadDocument($this->request->getData(), $document);
-
-            $document = $this->Documents->patchEntity(
-                $document,
-                $this->request->getData(),
-                ['fields' => [Document::FIELD_DOCUMENT_TYPE_ID]]
-            );
-            if ($this->Documents->save($document)) {
+        $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseTypes();
+        if ($this->getRequest()->is('post')) {
+            $document = $this->Documents->uploadDocument($this->getRequest()->getData(), $document);
+            if ($document instanceof Document) {
                 $this->Flash->success(__('The document has been saved.'));
 
                 return $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);

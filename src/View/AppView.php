@@ -37,6 +37,7 @@ use Cake\View\View;
  * @property \Tools\View\Helper\TimeHelper $Time
  * @property \Tools\View\Helper\FormatHelper $Format
  * @property \Flash\View\Helper\FlashHelper $Flash
+ * @property \App\View\Helper\MarkdownHelper $Markdown
  */
 class AppView extends View
 {

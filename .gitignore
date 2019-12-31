@@ -1,10 +1,19 @@
 # CakePHP specific files #
 ##########################
 /config/app.php
+/config/app4.php
+/config/app3.php
+
 /config/app_db.php
 /config/app_file.php
 /config/app_queue.php
+
 /config/.env
+/config/token.json
+/config/credentials.json
+
+/config/Migrations/*.lock
+
 /logs/*
 /tmp/*
 /vendor/*
@@ -41,13 +50,13 @@ nbproject/*
 .vscode
 # Sass preprocessor
 .sass-cache/
-/config/Migrations/*.lock
-/clover.xml
-/config/token.json
-/config/credentials.json
 
-/webroot/bootstrap_u_i
-/webroot/debug_kit
+/clover.xml
+
 /.php_cs.cache
 /.phpunit.result.cache
-/config/app4.php
+
+/webroot/files/*
+!/webroot/files/empty
+/webroot/bootstrap_u_i
+/webroot/debug_kit

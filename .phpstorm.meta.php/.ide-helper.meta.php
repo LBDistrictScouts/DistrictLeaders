@@ -524,6 +524,7 @@ namespace PHPSTORM_META {
 			'Icon' => \App\View\Helper\IconHelper::class,
 			'IdeHelper.DocBlock' => \IdeHelper\View\Helper\DocBlockHelper::class,
 			'Inflection' => \App\View\Helper\InflectionHelper::class,
+			'Markdown' => \App\View\Helper\MarkdownHelper::class,
 			'Migrations.Migration' => \Migrations\View\Helper\MigrationHelper::class,
 			'Number' => \Cake\View\Helper\NumberHelper::class,
 			'Paginator' => \Cake\View\Helper\PaginatorHelper::class,

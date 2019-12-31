@@ -24,6 +24,8 @@
         "google/apiclient": "^2.0",
         "guzzlehttp/psr7": "^1.5.2",
         "josbeir/cakephp-filesystem": "^1.0",
+        "league/commonmark": "^1.1",
+        "league/commonmark-extras": "^1.1",
         "league/flysystem-aws-s3-v3": "^1.0",
         "mobiledetect/mobiledetectlib": "2.*",
         "muffin/footprint": "^1.2",

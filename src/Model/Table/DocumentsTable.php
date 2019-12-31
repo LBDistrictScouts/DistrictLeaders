@@ -13,6 +13,7 @@ use Cake\ORM\Table;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Josbeir\Filesystem\FilesystemAwareTrait;
+use PhpParser\Comment\Doc;
 
 /**
  * Documents Model
@@ -108,49 +109,53 @@ class DocumentsTable extends Table
     /**
      * @param array $postData Post Request Data (file upload array)
      * @param \App\Model\Entity\Document $documentEntity The Document Entity
+     * @param string $fileSystem The configured Filesystem Name
      *
      * @return \Cake\Datasource\EntityInterface|bool
      */
-    public function uploadDocument($postData, $documentEntity)
+    public function uploadDocument($postData, $documentEntity, $fileSystem = 'default')
     {
         if (!key_exists('uploadedFile', $postData)) {
             return false;
         }
 
         /** @var \Cake\Datasource\EntityInterface $fileEntity */
-        $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
+        $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
+
+        $mime = $postData['uploadedFile']['type'] ?? $fileEntity->get(FileType::FIELD_MIME);
 
         try {
             $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
-                FileType::FIELD_MIME => $fileEntity->get(FileType::FIELD_MIME),
+                FileType::FIELD_MIME => $mime,
             ])->firstOrFail();
         } catch (RecordNotFoundException $exception) {
             return false;
         }
-
-        $this->DocumentVersions->DocumentEditions->patchEntity($fileEntity, [
-            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
-            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
-            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
-        ]);
 
         $documentName = explode('.', $fileEntity->get(DocumentEdition::FIELD_FILENAME))[0];
         $documentName = Inflector::humanize($documentName);
 
         $documentData = [
             Document::FIELD_DOCUMENT => $documentName,
+            Document::FIELD_DOCUMENT_TYPE_ID => $postData[Document::FIELD_DOCUMENT_TYPE_ID],
             Document::FIELD_DOCUMENT_VERSIONS => [
                 [
                     DocumentVersion::FIELD_VERSION_NUMBER => 1,
                     DocumentVersion::FIELD_DOCUMENT_EDITIONS => [
                         [
-                            $fileEntity,
+                            DocumentEdition::FIELD_FILENAME => $fileEntity->get(DocumentEdition::FIELD_FILENAME),
+                            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
+                            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
+                            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
+                            DocumentEdition::FIELD_SIZE => $fileEntity->get(DocumentEdition::FIELD_SIZE),
                         ],
                     ],
                 ],
             ],
         ];
 
-        return $this->patchEntity($documentEntity, $documentData, ['associated' => ['DocumentVersions' => ['DocumentEditions']]]);
+        $document = $this->patchEntity($documentEntity, $documentData, ['associated' => ['DocumentVersions.DocumentEditions']]);
+
+        return $this->save($document);
     }
 }

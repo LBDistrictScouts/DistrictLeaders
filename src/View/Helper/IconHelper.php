@@ -14,15 +14,6 @@ class IconHelper extends Helper
     ];
 
     /**
-     * @param array $config The Config Array
-     *
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-    }
-
-    /**
      * @param string $iconName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
      *

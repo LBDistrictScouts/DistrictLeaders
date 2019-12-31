@@ -95,5 +95,10 @@ return [
             FT::FIELD_FILE_EXTENSION => 'csv',
             FT::FIELD_MIME => 'application/csv',
         ],
+        [
+            FT::FIELD_FILE_TYPE => 'Markdown',
+            FT::FIELD_FILE_EXTENSION => 'md',
+            FT::FIELD_MIME => 'text/markdown',
+        ],
     ],
 ];
