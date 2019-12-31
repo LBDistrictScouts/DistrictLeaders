@@ -102,7 +102,7 @@ class CapabilityTaskTest extends TestCase
         $originalRoleType = $this->RoleTemplates->RoleTypes->get(1, ['contain' => 'Capabilities']);
 
         $roleTemplate = $this->RoleTemplates->get(1);
-        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['LOGIN', 'ADD_GROUP', 'EDIT_GROUP']);
+        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['LOGIN', 'CREATE_SCOUT_GROUP', 'UPDATE_SCOUT_GROUP']);
         $roleTemplate = $this->RoleTemplates->save($roleTemplate);
         TestCase::assertInstanceOf($this->RoleTemplates->getEntityClass(), $roleTemplate);
 

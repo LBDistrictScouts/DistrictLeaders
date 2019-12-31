@@ -101,7 +101,7 @@ class FileTypesTable extends Table
      *
      * @return mixed
      */
-    public function installBaseTypes()
+    public function installBaseFileTypes()
     {
         $base = Configure::read('fileTypes');
 

@@ -233,15 +233,15 @@ trait ModelTestTrait
     }
 
     /**
-     * @param array $keyAndAssociatedTable Array of Foreign Key Names & Associated Tables
+     * @param array $existsArray Array of Foreign Key Names & Associated Tables
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      *
      * @return void
      */
-    protected function validateExistsRules($keyAndAssociatedTable, $table, $good)
+    protected function validateExistsRules($existsArray, $table, $good)
     {
-        foreach ($keyAndAssociatedTable as $foreignKey => $associated) {
+        foreach ($existsArray as $foreignKey => $associated) {
             $this->validateExistsRule($foreignKey, $table, $associated, $good);
         }
     }
@@ -253,7 +253,9 @@ trait ModelTestTrait
     {
         $before = $table->find('all')->count();
 
-        $installed = $table->installBaseTypes();
+        $installAlias = 'installBase' . $table->getRegistryAlias();
+
+        $installed = call_user_func([$table, $installAlias]);
 
         TestCase::assertNotEquals($before, $installed);
         TestCase::assertNotEquals(0, $installed);

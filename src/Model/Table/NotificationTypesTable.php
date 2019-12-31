@@ -103,7 +103,7 @@ class NotificationTypesTable extends Table
      *
      * @return mixed
      */
-    public function installBaseTypes()
+    public function installBaseNotificationTypes()
     {
         $base = Configure::read('notificationTypes');
 

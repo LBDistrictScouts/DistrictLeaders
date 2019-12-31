@@ -204,7 +204,7 @@ class RoleTypesTableTest extends TestCase
     public function testPatchTemplateCapabilities()
     {
         $roleTemplate = $this->RoleTypes->RoleTemplates->get(1);
-        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['DIRECTORY', 'CH_DOCTYPE']);
+        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['DIRECTORY', 'DELETE_USER']);
         $roleTemplate = $this->RoleTypes->RoleTemplates->save($roleTemplate);
         TestCase::assertInstanceOf($this->RoleTypes->RoleTemplates->getEntityClass(), $roleTemplate);
 
@@ -219,7 +219,7 @@ class RoleTypesTableTest extends TestCase
             'LOGIN' => true,
             'OWN_USER' => true,
             'DIRECTORY' => true,
-            'CH_DOCTYPE' => true,
+            'DELETE_USER' => true,
         ];
 
         foreach ($roleType->capabilities as $capability) {

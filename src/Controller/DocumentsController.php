@@ -63,7 +63,7 @@ class DocumentsController extends AppController
     public function add()
     {
         $document = $this->Documents->newEntity();
-        $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseTypes();
+        $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseFileTypes();
         if ($this->getRequest()->is('post')) {
             $document = $this->Documents->uploadDocument($this->getRequest()->getData(), $document);
             if ($document instanceof Document) {

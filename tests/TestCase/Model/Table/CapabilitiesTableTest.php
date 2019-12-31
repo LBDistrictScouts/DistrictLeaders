@@ -3,16 +3,20 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
+use Cake\Utility\Inflector;
 
 /**
  * App\Model\Table\CapabilitiesTable Test Case
  */
 class CapabilitiesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -62,13 +66,11 @@ class CapabilitiesTableTest extends TestCase
      */
     public function getGood()
     {
-        $good = [
+        return [
             'capability_code' => 'NEW' . random_int(0, 999),
             'capability' => 'Llama Permissions' . random_int(0, 999),
             'min_level' => random_int(0, 5),
         ];
-
-        return $good;
     }
 
     /**
@@ -78,18 +80,14 @@ class CapabilitiesTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->Capabilities->get(1)->toArray();
-
         $expected = [
             'id' => 1,
             'capability_code' => 'ALL',
             'capability' => 'SuperUser Permissions',
             'min_level' => 5,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->Capabilities->find('all')->count();
-        TestCase::assertEquals(6, $count);
+        $this->validateInitialise($expected, $this->Capabilities, 6);
     }
 
     /**
@@ -109,47 +107,20 @@ class CapabilitiesTableTest extends TestCase
             'capability_code',
             'capability',
         ];
-
-        foreach ($required as $require) {
-            $reqArray = $good;
-            unset($reqArray[$require]);
-            $new = $this->Capabilities->newEntity($reqArray);
-            TestCase::assertFalse($this->Capabilities->save($new));
-        }
+        $this->validateRequired($required, $this->Capabilities, [$this, 'getGood']);
 
         $notEmpties = [
             'min_level',
             'capability_code',
             'capability',
         ];
-
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $good;
-            $reqArray[$not_empty] = '';
-            $new = $this->Capabilities->newEntity($reqArray);
-            TestCase::assertFalse($this->Capabilities->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->Capabilities, [$this, 'getGood']);
 
         $maxLengths = [
-            'capability_code' => 10,
+            'capability_code' => 63,
             'capability' => 255,
         ];
-
-        $string = hash('sha512', Security::randomBytes(256));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->Capabilities->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->Capabilities->newEntity($reqArray);
-            TestCase::assertFalse($this->Capabilities->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->Capabilities, [$this, 'getGood']);
     }
 
     /**
@@ -161,25 +132,10 @@ class CapabilitiesTableTest extends TestCase
     {
         // Is Unique
         $uniques = [
-            'capability_code' => 'FACE',
-            'capability' => 'I LIKE CHEESE',
+            'capability_code',
+            'capability',
         ];
-
-        foreach ($uniques as $unqueField => $uniqueValue) {
-            $values = $this->getGood();
-
-            $existing = $this->Capabilities->get(1)->toArray();
-
-            $values[$unqueField] = $uniqueValue;
-            $new = $this->Capabilities->newEntity($values);
-            TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
-
-            $values = $this->getGood();
-
-            $values[$unqueField] = $existing[$unqueField];
-            $new = $this->Capabilities->newEntity($values);
-            TestCase::assertFalse($this->Capabilities->save($new));
-        }
+        $this->validateUniqueRules($uniques, $this->Capabilities, [$this, 'getGood']);
     }
 
     /**
@@ -189,16 +145,149 @@ class CapabilitiesTableTest extends TestCase
      */
     public function testInstallBaseCapabilities()
     {
-        $before = $this->Capabilities->find('all')->count();
+        $this->validateInstallBase($this->Capabilities);
+    }
 
-        $installed = $this->Capabilities->installBaseCapabilities();
+    /**
+     * Test generateEntityCapabilities method
+     *
+     * @return void
+     */
+    public function testGenerateEntityCapabilities()
+    {
+        $result = $this->Capabilities->generateEntityCapabilities();
 
-//        TestCase::assertNotEquals($before, $installed);
-        TestCase::assertNotEquals(0, $installed);
+        $models = Configure::read('allModels');
+        $methods = Configure::read('entityCapabilities');
+        $expected = count($models) * count($methods);
 
-        $new = $before + $installed;
-        $after = $this->Capabilities->find('all')->count();
+        TestCase::assertEquals($expected, $result);
+    }
 
-        TestCase::assertEquals($new, $after);
+    /**
+     * @return array
+     */
+    public function providerEntityCapability()
+    {
+        return [
+            'Unprotected Scout Group Entity' => [
+                'ScoutGroups',
+                3,
+                false,
+                [
+                    [
+                        'id' => 7,
+                        'capability_code' => 'CREATE_SCOUT_GROUP',
+                        'capability' => 'Create Scout Group',
+                        'min_level' => 4,
+                    ],
+                    [
+                        'id' => 8,
+                        'capability_code' => 'UPDATE_SCOUT_GROUP',
+                        'capability' => 'Update Scout Group',
+                        'min_level' => 4,
+                    ],
+                    [
+                        'id' => 9,
+                        'capability_code' => 'VIEW_SCOUT_GROUP',
+                        'capability' => 'View Scout Group',
+                        'min_level' => 1,
+                    ],
+                    [
+                        'id' => 10,
+                        'capability_code' => 'DELETE_SCOUT_GROUP',
+                        'capability' => 'Delete Scout Group',
+                        'min_level' => 5,
+                    ],
+                ],
+            ],
+            'Protected Scout Group Entity' => [
+                'ScoutGroups',
+                3,
+                true,
+                [
+                    [
+                        'id' => 7,
+                        'capability_code' => 'CREATE_SCOUT_GROUP',
+                        'capability' => 'Create Scout Group',
+                        'min_level' => 4,
+                    ],
+                    [
+                        'id' => 8,
+                        'capability_code' => 'UPDATE_SCOUT_GROUP',
+                        'capability' => 'Update Scout Group',
+                        'min_level' => 4,
+                    ],
+                    [
+                        'id' => 9,
+                        'capability_code' => 'VIEW_SCOUT_GROUP',
+                        'capability' => 'View Scout Group',
+                        'min_level' => 3,
+                    ],
+                    [
+                        'id' => 10,
+                        'capability_code' => 'DELETE_SCOUT_GROUP',
+                        'capability' => 'Delete Scout Group',
+                        'min_level' => 5,
+                    ],
+                ],
+            ],
+            'Protected Section Entity' => [
+                'Sections',
+                2,
+                true,
+                [
+                    [
+                        'id' => 7,
+                        'capability_code' => 'CREATE_SECTION',
+                        'capability' => 'Create Section',
+                        'min_level' => 3,
+                    ],
+                    [
+                        'id' => 8,
+                        'capability_code' => 'UPDATE_SECTION',
+                        'capability' => 'Update Section',
+                        'min_level' => 3,
+                    ],
+                    [
+                        'id' => 9,
+                        'capability_code' => 'VIEW_SECTION',
+                        'capability' => 'View Section',
+                        'min_level' => 2,
+                    ],
+                    [
+                        'id' => 10,
+                        'capability_code' => 'DELETE_SECTION',
+                        'capability' => 'Delete Section',
+                        'min_level' => 5,
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test entityCapability method
+     *
+     * @dataProvider providerEntityCapability
+     *
+     * @param string $entity The entity being created
+     * @param int $baseLevel The Base Level of the Entity Test
+     * @param bool $protected Protection Option
+     * @param array $expected Entities Created
+     *
+     * @return void
+     */
+    public function testEntityCapability($entity, $baseLevel, $protected, $expected)
+    {
+        $result = $this->Capabilities->entityCapability($entity, $baseLevel, $protected);
+        TestCase::assertEquals(4, $result);
+
+        $searchValue = '%' . strtoupper(Inflector::singularize(Inflector::underscore($entity)));
+        $searchField = Capability::FIELD_CAPABILITY_CODE . ' LIKE';
+        $query = $this->Capabilities->find()->where([$searchField => $searchValue]);
+        TestCase::assertEquals(4, $query->count());
+
+        TestCase::assertSame($expected, $query->disableHydration()->toArray());
     }
 }

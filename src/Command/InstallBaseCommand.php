@@ -89,13 +89,13 @@ class InstallBaseCommand extends Command
         }
 
         if ($args->getOption('all') || $args->getOption('notification_types')) {
-            $happenings = $this->NotificationTypes->installBaseTypes();
+            $happenings = $this->NotificationTypes->installBaseNotificationTypes();
 
             $io->info('Notification Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('file_types')) {
-            $happenings = $this->FileTypes->installBaseTypes();
+            $happenings = $this->FileTypes->installBaseFileTypes();
 
             $io->info('File Types Installed: ' . $happenings);
         }

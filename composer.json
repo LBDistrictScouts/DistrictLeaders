@@ -64,6 +64,7 @@
         "post-install-cmd": [
             "@console-install",
             "@migrate",
+            "@install-base",
             "@symlink"
         ],
         "post-create-project-cmd": "@console-install",
@@ -101,7 +102,8 @@
         "migrate-app": "bin/cake migrations migrate",
         "migrate-queue": "bin/cake migrations migrate -p Queue",
         "migrate-database-log": "bin/cake migrations migrate -p DatabaseLog -c database_log --no-lock",
-        "symlink": "bin/cake plugin assets symlink"
+        "symlink": "bin/cake plugin assets symlink",
+        "install-base": "bin/cake install_base -a"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
