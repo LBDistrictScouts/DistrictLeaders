@@ -195,8 +195,6 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         $mapResolver->map(ServerRequest::class, RequestPolicy::class);
 
-        // Check the map resolver, and fallback to the orm resolver if
-        // a resource is not explicitly mapped.
         $resolver = new ResolverCollection([$ormResolver, $mapResolver]);
 
         return new AuthorizationService($resolver);

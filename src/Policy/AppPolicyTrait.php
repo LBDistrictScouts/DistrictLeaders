@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 namespace App\Policy;
 
+use Cake\ORM\TableRegistry;
+
 /**
  * A trait intended to make application tests of your controllers easier.
  */
@@ -33,9 +35,8 @@ trait AppPolicyTrait
             return false;
         }
 
-        if ($user->checkCapability('ALLT')) {
+        if ($user->checkCapability('ALL')) {
             return true;
         }
-        // fall through
     }
 }

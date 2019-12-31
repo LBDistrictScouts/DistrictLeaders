@@ -7,6 +7,7 @@ use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -46,6 +47,8 @@ use Cake\ORM\Entity;
  * @property int|null $password_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -174,6 +177,22 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public function getIdentifier()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $action The Action Method
+     * @param string $model The Model being Referenced
+     * @param int|null $group The Group ID for checking against
+     * @param int|null $section The Section ID for checking against
+     *
+     * @return bool
+     */
+    public function buildAndCheckCapability($action, $model, $group = null, $section = null)
+    {
+        $capTable = TableRegistry::getTableLocator()->get('Capabilities');
+        $capability = $capTable->buildCapability($action, $model);
+
+        return $this->checkCapability($capability, $group, $section);
     }
 
     /**

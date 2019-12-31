@@ -40,18 +40,26 @@ return [
         'DELETE' => 5,
     ],
 
+    'fieldCapabilities' => [
+        'CHANGE' => 1,
+        'VIEW' => 0,
+    ],
+
     'allModels' => [
         'Users' => [
             'baseLevel' => 1,
             'viewRestricted' => false,
+            'fieldLock' => 2,
         ],
         'ScoutGroups' => [
             'baseLevel' => 3,
             'viewRestricted' => false,
+            'fieldLock' => false,
         ],
         'Sections' => [
             'baseLevel' => 2,
             'viewRestricted' => false,
+            'fieldLock' => false,
         ],
     ],
 

@@ -10,6 +10,7 @@ use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
+use Monolog\Test\TestCase;
 
 /**
  * Capabilities Model
@@ -130,6 +131,10 @@ class CapabilitiesTable extends Table
         foreach (Configure::read('allModels') as $model => $options) {
             $model = Inflector::camelize($model);
             $count += $this->entityCapability($model, $options['baseLevel'], $options['viewRestricted']);
+
+            if ($options['fieldLock']) {
+                $count += $this->fieldCapability($model, $options['fieldLock']);
+            }
         }
 
         return $count;
@@ -164,15 +169,86 @@ class CapabilitiesTable extends Table
     }
 
     /**
+     * @param string $entity The Entity to be generated
+     * @param int $baseLevel The Base level of the entity
+     *
+     * @return int
+     */
+    public function fieldCapability($entity, $baseLevel)
+    {
+        $fieldActions = Configure::read('fieldCapabilities');
+
+        if (!TableRegistry::getTableLocator()->exists($entity)) {
+            return false;
+        }
+        $table = TableRegistry::getTableLocator()->get($entity);
+        $record = $table->find()->disableHydration()->first();
+        $fields = array_keys($record);
+        $count = 0;
+
+        foreach ($fieldActions as $action => $multiplier) {
+            foreach ($fields as $field) {
+                $data[Capability::FIELD_CAPABILITY_CODE] = $this->capabilityCodeFieldFormat($action, $entity, $field);
+
+                $data[Capability::FIELD_MIN_LEVEL] = $this->calculateLevel($baseLevel, $multiplier);
+                $data[Capability::FIELD_CAPABILITY] = $this->capabilityFieldNameFormat($action, $entity, $field);
+
+                $capability = $this->findOrCreate($data);
+                if ($capability instanceof \App\Model\Entity\Capability) {
+                    $count += 1;
+                }
+            }
+        }
+
+        return $count;
+    }
+
+    /**
      * @param string $action The name of the Action performed
-     * @param string $capability The Capability to be formatted
+     * @param string $model The Model to be formatted
      *
      * @return string
      */
-    protected function capabilityCodeFormat($action, $capability)
+    protected function capabilityCodeFormat($action, $model)
     {
-        $code = ucfirst(strtolower($action)) . $capability;
+        $code = ucfirst(strtolower($action)) . $model;
         $code = Inflector::underscore(Inflector::singularize($code));
+
+        return strtoupper($code);
+    }
+
+    /**
+     * @param string $action Action Method
+     * @param string $model Model to be referenced
+     *
+     * @return string
+     */
+    public function buildCapability($action, $model)
+    {
+        if (!TableRegistry::getTableLocator()->exists($model)) {
+            return false;
+        }
+
+        $methods = array_keys(array_merge(Configure::read('fieldCapabilities'), Configure::read('entityCapabilities')));
+        if (!in_array($action, $methods)) {
+            return false;
+        }
+
+        return $this->capabilityCodeFormat($action, $model);
+    }
+
+    /**
+     * @param string $action The name of the Action performed
+     * @param string $model The Model generated
+     * @param string $field The Field being limited
+     *
+     * @return string
+     */
+    protected function capabilityCodeFieldFormat($action, $model, $field)
+    {
+        $code = 'Field' . ucfirst(strtolower($action)) . $model;
+        $code = Inflector::underscore($code);
+        $code .= '@' . $field;
 
         return strtoupper($code);
     }
@@ -188,13 +264,28 @@ class CapabilitiesTable extends Table
     }
 
     /**
+     * @param string $action CRUD Method
+     * @param string $model The Model
+     * @param string $field The Field Restriction
+     *
+     * @return string
+     */
+    protected function capabilityFieldNameFormat($action, $model, $field)
+    {
+        $name = ucwords(strtolower($action)) . ' field';
+        $name .= ' "' . Inflector::humanize($field) . '"';
+
+        return $name . ' on ' . Inflector::humanize($model);
+    }
+
+    /**
      * @param int $baseLevel The Base Level for Capability
      * @param int $multiplier The Action Multiplier
-     * @param bool $viewRestricted Is the view action restricted
+     * @param bool|null $viewRestricted Is the view action restricted
      *
      * @return int
      */
-    protected function calculateLevel($baseLevel, $multiplier, $viewRestricted)
+    protected function calculateLevel($baseLevel, $multiplier, $viewRestricted = false)
     {
         if ($multiplier == -5 && $viewRestricted) {
             $multiplier = 0;

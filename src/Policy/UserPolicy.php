@@ -6,6 +6,7 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\ORM\TableRegistry;
 
 /**
  * Class UserPolicy
@@ -27,6 +28,11 @@ class UserPolicy implements BeforePolicyInterface
         if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
             return new Result(true);
         }
+
+        if ($user->buildAndCheckCapability('UPDATE', 'Users')) {
+            return new Result(true);
+        }
+
         // Results let you define a 'reason' for the failure.
         return new Result(false, 'not-owner');
     }
@@ -44,6 +50,10 @@ class UserPolicy implements BeforePolicyInterface
         }
 
         if ($user->checkCapability('DIRECTORY')) {
+            return new Result(true);
+        }
+
+        if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true);
         }
 

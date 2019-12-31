@@ -7,6 +7,7 @@ use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
+use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
 
@@ -67,9 +68,9 @@ class CapabilitiesTableTest extends TestCase
     public function getGood()
     {
         return [
-            'capability_code' => 'NEW' . random_int(0, 999),
-            'capability' => 'Llama Permissions' . random_int(0, 999),
-            'min_level' => random_int(0, 5),
+            Capability::FIELD_CAPABILITY_CODE => 'NEW' . random_int(0, 999),
+            Capability::FIELD_CAPABILITY => 'Llama Permissions' . random_int(0, 999),
+            Capability::FIELD_MIN_LEVEL => random_int(0, 5),
         ];
     }
 
@@ -81,10 +82,14 @@ class CapabilitiesTableTest extends TestCase
     public function testInitialize()
     {
         $expected = [
-            'id' => 1,
-            'capability_code' => 'ALL',
-            'capability' => 'SuperUser Permissions',
-            'min_level' => 5,
+            Capability::FIELD_ID => 1,
+            Capability::FIELD_CAPABILITY_CODE => 'ALL',
+            Capability::FIELD_CAPABILITY => 'SuperUser Permissions',
+            Capability::FIELD_MIN_LEVEL => 5,
+            Capability::FIELD_CRUD_FUNCTION => 'SPECIAL',
+            Capability::FIELD_APPLICABLE_MODEL => 'SPECIAL',
+            Capability::FIELD_APPLICABLE_FIELD => false,
+            Capability::FIELD_IS_FIELD_CAPABILITY => false,
         ];
 
         $this->validateInitialise($expected, $this->Capabilities, 6);
@@ -103,22 +108,22 @@ class CapabilitiesTableTest extends TestCase
         TestCase::assertInstanceOf('App\Model\Entity\Capability', $this->Capabilities->save($new));
 
         $required = [
-            'min_level',
-            'capability_code',
-            'capability',
+            Capability::FIELD_MIN_LEVEL,
+            Capability::FIELD_CAPABILITY_CODE,
+            Capability::FIELD_CAPABILITY,
         ];
         $this->validateRequired($required, $this->Capabilities, [$this, 'getGood']);
 
         $notEmpties = [
-            'min_level',
-            'capability_code',
-            'capability',
+            Capability::FIELD_MIN_LEVEL,
+            Capability::FIELD_CAPABILITY_CODE,
+            Capability::FIELD_CAPABILITY,
         ];
         $this->validateNotEmpties($notEmpties, $this->Capabilities, [$this, 'getGood']);
 
         $maxLengths = [
-            'capability_code' => 63,
-            'capability' => 255,
+            Capability::FIELD_CAPABILITY_CODE => 63,
+            Capability::FIELD_CAPABILITY => 255,
         ];
         $this->validateMaxLengths($maxLengths, $this->Capabilities, [$this, 'getGood']);
     }
@@ -132,8 +137,8 @@ class CapabilitiesTableTest extends TestCase
     {
         // Is Unique
         $uniques = [
-            'capability_code',
-            'capability',
+            Capability::FIELD_CAPABILITY_CODE,
+            Capability::FIELD_CAPABILITY,
         ];
         $this->validateUniqueRules($uniques, $this->Capabilities, [$this, 'getGood']);
     }
@@ -176,28 +181,28 @@ class CapabilitiesTableTest extends TestCase
                 false,
                 [
                     [
-                        'id' => 7,
-                        'capability_code' => 'CREATE_SCOUT_GROUP',
-                        'capability' => 'Create Scout Group',
-                        'min_level' => 4,
+                        Capability::FIELD_ID => 7,
+                        Capability::FIELD_CAPABILITY_CODE => 'CREATE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Create Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        'id' => 8,
-                        'capability_code' => 'UPDATE_SCOUT_GROUP',
-                        'capability' => 'Update Scout Group',
-                        'min_level' => 4,
+                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_CAPABILITY_CODE => 'UPDATE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Update Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        'id' => 9,
-                        'capability_code' => 'VIEW_SCOUT_GROUP',
-                        'capability' => 'View Scout Group',
-                        'min_level' => 1,
+                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_CAPABILITY_CODE => 'VIEW_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'View Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 1,
                     ],
                     [
-                        'id' => 10,
-                        'capability_code' => 'DELETE_SCOUT_GROUP',
-                        'capability' => 'Delete Scout Group',
-                        'min_level' => 5,
+                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_CAPABILITY_CODE => 'DELETE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Delete Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 5,
                     ],
                 ],
             ],
@@ -207,28 +212,28 @@ class CapabilitiesTableTest extends TestCase
                 true,
                 [
                     [
-                        'id' => 7,
-                        'capability_code' => 'CREATE_SCOUT_GROUP',
-                        'capability' => 'Create Scout Group',
-                        'min_level' => 4,
+                        Capability::FIELD_ID => 7,
+                        Capability::FIELD_CAPABILITY_CODE => 'CREATE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Create Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        'id' => 8,
-                        'capability_code' => 'UPDATE_SCOUT_GROUP',
-                        'capability' => 'Update Scout Group',
-                        'min_level' => 4,
+                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_CAPABILITY_CODE => 'UPDATE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Update Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        'id' => 9,
-                        'capability_code' => 'VIEW_SCOUT_GROUP',
-                        'capability' => 'View Scout Group',
-                        'min_level' => 3,
+                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_CAPABILITY_CODE => 'VIEW_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'View Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        'id' => 10,
-                        'capability_code' => 'DELETE_SCOUT_GROUP',
-                        'capability' => 'Delete Scout Group',
-                        'min_level' => 5,
+                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_CAPABILITY_CODE => 'DELETE_SCOUT_GROUP',
+                        Capability::FIELD_CAPABILITY => 'Delete Scout Group',
+                        Capability::FIELD_MIN_LEVEL => 5,
                     ],
                 ],
             ],
@@ -238,28 +243,28 @@ class CapabilitiesTableTest extends TestCase
                 true,
                 [
                     [
-                        'id' => 7,
-                        'capability_code' => 'CREATE_SECTION',
-                        'capability' => 'Create Section',
-                        'min_level' => 3,
+                        Capability::FIELD_ID => 7,
+                        Capability::FIELD_CAPABILITY_CODE => 'CREATE_SECTION',
+                        Capability::FIELD_CAPABILITY => 'Create Section',
+                        Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        'id' => 8,
-                        'capability_code' => 'UPDATE_SECTION',
-                        'capability' => 'Update Section',
-                        'min_level' => 3,
+                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_CAPABILITY_CODE => 'UPDATE_SECTION',
+                        Capability::FIELD_CAPABILITY => 'Update Section',
+                        Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        'id' => 9,
-                        'capability_code' => 'VIEW_SECTION',
-                        'capability' => 'View Section',
-                        'min_level' => 2,
+                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_CAPABILITY_CODE => 'VIEW_SECTION',
+                        Capability::FIELD_CAPABILITY => 'View Section',
+                        Capability::FIELD_MIN_LEVEL => 2,
                     ],
                     [
-                        'id' => 10,
-                        'capability_code' => 'DELETE_SECTION',
-                        'capability' => 'Delete Section',
-                        'min_level' => 5,
+                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_CAPABILITY_CODE => 'DELETE_SECTION',
+                        Capability::FIELD_CAPABILITY => 'Delete Section',
+                        Capability::FIELD_MIN_LEVEL => 5,
                     ],
                 ],
             ],
@@ -289,5 +294,160 @@ class CapabilitiesTableTest extends TestCase
         TestCase::assertEquals(4, $query->count());
 
         TestCase::assertSame($expected, $query->disableHydration()->toArray());
+    }
+
+    /**
+     * @return array
+     */
+    public function providerFieldCapability()
+    {
+        return [
+            'Capabilities Entity' => [
+                'Capabilities',
+                3,
+                8,
+                [
+                    [
+                        Capability::FIELD_ID => 7,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITIES@ID',
+                        Capability::FIELD_CAPABILITY => 'Change field "Id" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITIES@CAPABILITY_CODE',
+                        Capability::FIELD_CAPABILITY => 'Change field "Capability Code" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITIES@CAPABILITY',
+                        Capability::FIELD_CAPABILITY => 'Change field "Capability" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITIES@MIN_LEVEL',
+                        Capability::FIELD_CAPABILITY => 'Change field "Min Level" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 11,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITIES@ID',
+                        Capability::FIELD_CAPABILITY => 'View field "Id" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 12,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITIES@CAPABILITY_CODE',
+                        Capability::FIELD_CAPABILITY => 'View field "Capability Code" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 13,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITIES@CAPABILITY',
+                        Capability::FIELD_CAPABILITY => 'View field "Capability" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 14,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITIES@MIN_LEVEL',
+                        Capability::FIELD_CAPABILITY => 'View field "Min Level" on Capabilities',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                ],
+                [
+                    Capability::FIELD_ID => 7,
+                    Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITIES@ID',
+                    Capability::FIELD_CAPABILITY => 'Change field "Id" on Capabilities',
+                    Capability::FIELD_MIN_LEVEL => 4,
+                    Capability::FIELD_CRUD_FUNCTION => 'CHANGE',
+                    Capability::FIELD_APPLICABLE_MODEL => 'CAPABILITIES',
+                    Capability::FIELD_APPLICABLE_FIELD => 'ID',
+                    Capability::FIELD_IS_FIELD_CAPABILITY => true,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test entityCapability method
+     *
+     * @dataProvider providerFieldCapability
+     *
+     * @param string $entity The entity being created
+     * @param int $baseLevel The Base Level of the Entity Test
+     * @param int $fieldCount The number of fields
+     * @param array $expected Entities Created
+     * @param array $hydrated First Entity
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testFieldCapability($entity, $baseLevel, $fieldCount, $expected, $hydrated)
+    {
+        $result = $this->Capabilities->fieldCapability($entity, $baseLevel);
+        TestCase::assertEquals($fieldCount, $result);
+
+        $entitySearchValue = '%' . strtoupper(Inflector::singularize(Inflector::underscore($entity)));
+        $fieldSearchValue = 'FIELD_%';
+        $searchField = Capability::FIELD_CAPABILITY_CODE . ' LIKE';
+        $query = $this->Capabilities->find()->where([
+            $searchField => $entitySearchValue,
+            $searchField => $fieldSearchValue,
+        ]);
+        TestCase::assertEquals($fieldCount, $query->count());
+
+        TestCase::assertEquals($hydrated, $query->first()->toArray());
+
+        $query = $this->Capabilities->find()->where([
+            $searchField => $entitySearchValue,
+            $searchField => $fieldSearchValue,
+        ]);
+
+        TestCase::assertEquals($expected, $query->disableHydration()->toArray());
+
+        $result = $this->Capabilities->fieldCapability('Cheeses', 99);
+        TestCase::assertFalse($result);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerBuildCapability()
+    {
+        return [
+            'Create Capabilities' => [
+                'CREATE',
+                'Capabilities',
+                'CREATE_CAPABILITY',
+            ],
+            'Bad Action' => [
+                'JSKLSLS',
+                'Capabilities',
+                false,
+            ],
+            'Bad Model' => [
+                'CREATE',
+                'KASKDD',
+                false,
+            ],
+        ];
+    }
+
+    /**
+     * Test Build Capability Method and safety overloads
+     *
+     * @dataProvider providerBuildCapability
+     *
+     * @param string $action Action being entered
+     * @param string $model Model being entered
+     * @param string|false $expected Expectation of result
+     */
+    public function testBuildCapability($action, $model, $expected)
+    {
+        $result = $this->Capabilities->buildCapability($action, $model);
+        TestCase::assertEquals($expected, $result);
     }
 }
