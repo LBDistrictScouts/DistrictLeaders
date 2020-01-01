@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -87,7 +89,11 @@ class RoleTemplatesTable extends Table
      */
     public function beforeSave($event, $entity, $options)
     {
-        if ($entity->getOriginal(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES) != $entity->template_capabilities) {
+        if (
+            $entity->isNew()
+            || $entity->getOriginal(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES) != $entity->template_capabilities
+            || $entity->isDirty(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES)
+        ) {
             $this->getEventManager()->dispatch(new Event(
                 'Model.RoleTemplates.templateChange',
                 $this,
@@ -96,5 +102,86 @@ class RoleTemplatesTable extends Table
         }
 
         return true;
+    }
+
+    /**
+     * Function to install base entities from Config
+     *
+     * @return int
+     */
+    public function installBaseRoleTemplates()
+    {
+        $count = 0;
+        /** @var array[] $roleTemplates */
+        $roleTemplates = Configure::read('baseRoleTemplates');
+
+        foreach ($roleTemplates as $roleTemplate) {
+            if ($this->installBaseRoleTemplate($roleTemplate)) {
+                $count += 1;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
+     * function to install a template from Configuration
+     *
+     * @param array $roleTemplate Role Template Array for Config
+     *
+     * @return bool
+     */
+    public function installBaseRoleTemplate($roleTemplate)
+    {
+        // Quit loop if keys not present
+        if (!key_exists('template_name', $roleTemplate) || !key_exists('core_level', $roleTemplate)) {
+            return false;
+        }
+
+        // Generate core level templates
+        if (!key_exists('capabilities', $roleTemplate)) {
+            $roleTemplateEntity = $this->makeCoreTemplate($roleTemplate['template_name'], $roleTemplate['core_level']);
+        }
+
+        // Generate specific templates
+        if (key_exists('capabilities', $roleTemplate)) {
+            $roleTemplateEntity = $this->newEntity([
+                RoleTemplate::FIELD_ROLE_TEMPLATE => $roleTemplate['template_name'],
+                RoleTemplate::FIELD_INDICATIVE_LEVEL => $roleTemplate['core_level'],
+                RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => $roleTemplate['capabilities'],
+            ]);
+            $roleTemplateEntity = $this->save($roleTemplateEntity);
+        }
+
+        // Complete Count
+        if (isset($roleTemplateEntity) && $roleTemplateEntity instanceof RoleTemplate) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $name The Role Template Name
+     * @param int $level The Permission Level
+     *
+     * @return \App\Model\Entity\RoleTemplate|false
+     */
+    public function makeCoreTemplate($name, $level)
+    {
+        $query = $this->RoleTypes->Capabilities->find('level', ['level' => $level]);
+        $capabilities = [];
+
+        foreach ($query as $capability) {
+            array_push($capabilities, $capability->get(Capability::FIELD_CAPABILITY_CODE));
+        }
+
+        $roleTemplate = $this->newEntity([
+            RoleTemplate::FIELD_INDICATIVE_LEVEL => $level,
+            RoleTemplate::FIELD_ROLE_TEMPLATE => $name,
+            RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => $capabilities,
+        ]);
+
+        return $this->save($roleTemplate);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Capability;
 use Cake\Core\Configure;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Database\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -97,6 +99,25 @@ class CapabilitiesTable extends Table
         $rules->add($rules->isUnique([Capability::FIELD_CAPABILITY]));
 
         return $rules;
+    }
+
+    /**
+     * @param \Cake\Database\Query $query The Query being modified
+     * @param array $options Options for the find.
+     *
+     * @return mixed
+     */
+    public function findLevel(\Cake\Database\Query $query, array $options)
+    {
+        if (key_exists('level', $options) && is_numeric($options['level']) && $options['level'] >= 0 && $options['level'] <= 5) {
+            return $query
+                ->where(['min_level <= :level'])
+                ->bind(':level', $options['level'], 'integer');
+        }
+
+        return $query
+            ->where([':hold =' => 0])
+            ->bind(':hold', 1, 'integer');
     }
 
     /**

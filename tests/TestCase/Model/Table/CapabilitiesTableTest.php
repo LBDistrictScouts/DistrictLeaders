@@ -144,6 +144,53 @@ class CapabilitiesTableTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function providerFindLevel()
+    {
+        return [
+            'Level 0' => [ 0, 1 ],
+            'Level 1' => [ 1, 6 ],
+            'Level 2' => [ 2, 9 ],
+            'Level 3' => [ 3, 12 ],
+            'Level 4' => [ 4, 15 ],
+            'Level 5' => [ 5, 19 ],
+            'No Level' => [ null, 0 ],
+            'Bad Level' => [ 'fish', 0 ],
+        ];
+    }
+
+    /**
+     * Test the level finder function
+     *
+     * @dataProvider providerFindLevel
+     *
+     * @param int|null|string $level Min Level
+     * @param int $expectedCount Capabilities Found
+     */
+    public function testFindLevel($level, $expectedCount)
+    {
+        $this->Capabilities->installBaseCapabilities();
+
+        $query = $this->Capabilities->find('level', ['level' => $level]);
+        TestCase::assertEquals($expectedCount, $query->count());
+
+        if (is_numeric($level) && $level == 0) {
+            $expected = [
+                Capability::FIELD_ID => 6,
+                Capability::FIELD_CAPABILITY_CODE => 'LOGIN',
+                Capability::FIELD_CAPABILITY => 'Login',
+                Capability::FIELD_MIN_LEVEL => 0,
+                Capability::FIELD_CRUD_FUNCTION => 'SPECIAL',
+                Capability::FIELD_APPLICABLE_MODEL => 'SPECIAL',
+                Capability::FIELD_APPLICABLE_FIELD => false,
+                Capability::FIELD_IS_FIELD_CAPABILITY => false,
+            ];
+            TestCase::assertEquals($expected, $query->first()->toArray());
+        }
+    }
+
+    /**
      * Test installBaseCapabilities method
      *
      * @return void

@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * CapabilitiesFixture
- *
  */
 class CapabilitiesFixture extends TestFixture
 {
@@ -19,7 +18,10 @@ class CapabilitiesFixture extends TestFixture
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
         'capability_code' => ['type' => 'string', 'length' => 63, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'capability' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'min_level' => ['type' => 'integer', 'length' => 10, 'default' => '0', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'min_level' => ['type' => 'integer', 'length' => 10, 'default' => '1', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        '_indexes' => [
+            'capabilities_min_level' => ['type' => 'index', 'columns' => ['min_level'], 'length' => []],
+        ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'capabilities_capability_code' => ['type' => 'unique', 'columns' => ['capability_code'], 'length' => []],
@@ -27,7 +29,6 @@ class CapabilitiesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
