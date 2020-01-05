@@ -4,14 +4,103 @@
  * @var \App\Model\Entity\User $user
  * @var \App\Model\Entity\Audit $audit
  */
+
+$authUser = $this->getRequest()->getAttribute('identity');
+
 ?>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="jumbotron d-none d-sm-none d-md-flex d-lg-flex d-xl-flex" style="background-image: url(/img/activity-bg-2.jpg);background-size: cover;height: 300px;"></div>
+            <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                            <h4>Jacob Tyler</h4>
+                            <h6 class="text-muted mb-2">475931</h6>
+                        </div>
+                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
+                            <div class="dropdown d-lg-none"><button class="btn btn-primary dropdown-toggle d-sm-block d-md-block" data-toggle="dropdown" aria-expanded="false" type="button">Actions&nbsp;</button>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">First Item</a><a class="dropdown-item" role="presentation" href="#">Second Item</a><a class="dropdown-item" role="presentation" href="#">Third Item</a></div>
+                            </div>
+                            <div class="dropleft d-none d-sm-none d-lg-inline"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                                <div class="dropdown-menu dropdown-menu-right" role="menu">
+                                    <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation'])  ?>
+                                    <a class="dropdown-item" role="presentation" href="#">First Item</a>
+                                    <a class="dropdown-item" role="presentation" href="#">Second Item</a>
+                                    <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if (!empty($user->roles)): ?>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th><?= __('Role Type') ?></th>
+                                <th><?= __('Section') ?></th>
+                                <th><?= __('Email') ?></th>
+                                <th scope="col" class="actions"><?= __('Actions') ?></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach ($user->roles as $roles): ?>
+                            <tr>
+                                <td><?= $roles->has('role_type') ? h($roles->role_type->role_type) : '' ?> <?= $roles->has('role_status') && $roles->role_status->role_status != 'Active' ? '<span class="badge badge-info">' . h($roles->role_status->role_status) . '</span>' : '' ?></td>
+                                <td><?= $roles->has('section') ? h($roles->section->section) : '' ?></td>
+                                <td><?= $roles->has('user_contact') ? $this->Text->autoLinkEmails($roles->user_contact->contact_field) : '' ?></td>
+                                <td class="actions">
+                                    <?= $authUser->checkCapability('DIRECTORY') ? $this->Html->link('<i class="fal fa-eye"></i> Group', ['controller' => 'ScoutGroups', 'action' => 'view', $roles->section->scout_group_id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                    <?= $authUser->checkCapability('DIRECTORY') ? $this->Html->link('<i class="fal fa-eye"></i> Role Type', ['controller' => 'RoleTypes', 'action' => 'view', $roles->role_type_id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                    <?= $authUser->checkCapability('UPDATE_ROLE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Roles', 'action' => 'edit', $roles->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                    <?= $authUser->checkCapability('DELETE_ROLE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-lg-6">
+                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-body">
+                            <h5>Address</h5>
+                            <p class="card-text"><?= h($user->address_line_1) ?>,<br>Letchworth,<br>Hertfordshire.<br><strong>SG6 1FT</strong></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-body">
+                            <h5>Contact Numbers</h5>
+                            <p class="card-text"><i class="fas fa-phone"></i>&nbsp;01462 682165</p>
+                            <p class="card-text"><i class="fas fa-phone"></i>&nbsp;07804 918252</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
 <div class="users view large-9 medium-8 columns content">
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Dropdown button
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item'])  ?>
+
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
         </div>
@@ -47,7 +136,7 @@
         <?php if ($user->has('address_line_1')) : ?>
         <tr>
             <th scope="row"><?= __('Address Line 1') ?></th>
-            <td><?= h($user->address_line_1) ?></td>
+            <td></td>
         </tr>
         <?php endif; ?>
         <?php if ($user->has('address_line_2')) : ?>
@@ -128,45 +217,7 @@
     </div>
     <br/>
     <div id="related">
-        <?php if (!empty($user->roles)): ?>
-            <div class="collapse show" id="roles" data-parent="#related">
-                <div class="card">
-                    <div class="card-header">
-                        <h4><?= __('User Roles') ?></h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <tr>
-                                    <th scope="col"><?= __('Id') ?></th>
-                                    <th scope="col"><?= __('Role Type') ?></th>
-                                    <th scope="col"><?= __('Section Type') ?></th>
-                                    <th scope="col"><?= __('Group') ?></th>
-                                    <th scope="col"><?= __('Role Status') ?></th>
-                                    <th scope="col"><?= __('Role Contact') ?></th>
-                                    <th scope="col" class="actions"><?= __('Actions') ?></th>
-                                </tr>
-                                <?php foreach ($user->roles as $roles): ?>
-                                    <tr>
-                                        <td><?= h($roles->id) ?></td>
-                                        <td><?= $roles->has('role_type') ? h($roles->role_type->role_abbreviation) : '' ?></td>
-                                        <td><?= $roles->has('section') ? h($roles->section->section_type->section_type) : '' ?></td>
-                                        <td><?= $roles->has('section') ? h($roles->section->scout_group->scout_group) : '' ?></td>
-                                        <td><?= $roles->has('role_status') ? h($roles->role_status->role_status) : '' ?></td>
-                                        <td><?= $roles->has('user_contact') ? $this->Text->autoLinkEmails($roles->user_contact->contact_field) : '' ?></td>
-                                        <td class="actions">
-                                            <?= $this->Html->link(__('View'), ['controller' => 'Roles', 'action' => 'view', $roles->id]) ?>
-                                            <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>
-                                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
+
         <?php if (!empty($user->audits)): ?>
             <div class="collapse" id="recordChanges" data-parent="#related">
                 <div class="card">

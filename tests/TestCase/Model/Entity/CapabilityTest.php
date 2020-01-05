@@ -78,7 +78,7 @@ class CapabilityTest extends TestCase
     public function testGetApplicableModel()
     {
         $fieldValue = $this->Capability->get(Capability::FIELD_APPLICABLE_MODEL);
-        TestCase::assertSame('SCOUT_GROUP', $fieldValue);
+        TestCase::assertSame('ScoutGroups', $fieldValue);
 
         $this->Capability = new Capability([
             Capability::FIELD_CAPABILITY_CODE => 'LOGIN',
@@ -94,7 +94,7 @@ class CapabilityTest extends TestCase
             Capability::FIELD_MIN_LEVEL => 1,
         ]);
         $fieldValue = $this->Capability->get(Capability::FIELD_APPLICABLE_MODEL);
-        TestCase::assertSame('SCOUT_GROUP', $fieldValue);
+        TestCase::assertSame('ScoutGroups', $fieldValue);
     }
 
     /**

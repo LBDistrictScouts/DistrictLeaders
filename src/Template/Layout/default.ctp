@@ -34,9 +34,22 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
     </head>
     <body>
         <?= $this->element('navbar'); ?>
+        <?= $this->element('ModuleNav/selector'); ?>
         <div class="container" style="padding-bottom: 120px; padding-top: 20px;">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
+            <!-- Modal -->
+            <?php $identity = $this->getRequest()->getAttribute('identity'); ?>
+
+            <?php if (!is_null($identity)) : ?>
+                <?= $this->cell('Notify', [$identity->get('id')])->render() ?>
+                <?= $this->cell('ProfileModal', [$identity->get('id')], [
+                    'cache' => [
+                        'config' => 'cell_cache',
+                        'key' => 'profile_modal_' . $identity->get('id')
+                    ]
+                ])->render() ?>
+            <?php endif; ?>
         </div>
         <br/>
         <?= $this->element('footer'); ?>

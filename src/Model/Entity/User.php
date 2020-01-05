@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Core\Configure;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 
@@ -184,13 +186,14 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string $model The Model being Referenced
      * @param int|null $group The Group ID for checking against
      * @param int|null $section The Section ID for checking against
+     * @param string|null $field The field for action
      *
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null)
+    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
     {
         $capTable = TableRegistry::getTableLocator()->get('Capabilities');
-        $capability = $capTable->buildCapability($action, $model);
+        $capability = $capTable->buildCapability($action, $model, $field);
 
         return $this->checkCapability($capability, $group, $section);
     }

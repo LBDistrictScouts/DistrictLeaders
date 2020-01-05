@@ -14,12 +14,6 @@ $entity = $this->fetch('entity');
 ?>
 <div class="row">
     <div class="col-lg-12">
-        <h1><?= $this->Icon->iconHtmlEntity($entity) ?> <?= $this->Inflection->space($entity) ?></h1>
-        <br/>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -65,7 +59,6 @@ $entity = $this->fetch('entity');
                 </div>
                 <?php endif; ?>
             </div>
-            <?= $this->element('search') ?>
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">

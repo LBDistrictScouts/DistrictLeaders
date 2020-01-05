@@ -27,7 +27,11 @@
                 ]
             ])->render() ?>
             <ul class="navbar-nav move-right mt-2 mt-lg-0">
-                <?= $this->cell('Notify', [$identity->get('id')])->render() ?>
+                <li class="nav-item right-align mr-auto">
+                    <a class="nav-link" data-toggle="modal" data-target="#notify">
+                        <i class="fal fa-bell"></i>
+                    </a>
+                </li>
                 <?= $this->cell('Profile', [$identity->get('id')], [
                     'cache' => [
                         'config' => 'cell_cache',

@@ -51,5 +51,6 @@ return [
 
     'searchConfigured' => [
         'Users' => true,
+        'Documents' => true,
     ],
 ];

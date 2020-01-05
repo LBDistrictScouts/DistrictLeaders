@@ -145,7 +145,7 @@ class RoleTemplatesTable extends Table
 
         // Generate specific templates
         if (key_exists('capabilities', $roleTemplate)) {
-            $roleTemplateEntity = $this->newEntity([
+            $roleTemplateEntity = $this->makeOrPatch([
                 RoleTemplate::FIELD_ROLE_TEMPLATE => $roleTemplate['template_name'],
                 RoleTemplate::FIELD_INDICATIVE_LEVEL => $roleTemplate['core_level'],
                 RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => $roleTemplate['capabilities'],
@@ -176,12 +176,28 @@ class RoleTemplatesTable extends Table
             array_push($capabilities, $capability->get(Capability::FIELD_CAPABILITY_CODE));
         }
 
-        $roleTemplate = $this->newEntity([
+        $roleTemplate = $this->makeOrPatch([
             RoleTemplate::FIELD_INDICATIVE_LEVEL => $level,
             RoleTemplate::FIELD_ROLE_TEMPLATE => $name,
             RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => $capabilities,
         ]);
 
         return $this->save($roleTemplate);
+    }
+
+    /**
+     * @param array $objectArray The array to be saved
+     *
+     * @return RoleTemplate
+     */
+    protected function makeOrPatch($objectArray)
+    {
+        if ($this->exists([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])) {
+            $roleTemplate = $this->find()->where([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])->first();
+        } else {
+            $roleTemplate = $this->newEntity();
+        }
+
+        return $this->patchEntity($roleTemplate, $objectArray);
     }
 }

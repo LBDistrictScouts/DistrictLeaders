@@ -38,6 +38,7 @@ use Cake\View\View;
  * @property \Tools\View\Helper\FormatHelper $Format
  * @property \Flash\View\Helper\FlashHelper $Flash
  * @property \App\View\Helper\MarkdownHelper $Markdown
+ * @property \Search\View\Helper\SearchHelper $Search
  */
 class AppView extends View
 {
@@ -70,5 +71,7 @@ class AppView extends View
         $this->loadHelper('Authentication.Identity');
 
         $this->loadHelper('Functional');
+
+        $this->loadHelper('Search.Search');
     }
 }

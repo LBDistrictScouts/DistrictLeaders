@@ -7,6 +7,8 @@ use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
+use App\Model\Filter\DocumentsCollection;
+use App\Model\Filter\UsersCollection;
 use Cake\Event\Event;
 
 /**
@@ -60,22 +62,51 @@ class UsersController extends AppController
     }
 
     /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
+        /** @var \App\Model\Entity\User $user */
+        $user = $this->request->getAttribute('identity')->getOriginalData();
+
+        if (!$user->checkCapability('DIRECTORY')) {
+            $this->Flash->error('Results limited due to user permissions.');
+        }
+
+        $query = $this->Users->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => UsersCollection::class,
+        ])
+        ->contain([
+            'Roles' => [
+                'RoleTypes',
+                'Sections.SectionTypes',
+            ],
+            'UserContacts',
+        ]);
+        $users = $this->paginate($this->Authorization->applyScope($query));
+        $this->set(compact('users'));
+    }
+
+    /**
      * View method
      *
-     * @param string|null $id User id.
+     * @param string|null $userId User id.
+     *
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($userId = null)
     {
         $visibleFields = [
             'id',
             'first_name',
             'last_name',
-            'email',
         ];
 
-        $user = $this->Users->get($id, [
+        $user = $this->Users->get($userId, [
             'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles' => [
                 'RoleTypes',
                 'Sections' => [

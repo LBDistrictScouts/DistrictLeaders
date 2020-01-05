@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\ORM\Entity;
 
@@ -42,44 +43,11 @@ class Capability extends Entity
     ];
 
     /**
-     * @return array|false
-     */
-    private function breakFieldCode()
-    {
-        if ($this->is_field_capability) {
-            $code = substr($this->capability_code, 6);
-
-            return explode('@', $code);
-        }
-
-        return false;
-    }
-
-    /**
-     * @return array
-     */
-    private function breakCode()
-    {
-        $code = $this->capability_code;
-        if ($this->is_field_capability) {
-            $code = $this->breakFieldCode()[0];
-        }
-
-        return explode('_', $code, 2);
-    }
-
-    /**
      * @return bool
      */
     private function specialCode()
     {
-        foreach (Configure::read('baseCapabilities') as $cap) {
-            if ($this->capability_code == $cap[Capability::FIELD_CAPABILITY_CODE]) {
-                return true;
-            }
-        }
-
-        return false;
+        return (bool)CapBuilder::isSpecialCode($this->capability_code);
     }
 
     /**
@@ -87,13 +55,7 @@ class Capability extends Entity
      */
     protected function _getIsFieldCapability()
     {
-        $short = substr($this->capability_code, 0, 5);
-
-        if ($short == 'FIELD') {
-            return true;
-        }
-
-        return false;
+        return (bool)CapBuilder::isFieldType($this->capability_code);
     }
 
     /**
@@ -107,7 +69,7 @@ class Capability extends Entity
             return 'SPECIAL';
         }
 
-        return $this->breakCode()[0];
+        return CapBuilder::breakCode($this->capability_code)['crud'];
     }
 
     /**
@@ -121,7 +83,7 @@ class Capability extends Entity
             return 'SPECIAL';
         }
 
-        return $this->breakCode()[1];
+        return CapBuilder::breakCode($this->capability_code)['model'];
     }
 
     /**
@@ -132,7 +94,7 @@ class Capability extends Entity
     protected function _getApplicableField()
     {
         if ($this->is_field_capability) {
-            return $this->breakFieldCode()[1];
+            return CapBuilder::breakCode($this->capability_code)['field'];
         }
 
         return false;

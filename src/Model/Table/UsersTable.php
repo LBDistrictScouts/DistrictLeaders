@@ -37,6 +37,7 @@ use Cake\Validation\Validator;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class UsersTable extends Table
 {
@@ -56,6 +57,7 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Search.Search');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [

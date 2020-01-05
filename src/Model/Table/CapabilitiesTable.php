@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Capability;
+use App\Utility\CapBuilder;
 use Cake\Core\Configure;
+use Cake\Database\Exception;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Query;
 use Cake\ORM\RulesChecker;
@@ -144,16 +146,18 @@ class CapabilitiesTable extends Table
     }
 
     /**
+     * @param bool $fields Option to run for Fields Too
+     *
      * @return int
      */
-    public function generateEntityCapabilities()
+    public function generateEntityCapabilities($fields = true)
     {
         $count = 0;
         foreach (Configure::read('allModels') as $model => $options) {
             $model = Inflector::camelize($model);
             $count += $this->entityCapability($model, $options['baseLevel'], $options['viewRestricted']);
 
-            if ($options['fieldLock']) {
+            if ($options['fieldLock'] && $fields) {
                 $count += $this->fieldCapability($model, $options['fieldLock']);
             }
         }
@@ -174,14 +178,13 @@ class CapabilitiesTable extends Table
         $count = 0;
 
         foreach ($entityActions as $action => $multiplier) {
-            $code = $this->capabilityCodeFormat($action, $entity);
-            $data[Capability::FIELD_CAPABILITY_CODE] = $code;
+            $data[Capability::FIELD_CAPABILITY_CODE] = CapBuilder::capabilityCodeFormat($action, $entity);
 
-            $data[Capability::FIELD_MIN_LEVEL] = $this->calculateLevel($baseLevel, $multiplier, $viewRestricted);
-            $data[Capability::FIELD_CAPABILITY] = $this->capabilityNameFormat($code);
+            $data[Capability::FIELD_MIN_LEVEL] = CapBuilder::calculateLevel($baseLevel, $multiplier, $viewRestricted);
+            $data[Capability::FIELD_CAPABILITY] = CapBuilder::capabilityNameFormat($action, $entity);
 
             $capability = $this->findOrCreate($data);
-            if ($capability instanceof \App\Model\Entity\Capability) {
+            if ($capability instanceof Capability) {
                 $count += 1;
             }
         }
@@ -199,23 +202,29 @@ class CapabilitiesTable extends Table
     {
         $fieldActions = Configure::read('fieldCapabilities');
 
-        if (!TableRegistry::getTableLocator()->exists($entity)) {
+        $table = TableRegistry::getTableLocator()->get($entity);
+        if (!($table instanceof Table)) {
             return false;
         }
-        $table = TableRegistry::getTableLocator()->get($entity);
-        $record = $table->find()->disableHydration()->first();
-        $fields = array_keys($record);
+
+        try {
+            $record = $table->find()->disableHydration()->first();
+            $fields = array_keys($record);
+        } catch (Exception $exception) {
+            return false;
+        }
+
         $count = 0;
 
         foreach ($fieldActions as $action => $multiplier) {
             foreach ($fields as $field) {
-                $data[Capability::FIELD_CAPABILITY_CODE] = $this->capabilityCodeFieldFormat($action, $entity, $field);
+                $data[Capability::FIELD_CAPABILITY_CODE] = CapBuilder::capabilityCodeFormat($action, $entity, $field);
 
-                $data[Capability::FIELD_MIN_LEVEL] = $this->calculateLevel($baseLevel, $multiplier);
-                $data[Capability::FIELD_CAPABILITY] = $this->capabilityFieldNameFormat($action, $entity, $field);
+                $data[Capability::FIELD_MIN_LEVEL] = CapBuilder::calculateLevel($baseLevel, $multiplier);
+                $data[Capability::FIELD_CAPABILITY] = CapBuilder::capabilityNameFormat($action, $entity, $field);
 
-                $capability = $this->findOrCreate($data);
-                if ($capability instanceof \App\Model\Entity\Capability) {
+                $capability = $this->makeOrPatch($data);
+                if ($capability instanceof Capability) {
                     $count += 1;
                 }
             }
@@ -225,100 +234,40 @@ class CapabilitiesTable extends Table
     }
 
     /**
-     * @param string $action The name of the Action performed
-     * @param string $model The Model to be formatted
+     * @param array $objectArray The array to be saved
      *
-     * @return string
+     * @return Capability|false
      */
-    protected function capabilityCodeFormat($action, $model)
+    protected function makeOrPatch($objectArray)
     {
-        $code = ucfirst(strtolower($action)) . $model;
-        $code = Inflector::underscore(Inflector::singularize($code));
+        if ($this->exists([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])) {
+            $capability = $this->find()->where([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])->first();
+        } else {
+            $capability = $this->newEntity();
+        }
 
-        return strtoupper($code);
+        $capability = $this->patchEntity($capability, $objectArray);
+
+        return $this->save($capability);
     }
 
     /**
      * @param string $action Action Method
      * @param string $model Model to be referenced
+     * @param string|null $field The Field being referenced
      *
      * @return string
      */
-    public function buildCapability($action, $model)
+    public function buildCapability($action, $model, $field = null)
     {
         if (!TableRegistry::getTableLocator()->exists($model)) {
             return false;
         }
 
-        $methods = array_keys(array_merge(Configure::read('fieldCapabilities'), Configure::read('entityCapabilities')));
-        if (!in_array($action, $methods)) {
+        if (!CapBuilder::isActionType($action)) {
             return false;
         }
 
-        return $this->capabilityCodeFormat($action, $model);
-    }
-
-    /**
-     * @param string $action The name of the Action performed
-     * @param string $model The Model generated
-     * @param string $field The Field being limited
-     *
-     * @return string
-     */
-    protected function capabilityCodeFieldFormat($action, $model, $field)
-    {
-        $code = 'Field' . ucfirst(strtolower($action)) . $model;
-        $code = Inflector::underscore($code);
-        $code .= '@' . $field;
-
-        return strtoupper($code);
-    }
-
-    /**
-     * @param string $capabilityCode The Capability Code to be formatted.
-     *
-     * @return string
-     */
-    protected function capabilityNameFormat($capabilityCode)
-    {
-        return ucwords(strtolower(Inflector::humanize($capabilityCode)));
-    }
-
-    /**
-     * @param string $action CRUD Method
-     * @param string $model The Model
-     * @param string $field The Field Restriction
-     *
-     * @return string
-     */
-    protected function capabilityFieldNameFormat($action, $model, $field)
-    {
-        $name = ucwords(strtolower($action)) . ' field';
-        $name .= ' "' . Inflector::humanize($field) . '"';
-
-        return $name . ' on ' . Inflector::humanize($model);
-    }
-
-    /**
-     * @param int $baseLevel The Base Level for Capability
-     * @param int $multiplier The Action Multiplier
-     * @param bool|null $viewRestricted Is the view action restricted
-     *
-     * @return int
-     */
-    protected function calculateLevel($baseLevel, $multiplier, $viewRestricted = false)
-    {
-        if ($multiplier == -5 && $viewRestricted) {
-            $multiplier = 0;
-        }
-        $level = $baseLevel + $multiplier;
-
-        $minLevel = 1;
-        if ($baseLevel == 0) {
-            $minLevel = 0;
-        }
-        $level = max($minLevel, $level);
-
-        return min(5, $level);
+        return CapBuilder::capabilityCodeFormat($action, $model, $field);
     }
 }

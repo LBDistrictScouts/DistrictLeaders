@@ -33,6 +33,7 @@ use PhpParser\Comment\Doc;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class DocumentsTable extends Table
 {
@@ -54,6 +55,7 @@ class DocumentsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Search.Search');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\Document;
+use App\Model\Filter\DocumentsCollection;
 use Exception;
 
 /**
@@ -14,9 +15,26 @@ use Exception;
  * @property \App\Controller\Component\FilterComponent $Filter
  *
  * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \Search\Controller\Component\PrgComponent $Prg
  */
 class DocumentsController extends AppController
 {
+    /**
+     * @throws \Exception
+     *
+     * {@inheritdoc}
+     */
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Prg', [
+            // This is default config. You can modify "actions" as needed to make
+            // the PRG component work only for specified methods.
+            'actions' => ['search'],
+        ]);
+    }
+
     /**
      * Index method
      *
@@ -33,6 +51,27 @@ class DocumentsController extends AppController
         } catch (Exception $exception) {
             $query = $this->Documents->find()->contain(['DocumentTypes']);
         }
+
+        $documents = $this->paginate($query);
+
+        $this->set(compact('documents'));
+    }
+
+    /**
+     * Search method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
+        $this->paginate = [
+            'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes'],
+        ];
+
+        $query = $this->Documents->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => DocumentsCollection::class,
+        ]);
 
         $documents = $this->paginate($query);
 

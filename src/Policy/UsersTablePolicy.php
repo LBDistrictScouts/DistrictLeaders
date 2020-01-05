@@ -35,6 +35,21 @@ class UsersTablePolicy implements BeforePolicyInterface
      *
      * @return mixed
      */
+    public function scopeSearch($user, $query)
+    {
+        if ($user->checkCapability('DIRECTORY')) {
+            return $query;
+        }
+
+        return $query->where(['Users.id' => $user->getIdentifier()]);
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User being authorized.
+     * @param \Cake\ORM\Query $query The Query object to be limited.
+     *
+     * @return mixed
+     */
     public function scopeUpdate($user, $query)
     {
         if ($user->checkCapability('EDIT_USER')) {

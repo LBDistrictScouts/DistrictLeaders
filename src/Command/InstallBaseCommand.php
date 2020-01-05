@@ -17,6 +17,7 @@ use Cake\Mailer\MailerAwareTrait;
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
  * @property \App\Model\Table\FileTypesTable $FileTypes
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  */
 class InstallBaseCommand extends Command
 {
@@ -33,6 +34,7 @@ class InstallBaseCommand extends Command
         $this->loadModel('Capabilities');
         $this->loadModel('NotificationTypes');
         $this->loadModel('FileTypes');
+        $this->loadModel('RoleTemplates');
     }
 
     /**
@@ -58,6 +60,11 @@ class InstallBaseCommand extends Command
             ->addOption('file_types', [
                 'short' => 'f',
                 'help' => 'File Types',
+                'boolean' => true,
+            ])
+            ->addOption('role_templates', [
+                'short' => 'r',
+                'help' => 'Role Templates',
                 'boolean' => true,
             ])
             ->addOption('notification_types', [
@@ -98,6 +105,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->FileTypes->installBaseFileTypes();
 
             $io->info('File Types Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('role_templates')) {
+            $happenings = $this->RoleTemplates->installBaseRoleTemplates();
+
+            $io->info('Role Templates Installed: ' . $happenings);
         }
     }
 }

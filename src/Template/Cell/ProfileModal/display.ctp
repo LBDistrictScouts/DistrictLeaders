@@ -7,7 +7,7 @@
  */
 ?>
 <!-- Modal -->
-<div class="modal fade" id="notify" tabindex="5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="profile" tabindex="5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,6 +19,8 @@
             <div class="modal-body">
                 <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
                 <?= $this->Html->link('Edit Details', ['controller' => 'Users', 'action' => 'edit', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                <?= $this->Html->link('Change Password', ['controller' => 'Users', 'action' => 'password', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                <div class="dropdown-divider"></div>
                 <?= $this->Html->link('Logout', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item'])  ?>
             </div>
             <div class="modal-footer">
@@ -27,5 +29,3 @@
         </div>
     </div>
 </div>
-
-
