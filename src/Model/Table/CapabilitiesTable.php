@@ -183,7 +183,7 @@ class CapabilitiesTable extends Table
             $data[Capability::FIELD_MIN_LEVEL] = CapBuilder::calculateLevel($baseLevel, $multiplier, $viewRestricted);
             $data[Capability::FIELD_CAPABILITY] = CapBuilder::capabilityNameFormat($action, $entity);
 
-            $capability = $this->findOrCreate($data);
+            $capability = $this->makeOrPatch($data);
             if ($capability instanceof Capability) {
                 $count += 1;
             }
