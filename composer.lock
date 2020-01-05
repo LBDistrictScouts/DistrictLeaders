@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "abee03f42ca17006f2a8a45d41a5feee",
+    "content-hash": "cfea0bb95e6b150a67d59fe98ec0a1ba",
     "packages": [
         {
             "name": "ajgl/breakpoint-twig-extension",
@@ -7582,7 +7582,7 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.1",
-        "ext-json": "^1.5"
+        "ext-json": ">=1.5"
     },
     "platform-dev": []
 }
