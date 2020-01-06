@@ -7,17 +7,14 @@
 $this->extend('../Layout/CRUD/add');
 
 $this->assign('entity', 'ScoutGroups');
-$this->assign('icon', 'fa-paw');
-
 ?>
 <?= $this->Form->create($scoutGroup) ?>
 <fieldset>
     <?php
-        echo $this->Form->control('scout_group');
-        echo $this->Form->control('group_alias');
-        echo $this->Form->control('number_stripped');
-        echo $this->Form->control('charity_number');
-        echo $this->Form->control('group_domain');
+        echo $this->Form->control($scoutGroup::FIELD_SCOUT_GROUP);
+        echo $this->Form->control($scoutGroup::FIELD_GROUP_ALIAS);
+        echo $this->Form->control($scoutGroup::FIELD_NUMBER_STRIPPED);
+        echo $this->Form->control($scoutGroup::FIELD_CHARITY_NUMBER);
+        echo $this->Form->control($scoutGroup::FIELD_GROUP_DOMAIN);
     ?>
 </fieldset>
-

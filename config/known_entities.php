@@ -81,6 +81,11 @@ return [
             FT::FIELD_MIME => 'application/docx',
         ],
         [
+            FT::FIELD_FILE_TYPE => 'Scalable Vector Graphic',
+            FT::FIELD_FILE_EXTENSION => 'svg',
+            FT::FIELD_MIME => 'image/svg+xml',
+        ],
+        [
             FT::FIELD_FILE_TYPE => 'PDF',
             FT::FIELD_FILE_EXTENSION => 'pdf',
             FT::FIELD_MIME => 'application/pdf',

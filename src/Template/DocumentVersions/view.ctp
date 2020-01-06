@@ -18,11 +18,11 @@
     </ul>
 </nav>
 <div class="documentVersions view large-9 medium-8 columns content">
-    <h3><?= h($documentVersion->id) ?></h3>
+    <h3><?= h($documentVersion->version_number) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Document') ?></th>
-            <td><?= $documentVersion->has('document') ? $this->Html->link($documentVersion->document->id, ['controller' => 'Documents', 'action' => 'view', $documentVersion->document->id]) : '' ?></td>
+            <td><?= $documentVersion->has('document') ? $this->Html->link($documentVersion->document->document, ['controller' => 'Documents', 'action' => 'view', $documentVersion->document->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -56,6 +56,10 @@
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col"><?= __('Document Version Id') ?></th>
                 <th scope="col"><?= __('File Type Id') ?></th>
+                <th scope="col"><?= __('File Path') ?></th>
+                <th scope="col"><?= __('Filename') ?></th>
+                <th scope="col"><?= __('Size') ?></th>
+                <th scope="col"><?= __('Md5 Hash') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($documentVersion->document_editions as $documentEditions): ?>
@@ -66,6 +70,10 @@
                 <td><?= h($documentEditions->deleted) ?></td>
                 <td><?= h($documentEditions->document_version_id) ?></td>
                 <td><?= h($documentEditions->file_type_id) ?></td>
+                <td><?= h($documentEditions->file_path) ?></td>
+                <td><?= h($documentEditions->filename) ?></td>
+                <td><?= h($documentEditions->size) ?></td>
+                <td><?= h($documentEditions->md5_hash) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'DocumentEditions', 'action' => 'view', $documentEditions->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'DocumentEditions', 'action' => 'edit', $documentEditions->id]) ?>

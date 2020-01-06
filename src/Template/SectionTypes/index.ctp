@@ -2,50 +2,33 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\SectionType[]|\Cake\Collection\CollectionInterface $sectionTypes
+ * @var \App\Model\Entity\User $authUser
  */
+
+$authUser = $this->getRequest()->getAttribute('identity');
+
+$this->extend('../Layout/CRUD/index');
+
+$this->assign('entity', 'SectionTypes');
+$this->assign('subset', 'All');
+$this->assign('add', $authUser->checkCapability('CREATE_SECTION_TYPE'));
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Section Type'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Role Types'), ['controller' => 'RoleTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role Type'), ['controller' => 'RoleTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Sections'), ['controller' => 'Sections', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Section'), ['controller' => 'Sections', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="sectionTypes index large-9 medium-8 columns content">
-    <h3><?= __('Section Types') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('section_type') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($sectionTypes as $sectionType): ?>
-            <tr>
-                <td><?= $this->Number->format($sectionType->id) ?></td>
-                <td><?= h($sectionType->section_type) ?></td>
+<thead>
+    <tr>
+        <th scope="col"><?= $this->Paginator->sort('section_type') ?></th>
+        <th scope="col" class="actions"><?= __('Actions') ?></th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($sectionTypes as $sectionType): ?>
+    <tr>
+        <td><?= h($sectionType->section_type) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $sectionType->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $sectionType->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $sectionType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $sectionType->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-</div>
+            <?= $authUser->checkCapability('VIEW_SECTION_TYPE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $sectionType->id], ['title' => __('View Section Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('UPDATE_SECTION_TYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $sectionType->id], ['title' => __('Edit Section Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('DELETE_SECTION_TYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $sectionType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $sectionType->id), 'title' => __('Delete Section Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>

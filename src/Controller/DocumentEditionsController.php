@@ -25,7 +25,7 @@ class DocumentEditionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['DocumentVersions', 'FileTypes'],
+            'contain' => ['DocumentVersions.Documents', 'FileTypes'],
         ];
         $documentEditions = $this->paginate($this->DocumentEditions);
 
@@ -70,7 +70,7 @@ class DocumentEditionsController extends AppController
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
-        $documentVersions = $this->DocumentEditions->DocumentVersions->find('list', ['limit' => 200]);
+        $documentVersions = $this->DocumentEditions->DocumentVersions->find('documentList', ['limit' => 200]);
         $fileTypes = $this->DocumentEditions->FileTypes->find('list', ['limit' => 200]);
         $this->set(compact('documentEdition', 'documentVersions', 'fileTypes'));
     }
@@ -96,7 +96,7 @@ class DocumentEditionsController extends AppController
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
-        $documentVersions = $this->DocumentEditions->DocumentVersions->find('list', ['limit' => 200]);
+        $documentVersions = $this->DocumentEditions->DocumentVersions->find('documentList', ['limit' => 200]);
         $fileTypes = $this->DocumentEditions->FileTypes->find('list', ['limit' => 200]);
         $this->set(compact('documentEdition', 'documentVersions', 'fileTypes'));
     }

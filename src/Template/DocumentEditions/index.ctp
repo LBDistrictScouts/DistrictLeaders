@@ -2,58 +2,42 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\DocumentEdition[]|\Cake\Collection\CollectionInterface $documentEditions
+ * @var \App\Model\Entity\User $authUser
  */
+
+$authUser = $this->getRequest()->getAttribute('identity');
+
+$this->extend('../Layout/CRUD/index');
+
+$this->assign('entity', 'DocumentEditions');
+$this->assign('subset', 'All');
+$this->assign('add', $authUser->checkCapability('CREATE_DOCUMENT_EDITION'));
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Document Edition'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Document Versions'), ['controller' => 'DocumentVersions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Document Version'), ['controller' => 'DocumentVersions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List File Types'), ['controller' => 'FileTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New File Type'), ['controller' => 'FileTypes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="documentEditions index large-9 medium-8 columns content">
-    <h3><?= __('Document Editions') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('deleted') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('document_version_id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('file_type_id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($documentEditions as $documentEdition): ?>
-            <tr>
-                <td><?= $this->Number->format($documentEdition->id) ?></td>
-                <td><?= h($documentEdition->created) ?></td>
-                <td><?= h($documentEdition->modified) ?></td>
-                <td><?= h($documentEdition->deleted) ?></td>
-                <td><?= $documentEdition->has('document_version') ? $this->Html->link($documentEdition->document_version->id, ['controller' => 'DocumentVersions', 'action' => 'view', $documentEdition->document_version->id]) : '' ?></td>
-                <td><?= $documentEdition->has('file_type') ? $this->Html->link($documentEdition->file_type->id, ['controller' => 'FileTypes', 'action' => 'view', $documentEdition->file_type->id]) : '' ?></td>
+<thead>
+    <tr>
+        <th scope="col"><?= $this->Paginator->sort('document_version_id') ?></th>
+        <th scope="col" class="actions"><?= __('Actions') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('file_type_id') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('size') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('filename') ?></th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($documentEditions as $documentEdition): ?>
+    <tr>
+        <td><?= $documentEdition->has('document_version') ? $this->Html->link($documentEdition->document_version->document->document . ' (' . $this->Number->format($documentEdition->document_version->version_number) . ')', ['controller' => 'DocumentVersions', 'action' => 'view', $documentEdition->document_version->id]) : '' ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $documentEdition->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $documentEdition->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $documentEdition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentEdition->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-</div>
+            <?= $authUser->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $documentEdition->id], ['title' => __('View Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-download"></i>', ['action' => 'download', $documentEdition->id], ['title' => __('Download Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('UPDATE_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $documentEdition->id], ['title' => __('Edit Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $authUser->checkCapability('DELETE_DOCUMENT_EDITION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $documentEdition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentEdition->id), 'title' => __('Delete Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+        </td>
+        <td><?= $documentEdition->has('file_type') ? $this->Html->link($documentEdition->file_type->file_type, ['controller' => 'FileTypes', 'action' => 'view', $documentEdition->file_type->id]) : '' ?></td>
+        <td><?= $this->Number->toReadableSize($documentEdition->size) ?></td>
+        <td><?= $this->Time->format($documentEdition->created, 'dd-MMM-yy HH:mm') ?></td>
+        <td><?= h($documentEdition->filename) ?></td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>

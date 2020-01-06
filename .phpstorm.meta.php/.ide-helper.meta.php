@@ -489,6 +489,7 @@ namespace PHPSTORM_META {
 			'Flash/success' => \Cake\View\View::class,
 			'ModuleNav/directory' => \Cake\View\View::class,
 			'ModuleNav/documents' => \Cake\View\View::class,
+			'ModuleNav/groups' => \Cake\View\View::class,
 			'ModuleNav/selector' => \Cake\View\View::class,
 			'Queue.search' => \Cake\View\View::class,
 			'Tools.pagination' => \Cake\View\View::class,

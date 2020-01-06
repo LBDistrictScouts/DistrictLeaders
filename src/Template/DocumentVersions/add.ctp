@@ -8,12 +8,12 @@
 $this->extend('../Layout/CRUD/add');
 
 $this->assign('entity', 'DocumentVersions');
-
 ?>
 <?= $this->Form->create($documentVersion) ?>
 <fieldset>
     <?php
-        echo $this->Form->control('document_id', ['options' => $documents]);
-        echo $this->Form->control('version_number');
+        /** @var array $documents The Document Id List */
+        echo $this->Form->control($documentVersion::FIELD_DOCUMENT_ID, ['options' => $documents]);
+        echo $this->Form->control($documentVersion::FIELD_VERSION_NUMBER);
     ?>
 </fieldset>

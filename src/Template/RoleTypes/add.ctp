@@ -3,34 +3,25 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\RoleType $roleType
  * @var mixed $capabilities
+ * @var mixed $roleTemplates
  * @var mixed $sectionTypes
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', 'RoleTypes');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Role Types'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Section Types'), ['controller' => 'SectionTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Section Type'), ['controller' => 'SectionTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Capabilities'), ['controller' => 'Capabilities', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Capability'), ['controller' => 'Capabilities', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="roleTypes form large-9 medium-8 columns content">
-    <?= $this->Form->create($roleType) ?>
-    <fieldset>
-        <legend><?= __('Add Role Type') ?></legend>
-        <?php
-            echo $this->Form->control('role_type');
-            echo $this->Form->control('role_abbreviation');
-            echo $this->Form->control('section_type_id', ['options' => $sectionTypes, 'empty' => true]);
-            echo $this->Form->control('level');
-            echo $this->Form->control('role_template_id');
-            echo $this->Form->control('capabilities._ids', ['options' => $capabilities]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($roleType) ?>
+<fieldset>
+    <?php
+        echo $this->Form->control($roleType::FIELD_ROLE_TYPE);
+        echo $this->Form->control($roleType::FIELD_ROLE_ABBREVIATION);
+        /** @var array $sectionTypes The Section Type Id List */
+        echo $this->Form->control($roleType::FIELD_SECTION_TYPE_ID, ['options' => $sectionTypes, 'empty' => true]);
+        echo $this->Form->control($roleType::FIELD_LEVEL);
+        /** @var array $roleTemplates The Role Template Id List */
+        echo $this->Form->control($roleType::FIELD_ROLE_TEMPLATE_ID, ['options' => $roleTemplates, 'empty' => true]);
+        /** @var array $capabilities The Capabilities List */
+        echo $this->Form->control('capabilities._ids', ['options' => $capabilities]);
+    ?>
+</fieldset>

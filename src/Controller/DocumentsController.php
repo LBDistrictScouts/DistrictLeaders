@@ -88,7 +88,7 @@ class DocumentsController extends AppController
     public function view($id = null)
     {
         $document = $this->Documents->get($id, [
-            'contain' => ['DocumentTypes', 'DocumentVersions'],
+            'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes'],
         ]);
 
         $this->set('document', $document);

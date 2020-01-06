@@ -116,7 +116,7 @@ class UsersController extends AppController
                 'RoleStatuses',
                 'UserContacts',
             ]],
-            'fields' => $visibleFields,
+//            'fields' => $visibleFields,
         ]);
 
         $this->Authorization->authorize($user);

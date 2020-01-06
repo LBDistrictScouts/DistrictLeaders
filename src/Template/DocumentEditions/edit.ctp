@@ -5,33 +5,21 @@
  * @var mixed $documentVersions
  * @var mixed $fileTypes
  */
+
+$this->extend('../Layout/CRUD/edit');
+
+$this->assign('entity', 'DocumentEditions');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $documentEdition->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $documentEdition->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Document Editions'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Document Versions'), ['controller' => 'DocumentVersions', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Document Version'), ['controller' => 'DocumentVersions', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List File Types'), ['controller' => 'FileTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New File Type'), ['controller' => 'FileTypes', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="documentEditions form large-9 medium-8 columns content">
-    <?= $this->Form->create($documentEdition) ?>
-    <fieldset>
-        <legend><?= __('Edit Document Edition') ?></legend>
-        <?php
-            echo $this->Form->control('deleted');
-            echo $this->Form->control('document_version_id', ['options' => $documentVersions]);
-            echo $this->Form->control('file_type_id', ['options' => $fileTypes]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($documentEdition) ?>
+<fieldset>
+    <?php
+        /** @var array $documentVersions The Document Version Id List */
+        echo $this->Form->control($documentEdition::FIELD_DOCUMENT_VERSION_ID, ['options' => $documentVersions]);
+        /** @var array $fileTypes The File Type Id List */
+        echo $this->Form->control($documentEdition::FIELD_FILE_TYPE_ID, ['options' => $fileTypes]);
+        echo $this->Form->control($documentEdition::FIELD_FILE_PATH);
+        echo $this->Form->control($documentEdition::FIELD_FILENAME);
+        echo $this->Form->control($documentEdition::FIELD_SIZE);
+        echo $this->Form->control($documentEdition::FIELD_MD5_HASH);
+    ?>
+</fieldset>

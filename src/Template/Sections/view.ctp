@@ -20,7 +20,7 @@
     </ul>
 </nav>
 <div class="sections view large-9 medium-8 columns content">
-    <h3><?= h($section->id) ?></h3>
+    <h3><?= h($section->section) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Section') ?></th>
@@ -28,11 +28,11 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Section Type') ?></th>
-            <td><?= $section->has('section_type') ? $this->Html->link($section->section_type->id, ['controller' => 'SectionTypes', 'action' => 'view', $section->section_type->id]) : '' ?></td>
+            <td><?= $section->has('section_type') ? $this->Html->link($section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $section->section_type->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Scout Group') ?></th>
-            <td><?= $section->has('scout_group') ? $this->Html->link($section->scout_group->id, ['controller' => 'ScoutGroups', 'action' => 'view', $section->scout_group->id]) : '' ?></td>
+            <td><?= $section->has('scout_group') ? $this->Html->link($section->scout_group->group_alias, ['controller' => 'ScoutGroups', 'action' => 'view', $section->scout_group->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -45,6 +45,10 @@
         <tr>
             <th scope="row"><?= __('Modified') ?></th>
             <td><?= h($section->modified) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Deleted') ?></th>
+            <td><?= h($section->deleted) ?></td>
         </tr>
     </table>
     <div class="related">
@@ -59,6 +63,8 @@
                 <th scope="col"><?= __('Role Status Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Deleted') ?></th>
+                <th scope="col"><?= __('User Contact Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($section->roles as $roles): ?>
@@ -70,6 +76,8 @@
                 <td><?= h($roles->role_status_id) ?></td>
                 <td><?= h($roles->created) ?></td>
                 <td><?= h($roles->modified) ?></td>
+                <td><?= h($roles->deleted) ?></td>
+                <td><?= h($roles->user_contact_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Roles', 'action' => 'view', $roles->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>

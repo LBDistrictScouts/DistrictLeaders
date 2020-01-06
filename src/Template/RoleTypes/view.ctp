@@ -13,6 +13,8 @@
         <li><?= $this->Html->link(__('New Role Type'), ['action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Section Types'), ['controller' => 'SectionTypes', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Section Type'), ['controller' => 'SectionTypes', 'action' => 'add']) ?> </li>
+        <li><?= $this->Html->link(__('List Role Templates'), ['controller' => 'RoleTemplates', 'action' => 'index']) ?> </li>
+        <li><?= $this->Html->link(__('New Role Template'), ['controller' => 'RoleTemplates', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?> </li>
         <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?> </li>
         <li><?= $this->Html->link(__('List Capabilities'), ['controller' => 'Capabilities', 'action' => 'index']) ?> </li>
@@ -32,7 +34,11 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Section Type') ?></th>
-            <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->id, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
+            <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Role Template') ?></th>
+            <td><?= $roleType->has('role_template') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>
@@ -41,10 +47,6 @@
         <tr>
             <th scope="row"><?= __('Level') ?></th>
             <td><?= $this->Number->format($roleType->level) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Role Template Id') ?></th>
-            <td><?= $this->Number->format($roleType->role_template_id) ?></td>
         </tr>
     </table>
     <div class="related">

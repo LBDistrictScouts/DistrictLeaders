@@ -16,7 +16,7 @@ return [
             ],
         ],
         'camps' => [
-            'enabled' => true,
+            'enabled' => false,
             'capability' => [
                 'index' => 'CAMPS',
             ],
@@ -28,7 +28,7 @@ return [
             ],
         ],
         'articles' => [
-            'enabled' => true,
+            'enabled' => false,
             'capability' => [
                 'index' => 'ARTICLES',
             ],

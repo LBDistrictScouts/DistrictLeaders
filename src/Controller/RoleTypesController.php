@@ -20,7 +20,7 @@ class RoleTypesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes'],
+            'contain' => ['SectionTypes', 'RoleTemplates'],
         ];
         $roleTypes = $this->paginate($this->RoleTypes);
 

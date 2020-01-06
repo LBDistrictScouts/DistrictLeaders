@@ -14,9 +14,10 @@
         <div class="collapse navbar-collapse"
              id="navcol-1">
             <ul class="nav navbar-nav">
-                <li class="nav-item" role="presentation"><a class="nav-link active text-white-50" href="#">Link 1</a></li>
-                <li class="nav-item" role="presentation"><?= $this->Html->link('Upload '. $this->Inflection->singleSpace($this->fetch('entity')), ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'nav-link text-white-50'])  ?></li>
-                <li class="nav-item" role="presentation"><a class="nav-link text-white-50" href="#">Link 3</a></li>
+                <li class="nav-item" role="presentation"><?= $this->Html->link('Upload Document', ['controller' => 'Documents', 'action' => 'add'], ['class' => 'nav-link text-white-50'])  ?></li>
+                <li class="nav-item" role="presentation"><?= $this->Html->link('Forms', ['controller' => 'Documents', 'action' => 'index', '?' => ['Form' => true]], ['class' => 'nav-link text-white-50'])  ?></li>
+                <li class="nav-item" role="presentation"><?= $this->Html->link('Policies', ['controller' => 'Documents', 'action' => 'index', '?' => ['Policy' => true]], ['class' => 'nav-link text-white-50'])  ?></li>
+                <li class="nav-item" role="presentation"><?= $this->Html->link('Invoices', ['controller' => 'Documents', 'action' => 'index', '?' => ['Invoice' => true]], ['class' => 'nav-link text-white-50'])  ?></li>
             </ul>
             <?= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'search'], 'class' => 'form-inline ml-auto', 'valueSources' => 'query']) ?>
                 <div class="form-group text-white-50">

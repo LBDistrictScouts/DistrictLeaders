@@ -18,7 +18,7 @@
     </ul>
 </nav>
 <div class="sectionTypes view large-9 medium-8 columns content">
-    <h3><?= h($sectionType->id) ?></h3>
+    <h3><?= h($sectionType->section_type) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Section Type') ?></th>
@@ -38,6 +38,8 @@
                 <th scope="col"><?= __('Role Type') ?></th>
                 <th scope="col"><?= __('Role Abbreviation') ?></th>
                 <th scope="col"><?= __('Section Type Id') ?></th>
+                <th scope="col"><?= __('Level') ?></th>
+                <th scope="col"><?= __('Role Template Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($sectionType->role_types as $roleTypes): ?>
@@ -46,6 +48,8 @@
                 <td><?= h($roleTypes->role_type) ?></td>
                 <td><?= h($roleTypes->role_abbreviation) ?></td>
                 <td><?= h($roleTypes->section_type_id) ?></td>
+                <td><?= h($roleTypes->level) ?></td>
+                <td><?= h($roleTypes->role_template_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'RoleTypes', 'action' => 'view', $roleTypes->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'RoleTypes', 'action' => 'edit', $roleTypes->id]) ?>
@@ -67,6 +71,7 @@
                 <th scope="col"><?= __('Scout Group Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($sectionType->sections as $sections): ?>
@@ -77,6 +82,7 @@
                 <td><?= h($sections->scout_group_id) ?></td>
                 <td><?= h($sections->created) ?></td>
                 <td><?= h($sections->modified) ?></td>
+                <td><?= h($sections->deleted) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Sections', 'action' => 'view', $sections->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Sections', 'action' => 'edit', $sections->id]) ?>
