@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Database\Exception;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Query;
+use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -203,19 +204,20 @@ class CapabilitiesTable extends Table
         $fieldActions = Configure::read('fieldCapabilities');
 
         $table = TableRegistry::getTableLocator()->get($entity);
-        if (!($table instanceof Table)) {
+        if (!($table instanceof Table) || $table->getEntityClass() == 'Cake\ORM\Entity') {
             return false;
         }
+        $entityClass = $table->getEntityClass();
 
         try {
-            $record = $table->find()->disableHydration()->first();
-            if (!is_array($record)) {
-                return false;
+            $record = $table->find()->first();
+            if (!($record instanceof $entityClass)) {
+                $record = $table->newEntity();
             }
-            $fields = array_keys($record);
         } catch (Exception $exception) {
-            return false;
+            $record = $table->newEntity();
         }
+        $fields = $record->getVisible();
 
         $count = 0;
 
