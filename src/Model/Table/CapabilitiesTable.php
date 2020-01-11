@@ -209,6 +209,9 @@ class CapabilitiesTable extends Table
 
         try {
             $record = $table->find()->disableHydration()->first();
+            if (!is_array($record)) {
+                return false;
+            }
             $fields = array_keys($record);
         } catch (Exception $exception) {
             return false;
