@@ -18,6 +18,7 @@
             </div>
             <div class="modal-body">
                 <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                <?= $this->Html->link('View Permissions', ['controller' => 'Pages', 'action' => 'display', 'permissions'], ['class' => 'dropdown-item'])  ?>
                 <?= $this->Html->link('Edit Details', ['controller' => 'Users', 'action' => 'edit', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
                 <?= $this->Html->link('Change Password', ['controller' => 'Users', 'action' => 'password', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
                 <div class="dropdown-divider"></div>

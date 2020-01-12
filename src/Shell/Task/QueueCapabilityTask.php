@@ -53,6 +53,7 @@ class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
             $roleType = $this->RoleTypes->patchTemplateCapabilities($roleType);
             if ($this->RoleTypes->save($roleType) instanceof RoleType) {
                 $passed += 1;
+                $this->RoleTypes->patchRoleUsers($roleType);
             }
             $this->QueuedJobs->updateProgress($jobId, $idx / $totalRecords);
         }

@@ -27,6 +27,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class EmailSendsTable extends Table
 {
@@ -229,7 +230,7 @@ class EmailSendsTable extends Table
          */
         extract($this->codeSplitter($emailGenerationCode));
 
-        $existExempt = ['USR-PWD'];
+        $existExempt = ['USR-PWD', 'USR-CCH'];
         $newCode = $this->codeExistValidator($emailGenerationCode, $existExempt);
 
         if (!$newCode) {
@@ -256,6 +257,17 @@ class EmailSendsTable extends Table
                         $redirect = [
                             'controller' => 'Users',
                             'action' => 'password',
+                            'prefix' => false,
+                        ];
+                        break;
+                    case 'CCH':
+                        $emailTemplate = 'permissions_change';
+                        $subject = 'Permissions Changed for ' . $user->full_name;
+
+                        $redirect = [
+                            'controller' => 'Pages',
+                            'action' => 'display',
+                            'permissions',
                             'prefix' => false,
                         ];
                         break;
@@ -406,7 +418,12 @@ class EmailSendsTable extends Table
             $emailSend = $this->get($sendHeaders['X-Gen-ID']);
         }
 
-        $emailSend->set('message_send_code', $results->id);
+        if (key_exists('results', $results)) {
+            $results = $results['results'];
+        }
+        if (key_exists('id', $results)) {
+            $emailSend->set('message_send_code', $results['id']);
+        }
         $emailSend->set('sent', FrozenTime::now());
 
         $this->save($emailSend);

@@ -80,6 +80,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::prefix('admin', function (RouteBuilder $routes) {
+    // All routes here will be prefixed with `/admin`
+    // And have the prefix => admin route element added.
+
+    $routes->connect('/', ['controller' => 'Admin', 'action' => 'home']);
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.

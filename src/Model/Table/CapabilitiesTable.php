@@ -31,6 +31,7 @@ use Monolog\Test\TestCase;
  * @method \App\Model\Entity\Capability[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Capability findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class CapabilitiesTable extends Table
 {

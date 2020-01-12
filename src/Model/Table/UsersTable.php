@@ -38,6 +38,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UsersTable extends Table
 {

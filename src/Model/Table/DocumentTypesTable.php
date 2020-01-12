@@ -22,6 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DocumentType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class DocumentTypesTable extends Table
 {

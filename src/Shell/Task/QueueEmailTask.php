@@ -13,6 +13,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @package App\Shell\Task
  *
  * @property \App\Model\Table\EmailSendsTable EmailSends
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class QueueEmailTask extends QueueTask implements QueueTaskInterface
 {
@@ -29,6 +30,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
+     *
      * @return void
      */
     public function run(array $data, $jobId)
@@ -38,9 +40,17 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
         }
 
         $this->loadModel('EmailSends');
+        $this->loadModel('Queue.QueuedJobs');
 
-        if (!$this->EmailSends->make($data['email_generation_code'])) {
-            throw new QueueException('Make & Send Failed.');
+        $email = $this->EmailSends->make($data['email_generation_code']);
+
+        if (!$email) {
+            throw new QueueException('Make Failed.');
         }
+
+        $job = $this->QueuedJobs->get($jobId);
+        $data['email_send_id'] = $email;
+        $job->set('data', $data);
+        $this->QueuedJobs->save($job);
     }
 }

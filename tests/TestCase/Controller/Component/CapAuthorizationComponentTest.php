@@ -2,7 +2,9 @@
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\CapAuthorizationComponent;
+use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
+use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationService;
 use Authorization\Controller\Component\AuthorizationComponent;
 use Authorization\IdentityDecorator;
@@ -18,17 +20,27 @@ use Cake\TestSuite\TestCase;
  */
 class CapAuthorizationComponentTest extends TestCase
 {
+    use AppTestTrait;
+
     /**
-     * Test subject
-     *
-     * @var \App\Controller\Component\CapAuthorizationComponent
+     * @var \App\Controller\Component\CapAuthorizationComponent The Component under test
      */
     public $CapAuthorization;
 
     /**
+     * @var \Cake\Controller\Controller The Controller for Request
+     */
+    public $Controller;
+
+    /**
+     * @var \Cake\Controller\ComponentRegistry The Registry of Components
+     */
+    public $ComponentRegistry;
+
+    /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var \App\Model\Table\UsersTable The Table for Users
      */
     public $Users;
 
@@ -109,7 +121,17 @@ class CapAuthorizationComponentTest extends TestCase
     }
 
     /**
-     * Test initial setup
+     * Test initialize method
+     *
+     * @return void
+     */
+    public function testInitialize()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test see method
      *
      * @return void
      */
@@ -122,8 +144,48 @@ class CapAuthorizationComponentTest extends TestCase
 
         // Processed User
         $user = $this->Users->patchCapabilities($user);
-        debug($user);
+        $this->setUp();
         $result = $this->CapAuthorization->see($user);
-        TestCase::assertEquals([], $result);
+        TestCase::assertEquals([
+            User::FIELD_ID,
+            User::FIELD_USERNAME,
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_POSTCODE,
+            User::FIELD_CREATED,
+            User::FIELD_MODIFIED,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_DELETED,
+            User::FIELD_LAST_LOGIN_IP,
+            User::FIELD_CAPABILITIES,
+            User::FIELD_PASSWORD_STATE_ID,
+            User::FIELD_FULL_NAME,
+        ], $result);
+    }
+
+    /**
+     * Test checkCapability method
+     *
+     * @return void
+     */
+    public function testCheckCapability()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildAndCheckCapability method
+     *
+     * @return void
+     */
+    public function testBuildAndCheckCapability()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

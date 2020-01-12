@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
+use App\Shell\Task\QueueCapabilityTask;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -87,6 +88,17 @@ class CapabilityTaskTest extends TestCase
         if ($job instanceof \Queue\Model\Entity\QueuedJob) {
             TestCase::assertEquals(0, $job->get('failed'));
         }
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testCapabilityQueueRun()
+    {
+        $task = new QueueCapabilityTask();
+        $task->run(['role_template_id' => 1], 1);
     }
 
     /**

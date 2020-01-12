@@ -34,6 +34,7 @@ use PhpParser\Comment\Doc;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class DocumentsTable extends Table
 {

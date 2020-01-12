@@ -43,6 +43,8 @@ class UserListener implements EventListenerInterface
         $user->setDirty('modified', true);
 
         $this->Users->save($user);
+
+        $this->Users->patchCapabilities($user);
     }
 
     /**

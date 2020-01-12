@@ -23,6 +23,7 @@ return [
         ],
         'documents' => [
             'enabled' => true,
+            'exposed' => true,
             'capability' => [
                 'index' => 'DOCUMENTS',
             ],
@@ -31,6 +32,12 @@ return [
             'enabled' => false,
             'capability' => [
                 'index' => 'ARTICLES',
+            ],
+        ],
+        'admin' => [
+            'enabled' => true,
+            'capability' => [
+                'index' => 'ALL',
             ],
         ],
         'search' => [

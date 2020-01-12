@@ -22,6 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class NotificationTypesTable extends Table
 {

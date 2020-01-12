@@ -34,12 +34,10 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
     </head>
     <body>
         <?= $this->element('navbar'); ?>
-        <div class="container" style="padding-bottom: 120px; padding-top: 20px;">
-	        <?= $this->Flash->render() ?>
-            <?= $this->fetch('content') ?>
-        </div>
+        <?= $this->Flash->render() ?>
+        <?= $this->fetch('content') ?>
         <br/>
-        <?= $this->element('footer'); ?>
+        <?= $this->element('dark-footer'); ?>
         <?= $this->element('script'); ?>
     </body>
 </html>

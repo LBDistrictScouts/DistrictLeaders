@@ -29,6 +29,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UserContactsTable extends Table
 {

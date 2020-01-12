@@ -27,6 +27,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @method \App\Model\Entity\DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class DocumentEditionsTable extends Table
 {

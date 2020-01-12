@@ -164,7 +164,7 @@ class UsersControllerTest extends TestCase
             'action' => 'login',
         ]);
 
-        $this->assertResponseContains('Leader Login');
+        $this->assertResponseContains('Remember me on this Computer');
         $this->assertResponseOk();
 
         // Logging In

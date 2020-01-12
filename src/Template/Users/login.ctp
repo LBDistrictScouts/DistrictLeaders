@@ -3,46 +3,48 @@
  * @var \App\View\AppView $this
  * @var \App\Form\ResetForm $resForm
  */
+
+$backgrounds = [
+    'explorer-belt-expedition.jpg',
+    'scout-jumping-into-lake.jpg',
+    'two-cubs-leaping-into-water.jpg',
+];
+try {
+    $background = $backgrounds[random_int(0, 2)];
+} catch (Exception $e) {
+    $background = $background[0];
+}
+
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-12 col-md-6">
-        <div class="login-card card card-default">
-            <div class="card-header">
-                <h3>Leader Login</h3>
-            </div>
-            <div class="card-body">
-                <?= $this->Form->create() ?>
-                <?= $this->Form->control('username') ?>
-                <?= $this->Form->control('password') ?>
-                <?= $this->Form->checkbox('remember_me') ?> Remember me on this Computer<br/>
-            </div>
-            <div class="card-footer">
-                <div class="row">
-                    <div class="col-12">
-	                    <?= $this->Form->button('Login',['class' => 'btn btn-primary btn-lg btn-block']) ?>
-                    </div>
-                </div>
-                <br/>
-                <div class="row">
-                    <div class="col-md-6 col-12">
-                        <a href="<?php echo $this->Url->build([
-			                'controller' => 'Users',
-			                'action' => 'username',
-			                'prefix' => false],['_full']); ?>">
-                            <button type="button" class="btn btn-default btn-block float-md-right">Forgot Username</button></a>
-                    </div>
-                    <div class="col d-lg-none d-xl-none d-md-none"><br/></div>
-                    <div class="col-md-6 col-12">
-                        <a href="<?php echo $this->Url->build([
-		                    'controller' => 'Users',
-		                    'action' => 'forgot',
-		                    'prefix' => false],['_full']); ?>">
-                            <button type="button" class="btn btn-default btn-block float-md-right">Forgot Password</button></a>
-                    </div>
+<div class="login-dark" style="font-family: 'Nunito Sans', sans-serif;background-image: url('/img/<?= $background ?>');">
+    <?= $this->Form->create(null, ['method' => 'post']) ?>
+        <div>
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration"><i class="fal fa-unlock-alt"></i></div>
+            <?= $this->Form->input('username', ['class' => 'form-control form-control-lg', 'label' => false, 'type' => 'username d-inline', 'id' => 'username', 'name' => 'username', 'placeholder' => 'Username']) ?>
+
+            <?= $this->Form->password('username', ['class' => 'form-control form-control-lg', 'label' => false, 'type' => 'password', 'id' => 'password', 'name' => 'password', 'placeholder' => 'Password']) ?>
+
+            <div class="form-group text-center text-white-50" style="padding-top: 15px;padding-bottom: 15px;">
+                <div class="form-check">
+                    <?= $this->Form->checkbox('remember_me', ['class' => 'form-check-input', 'id' => 'formCheck-1', 'name' => 'remember_me']) ?>
+                    <?= $this->Form->label('remember_me', 'Remember me on this Computer', ['class' => 'form-check-label']) ?>
                 </div>
             </div>
-	        <?= $this->Form->end() ?>
+            <div class="form-group d-inline">
+                <?= $this->Form->button('Log In', ['class' => 'btn btn-primary btn-block', 'type' => 'submit']) ?>
+            </div>
+            <div class="form-row" style="margin-top: 20px;">
+                <div class="col"><a href="<?php echo $this->Url->build([
+                        'controller' => 'Users',
+                        'action' => 'username',
+                        'prefix' => false], ['_full']); ?>" class="forgot">Forgot your username?</a></div>
+                <div class="col"><a href="<?php echo $this->Url->build([
+                        'controller' => 'Users',
+                        'action' => 'forgot',
+                        'prefix' => false], ['_full']); ?>" class="forgot">Forgot your password?</a></div>
+            </div>
         </div>
-    </div>
+    <?= $this->Form->end() ?>
 </div>

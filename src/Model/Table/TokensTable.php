@@ -30,6 +30,7 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class TokensTable extends Table
 {

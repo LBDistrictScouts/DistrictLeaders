@@ -20,6 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {

@@ -19,6 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SiteSession findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class SiteSessionsTable extends Table
 {

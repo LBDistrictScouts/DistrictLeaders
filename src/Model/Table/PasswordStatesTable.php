@@ -20,6 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\PasswordState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\PasswordState[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\PasswordState findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\PasswordState[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class PasswordStatesTable extends Table
 {

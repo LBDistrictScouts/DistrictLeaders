@@ -7,7 +7,9 @@ use App\Model\Entity\CapabilitiesRoleType;
 use App\Model\Entity\Capability;
 use App\Model\Entity\Role;
 use App\Model\Entity\RoleType;
+use App\Model\Entity\User;
 use Cake\Core\Configure;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -29,6 +31,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class RoleTypesTable extends Table
 {
@@ -135,5 +138,32 @@ class RoleTypesTable extends Table
         }
 
         return $roleType;
+    }
+
+    /**
+     * @param RoleType $roleType The RoleType Entity
+     *
+     * @return int
+     */
+    public function patchRoleUsers($roleType)
+    {
+        $count = 0;
+
+        $roleTypeId = $roleType->get(RoleType::FIELD_ID);
+        $query = $this->Roles->Users
+            ->find()
+            ->matching('Roles', function (Query $q) use ($roleTypeId) {
+                return $q->where(['Roles.' . Role::FIELD_ROLE_TYPE_ID => $roleTypeId]);
+            });
+
+        foreach ($query as $user) {
+            $result = $this->Roles->Users->patchCapabilities($user);
+
+            if ($result instanceof User) {
+                $count += 1;
+            }
+        }
+
+        return $count;
     }
 }

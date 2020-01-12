@@ -63,11 +63,12 @@ try {
     Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
     Configure::load('app_queue', 'default', false);
-    Configure::load('capabilities', 'default', false);
-    Configure::load('functional_areas', 'default', false);
-    Configure::load('known_entities', 'default', false);
-    Configure::load('settings', 'default', false);
-    Configure::load('webservices', 'default', false);
+    Configure::load('AppSetup' . DS . 'capabilities', 'default', false);
+    Configure::load('AppSetup' . DS . 'daily_crons', 'default', false);
+    Configure::load('AppSetup' . DS . 'functional_areas', 'default', false);
+    Configure::load('AppSetup' . DS . 'known_entities', 'default', false);
+    Configure::load('AppSetup' . DS . 'settings', 'default', false);
+    Configure::load('AppSetup' . DS . 'webservices', 'default', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }

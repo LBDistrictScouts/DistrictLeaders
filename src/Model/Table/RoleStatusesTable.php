@@ -20,6 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class RoleStatusesTable extends Table
 {

@@ -21,6 +21,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class CapabilitiesRoleTypesTable extends Table
 {

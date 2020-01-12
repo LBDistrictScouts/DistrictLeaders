@@ -17,34 +17,48 @@
 <?= $this->Form->create(${{ singularVar }}) ?>
 <fieldset>
     <?php
+        $args = [
+            'CHANGE',
+            ${{ singularVar }}->getSource(),
+            null,
+            null,
+        ];
+
 {% for field in fields if field not in primaryKey %}
 {%- if keyFields[field] %}
+        $args[4] = ${{ singularVar }}::FIELD_{{ field|upper }};
+        {{- "\n" }}
     {%- set fieldData = Bake.columnData(field, schema) %}
         /** @var array ${{ keyFields[field] }} The {{ field|humanize }} List */
         {{- "\n" }}
     {%- if fieldData.null %}
-        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}, 'empty' => true]);
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}, 'empty' => true]) : '';
         {{- "\n" }}
     {%- else %}
-        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}]);
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}]) : '';
         {{- "\n" }}
     {%- endif %}
+    {{- "\n" }}
 {%- elseif field not in ['created', 'modified', 'updated', 'deleted'] %}
+        $args[4] = ${{ singularVar }}::FIELD_{{ field|upper }};
+        {{- "\n" }}
     {%- set fieldData = Bake.columnData(field, schema) %}
     {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
-        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['empty' => true]);
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['empty' => true]) : '';
         {{- "\n" }}
     {%- else %}
-        echo $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }});
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}) : '';
         {{- "\n" }}
     {%- endif %}
+    {{- "\n" }}
 {%- endif %}
+
 {%- endfor %}
 
 {%- if associations.BelongsToMany %}
 {%- for assocName, assocData in associations.BelongsToMany %}
         /** @var array ${{ assocData.variable }} The {{ assocName }} List */
-        echo $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]);
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]) : '';
         {{- "\n" }}
 {%- endfor %}
 {% endif %}

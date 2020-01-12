@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Role;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
@@ -226,5 +227,21 @@ class RoleTypesTableTest extends TestCase
             TestCase::assertTrue(key_exists($capability->capability_code, $expectedCaps));
             TestCase::assertSame($capability->_joinData->template, $expectedCaps[$capability->capability_code]);
         }
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchRoleUsers()
+    {
+        $roleType = $this->RoleTypes->find()->first();
+        $users = $this->RoleTypes->Roles->find()->where([Role::FIELD_ROLE_TYPE_ID => $roleType->get(RoleType::FIELD_ID)])->count();
+
+        $result = $this->RoleTypes->patchRoleUsers($roleType);
+
+        TestCase::assertEquals($users, $result);
+        TestCase::assertNotEquals(0, $result);
     }
 }

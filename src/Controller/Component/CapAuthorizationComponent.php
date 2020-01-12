@@ -45,7 +45,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
         $section = null;
 
         foreach ($resource->getVisible() as $visibleField) {
-            if ($this->buildAndCheckCapability($action, 'Users', $group, $section, $visibleField)) {
+            if ($this->buildAndCheckCapability($action, $resource->getSource(), $group, $section, $visibleField)) {
                 array_push($fields, $visibleField);
             }
         }

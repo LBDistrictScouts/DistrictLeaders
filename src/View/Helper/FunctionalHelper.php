@@ -63,17 +63,26 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $function The Function to be Checked
-     * @param \App\Model\Entity\User $identity The User Identity
+     * @param \App\Model\Entity\User|null $identity The User Identity
      * @param string|null $action The action being checked
      *
      * @return bool
      */
-    public function checkFunctionAuth($function, $identity, $action = 'index')
+    public function checkFunctionAuth($function, $identity = false, $action = 'index')
     {
-        $area = $this->checkFunction($function);
+        $exposed = $this->FunctionalAreas[$function]['exposed'] ?? false;
 
-        $methodAuth = $this->FunctionalAreas[$function]['capability'][$action];
-        $can = $identity->checkCapability($methodAuth);
+        if (is_null($identity) && !$exposed) {
+            return false;
+        }
+
+        $area = $this->checkFunction($function);
+        $can = $exposed;
+
+        if (!$exposed) {
+            $methodAuth = $this->FunctionalAreas[$function]['capability'][$action];
+            $can = $identity->checkCapability($methodAuth);
+        }
 
         return (bool)($can && $area);
     }

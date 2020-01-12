@@ -23,6 +23,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Audit findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
+ * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class AuditsTable extends Table
 {

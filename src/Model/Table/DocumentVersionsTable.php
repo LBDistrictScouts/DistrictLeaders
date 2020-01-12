@@ -26,6 +26,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class DocumentVersionsTable extends Table
 {

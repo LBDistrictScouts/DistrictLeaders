@@ -11,7 +11,7 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'DocumentEditions');
 $this->assign('subset', 'All');
-$this->assign('add', $authUser->checkCapability('CREATE_DOCUMENT_EDITION'));
+$this->assign('add', $this->Identity->checkCapability('CREATE_DOCUMENT_EDITION'));
 
 ?>
 <thead>
@@ -29,10 +29,10 @@ $this->assign('add', $authUser->checkCapability('CREATE_DOCUMENT_EDITION'));
     <tr>
         <td><?= $documentEdition->has('document_version') ? $this->Html->link($documentEdition->document_version->document->document . ' (' . $this->Number->format($documentEdition->document_version->version_number) . ')', ['controller' => 'DocumentVersions', 'action' => 'view', $documentEdition->document_version->id]) : '' ?></td>
                 <td class="actions">
-            <?= $authUser->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $documentEdition->id], ['title' => __('View Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-download"></i>', ['action' => 'download', $documentEdition->id], ['title' => __('Download Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('UPDATE_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $documentEdition->id], ['title' => __('Edit Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('DELETE_DOCUMENT_EDITION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $documentEdition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentEdition->id), 'title' => __('Delete Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $documentEdition->id], ['title' => __('View Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('VIEW_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-download"></i>', ['action' => 'download', $documentEdition->id], ['title' => __('Download Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('UPDATE_DOCUMENT_EDITION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $documentEdition->id], ['title' => __('Edit Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('DELETE_DOCUMENT_EDITION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $documentEdition->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentEdition->id), 'title' => __('Delete Document Edition'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= $documentEdition->has('file_type') ? $this->Html->link($documentEdition->file_type->file_type, ['controller' => 'FileTypes', 'action' => 'view', $documentEdition->file_type->id]) : '' ?></td>
         <td><?= $this->Number->toReadableSize($documentEdition->size) ?></td>

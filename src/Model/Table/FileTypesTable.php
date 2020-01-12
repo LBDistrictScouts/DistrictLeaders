@@ -22,6 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\FileType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\FileType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\FileType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\FileType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class FileTypesTable extends Table
 {

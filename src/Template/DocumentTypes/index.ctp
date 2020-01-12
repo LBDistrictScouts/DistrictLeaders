@@ -11,7 +11,7 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'DocumentTypes');
 $this->assign('subset', 'All');
-$this->assign('add', $authUser->checkCapability('CH_DOCTYPE'));
+$this->assign('add', $this->Identity->checkCapability('CH_DOCTYPE'));
 
 ?>
 <thead>
@@ -28,8 +28,8 @@ $this->assign('add', $authUser->checkCapability('CH_DOCTYPE'));
         <td><?= h($documentType->document_type) ?></td>
         <td class="actions">
             <?= $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $documentType->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
-            <?= $authUser->checkCapability('CH_DOCTYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $documentType->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('CH_DOCTYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $documentType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentType->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('CH_DOCTYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $documentType->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('CH_DOCTYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $documentType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $documentType->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
     </tr>
     <?php endforeach; ?>

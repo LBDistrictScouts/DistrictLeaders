@@ -24,6 +24,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class SectionTypesTable extends Table
 {

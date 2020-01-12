@@ -30,6 +30,7 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class RolesTable extends Table
 {

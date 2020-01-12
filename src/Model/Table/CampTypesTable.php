@@ -20,6 +20,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class CampTypesTable extends Table
 {

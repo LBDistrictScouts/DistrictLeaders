@@ -11,7 +11,7 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'Documents');
 $this->assign('subset', 'All');
-$this->assign('add', $authUser->checkCapability('ADD_DOCUMENT'));
+$this->assign('add', $this->Identity->checkCapability('ADD_DOCUMENT'));
 
 ?>
 <thead>
@@ -28,9 +28,9 @@ $this->assign('add', $authUser->checkCapability('ADD_DOCUMENT'));
     <tr>
         <td><?= h($document->document) ?></td>
                 <td class="actions">
-            <?= $authUser->checkCapability('VIEW_DOCUMENT') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $document->id], ['title' => __('View Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('EDIT_DOCUMENT') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $document->id], ['title' => __('Edit Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('DELETE_DOCUMENT') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $document->id], ['confirm' => __('Are you sure you want to delete # {0}?', $document->id), 'title' => __('Delete Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('VIEW_DOCUMENT') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $document->id], ['title' => __('View Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('EDIT_DOCUMENT') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $document->id], ['title' => __('Edit Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('DELETE_DOCUMENT') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $document->id], ['confirm' => __('Are you sure you want to delete # {0}?', $document->id), 'title' => __('Delete Document'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= $document->has('document_type') ? $this->Html->link($document->document_type->document_type, ['controller' => 'DocumentTypes', 'action' => 'view', $document->document_type->id]) : '' ?></td>
         <td><?= $this->Time->format($document->created, 'dd-MMM-yy HH:mm') ?></td>

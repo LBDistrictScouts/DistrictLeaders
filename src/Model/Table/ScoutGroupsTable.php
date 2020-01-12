@@ -23,6 +23,7 @@ use Cake\Validation\Validator;
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class ScoutGroupsTable extends Table
 {

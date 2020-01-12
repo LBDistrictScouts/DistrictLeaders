@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  */
+
+$identity = $this->getRequest()->getAttribute('identity');
 ?>
 <header>
     <div class="jumbotron jumbotron-fluid">
@@ -15,7 +17,7 @@
     <section class="features-icons bg-light text-center" style="padding: 0 10px 50px 10px;">
         <div class="container">
             <div class="row">
-                <?php if ($this->Functional->checkFunction('directory') && $this->Identity->isLoggedIn()) : ?>
+                <?php if ($this->Functional->checkFunctionAuth('directory', $identity)) : ?>
                     <div class="col">
                         <div class="row" style="padding: 25px 0px;">
                             <div class="col">
@@ -36,7 +38,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->Functional->checkFunction('articles')) : ?>
+                <?php if ($this->Functional->checkFunctionAuth('articles', $identity)) : ?>
                     <div class="col">
                         <div class="row" style="padding: 25px 0px;">
                             <div class="col">
@@ -56,7 +58,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->Functional->checkFunction('documents')) : ?>
+                <?php if ($this->Functional->checkFunctionAuth('documents', $identity)) : ?>
                     <div class="col">
                         <div class="row" style="padding: 25px 0px;">
                             <div class="col">
@@ -76,7 +78,7 @@
                         </div>
                     </div>
                 <?php endif; ?>
-                <?php if ($this->Functional->checkFunction('camps')) : ?>
+                <?php if ($this->Functional->checkFunctionAuth('camps', $identity)) : ?>
                     <div class="col">
                         <div class="row" style="padding: 25px 0px;">
                             <div class="col">

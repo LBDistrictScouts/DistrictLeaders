@@ -22,6 +22,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\UserContactType findOrCreate($search, callable $callback = null, $options = [])
  *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UserContactTypesTable extends Table
 {

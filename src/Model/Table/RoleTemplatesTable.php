@@ -23,6 +23,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleTemplate patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleTemplate[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleTemplate findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class RoleTemplatesTable extends Table
 {

@@ -11,7 +11,7 @@ $this->extend('../Layout/CRUD/index');
 
 $this->assign('entity', 'RoleTypes');
 $this->assign('subset', 'All');
-$this->assign('add', $authUser->checkCapability('CREATE_ROLE_TYPE'));
+$this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TYPE'));
 
 ?>
 <thead>
@@ -29,9 +29,9 @@ $this->assign('add', $authUser->checkCapability('CREATE_ROLE_TYPE'));
     <tr>
         <td><?= h($roleType->role_abbreviation) ?></td>
                 <td class="actions">
-            <?= $authUser->checkCapability('VIEW_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $roleType->id], ['title' => __('View Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('UPDATE_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $roleType->id], ['title' => __('Edit Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $authUser->checkCapability('DELETE_ROLE_TYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $roleType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleType->id), 'title' => __('Delete Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('VIEW_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $roleType->id], ['title' => __('View Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('UPDATE_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $roleType->id], ['title' => __('Edit Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('DELETE_ROLE_TYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $roleType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleType->id), 'title' => __('Delete Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= h($roleType->role_type) ?></td>
         <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
