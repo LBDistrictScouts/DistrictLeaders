@@ -32,6 +32,7 @@
         "muffin/trash": "^2.1",
         "php-http/guzzle6-adapter": "^2.0",
         "sparkpost/sparkpost": "^2.2",
+        "symfony/yaml": "^5.0",
         "twilio/sdk": "^5.34",
         "webonyx/graphql-php": "^0.13.8"
     },

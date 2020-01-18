@@ -1,0 +1,25 @@
+fileTypes:
+    -
+        file_type: Word
+        file_extension: docx
+        mime: application/docx
+    -
+        file_type: 'Scalable Vector Graphic'
+        file_extension: svg
+        mime: image/svg+xml
+    -
+        file_type: PDF
+        file_extension: pdf
+        mime: application/pdf
+    -
+        file_type: 'Old Word'
+        file_extension: doc
+        mime: application/doc
+    -
+        file_type: 'Comma Separated Value'
+        file_extension: csv
+        mime: application/csv
+    -
+        file_type: Markdown
+        file_extension: md
+        mime: text/markdown

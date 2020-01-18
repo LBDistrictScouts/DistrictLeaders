@@ -50,7 +50,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
 
         $job = $this->QueuedJobs->get($jobId);
         $data['email_send_id'] = $email;
-        $job->set('data', $data);
+        $job->set('data', serialize($data));
         $this->QueuedJobs->save($job);
     }
 }

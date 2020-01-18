@@ -36,6 +36,7 @@ before_install:
   - cp config/app_db.travis.php config/app_db.php
   - cp config/app_file.travis.php config/app_file.php
   - cp config/app.travis.php config/app.php
+  - rm config/app_queue.php
   - cp config/app_queue.travis.php config/app_queue.php
 
 install:

@@ -39,7 +39,7 @@ class CapabilityListener implements EventListenerInterface
         $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Capability',
-            ['role_template' => $roleTemplate]
+            ['role_template_id' => $roleTemplate->id]
         );
     }
 }

@@ -106,6 +106,7 @@ class NotificationTypesTable extends Table
      */
     public function installBaseNotificationTypes()
     {
+        Configure::load('AppSetup' . DS . 'notification_types', 'yaml', false);
         $base = Configure::read('notificationTypes');
 
         $total = 0;

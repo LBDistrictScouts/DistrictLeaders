@@ -1,0 +1,155 @@
+debug: true
+App:
+    namespace: App
+    encoding: UTF-8
+    defaultLocale: en_US
+    defaultTimezone: UTC
+    base: false
+    dir: src
+    webroot: webroot
+    wwwRoot: /Users/jacob/Development/DistrictLeaders/webroot/
+    fullBaseUrl: false
+    imageBaseUrl: img/
+    cssBaseUrl: css/
+    jsBaseUrl: js/
+    paths:
+        plugins:
+            - /Users/jacob/Development/DistrictLeaders/plugins/
+        templates:
+            - /Users/jacob/Development/DistrictLeaders/src/Template/
+        locales:
+            - /Users/jacob/Development/DistrictLeaders/src/Locale/
+    who:
+        system: 'LBD Leader System'
+        email: webmaster@lbdscouts.org.uk
+Security:
+    salt: 8dab7ae2cfd5a96c9381b5a807d5211374f8d6e75bc633643695b6458401a5a5
+    cookieKey: a4a89519622e7d8c8a21b52f6c9eed44386f46b8d0fb71b94f88c56976b7f21e
+Asset: {  }
+Cache:
+    default:
+        className: Cake\Cache\Engine\FileEngine
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/
+        url: null
+    redis:
+        className: Redis
+        duration: '+1 hours'
+        prefix: cake_redis_
+        host: 127.0.0.1
+        port: 6379
+        fallback: default
+    _cake_core_:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: myapp_cake_core_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/persistent/
+        serialize: true
+        duration: '+1 years'
+        url: null
+    _cake_model_:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: myapp_cake_model_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/models/
+        serialize: true
+        duration: '+1 years'
+        url: null
+    _cake_routes_:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: myapp_cake_routes_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/
+        serialize: true
+        duration: '+1 years'
+        url: null
+    capability:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: leaders_cap_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/capabilities/
+        serialize: true
+        duration: '+30 minutes'
+    cell_cache:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: cell_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/cell/
+        serialize: true
+        duration: '+30 minutes'
+    combo:
+        className: Cake\Cache\Engine\FileEngine
+        prefix: combo_session_
+        path: /Users/jacob/Development/DistrictLeaders/tmp/cache/combo/
+        serialize: true
+        duration: '+3 hours'
+Error:
+    errorLevel: 32767
+    exceptionRenderer: Cake\Error\ExceptionRenderer
+    skipLog: {  }
+    log: true
+    trace: true
+EmailTransport:
+    default:
+        className: SparkPost
+Email:
+    default:
+        from: jacob@lbdscouts.org.uk
+Log:
+    debug:
+        className: Cake\Log\Engine\FileLog
+        path: /Users/jacob/Development/DistrictLeaders/logs/
+        file: debug
+        url: null
+        scopes: false
+        levels:
+            - debug
+    error:
+        className: Cake\Log\Engine\FileLog
+        path: /Users/jacob/Development/DistrictLeaders/logs/
+        file: error
+        scopes: false
+        levels:
+            - notice
+            - info
+            - warning
+            - error
+            - critical
+            - alert
+            - emergency
+    queue:
+        className: Cake\Log\Engine\FileLog
+        type: queue
+        levels:
+            - info
+        scopes:
+            - queue
+    queries:
+        className: Cake\Log\Engine\FileLog
+        path: /Users/jacob/Development/DistrictLeaders/logs/
+        file: queries
+        url: null
+        scopes:
+            - queriesLog
+DatabaseLog:
+    datasource: database_log
+    limit: 9999
+    maxLength: '-1 year'
+Session:
+    defaults: database
+    handler:
+        engine: ComboSession
+        model: SiteSessions
+        cache: combo
+IdeHelper:
+    preemptive: true
+GoogleClient:
+    TokenPath: config/token.json
+Muffin/Tokenize:
+    lifetime: '3 days'
+    length: 32
+    table: tokenize_tokens
+SparkPost:
+    Api:
+        key: 6d4629f4dfc812c453ab1e7a452656578898c2c5
+defaultAdmin:
+    username: JacobAGTyler
+    email: webmaster@4thgoat.org.uk
+    first_name: Jacob
+    last_name: Tyler
+    membership_number: 83
+    postcode: 'SG6 1FT'

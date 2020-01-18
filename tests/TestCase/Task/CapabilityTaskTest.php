@@ -5,8 +5,9 @@ namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
 use App\Shell\Task\QueueCapabilityTask;
+use Cake\Console\ConsoleIo;
+use Cake\Console\ConsoleOutput;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -17,14 +18,20 @@ use Cake\TestSuite\TestCase;
  */
 class CapabilityTaskTest extends TestCase
 {
-    use ConsoleIntegrationTestTrait;
+    /**
+     * @var QueueCapabilityTask|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected $Task;
 
     /**
-     * Test subject
-     *
-     * @var \App\Shell\Task\QueueCapabilityTask
+     * @var \Tools\TestSuite\ConsoleOutput
      */
-    public $QueueCapabilityTask;
+    protected $out;
+
+    /**
+     * @var \Tools\TestSuite\ConsoleOutput
+     */
+    protected $err;
 
     /**
      * Fixtures
@@ -61,14 +68,33 @@ class CapabilityTaskTest extends TestCase
     ];
 
     /**
+     * Setup Defaults
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->out = new ConsoleOutput();
+        $this->err = new ConsoleOutput();
+        $testIo = new ConsoleIo($this->out, $this->err);
+
+        $this->Task = new QueueCapabilityTask($testIo);
+    }
+
+    /**
      * Test initial setup
      *
      * @return void
+     *
+     * @throws \Throwable
      */
     public function testCapabilityQueueJob()
     {
         $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
         $originalJobCount = $this->QueuedJobs->find('all')->count();
+        TestCase::assertEquals(0, $originalJobCount);
 
         $this->QueuedJobs->createJob(
             'Capability',
@@ -80,25 +106,16 @@ class CapabilityTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        $this->useCommandRunner();
-        $this->exec('queue runworker');
+        /** @var \Queue\Model\Entity\QueuedJob $job */
+        $job = $this->QueuedJobs->find()->first();
+        $data = unserialize($job->get('data'));
+
+        $this->Task->run($data, $job->id);
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
-            TestCase::assertEquals(0, $job->get('failed'));
-        }
-    }
 
-    /**
-     * Test initial setup
-     *
-     * @return void
-     */
-    public function testCapabilityQueueRun()
-    {
-        $task = new QueueCapabilityTask();
-        $task->run(['role_template_id' => 1], 1);
+        TestCase::assertEquals(1, $job->progress);
     }
 
     /**
@@ -128,14 +145,14 @@ class CapabilityTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        $this->useCommandRunner();
-        $this->exec('queue runworker');
+        $job = $this->QueuedJobs->find()->first();
+        $data = unserialize($job->get('data'));
+
+        $this->Task->run($data, $job->id);
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
-            TestCase::assertEquals(0, $job->get('failed'));
-        }
+        TestCase::assertEquals(1, $job->progress);
 
         $updatedRoleType = $this->RoleTemplates->RoleTypes->get(1, ['contain' => 'Capabilities']);
         TestCase::assertNotSame($originalRoleType, $updatedRoleType);
@@ -161,13 +178,13 @@ class CapabilityTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        $this->useCommandRunner();
-        $this->exec('queue runworker');
+        $job = $this->QueuedJobs->find()->first();
+        $data = unserialize($job->get('data'));
+
+        $this->Task->run($data, $job->id);
 
         /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
-        if ($job instanceof \Queue\Model\Entity\QueuedJob) {
-            TestCase::assertEquals(0, $job->get('failed'));
-        }
+        TestCase::assertEquals(1, $job->progress);
     }
 }

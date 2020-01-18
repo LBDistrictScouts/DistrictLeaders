@@ -29,6 +29,7 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+use App\Configure\Engine\YamlConfig;
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
@@ -59,16 +60,28 @@ use Detection\MobileDetect;
 try {
     Configure::config('default', new PhpConfig());
     Configure::config('json', new JsonConfig());
+    Configure::config('yaml', new YamlConfig());
+} catch (Exception $e) {
+    exit($e->getMessage() . "\n");
+}
+
+/** Core Config Values */
+try {
     Configure::load('app', 'default', false);
     Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
     Configure::load('app_queue', 'default', false);
-    Configure::load('AppSetup' . DS . 'capabilities', 'default', false);
-    Configure::load('AppSetup' . DS . 'daily_crons', 'default', false);
-    Configure::load('AppSetup' . DS . 'functional_areas', 'default', false);
-    Configure::load('AppSetup' . DS . 'known_entities', 'default', false);
-    Configure::load('AppSetup' . DS . 'settings', 'default', false);
-    Configure::load('AppSetup' . DS . 'webservices', 'default', false);
+} catch (Exception $e) {
+    exit($e->getMessage() . "\n");
+}
+
+/** Yaml Application Values */
+try {
+    Configure::load('AppSetup' . DS . 'capabilities', 'yaml', false);
+    Configure::load('AppSetup' . DS . 'daily_crons', 'yaml', false);
+    Configure::load('AppSetup' . DS . 'functional_areas', 'yaml', false);
+    Configure::load('AppSetup' . DS . 'settings', 'yaml', false);
+    Configure::load('AppSetup' . DS . 'webservices', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
