@@ -1,5 +1,14 @@
-**/*.yml
-**/*.md
+.codecov.yml
+.stickler.yml
+.travis.yml
+codeclimate.yml
+codecov.yml
+
+CODE_OF_CONDUCT.md
+README.md
+
+.github/*.md
+
 **/*.default.php
 config/Migrations/schema-dump-default.lock
 config/app.travis.php
