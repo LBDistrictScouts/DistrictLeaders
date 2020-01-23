@@ -23,8 +23,6 @@ use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceProviderInterface;
-use Authorization\Exception\ForbiddenException;
-use Authorization\Exception\MissingIdentityException;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Policy\MapResolver;
@@ -102,7 +100,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
          * Debug Kit should not be installed on a production system
          */
         if (Configure::read('debug')) {
-            $this->addPlugin('DebugKit', ['bootstrap' => true]);
+            $this->addPlugin('DebugKit', ['bootstrap' => true, 'routes' => true]);
         }
     }
 
@@ -158,10 +156,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
                     'className' => 'Authorization.Redirect',
                     'url' => self::LOGIN_URL,
                     'queryParam' => 'redirectUrl',
-                    'exceptions' => [
-                        MissingIdentityException::class,
-                        ForbiddenException::class,
-                    ],
+                    'exceptions' => Configure::read('UnauthorizedExceptions'),
                 ],
                 'requireAuthorizationCheck' => true,
             ]))
@@ -195,7 +190,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         $mapResolver->map(ServerRequest::class, RequestPolicy::class);
 
-        $resolver = new ResolverCollection([$ormResolver, $mapResolver]);
+        $resolver = new ResolverCollection([$mapResolver, $ormResolver]);
 
         return new AuthorizationService($resolver);
     }

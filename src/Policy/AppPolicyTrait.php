@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace App\Policy;
 
+use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 
 /**
@@ -27,7 +28,7 @@ trait AppPolicyTrait
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
      *
-     * @return bool|void
+     * @return bool|null
      */
     public function before($user, $resource, $action)
     {
@@ -38,5 +39,20 @@ trait AppPolicyTrait
         if ($user->checkCapability('ALL')) {
             return true;
         }
+
+        if ($user->checkCapability($action)) {
+            return true;
+        }
+
+        if ($resource instanceof Entity) {
+            /** @var Entity $model */
+            $model = $resource->getSource();
+
+            if ($user->buildAndCheckCapability($action, $model)) {
+                return true;
+            }
+        }
+
+        return null;
     }
 }

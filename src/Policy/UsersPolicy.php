@@ -6,13 +6,15 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\Log\Log;
+use Cake\ORM\TableRegistry;
 
 /**
  * Class UserPolicy
  *
  * @package App\Policy
  */
-class UserPolicy implements BeforePolicyInterface
+class UsersPolicy implements BeforePolicyInterface
 {
     use AppPolicyTrait;
 
@@ -67,6 +69,7 @@ class UserPolicy implements BeforePolicyInterface
      */
     public function canIndex(User $user)
     {
+        Log::debug('can-index');
         if ($user->checkCapability('DIRECTORY')) {
             return new Result(true);
         }

@@ -8,6 +8,7 @@ use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Core\Configure;
+use Cake\Log\Log;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 

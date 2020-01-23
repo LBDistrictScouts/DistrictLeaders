@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Database\Exception;
 use Cake\Database\Expression\QueryExpression;
 use Cake\Database\Query;
+use Cake\Log\Log;
 use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -266,11 +267,9 @@ class CapabilitiesTable extends Table
      */
     public function buildCapability($action, $model, $field = null)
     {
-        if (!TableRegistry::getTableLocator()->exists($model)) {
-            return false;
-        }
-
         if (!CapBuilder::isActionType($action)) {
+            Log::debug('NotActionType');
+
             return false;
         }
 

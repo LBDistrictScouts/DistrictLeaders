@@ -100,11 +100,8 @@ class UsersController extends AppController
      */
     public function view($userId = null)
     {
-        $visibleFields = [
-            'id',
-            'first_name',
-            'last_name',
-        ];
+        $user = $this->Users->get($userId);
+        $visibleFields = $this->Authorization->see($user);
 
         $user = $this->Users->get($userId, [
             'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles' => [
@@ -116,11 +113,10 @@ class UsersController extends AppController
                 'RoleStatuses',
                 'UserContacts',
             ]],
-//            'fields' => $visibleFields,
+            'fields' => $visibleFields,
         ]);
 
         $this->Authorization->authorize($user);
-        $this->Authorization->can($user, 'view');
 
         $this->set('user', $user);
     }

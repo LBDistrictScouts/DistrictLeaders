@@ -164,11 +164,11 @@ class CapabilitiesTableTest extends TestCase
     {
         return [
             'Level 0' => [ 0, 1 ],
-            'Level 1' => [ 1, 6 ],
-            'Level 2' => [ 2, 28 ],
-            'Level 3' => [ 3, 50 ],
-            'Level 4' => [ 4, 53 ],
-            'Level 5' => [ 5, 57 ],
+            'Level 1' => [ 1, 8 ],
+            'Level 2' => [ 2, 30 ],
+            'Level 3' => [ 3, 52 ],
+            'Level 4' => [ 4, 55 ],
+            'Level 5' => [ 5, 65 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -489,11 +489,11 @@ class CapabilitiesTableTest extends TestCase
                 'Capabilities',
                 false,
             ],
-            'Bad Model' => [
+            /*'Bad Model' => [
                 'CREATE',
                 'KASKDD',
                 false,
-            ],
+            ],*/
             'View Field CAPABILITY_CODE' => [
                 'VIEW',
                 'Capabilities',
@@ -506,12 +506,12 @@ class CapabilitiesTableTest extends TestCase
                 false,
                 Capability::FIELD_CAPABILITY_CODE,
             ],
-            'Bad Field Model' => [
+            /*'Bad Field Model' => [
                 'VIEW',
                 'KSOSAISA',
                 false,
                 Capability::FIELD_CAPABILITY_CODE,
-            ],
+            ],*/
         ];
     }
 

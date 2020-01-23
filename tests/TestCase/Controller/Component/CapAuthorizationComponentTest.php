@@ -25,7 +25,7 @@ class CapAuthorizationComponentTest extends TestCase
     /**
      * @var \App\Controller\Component\CapAuthorizationComponent The Component under test
      */
-    public $CapAuthorization;
+    public $Authorization;
 
     /**
      * @var \Cake\Controller\Controller The Controller for Request
@@ -102,7 +102,7 @@ class CapAuthorizationComponentTest extends TestCase
 
         $this->Controller = new Controller($request);
         $this->ComponentRegistry = new ComponentRegistry($this->Controller);
-        $this->CapAuthorization = new CapAuthorizationComponent($this->ComponentRegistry);
+        $this->Authorization = new CapAuthorizationComponent($this->ComponentRegistry);
 
         $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
         $this->Users = TableRegistry::getTableLocator()->get('Users', $config);
@@ -115,7 +115,7 @@ class CapAuthorizationComponentTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->CapAuthorization);
+        unset($this->Authorization);
 
         parent::tearDown();
     }
@@ -139,13 +139,13 @@ class CapAuthorizationComponentTest extends TestCase
     {
         // Unauthorised User
         $user = $this->Users->get(1);
-        $result = $this->CapAuthorization->see($user);
+        $result = $this->Authorization->see($user);
         TestCase::assertEquals([], $result);
 
         // Processed User
         $user = $this->Users->patchCapabilities($user);
         $this->setUp();
-        $result = $this->CapAuthorization->see($user);
+        $result = $this->Authorization->see($user);
         TestCase::assertEquals([
             User::FIELD_ID,
             User::FIELD_USERNAME,
@@ -165,7 +165,6 @@ class CapAuthorizationComponentTest extends TestCase
             User::FIELD_LAST_LOGIN_IP,
             User::FIELD_CAPABILITIES,
             User::FIELD_PASSWORD_STATE_ID,
-            User::FIELD_FULL_NAME,
         ], $result);
     }
 

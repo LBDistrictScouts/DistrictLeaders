@@ -77,11 +77,11 @@ try {
 
 /** Yaml Application Values */
 try {
-    Configure::load('AppSetup' . DS . 'capabilities', 'yaml', false);
-    Configure::load('AppSetup' . DS . 'daily_crons', 'yaml', false);
-    Configure::load('AppSetup' . DS . 'functional_areas', 'yaml', false);
-    Configure::load('AppSetup' . DS . 'settings', 'yaml', false);
-    Configure::load('AppSetup' . DS . 'webservices', 'yaml', false);
+    Configure::load('Application' . DS . 'capabilities', 'yaml', false);
+    Configure::load('Application' . DS . 'daily_crons', 'yaml', false);
+    Configure::load('Application' . DS . 'functional_areas', 'yaml', false);
+    Configure::load('Application' . DS . 'settings', 'yaml', false);
+    Configure::load('Application' . DS . 'webservices', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }

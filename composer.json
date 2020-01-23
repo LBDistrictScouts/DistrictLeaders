@@ -39,7 +39,7 @@
     "require-dev": {
         "cakephp/bake": "@stable",
         "cakephp/cakephp-codesniffer": "^3.3.0",
-        "cakephp/debug_kit": "@stable",
+        "cakephp/debug_kit": "^3.21",
         "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
@@ -73,7 +73,6 @@
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "console-install": "App\\Console\\Installer::postInstall",
         "check": [
-            "@test",
             "@cs-check",
             "@validate",
             "@phpstan"

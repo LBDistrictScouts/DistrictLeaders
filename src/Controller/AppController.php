@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
 use Authentication\AuthenticationService;
@@ -35,6 +36,7 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  *
  * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  * @property \Flash\Controller\Component\FlashComponent $Flash
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
 {
@@ -99,7 +101,7 @@ class AppController extends Controller
         $this->loadComponent('Flash.Flash');
         $this->loadComponent('Cookie');
 
-        $this->loadComponent('Authorization.Authorization');
+        $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
@@ -117,5 +119,6 @@ class AppController extends Controller
     {
         $this->getEventManager()->on(new UserListener());
         $this->getEventManager()->on(new RoleListener());
+        $this->getEventManager()->on(new CapabilityListener());
     }
 }

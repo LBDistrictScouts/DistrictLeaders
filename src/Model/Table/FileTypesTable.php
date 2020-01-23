@@ -104,7 +104,7 @@ class FileTypesTable extends Table
      */
     public function installBaseFileTypes()
     {
-        Configure::load('AppSetup' . DS . 'file_types', 'yaml', false);
+        Configure::load('Application' . DS . 'file_types', 'yaml', false);
         $base = Configure::read('fileTypes');
 
         $total = 0;

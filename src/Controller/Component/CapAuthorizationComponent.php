@@ -44,7 +44,12 @@ class CapAuthorizationComponent extends AuthorizationComponent
         $group = null;
         $section = null;
 
+        $virtual = $resource->getVirtual();
+
         foreach ($resource->getVisible() as $visibleField) {
+            if (in_array($visibleField, $virtual)) {
+                continue;
+            }
             if ($this->buildAndCheckCapability($action, $resource->getSource(), $group, $section, $visibleField)) {
                 array_push($fields, $visibleField);
             }
@@ -67,6 +72,10 @@ class CapAuthorizationComponent extends AuthorizationComponent
      */
     public function checkCapability($capability, $group = null, $section = null)
     {
+        if (is_null($this->CapUser)) {
+            return false;
+        }
+
         return $this->capUser->checkCapability($capability, $group, $section);
     }
 
@@ -82,20 +91,28 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      *
-     * @return bool|\Authorization\Policy\ResultInterface
+     * @return bool
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
     {
+        if (is_null($this->capUser)) {
+            return false;
+        }
+
         return $this->capUser->buildAndCheckCapability($action, $model, $group, $section, $field);
     }
 
     /**
-     * @return \App\Model\Entity\User
+     * @return \App\Model\Entity\User|null
      */
     protected function getCapUser()
     {
         $request = $this->getController()->getRequest();
         $identity = $this->getIdentity($request);
+
+        if (is_null($identity)) {
+            return null;
+        }
 
         $users = TableRegistry::getTableLocator()->get('Users');
 

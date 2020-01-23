@@ -53,6 +53,8 @@ class CapBuilder
      */
     public static function capabilityCodeFormat($action, $model, $field = null)
     {
+        $action = CapBuilder::applyActionOverrides($action);
+
         if (!is_null($field)) {
             if (!CapBuilder::isFieldActionType($action)) {
                 return false;
@@ -138,6 +140,27 @@ class CapBuilder
     }
 
     /**
+     * @param string $action Action which might need overriding
+     *
+     * @return string|false
+     */
+    protected static function applyActionOverrides($action)
+    {
+        if (is_null($action) || empty($action)) {
+            return false;
+        }
+
+        $action = strtoupper($action);
+        $overrides = Configure::read('actionOverrides');
+
+        if (key_exists($action, $overrides)) {
+            return $overrides[$action];
+        }
+
+        return $action;
+    }
+
+    /**
      * @return array
      */
     protected static function entityActionTypes()
@@ -176,6 +199,8 @@ class CapBuilder
      */
     public static function isFieldActionType($action)
     {
+        $action = self::applyActionOverrides($action);
+
         return (bool)in_array($action, CapBuilder::fieldActionTypes());
     }
 
@@ -186,6 +211,8 @@ class CapBuilder
      */
     public static function isEntityActionType($action)
     {
+        $action = self::applyActionOverrides($action);
+
         return (bool)in_array($action, CapBuilder::entityActionTypes());
     }
 
@@ -206,6 +233,8 @@ class CapBuilder
      */
     public static function isActionType($action)
     {
+        $action = CapBuilder::applyActionOverrides($action);
+
         return (bool)in_array($action, CapBuilder::actionTypes());
     }
 

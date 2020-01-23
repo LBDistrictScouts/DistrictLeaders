@@ -537,6 +537,7 @@ namespace PHPSTORM_META {
 			'Migrations.Migration' => \Migrations\View\Helper\MigrationHelper::class,
 			'Number' => \Cake\View\Helper\NumberHelper::class,
 			'Paginator' => \Cake\View\Helper\PaginatorHelper::class,
+			'Queue.Queue' => \Queue\View\Helper\QueueHelper::class,
 			'Queue.QueueProgress' => \Queue\View\Helper\QueueProgressHelper::class,
 			'Rss' => \Cake\View\Helper\RssHelper::class,
 			'Search.Search' => \Search\View\Helper\SearchHelper::class,
