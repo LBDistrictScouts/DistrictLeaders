@@ -189,12 +189,14 @@ class RoleTemplatesTable extends Table
     /**
      * @param array $objectArray The array to be saved
      *
-     * @return RoleTemplate
+     * @return \App\Model\Entity\RoleTemplate
      */
     protected function makeOrPatch($objectArray)
     {
         if ($this->exists([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])) {
-            $roleTemplate = $this->find()->where([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])->first();
+            $roleTemplate = $this->find()
+                ->where([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])
+                ->first();
         } else {
             $roleTemplate = $this->newEntity();
         }

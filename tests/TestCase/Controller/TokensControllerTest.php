@@ -54,25 +54,6 @@ class TokensControllerTest extends TestCase
     private $controller = 'Tokens';
 
     /**
-     * @var array $validEntityData Valid creation Data.
-     */
-    private $validEntityData = [
-        'token' => 'Password Reset for Jacob',
-        'email_send_id' => 1,
-        'active' => true,
-        'random_number' => 1789,
-        'token_header' => [
-            'redirect' => [
-                'controller' => 'Applications',
-                'action' => 'view',
-                'prefix' => false,
-                1,
-            ],
-            'authenticate' => true,
-        ],
-    ];
-
-    /**
      * Test index method
      *
      * @return void

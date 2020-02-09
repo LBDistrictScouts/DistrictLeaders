@@ -72,29 +72,12 @@ class DocumentVersionsTable extends Table
             ->requirePresence('version_number', 'create')
             ->notEmptyString('version_number');
 
-        return $validator;
-    }
+        $validator
+            ->integer('document_id')
+            ->requirePresence('document_id', 'create')
+            ->notEmptyString('document_id');
 
-    /**
-     * Finder Method for
-     *
-     * @param \Cake\ORM\Query $query The Query to be Modified
-     * @param array $options The Options passed
-     *
-     * @return \Cake\ORM\Query
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     * @SuppressWarnings(PHPMD.CamelCaseVariableName)
-     */
-    public function findDocumentList(Query $query, array $options)
-    {
-        return $query->contain('Documents')
-            ->find('list', array_merge($options, [
-                'valueField' => function ($document_version) {
-                    /** @var \App\Model\Entity\DocumentVersion $document_version */
-                    return $document_version->document->get(Document::FIELD_DOCUMENT) . ' - ' . $document_version->get(DocumentVersion::FIELD_VERSION_NUMBER);
-                },
-            ]));
+        return $validator;
     }
 
     /**
@@ -111,5 +94,29 @@ class DocumentVersionsTable extends Table
         $rules->add($rules->isUnique(['version_number', 'document_id']));
 
         return $rules;
+    }
+
+    /**
+     * Finder Method for Document List
+     *
+     * @param \Cake\ORM\Query $query The Query to be Modified
+     * @param array $options The Options passed
+     *
+     * @return \Cake\ORM\Query
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @SuppressWarnings(PHPMD.CamelCaseVariableName)
+     */
+    public function findDocumentList(Query $query, array $options)
+    {
+        return $query->contain('Documents')
+            ->find('list', array_merge($options, [
+                'valueField' => function ($document_version) {
+                    /** @var \App\Model\Entity\DocumentVersion $document_version */
+                    return $document_version->document->get(Document::FIELD_DOCUMENT)
+                           . ' - '
+                           . $document_version->get(DocumentVersion::FIELD_VERSION_NUMBER);
+                },
+            ]));
     }
 }

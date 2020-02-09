@@ -32,10 +32,10 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
-use Cake\Http\MiddlewareQueue;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
+use Cake\Http\MiddlewareQueue;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
@@ -48,7 +48,10 @@ use Psr\Http\Message\ServerRequestInterface;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication implements AuthorizationServiceProviderInterface, AuthenticationServiceProviderInterface
+
+class Application extends BaseApplication implements
+    AuthorizationServiceProviderInterface,
+    AuthenticationServiceProviderInterface
 {
     protected const LOGIN_URL = '/users/login';
 
@@ -183,8 +186,10 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthorizationService(ServerRequestInterface $request, ResponseInterface $response): AuthorizationService
-    {
+    public function getAuthorizationService(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ): AuthorizationService {
         $ormResolver = new OrmResolver();
         $mapResolver = new MapResolver();
 
@@ -205,8 +210,10 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthenticationService(ServerRequestInterface $request, ResponseInterface $response): AuthenticationService
-    {
+    public function getAuthenticationService(
+        ServerRequestInterface $request,
+        ResponseInterface $response
+    ): AuthenticationService {
         $service = new AuthenticationService();
 
         $fields = [

@@ -132,8 +132,14 @@ class RoleTypesTable extends Table
         }
 
         foreach ($capabilities as $capability) {
-            $roleCapability = $this->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => $capability])->first();
-            $roleCapability->_joinData = new CapabilitiesRoleType([CapabilitiesRoleType::FIELD_TEMPLATE => true], ['markNew' => true]);
+            $roleCapability = $this->Capabilities
+                ->find()
+                ->where([Capability::FIELD_CAPABILITY_CODE => $capability])
+                ->first();
+            $roleCapability->_joinData = new CapabilitiesRoleType(
+                [CapabilitiesRoleType::FIELD_TEMPLATE => true],
+                ['markNew' => true]
+            );
             $this->Capabilities->link($roleType, [$roleCapability]);
         }
 
@@ -141,7 +147,7 @@ class RoleTypesTable extends Table
     }
 
     /**
-     * @param RoleType $roleType The RoleType Entity
+     * @param \App\Model\Entity\RoleType $roleType The RoleType Entity
      *
      * @return int
      */

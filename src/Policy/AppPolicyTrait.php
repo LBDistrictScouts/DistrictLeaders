@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace App\Policy;
 
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
 
 /**
  * A trait intended to make application tests of your controllers easier.
@@ -45,7 +44,7 @@ trait AppPolicyTrait
         }
 
         if ($resource instanceof Entity) {
-            /** @var Entity $model */
+            /** @var \Cake\ORM\Entity $model */
             $model = $resource->getSource();
 
             if ($user->buildAndCheckCapability($action, $model)) {

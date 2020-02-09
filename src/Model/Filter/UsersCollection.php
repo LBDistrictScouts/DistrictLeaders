@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Filter;
 
-use App\Model\Entity\RoleType;
-use App\Model\Entity\SectionType;
 use App\Model\Entity\User;
-use App\Model\Entity\UserContact;
 use Search\Model\Filter\FilterCollection;
 
 class UsersCollection extends FilterCollection

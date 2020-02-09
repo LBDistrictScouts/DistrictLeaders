@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Table\RoleTemplatesTable;
 use Cake\Event\EventList;
-use Cake\Event\EventManager;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -290,17 +288,13 @@ class RoleTemplatesTableTest extends TestCase
         $template = $this->RoleTemplates->makeCoreTemplate($name, $level);
 
         if (!is_bool($expected) && $expected) {
-            /**
-             * @var array $actualCapabilities
-             * @var array $actualEntity
-             */
-            extract($this->splitArray($template->toArray(), RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'actual'));
+            $actualCapabilities = [];
+            $actualEntity = [];
+            extract($this->splitArray($template->toArray(), RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'actual'), EXTR_OVERWRITE);
 
-            /**
-             * @var array $expectedCapabilities
-             * @var array $expectedEntity
-             */
-            extract($this->splitArray($expected, RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'expected'));
+            $expectedCapabilities = [];
+            $expectedEntity = [];
+            extract($this->splitArray($expected, RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'expected'), EXTR_OVERWRITE);
 
             foreach ($expectedCapabilities as $expectedCapability) {
                 TestCase::assertTrue(in_array($expectedCapability, $actualCapabilities));
@@ -442,16 +436,12 @@ class RoleTemplatesTableTest extends TestCase
 
         if ($expected) {
             $result = $this->RoleTemplates->get(2)->toArray();
-            /**
-             * @var array $actualCapabilities
-             * @var array $actualEntity
-             */
+            $actualCapabilities = [];
+            $actualEntity = [];
             extract($this->splitArray($result, RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'actual'));
 
-            /**
-             * @var array $expectedCapabilities
-             * @var array $expectedEntity
-             */
+            $expectedCapabilities = [];
+            $expectedEntity = [];
             extract($this->splitArray($expected, RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'expected'));
 
             foreach ($expectedCapabilities as $expectedCapability) {

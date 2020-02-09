@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\CapAuthorizationComponent;
@@ -6,7 +8,6 @@ use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationService;
-use Authorization\Controller\Component\AuthorizationComponent;
 use Authorization\IdentityDecorator;
 use Authorization\Policy\OrmResolver;
 use Cake\Controller\ComponentRegistry;

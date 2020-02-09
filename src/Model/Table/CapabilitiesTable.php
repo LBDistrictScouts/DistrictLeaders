@@ -7,16 +7,12 @@ use App\Model\Entity\Capability;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\Database\Exception;
-use Cake\Database\Expression\QueryExpression;
-use Cake\Database\Query;
 use Cake\Log\Log;
-use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
-use Monolog\Test\TestCase;
 
 /**
  * Capabilities Model
@@ -114,7 +110,12 @@ class CapabilitiesTable extends Table
      */
     public function findLevel(\Cake\Database\Query $query, array $options)
     {
-        if (key_exists('level', $options) && is_numeric($options['level']) && $options['level'] >= 0 && $options['level'] <= 5) {
+        if (
+            key_exists('level', $options)
+            && is_numeric($options['level'])
+            && $options['level'] >= 0
+            && $options['level'] <= 5
+        ) {
             return $query
                 ->where(['min_level <= :level'])
                 ->bind(':level', $options['level'], 'integer');
@@ -243,12 +244,14 @@ class CapabilitiesTable extends Table
     /**
      * @param array $objectArray The array to be saved
      *
-     * @return Capability|false
+     * @return \App\Model\Entity\Capability|false
      */
     protected function makeOrPatch($objectArray)
     {
         if ($this->exists([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])) {
-            $capability = $this->find()->where([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])->first();
+            $capability = $this->find()
+                ->where([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])
+                ->first();
         } else {
             $capability = $this->newEntity();
         }

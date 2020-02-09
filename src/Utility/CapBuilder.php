@@ -114,7 +114,7 @@ class CapBuilder
      */
     public static function calculateLevel($baseLevel, $multiplier, $viewRestricted = false)
     {
-        if ($multiplier == -(static::$maxLevel) && $viewRestricted) {
+        if ($multiplier == -static::$maxLevel && $viewRestricted) {
             $multiplier = 0;
         }
         $level = $baseLevel + $multiplier;

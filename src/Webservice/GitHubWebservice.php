@@ -55,7 +55,8 @@ class GitHubWebservice extends Webservice
             }
         }
         // Check if this query could be requested using a nested resource.
-        if ($nestedResource = $this->nestedResource($query->clause('where'))) {
+        $nestedResource = $this->nestedResource($query->clause('where'));
+        if ($nestedResource) {
             $url = $nestedResource;
             // If this is the case turn search of
             $search = false;

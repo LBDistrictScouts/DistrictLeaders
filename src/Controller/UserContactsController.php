@@ -72,7 +72,10 @@ class UserContactsController extends AppController
             $term = $userContactType->get(UserContactType::FIELD_USER_CONTACT_TYPE);
             $this->set(compact('term'));
 
-            $userContact->set(UserContact::FIELD_USER_CONTACT_TYPE_ID, $userContactType->get(UserContactType::FIELD_ID));
+            $userContact->set(
+                UserContact::FIELD_USER_CONTACT_TYPE_ID,
+                $userContactType->get(UserContactType::FIELD_ID)
+            );
         }
 
         // Set User if known
@@ -86,11 +89,19 @@ class UserContactsController extends AppController
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            if (!key_exists(UserContact::FIELD_USER_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_ID))) {
+            if (
+                !key_exists(UserContact::FIELD_USER_ID, $data)
+                && !is_null($userContact->get(UserContact::FIELD_USER_ID))
+            ) {
                 $data[UserContact::FIELD_USER_ID] = $userContact->get(UserContact::FIELD_USER_ID);
             }
-            if (!key_exists(UserContact::FIELD_USER_CONTACT_TYPE_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID))) {
-                $data[UserContact::FIELD_USER_CONTACT_TYPE_ID] = $userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID);
+            if (
+                !key_exists(UserContact::FIELD_USER_CONTACT_TYPE_ID, $data)
+                && !is_null($userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID))
+            ) {
+                $data[UserContact::FIELD_USER_CONTACT_TYPE_ID] = $userContact->get(
+                    UserContact::FIELD_USER_CONTACT_TYPE_ID
+                );
             }
 
             $validator = 'default';

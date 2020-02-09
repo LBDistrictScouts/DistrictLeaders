@@ -102,7 +102,9 @@ class DocumentsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $new = $this->Documents->newEntity($this->getGood());
+        $new = $this->Documents->save($new);
+        TestCase::assertInstanceOf($this->Documents->getEntityClass(), $new);
     }
 
     /**

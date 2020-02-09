@@ -8,8 +8,6 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
 
 /**
  * Class PasswordCommand
@@ -58,10 +56,10 @@ class DailyCommand extends Command
         $success = 0;
 
         foreach ($tasks as $class) {
+            /** @var \App\Cron\Cron $taskClass */
             $taskClass = new $class();
 
             if (get_parent_class($taskClass) == 'App\Cron\Cron') {
-                /** @var Cron $taskClass */
                 $success += $taskClass->scheduleJobs();
             }
         }

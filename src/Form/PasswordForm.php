@@ -92,7 +92,11 @@ class PasswordForm extends Form
         }
 
         $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $user = $this->Users->patchEntity($user, [User::FIELD_PASSWORD => $newPassword], [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]);
+        $user = $this->Users->patchEntity(
+            $user,
+            [User::FIELD_PASSWORD => $newPassword],
+            [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]
+        );
 
         if ($this->Users->save($user)) {
             return true;

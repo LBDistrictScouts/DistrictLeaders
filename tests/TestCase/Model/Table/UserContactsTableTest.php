@@ -181,7 +181,11 @@ class UserContactsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->validateUniqueRule(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood']);
+        $this->validateUniqueRule(
+            [UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD],
+            $this->UserContacts,
+            [$this, 'getGood']
+        );
 
         // User Contact Type Exists
         $this->validateExistsRule(UserContact::FIELD_USER_CONTACT_TYPE_ID, $this->UserContacts, $this->UserContacts->UserContactTypes, [$this, 'getGood']);
@@ -198,7 +202,6 @@ class UserContactsTableTest extends TestCase
     public function testIsValidDomainEmail()
     {
         TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com', []));
-
         TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk', []));
     }
 }

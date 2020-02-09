@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Cron;
 
 /**
@@ -8,5 +10,4 @@ namespace App\Cron;
  */
 class UserPatchCron extends Cron
 {
-
 }

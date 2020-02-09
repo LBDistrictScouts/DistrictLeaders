@@ -62,7 +62,11 @@ class RoleTypesController extends AppController
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
         $roleTemplates = $this->RoleTypes->RoleTemplates->find('list', ['limit' => 200]);
-        $capabilities = $this->RoleTypes->Capabilities->find('list', ['conditions' => ['min_level <=' => $roleType->level]]);
+        $capabilities = $this->RoleTypes->Capabilities->find('list', [
+            'conditions' => [
+                'min_level <=' => $roleType->level,
+            ],
+        ]);
         $this->set(compact('roleType', 'sectionTypes', 'capabilities', 'roleTemplates'));
     }
 
@@ -89,7 +93,12 @@ class RoleTypesController extends AppController
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
         $roleTemplates = $this->RoleTypes->RoleTemplates->find('list', ['limit' => 200]);
-        $capabilities = $this->RoleTypes->Capabilities->find('list', ['conditions' => ['min_level <=' => $roleType->level]]);
+        $capabilities = $this->RoleTypes->Capabilities
+            ->find('list', [
+                'conditions' => [
+                    'min_level <=' => $roleType->level,
+                ],
+            ]);
         $this->set(compact('roleType', 'sectionTypes', 'capabilities', 'roleTemplates'));
     }
 

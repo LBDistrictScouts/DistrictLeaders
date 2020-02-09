@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Helper;
 
 use Cake\View\Helper;
-use Cake\View\View;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
 use League\CommonMark\Extras\CommonMarkExtrasExtension;

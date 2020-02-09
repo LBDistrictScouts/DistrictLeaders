@@ -5,10 +5,8 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
-use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
 

@@ -362,7 +362,6 @@ class TokensTable extends Table
             $valid = $this->validateToken($token);
 
             if ($valid && $valid == $tokenId) {
-                /** @var \App\Model\Entity\Token $tokenRow */
                 return $this->get($valid, ['contain' => 'EmailSends.Users']);
             }
         }

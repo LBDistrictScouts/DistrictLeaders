@@ -13,7 +13,6 @@ use Cake\ORM\Table;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 use Josbeir\Filesystem\FilesystemAwareTrait;
-use PhpParser\Comment\Doc;
 
 /**
  * Documents Model
@@ -157,7 +156,11 @@ class DocumentsTable extends Table
             ],
         ];
 
-        $document = $this->patchEntity($documentEntity, $documentData, ['associated' => ['DocumentVersions.DocumentEditions']]);
+        $document = $this->patchEntity($documentEntity, $documentData, [
+            'associated' => [
+                'DocumentVersions.DocumentEditions',
+            ],
+        ]);
 
         return $this->save($document);
     }

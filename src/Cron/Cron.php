@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Cron;
 
 use Cake\Core\Configure;
@@ -46,7 +48,7 @@ class Cron
     {
         $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
 
-        $className = get_class($this);
+        $className = static::class;
         $className = array_reverse(explode('\\', $className))[0];
         $config = Configure::read(self::CONF_KEY . '.' . $className);
 

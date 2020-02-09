@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller\Component;
 
 use Authorization\Controller\Component\AuthorizationComponent;
-use Cake\Controller\ComponentRegistry;
 use Cake\ORM\TableRegistry;
 
 /**

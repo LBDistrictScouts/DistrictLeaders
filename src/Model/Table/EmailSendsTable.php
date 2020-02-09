@@ -183,11 +183,9 @@ class EmailSendsTable extends Table
     {
         $exists = $this->exists(['email_generation_code' => $emailGenerationCode]);
 
-        /**
-         * @var string $type
-         * @var string $subType
-         */
-        extract($this->codeSplitter($emailGenerationCode));
+        $type = '';
+        $subType = '';
+        extract($this->codeSplitter($emailGenerationCode), EXTR_OVERWRITE);
 
         $notificationTypeCode = $type . '-' . $subType;
         if ($exists && !in_array($notificationTypeCode, $existExempt)) {
@@ -223,12 +221,10 @@ class EmailSendsTable extends Table
      */
     public function make($emailGenerationCode)
     {
-        /**
-         * @var string $type
-         * @var int $entityId
-         * @var string $subType
-         */
-        extract($this->codeSplitter($emailGenerationCode));
+        $type = '';
+        $subType = '';
+        $entityId = 0;
+        extract($this->codeSplitter($emailGenerationCode), EXTR_OVERWRITE);
 
         $existExempt = ['USR-PWD', 'USR-CCH'];
         $newCode = $this->codeExistValidator($emailGenerationCode, $existExempt);
@@ -356,10 +352,8 @@ class EmailSendsTable extends Table
             $token = $this->Tokens->buildToken($token->id);
         }
 
-        /**
-         * @var string $type
-         * @var int $entityId
-         */
+        $type = '';
+        $entityId = 0;
         extract($this->codeSplitter($email->email_generation_code));
 
         switch ($type) {

@@ -110,7 +110,8 @@ class FileTypesTable extends Table
         $total = 0;
 
         foreach ($base as $baseType) {
-            $query = $this->find()->where([FileType::FIELD_FILE_EXTENSION => $baseType[FileType::FIELD_FILE_EXTENSION]]);
+            $query = $this->find()
+                          ->where([FileType::FIELD_FILE_EXTENSION => $baseType[FileType::FIELD_FILE_EXTENSION]]);
             $status = $this->newEntity();
             if ($query->count() > 0) {
                 $status = $query->first();

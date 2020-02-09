@@ -7,7 +7,6 @@ use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Log\Log;
-use Cake\ORM\TableRegistry;
 
 /**
  * Class UserPolicy

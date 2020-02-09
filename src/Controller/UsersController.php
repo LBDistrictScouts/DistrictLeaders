@@ -7,7 +7,6 @@ use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
-use App\Model\Filter\DocumentsCollection;
 use App\Model\Filter\UsersCollection;
 use Cake\Event\Event;
 
@@ -284,7 +283,9 @@ class UsersController extends AppController
                     $this->loadModel('EmailSends');
 
                     if ($this->EmailSends->makeAndSend($sendCode)) {
-                        $this->Flash->success('We have sent a password reset token to your email. This is valid for a short period of time.');
+                        $message = 'We have sent a password reset token to your email.';
+                        $message .= ' This is valid for a short period of time.';
+                        $this->Flash->success($message);
 
                         return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
                     }
@@ -377,7 +378,12 @@ class UsersController extends AppController
 
         $passwordForm = new PasswordForm();
 
-        if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && isset($resetUser) && $resetUser instanceof User && $this->request->is('post')) {
+        if (
+            $changeType > self::CHANGE_TYPE_UNAUTHORIZED
+            && isset($resetUser)
+            && $resetUser instanceof User
+            && $this->request->is('post')
+        ) {
             if (!$passwordForm->validate($this->request->getData())) {
                 $this->Flash->error(__('The data provided has errors.'));
             } else {

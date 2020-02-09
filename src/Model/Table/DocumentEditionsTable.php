@@ -68,27 +68,38 @@ class DocumentEditionsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(DocumentEdition::FIELD_ID)
+            ->allowEmptyString(DocumentEdition::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('file_path')
-            ->maxLength('file_path', 255)
-            ->allowEmptyString('file_path');
+            ->scalar(DocumentEdition::FIELD_FILE_PATH)
+            ->maxLength(DocumentEdition::FIELD_FILE_PATH, 255)
+            ->requirePresence(DocumentEdition::FIELD_FILE_PATH, 'create')
+            ->notEmptyString(DocumentEdition::FIELD_FILE_PATH);
 
         $validator
-            ->scalar('filename')
-            ->maxLength('filename', 255)
-            ->allowEmptyString('filename');
+            ->scalar(DocumentEdition::FIELD_FILENAME)
+            ->maxLength(DocumentEdition::FIELD_FILENAME, 255)
+            ->requirePresence(DocumentEdition::FIELD_FILENAME, 'create')
+            ->notEmptyString(DocumentEdition::FIELD_FILENAME);
 
         $validator
-            ->integer('size')
-            ->allowEmptyString('size');
+            ->integer(DocumentEdition::FIELD_SIZE)
+            ->allowEmptyString(DocumentEdition::FIELD_SIZE);
 
         $validator
-            ->scalar('md5_hash')
-            ->maxLength('md5_hash', 32)
-            ->allowEmptyString('md5_hash');
+            ->scalar(DocumentEdition::FIELD_MD5_HASH)
+            ->requirePresence(DocumentEdition::FIELD_MD5_HASH, false)
+            ->maxLength(DocumentEdition::FIELD_MD5_HASH, 32)
+            ->allowEmptyString(DocumentEdition::FIELD_MD5_HASH);
+
+        $validator
+            ->requirePresence(DocumentEdition::FIELD_DOCUMENT_VERSION_ID, 'create')
+            ->notEmptyString(DocumentEdition::FIELD_DOCUMENT_VERSION_ID);
+
+        $validator
+            ->requirePresence(DocumentEdition::FIELD_FILE_TYPE_ID, 'create')
+            ->notEmptyString(DocumentEdition::FIELD_FILE_TYPE_ID);
 
         return $validator;
     }
@@ -102,10 +113,13 @@ class DocumentEditionsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->existsIn(['document_version_id'], 'DocumentVersions'));
-        $rules->add($rules->existsIn(['file_type_id'], 'FileTypes'));
+        $rules->add($rules->existsIn([DocumentEdition::FIELD_DOCUMENT_VERSION_ID], 'DocumentVersions'));
+        $rules->add($rules->existsIn([DocumentEdition::FIELD_FILE_TYPE_ID], 'FileTypes'));
 
-        $rules->add($rules->isUnique(['file_type_id', 'document_version_id']));
+        $rules->add($rules->isUnique([
+            DocumentEdition::FIELD_FILE_TYPE_ID,
+            DocumentEdition::FIELD_DOCUMENT_VERSION_ID,
+        ]));
 
         return $rules;
     }
@@ -125,7 +139,10 @@ class DocumentEditionsTable extends Table
         $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
 
         try {
-            $fileType = $this->FileTypes->find()->where([FileType::FIELD_MIME => $fileEntity->get('mime')])->firstOrFail();
+            $fileType = $this->FileTypes
+                ->find()
+                ->where([FileType::FIELD_MIME => $fileEntity->get('mime')])
+                ->firstOrFail();
         } catch (RecordNotFoundException $exception) {
             return false;
         }

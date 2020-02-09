@@ -281,7 +281,7 @@ class CapBuilderTest extends TestCase
             ],
             'Under Max Base' => [
                 1,
-                (-10),
+                -10,
                 1,
             ],
             'Over Max Multiplier' => [
@@ -291,7 +291,7 @@ class CapBuilderTest extends TestCase
             ],
             'Under Max Multiplier' => [
                 1,
-                (-10),
+                -10,
                 1,
             ],
         ];

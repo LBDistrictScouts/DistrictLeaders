@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Shell\Task;
 
-use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;

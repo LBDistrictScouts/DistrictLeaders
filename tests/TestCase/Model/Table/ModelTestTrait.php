@@ -14,6 +14,49 @@ use Cake\Utility\Security;
 trait ModelTestTrait
 {
     /**
+     * @var array An array for Default Error Messages
+     */
+    private $defaultErrorMessages = [
+        '_required' => 'This field is required',
+        '_empty' => 'This field cannot be left empty',
+        '_isUnique' => 'This value is already in use',
+        '_existsIn' => 'This value does not exist',
+        'email' => 'The provided value is invalid',
+        'maxLength' => 'The provided value is invalid',
+        'unique' => 'The provided value is invalid',
+        'validDomainEmail' => 'You must use a Scouting Email Address',
+    ];
+
+    /**
+     * @param \Cake\Datasource\EntityInterface $entity
+     * @param string $field The Field expected to error
+     * @param string $message
+     * @param string $errorType
+     *
+     * @return void
+     */
+    private function checkError($entity, $field, $errorType, $message = null)
+    {
+        if (!key_exists($errorType, $this->defaultErrorMessages)) {
+            TestCase::assertTrue(false);
+        }
+
+        if (
+            $errorType == '_isUnique'
+            && key_exists('unique', $entity->getError($field))
+            && !key_exists('_isUnique', $entity->getError($field))
+        ) {
+            $errorType = 'unique';
+        }
+
+        if (is_null($message)) {
+            $message = $this->defaultErrorMessages[$errorType];
+        }
+
+        TestCase::assertSame($message, $entity->getError($field)[$errorType]);
+    }
+
+    /**
      * @param array $requiredFields Required Fields Array
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
@@ -27,7 +70,7 @@ trait ModelTestTrait
             $requiredArray = call_user_func($good);
             unset($requiredArray[$require]);
             $new = $table->newEntity($requiredArray, ['validate' => $validator]);
-            TestCase::assertSame('This field is required', $new->getError($require)['_required']);
+            $this->checkError($new, $require, '_required');
             TestCase::assertFalse($table->save($new));
         }
     }
@@ -59,12 +102,12 @@ trait ModelTestTrait
      *
      * @return void
      */
-    protected function validateNotEmpty($field, $table, $good, $validator = 'default', $message = 'This field cannot be left empty')
+    protected function validateNotEmpty($field, $table, $good, $validator = 'default', $message = null)
     {
         $notEmptyArray = call_user_func($good);
         $notEmptyArray[$field] = '';
         $new = $table->newEntity($notEmptyArray, ['validate' => $validator]);
-        TestCase::assertSame($message, $new->getError($field)['_empty']);
+        $this->checkError($new, $field, '_empty', $message);
         TestCase::assertFalse($table->save($new));
     }
 
@@ -127,7 +170,7 @@ trait ModelTestTrait
             $newMaxLengthArray = call_user_func($good);
             $newMaxLengthArray[$maxField] = substr($string, 1, $maxLength + 1);
             $new = $table->newEntity($newMaxLengthArray, ['validate' => $validator]);
-            TestCase::assertSame('The provided value is invalid', $new->getError($maxField)['maxLength']);
+            $this->checkError($new, $maxField, 'maxLength');
             TestCase::assertFalse($table->save($new));
         }
     }
@@ -137,26 +180,26 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     * @param string $message The Output Message Expected
+     * @param string|null $message The Output Message Expected
      *
      * @return void
      */
-    protected function validateEmail($field, $table, $good, $validator = 'default', $message = 'You must use a Scouting Email Address')
+    protected function validateEmail($field, $table, $good, $validator = 'default', $message = null)
     {
         // Bad Email
         $newEntityArray = call_user_func($good);
         $newEntityArray[$field] = 'jacob@ll';
         $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
-        TestCase::assertSame('The provided value is invalid', $new->getError($field)['email']);
-        TestCase::assertSame($message, $new->getError($field)['validDomainEmail']);
         TestCase::assertFalse($table->save($new));
+        $this->checkError($new, $field, 'email');
+        $this->checkError($new, $field, 'validDomainEmail', $message);
 
         $newEntityArray = call_user_func($good);
         $newEntityArray[$field] = 'jacob@button.com';
         $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
-        TestCase::assertNotContains('email', $new->getErrors());
-        TestCase::assertSame($message, $new->getError($field)['validDomainEmail']);
         TestCase::assertFalse($table->save($new));
+        TestCase::assertNotContains('email', $new->getErrors());
+        $this->checkError($new, $field, 'validDomainEmail', $message);
 
         $newEntityArray = call_user_func($good);
         $new = $table->newEntity($newEntityArray, ['validate' => $validator]);
@@ -166,7 +209,7 @@ trait ModelTestTrait
     }
 
     /**
-     * @param string $field Field Name
+     * @param string|array $field Field Name
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      *
@@ -182,9 +225,18 @@ trait ModelTestTrait
         TestCase::assertInstanceOf($instance, $table->save($new));
 
         $values = call_user_func($good);
-        $values[$field] = $existing[$field];
+        if (is_array($field)) {
+            foreach ($field as $uqField) {
+                $values[$uqField] = $existing[$uqField];
+            }
+            $field = $field[0];
+        } else {
+            $values[$field] = $existing[$field];
+        }
+
         $new = $table->newEntity($values);
         TestCase::assertFalse($table->save($new));
+        $this->checkError($new, $field, '_isUnique');
     }
 
     /**
@@ -230,6 +282,7 @@ trait ModelTestTrait
         $values[$field] = $fKey + 1;
         $new = $table->newEntity($values, $options);
         TestCase::assertFalse($table->save($new));
+        $this->checkError($new, $field, '_existsIn');
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use App\Utility\CapBuilder;
-use Cake\Core\Configure;
 use Cake\ORM\Entity;
 
 /**

@@ -3,12 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\Core\Configure;
-use Cake\Log\Log;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 

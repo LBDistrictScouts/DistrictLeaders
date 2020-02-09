@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Index;
 
 use App\Model\Entity\User;
-use App\Model\Index\ContactsIndex;
 use App\Test\TestCase\Model\Table\ModelTestTrait;
 use App\Utility\TextSafe;
-use Cake\ElasticSearch\IndexRegistry;
 use Cake\I18n\Time;
 use Cake\TestSuite\TestCase;
 

@@ -38,15 +38,16 @@
     },
     "require-dev": {
         "cakephp/bake": "@stable",
-        "cakephp/cakephp-codesniffer": "^3.3.0",
+        "cakephp/cakephp-codesniffer": "^4.0",
         "cakephp/debug_kit": "^3.21",
         "dereuromark/cakephp-ide-helper": "@stable",
         "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
+        "phpmd/phpmd": "@stable",
         "phpunit/php-code-coverage": "@stable",
         "phpunit/phpunit": "^5|^6",
         "psy/psysh": "@stable",
-        "phpmd/phpmd" : "@stable"
+        "slevomat/coding-standard": "^6.1"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."
@@ -84,7 +85,7 @@
             "@phpstorm"
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
-        "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ config/",
+        "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ config/",
         "phpstan": [
             "@phpstan-setup",
             "@phpstan-test"
