@@ -61,9 +61,5 @@ $this->assign('entity', 'Users');
         $args[4] = $user::FIELD_CAPABILITIES;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_CAPABILITIES) : '';
 
-        $args[4] = $user::FIELD_PASSWORD_STATE_ID;
-        /** @var array $passwordStates The Password State Id List */
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_PASSWORD_STATE_ID, ['options' => $passwordStates, 'empty' => true]) : '';
-
     ?>
 </fieldset>
