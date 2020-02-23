@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $action
+ * @var mixed $entity
+ * @var mixed $objectId
+ * @var mixed $queryParams
+ */
 declare(strict_types=1);
 
 /**

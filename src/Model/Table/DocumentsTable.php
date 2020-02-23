@@ -34,6 +34,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\BelongsTo $DocumentPreviews
  */
 class DocumentsTable extends Table
 {
@@ -69,6 +70,13 @@ class DocumentsTable extends Table
         ]);
         $this->hasMany('DocumentVersions', [
             'foreignKey' => 'document_id',
+        ]);
+
+        $this->belongsTo('DocumentPreviews', [
+            'foreignKey' => 'document_preview_id',
+            'className' => 'DocumentEditions',
+            'propertyName' => 'document_preview',
+            'strategy' => 'select',
         ]);
     }
 

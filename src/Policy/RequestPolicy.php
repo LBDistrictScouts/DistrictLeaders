@@ -25,6 +25,9 @@ class RequestPolicy implements RequestPolicyInterface
      */
     public function canAccess($identity, ServerRequest $request)
     {
+        $action = $request->getParam('action');
+        $controller = $request->getParam('controller');
+
         // Prevent DebugKit from infinitely looping
         if ($request->getParam('plugin') === 'DebugKit') {
             return new Result(true);
@@ -35,21 +38,18 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         // Baseline Access
-        if ($request->getParam('controller') === 'Pages' && $request->getParam('action') === 'display') {
+        if ($controller === 'Pages' && $action === 'display') {
             return new Result(true);
         }
 
         // Token Validation
-        if ($request->getParam('controller') === 'Tokens' && $request->getParam('action') === 'validate') {
+        if ($controller === 'Tokens' && $action === 'validate') {
             return new Result(true);
         }
 
         // Own User Validation
-        Log::debug($request->getParam('action'));
-        if (
-            $request->getParam('controller') === 'Users'
-            && in_array($request->getParam('action'), ['edit', 'view', 'password'])
-        ) {
+        Log::debug($action);
+        if ($controller === 'Users' && in_array($action, ['edit', 'view', 'password'])) {
             $object = explode('/', $request->getPath());
             $object = array_reverse($object)[0];
 
@@ -60,12 +60,14 @@ class RequestPolicy implements RequestPolicyInterface
 
         // User controller allow
         $userActions = ['login', 'logout', 'username', 'token', 'password', 'forgot'];
-        if ($request->getParam('controller') === 'Users' && in_array($request->getParam('action'), $userActions)) {
+        if ($controller === 'Users' && in_array($action, $userActions)) {
             return new Result(true);
         }
 
-        if ($identity->buildAndCheckCapability($request->getParam('action'), $request->getParam('controller'))) {
-            return new Result(true);
+        if (!is_null($identity) && isset($identity)) {
+            if ($identity->buildAndCheckCapability($action, $request->getParam('controller'))) {
+                return new Result(true);
+            }
         }
     }
 }

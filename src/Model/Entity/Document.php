@@ -17,6 +17,9 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\DocumentType $document_type
  * @property \App\Model\Entity\DocumentVersion[] $document_versions
+ * @property int|null $document_preview_id
+ * @property int|null $latest_version
+ * @property \App\Model\Entity\DocumentEdition|null $document_preview
  */
 class Document extends Entity
 {
@@ -47,4 +50,7 @@ class Document extends Entity
     public const FIELD_DOCUMENT = 'document';
     public const FIELD_DOCUMENT_TYPE = 'document_type';
     public const FIELD_DOCUMENT_VERSIONS = 'document_versions';
+    public const FIELD_DOCUMENT_PREVIEW_ID = 'document_preview_id';
+    public const FIELD_LATEST_VERSION = 'latest_version';
+    public const FIELD_DOCUMENT_PREVIEW = 'document_preview';
 }

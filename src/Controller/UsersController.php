@@ -282,7 +282,7 @@ class UsersController extends AppController
                     $sendCode = 'USR-' . $user->id . '-PWD';
                     $this->loadModel('EmailSends');
 
-                    if ($this->EmailSends->makeAndSend($sendCode)) {
+                    if ($this->EmailSends->make($sendCode)) {
                         $message = 'We have sent a password reset token to your email.';
                         $message .= ' This is valid for a short period of time.';
                         $this->Flash->success($message);

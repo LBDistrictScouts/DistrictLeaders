@@ -34,9 +34,6 @@ $this->assign('entity', 'Users');
         $args[4] = $user::FIELD_EMAIL;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_EMAIL) : '';
 
-        $args[4] = $user::FIELD_PASSWORD;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_PASSWORD) : '';
-
         $args[4] = $user::FIELD_ADDRESS_LINE_1;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_ADDRESS_LINE_1) : '';
 
@@ -51,15 +48,6 @@ $this->assign('entity', 'Users');
 
         $args[4] = $user::FIELD_POSTCODE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_POSTCODE) : '';
-
-        $args[4] = $user::FIELD_LAST_LOGIN;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_LAST_LOGIN) : '';
-
-        $args[4] = $user::FIELD_LAST_LOGIN_IP;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_LAST_LOGIN_IP) : '';
-
-        $args[4] = $user::FIELD_CAPABILITIES;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_CAPABILITIES) : '';
 
     ?>
 </fieldset>
