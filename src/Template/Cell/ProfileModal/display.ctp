@@ -16,17 +16,19 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
-                <?= $this->Html->link('View Permissions', ['controller' => 'Pages', 'action' => 'display', 'permissions'], ['class' => 'dropdown-item'])  ?>
-                <?= $this->Html->link('Edit Details', ['controller' => 'Users', 'action' => 'edit', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
-                <?= $this->Html->link('Change Password', ['controller' => 'Users', 'action' => 'password', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
-                <div class="dropdown-divider"></div>
-                <?= $this->Html->link('Logout', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item'])  ?>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
+            <?php if (is_integer($loggedInUserId)) : ?>
+                <div class="modal-body">
+                    <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                    <?= $this->Html->link('View Permissions', ['controller' => 'Pages', 'action' => 'display', 'permissions'], ['class' => 'dropdown-item'])  ?>
+                    <?= $this->Html->link('Edit Details', ['controller' => 'Users', 'action' => 'edit', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                    <?= $this->Html->link('Change Password', ['controller' => 'Users', 'action' => 'password', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
+                    <div class="dropdown-divider"></div>
+                    <?= $this->Html->link('Logout', ['controller' => 'Users', 'action' => 'logout'], ['class' => 'dropdown-item'])  ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

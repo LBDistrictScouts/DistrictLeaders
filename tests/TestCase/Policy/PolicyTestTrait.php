@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Policy;
 
+use App\Model\Entity\User;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
@@ -28,15 +29,63 @@ trait PolicyTestTrait
     }
 
     /**
+     * @return \App\Model\Entity\User
+     */
+    private function getFakeUser()
+    {
+        $userTestData = [
+            'username' => 'Test123',
+            'membership_number' => (int) 89809,
+            'first_name' => 'Juliet',
+            'last_name' => 'Bravo',
+            'email' => 'jules@bravo.org.uk',
+            'password' => '$2y$10$6xl1gLHZyHzNfciVdoFLy.7TZAdt77yb/bStDdLBfLbjtGaDp3Nqm',
+            'address_line_1' => '5 Gatterson',
+            'address_line_2' => '',
+            'city' => 'Goat Land',
+            'county' => 'Lingua',
+            'postcode' => 'LI6 9PP',
+            'last_login' => null,
+            'deleted' => null,
+            'last_login_ip' => 'null',
+            'capabilities' => [
+                'user' => [],
+                'group' => [],
+                'section' => []
+            ],
+            'password_state_id' => null,
+            'full_name' => 'Juliet Bravo',
+        ];
+
+        $user = new User($userTestData, ['validate' => false]);
+        $user->isNew(false);
+
+        return $user;
+    }
+
+    /**
      * @param string $capability Capability the User will have
      */
-    protected function userWithCapability($capability)
+    protected function userWithUserCapability($capability)
+    {
+        $this->userWithCapability($capability, 'user');
+    }
+
+    /**
+     * @param string $capability Capability the User will have
+     * @param string $level Capability Level
+     */
+    protected function userWithCapability($capability, $level = 'user')
     {
         $users = TableRegistry::getTableLocator()->get('Users');
         $user = $users->find()->first();
 
+        if (empty($user) || is_null($user)) {
+            $user = $this->getFakeUser();
+        }
+
         // Add the Capabilities retrieval method
-        $user->set('capabilities', ['user' => [$capability]]);
+        $user->set('capabilities', [$level => [$capability]]);
         $user->clean();
 
         $this->session(['Auth' => $user]);
@@ -87,7 +136,7 @@ trait PolicyTestTrait
             }
         }
 
-        $this->userWithCapability($capability);
+        $this->userWithUserCapability($capability);
 
         try {
             $this->get($url);

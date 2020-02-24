@@ -12,8 +12,12 @@
 
     <!-- Add any additional test suites you want to run here -->
     <testsuites>
+        <testsuite name="policy">
+            <directory>tests/TestCase/Policy/</directory>
+        </testsuite>
         <testsuite name="app">
             <directory>tests/TestCase/</directory>
+            <exclude>tests/TestCase/Policy/</exclude>
         </testsuite>
         <!-- Add plugin test suites here. -->
     </testsuites>

@@ -84,6 +84,8 @@ class Application extends BaseApplication implements
 
         $this->addPlugin('BootstrapUI');
 
+        $this->addPlugin('WyriHaximus/TwigView');
+
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 

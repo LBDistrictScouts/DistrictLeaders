@@ -268,9 +268,13 @@ class UserTest extends TestCase
         // Group Check
         TestCase::assertTrue($testUser->checkCapability('EDIT_SECT', 1));
         TestCase::assertFalse($testUser->checkCapability('EDIT_SECT', 2));
+        TestCase::assertTrue($testUser->checkCapability('EDIT_SECT', [1, 2]));
+        TestCase::assertFalse($testUser->checkCapability('EDIT_SECT', [2]));
 
         // Section Check
         TestCase::assertTrue($testUser->checkCapability('EDIT_USER', null, 1));
         TestCase::assertFalse($testUser->checkCapability('EDIT_USER', null, 2));
+        TestCase::assertTrue($testUser->checkCapability('EDIT_USER', null, [1, 2]));
+        TestCase::assertFalse($testUser->checkCapability('EDIT_USER', null, [2]));
     }
 }

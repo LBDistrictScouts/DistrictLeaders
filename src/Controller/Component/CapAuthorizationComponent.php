@@ -4,15 +4,20 @@ declare(strict_types=1);
 namespace App\Controller\Component;
 
 use Authorization\Controller\Component\AuthorizationComponent;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\TableRegistry;
 
 /**
  * CapAuthorization component
  *
  * {@inheritDoc}
+ *
+ * @property \App\Model\Table\UsersTable $Users
  */
 class CapAuthorizationComponent extends AuthorizationComponent
 {
+    use ModelAwareTrait;
+
     /**
      * @var \App\Model\Entity\User
      */
@@ -115,8 +120,13 @@ class CapAuthorizationComponent extends AuthorizationComponent
             return null;
         }
 
-        $users = TableRegistry::getTableLocator()->get('Users');
+        if (is_integer($identity['id'])) {
+            $this->loadModel('Users');
 
-        return $users->get($identity['id']);
+            return $this->Users->get($identity['id']);
+        }
+
+        return null;
+
     }
 }

@@ -182,8 +182,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|null $group The Group ID for checking against
-     * @param int|null $section The Section ID for checking against
+     * @param int|array|null $group The Group ID for checking against
+     * @param int|array|null $section The Section ID for checking against
      * @param string|null $field The field for action
      *
      * @return bool
@@ -200,8 +200,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * Function to Check Capability Exists
      *
      * @param string $capability The Capability being checked.
-     * @param int|null $group A Group ID if applicable
-     * @param int|null $section A Section ID if applicable
+     * @param int|array|null $group A Group ID if applicable
+     * @param int|array|null $section A Section ID if applicable
      *
      * @return bool
      */
@@ -240,22 +240,45 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Check for Subset of Capabilities Array.
      *
-     * @param string $capability The Capability being Verified
+     * @param string $capability The Capability being verified
      * @param string $subset The Authorisation Subset
-     * @param int $entityID The Entity ID
+     * @param int $entities The Entity ID or Array of IDs
      *
      * @return bool
      */
-    private function subSetCapabilityCheck($capability, $subset, $entityID)
+    private function subSetCapabilityCheck($capability, $subset, $entities)
     {
         if (key_exists($subset, $this->capabilities)) {
             $subsetCapabilities = $this->capabilities[$subset];
 
-            if (key_exists($entityID, $subsetCapabilities)) {
-                foreach ($subsetCapabilities as $idx => $set) {
-                    if (in_array($capability, $set) && $idx == $entityID) {
+            if (is_integer($entities) && $this->capabilitySubsetArray($capability, $entities, $subsetCapabilities)) {
+                return true;
+            }
+
+            if (is_array($entities)) {
+                foreach ($entities as $entity) {
+                    if ($this->capabilitySubsetArray($capability, $entity, $subsetCapabilities)) {
                         return true;
                     }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $capability The Capability being verified
+     * @param int $entityID The Entity ID
+     * @param array $subsetCapabilities The Capabilities for the level being checked
+     *
+     * @return bool
+     */
+    private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities) {
+        if (key_exists($entityID, $subsetCapabilities)) {
+            foreach ($subsetCapabilities as $idx => $set) {
+                if (in_array($capability, $set) && $idx == $entityID) {
+                    return true;
                 }
             }
         }

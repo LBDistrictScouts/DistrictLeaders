@@ -38,11 +38,13 @@ class ProfileModalCell extends Cell
      */
     public function display($loggedInUserId)
     {
-        $this->loadModel('Users');
+        if (is_integer($loggedInUserId)) {
+            $this->loadModel('Users');
 
-        $name = $this->Users->get($loggedInUserId)->full_name;
-        $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
+            $name = $this->Users->get($loggedInUserId)->full_name;
+            $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
 
-        $this->set(compact('capabilities', 'loggedInUserId', 'name'));
+            $this->set(compact('capabilities', 'loggedInUserId', 'name'));
+        }
     }
 }

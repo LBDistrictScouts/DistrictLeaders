@@ -64,13 +64,15 @@ class ApplicationTest extends IntegrationTestCase
             'DatabaseLog',
             'Muffin/Footprint',
             'Flash',
+            'WyriHaximus/TwigView',
         ];
-
-        TestCase::assertCount(count($expectedPlugins), $plugins);
 
         foreach ($expectedPlugins as $plugin) {
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
         }
+        debug($plugins);
+
+        TestCase::assertCount(count($expectedPlugins), $plugins);
     }
 
     /**
