@@ -41,11 +41,13 @@ class NotifyCell extends Cell
      */
     public function display($loggedInUserId)
     {
-        $notifications = $this->Notifications->find('all');
+        if (is_integer($loggedInUserId)) {
+            $notifications = $this->Notifications->find('all');
 
-        $name = $this->Users->get($loggedInUserId)->full_name;
-        $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
+            $name = $this->Users->get($loggedInUserId)->full_name;
+            $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
 
-        $this->set(compact('capabilities', 'loggedInUserId', 'name', 'notifications'));
+            $this->set(compact('capabilities', 'loggedInUserId', 'name', 'notifications'));
+        }
     }
 }

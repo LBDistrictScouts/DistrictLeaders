@@ -6,8 +6,10 @@
  * @var string $name
  */
 ?>
-<li class="nav-item right-align mr-auto">
-    <a class="nav-link" data-toggle="modal" data-target="#profile">
-        <i class="fal fa-user"></i> <?= h($name) ?>
-    </a>
-</li>
+<?php if (isset($name)) : ?>
+    <li class="nav-item right-align mr-auto">
+        <a class="nav-link" data-toggle="modal" data-target="#profile">
+            <i class="fal fa-user"></i> <?= h($name) ?>
+        </a>
+    </li>
+<?php endif; ?>
