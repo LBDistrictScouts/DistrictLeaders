@@ -7,7 +7,7 @@ os: linux
 version: ~> 1.0
 
 addons:
-  postgresql: "10"
+  postgresql: "11"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
@@ -31,6 +31,9 @@ jobs:
 
     - name: "PHP 7.3"
       php: 7.3
+
+    - name: "PHP 7.4"
+      php: 7.4
 
 before_install:
   - cp config/app_db.travis.php config/app_db.php
