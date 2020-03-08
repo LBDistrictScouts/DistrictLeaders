@@ -35,7 +35,7 @@ trait PolicyTestTrait
     {
         $userTestData = [
             'username' => 'Test123',
-            'membership_number' => (int) 89809,
+            'membership_number' => (int)89809,
             'first_name' => 'Juliet',
             'last_name' => 'Bravo',
             'email' => 'jules@bravo.org.uk',
@@ -51,7 +51,7 @@ trait PolicyTestTrait
             'capabilities' => [
                 'user' => [],
                 'group' => [],
-                'section' => []
+                'section' => [],
             ],
             'password_state_id' => null,
             'full_name' => 'Juliet Bravo',

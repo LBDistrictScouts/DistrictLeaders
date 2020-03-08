@@ -274,7 +274,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * @return bool
      */
-    private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities) {
+    private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities)
+    {
         if (key_exists($entityID, $subsetCapabilities)) {
             foreach ($subsetCapabilities as $idx => $set) {
                 if (in_array($capability, $set) && $idx == $entityID) {

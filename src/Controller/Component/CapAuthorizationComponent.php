@@ -5,7 +5,6 @@ namespace App\Controller\Component;
 
 use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\ORM\TableRegistry;
 
 /**
  * CapAuthorization component
@@ -127,6 +126,5 @@ class CapAuthorizationComponent extends AuthorizationComponent
         }
 
         return null;
-
     }
 }

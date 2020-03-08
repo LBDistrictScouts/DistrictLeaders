@@ -70,7 +70,6 @@ class ApplicationTest extends IntegrationTestCase
         foreach ($expectedPlugins as $plugin) {
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
         }
-        debug($plugins);
 
         TestCase::assertCount(count($expectedPlugins), $plugins);
     }

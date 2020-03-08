@@ -18,6 +18,10 @@
         <testsuite name="app">
             <directory>tests/TestCase/</directory>
             <exclude>tests/TestCase/Policy/</exclude>
+            <exclude>tests/TestCase/Task/</exclude>
+        </testsuite>
+        <testsuite name="async">
+            <directory>tests/TestCase/Task/</directory>
         </testsuite>
         <!-- Add plugin test suites here. -->
     </testsuites>
