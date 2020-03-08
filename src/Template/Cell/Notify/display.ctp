@@ -7,6 +7,7 @@
  */
 ?>
 <!-- Modal -->
+<?php if (isset($loggedInUserId) && is_integer($loggedInUserId)) : ?>
 <div class="modal fade" id="notify" tabindex="5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -27,5 +28,5 @@
         </div>
     </div>
 </div>
-
+<?php endif; ?>
 
