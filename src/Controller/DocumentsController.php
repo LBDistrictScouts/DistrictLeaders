@@ -24,7 +24,7 @@ class DocumentsController extends AppController
      *
      * {@inheritdoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 

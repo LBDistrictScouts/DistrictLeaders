@@ -37,7 +37,7 @@ class FunctionalHelper extends Helper
      *
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->FunctionalAreas = Configure::read('functionalAreas');
         $this->SearchConfigured = Configure::read('searchConfigured');

@@ -436,7 +436,7 @@ class UsersTable extends Table
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave($event, $entity, $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if ($entity->getOriginal('capabilities') != $entity->capabilities) {
             $this->getEventManager()->dispatch(new Event(

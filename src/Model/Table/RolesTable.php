@@ -123,7 +123,7 @@ class RolesTable extends Table
      *
      * @return bool
      */
-    public function afterSave($event, $entity, $options)
+    public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         $user = $this->Users->get($entity->get(Role::FIELD_USER_ID));
         $this->Users->patchCapabilities($user);

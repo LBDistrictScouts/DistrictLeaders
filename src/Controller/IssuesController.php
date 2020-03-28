@@ -24,7 +24,7 @@ class IssuesController extends Controller
      *
      * @return \Cake\Http\Response|void|null
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->modelFactory('Endpoint', ['Muffin\Webservice\Model\EndpointRegistry', 'get']);
         $this->loadModel('CvoTechnologies/GitHub.Issues', 'Endpoint');

@@ -34,7 +34,7 @@ class AuditableBehavior extends Behavior
      *
      * @return bool
      */
-    public function afterSave($event, $entity, $options)
+    public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if ($this->getTable()->hasAssociation('Audits')) {
             $this->Audits = TableRegistry::getTableLocator()->get('Audits');

@@ -77,7 +77,7 @@ class PagesController extends AppController
      *
      * @return \Cake\Http\Response|void|null
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->Authentication->allowUnauthenticated(['display']);
     }

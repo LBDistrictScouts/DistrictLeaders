@@ -166,7 +166,7 @@ class TokensTable extends Table
      *
      * @throws \Exception
      */
-    public function beforeSave(Event $event)
+    public function beforeSave(\Cake\Event\EventInterface $event)
     {
         /** @var \App\Model\Entity\Token $entity */
         $entity = $event->getData('entity');

@@ -31,7 +31,7 @@ class CaseableBehavior extends Behavior
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeRules($event, $entity)
+    public function beforeRules(\Cake\Event\EventInterface $event, $entity)
     {
         $dirty = $entity->getDirty();
         $columns = $this->_config['case_columns'];

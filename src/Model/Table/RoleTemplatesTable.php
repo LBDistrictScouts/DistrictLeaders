@@ -88,7 +88,7 @@ class RoleTemplatesTable extends Table
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave($event, $entity, $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if (
             $entity->isNew()

@@ -30,7 +30,7 @@ class MarkdownHelper extends Helper
      *
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
         $environment = Environment::createCommonMarkEnvironment();
