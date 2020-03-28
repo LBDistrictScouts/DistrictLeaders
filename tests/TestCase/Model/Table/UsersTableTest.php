@@ -31,7 +31,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -152,7 +152,7 @@ class UsersTableTest extends TestCase
             User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
             User::FIELD_FULL_NAME => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
             User::FIELD_CAPABILITIES => null,
-            User::FIELD_PASSWORD_STATE_ID => 1,
+            User::FIELD_USER_STATE_ID => 1,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);
@@ -253,8 +253,9 @@ class UsersTableTest extends TestCase
             User::FIELD_MEMBERSHIP_NUMBER,
             User::FIELD_EMAIL,
         ];
-
         $this->validateUniqueRules($uniques, $this->Users, [$this, 'getGood']);
+
+        $this->validateExistsRule(User::FIELD_USER_STATE_ID, $this->Users, $this->Users->UserStates, [$this, 'getGood']);
     }
 
     /**

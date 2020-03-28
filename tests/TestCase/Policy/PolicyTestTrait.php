@@ -53,7 +53,7 @@ trait PolicyTestTrait
                 'group' => [],
                 'section' => [],
             ],
-            'password_state_id' => null,
+            'user_state_id' => null,
             'full_name' => 'Juliet Bravo',
         ];
 

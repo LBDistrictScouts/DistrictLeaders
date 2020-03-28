@@ -6,7 +6,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * PasswordState Entity
+ * UserState Entity
  *
  * @property int $id
  * @property string $user_state
@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\User[] $users
  */
-class PasswordState extends Entity
+class UserState extends Entity
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().

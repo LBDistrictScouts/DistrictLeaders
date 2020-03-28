@@ -51,7 +51,7 @@ class CapAuthorizationComponentTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -165,7 +165,7 @@ class CapAuthorizationComponentTest extends TestCase
             User::FIELD_DELETED,
             User::FIELD_LAST_LOGIN_IP,
             User::FIELD_CAPABILITIES,
-            User::FIELD_PASSWORD_STATE_ID,
+            User::FIELD_USER_STATE_ID,
         ], $result);
     }
 

@@ -28,7 +28,7 @@ class UserListenerTest extends TestCase
     use AppTestTrait;
 
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',

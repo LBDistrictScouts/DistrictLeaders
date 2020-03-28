@@ -39,7 +39,7 @@ class CapabilityTaskTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',

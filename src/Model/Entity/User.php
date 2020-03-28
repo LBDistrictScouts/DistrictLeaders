@@ -39,16 +39,17 @@ use Cake\ORM\TableRegistry;
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\CampRole[] $camp_roles
  * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\PasswordState|null $password_state
+ * @property \App\Model\Entity\UserState|null $user_state
  * @property \App\Model\Entity\EmailSend[] $email_sends
  * @property \App\Model\Entity\Notification[] $notifications
  * @property \App\Model\Entity\UserContact[] $user_contacts
  *
- * @property int|null $password_state_id
+ * @property int|null $user_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
  *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @property \App\Model\Entity\PasswordState|null $password_state
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -78,7 +79,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'last_login' => true,
         'last_login_ip' => true,
         'capabilities' => true,
-        'password_state_id' => true,
+        'user_state_id' => true,
         'changes' => true,
         'audits' => true,
         'camp_roles' => true,
@@ -311,11 +312,12 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_AUTHORIZATION = 'authorization';
     public const FIELD_DELETED = 'deleted';
     public const FIELD_CAMP_ROLES = 'camp_roles';
-    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_USER_STATE = 'user_state';
     public const FIELD_EMAIL_SENDS = 'email_sends';
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_USER_CONTACTS = 'user_contacts';
-    public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
+    public const FIELD_USER_STATE_ID = 'user_state_id';
+    public const FIELD_PASSWORD_STATE = 'password_state';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 }

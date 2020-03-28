@@ -15,7 +15,7 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\PasswordStatesTable&\Cake\ORM\Association\BelongsTo $PasswordStates
+ * @property \App\Model\Table\UserStatesTable&\Cake\ORM\Association\BelongsTo $UserStates
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Changes
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
@@ -88,8 +88,8 @@ class UsersTable extends Table
             ],
         ]);
 
-        $this->belongsTo('PasswordStates', [
-            'foreignKey' => 'password_state_id',
+        $this->belongsTo('UserStates', [
+            'foreignKey' => 'user_state_id',
         ]);
 
         $this->hasMany('Changes', [
@@ -240,7 +240,7 @@ class UsersTable extends Table
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['membership_number']));
-        $rules->add($rules->existsIn(['password_state_id'], 'PasswordStates'));
+        $rules->add($rules->existsIn(['user_state_id'], 'UserStates'));
 
         return $rules;
     }

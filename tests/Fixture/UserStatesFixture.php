@@ -4,10 +4,9 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * PasswordStatesFixture
- *
+ * UserStatesFixture
  */
-class PasswordStatesFixture extends TestFixture
+class UserStatesFixture extends TestFixture
 {
     /**
      * Fields
@@ -17,7 +16,7 @@ class PasswordStatesFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
-        'password_state' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
+        'user_state' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         'expired' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         '_constraints' => [
@@ -25,7 +24,6 @@ class PasswordStatesFixture extends TestFixture
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -35,9 +33,9 @@ class PasswordStatesFixture extends TestFixture
     {
         $this->records = [
             [
-                'password_state' => 'Lorem ipsum dolor sit amet',
+                'user_state' => 'Lorem ipsum dolor sit amet',
                 'active' => true,
-                'expired' => false,
+                'expired' => true,
             ],
         ];
         parent::init();

@@ -34,16 +34,16 @@ class UsersFixture extends TestFixture
         'deleted' => ['type' => 'timestamp', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'last_login_ip' => ['type' => 'string', 'length' => 255, 'default' => 'null', 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
         'capabilities' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
-        'password_state_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'user_state_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_indexes' => [
-            'users_password_state_id' => ['type' => 'index', 'columns' => ['password_state_id'], 'length' => []],
+            'users_user_state_id' => ['type' => 'index', 'columns' => ['user_state_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'users_username' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
             'users_membership_number' => ['type' => 'unique', 'columns' => ['membership_number'], 'length' => []],
             'users_email' => ['type' => 'unique', 'columns' => ['email'], 'length' => []],
-            'users_password_state_id_fkey' => ['type' => 'foreign', 'columns' => ['password_state_id'], 'references' => ['password_states', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
+            'users_user_state_id_fkey' => ['type' => 'foreign', 'columns' => ['user_state_id'], 'references' => ['user_states', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd
@@ -74,7 +74,7 @@ class UsersFixture extends TestFixture
                 'last_login' => 1565538411,
                 'last_login_ip' => '192.168.0.1',
                 'deleted' => null,
-                'password_state_id' => 1,
+                'user_state_id' => 1,
             ],
             [
                 'username' => 'FishyLlama',
@@ -94,7 +94,7 @@ class UsersFixture extends TestFixture
                 'last_login' => null,
                 'last_login_ip' => null,
                 'deleted' => null,
-                'password_state_id' => 1,
+                'user_state_id' => 1,
             ],
         ];
         parent::init();

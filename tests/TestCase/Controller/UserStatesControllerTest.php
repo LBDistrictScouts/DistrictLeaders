@@ -6,11 +6,11 @@ namespace App\Test\TestCase\Controller;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\PasswordStatesController Test Case
+ * App\Controller\UserStatesController Test Case
  *
- * @uses \App\Controller\PasswordStatesController
+ * @uses \App\Controller\UserStatesController
  */
-class PasswordStatesControllerTest extends TestCase
+class UserStatesControllerTest extends TestCase
 {
     use AppTestTrait;
 
@@ -20,7 +20,7 @@ class PasswordStatesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -39,7 +39,7 @@ class PasswordStatesControllerTest extends TestCase
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'PasswordStates';
+    private $controller = 'UserStates';
 
     /**
      * Test index method
@@ -79,7 +79,7 @@ class PasswordStatesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'password_state' => 'New',
+                'user_state' => 'New',
                 'active' => true,
                 'expired' => false,
             ],
@@ -101,7 +101,7 @@ class PasswordStatesControllerTest extends TestCase
         $this->tryEditPost(
             $this->controller,
             [
-                'password_state' => 'Edited',
+                'user_state' => 'Edited',
                 'active' => true,
                 'expired' => false,
             ],
@@ -121,7 +121,7 @@ class PasswordStatesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'password_state' => 'For Deletion',
+                'user_state' => 'For Deletion',
                 'active' => true,
                 'expired' => false,
             ],
