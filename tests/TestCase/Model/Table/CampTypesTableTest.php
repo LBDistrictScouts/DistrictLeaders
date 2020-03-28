@@ -35,7 +35,7 @@ class CampTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('CampTypes') ? [] : ['className' => CampTypesTable::class];
@@ -47,7 +47,7 @@ class CampTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CampTypes);
 

@@ -32,7 +32,7 @@ class MarkdownHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +47,7 @@ class MarkdownHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Markdown);
 
@@ -84,8 +84,8 @@ class MarkdownHelperTest extends TestCase
 
         $htmlText = $this->Markdown->markdownToHtml($markdownText);
 
-        TestCase::assertContains('<h1>CakePHP Application Skeleton</h1>', $htmlText);
-        TestCase::assertContains('<a href="https://travis-ci.org/LBDistrictScouts/DistrictLeaders"><img src="https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development" alt="Build Status" /></a>', $htmlText);
-        TestCase::assertContains('<p>Then visit <code>http://localhost:8765</code> to see the welcome page.</p>', $htmlText);
+        TestCase::assertStringContainsString('<h1>CakePHP Application Skeleton</h1>', $htmlText);
+        TestCase::assertStringContainsString('<a href="https://travis-ci.org/LBDistrictScouts/DistrictLeaders"><img src="https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development" alt="Build Status" /></a>', $htmlText);
+        TestCase::assertStringContainsString('<p>Then visit <code>http://localhost:8765</code> to see the welcome page.</p>', $htmlText);
     }
 }

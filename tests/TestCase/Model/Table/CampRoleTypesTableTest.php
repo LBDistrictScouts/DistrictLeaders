@@ -51,7 +51,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('CampRoleTypes') ? [] : ['className' => CampRoleTypesTable::class];
@@ -63,7 +63,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CampRoleTypes);
 

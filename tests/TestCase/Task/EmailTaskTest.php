@@ -75,7 +75,7 @@ class EmailTaskTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

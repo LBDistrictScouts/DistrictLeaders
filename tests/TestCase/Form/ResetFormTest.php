@@ -55,7 +55,7 @@ class ResetFormTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Reset = new ResetForm();
@@ -66,7 +66,7 @@ class ResetFormTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Reset);
 

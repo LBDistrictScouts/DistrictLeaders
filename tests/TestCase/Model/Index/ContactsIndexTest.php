@@ -62,7 +62,7 @@ class ContactsIndexTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 //        $config = IndexRegistry::exists('Contacts') ? [] : ['className' => ContactsIndex::class];
@@ -77,7 +77,7 @@ class ContactsIndexTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Contacts);
 

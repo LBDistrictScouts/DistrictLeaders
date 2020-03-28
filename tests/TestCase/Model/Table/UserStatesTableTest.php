@@ -36,7 +36,7 @@ class UserStatesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('UserStates') ? [] : ['className' => UserStatesTable::class];
@@ -48,7 +48,7 @@ class UserStatesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->UserStates);
 

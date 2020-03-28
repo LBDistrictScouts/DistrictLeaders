@@ -74,7 +74,7 @@ class FilterComponentTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $request = new ServerRequest();
@@ -92,7 +92,7 @@ class FilterComponentTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Filter);
 
@@ -186,7 +186,7 @@ class FilterComponentTest extends TestCase
         TestCase::assertSame($expected, $viewVars['appliedFilters']);
 
         // Check Filter Applied
-        TestCase::assertContains($association->getForeignKey() . ' in (:c0)', $returnedQuery->sql());
+        TestCase::assertStringContainsString($association->getForeignKey() . ' in (:c0)', $returnedQuery->sql());
         $expected = [
             ':c0' => [
                 'value' => 1,
@@ -226,7 +226,7 @@ class FilterComponentTest extends TestCase
 
         TestCase::assertArrayHasKey('RoleTypes', $returnedQuery->getContain());
 
-        TestCase::assertContains($association->getForeignKey() . ' in (:c0)', $returnedQuery->sql());
+        TestCase::assertStringContainsString($association->getForeignKey() . ' in (:c0)', $returnedQuery->sql());
         $expected = [
             ':c0' => [
                 'value' => 7,

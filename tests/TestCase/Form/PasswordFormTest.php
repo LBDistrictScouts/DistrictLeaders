@@ -66,7 +66,7 @@ class PasswordFormTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Password = new PasswordForm();
@@ -77,7 +77,7 @@ class PasswordFormTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Password);
 

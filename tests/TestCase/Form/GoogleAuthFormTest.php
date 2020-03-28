@@ -23,7 +23,7 @@ class GoogleAuthFormTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->GoogleAuth = new GoogleAuthForm();
@@ -34,7 +34,7 @@ class GoogleAuthFormTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->GoogleAuth);
 

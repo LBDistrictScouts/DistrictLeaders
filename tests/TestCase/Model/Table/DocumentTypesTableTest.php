@@ -37,7 +37,7 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('DocumentTypes') ? [] : ['className' => DocumentTypesTable::class];
@@ -49,7 +49,7 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->DocumentTypes);
 

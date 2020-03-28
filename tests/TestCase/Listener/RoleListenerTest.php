@@ -38,7 +38,7 @@ class RoleListenerTest extends TestCase
         'app.Roles',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Roles = TableRegistry::getTableLocator()->get('Roles');

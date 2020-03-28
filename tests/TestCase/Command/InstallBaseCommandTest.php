@@ -58,7 +58,7 @@ class InstallBaseCommandTest extends TestCase
     /**
      * Setup Function
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->useCommandRunner();

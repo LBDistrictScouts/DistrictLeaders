@@ -24,7 +24,7 @@ class GoogleClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $registry = new ComponentRegistry();
@@ -36,7 +36,7 @@ class GoogleClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->GoogleClient);
 

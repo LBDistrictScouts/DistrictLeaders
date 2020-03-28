@@ -44,7 +44,7 @@ class UserListenerTest extends TestCase
         'app.Roles',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Users = TableRegistry::getTableLocator()->get('Users');

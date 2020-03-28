@@ -36,7 +36,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Sections') ? [] : ['className' => SectionsTable::class];
@@ -48,7 +48,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Sections);
 
