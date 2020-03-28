@@ -13,7 +13,7 @@ class UsersCollection extends FilterCollection
      *
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this
             ->add('q', 'Search.Like', [

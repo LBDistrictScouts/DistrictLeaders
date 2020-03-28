@@ -19,10 +19,14 @@ namespace App;
 use Ajax\Middleware\AjaxMiddleware;
 use App\Policy\RequestPolicy;
 use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
 use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Exception\ForbiddenException;
+use Authorization\Exception\MissingIdentityException;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Policy\MapResolver;
@@ -32,6 +36,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
@@ -129,7 +134,7 @@ class Application extends BaseApplication implements
         // Catch any exceptions in the lower layers,
         // and make an error page/response
         $middlewareQueue
-            ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
+            ->add(new ErrorHandlerMiddleware(Configure::read('Error')))
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
@@ -175,23 +180,29 @@ class Application extends BaseApplication implements
                 'httpOnly' => true,
             ]))
 
-            ->add(AjaxMiddleware::class);
+            ->add(new BodyParserMiddleware());
+
+//            ->add(new HttpsEnforcerMiddleware([
+//                'disableOnDebug' => true,
+//                'headers' => ['X-Https-Upgrade' => true],
+//                'redirect' => true,
+//                'statusCode' => 302,
+//            ]));
+
+//            ->add(AjaxMiddleware::class);
 
         return $middlewareQueue;
     }
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
-     * @param \Psr\Http\Message\ResponseInterface $response The Response Received
      *
-     * @return \Authorization\AuthorizationService
+     * @return \Authorization\AuthorizationService|\Authorization\AuthorizationServiceInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthorizationService(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    ): AuthorizationService {
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
         $ormResolver = new OrmResolver();
         $mapResolver = new MapResolver();
 
@@ -206,16 +217,13 @@ class Application extends BaseApplication implements
      * Returns a service provider instance.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
-     * @param \Psr\Http\Message\ResponseInterface $response Response
      *
-     * @return \Authentication\AuthenticationService
+     * @return \Authentication\AuthenticationServiceInterface
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getAuthenticationService(
-        ServerRequestInterface $request,
-        ResponseInterface $response
-    ): AuthenticationService {
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
+    {
         $service = new AuthenticationService();
 
         $fields = [

@@ -36,8 +36,8 @@ class AuditsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
-    {
+    public function init(): void
+{
         $this->records = [
             [
                 'audit_field' => 'first_name',

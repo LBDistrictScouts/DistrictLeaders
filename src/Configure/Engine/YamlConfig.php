@@ -40,7 +40,7 @@ class YamlConfig implements ConfigEngineInterface
      * @param string $key Key
      * @return array
      */
-    public function read($key)
+    public function read(string $key): array
     {
         $file = $this->_getFilePath($key, true);
         $input = file_get_contents($file);
@@ -60,7 +60,7 @@ class YamlConfig implements ConfigEngineInterface
      *
      * @return bool Success
      */
-    public function dump($key, array $data)
+    public function dump($key, array $data): bool
     {
         $filename = $this->_getFilePath($key);
 

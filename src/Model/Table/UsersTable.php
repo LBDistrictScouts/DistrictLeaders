@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -122,13 +123,13 @@ class UsersTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchema $schema The Schema to be modified
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
      *
-     * @return \Cake\Database\Schema\TableSchema
+     * @return \Cake\Database\Schema\TableSchemaInterface
      *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _initializeSchema(TableSchema $schema): TableSchema
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType(User::FIELD_CAPABILITIES, 'json');
 

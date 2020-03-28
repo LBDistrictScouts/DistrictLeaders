@@ -36,8 +36,8 @@ class CampsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
-    {
+    public function init(): void
+{
         $this->records = [
             [
                 'created' => 1546807673,

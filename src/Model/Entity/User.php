@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
+use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
@@ -134,6 +135,14 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public function can($action, $resource): bool
     {
         return $this->authorization->can($this, $action, $resource);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canResult(string $action, $resource): ResultInterface
+    {
+        return $this->authorization->canResult($this, $action, $resource);
     }
 
     /**
