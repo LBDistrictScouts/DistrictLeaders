@@ -9,7 +9,6 @@ use Cake\Core\Configure;
  * Capabilities Controller
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
- *
  * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController

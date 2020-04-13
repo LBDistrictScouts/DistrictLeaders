@@ -7,7 +7,6 @@ namespace App\Controller;
  * Sections Controller
  *
  * @property \App\Model\Table\SectionsTable $Sections
- *
  * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController

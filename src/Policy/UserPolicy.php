@@ -19,7 +19,6 @@ class UserPolicy implements BeforePolicyInterface
     /**
      * @param \App\Model\Entity\User $user The User Editing
      * @param \App\Model\Entity\User $subject The User being Edited
-     *
      * @return \Authorization\Policy\Result
      */
     public function canUpdate(User $user, User $subject)
@@ -39,7 +38,6 @@ class UserPolicy implements BeforePolicyInterface
     /**
      * @param \App\Model\Entity\User $user The User Editing
      * @param \App\Model\Entity\User $subject The User being Edited
-     *
      * @return \Authorization\Policy\Result
      */
     public function canView(User $user, User $subject)
@@ -62,7 +60,6 @@ class UserPolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     *
      * @return \Authorization\Policy\Result
      */
     public function canIndex(User $user)

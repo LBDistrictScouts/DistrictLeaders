@@ -15,7 +15,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
- *
  * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
  * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])

@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * CampTypes Model
  *
  * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\HasMany $Camps
- *
  * @method \App\Model\Entity\CampType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CampType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])

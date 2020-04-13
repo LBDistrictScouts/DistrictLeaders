@@ -27,7 +27,6 @@ trait AppPolicyTrait
      * @param \App\Model\Entity\User $user Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
-     *
      * @return \Authorization\Policy\Result|void
      */
     public function before($user, $resource, $action): Result

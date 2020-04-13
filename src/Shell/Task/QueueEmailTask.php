@@ -11,7 +11,6 @@ use Queue\Shell\Task\QueueTaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- *
  * @property \App\Model\Table\EmailSendsTable EmailSends
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
@@ -30,7 +29,6 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
-     *
      * @return void
      */
     public function run(array $data, $jobId): void

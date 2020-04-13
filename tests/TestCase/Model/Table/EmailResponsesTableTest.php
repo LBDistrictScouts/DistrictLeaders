@@ -82,7 +82,6 @@ class EmailResponsesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -128,7 +127,6 @@ class EmailResponsesTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidationDefault()

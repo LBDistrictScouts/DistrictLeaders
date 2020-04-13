@@ -7,7 +7,6 @@ namespace App\Controller;
  * CampRoleTypes Controller
  *
  * @property \App\Model\Table\CampRoleTypesTable $CampRoleTypes
- *
  * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRoleTypesController extends AppController

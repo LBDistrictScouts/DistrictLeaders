@@ -10,7 +10,6 @@ use Cake\ORM\TableRegistry;
  * Class LoginEvent
  *
  * @package App\Listener
- *
  * @property \App\Model\Table\UsersTable $Users
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
@@ -29,7 +28,6 @@ class RoleListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function newRole($event)
@@ -46,7 +44,6 @@ class RoleListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function roleChange($event)

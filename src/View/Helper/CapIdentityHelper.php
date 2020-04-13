@@ -35,7 +35,6 @@ class CapIdentityHelper extends IdentityHelper
 
     /**
      * @param string $capabilityCode Capability Code for Checking
-     *
      * @return bool
      */
     public function checkCapability($capabilityCode)
@@ -49,7 +48,6 @@ class CapIdentityHelper extends IdentityHelper
      * @param int|null $group The Group ID for checking against
      * @param int|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     *
      * @return bool
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)

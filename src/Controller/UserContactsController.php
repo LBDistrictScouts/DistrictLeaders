@@ -11,7 +11,6 @@ use App\Model\Entity\UserContactType;
  * UserContacts Controller
  *
  * @property \App\Model\Table\UserContactsTable $UserContacts
- *
  * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactsController extends AppController
@@ -35,9 +34,7 @@ class UserContactsController extends AppController
      * View method
      *
      * @param string|null $id User Contact id.
-     *
      * @return \Cake\Http\Response|void
-     *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)

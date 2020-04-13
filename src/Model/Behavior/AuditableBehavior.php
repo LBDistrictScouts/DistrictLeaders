@@ -31,7 +31,6 @@ class AuditableBehavior extends Behavior
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \Cake\ORM\Entity $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
      */
     public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)

@@ -17,7 +17,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $RoleStatuses
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $UserContacts
- *
  * @method \App\Model\Entity\Role get($primaryKey, $options = [])
  * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
@@ -26,7 +25,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Role patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Role[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Role findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
@@ -120,7 +118,6 @@ class RolesTable extends Table
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \App\Model\Entity\Role $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
      */
     public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)

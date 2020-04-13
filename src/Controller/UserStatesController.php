@@ -9,7 +9,6 @@ use App\Model\Entity\UserState;
  * UserStates Controller
  *
  * @property \App\Model\Table\UserStatesTable $UserStates
- *
  * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 

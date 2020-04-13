@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * CampRoleTypes Model
  *
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
- *
  * @method \App\Model\Entity\CampRoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CampRoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampRoleType[] newEntities(array $data, array $options = [])
@@ -20,7 +19,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */

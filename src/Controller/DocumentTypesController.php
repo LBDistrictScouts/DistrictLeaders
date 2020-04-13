@@ -7,7 +7,6 @@ namespace App\Controller;
  * DocumentTypes Controller
  *
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
- *
  * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController

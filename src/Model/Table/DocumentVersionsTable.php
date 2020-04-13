@@ -15,7 +15,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\BelongsTo $Documents
  * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
- *
  * @method \App\Model\Entity\DocumentVersion get($primaryKey, $options = [])
  * @method \App\Model\Entity\DocumentVersion newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] newEntities(array $data, array $options = [])
@@ -24,7 +23,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DocumentVersion patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
@@ -101,9 +99,7 @@ class DocumentVersionsTable extends Table
      *
      * @param \Cake\ORM\Query $query The Query to be Modified
      * @param array $options The Options passed
-     *
      * @return \Cake\ORM\Query
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CamelCaseVariableName)
      */

@@ -3,6 +3,10 @@
  * @var \App\View\AppView $this
  * @var bool $contact
  * @var \App\Model\Entity\Role $role
+ * @var mixed $roleStatuses
+ * @var mixed $roleTypes
+ * @var mixed $sections
+ * @var mixed $userContacts
  */
 
 $this->extend('../Layout/CRUD/edit');

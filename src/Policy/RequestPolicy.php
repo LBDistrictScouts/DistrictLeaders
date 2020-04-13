@@ -20,7 +20,6 @@ class RequestPolicy implements RequestPolicyInterface
      *
      * @param \App\Model\Entity\User|null $identity The Identity
      * @param \Cake\Http\ServerRequest $request Server Request
-     *
      * @return bool|void|\Authorization\Policy\Result
      */
     public function canAccess($identity, ServerRequest $request)

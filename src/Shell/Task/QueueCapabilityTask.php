@@ -11,7 +11,6 @@ use Queue\Shell\Task\QueueTaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */

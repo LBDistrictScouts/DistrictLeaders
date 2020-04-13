@@ -10,7 +10,6 @@ use App\Model\Entity\RoleTemplate;
  * RoleTemplates Controller
  *
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
- *
  * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTemplatesController extends AppController
@@ -31,7 +30,6 @@ class RoleTemplatesController extends AppController
      * View method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -73,7 +71,6 @@ class RoleTemplatesController extends AppController
      * Edit method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -103,7 +100,6 @@ class RoleTemplatesController extends AppController
      * Delete method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

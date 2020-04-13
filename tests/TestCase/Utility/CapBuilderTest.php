@@ -42,9 +42,7 @@ class CapBuilderTest extends TestCase
      *
      * @param string $capability The Capability String
      * @param bool $expected The length of the expected string
-     *
      * @dataProvider providerIsFieldType
-     *
      * @return void
      */
     public function testIsFieldType($capability, $expected)
@@ -82,9 +80,7 @@ class CapBuilderTest extends TestCase
      *
      * @param string $action The Capability String
      * @param bool $expected The length of the expected string
-     *
      * @dataProvider providerIsFieldActionType
-     *
      * @return void
      */
     public function testIsFieldActionType($action, $expected)
@@ -162,9 +158,7 @@ class CapBuilderTest extends TestCase
      * @param string $action The name of the Action performed
      * @param string $model The Model generated
      * @param string|null $field The Field being limited
-     *
      * @dataProvider providerCapabilityCodeFormat
-     *
      * @return string
      */
     public static function testCapabilityCodeFormat($expected, $action, $model, $field = null)
@@ -242,9 +236,7 @@ class CapBuilderTest extends TestCase
      * @param string $action The name of the Action performed
      * @param string $model The Model generated
      * @param string|null $field The Field being limited
-     *
      * @dataProvider providerCapabilityNameFormat
-     *
      * @return string
      */
     public static function testCapabilityNameFormat($expected, $action, $model, $field = null)
@@ -302,9 +294,7 @@ class CapBuilderTest extends TestCase
      * @param int $baseLevel The Base Level for Capability
      * @param int $multiplier The Action Multiplier
      * @param bool|null $viewRestricted Is the view action restricted
-     *
      * @dataProvider providerCalculateLevel
-     *
      * @return void
      */
     public static function testCalculateLevel($expected, $baseLevel, $multiplier, $viewRestricted = false)
@@ -336,9 +326,7 @@ class CapBuilderTest extends TestCase
     /**
      * @param string $action The Action to be validated
      * @param bool $expected Outcome Expected
-     *
      * @dataProvider providerIsActionType
-     *
      * @return void
      */
     public static function testIsActionType($action, $expected)
@@ -374,9 +362,7 @@ class CapBuilderTest extends TestCase
     /**
      * @param string $model The Model to be validated
      * @param bool $expected The Field Expected
-     *
      * @dataProvider providerIsFieldRestricted
-     *
      * @return void
      */
     public static function testIsFieldRestricted($model, $expected)
@@ -412,9 +398,7 @@ class CapBuilderTest extends TestCase
     /**
      * @param string $capabilityCode The Capability Code to be broken
      * @param array $expected Outcome expected
-     *
      * @dataProvider providerBreakCode
-     *
      * @return void
      */
     public static function testBreakCode($capabilityCode, $expected)
@@ -447,9 +431,7 @@ class CapBuilderTest extends TestCase
     /**
      * @param string $capabilityCode Capability Code for testing
      * @param bool $expected Outcome expected
-     *
      * @dataProvider providerSpecialCode
-     *
      * @return void
      */
     public static function testIsSpecialCode($capabilityCode, $expected)

@@ -29,9 +29,7 @@ class TextSafeTest extends TestCase
      *
      * @param string $string String to be encoded
      * @param string $expected String expected after encoding
-     *
      * @return void
-     *
      * @dataProvider providerEncodeData
      */
     public function testEncode($string, $expected)
@@ -44,9 +42,7 @@ class TextSafeTest extends TestCase
      *
      * @param string $expected String expected after encoding
      * @param string $string String to be encoded
-     *
      * @dataProvider providerEncodeData
-     *
      * @return void
      */
     public function testDecode($expected, $string)
@@ -72,9 +68,7 @@ class TextSafeTest extends TestCase
      * Test decode()
      *
      * @param int $expected The length of the expected string
-     *
      * @dataProvider providerShuffleData
-     *
      * @return void
      */
     public function testShuffle($expected)

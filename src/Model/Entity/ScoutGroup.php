@@ -46,7 +46,6 @@ class ScoutGroup extends Entity
 
     /**
      * @param string $value The Domain
-     *
      * @return string
      */
     protected function _setGroupDomain($value)

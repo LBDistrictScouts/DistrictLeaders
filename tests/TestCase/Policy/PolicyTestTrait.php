@@ -123,7 +123,6 @@ trait PolicyTestTrait
      *
      * @param array|string $url The Url Array to be tested.
      * @param string|null $capability The Capability to be checked
-     *
      * @return void
      */
     protected function tryGetWith($url, $capability = null)
@@ -152,7 +151,6 @@ trait PolicyTestTrait
      *
      * @param array|string $url The Url Array to be tested.
      * @param array|string|null $capability The Capability to be checked
-     *
      * @return void
      */
     protected function tryGetWithout($url, $capability = null)

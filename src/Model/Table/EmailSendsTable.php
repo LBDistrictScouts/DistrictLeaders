@@ -16,7 +16,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\BelongsTo $Notifications
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
- *
  * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailSend newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
@@ -25,7 +24,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
@@ -159,7 +157,6 @@ class EmailSendsTable extends Table
 
     /**
      * @param string $emailGenerationCode The Email Generation Code
-     *
      * @return array
      */
     private function codeSplitter($emailGenerationCode)
@@ -176,7 +173,6 @@ class EmailSendsTable extends Table
     /**
      * @param string $emailGenerationCode The Code provided to generate the email
      * @param array $existExempt An override array for exist Overrides
-     *
      * @return false|string
      */
     private function codeExistValidator($emailGenerationCode, $existExempt)
@@ -212,9 +208,7 @@ class EmailSendsTable extends Table
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
-     *
      * @return false|int
-     *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -335,7 +329,6 @@ class EmailSendsTable extends Table
      * Dispatches the Email using the Mailer
      *
      * @param int $emailSendId The ID of the Email Send
-     *
      * @return bool
      */
     public function send($emailSendId)
@@ -378,7 +371,6 @@ class EmailSendsTable extends Table
      * Makes an Email Dispatch Event and then despatches it.
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
-     *
      * @return bool
      */
     public function makeAndSend($emailGenerationCode)
@@ -401,7 +393,6 @@ class EmailSendsTable extends Table
      *
      * @param array $results The Returned Results Array
      * @param array $sendHeaders The Send Headers
-     *
      * @return bool
      */
     public function sendRegister($results, $sendHeaders)

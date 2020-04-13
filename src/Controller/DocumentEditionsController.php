@@ -10,7 +10,6 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * DocumentEditions Controller
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
- *
  * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController

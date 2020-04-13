@@ -57,7 +57,7 @@ class Application extends BaseApplication implements
     protected const LOGIN_URL = '/users/login';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function bootstrap(): void
     {
@@ -194,9 +194,7 @@ class Application extends BaseApplication implements
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
-     *
      * @return \Authorization\AuthorizationService|\Authorization\AuthorizationServiceInterface
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
@@ -215,9 +213,7 @@ class Application extends BaseApplication implements
      * Returns a service provider instance.
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request Request
-     *
      * @return \Authentication\AuthenticationServiceInterface
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface

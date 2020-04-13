@@ -18,7 +18,6 @@ use Cake\Validation\Validator;
  * Capabilities Model
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
- *
  * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
  * @method \App\Model\Entity\Capability newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
@@ -105,7 +104,6 @@ class CapabilitiesTable extends Table
     /**
      * @param \Cake\Database\Query $query The Query being modified
      * @param array $options Options for the find.
-     *
      * @return mixed
      */
     public function findLevel(\Cake\Database\Query $query, array $options)
@@ -151,7 +149,6 @@ class CapabilitiesTable extends Table
 
     /**
      * @param bool $fields Option to run for Fields Too
-     *
      * @return int
      */
     public function generateEntityCapabilities($fields = true)
@@ -173,7 +170,6 @@ class CapabilitiesTable extends Table
      * @param string $entity The Entity to be generated
      * @param int $baseLevel The Base level of the entity
      * @param bool|null $viewRestricted Is the view restricted
-     *
      * @return int
      */
     public function entityCapability($entity, $baseLevel, $viewRestricted = false)
@@ -199,7 +195,6 @@ class CapabilitiesTable extends Table
     /**
      * @param string $entity The Entity to be generated
      * @param int $baseLevel The Base level of the entity
-     *
      * @return int
      */
     public function fieldCapability($entity, $baseLevel)
@@ -243,7 +238,6 @@ class CapabilitiesTable extends Table
 
     /**
      * @param array $objectArray The array to be saved
-     *
      * @return \App\Model\Entity\Capability|false
      */
     protected function makeOrPatch($objectArray)
@@ -265,7 +259,6 @@ class CapabilitiesTable extends Table
      * @param string $action Action Method
      * @param string $model Model to be referenced
      * @param string|null $field The Field being referenced
-     *
      * @return string
      */
     public function buildCapability($action, $model, $field = null)
@@ -281,19 +274,17 @@ class CapabilitiesTable extends Table
 
     /**
      * @param array $capabilityArray An Array of Associative Objects
-     *
      * @return array
      */
-    public function enrichRoleType(Array $capabilityArray)
+    public function enrichRoleType(array $capabilityArray)
     {
         $cleanMatrix = [];
         $special = [];
 
         foreach ($capabilityArray as $capability) {
-
+            /** @var \App\Model\Entity\Capability $capability */
             $isTemplate = $capability->_joinData->template ?? false;
 
-            /** @var Capability $capability */
             $code = $capability->capability_code;
             if (!CapBuilder::isSpecialCode($code)) {
                 $codeArray = CapBuilder::breakCode($code);
@@ -309,30 +300,28 @@ class CapabilitiesTable extends Table
         return $cleanMatrix;
     }
 
-
     /**
      * @param array $capabilityArray The Capability Array to be Enriched.
-     *
      * @return array
      */
-    public function enrichUserCapability(Array $capabilityArray)
+    public function enrichUserCapability(array $capabilityArray)
     {
         $cleanMatrix = [];
 
         // User
-        if(key_exists('user', $capabilityArray)) {
+        if (key_exists('user', $capabilityArray)) {
             $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $capabilityArray['user'], 'User');
         }
 
         // Scout Groups
-        if(key_exists('group', $capabilityArray)) {
+        if (key_exists('group', $capabilityArray)) {
             foreach ($capabilityArray['group'] as $groupId => $groupArray) {
                 $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $groupArray, 'Group.' . $groupId);
             }
         }
 
         // Sections
-        if(key_exists('section', $capabilityArray)) {
+        if (key_exists('section', $capabilityArray)) {
             foreach ($capabilityArray['section'] as $sectionId => $sectionArray) {
                 $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $sectionArray, 'Section.' . $sectionId);
             }
@@ -344,11 +333,11 @@ class CapabilitiesTable extends Table
     /**
      * @param array $cleanMatrix The working array to append result into
      * @param array $entityArray The Entity Associative Array
-     * @param String $matrixKey The Matrix Key for the Entity
-     *
+     * @param string $matrixKey The Matrix Key for the Entity
      * @return array
      */
-    private function entityMatrixParsing (Array $cleanMatrix, Array $entityArray, String $matrixKey) {
+    private function entityMatrixParsing(array $cleanMatrix, array $entityArray, string $matrixKey)
+    {
         $special = [];
         $models = [];
 
@@ -385,10 +374,9 @@ class CapabilitiesTable extends Table
      * @param array $models The Existing Models Array
      * @param array $codeArray The Current Code Array
      * @param int|bool $payload The ID of the Capability
-     *
      * @return array
      */
-    private function codeMatrixAdaption (Array $models, Array $codeArray, $payload)
+    private function codeMatrixAdaption(array $models, array $codeArray, $payload)
     {
         if (!key_exists($codeArray['model'], $models)) {
             $models[$codeArray['model']] = [];

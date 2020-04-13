@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\EmailSend $emailSend
+ * @var mixed $notifications
+ * @var mixed $users
  */
 
 $this->extend('../Layout/CRUD/add');

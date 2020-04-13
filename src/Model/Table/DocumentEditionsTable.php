@@ -16,7 +16,6 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  *
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
  * @property \App\Model\Table\FileTypesTable&\Cake\ORM\Association\BelongsTo $FileTypes
- *
  * @method \App\Model\Entity\DocumentEdition get($primaryKey, $options = [])
  * @method \App\Model\Entity\DocumentEdition newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DocumentEdition[] newEntities(array $data, array $options = [])
@@ -25,7 +24,6 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @method \App\Model\Entity\DocumentEdition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
@@ -126,7 +124,6 @@ class DocumentEditionsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     *
      * @return \Cake\Datasource\EntityInterface|bool
      */
     public function uploadDocument($postData)

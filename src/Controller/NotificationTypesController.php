@@ -7,7 +7,6 @@ namespace App\Controller;
  * NotificationTypes Controller
  *
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
- *
  * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationTypesController extends AppController

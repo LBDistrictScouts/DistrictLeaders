@@ -57,7 +57,6 @@ class EmailResponseTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -151,7 +150,6 @@ class EmailResponseTypesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     *
      * @throws
      */
     public function testBuildRules()

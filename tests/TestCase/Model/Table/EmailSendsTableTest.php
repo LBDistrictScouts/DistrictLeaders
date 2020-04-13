@@ -80,7 +80,6 @@ class EmailSendsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -109,7 +108,6 @@ class EmailSendsTableTest extends TestCase
      * Get Expected Function
      *
      * @return array
-     *
      * @throws
      */
     private function getExpected()
@@ -163,7 +161,6 @@ class EmailSendsTableTest extends TestCase
      * Test initialize method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testInitialize()
@@ -208,7 +205,6 @@ class EmailSendsTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidationDefault()
@@ -280,7 +276,6 @@ class EmailSendsTableTest extends TestCase
      * Test Make method
      *
      * @return void
-     *
      * @throws
      */
     public function testMake()

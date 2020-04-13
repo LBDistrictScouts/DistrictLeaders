@@ -88,7 +88,6 @@ class UsersTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()

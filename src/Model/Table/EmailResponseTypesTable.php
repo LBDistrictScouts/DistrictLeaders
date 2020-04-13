@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * EmailResponseTypes Model
  *
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
- *
  * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailResponseType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])

@@ -48,7 +48,6 @@ use Cake\ORM\TableRegistry;
  * @property int|null $user_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @property \App\Model\Entity\PasswordState|null $password_state
  */
@@ -98,7 +97,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
 
     /**
      * @param string $value The un-hashed password string
-     *
      * @return bool|string|void
      */
     protected function _setPassword($value)
@@ -130,7 +128,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return bool
      */
     public function can($action, $resource): bool
     {
@@ -138,7 +138,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     }
 
     /**
-     * @inheritDoc
+     * Authorization\IdentityInterface method
+     *
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return \Authorization\Policy\ResultInterface
      */
     public function canResult(string $action, $resource): ResultInterface
     {
@@ -148,7 +152,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return mixed The modified resource.
      */
     public function applyScope($action, $resource)
     {
@@ -158,7 +164,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @return array|\ArrayAccess
      */
     public function getOriginalData()
     {
@@ -169,7 +175,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * Setter to be used by the middleware.
      *
      * @param \Authorization\AuthorizationService $service The Auth Service
-     *
      * @return \App\Model\Entity\User
      */
     public function setAuthorization($service)
@@ -195,7 +200,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param int|array|null $group The Group ID for checking against
      * @param int|array|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     *
      * @return bool
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
@@ -212,7 +216,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string $capability The Capability being checked.
      * @param int|array|null $group A Group ID if applicable
      * @param int|array|null $section A Section ID if applicable
-     *
      * @return bool
      */
     public function checkCapability($capability, $group = null, $section = null)
@@ -253,7 +256,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string $capability The Capability being verified
      * @param string $subset The Authorisation Subset
      * @param int $entities The Entity ID or Array of IDs
-     *
      * @return bool
      */
     private function subSetCapabilityCheck($capability, $subset, $entities)
@@ -281,7 +283,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string $capability The Capability being verified
      * @param int $entityID The Entity ID
      * @param array $subsetCapabilities The Capabilities for the level being checked
-     *
      * @return bool
      */
     private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities)

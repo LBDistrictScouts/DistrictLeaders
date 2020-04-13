@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * SectionsFixture
- *
  */
 class SectionsFixture extends TestFixture
 {

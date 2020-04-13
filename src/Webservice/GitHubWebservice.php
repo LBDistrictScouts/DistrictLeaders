@@ -26,7 +26,7 @@ class GitHubWebservice extends Webservice
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _executeReadQuery(Query $query, array $options = [])
     {
@@ -100,7 +100,7 @@ class GitHubWebservice extends Webservice
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _transformResource(Endpoint $endpoint, array $result): Resource
     {

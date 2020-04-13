@@ -55,7 +55,6 @@ class AuditsControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     *
      * @throws
      */
     public function testView()

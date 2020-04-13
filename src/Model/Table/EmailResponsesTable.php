@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
  * @property \App\Model\Table\EmailResponseTypesTable&\Cake\ORM\Association\BelongsTo $EmailResponseTypes
- *
  * @method \App\Model\Entity\EmailResponse get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailResponse newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\EmailResponse[] newEntities(array $data, array $options = [])
@@ -21,7 +20,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailResponse patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponse[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponse findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])

@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Notification $notification
+ * @var mixed $notificationTypes
+ * @var mixed $users
  */
 
 $this->extend('../Layout/CRUD/edit');

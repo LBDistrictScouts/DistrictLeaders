@@ -19,7 +19,6 @@ class UsersTablePolicy implements BeforePolicyInterface
     /**
      * @param \App\Model\Entity\User $user The User being authorized.
      * @param \Cake\ORM\Query $query The Query object to be limited.
-     *
      * @return mixed
      */
     public function scopeList($user, $query)
@@ -34,7 +33,6 @@ class UsersTablePolicy implements BeforePolicyInterface
     /**
      * @param \App\Model\Entity\User $user The User being authorized.
      * @param \Cake\ORM\Query $query The Query object to be limited.
-     *
      * @return mixed
      */
     public function scopeSearch($user, $query)
@@ -49,7 +47,6 @@ class UsersTablePolicy implements BeforePolicyInterface
     /**
      * @param \App\Model\Entity\User $user The User being authorized.
      * @param \Cake\ORM\Query $query The Query object to be limited.
-     *
      * @return mixed
      */
     public function scopeUpdate($user, $query)
@@ -63,7 +60,6 @@ class UsersTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     *
      * @return \Authorization\Policy\Result
      */
     public function canIndex(User $user)
@@ -79,7 +75,6 @@ class UsersTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     *
      * @return \Authorization\Policy\Result
      */
     public function canView(User $user)

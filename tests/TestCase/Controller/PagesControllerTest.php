@@ -91,7 +91,6 @@ class PagesControllerTest extends TestCase
      * Test that missing template renders 404 page in production
      *
      * @return void
-     *
      * @throws \Throwable
      * @throws \PHPUnit\Exception
      */
@@ -110,7 +109,6 @@ class PagesControllerTest extends TestCase
      * Test that missing template in debug mode renders missing_template error page
      *
      * @return void
-     *
      * @throws \Throwable
      * @throws \PHPUnit\Exception
      */
@@ -131,7 +129,6 @@ class PagesControllerTest extends TestCase
      * Test directory traversal protection
      *
      * @return void
-     *
      * @throws \Throwable
      * @throws \PHPUnit\Exception
      */

@@ -10,7 +10,6 @@ use Cake\ORM\TableRegistry;
  * Class LoginEvent
  *
  * @package App\Listener
- *
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
@@ -28,7 +27,6 @@ class CapabilityListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function templateChange($event)

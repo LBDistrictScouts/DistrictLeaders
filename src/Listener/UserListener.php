@@ -11,7 +11,6 @@ use Cake\ORM\TableRegistry;
  * Class LoginEvent
  *
  * @package App\Listener
- *
  * @property \App\Model\Table\UsersTable $Users
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
@@ -30,7 +29,6 @@ class UserListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function updateLogin($event)
@@ -49,7 +47,6 @@ class UserListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function capChange($event)

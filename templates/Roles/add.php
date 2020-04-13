@@ -2,6 +2,10 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Role $role
+ * @var mixed $roleStatuses
+ * @var mixed $roleTypes
+ * @var mixed $sections
+ * @var mixed $users
  */
 
 $this->extend('../Layout/CRUD/add');

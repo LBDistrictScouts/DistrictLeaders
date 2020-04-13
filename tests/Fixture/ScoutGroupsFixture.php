@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * ScoutGroupsFixture
- *
  */
 class ScoutGroupsFixture extends TestFixture
 {

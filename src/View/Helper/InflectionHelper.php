@@ -22,7 +22,6 @@ class InflectionHelper extends Helper
      *  Humanise
      *
      * @param string $text The Text to be humanised
-     *
      * @return string
      */
     public function space($text)
@@ -34,7 +33,6 @@ class InflectionHelper extends Helper
      *  Humanise
      *
      * @param string $text The Text to be humanised
-     *
      * @return string
      */
     public function singleSpace($text)

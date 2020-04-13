@@ -7,7 +7,6 @@ namespace App\Controller;
  * Notifications Controller
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
- *
  * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController

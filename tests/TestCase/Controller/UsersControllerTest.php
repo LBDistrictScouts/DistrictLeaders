@@ -11,7 +11,6 @@ use Cake\TestSuite\TestCase;
  * App\Controller\UsersController Test Case
  *
  * @uses \App\Controller\UsersController
- *
  * @property \App\Model\Table\UsersTable $Users
  */
 class UsersControllerTest extends TestCase

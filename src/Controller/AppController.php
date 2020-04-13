@@ -46,7 +46,6 @@ class AppController extends Controller
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
      * @param null $user The Footprint User
-     *
      * @return bool|\Cake\ORM\Entity
      */
     protected function _setCurrentUser($user = null)
@@ -72,7 +71,6 @@ class AppController extends Controller
      * e.g. `$this->loadComponent('Security');`
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function initialize(): void

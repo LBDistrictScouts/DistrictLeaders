@@ -57,7 +57,6 @@ class TokensControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidate()
@@ -90,7 +89,6 @@ class TokensControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidateAndAuthenticate()

@@ -84,7 +84,6 @@ class Cron
      *
      * @param string $offset Time Offset Compatible with FrozenTime Modify
      * @param array|null $data Data for Task
-     *
      * @return bool
      */
     protected function scheduleJob($offset, $data = null)
@@ -108,7 +107,6 @@ class Cron
 
     /**
      * @param string $offset Time Offset Compatible with FrozenTime Modify
-     *
      * @return \Cake\I18n\FrozenTime
      */
     protected function getTimeOffset($offset)

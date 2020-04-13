@@ -73,7 +73,6 @@ class PagesController extends AppController
 
     /**
      * @param \Cake\Event\Event $event The CakePHP Event
-     *
      * @return \Cake\Http\Response|void|null
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)

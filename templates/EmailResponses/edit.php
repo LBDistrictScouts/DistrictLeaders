@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\EmailResponse $emailResponse
+ * @var mixed $emailResponseTypes
+ * @var mixed $emailSends
  */
 
 $this->extend('../Layout/CRUD/edit');

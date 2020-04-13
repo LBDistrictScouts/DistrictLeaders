@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  * DocumentTypes Model
  *
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\HasMany $Documents
- *
  * @method \App\Model\Entity\DocumentType get($primaryKey, $options = [])
  * @method \App\Model\Entity\DocumentType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DocumentType[] newEntities(array $data, array $options = [])

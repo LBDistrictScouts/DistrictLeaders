@@ -74,7 +74,6 @@ class RoleTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     public function getGood()

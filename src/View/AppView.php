@@ -32,7 +32,6 @@ use Cake\View\View;
  * @property \BootstrapUI\View\Helper\FormHelper $Form
  * @property \BootstrapUI\View\Helper\HtmlHelper $Html
  * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
- *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  * @property \Tools\View\Helper\TimeHelper $Time
  * @property \Tools\View\Helper\FormatHelper $Format

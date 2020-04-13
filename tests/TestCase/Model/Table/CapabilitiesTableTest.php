@@ -74,7 +74,6 @@ class CapabilitiesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     public function getGood()
@@ -176,7 +175,6 @@ class CapabilitiesTableTest extends TestCase
      * Test the level finder function
      *
      * @dataProvider providerFindLevel
-     *
      * @param int|null|string $level Min Level
      * @param int $expectedCount Capabilities Found
      */
@@ -334,12 +332,10 @@ class CapabilitiesTableTest extends TestCase
      * Test entityCapability method
      *
      * @dataProvider providerEntityCapability
-     *
      * @param string $entity The entity being created
      * @param int $baseLevel The Base Level of the Entity Test
      * @param bool $protected Protection Option
      * @param array $expected Entities Created
-     *
      * @return void
      */
     public function testEntityCapability($entity, $baseLevel, $protected, $expected)
@@ -433,15 +429,12 @@ class CapabilitiesTableTest extends TestCase
      * Test entityCapability method
      *
      * @dataProvider providerFieldCapability
-     *
      * @param string $entity The entity being created
      * @param int $baseLevel The Base Level of the Entity Test
      * @param int $fieldCount The number of fields
      * @param array $expected Entities Created
      * @param array $hydrated First Entity
-     *
      * @return void
-     *
      * @throws \Exception
      */
     public function testFieldCapability($entity, $baseLevel, $fieldCount, $expected, $hydrated)
@@ -517,7 +510,6 @@ class CapabilitiesTableTest extends TestCase
      * Test Build Capability Method and safety overloads
      *
      * @dataProvider providerBuildCapability
-     *
      * @param string $action Action being entered
      * @param string $model Model being entered
      * @param string|false $expected Expectation of result
@@ -527,7 +519,6 @@ class CapabilitiesTableTest extends TestCase
         $result = $this->Capabilities->buildCapability($action, $model, $field);
         TestCase::assertEquals($expected, $result);
     }
-
 
     /**
      * @return array
@@ -596,130 +587,130 @@ class CapabilitiesTableTest extends TestCase
                 [
                     'User' => [
                         'ScoutGroups' => [
-                            'CREATE' => (int) 79,
-                            'DELETE' => (int) 51,
-                            'VIEW' => (int) 50,
-                            'UPDATE' => (int) 34
+                            'CREATE' => (int)79,
+                            'DELETE' => (int)51,
+                            'VIEW' => (int)50,
+                            'UPDATE' => (int)34,
                         ],
                         'Users' => [
                             'fields' => [
                                 'LAST_LOGIN' => [
-                                    'VIEW' => (int) 41
+                                    'VIEW' => (int)41,
                                 ],
                                 'LAST_LOGIN_IP' => [
-                                    'VIEW' => (int) 43
+                                    'VIEW' => (int)43,
                                 ],
                                 'LAST_NAME' => [
-                                    'VIEW' => (int) 20
-                                ]
+                                    'VIEW' => (int)20,
+                                ],
                             ],
-                            'CREATE' => (int) 46,
-                            'DELETE' => (int) 49
+                            'CREATE' => (int)46,
+                            'DELETE' => (int)49,
                         ],
                         'Special' => [
-                            (int) 36 => 'ALL'
-                        ]
+                            (int)36 => 'ALL',
+                        ],
                     ],
                     'CRUD' => [
-                        (int) 0 => 'CREATE',
-                        (int) 1 => 'DELETE',
-                        (int) 2 => 'VIEW',
-                        (int) 3 => 'UPDATE',
-                        (int) 4 => 'CHANGE'
+                        (int)0 => 'CREATE',
+                        (int)1 => 'DELETE',
+                        (int)2 => 'VIEW',
+                        (int)3 => 'UPDATE',
+                        (int)4 => 'CHANGE',
                     ],
                     'Group.1' => [
                         'Sections' => [
-                            'CREATE' => (int) 70,
-                            'UPDATE' => (int) 71
+                            'CREATE' => (int)70,
+                            'UPDATE' => (int)71,
                         ],
                         'Users' => [
-                            'CREATE' => (int) 23,
+                            'CREATE' => (int)23,
                             'fields' => [
                                 'ADDRESS_LINE_1' => [
-                                    'CHANGE' => (int) 47,
-                                    'VIEW' => (int) 65
+                                    'CHANGE' => (int)47,
+                                    'VIEW' => (int)65,
                                 ],
                                 'ADDRESS_LINE_2' => [
-                                    'CHANGE' => (int) 48,
-                                    'VIEW' => (int) 66
+                                    'CHANGE' => (int)48,
+                                    'VIEW' => (int)66,
                                 ],
                                 'CAPABILITIES' => [
-                                    'CHANGE' => (int) 56,
-                                    'VIEW' => (int) 77
+                                    'CHANGE' => (int)56,
+                                    'VIEW' => (int)77,
                                 ],
                                 'CITY' => [
-                                    'CHANGE' => (int) 17,
-                                    'VIEW' => (int) 67
+                                    'CHANGE' => (int)17,
+                                    'VIEW' => (int)67,
                                 ],
                                 'COUNTY' => [
-                                    'CHANGE' => (int) 49,
-                                    'VIEW' => (int) 68
+                                    'CHANGE' => (int)49,
+                                    'VIEW' => (int)68,
                                 ],
                                 'CREATED' => [
-                                    'CHANGE' => (int) 51,
-                                    'VIEW' => (int) 72
+                                    'CHANGE' => (int)51,
+                                    'VIEW' => (int)72,
                                 ],
                                 'EMAIL' => [
-                                    'CHANGE' => (int) 45,
-                                    'VIEW' => (int) 63
+                                    'CHANGE' => (int)45,
+                                    'VIEW' => (int)63,
                                 ],
                                 'FIRST_NAME' => [
-                                    'CHANGE' => (int) 43,
-                                    'VIEW' => (int) 61
+                                    'CHANGE' => (int)43,
+                                    'VIEW' => (int)61,
                                 ],
                                 'FULL_NAME' => [
-                                    'CHANGE' => (int) 79,
-                                    'VIEW' => (int) 80
+                                    'CHANGE' => (int)79,
+                                    'VIEW' => (int)80,
                                 ],
                                 'LAST_LOGIN' => [
-                                    'CHANGE' => (int) 53,
-                                    'VIEW' => (int) 74
+                                    'CHANGE' => (int)53,
+                                    'VIEW' => (int)74,
                                 ],
                                 'LAST_LOGIN_IP' => [
-                                    'CHANGE' => (int) 55
+                                    'CHANGE' => (int)55,
                                 ],
                                 'LAST_NAME' => [
-                                    'CHANGE' => (int) 44
+                                    'CHANGE' => (int)44,
                                 ],
                                 'MEMBERSHIP_NUMBER' => [
-                                    'CHANGE' => (int) 42
+                                    'CHANGE' => (int)42,
                                 ],
                                 'MODIFIED' => [
-                                    'CHANGE' => (int) 52
+                                    'CHANGE' => (int)52,
                                 ],
                                 'PASSWORD' => [
-                                    'CHANGE' => (int) 46
+                                    'CHANGE' => (int)46,
                                 ],
                                 'PASSWORD_STATE_ID' => [
-                                    'CHANGE' => (int) 57
+                                    'CHANGE' => (int)57,
                                 ],
                                 'POSTCODE' => [
-                                    'CHANGE' => (int) 50
+                                    'CHANGE' => (int)50,
                                 ],
                                 'USERNAME' => [
-                                    'CHANGE' => (int) 41
+                                    'CHANGE' => (int)41,
                                 ],
                                 'DELETED' => [
-                                    'VIEW' => (int) 75
+                                    'VIEW' => (int)75,
                                 ],
                                 'ID' => [
-                                    'VIEW' => (int) 58
-                                ]
+                                    'VIEW' => (int)58,
+                                ],
                             ],
-                            'UPDATE' => (int) 24
+                            'UPDATE' => (int)24,
                         ],
-                        'Special' => []
+                        'Special' => [],
                     ],
                     'Group.2' => [
                         'Sections' => [
-                            'CREATE' => (int) 70,
-                            'UPDATE' => (int) 71
+                            'CREATE' => (int)70,
+                            'UPDATE' => (int)71,
                         ],
                         'Users' => [
-                            'CREATE' => (int) 23
+                            'CREATE' => (int)23,
                         ],
-                        'Special' => []
-                    ]
+                        'Special' => [],
+                    ],
                 ],
             ],
             'Complex Section Capability Array' => [
@@ -783,130 +774,130 @@ class CapabilitiesTableTest extends TestCase
                 [
                     'User' => [
                         'ScoutGroups' => [
-                            'CREATE' => (int) 79,
-                            'DELETE' => (int) 51,
-                            'VIEW' => (int) 50,
-                            'UPDATE' => (int) 34
+                            'CREATE' => (int)79,
+                            'DELETE' => (int)51,
+                            'VIEW' => (int)50,
+                            'UPDATE' => (int)34,
                         ],
                         'Users' => [
                             'fields' => [
                                 'LAST_LOGIN' => [
-                                    'VIEW' => (int) 41
+                                    'VIEW' => (int)41,
                                 ],
                                 'LAST_LOGIN_IP' => [
-                                    'VIEW' => (int) 43
+                                    'VIEW' => (int)43,
                                 ],
                                 'LAST_NAME' => [
-                                    'VIEW' => (int) 20
-                                ]
+                                    'VIEW' => (int)20,
+                                ],
                             ],
-                            'CREATE' => (int) 46,
-                            'DELETE' => (int) 49
+                            'CREATE' => (int)46,
+                            'DELETE' => (int)49,
                         ],
                         'Special' => [
-                            (int) 36 => 'ALL'
-                        ]
+                            (int)36 => 'ALL',
+                        ],
                     ],
                     'CRUD' => [
-                        (int) 0 => 'CREATE',
-                        (int) 1 => 'DELETE',
-                        (int) 2 => 'VIEW',
-                        (int) 3 => 'UPDATE',
-                        (int) 4 => 'CHANGE'
+                        (int)0 => 'CREATE',
+                        (int)1 => 'DELETE',
+                        (int)2 => 'VIEW',
+                        (int)3 => 'UPDATE',
+                        (int)4 => 'CHANGE',
                     ],
                     'Section.1' => [
                         'Sections' => [
-                            'CREATE' => (int) 70,
-                            'UPDATE' => (int) 71
+                            'CREATE' => (int)70,
+                            'UPDATE' => (int)71,
                         ],
                         'Users' => [
-                            'CREATE' => (int) 23,
+                            'CREATE' => (int)23,
                             'fields' => [
                                 'ADDRESS_LINE_1' => [
-                                    'CHANGE' => (int) 47,
-                                    'VIEW' => (int) 65
+                                    'CHANGE' => (int)47,
+                                    'VIEW' => (int)65,
                                 ],
                                 'ADDRESS_LINE_2' => [
-                                    'CHANGE' => (int) 48,
-                                    'VIEW' => (int) 66
+                                    'CHANGE' => (int)48,
+                                    'VIEW' => (int)66,
                                 ],
                                 'CAPABILITIES' => [
-                                    'CHANGE' => (int) 56,
-                                    'VIEW' => (int) 77
+                                    'CHANGE' => (int)56,
+                                    'VIEW' => (int)77,
                                 ],
                                 'CITY' => [
-                                    'CHANGE' => (int) 17,
-                                    'VIEW' => (int) 67
+                                    'CHANGE' => (int)17,
+                                    'VIEW' => (int)67,
                                 ],
                                 'COUNTY' => [
-                                    'CHANGE' => (int) 49,
-                                    'VIEW' => (int) 68
+                                    'CHANGE' => (int)49,
+                                    'VIEW' => (int)68,
                                 ],
                                 'CREATED' => [
-                                    'CHANGE' => (int) 51,
-                                    'VIEW' => (int) 72
+                                    'CHANGE' => (int)51,
+                                    'VIEW' => (int)72,
                                 ],
                                 'EMAIL' => [
-                                    'CHANGE' => (int) 45,
-                                    'VIEW' => (int) 63
+                                    'CHANGE' => (int)45,
+                                    'VIEW' => (int)63,
                                 ],
                                 'FIRST_NAME' => [
-                                    'CHANGE' => (int) 43,
-                                    'VIEW' => (int) 61
+                                    'CHANGE' => (int)43,
+                                    'VIEW' => (int)61,
                                 ],
                                 'FULL_NAME' => [
-                                    'CHANGE' => (int) 79,
-                                    'VIEW' => (int) 80
+                                    'CHANGE' => (int)79,
+                                    'VIEW' => (int)80,
                                 ],
                                 'LAST_LOGIN' => [
-                                    'CHANGE' => (int) 53,
-                                    'VIEW' => (int) 74
+                                    'CHANGE' => (int)53,
+                                    'VIEW' => (int)74,
                                 ],
                                 'LAST_LOGIN_IP' => [
-                                    'CHANGE' => (int) 55
+                                    'CHANGE' => (int)55,
                                 ],
                                 'LAST_NAME' => [
-                                    'CHANGE' => (int) 44
+                                    'CHANGE' => (int)44,
                                 ],
                                 'MEMBERSHIP_NUMBER' => [
-                                    'CHANGE' => (int) 42
+                                    'CHANGE' => (int)42,
                                 ],
                                 'MODIFIED' => [
-                                    'CHANGE' => (int) 52
+                                    'CHANGE' => (int)52,
                                 ],
                                 'PASSWORD' => [
-                                    'CHANGE' => (int) 46
+                                    'CHANGE' => (int)46,
                                 ],
                                 'PASSWORD_STATE_ID' => [
-                                    'CHANGE' => (int) 57
+                                    'CHANGE' => (int)57,
                                 ],
                                 'POSTCODE' => [
-                                    'CHANGE' => (int) 50
+                                    'CHANGE' => (int)50,
                                 ],
                                 'USERNAME' => [
-                                    'CHANGE' => (int) 41
+                                    'CHANGE' => (int)41,
                                 ],
                                 'DELETED' => [
-                                    'VIEW' => (int) 75
+                                    'VIEW' => (int)75,
                                 ],
                                 'ID' => [
-                                    'VIEW' => (int) 58
-                                ]
+                                    'VIEW' => (int)58,
+                                ],
                             ],
-                            'UPDATE' => (int) 24
+                            'UPDATE' => (int)24,
                         ],
-                        'Special' => []
+                        'Special' => [],
                     ],
                     'Section.2' => [
                         'Sections' => [
-                            'CREATE' => (int) 70,
-                            'UPDATE' => (int) 71
+                            'CREATE' => (int)70,
+                            'UPDATE' => (int)71,
                         ],
                         'Users' => [
-                            'CREATE' => (int) 23
+                            'CREATE' => (int)23,
                         ],
-                        'Special' => []
-                    ]
+                        'Special' => [],
+                    ],
                 ],
             ],
             'User Basic Array' => [
@@ -927,47 +918,45 @@ class CapabilitiesTableTest extends TestCase
                 [
                     'User' => [
                         'ScoutGroups' => [
-                            'CREATE' => (int) 79,
-                            'DELETE' => (int) 51,
-                            'VIEW' => (int) 50,
-                            'UPDATE' => (int) 34
+                            'CREATE' => (int)79,
+                            'DELETE' => (int)51,
+                            'VIEW' => (int)50,
+                            'UPDATE' => (int)34,
                         ],
                         'Users' => [
                             'fields' => [
                                 'LAST_LOGIN' => [
-                                    'VIEW' => (int) 41
+                                    'VIEW' => (int)41,
                                 ],
                                 'LAST_LOGIN_IP' => [
-                                    'VIEW' => (int) 43
+                                    'VIEW' => (int)43,
                                 ],
                                 'LAST_NAME' => [
-                                    'VIEW' => (int) 20
-                                ]
+                                    'VIEW' => (int)20,
+                                ],
                             ],
-                            'CREATE' => (int) 46,
-                            'DELETE' => (int) 49
+                            'CREATE' => (int)46,
+                            'DELETE' => (int)49,
                         ],
                         'Special' => [
-                            (int) 36 => 'ALL'
-                        ]
+                            (int)36 => 'ALL',
+                        ],
                     ],
                     'CRUD' => [
-                        (int) 0 => 'CREATE',
-                        (int) 1 => 'DELETE',
-                        (int) 2 => 'VIEW',
-                        (int) 3 => 'UPDATE'
-                    ]
+                        (int)0 => 'CREATE',
+                        (int)1 => 'DELETE',
+                        (int)2 => 'VIEW',
+                        (int)3 => 'UPDATE',
+                    ],
                 ],
-            ]
+            ],
         ];
     }
-
 
     /**
      * Test Build Capability Method and safety overloads
      *
      * @dataProvider providerEnrichCapability
-     *
      * @param array $bare Array to be enriched
      * @param array $enriched Expected Result
      */
@@ -996,7 +985,6 @@ class CapabilitiesTableTest extends TestCase
      * Test Build Capability Method and safety overloads
      *
      * @dataProvider providerEnrichRoleType
-     *
      * @param array $bare Array to be enriched
      * @param array $enriched Expected Result
      */

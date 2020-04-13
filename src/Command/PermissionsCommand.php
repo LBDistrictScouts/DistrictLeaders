@@ -12,7 +12,6 @@ use Cake\Console\ConsoleOptionParser;
  * Class PasswordCommand
  *
  * @package App\Command
- *
  * @property \App\Model\Table\UsersTable $Users
  */
 class PermissionsCommand extends Command
@@ -30,7 +29,6 @@ class PermissionsCommand extends Command
 
     /**
      * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     *
      * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
@@ -55,11 +53,8 @@ class PermissionsCommand extends Command
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
      * @param \Cake\Console\ConsoleIo $io The IO
-     *
      * @return int|void|null
-     *
      * @throws \Exception
-     *
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */

@@ -19,7 +19,6 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  *
  * @property \App\Model\Table\DocumentTypesTable&\Cake\ORM\Association\BelongsTo $DocumentTypes
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\HasMany $DocumentVersions
- *
  * @method \App\Model\Entity\Document get($primaryKey, $options = [])
  * @method \App\Model\Entity\Document newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
@@ -28,7 +27,6 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @method \App\Model\Entity\Document patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Document[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Document findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
@@ -120,7 +118,6 @@ class DocumentsTable extends Table
      * @param array $postData Post Request Data (file upload array)
      * @param \App\Model\Entity\Document $documentEntity The Document Entity
      * @param string $fileSystem The configured Filesystem Name
-     *
      * @return \Cake\Datasource\EntityInterface|bool
      */
     public function uploadDocument($postData, $documentEntity, $fileSystem = 'default')

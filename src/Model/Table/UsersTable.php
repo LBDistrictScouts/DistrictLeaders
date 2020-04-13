@@ -23,7 +23,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
- *
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -32,7 +31,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
@@ -123,9 +121,7 @@ class UsersTable extends Table
 
     /**
      * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     *
      * @return \Cake\Database\Schema\TableSchemaInterface
-     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -247,9 +243,7 @@ class UsersTable extends Table
 
     /**
      * @param \App\Model\Entity\User $user UserEntity
-     *
      * @return array
-     *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
@@ -338,7 +332,6 @@ class UsersTable extends Table
      * Retrieve User Capabilities
      *
      * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
-     *
      * @return array
      */
     public function retrieveCapabilities(User $user)
@@ -352,7 +345,6 @@ class UsersTable extends Table
      * Patch User Capabilities
      *
      * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
-     *
      * @return \App\Model\Entity\User|bool
      */
     public function patchCapabilities(User $user)
@@ -369,7 +361,6 @@ class UsersTable extends Table
      *
      * @param \App\Model\Entity\User $user The User to be checked
      * @param string $capability The Capability to be found
-     *
      * @return bool|array
      */
     public function userCapability(User $user, string $capability)
@@ -412,9 +403,7 @@ class UsersTable extends Table
      *
      * @param \Cake\ORM\Query $query The Query to be Modified
      * @param array $options The Options passed
-     *
      * @return \Cake\ORM\Query
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function findAuth(Query $query, array $options)
@@ -431,9 +420,7 @@ class UsersTable extends Table
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \App\Model\Entity\User $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
@@ -483,9 +470,7 @@ class UsersTable extends Table
     /**
      * @param string $value The Entity Value to be validated
      * @param array $context The Validation Context
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function isValidDomainEmail($value, $context)

@@ -16,7 +16,6 @@ class IconHelper extends Helper
     /**
      * @param string $iconName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
-     *
      * @return string
      */
     private function buildIconString($iconName, $modifiers = null)
@@ -37,7 +36,6 @@ class IconHelper extends Helper
 
     /**
      * @param string $iconString Output from BuildIconString
-     *
      * @return string
      */
     private function buildHtmlString($iconString)
@@ -47,7 +45,6 @@ class IconHelper extends Helper
 
     /**
      * @param string $entityName The Name of the Entity
-     *
      * @return string|bool
      */
     private function getEntityIcon($entityName)
@@ -64,7 +61,6 @@ class IconHelper extends Helper
     /**
      * @param string $iconName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
-     *
      * @return string
      */
     public function iconStandard($iconName, $modifiers = null)
@@ -75,7 +71,6 @@ class IconHelper extends Helper
     /**
      * @param string $iconName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
-     *
      * @return string
      */
     public function iconHtml($iconName, $modifiers = null)
@@ -88,7 +83,6 @@ class IconHelper extends Helper
     /**
      * @param string $entityName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
-     *
      * @return string|bool
      */
     public function iconStandardEntity($entityName, $modifiers = null)
@@ -104,7 +98,6 @@ class IconHelper extends Helper
     /**
      * @param string $entityName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
-     *
      * @return string|bool
      */
     public function iconHtmlEntity($entityName, $modifiers = null)

@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\RoleTemplate $roleTemplate
+ * @var mixed $capabilities
  */
 
 $this->extend('../Layout/CRUD/add');

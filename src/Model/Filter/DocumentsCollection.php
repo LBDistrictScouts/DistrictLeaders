@@ -13,6 +13,8 @@ class DocumentsCollection extends FilterCollection
      * Startup Method
      *
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function initialize(): void
     {

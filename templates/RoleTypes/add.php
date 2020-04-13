@@ -2,6 +2,9 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\RoleType $roleType
+ * @var mixed $capabilities
+ * @var mixed $roleTemplates
+ * @var mixed $sectionTypes
  */
 
 $this->extend('../Layout/CRUD/add');

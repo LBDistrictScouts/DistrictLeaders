@@ -47,7 +47,6 @@ class GoogleClientComponentTest extends TestCase
      * Test initial setup
      *
      * @return void
-     *
      * @throws \Google_Exception
      */
     public function testInitialization()

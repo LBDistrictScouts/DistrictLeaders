@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $ChangedUsers
- *
  * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
  * @method \App\Model\Entity\Audit newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
@@ -133,7 +132,6 @@ class AuditsTable extends Table
 
     /**
      * @param \Cake\ORM\Query $query The Query to be modified.
-     *
      * @return \Cake\ORM\Query
      */
     public function findUsers($query)
@@ -145,7 +143,6 @@ class AuditsTable extends Table
 
     /**
      * @param \Cake\ORM\Query $query The Query to be modified.
-     *
      * @return \Cake\ORM\Query
      */
     public function findRoles($query)
@@ -157,7 +154,6 @@ class AuditsTable extends Table
 
     /**
      * @param \Cake\ORM\Query $query The Query to be modified.
-     *
      * @return \Cake\ORM\Query
      */
     public function findContacts($query)

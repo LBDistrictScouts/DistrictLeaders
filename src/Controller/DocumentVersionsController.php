@@ -7,7 +7,6 @@ namespace App\Controller;
  * DocumentVersions Controller
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
- *
  * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController

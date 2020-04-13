@@ -60,7 +60,6 @@ class ScoutGroupsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -271,9 +270,7 @@ class ScoutGroupsTableTest extends TestCase
      *
      * @param string $emailString String to be encoded
      * @param bool $expected Expected Result
-     *
      * @return void
-     *
      * @dataProvider providerDomainVerifyData
      */
     public function testDomainVerify($emailString, $expected)

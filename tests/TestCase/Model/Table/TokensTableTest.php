@@ -85,7 +85,6 @@ class TokensTableTest extends TestCase
      * Get Good Entity Data
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()

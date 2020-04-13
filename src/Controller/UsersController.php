@@ -14,9 +14,7 @@ use Cake\Event\Event;
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
- *
  * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
- *
  * @property \App\Model\Table\TokensTable $Tokens
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
@@ -24,7 +22,6 @@ class UsersController extends AppController
 {
     /**
      * @throws \Exception
-     *
      * @return void
      */
     public function initialize(): void
@@ -93,7 +90,6 @@ class UsersController extends AppController
      * View method
      *
      * @param string|null $userId User id.
-     *
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -238,7 +234,6 @@ class UsersController extends AppController
      * Password Reset Function - Enables Resetting a User's Password via Email
      *
      * @return \Cake\Http\Response
-     *
      * @throws \Exception
      */
     public function forgot()
@@ -308,7 +303,6 @@ class UsersController extends AppController
      * Username Clarification Function - Enables Resetting a User's Password via Email
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function username()

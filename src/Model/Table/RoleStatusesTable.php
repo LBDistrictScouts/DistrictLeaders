@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * RoleStatuses Model
  *
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- *
  * @method \App\Model\Entity\RoleStatus get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleStatus newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])

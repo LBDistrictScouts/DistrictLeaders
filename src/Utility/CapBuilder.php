@@ -48,7 +48,6 @@ class CapBuilder
      * @param string $action The name of the Action performed
      * @param string $model The Model to be formatted
      * @param string|null $field The Field being limited
-     *
      * @return string|false
      */
     public static function capabilityCodeFormat($action, $model, $field = null)
@@ -80,7 +79,6 @@ class CapBuilder
      * @param string $action The name of the Action performed
      * @param string $model The Model to be formatted
      * @param string|null $field The Field Restriction
-     *
      * @return string|false
      */
     public static function capabilityNameFormat($action, $model, $field = null)
@@ -109,7 +107,6 @@ class CapBuilder
      * @param int $baseLevel The Base Level for Capability
      * @param int $multiplier The Action Multiplier
      * @param bool|null $viewRestricted Is the view action restricted
-     *
      * @return int
      */
     public static function calculateLevel($baseLevel, $multiplier, $viewRestricted = false)
@@ -141,7 +138,6 @@ class CapBuilder
 
     /**
      * @param string $action Action which might need overriding
-     *
      * @return string|false
      */
     protected static function applyActionOverrides($action)
@@ -194,7 +190,6 @@ class CapBuilder
 
     /**
      * @param string $action Action to be Checked
-     *
      * @return bool
      */
     public static function isFieldActionType($action)
@@ -206,7 +201,6 @@ class CapBuilder
 
     /**
      * @param string $action Action to be Checked
-     *
      * @return bool
      */
     public static function isEntityActionType($action)
@@ -218,7 +212,6 @@ class CapBuilder
 
     /**
      * @param string $capability Capability to be Checked
-     *
      * @return bool
      */
     public static function isFieldType($capability)
@@ -228,7 +221,6 @@ class CapBuilder
 
     /**
      * @param string $action The Action to be validated
-     *
      * @return bool
      */
     public static function isActionType($action)
@@ -240,7 +232,6 @@ class CapBuilder
 
     /**
      * @param string $model The Model to be validated
-     *
      * @return bool
      */
     public static function isFieldRestricted($model)
@@ -250,7 +241,6 @@ class CapBuilder
 
     /**
      * @param string $capabilityCode Capability code to be broken
-     *
      * @return array|false
      */
     protected static function breakFieldCode($capabilityCode)
@@ -266,7 +256,6 @@ class CapBuilder
 
     /**
      * @param string $capabilityCode The Capability Code to be broken
-     *
      * @return array
      */
     public static function breakCode($capabilityCode)
@@ -288,7 +277,6 @@ class CapBuilder
 
     /**
      * @param string $capabilityCode Capability Code for testing
-     *
      * @return bool
      */
     public static function isSpecialCode($capabilityCode)

@@ -48,7 +48,6 @@ trait AppTestTrait
      * Function to do generic feature for Get Integration Test Load.
      *
      * @param array|string $url The Url Array to be tested.
-     *
      * @return void
      */
     protected function tryGet($url)

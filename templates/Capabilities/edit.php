@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Capability $capability
+ * @var mixed $roleTypes
  */
 
 $this->extend('../Layout/CRUD/edit');

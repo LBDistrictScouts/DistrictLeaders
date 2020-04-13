@@ -7,7 +7,6 @@ namespace App\Controller;
  * EmailResponseTypes Controller
  *
  * @property \App\Model\Table\EmailResponseTypesTable $EmailResponseTypes
- *
  * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailResponseTypesController extends AppController

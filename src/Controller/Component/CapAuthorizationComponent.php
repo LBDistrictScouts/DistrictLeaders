@@ -23,7 +23,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     protected $capUser;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -37,9 +37,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     /**
      * @param \Cake\ORM\Entity $resource The resource to check authorization on.
      * @param string|null $action The action to check authorization for.
-     *
      * @return array
-     *
      * @throws \Authorization\Exception\ForbiddenException when policy check fails.
      */
     public function see($resource, $action = 'VIEW')
@@ -72,7 +70,6 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string $capability The Capability being checked.
      * @param int|null $group A Group ID if applicable
      * @param int|null $section A Section ID if applicable
-     *
      * @return bool|\Authorization\Policy\ResultInterface
      */
     public function checkCapability($capability, $group = null, $section = null)
@@ -95,7 +92,6 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param int|null $group The Group ID for checking against
      * @param int|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     *
      * @return bool
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)

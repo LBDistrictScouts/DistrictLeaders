@@ -22,7 +22,6 @@ use Josbeir\Filesystem\FileEntityInterface;
  *
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property \App\Model\Entity\FileType $file_type
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  */
 class DocumentEdition extends Entity implements FileEntityInterface
@@ -60,7 +59,6 @@ class DocumentEdition extends Entity implements FileEntityInterface
 
     /**
      * @param string $path The Path to be set
-     *
      * @return \Josbeir\Filesystem\FileEntityInterface
      */
     public function setPath(string $path): FileEntityInterface

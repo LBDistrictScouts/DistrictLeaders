@@ -21,7 +21,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleTemplatesTable&\Cake\ORM\Association\BelongsTo $RoleTemplates
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
- *
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
@@ -115,7 +114,6 @@ class RoleTypesTable extends Table
 
     /**
      * @param \App\Model\Entity\RoleType $roleType The Entity to be Patched.
-     *
      * @return \App\Model\Entity\RoleType
      */
     public function patchTemplateCapabilities($roleType)
@@ -148,7 +146,6 @@ class RoleTypesTable extends Table
 
     /**
      * @param \App\Model\Entity\RoleType $roleType The RoleType Entity
-     *
      * @return int
      */
     public function patchRoleUsers($roleType)

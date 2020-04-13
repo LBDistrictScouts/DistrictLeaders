@@ -26,9 +26,7 @@ class CaseableBehavior extends Behavior
      *
      * @param \Cake\Event\Event $event The event being processed.
      * @param \Cake\ORM\Entity $entity The Entity being processed.
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeRules(\Cake\Event\EventInterface $event, $entity)

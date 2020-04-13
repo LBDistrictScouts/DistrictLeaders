@@ -34,7 +34,6 @@ class FunctionalHelper extends Helper
 
     /**
      * @param array $config The Config Array
-     *
      * @return void
      */
     public function initialize(array $config): void
@@ -47,7 +46,6 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $function The Function to be Checked
-     *
      * @return bool
      */
     public function checkFunction($function)
@@ -65,7 +63,6 @@ class FunctionalHelper extends Helper
      * @param string $function The Function to be Checked
      * @param \App\Model\Entity\User|null $identity The User Identity
      * @param string|null $action The action being checked
-     *
      * @return bool
      */
     public function checkFunctionAuth($function, $identity = false, $action = 'index')
@@ -91,7 +88,6 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $searchModel The Function to be Checked
-     *
      * @return bool
      */
     public function checkSearchConfigured($searchModel)

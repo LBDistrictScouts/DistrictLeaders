@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * ScoutGroups Model
  *
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
- *
  * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
@@ -20,7 +19,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
@@ -125,7 +123,6 @@ class ScoutGroupsTable extends Table
      * A Loop function to validate an email address against recorded domains.
      *
      * @param string $emailAddress The Email Address to be verified
-     *
      * @return bool
      */
     public function domainVerify($emailAddress)

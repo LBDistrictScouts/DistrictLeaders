@@ -57,7 +57,6 @@ class UserContactTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws \Exception
      */
     private function getGood()
@@ -105,7 +104,6 @@ class UserContactTypesTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testValidationDefault()
@@ -172,7 +170,6 @@ class UserContactTypesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testBuildRules()

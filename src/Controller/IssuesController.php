@@ -9,9 +9,7 @@ use Cake\Datasource\ModelAwareTrait;
 /**
  * Issues Controller
  *
- *
  * @method \App\Model\Entity\Issue[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
- *
  * @property \Cake\ORM\Table $Issues
  */
 class IssuesController extends Controller
@@ -20,7 +18,6 @@ class IssuesController extends Controller
 
     /**
      * @param \Cake\Event\Event $event The event being interrupted
-     *
      * @return \Cake\Http\Response|void|null
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)

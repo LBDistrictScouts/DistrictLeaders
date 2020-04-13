@@ -20,7 +20,6 @@ class FilterComponent extends Component
     /**
      * @param \Cake\ORM\Association $association The Association for Filtering on
      * @param array $queryParams The Query Params of the Request
-     *
      * @return \Cake\ORM\Query
      */
     public function indexFilters($association, $queryParams)

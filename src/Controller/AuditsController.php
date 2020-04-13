@@ -7,7 +7,6 @@ namespace App\Controller;
  * Audits Controller
  *
  * @property \App\Model\Table\AuditsTable $Audits
- *
  * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AuditsController extends AppController

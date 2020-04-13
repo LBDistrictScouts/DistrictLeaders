@@ -9,7 +9,6 @@ use Cake\Core\Configure;
  * RoleTypes Controller
  *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
- *
  * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController

@@ -29,6 +29,7 @@ class MarkdownHelper extends Helper
      * @param array $config Array for configuration
      *
      * {@inheritDoc}
+     * @return void
      */
     public function initialize(array $config): void
     {
@@ -49,7 +50,6 @@ class MarkdownHelper extends Helper
 
     /**
      * @param string $markdownStream The Markdown Stream to be converted to html
-     *
      * @return string
      */
     public function markdownToHtml($markdownStream)

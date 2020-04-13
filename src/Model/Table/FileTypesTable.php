@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  * FileTypes Model
  *
  * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
- *
  * @method \App\Model\Entity\FileType get($primaryKey, $options = [])
  * @method \App\Model\Entity\FileType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\FileType[] newEntities(array $data, array $options = [])

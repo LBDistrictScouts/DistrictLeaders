@@ -32,7 +32,6 @@ trait ModelTestTrait
      * @param string $field The Field expected to error
      * @param string $message
      * @param string $errorType
-     *
      * @return void
      */
     private function checkError($entity, $field, $errorType, $message = null)
@@ -61,7 +60,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     *
      * @return void
      */
     protected function validateRequired($requiredFields, $table, $good, $validator = 'default')
@@ -80,7 +78,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     *
      * @return void
      */
     protected function validateNotRequired($notRequiredFields, $table, $good, $validator = 'default')
@@ -99,7 +96,6 @@ trait ModelTestTrait
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @param string $message The Output Message Expected
-     *
      * @return void
      */
     protected function validateNotEmpty($field, $table, $good, $validator = 'default', $message = null)
@@ -116,7 +112,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     *
      * @return void
      */
     protected function validateNotEmpties($notEmptyFields, $table, $good, $validator = 'default')
@@ -131,7 +126,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     *
      * @return void
      */
     protected function validateEmpties($emptyFields, $table, $good, $validator = 'default')
@@ -149,7 +143,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
-     *
      * @return void
      */
     protected function validateMaxLengths($maxLengthFields, $table, $good, $validator = 'default')
@@ -181,7 +174,6 @@ trait ModelTestTrait
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @param string|null $message The Output Message Expected
-     *
      * @return void
      */
     protected function validateEmail($field, $table, $good, $validator = 'default', $message = null)
@@ -212,7 +204,6 @@ trait ModelTestTrait
      * @param string|array $field Field Name
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
-     *
      * @return void
      */
     protected function validateUniqueRule($field, $table, $good)
@@ -243,7 +234,6 @@ trait ModelTestTrait
      * @param array $uniqueFieldArray Array of Field Names
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
-     *
      * @return void
      */
     protected function validateUniqueRules($uniqueFieldArray, $table, $good)
@@ -259,7 +249,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $association The Associated Table to be tested
      * @param callable $good The Good Generation Function
      * @param array|null $options Options Array for Save Entity
-     *
      * @return void
      */
     protected function validateExistsRule($field, $table, $association, $good, $options = [])
@@ -289,7 +278,6 @@ trait ModelTestTrait
      * @param array $existsArray Array of Foreign Key Names & Associated Tables
      * @param \Cake\ORM\Table $table The Table to be tested
      * @param callable $good The Good Generation Function
-     *
      * @return void
      */
     protected function validateExistsRules($existsArray, $table, $good)

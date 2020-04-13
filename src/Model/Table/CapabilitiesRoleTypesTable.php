@@ -12,7 +12,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsTo $Capabilities
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
- *
  * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])

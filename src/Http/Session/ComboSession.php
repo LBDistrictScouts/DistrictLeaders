@@ -36,7 +36,6 @@ class ComboSession extends DatabaseSession
      * Method used to read from a database session.
      *
      * @param string|int $sessionId ID that uniquely identifies session in database.
-     *
      * @return string Session data or empty string if it does not exist.
      */
     public function read($sessionId): string
@@ -54,7 +53,6 @@ class ComboSession extends DatabaseSession
      *
      * @param string|int $sessionId ID that uniquely identifies session in database.
      * @param mixed $data The data to be saved.
-     *
      * @return bool True for successful write, false otherwise.
      */
     public function write($sessionId, $data): bool
@@ -68,7 +66,6 @@ class ComboSession extends DatabaseSession
      * Method called on the destruction of a database session.
      *
      * @param string|int $sessionId ID that uniquely identifies session in database.
-     *
      * @return bool True for successful delete, false otherwise.
      */
     public function destroy($sessionId): bool

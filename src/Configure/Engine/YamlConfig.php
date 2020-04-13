@@ -13,7 +13,6 @@ use Symfony\Component\Yaml\Yaml;
  * Class YamlConfig
  *
  * @package App\Configure\Engine
- *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class YamlConfig implements ConfigEngineInterface
@@ -57,7 +56,6 @@ class YamlConfig implements ConfigEngineInterface
      *
      * @param mixed $key Key
      * @param array $data Data
-     *
      * @return bool Success
      */
     public function dump($key, array $data): bool

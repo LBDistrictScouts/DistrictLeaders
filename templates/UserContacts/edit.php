@@ -2,6 +2,8 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\UserContact $userContact
+ * @var mixed $userContactTypes
+ * @var mixed $users
  */
 
 $this->extend('../Layout/CRUD/edit');

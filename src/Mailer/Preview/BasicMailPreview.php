@@ -10,7 +10,6 @@ use DebugKit\Mailer\MailPreview;
  * Class BasicMailPreview
  *
  * @package App\Mailer\Preview
- *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  * @property \App\Model\Table\TokensTable $Tokens
  */

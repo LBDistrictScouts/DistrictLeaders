@@ -69,7 +69,6 @@ class RoleTemplatesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -258,7 +257,6 @@ class RoleTemplatesTableTest extends TestCase
      * @param array $entity Array to be split
      * @param string $key Key to split on
      * @param string $prefix for the Array
-     *
      * @return array
      */
     private function splitArray($entity, $key, $prefix)
@@ -276,11 +274,9 @@ class RoleTemplatesTableTest extends TestCase
      * Test makeCoreTemplate method
      *
      * @dataProvider providerMakeCoreTemplate
-     *
      * @param string $name The Name for the Template
      * @param int $level The Level for the core
      * @param array $expected Expected array as created
-     *
      * @return void
      */
     public function testMakeCoreTemplate($name, $level, $expected)
@@ -422,7 +418,6 @@ class RoleTemplatesTableTest extends TestCase
 
     /**
      * @dataProvider providerInstallBaseRoleTemplate
-     *
      * @param array $roleTemplate The Input from config
      * @param array|false $expected The Role Template to be created
      */

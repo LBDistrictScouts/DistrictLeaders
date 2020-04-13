@@ -67,9 +67,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideFunctionalAreaData
-     *
      * @return void
      */
     public function testFunctionalArea($expected, $provided)
@@ -100,9 +98,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSearchConfigData
-     *
      * @return void
      */
     public function testSearchConfigured($expected, $provided)

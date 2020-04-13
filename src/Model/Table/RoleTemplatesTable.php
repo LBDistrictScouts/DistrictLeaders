@@ -14,7 +14,6 @@ use Cake\Validation\Validator;
  * RoleTemplates Model
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
- *
  * @method \App\Model\Entity\RoleTemplate get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleTemplate newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleTemplate[] newEntities(array $data, array $options = [])
@@ -83,9 +82,7 @@ class RoleTemplatesTable extends Table
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
@@ -129,7 +126,6 @@ class RoleTemplatesTable extends Table
      * function to install a template from Configuration
      *
      * @param array $roleTemplate Role Template Array for Config
-     *
      * @return bool
      */
     public function installBaseRoleTemplate($roleTemplate)
@@ -165,7 +161,6 @@ class RoleTemplatesTable extends Table
     /**
      * @param string $name The Role Template Name
      * @param int $level The Permission Level
-     *
      * @return \App\Model\Entity\RoleTemplate|false
      */
     public function makeCoreTemplate($name, $level)
@@ -188,7 +183,6 @@ class RoleTemplatesTable extends Table
 
     /**
      * @param array $objectArray The array to be saved
-     *
      * @return \App\Model\Entity\RoleTemplate
      */
     protected function makeOrPatch($objectArray)

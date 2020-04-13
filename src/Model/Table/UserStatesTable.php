@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * UserStates Model
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
- *
  * @method \App\Model\Entity\UserState get($primaryKey, $options = [])
  * @method \App\Model\Entity\UserState newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\UserState[] newEntities(array $data, array $options = [])

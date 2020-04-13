@@ -9,6 +9,7 @@ class CapabilitiesLength extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function up()
@@ -27,6 +28,7 @@ class CapabilitiesLength extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function down()

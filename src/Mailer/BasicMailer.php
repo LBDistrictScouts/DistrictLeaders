@@ -17,7 +17,6 @@ class BasicMailer extends Mailer
      * @param \App\Model\Entity\EmailSend $emailSend The Email Send Entity
      * @param string|null $token The Encoded Token to be sent.
      * @param \Cake\ORM\Entity|null $entity The Subject Entity
-     *
      * @return void
      */
     public function doSend($emailSend, $token = null, $entity = null)

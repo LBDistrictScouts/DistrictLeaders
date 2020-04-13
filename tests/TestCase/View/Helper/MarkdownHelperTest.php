@@ -68,7 +68,6 @@ class MarkdownHelperTest extends TestCase
      * Test markdownToHtml method
      *
      * @return void
-     *
      * @throws \League\Flysystem\FileNotFoundException
      * @throws \Josbeir\Filesystem\Exception\FilesystemException
      */

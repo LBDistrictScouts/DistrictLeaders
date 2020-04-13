@@ -45,7 +45,6 @@ class UserStatesControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testIndex()
@@ -57,7 +56,6 @@ class UserStatesControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     *
      * @throws
      */
     public function testView()
@@ -69,7 +67,6 @@ class UserStatesControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     *
      * @throws
      */
     public function testAdd()
@@ -91,7 +88,6 @@ class UserStatesControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     *
      * @throws
      */
     public function testEdit()
@@ -113,7 +109,6 @@ class UserStatesControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     *
      * @throws
      */
     public function testDelete()

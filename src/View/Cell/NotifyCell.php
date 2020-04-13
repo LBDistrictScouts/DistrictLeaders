@@ -36,7 +36,6 @@ class NotifyCell extends Cell
      * Default display method.
      *
      * @param int $loggedInUserId The Id of the Authenticated User
-     *
      * @return void
      */
     public function display($loggedInUserId)

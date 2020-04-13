@@ -18,7 +18,6 @@ use Cake\Validation\Validator;
  * Tokens Model
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
- *
  * @method \App\Model\Entity\Token get($primaryKey, $options = [])
  * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
@@ -26,7 +25,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Token[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
@@ -115,9 +113,7 @@ class TokensTable extends Table
 
     /**
      * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     *
      * @return \Cake\Database\Schema\TableSchemaInterface
-     *
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -142,11 +138,9 @@ class TokensTable extends Table
     }
 
     /**
-     *
      * @param \Cake\Event\Event $event The Event to be processed
      * @param \App\Model\Table\ArrayObject $data The data to be modified
      * @param \App\Model\Table\ArrayObject $options The Options Contained
-     *
      * @return void
      */
     public function beforeMarshal(Event $event, $data, $options)
@@ -161,9 +155,7 @@ class TokensTable extends Table
      * Hashes the password before save
      *
      * @param \Cake\Event\Event $event The event trigger.
-     *
      * @return true
-     *
      * @throws \Exception
      */
     public function beforeSave(\Cake\Event\EventInterface $event)
@@ -184,7 +176,6 @@ class TokensTable extends Table
 
     /**
      * @param int $tokenId The Id of the Token
-     *
      * @return string
      */
     public function prepareToken($tokenId)
@@ -218,7 +209,6 @@ class TokensTable extends Table
 
     /**
      * @param int $tokenId The Id of the Token
-     *
      * @return string
      */
     public function buildToken($tokenId)
@@ -231,7 +221,6 @@ class TokensTable extends Table
 
     /**
      * @param string $token The Token to be Validated & Decrypted
-     *
      * @return int|bool $validation Containing the validation state & id
      */
     public function validateToken($token)
@@ -279,7 +268,6 @@ class TokensTable extends Table
 
     /**
      * @param \App\Model\Entity\Token $token The token to be cleaned.
-     *
      * @return int
      */
     public function cleanToken($token)
@@ -346,7 +334,6 @@ class TokensTable extends Table
 
     /**
      * @param array $requestQueryParams Request Query Params
-     *
      * @return false|\App\Model\Entity\Token
      */
     public function validateTokenRequest($requestQueryParams)

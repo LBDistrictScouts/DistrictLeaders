@@ -11,7 +11,6 @@ use Cake\Validation\Validator;
  * UserContactTypes Model
  *
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
- *
  * @method \App\Model\Entity\UserContactType get($primaryKey, $options = [])
  * @method \App\Model\Entity\UserContactType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\UserContactType[] newEntities(array $data, array $options = [])
@@ -20,7 +19,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\UserContactType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserContactType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserContactType findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */

@@ -182,9 +182,7 @@ class ResetFormTest extends TestCase
      * @param array $outcome The error and error field etc
      * @param string|null $firstName The First Name
      * @param string|null $lastName The Last Name
-     *
      * @dataProvider provideValidateData
-     *
      * @return void
      */
     public function testValidate($membershipNumber, $email, $outcome, $firstName = null, $lastName = null)

@@ -87,7 +87,6 @@ class CapabilityTaskTest extends TestCase
      * Test initial setup
      *
      * @return void
-     *
      * @throws \Throwable
      */
     public function testCapabilityQueueJob()

@@ -128,7 +128,6 @@ class PasswordFormTest extends TestCase
      * @param string $confirmPassword The Old Password Field
      * @param string $postcode The User Password
      * @param array $outcome The Outcome Array
-     *
      * @dataProvider provideValidateData
      */
     public function testValidate($newPassword, $confirmPassword, $postcode, $outcome)
@@ -269,9 +268,7 @@ class PasswordFormTest extends TestCase
      *
      * @param array $requestArray
      * @param array $outcomeArray
-     *
      * @dataProvider provideExecuteData
-     *
      * @return void
      */
     public function testExecute($requestArray, $outcomeArray)

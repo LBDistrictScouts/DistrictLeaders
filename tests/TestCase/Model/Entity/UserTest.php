@@ -10,14 +10,11 @@ use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityDecorator;
 use Authorization\IdentityInterface;
 use Authorization\Middleware\AuthorizationMiddleware;
-use Cake\Http\Response;
-use Cake\Http\Server;
 use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use function Aws\default_http_handler;
 
 /**
  * App\Model\Entity\User Test Case
@@ -209,7 +206,6 @@ class UserTest extends TestCase
 
     /**
      * @param User $user The user to be altered.
-     *
      * @return User
      */
     private function notAll($user)

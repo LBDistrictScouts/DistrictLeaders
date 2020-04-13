@@ -13,7 +13,6 @@ use Cake\Validation\Validator;
  * NotificationTypes Model
  *
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
- *
  * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
  * @method \App\Model\Entity\NotificationType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
@@ -133,7 +132,6 @@ class NotificationTypesTable extends Table
      *
      * @param string $type The Type of the Notification
      * @param string $subtype The SubType
-     *
      * @return mixed
      */
     public function getTypeCode($type, $subtype)

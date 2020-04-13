@@ -13,7 +13,6 @@ use Cake\TestSuite\TestCase;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- *
  * @property \App\Model\Table\RolesTable $Roles
  * @property EventManager $EventManager
  */

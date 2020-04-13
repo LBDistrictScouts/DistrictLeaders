@@ -7,7 +7,6 @@ namespace App\Controller;
  * RoleStatuses Controller
  *
  * @property \App\Model\Table\RoleStatusesTable $RoleStatuses
- *
  * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleStatusesController extends AppController

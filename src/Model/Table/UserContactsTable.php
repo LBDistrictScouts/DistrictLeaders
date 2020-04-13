@@ -14,7 +14,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- *
  * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
  * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
@@ -23,7 +22,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
@@ -154,7 +152,6 @@ class UserContactsTable extends Table
     /**
      * @param string $value The Entity Value to be validated
      * @param array $context The Validation Context
-     *
      * @return bool
      */
     public function isValidDomainEmail($value, $context)

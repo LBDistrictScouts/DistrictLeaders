@@ -33,7 +33,6 @@ class NavBarCell extends Cell
      * Default display method.
      *
      * @param \App\Model\Entity\User $identity The Authenticated User
-     *
      * @return void
      */
     public function display($identity)

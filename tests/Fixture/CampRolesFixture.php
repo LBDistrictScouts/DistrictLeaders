@@ -5,7 +5,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * CampRolesFixture
- *
  */
 class CampRolesFixture extends TestFixture
 {

@@ -7,7 +7,6 @@ namespace App\Controller;
  * CampTypes Controller
  *
  * @property \App\Model\Table\CampTypesTable $CampTypes
- *
  * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampTypesController extends AppController

@@ -61,9 +61,7 @@ class InflectionHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSpaceData
-     *
      * @return void
      */
     public function testSpace($expected, $provided)
@@ -90,9 +88,7 @@ class InflectionHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSpaceSingluarData
-     *
      * @return void
      */
     public function testSinglulariseSpace($expected, $provided)

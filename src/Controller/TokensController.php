@@ -7,14 +7,12 @@ namespace App\Controller;
  * Tokens Controller
  *
  * @property \App\Model\Table\TokensTable $Tokens
- *
  * @method \App\Model\Entity\Token[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {
     /**
      * @throws \Exception
-     *
      * @return void
      */
     public function initialize(): void
@@ -28,7 +26,6 @@ class TokensController extends AppController
      * Validation of a Token
      *
      * @param string $token The Token for deciphering.
-     *
      * @return \Cake\Http\Response|null
      */
     public function validate($token = null)

@@ -34,7 +34,6 @@ use SparkPost\SparkPostException;
  * Provides an interface between the CakePHP Email functionality and the SparkPost API.
  *
  * @package SparkPost\Mailer\Transport
- *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
 class SparkPostTransport extends AbstractTransport
@@ -43,7 +42,6 @@ class SparkPostTransport extends AbstractTransport
      * Send mail via SparkPost REST API
      *
      * @param \Cake\Mailer\Message $emailMessage Email message
-     *
      * @return array
      */
     public function send(Message $emailMessage): array

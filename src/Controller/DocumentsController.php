@@ -13,7 +13,6 @@ use Exception;
  * @property \App\Model\Table\DocumentsTable $Documents
  *
  * @property \App\Controller\Component\FilterComponent $Filter
- *
  * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  * @property \Search\Controller\Component\SearchComponent $Search
  */
@@ -23,6 +22,7 @@ class DocumentsController extends AppController
      * @throws \Exception
      *
      * {@inheritdoc}
+     * @return void
      */
     public function initialize(): void
     {

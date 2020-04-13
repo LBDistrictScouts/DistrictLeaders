@@ -7,7 +7,6 @@ namespace App\Controller;
  * UserContactTypes Controller
  *
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
- *
  * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
@@ -28,9 +27,7 @@ class UserContactTypesController extends AppController
      * View method
      *
      * @param string|null $id User Contact Type id.
-     *
      * @return \Cake\Http\Response|void
-     *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
