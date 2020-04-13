@@ -1,116 +1,134 @@
 <?php
 /**
  * @var \App\View\AppView $this
+ * @var array $crudList
+ * @var array $models
+ * @var array $capabilities
  * @var \App\Model\Entity\RoleType $roleType
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Role Type'), ['action' => 'edit', $roleType->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Role Type'), ['action' => 'delete', $roleType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleType->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Role Types'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Role Type'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Section Types'), ['controller' => 'SectionTypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Section Type'), ['controller' => 'SectionTypes', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Role Templates'), ['controller' => 'RoleTemplates', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Role Template'), ['controller' => 'RoleTemplates', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Roles'), ['controller' => 'Roles', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Role'), ['controller' => 'Roles', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Capabilities'), ['controller' => 'Capabilities', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Capability'), ['controller' => 'Capabilities', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<div class="roleTypes view large-9 medium-8 columns content">
-    <h3><?= h($roleType->role_abbreviation) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Role Type') ?></th>
-            <td><?= h($roleType->role_type) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Role Abbreviation') ?></th>
-            <td><?= h($roleType->role_abbreviation) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Section Type') ?></th>
-            <td><?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Role Template') ?></th>
-            <td><?= $roleType->has('role_template') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($roleType->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Level') ?></th>
-            <td><?= $this->Number->format($roleType->level) ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Capabilities') ?></h4>
+
+
+<div class="row">
+    <div class="col">
+        <div class="jumbotron d-none d-sm-none d-md-flex d-lg-flex d-xl-flex" style="background-image: url(/img/activity-bg-2.jpg);background-size: cover;height: 300px;"></div>
+        <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                        <h4><?= h($roleType->role_type) ?></h4>
+
+                        <h6 class="text-muted mb-2"><strong>Role Abbreviation:</strong> <?= h($roleType->role_abbreviation) ?></h6>
+                        <h6 class="text-muted mb-2"><strong>Section Type:</strong> <?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></h6>
+                        <h6 class="text-muted mb-2"><strong>Role Template:</strong> <?= $roleType->has('role_template') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : '' ?></h6>
+                        <h6 class="text-muted mb-2"><strong>Level:</strong> <?= $this->Number->format($roleType->level) ?></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
         <?php if (!empty($roleType->capabilities)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Capability Code') ?></th>
-                <th scope="col"><?= __('Capability') ?></th>
-                <th scope="col"><?= __('Min Level') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($roleType->capabilities as $capabilities): ?>
-            <tr>
-                <td><?= h($capabilities->id) ?></td>
-                <td><?= h($capabilities->capability_code) ?></td>
-                <td><?= h($capabilities->capability) ?></td>
-                <td><?= h($capabilities->min_level) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Capabilities', 'action' => 'view', $capabilities->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Capabilities', 'action' => 'edit', $capabilities->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Capabilities', 'action' => 'delete', $capabilities->id], ['confirm' => __('Are you sure you want to delete # {0}?', $capabilities->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
-        <h4><?= __('Related Roles') ?></h4>
-        <?php if (!empty($roleType->roles)): ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Role Type Id') ?></th>
-                <th scope="col"><?= __('Section Id') ?></th>
-                <th scope="col"><?= __('User Id') ?></th>
-                <th scope="col"><?= __('Role Status Id') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Deleted') ?></th>
-                <th scope="col"><?= __('User Contact Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($roleType->roles as $roles): ?>
-            <tr>
-                <td><?= h($roles->id) ?></td>
-                <td><?= h($roles->role_type_id) ?></td>
-                <td><?= h($roles->section_id) ?></td>
-                <td><?= h($roles->user_id) ?></td>
-                <td><?= h($roles->role_status_id) ?></td>
-                <td><?= h($roles->created) ?></td>
-                <td><?= h($roles->modified) ?></td>
-                <td><?= h($roles->deleted) ?></td>
-                <td><?= h($roles->user_contact_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Roles', 'action' => 'view', $roles->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Roles', 'action' => 'delete', $roles->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roles->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
+            <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                <div class="card-header">
+                    <h3>Capabilities on Role</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                            <div class="row">
+                                <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Special</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <?php foreach ($capabilities['Special'] as $capability => $templated): ?>
+                                                            <span class="badge badge-<?= $templated ? 'success' : 'info' ?>"><?= h($capability) ?></span>
+                                                        <?php endforeach; ?>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <p class="text-right"><span class="badge badge-success">Green Badges</span> are templated values. <span class="badge badge-info">Blue Badges</span> are manual values.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th><?= __('Model') ?></th>
+                                            <th><?= __('Field') ?></th>
+                                            <?php foreach ($crudList as $crud): ?>
+                                                <th><?= ucwords(strtolower($crud)) ?></th>
+                                            <?php endforeach; ?>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($models as $knownModel => $modelConfig): ?>
+                                            <tr>
+                                                <td><?= $this->Inflection->space($knownModel) ?></td>
+                                                <td></td>
+                                                <?php foreach ($crudList as $crud): ?>
+                                                    <?php
+                                                        if (key_exists($knownModel, $capabilities)) {
+                                                            $modelMatrix = $capabilities[$knownModel];
+                                                        } else {
+                                                            $modelMatrix = [];
+                                                        }
+
+                                                        if (key_exists($crud, $modelMatrix) && $modelMatrix[$crud]) {
+                                                            $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
+                                                        } else {
+                                                            $isTemplate = '<icon class="fal fa-check-circle"></icon>';
+                                                        }
+                                                    ?>
+                                                    <td><?= key_exists($crud, $modelMatrix) ? $isTemplate : '' ?></td>
+                                                <?php endforeach; ?>
+                                            </tr>
+                                            <?php if (key_exists($knownModel, $capabilities) && key_exists('fields', $capabilities[$knownModel])) : ?>
+                                                <?php foreach ($capabilities[$knownModel]['fields'] as $field => $fieldCrud) : ?>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td><?= ucwords($this->Inflection->space(strtolower($field))) ?></td>
+                                                        <?php foreach ($crudList as $crud): ?>
+                                                            <?php if ($crud != 'CHANGE') : ?>
+                                                                <?php
+                                                                    if ($crud == 'UPDATE') {
+                                                                        $crud = 'CHANGE';
+                                                                    }
+                                                                    $isActive = '';
+                                                                    if ($crud == 'CREATE' || $crud == 'DELETE') {
+                                                                        $isActive = '<icon class="fal fa-ellipsis-h"></icon>';
+                                                                    }
+
+                                                                    if (key_exists($crud, $fieldCrud) && $fieldCrud[$crud]) {
+                                                                        $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
+                                                                    } else {
+                                                                        $isTemplate = '<icon class="fal fa-check-circle"></icon>';
+                                                                    }
+                                                                ?>
+                                                                <td><?= key_exists($crud, $fieldCrud) ? $isTemplate :  $isActive ?></td>
+                                                            <?php endif; ?>
+                                                        <?php endforeach; ?>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+
+                                    </tbody>
+                                </table>
+                                <p class="text-right"><icon class="fal fa-clipboard-check"></icon> is a templated value. <icon class="fal fa-check-circle"></icon> is a manual value.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php endif; ?>
     </div>
 </div>

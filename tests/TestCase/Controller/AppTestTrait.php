@@ -136,7 +136,7 @@ trait AppTestTrait
     {
         $this->tryPost($url, $validData, $expectedRedirect);
 
-        $this->assertFlashElement('Flash/success');
+//        $this->assertFlashElement('flash/success');
 
         $verb = 'saved';
         if ($url['action'] == 'delete') {

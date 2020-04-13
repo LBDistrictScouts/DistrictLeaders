@@ -527,4 +527,484 @@ class CapabilitiesTableTest extends TestCase
         $result = $this->Capabilities->buildCapability($action, $model, $field);
         TestCase::assertEquals($expected, $result);
     }
+
+
+    /**
+     * @return array
+     */
+    public function providerEnrichCapability()
+    {
+        return [
+            'Complex Group Capability Array' => [
+                [
+                    'user' => [
+                        36 => 'ALL',
+                        79 => 'CREATE_SCOUT_GROUP',
+                        51 => 'DELETE_SCOUT_GROUP',
+                        50 => 'VIEW_SCOUT_GROUP',
+                        34 => 'UPDATE_SCOUT_GROUP',
+                        41 => 'FIELD_VIEW_USERS@LAST_LOGIN',
+                        43 => 'FIELD_VIEW_USERS@LAST_LOGIN_IP',
+                        46 => 'CREATE_USER',
+                        49 => 'DELETE_USER',
+                        20 => 'FIELD_VIEW_USERS@LAST_NAME',
+                    ],
+                    'group' => [
+                        1 => [
+                            70 => 'CREATE_SECTION',
+                            23 => 'CREATE_USER',
+                            47 => 'FIELD_CHANGE_USER@ADDRESS_LINE_1',
+                            48 => 'FIELD_CHANGE_USER@ADDRESS_LINE_2',
+                            56 => 'FIELD_CHANGE_USER@CAPABILITIES',
+                            17 => 'FIELD_CHANGE_USER@CITY',
+                            49 => 'FIELD_CHANGE_USER@COUNTY',
+                            51 => 'FIELD_CHANGE_USER@CREATED',
+                            45 => 'FIELD_CHANGE_USER@EMAIL',
+                            43 => 'FIELD_CHANGE_USER@FIRST_NAME',
+                            79 => 'FIELD_CHANGE_USER@FULL_NAME',
+                            53 => 'FIELD_CHANGE_USER@LAST_LOGIN',
+                            55 => 'FIELD_CHANGE_USER@LAST_LOGIN_IP',
+                            44 => 'FIELD_CHANGE_USER@LAST_NAME',
+                            42 => 'FIELD_CHANGE_USER@MEMBERSHIP_NUMBER',
+                            52 => 'FIELD_CHANGE_USER@MODIFIED',
+                            46 => 'FIELD_CHANGE_USER@PASSWORD',
+                            57 => 'FIELD_CHANGE_USER@PASSWORD_STATE_ID',
+                            50 => 'FIELD_CHANGE_USER@POSTCODE',
+                            41 => 'FIELD_CHANGE_USER@USERNAME',
+                            65 => 'FIELD_VIEW_USER@ADDRESS_LINE_1',
+                            66 => 'FIELD_VIEW_USER@ADDRESS_LINE_2',
+                            77 => 'FIELD_VIEW_USER@CAPABILITIES',
+                            67 => 'FIELD_VIEW_USER@CITY',
+                            68 => 'FIELD_VIEW_USER@COUNTY',
+                            72 => 'FIELD_VIEW_USER@CREATED',
+                            75 => 'FIELD_VIEW_USER@DELETED',
+                            63 => 'FIELD_VIEW_USER@EMAIL',
+                            61 => 'FIELD_VIEW_USER@FIRST_NAME',
+                            80 => 'FIELD_VIEW_USER@FULL_NAME',
+                            58 => 'FIELD_VIEW_USER@ID',
+                            74 => 'FIELD_VIEW_USER@LAST_LOGIN',
+                            71 => 'UPDATE_SECTION',
+                            24 => 'UPDATE_USER',
+                        ],
+                        2 => [
+                            70 => 'CREATE_SECTION',
+                            23 => 'CREATE_USER',
+                            71 => 'UPDATE_SECTION',
+                        ],
+                    ],
+                ],
+                [
+                    'User' => [
+                        'ScoutGroups' => [
+                            'CREATE' => (int) 79,
+                            'DELETE' => (int) 51,
+                            'VIEW' => (int) 50,
+                            'UPDATE' => (int) 34
+                        ],
+                        'Users' => [
+                            'fields' => [
+                                'LAST_LOGIN' => [
+                                    'VIEW' => (int) 41
+                                ],
+                                'LAST_LOGIN_IP' => [
+                                    'VIEW' => (int) 43
+                                ],
+                                'LAST_NAME' => [
+                                    'VIEW' => (int) 20
+                                ]
+                            ],
+                            'CREATE' => (int) 46,
+                            'DELETE' => (int) 49
+                        ],
+                        'Special' => [
+                            (int) 36 => 'ALL'
+                        ]
+                    ],
+                    'CRUD' => [
+                        (int) 0 => 'CREATE',
+                        (int) 1 => 'DELETE',
+                        (int) 2 => 'VIEW',
+                        (int) 3 => 'UPDATE',
+                        (int) 4 => 'CHANGE'
+                    ],
+                    'Group.1' => [
+                        'Sections' => [
+                            'CREATE' => (int) 70,
+                            'UPDATE' => (int) 71
+                        ],
+                        'Users' => [
+                            'CREATE' => (int) 23,
+                            'fields' => [
+                                'ADDRESS_LINE_1' => [
+                                    'CHANGE' => (int) 47,
+                                    'VIEW' => (int) 65
+                                ],
+                                'ADDRESS_LINE_2' => [
+                                    'CHANGE' => (int) 48,
+                                    'VIEW' => (int) 66
+                                ],
+                                'CAPABILITIES' => [
+                                    'CHANGE' => (int) 56,
+                                    'VIEW' => (int) 77
+                                ],
+                                'CITY' => [
+                                    'CHANGE' => (int) 17,
+                                    'VIEW' => (int) 67
+                                ],
+                                'COUNTY' => [
+                                    'CHANGE' => (int) 49,
+                                    'VIEW' => (int) 68
+                                ],
+                                'CREATED' => [
+                                    'CHANGE' => (int) 51,
+                                    'VIEW' => (int) 72
+                                ],
+                                'EMAIL' => [
+                                    'CHANGE' => (int) 45,
+                                    'VIEW' => (int) 63
+                                ],
+                                'FIRST_NAME' => [
+                                    'CHANGE' => (int) 43,
+                                    'VIEW' => (int) 61
+                                ],
+                                'FULL_NAME' => [
+                                    'CHANGE' => (int) 79,
+                                    'VIEW' => (int) 80
+                                ],
+                                'LAST_LOGIN' => [
+                                    'CHANGE' => (int) 53,
+                                    'VIEW' => (int) 74
+                                ],
+                                'LAST_LOGIN_IP' => [
+                                    'CHANGE' => (int) 55
+                                ],
+                                'LAST_NAME' => [
+                                    'CHANGE' => (int) 44
+                                ],
+                                'MEMBERSHIP_NUMBER' => [
+                                    'CHANGE' => (int) 42
+                                ],
+                                'MODIFIED' => [
+                                    'CHANGE' => (int) 52
+                                ],
+                                'PASSWORD' => [
+                                    'CHANGE' => (int) 46
+                                ],
+                                'PASSWORD_STATE_ID' => [
+                                    'CHANGE' => (int) 57
+                                ],
+                                'POSTCODE' => [
+                                    'CHANGE' => (int) 50
+                                ],
+                                'USERNAME' => [
+                                    'CHANGE' => (int) 41
+                                ],
+                                'DELETED' => [
+                                    'VIEW' => (int) 75
+                                ],
+                                'ID' => [
+                                    'VIEW' => (int) 58
+                                ]
+                            ],
+                            'UPDATE' => (int) 24
+                        ],
+                        'Special' => []
+                    ],
+                    'Group.2' => [
+                        'Sections' => [
+                            'CREATE' => (int) 70,
+                            'UPDATE' => (int) 71
+                        ],
+                        'Users' => [
+                            'CREATE' => (int) 23
+                        ],
+                        'Special' => []
+                    ]
+                ],
+            ],
+            'Complex Section Capability Array' => [
+                [
+                    'user' => [
+                        36 => 'ALL',
+                        79 => 'CREATE_SCOUT_GROUP',
+                        51 => 'DELETE_SCOUT_GROUP',
+                        50 => 'VIEW_SCOUT_GROUP',
+                        34 => 'UPDATE_SCOUT_GROUP',
+                        41 => 'FIELD_VIEW_USERS@LAST_LOGIN',
+                        43 => 'FIELD_VIEW_USERS@LAST_LOGIN_IP',
+                        46 => 'CREATE_USER',
+                        49 => 'DELETE_USER',
+                        20 => 'FIELD_VIEW_USERS@LAST_NAME',
+                    ],
+                    'section' => [
+                        1 => [
+                            70 => 'CREATE_SECTION',
+                            23 => 'CREATE_USER',
+                            47 => 'FIELD_CHANGE_USER@ADDRESS_LINE_1',
+                            48 => 'FIELD_CHANGE_USER@ADDRESS_LINE_2',
+                            56 => 'FIELD_CHANGE_USER@CAPABILITIES',
+                            17 => 'FIELD_CHANGE_USER@CITY',
+                            49 => 'FIELD_CHANGE_USER@COUNTY',
+                            51 => 'FIELD_CHANGE_USER@CREATED',
+                            45 => 'FIELD_CHANGE_USER@EMAIL',
+                            43 => 'FIELD_CHANGE_USER@FIRST_NAME',
+                            79 => 'FIELD_CHANGE_USER@FULL_NAME',
+                            53 => 'FIELD_CHANGE_USER@LAST_LOGIN',
+                            55 => 'FIELD_CHANGE_USER@LAST_LOGIN_IP',
+                            44 => 'FIELD_CHANGE_USER@LAST_NAME',
+                            42 => 'FIELD_CHANGE_USER@MEMBERSHIP_NUMBER',
+                            52 => 'FIELD_CHANGE_USER@MODIFIED',
+                            46 => 'FIELD_CHANGE_USER@PASSWORD',
+                            57 => 'FIELD_CHANGE_USER@PASSWORD_STATE_ID',
+                            50 => 'FIELD_CHANGE_USER@POSTCODE',
+                            41 => 'FIELD_CHANGE_USER@USERNAME',
+                            65 => 'FIELD_VIEW_USER@ADDRESS_LINE_1',
+                            66 => 'FIELD_VIEW_USER@ADDRESS_LINE_2',
+                            77 => 'FIELD_VIEW_USER@CAPABILITIES',
+                            67 => 'FIELD_VIEW_USER@CITY',
+                            68 => 'FIELD_VIEW_USER@COUNTY',
+                            72 => 'FIELD_VIEW_USER@CREATED',
+                            75 => 'FIELD_VIEW_USER@DELETED',
+                            63 => 'FIELD_VIEW_USER@EMAIL',
+                            61 => 'FIELD_VIEW_USER@FIRST_NAME',
+                            80 => 'FIELD_VIEW_USER@FULL_NAME',
+                            58 => 'FIELD_VIEW_USER@ID',
+                            74 => 'FIELD_VIEW_USER@LAST_LOGIN',
+                            71 => 'UPDATE_SECTION',
+                            24 => 'UPDATE_USER',
+                        ],
+                        2 => [
+                            70 => 'CREATE_SECTION',
+                            23 => 'CREATE_USER',
+                            71 => 'UPDATE_SECTION',
+                        ],
+                    ],
+                ],
+                [
+                    'User' => [
+                        'ScoutGroups' => [
+                            'CREATE' => (int) 79,
+                            'DELETE' => (int) 51,
+                            'VIEW' => (int) 50,
+                            'UPDATE' => (int) 34
+                        ],
+                        'Users' => [
+                            'fields' => [
+                                'LAST_LOGIN' => [
+                                    'VIEW' => (int) 41
+                                ],
+                                'LAST_LOGIN_IP' => [
+                                    'VIEW' => (int) 43
+                                ],
+                                'LAST_NAME' => [
+                                    'VIEW' => (int) 20
+                                ]
+                            ],
+                            'CREATE' => (int) 46,
+                            'DELETE' => (int) 49
+                        ],
+                        'Special' => [
+                            (int) 36 => 'ALL'
+                        ]
+                    ],
+                    'CRUD' => [
+                        (int) 0 => 'CREATE',
+                        (int) 1 => 'DELETE',
+                        (int) 2 => 'VIEW',
+                        (int) 3 => 'UPDATE',
+                        (int) 4 => 'CHANGE'
+                    ],
+                    'Section.1' => [
+                        'Sections' => [
+                            'CREATE' => (int) 70,
+                            'UPDATE' => (int) 71
+                        ],
+                        'Users' => [
+                            'CREATE' => (int) 23,
+                            'fields' => [
+                                'ADDRESS_LINE_1' => [
+                                    'CHANGE' => (int) 47,
+                                    'VIEW' => (int) 65
+                                ],
+                                'ADDRESS_LINE_2' => [
+                                    'CHANGE' => (int) 48,
+                                    'VIEW' => (int) 66
+                                ],
+                                'CAPABILITIES' => [
+                                    'CHANGE' => (int) 56,
+                                    'VIEW' => (int) 77
+                                ],
+                                'CITY' => [
+                                    'CHANGE' => (int) 17,
+                                    'VIEW' => (int) 67
+                                ],
+                                'COUNTY' => [
+                                    'CHANGE' => (int) 49,
+                                    'VIEW' => (int) 68
+                                ],
+                                'CREATED' => [
+                                    'CHANGE' => (int) 51,
+                                    'VIEW' => (int) 72
+                                ],
+                                'EMAIL' => [
+                                    'CHANGE' => (int) 45,
+                                    'VIEW' => (int) 63
+                                ],
+                                'FIRST_NAME' => [
+                                    'CHANGE' => (int) 43,
+                                    'VIEW' => (int) 61
+                                ],
+                                'FULL_NAME' => [
+                                    'CHANGE' => (int) 79,
+                                    'VIEW' => (int) 80
+                                ],
+                                'LAST_LOGIN' => [
+                                    'CHANGE' => (int) 53,
+                                    'VIEW' => (int) 74
+                                ],
+                                'LAST_LOGIN_IP' => [
+                                    'CHANGE' => (int) 55
+                                ],
+                                'LAST_NAME' => [
+                                    'CHANGE' => (int) 44
+                                ],
+                                'MEMBERSHIP_NUMBER' => [
+                                    'CHANGE' => (int) 42
+                                ],
+                                'MODIFIED' => [
+                                    'CHANGE' => (int) 52
+                                ],
+                                'PASSWORD' => [
+                                    'CHANGE' => (int) 46
+                                ],
+                                'PASSWORD_STATE_ID' => [
+                                    'CHANGE' => (int) 57
+                                ],
+                                'POSTCODE' => [
+                                    'CHANGE' => (int) 50
+                                ],
+                                'USERNAME' => [
+                                    'CHANGE' => (int) 41
+                                ],
+                                'DELETED' => [
+                                    'VIEW' => (int) 75
+                                ],
+                                'ID' => [
+                                    'VIEW' => (int) 58
+                                ]
+                            ],
+                            'UPDATE' => (int) 24
+                        ],
+                        'Special' => []
+                    ],
+                    'Section.2' => [
+                        'Sections' => [
+                            'CREATE' => (int) 70,
+                            'UPDATE' => (int) 71
+                        ],
+                        'Users' => [
+                            'CREATE' => (int) 23
+                        ],
+                        'Special' => []
+                    ]
+                ],
+            ],
+            'User Basic Array' => [
+                [
+                    'user' => [
+                        36 => 'ALL',
+                        79 => 'CREATE_SCOUT_GROUP',
+                        51 => 'DELETE_SCOUT_GROUP',
+                        50 => 'VIEW_SCOUT_GROUP',
+                        34 => 'UPDATE_SCOUT_GROUP',
+                        41 => 'FIELD_VIEW_USERS@LAST_LOGIN',
+                        43 => 'FIELD_VIEW_USERS@LAST_LOGIN_IP',
+                        46 => 'CREATE_USER',
+                        49 => 'DELETE_USER',
+                        20 => 'FIELD_VIEW_USERS@LAST_NAME',
+                    ],
+                ],
+                [
+                    'User' => [
+                        'ScoutGroups' => [
+                            'CREATE' => (int) 79,
+                            'DELETE' => (int) 51,
+                            'VIEW' => (int) 50,
+                            'UPDATE' => (int) 34
+                        ],
+                        'Users' => [
+                            'fields' => [
+                                'LAST_LOGIN' => [
+                                    'VIEW' => (int) 41
+                                ],
+                                'LAST_LOGIN_IP' => [
+                                    'VIEW' => (int) 43
+                                ],
+                                'LAST_NAME' => [
+                                    'VIEW' => (int) 20
+                                ]
+                            ],
+                            'CREATE' => (int) 46,
+                            'DELETE' => (int) 49
+                        ],
+                        'Special' => [
+                            (int) 36 => 'ALL'
+                        ]
+                    ],
+                    'CRUD' => [
+                        (int) 0 => 'CREATE',
+                        (int) 1 => 'DELETE',
+                        (int) 2 => 'VIEW',
+                        (int) 3 => 'UPDATE'
+                    ]
+                ],
+            ]
+        ];
+    }
+
+
+    /**
+     * Test Build Capability Method and safety overloads
+     *
+     * @dataProvider providerEnrichCapability
+     *
+     * @param array $bare Array to be enriched
+     * @param array $enriched Expected Result
+     */
+    public function testEnrichCapability($bare, $enriched)
+    {
+        $result = $this->Capabilities->enrichUserCapability($bare);
+        debug($result);
+
+        TestCase::assertEquals($enriched, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerEnrichRoleType()
+    {
+        return [
+            'Complex Group Capability Array' => [
+                [],
+                [],
+            ],
+        ];
+    }
+
+    /**
+     * Test Build Capability Method and safety overloads
+     *
+     * @dataProvider providerEnrichRoleType
+     *
+     * @param array $bare Array to be enriched
+     * @param array $enriched Expected Result
+     */
+    public function testEnrichRoleType($bare, $enriched)
+    {
+        $result = $this->Capabilities->enrichUserCapability($bare);
+        debug($result);
+
+        TestCase::assertEquals($enriched, $result);
+    }
 }

@@ -3,23 +3,26 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\CampRoleType $campRoleType
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', 'CampRoleTypes');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Camp Role Types'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Camp Roles'), ['controller' => 'CampRoles', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Camp Role'), ['controller' => 'CampRoles', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="campRoleTypes form large-9 medium-8 columns content">
-    <?= $this->Form->create($campRoleType) ?>
-    <fieldset>
-        <legend><?= __('Add Camp Role Type') ?></legend>
-        <?php
-            echo $this->Form->control('camp_role_type');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($campRoleType) ?>
+<fieldset>
+    <?php
+        $args = [
+            'CHANGE',
+            $campRoleType->getSource(),
+            null,
+            null,
+        ];
+
+        $args[4] = $campRoleType::FIELD_ID;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($campRoleType::FIELD_ID) : '';
+
+        $args[4] = $campRoleType::FIELD_CAMP_ROLE_TYPE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($campRoleType::FIELD_CAMP_ROLE_TYPE) : '';
+
+    ?>
+</fieldset>

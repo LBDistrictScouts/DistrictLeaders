@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace App\Policy;
 
+use Authorization\Policy\Result;
 use Cake\ORM\Entity;
 
 /**
@@ -27,20 +28,20 @@ trait AppPolicyTrait
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
      *
-     * @return bool|null
+     * @return \Authorization\Policy\Result|void
      */
-    public function before($user, $resource, $action)
+    public function before($user, $resource, $action): Result
     {
         if (is_null($user)) {
-            return false;
+            return new Result(false, 'User not present. Auth error.');
         }
 
         if ($user->checkCapability('ALL')) {
-            return true;
+            return new Result(true, 'ALL capability present.');
         }
 
         if ($user->checkCapability($action)) {
-            return true;
+            return new Result(true, 'Action specific capability present.');
         }
 
         if ($resource instanceof Entity) {
@@ -48,10 +49,8 @@ trait AppPolicyTrait
             $model = $resource->getSource();
 
             if ($user->buildAndCheckCapability($action, $model)) {
-                return true;
+                return new Result(true, 'Entity specific capability present.');
             }
         }
-
-        return null;
     }
 }

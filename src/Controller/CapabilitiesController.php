@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Core\Configure;
+
 /**
  * Capabilities Controller
  *
@@ -27,7 +29,7 @@ class CapabilitiesController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Capability id.
+     * @param int|null $id Capability id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -38,6 +40,41 @@ class CapabilitiesController extends AppController
         ]);
 
         $this->set('capability', $capability);
+    }
+
+    /**
+     * View method
+     *
+     * @param int|null $userId User id.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function permissions($userId = null)
+    {
+        $user = $this->Capabilities->RoleTypes->Roles->Users->get($userId);
+        $this->set('user', $user);
+
+        $capabilities = $this->Capabilities->enrichUserCapability($user->capabilities);
+
+        foreach ($capabilities as $key => $array) {
+            if (strstr($key, '.')) {
+                $keyArray = explode('.', $key);
+                if (strstr($key, 'Group')) {
+                    $group = $this->Capabilities->RoleTypes->Roles->Sections->ScoutGroups->get($keyArray[1]);
+                    $capabilities[$key]['object'] = $group;
+                }
+                if (strstr($key, 'Section')) {
+                    $section = $this->Capabilities->RoleTypes->Roles->Sections->get($keyArray[1]);
+                    $capabilities[$key]['object'] = $section;
+                }
+            }
+            $array = [];
+        }
+        $this->set('capabilities', $capabilities);
+
+        $models = Configure::read('allModels');
+        ksort($models);
+        $this->set('models', $models);
     }
 
     /**

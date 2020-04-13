@@ -5,7 +5,7 @@ namespace App\Command;
 
 use App\Model\Entity\User;
 use Cake\Console\Arguments;
-use Cake\Console\Command;
+use Cake\Command\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;

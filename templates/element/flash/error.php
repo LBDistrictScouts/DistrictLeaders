@@ -30,9 +30,19 @@ BUTTON;
 	$message = $button . $message;
 }
 
+$classString = '';
+
+foreach ($class as $idx => $classItem) {
+    if ($idx == 0) {
+        $classString .= $classItem;
+    } else {
+        $classString .= ' ' . $classItem;
+    }
+}
+
 if (key_exists('attributes',$params)) {
-	echo $this->Html->div($class, $message, $params['attributes']);
+	echo $this->Html->div($classString, $message, $params['attributes']);
 } else {
-	echo $this->Html->div($class, $message);
+	echo $this->Html->div($classString, $message);
 }
 

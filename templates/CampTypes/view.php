@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="campTypes view large-9 medium-8 columns content">
-    <h3><?= h($campType->id) ?></h3>
+    <h3><?= h($campType->camp_type) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Camp Type') ?></th>

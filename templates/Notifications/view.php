@@ -24,7 +24,7 @@
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $notification->has('user') ? $this->Html->link($notification->user->username, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?></td>
+            <td><?= $notification->has('user') ? $this->Html->link($notification->user->full_name, ['controller' => 'Users', 'action' => 'view', $notification->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Notification Type') ?></th>

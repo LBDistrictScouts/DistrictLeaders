@@ -34,6 +34,12 @@ class CapabilitiesControllerTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**

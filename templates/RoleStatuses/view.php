@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="roleStatuses view large-9 medium-8 columns content">
-    <h3><?= h($roleStatus->id) ?></h3>
+    <h3><?= h($roleStatus->role_status) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Role Status') ?></th>
@@ -39,6 +39,8 @@
                 <th scope="col"><?= __('Role Status Id') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Deleted') ?></th>
+                <th scope="col"><?= __('User Contact Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($roleStatus->roles as $roles): ?>
@@ -50,6 +52,8 @@
                 <td><?= h($roles->role_status_id) ?></td>
                 <td><?= h($roles->created) ?></td>
                 <td><?= h($roles->modified) ?></td>
+                <td><?= h($roles->deleted) ?></td>
+                <td><?= h($roles->user_contact_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Roles', 'action' => 'view', $roles->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Roles', 'action' => 'edit', $roles->id]) ?>

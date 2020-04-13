@@ -278,4 +278,140 @@ class CapabilitiesTable extends Table
 
         return CapBuilder::capabilityCodeFormat($action, $model, $field);
     }
+
+    /**
+     * @param array $capabilityArray An Array of Associative Objects
+     *
+     * @return array
+     */
+    public function enrichRoleType(Array $capabilityArray)
+    {
+        $cleanMatrix = [];
+        $special = [];
+
+        foreach ($capabilityArray as $capability) {
+
+            $isTemplate = $capability->_joinData->template ?? false;
+
+            /** @var Capability $capability */
+            $code = $capability->capability_code;
+            if (!CapBuilder::isSpecialCode($code)) {
+                $codeArray = CapBuilder::breakCode($code);
+
+                $cleanMatrix = $this->codeMatrixAdaption($cleanMatrix, $codeArray, $isTemplate);
+            } else {
+                $special[$code] = $isTemplate;
+            }
+        }
+
+        $cleanMatrix['Special'] = $special;
+
+        return $cleanMatrix;
+    }
+
+
+    /**
+     * @param array $capabilityArray The Capability Array to be Enriched.
+     *
+     * @return array
+     */
+    public function enrichUserCapability(Array $capabilityArray)
+    {
+        $cleanMatrix = [];
+
+        // User
+        if(key_exists('user', $capabilityArray)) {
+            $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $capabilityArray['user'], 'User');
+        }
+
+        // Scout Groups
+        if(key_exists('group', $capabilityArray)) {
+            foreach ($capabilityArray['group'] as $groupId => $groupArray) {
+                $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $groupArray, 'Group.' . $groupId);
+            }
+        }
+
+        // Sections
+        if(key_exists('section', $capabilityArray)) {
+            foreach ($capabilityArray['section'] as $sectionId => $sectionArray) {
+                $cleanMatrix = $this->entityMatrixParsing($cleanMatrix, $sectionArray, 'Section.' . $sectionId);
+            }
+        }
+
+        return $cleanMatrix;
+    }
+
+    /**
+     * @param array $cleanMatrix The working array to append result into
+     * @param array $entityArray The Entity Associative Array
+     * @param String $matrixKey The Matrix Key for the Entity
+     *
+     * @return array
+     */
+    private function entityMatrixParsing (Array $cleanMatrix, Array $entityArray, String $matrixKey) {
+        $special = [];
+        $models = [];
+
+        if (key_exists('CRUD', $cleanMatrix)) {
+            $overallCrud = $cleanMatrix['CRUD'];
+        } else {
+            $overallCrud = [];
+        }
+
+        foreach ($entityArray as $id => $code) {
+            if (!CapBuilder::isSpecialCode($code)) {
+                $codeArray = CapBuilder::breakCode($code);
+
+                $models = $this->codeMatrixAdaption($models, $codeArray, $id);
+
+                if (!in_array($codeArray['crud'], $overallCrud)) {
+                    array_push($overallCrud, $codeArray['crud']);
+                }
+            } else {
+                $special[$id] = $code;
+            }
+        }
+
+        $cleanMatrix[$matrixKey] = $models;
+        $cleanMatrix[$matrixKey]['Special'] = $special;
+
+        ksort($overallCrud);
+        $cleanMatrix['CRUD'] = $overallCrud;
+
+        return $cleanMatrix;
+    }
+
+    /**
+     * @param array $models The Existing Models Array
+     * @param array $codeArray The Current Code Array
+     * @param int|bool $payload The ID of the Capability
+     *
+     * @return array
+     */
+    private function codeMatrixAdaption (Array $models, Array $codeArray, $payload)
+    {
+        if (!key_exists($codeArray['model'], $models)) {
+            $models[$codeArray['model']] = [];
+        }
+
+        if ($codeArray['is_field']) {
+            if (!key_exists('fields', $models[$codeArray['model']])) {
+                $models[$codeArray['model']]['fields'] = [];
+            }
+
+            if (!key_exists($codeArray['field'], $models[$codeArray['model']]['fields'])) {
+                $models[$codeArray['model']]['fields'][$codeArray['field']] = [];
+            }
+
+            if (!key_exists($codeArray['crud'], $models[$codeArray['model']]['fields'][$codeArray['field']])) {
+                $models[$codeArray['model']]['fields'][$codeArray['field']][$codeArray['crud']] = $payload;
+            }
+        } else {
+            if (!key_exists($codeArray['crud'], $models[$codeArray['model']])) {
+                $models[$codeArray['model']][$codeArray['crud']] = $payload;
+            }
+        }
+
+        return $models;
+    }
 }

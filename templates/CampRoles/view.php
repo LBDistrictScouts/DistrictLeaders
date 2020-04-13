@@ -24,15 +24,15 @@
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Camp') ?></th>
-            <td><?= $campRole->has('camp') ? $this->Html->link($campRole->camp->id, ['controller' => 'Camps', 'action' => 'view', $campRole->camp->id]) : '' ?></td>
+            <td><?= $campRole->has('camp') ? $this->Html->link($campRole->camp->camp_name, ['controller' => 'Camps', 'action' => 'view', $campRole->camp->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('User') ?></th>
-            <td><?= $campRole->has('user') ? $this->Html->link($campRole->user->username, ['controller' => 'Users', 'action' => 'view', $campRole->user->id]) : '' ?></td>
+            <td><?= $campRole->has('user') ? $this->Html->link($campRole->user->full_name, ['controller' => 'Users', 'action' => 'view', $campRole->user->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Camp Role Type') ?></th>
-            <td><?= $campRole->has('camp_role_type') ? $this->Html->link($campRole->camp_role_type->id, ['controller' => 'CampRoleTypes', 'action' => 'view', $campRole->camp_role_type->id]) : '' ?></td>
+            <td><?= $campRole->has('camp_role_type') ? $this->Html->link($campRole->camp_role_type->camp_role_type, ['controller' => 'CampRoleTypes', 'action' => 'view', $campRole->camp_role_type->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

@@ -37,7 +37,7 @@ class RolesController extends AppController
     public function view($id = null)
     {
         $role = $this->Roles->get($id, [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts'],
         ]);
 
         $this->set('role', $role);
@@ -56,7 +56,7 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'view', $role->get('id')]);
+                return $this->redirect(['action' => 'edit', $role->get('id'), '?' => ['contact' => true]]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
@@ -77,6 +77,9 @@ class RolesController extends AppController
      */
     public function edit($id = null)
     {
+        $contact = $this->getRequest()->getQueryParams()['contact'] ?? false;
+        $this->set('contact', $contact);
+
         $role = $this->Roles->get($id, [
             'contain' => [],
         ]);

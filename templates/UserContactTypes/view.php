@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="userContactTypes view large-9 medium-8 columns content">
-    <h3><?= h($userContactType->id) ?></h3>
+    <h3><?= h($userContactType->user_contact_type) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('User Contact Type') ?></th>

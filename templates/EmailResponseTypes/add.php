@@ -3,24 +3,29 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\EmailResponseType $emailResponseType
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', 'EmailResponseTypes');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Email Response Types'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Email Responses'), ['controller' => 'EmailResponses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Email Response'), ['controller' => 'EmailResponses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="emailResponseTypes form large-9 medium-8 columns content">
-    <?= $this->Form->create($emailResponseType) ?>
-    <fieldset>
-        <legend><?= __('Add Email Response Type') ?></legend>
-        <?php
-            echo $this->Form->control('email_response_type');
-            echo $this->Form->control('bounce');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($emailResponseType) ?>
+<fieldset>
+    <?php
+        $args = [
+            'CHANGE',
+            $emailResponseType->getSource(),
+            null,
+            null,
+        ];
+
+        $args[4] = $emailResponseType::FIELD_ID;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailResponseType::FIELD_ID) : '';
+
+        $args[4] = $emailResponseType::FIELD_EMAIL_RESPONSE_TYPE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailResponseType::FIELD_EMAIL_RESPONSE_TYPE) : '';
+
+        $args[4] = $emailResponseType::FIELD_BOUNCE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailResponseType::FIELD_BOUNCE) : '';
+
+    ?>
+</fieldset>

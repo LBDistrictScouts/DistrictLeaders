@@ -28,7 +28,7 @@ use Cake\ORM\Query;
  * Policy resolver that applies conventions based policy classes
  * for CakePHP ORM Tables, Entities and Queries.
  */
-class CoreResolver implements ResolverInterface
+class CoreResolverOLD implements ResolverInterface
 {
     /**
      * Application namespace.

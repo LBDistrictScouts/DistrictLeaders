@@ -3,26 +3,35 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\NotificationType $notificationType
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', 'NotificationTypes');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Notification Types'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Notifications'), ['controller' => 'Notifications', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Notification'), ['controller' => 'Notifications', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="notificationTypes form large-9 medium-8 columns content">
-    <?= $this->Form->create($notificationType) ?>
-    <fieldset>
-        <legend><?= __('Add Notification Type') ?></legend>
-        <?php
-            echo $this->Form->control('notification_type');
-            echo $this->Form->control('notification_description');
-            echo $this->Form->control('icon');
-            echo $this->Form->control('type_code');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($notificationType) ?>
+<fieldset>
+    <?php
+        $args = [
+            'CHANGE',
+            $notificationType->getSource(),
+            null,
+            null,
+        ];
+
+        $args[4] = $notificationType::FIELD_ID;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_ID) : '';
+
+        $args[4] = $notificationType::FIELD_NOTIFICATION_TYPE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_NOTIFICATION_TYPE) : '';
+
+        $args[4] = $notificationType::FIELD_NOTIFICATION_DESCRIPTION;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_NOTIFICATION_DESCRIPTION) : '';
+
+        $args[4] = $notificationType::FIELD_ICON;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_ICON) : '';
+
+        $args[4] = $notificationType::FIELD_TYPE_CODE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_TYPE_CODE) : '';
+
+    ?>
+</fieldset>

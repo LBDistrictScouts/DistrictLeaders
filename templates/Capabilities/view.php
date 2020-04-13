@@ -16,7 +16,7 @@
     </ul>
 </nav>
 <div class="capabilities view large-9 medium-8 columns content">
-    <h3><?= h($capability->id) ?></h3>
+    <h3><?= h($capability->capability_code) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Capability Code') ?></th>
@@ -31,8 +31,8 @@
             <td><?= $this->Number->format($capability->id) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Level') ?></th>
-            <td><?= $this->Number->format($capability->level) ?></td>
+            <th scope="row"><?= __('Min Level') ?></th>
+            <td><?= $this->Number->format($capability->min_level) ?></td>
         </tr>
     </table>
     <div class="related">
@@ -44,6 +44,8 @@
                 <th scope="col"><?= __('Role Type') ?></th>
                 <th scope="col"><?= __('Role Abbreviation') ?></th>
                 <th scope="col"><?= __('Section Type Id') ?></th>
+                <th scope="col"><?= __('Level') ?></th>
+                <th scope="col"><?= __('Role Template Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($capability->role_types as $roleTypes): ?>
@@ -52,6 +54,8 @@
                 <td><?= h($roleTypes->role_type) ?></td>
                 <td><?= h($roleTypes->role_abbreviation) ?></td>
                 <td><?= h($roleTypes->section_type_id) ?></td>
+                <td><?= h($roleTypes->level) ?></td>
+                <td><?= h($roleTypes->role_template_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'RoleTypes', 'action' => 'view', $roleTypes->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'RoleTypes', 'action' => 'edit', $roleTypes->id]) ?>

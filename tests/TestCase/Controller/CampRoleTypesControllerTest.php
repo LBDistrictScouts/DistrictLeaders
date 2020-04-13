@@ -38,6 +38,8 @@ class CampRoleTypesControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**

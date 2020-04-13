@@ -3,49 +3,33 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\EmailResponseType[]|\Cake\Collection\CollectionInterface $emailResponseTypes
  */
+
+$this->extend('../Layout/CRUD/index');
+
+$this->assign('entity', 'EmailResponseTypes');
+$this->assign('subset', 'All');
+$this->assign('add', $this->Identity->checkCapability('CREATE_EMAIL_RESPONSE_TYPE'));
+
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Email Response Type'), ['action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Email Responses'), ['controller' => 'EmailResponses', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Email Response'), ['controller' => 'EmailResponses', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="emailResponseTypes index large-9 medium-8 columns content">
-    <h3><?= __('Email Response Types') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('email_response_type') ?></th>
-                <th scope="col"><?= $this->Paginator->sort('bounce') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($emailResponseTypes as $emailResponseType): ?>
-            <tr>
-                <td><?= $this->Number->format($emailResponseType->id) ?></td>
-                <td><?= h($emailResponseType->email_response_type) ?></td>
-                <td><?= h($emailResponseType->bounce) ?></td>
+<thead>
+    <tr>
+        <th scope="col"><?= $this->Paginator->sort('id') ?></th>
+        <th scope="col" class="actions"><?= __('Actions') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('email_response_type') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('bounce') ?></th>
+    </tr>
+</thead>
+<tbody>
+    <?php foreach ($emailResponseTypes as $emailResponseType): ?>
+    <tr>
+        <td><?= h($emailResponseType->id) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $emailResponseType->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $emailResponseType->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $emailResponseType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $emailResponseType->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-    </div>
-</div>
+            <?= $this->Identity->checkCapability('VIEW_EMAIL_RESPONSE_TYPE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $emailResponseType->id], ['title' => __('View Email Response Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('UPDATE_EMAIL_RESPONSE_TYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $emailResponseType->id], ['title' => __('Edit Email Response Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->checkCapability('DELETE_EMAIL_RESPONSE_TYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $emailResponseType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $emailResponseType->id), 'title' => __('Delete Email Response Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+        </td>
+        <td><?= h($emailResponseType->email_response_type) ?></td>
+        <td><?= h($emailResponseType->bounce) ?></td>
+    </tr>
+    <?php endforeach; ?>
+</tbody>

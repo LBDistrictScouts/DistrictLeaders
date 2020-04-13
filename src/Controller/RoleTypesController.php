@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Core\Configure;
+
 /**
  * RoleTypes Controller
  *
@@ -37,10 +39,21 @@ class RoleTypesController extends AppController
     public function view($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['SectionTypes', 'Capabilities', 'Roles'],
+            'contain' => ['SectionTypes', 'Capabilities', 'Roles', 'RoleTemplates'],
         ]);
-
         $this->set('roleType', $roleType);
+
+        $capabilities = $this->RoleTypes->Capabilities->enrichRoleType($roleType->capabilities);
+        $this->set('capabilities', $capabilities);
+
+        $models = Configure::read('allModels');
+        ksort($models);
+        $this->set('models', $models);
+
+        $crud = Configure::read('entityCapabilities');
+        ksort($crud);
+        $crudList = array_keys($crud);
+        $this->set('crudList', $crudList);
     }
 
     /**

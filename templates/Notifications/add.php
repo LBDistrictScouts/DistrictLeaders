@@ -2,41 +2,59 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Notification $notification
- * @var mixed $notificationTypes
- * @var mixed $users
  */
+
+$this->extend('../Layout/CRUD/add');
+
+$this->assign('entity', 'Notifications');
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Notifications'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Notification Types'), ['controller' => 'NotificationTypes', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Notification Type'), ['controller' => 'NotificationTypes', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Email Sends'), ['controller' => 'EmailSends', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Email Send'), ['controller' => 'EmailSends', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="notifications form large-9 medium-8 columns content">
-    <?= $this->Form->create($notification) ?>
-    <fieldset>
-        <legend><?= __('Add Notification') ?></legend>
-        <?php
-            echo $this->Form->control('user_id', ['options' => $users, 'empty' => true]);
-            echo $this->Form->control('notification_type_id', ['options' => $notificationTypes, 'empty' => true]);
-            echo $this->Form->control('new');
-            echo $this->Form->control('notification_header');
-            echo $this->Form->control('text');
-            echo $this->Form->control('read_date');
-            echo $this->Form->control('notification_source');
-            echo $this->Form->control('link_id');
-            echo $this->Form->control('link_controller');
-            echo $this->Form->control('link_prefix');
-            echo $this->Form->control('link_action');
-            echo $this->Form->control('deleted');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
+<?= $this->Form->create($notification) ?>
+<fieldset>
+    <?php
+        $args = [
+            'CHANGE',
+            $notification->getSource(),
+            null,
+            null,
+        ];
+
+        $args[4] = $notification::FIELD_ID;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_ID) : '';
+
+        $args[4] = $notification::FIELD_USER_ID;
+        /** @var array $users The User Id List */
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_USER_ID, ['options' => $users, 'empty' => true]) : '';
+
+        $args[4] = $notification::FIELD_NOTIFICATION_TYPE_ID;
+        /** @var array $notificationTypes The Notification Type Id List */
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_NOTIFICATION_TYPE_ID, ['options' => $notificationTypes, 'empty' => true]) : '';
+
+        $args[4] = $notification::FIELD_NEW;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_NEW) : '';
+
+        $args[4] = $notification::FIELD_NOTIFICATION_HEADER;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_NOTIFICATION_HEADER) : '';
+
+        $args[4] = $notification::FIELD_TEXT;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_TEXT) : '';
+
+        $args[4] = $notification::FIELD_READ_DATE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_READ_DATE) : '';
+
+        $args[4] = $notification::FIELD_NOTIFICATION_SOURCE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_NOTIFICATION_SOURCE) : '';
+
+        $args[4] = $notification::FIELD_LINK_ID;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_LINK_ID) : '';
+
+        $args[4] = $notification::FIELD_LINK_CONTROLLER;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_LINK_CONTROLLER) : '';
+
+        $args[4] = $notification::FIELD_LINK_PREFIX;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_LINK_PREFIX) : '';
+
+        $args[4] = $notification::FIELD_LINK_ACTION;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_LINK_ACTION) : '';
+
+    ?>
+</fieldset>

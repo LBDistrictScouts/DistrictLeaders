@@ -24,7 +24,8 @@
             null,
         ];
 
-{% for field in fields if field not in primaryKey %}
+{% if field not in primaryKey  %}
+{% for field in fields %}
 {%- if keyFields[field] %}
         $args[4] = ${{ singularVar }}::FIELD_{{ field|upper }};
         {{- "\n" }}
@@ -54,6 +55,7 @@
 {%- endif %}
 
 {%- endfor %}
+{% endif %}
 
 {%- if associations.BelongsToMany %}
 {%- for assocName, assocData in associations.BelongsToMany %}
