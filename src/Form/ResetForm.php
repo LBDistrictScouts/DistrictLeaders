@@ -19,7 +19,7 @@ class ResetForm extends Form
      *
      * @return \Cake\Form\Schema $schema
      */
-    protected function _buildSchema(Schema $schema): Schema
+    protected function buildSchema(Schema $schema): Schema
     {
         $schema
             ->addField(self::FIELD_MEMBERSHIP_NUMBER, 'integer')
@@ -37,7 +37,7 @@ class ResetForm extends Form
      *
      * @return \Cake\Validation\Validator $validator
      */
-    protected function _buildValidator(Validator $validator): Validator
+    protected function buildValidator(Validator $validator): Validator
     {
         $validator
             ->requirePresence(self::FIELD_MEMBERSHIP_NUMBER)

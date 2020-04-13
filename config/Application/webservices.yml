@@ -1,4 +1,4 @@
 Webservices:
     git_hub:
-        className: Muffin\Webservice\Connection
-        service: CvoTechnologies/GitHub.GitHub
+        className: Muffin\Webservice\Datasource\Connection
+        service: GitHub

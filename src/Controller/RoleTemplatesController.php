@@ -51,7 +51,7 @@ class RoleTemplatesController extends AppController
      */
     public function add()
     {
-        $roleTemplate = $this->RoleTemplates->newEntity();
+        $roleTemplate = $this->RoleTemplates->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleTemplate = $this->RoleTemplates->patchEntity($roleTemplate, $this->request->getData());
             if ($this->RoleTemplates->save($roleTemplate)) {

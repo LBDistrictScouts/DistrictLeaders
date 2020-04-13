@@ -50,7 +50,7 @@ class RoleTypesController extends AppController
      */
     public function add()
     {
-        $roleType = $this->RoleTypes->newEntity();
+        $roleType = $this->RoleTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleType = $this->RoleTypes->patchEntity($roleType, $this->request->getData());
             if ($this->RoleTypes->save($roleType)) {

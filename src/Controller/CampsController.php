@@ -50,7 +50,7 @@ class CampsController extends AppController
      */
     public function add()
     {
-        $camp = $this->Camps->newEntity();
+        $camp = $this->Camps->newEmptyEntity();
         if ($this->request->is('post')) {
             $camp = $this->Camps->patchEntity($camp, $this->request->getData());
             if ($this->Camps->save($camp)) {

@@ -47,7 +47,7 @@ class CampTypesController extends AppController
      */
     public function add()
     {
-        $campType = $this->CampTypes->newEntity();
+        $campType = $this->CampTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $campType = $this->CampTypes->patchEntity($campType, $this->request->getData());
             if ($this->CampTypes->save($campType)) {

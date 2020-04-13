@@ -47,7 +47,7 @@ class CampRoleTypesController extends AppController
      */
     public function add()
     {
-        $campRoleType = $this->CampRoleTypes->newEntity();
+        $campRoleType = $this->CampRoleTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $campRoleType = $this->CampRoleTypes->patchEntity($campRoleType, $this->request->getData());
             if ($this->CampRoleTypes->save($campRoleType)) {

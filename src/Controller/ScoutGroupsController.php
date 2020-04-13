@@ -49,7 +49,7 @@ class ScoutGroupsController extends AppController
      */
     public function add()
     {
-        $scoutGroup = $this->ScoutGroups->newEntity();
+        $scoutGroup = $this->ScoutGroups->newEmptyEntity();
         if ($this->request->is('post')) {
             $scoutGroup = $this->ScoutGroups->patchEntity($scoutGroup, $this->request->getData());
             if ($this->ScoutGroups->save($scoutGroup)) {

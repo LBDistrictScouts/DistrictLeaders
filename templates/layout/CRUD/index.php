@@ -80,7 +80,7 @@ $entity = $this->fetch('entity');
                         </div>
                     </div>
                     <div class="col-lg-6 text-right">
-                        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
+                        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
                     </div>
                 </div>
             </div>

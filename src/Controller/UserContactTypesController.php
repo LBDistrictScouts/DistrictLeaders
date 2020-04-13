@@ -49,7 +49,7 @@ class UserContactTypesController extends AppController
      */
     public function add()
     {
-        $userContactType = $this->UserContactTypes->newEntity();
+        $userContactType = $this->UserContactTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $userContactType = $this->UserContactTypes->patchEntity($userContactType, $this->request->getData());
             if ($this->UserContactTypes->save($userContactType)) {

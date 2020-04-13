@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\Event\Event;
 
 /**
  * Issues Controller
@@ -68,7 +67,7 @@ class IssuesController extends Controller
      */
     public function add()
     {
-        $issue = $this->Issues->newEntity();
+        $issue = $this->Issues->newEmptyEntity();
         if ($this->request->is('post')) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());
             if ($this->Issues->save($issue)) {

@@ -23,7 +23,7 @@ class UsersCollection extends FilterCollection
                 'comparison' => 'ILIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => [
+                'fields' => [
                     User::FIELD_FIRST_NAME,
                     User::FIELD_LAST_NAME,
                     User::FIELD_EMAIL,

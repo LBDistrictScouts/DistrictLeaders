@@ -26,7 +26,7 @@ class NotifyCell extends Cell
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadModel('Users');
         $this->loadModel('Notifications');

@@ -47,7 +47,7 @@ class RoleStatusesController extends AppController
      */
     public function add()
     {
-        $roleStatus = $this->RoleStatuses->newEntity();
+        $roleStatus = $this->RoleStatuses->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleStatus = $this->RoleStatuses->patchEntity($roleStatus, $this->request->getData());
             if ($this->RoleStatuses->save($roleStatus)) {

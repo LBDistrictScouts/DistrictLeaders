@@ -50,7 +50,7 @@ class EmailResponsesController extends AppController
      */
     public function add()
     {
-        $emailResponse = $this->EmailResponses->newEntity();
+        $emailResponse = $this->EmailResponses->newEmptyEntity();
         if ($this->request->is('post')) {
             $emailResponse = $this->EmailResponses->patchEntity($emailResponse, $this->request->getData());
             if ($this->EmailResponses->save($emailResponse)) {

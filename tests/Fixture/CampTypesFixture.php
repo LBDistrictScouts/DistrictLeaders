@@ -31,7 +31,7 @@ class CampTypesFixture extends TestFixture
      * @return void
      */
     public function init(): void
-{
+    {
         $this->records = [
             [
                 'camp_type' => 'Lorem ipsum sit amet',

@@ -48,6 +48,7 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
+            'Muffin/Webservice',
             'CakeDto',
             'Tools',
             'Search',
@@ -106,14 +107,23 @@ class ApplicationTest extends IntegrationTestCase
 
         $middleware = $app->middleware($middleware);
 
-        TestCase::assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
-        TestCase::assertInstanceOf(AssetMiddleware::class, $middleware->get(1));
-        TestCase::assertInstanceOf(RoutingMiddleware::class, $middleware->get(2));
-        TestCase::assertInstanceOf(EncryptedCookieMiddleware::class, $middleware->get(3));
-        TestCase::assertInstanceOf(AuthenticationMiddleware::class, $middleware->get(4));
-        TestCase::assertInstanceOf(AuthorizationMiddleware::class, $middleware->get(5));
-        TestCase::assertInstanceOf(RequestAuthorizationMiddleware::class, $middleware->get(6));
-        TestCase::assertInstanceOf(SecurityHeadersMiddleware::class, $middleware->get(7));
-        TestCase::assertInstanceOf(CsrfProtectionMiddleware::class, $middleware->get(8));
+        $middleware->seek(0);
+
+        $middlewareArray = [
+            ErrorHandlerMiddleware::class,
+            AssetMiddleware::class,
+            RoutingMiddleware::class,
+            EncryptedCookieMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            RequestAuthorizationMiddleware::class,
+            SecurityHeadersMiddleware::class,
+            CsrfProtectionMiddleware::class,
+        ];
+
+        foreach ($middlewareArray as $middlewareItem) {
+            TestCase::assertInstanceOf($middlewareItem, $middleware->current());
+            $middleware->next();
+        }
     }
 }

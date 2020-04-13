@@ -20,7 +20,7 @@ class GitHub extends AbstractDriver
      */
     public function initialize(): void
     {
-        $this->client(new Client([
+        $this->setClient(new Client([
             'host' => 'api.github.com',
             'scheme' => 'https',
         ]));

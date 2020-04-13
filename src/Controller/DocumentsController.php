@@ -15,7 +15,7 @@ use Exception;
  * @property \App\Controller\Component\FilterComponent $Filter
  *
  * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
- * @property \Search\Controller\Component\PrgComponent $Prg
+ * @property \Search\Controller\Component\SearchComponent $Search
  */
 class DocumentsController extends AppController
 {
@@ -28,9 +28,9 @@ class DocumentsController extends AppController
     {
         parent::initialize();
 
-        $this->loadComponent('Search.Prg', [
+        $this->loadComponent('Search.Search', [
             // This is default config. You can modify "actions" as needed to make
-            // the PRG component work only for specified methods.
+            // the SEARCH component work only for specified methods.
             'actions' => ['search'],
         ]);
     }
@@ -101,7 +101,7 @@ class DocumentsController extends AppController
      */
     public function add()
     {
-        $document = $this->Documents->newEntity();
+        $document = $this->Documents->newEmptyEntity();
         $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseFileTypes();
         if ($this->getRequest()->is('post')) {
             $document = $this->Documents->uploadDocument($this->getRequest()->getData(), $document);

@@ -20,7 +20,7 @@ namespace PHPSTORM_META {
 			'GoogleClient' => \App\Controller\Component\GoogleClientComponent::class,
 			'Paginator' => \Cake\Controller\Component\PaginatorComponent::class,
 			'RequestHandler' => \Cake\Controller\Component\RequestHandlerComponent::class,
-			'Search.Prg' => \Search\Controller\Component\PrgComponent::class,
+			'Search.Search' => \Search\Controller\Component\SearchComponent::class,
 			'Security' => \Cake\Controller\Component\SecurityComponent::class,
 			'Tools.Common' => \Tools\Controller\Component\CommonComponent::class,
 			'Tools.Mobile' => \Tools\Controller\Component\MobileComponent::class,

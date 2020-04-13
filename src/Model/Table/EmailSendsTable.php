@@ -407,7 +407,7 @@ class EmailSendsTable extends Table
     public function sendRegister($results, $sendHeaders)
     {
         if (!key_exists('X-Gen-ID', $sendHeaders)) {
-            $emailSend = $this->newEntity();
+            $emailSend = $this->newEmptyEntity();
         } else {
             $emailSend = $this->get($sendHeaders['X-Gen-ID']);
         }

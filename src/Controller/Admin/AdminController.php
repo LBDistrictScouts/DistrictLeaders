@@ -7,6 +7,8 @@ use App\Controller\AppController;
 
 /**
  * Admin Controller
+ *
+ * @property \Cake\ORM\Table $Admin
  */
 class AdminController extends AppController
 {

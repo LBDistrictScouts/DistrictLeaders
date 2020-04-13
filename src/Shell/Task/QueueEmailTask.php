@@ -33,7 +33,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
      *
      * @return void
      */
-    public function run(array $data, $jobId)
+    public function run(array $data, $jobId): void
     {
         if (!key_exists('email_generation_code', $data)) {
             throw new QueueException('Email generation code not specified.');

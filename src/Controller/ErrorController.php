@@ -16,8 +16,6 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
-use Cake\Event\Event;
-
 /**
  * Error Handling Controller
  *

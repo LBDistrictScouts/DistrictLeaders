@@ -50,7 +50,7 @@ class CampRolesController extends AppController
      */
     public function add()
     {
-        $campRole = $this->CampRoles->newEntity();
+        $campRole = $this->CampRoles->newEmptyEntity();
         if ($this->request->is('post')) {
             $campRole = $this->CampRoles->patchEntity($campRole, $this->request->getData());
             if ($this->CampRoles->save($campRole)) {

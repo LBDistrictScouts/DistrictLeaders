@@ -55,7 +55,7 @@ class DocumentEditionsController extends AppController
      */
     public function upload()
     {
-        $documentEdition = $this->DocumentEditions->newEntity();
+        $documentEdition = $this->DocumentEditions->newEmptyEntity();
         if ($this->request->is('post')) {
 //            debug($this->request->getData());
 

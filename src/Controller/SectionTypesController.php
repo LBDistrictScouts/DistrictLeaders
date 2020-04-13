@@ -47,7 +47,7 @@ class SectionTypesController extends AppController
      */
     public function add()
     {
-        $sectionType = $this->SectionTypes->newEntity();
+        $sectionType = $this->SectionTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $sectionType = $this->SectionTypes->patchEntity($sectionType, $this->request->getData());
             if ($this->SectionTypes->save($sectionType)) {

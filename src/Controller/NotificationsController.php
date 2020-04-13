@@ -50,7 +50,7 @@ class NotificationsController extends AppController
      */
     public function add()
     {
-        $notification = $this->Notifications->newEntity();
+        $notification = $this->Notifications->newEmptyEntity();
         if ($this->request->is('post')) {
             $notification = $this->Notifications->patchEntity($notification, $this->request->getData());
             if ($this->Notifications->save($notification)) {

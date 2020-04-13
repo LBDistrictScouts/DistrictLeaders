@@ -32,9 +32,7 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * @property \App\Model\Table\UsersTable $Users
  *
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  *
- * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  * @property \Flash\Controller\Component\FlashComponent $Flash
  * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
@@ -99,7 +97,7 @@ class AppController extends Controller
         $service->loadAuthenticator('Authentication.Form');
 
         $this->loadComponent('Flash.Flash');
-        $this->loadComponent('Cookie');
+//        $this->loadComponent('Cookie');
 
         $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
 

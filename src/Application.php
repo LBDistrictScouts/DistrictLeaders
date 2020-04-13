@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace App;
 
-use Ajax\Middleware\AjaxMiddleware;
 use App\Policy\RequestPolicy;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
@@ -25,8 +24,6 @@ use Authentication\Middleware\AuthenticationMiddleware;
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
-use Authorization\Exception\ForbiddenException;
-use Authorization\Exception\MissingIdentityException;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Authorization\Policy\MapResolver;
@@ -44,7 +41,6 @@ use Cake\Http\MiddlewareQueue;
 use Cake\Http\ServerRequest;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -65,6 +61,8 @@ class Application extends BaseApplication implements
      */
     public function bootstrap(): void
     {
+        $this->addPlugin('Muffin/Webservice');
+
         $this->addPlugin('Flash');
 
         $this->addPlugin('CakeDto', ['bootstrap' => true]);

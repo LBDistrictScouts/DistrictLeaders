@@ -47,7 +47,7 @@ class CapabilitiesController extends AppController
      */
     public function add()
     {
-        $capability = $this->Capabilities->newEntity();
+        $capability = $this->Capabilities->newEmptyEntity();
         if ($this->request->is('post')) {
             $capability = $this->Capabilities->patchEntity($capability, $this->request->getData());
             if ($this->Capabilities->save($capability)) {

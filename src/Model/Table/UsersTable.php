@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
-use Cake\Database\Schema\TableSchema;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;

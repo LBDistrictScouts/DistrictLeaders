@@ -115,7 +115,7 @@ class NotificationTypesTable extends Table
             $query = $this->find()->where([
                 NotificationType::FIELD_NOTIFICATION_TYPE => $baseType[NotificationType::FIELD_NOTIFICATION_TYPE],
             ]);
-            $status = $this->newEntity();
+            $status = $this->newEmptyEntity();
             if ($query->count() > 0) {
                 $status = $query->first();
             }

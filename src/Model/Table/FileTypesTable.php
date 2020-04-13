@@ -112,7 +112,7 @@ class FileTypesTable extends Table
         foreach ($base as $baseType) {
             $query = $this->find()
                           ->where([FileType::FIELD_FILE_EXTENSION => $baseType[FileType::FIELD_FILE_EXTENSION]]);
-            $status = $this->newEntity();
+            $status = $this->newEmptyEntity();
             if ($query->count() > 0) {
                 $status = $query->first();
             }

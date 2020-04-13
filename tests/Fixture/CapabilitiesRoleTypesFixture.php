@@ -31,7 +31,7 @@ class CapabilitiesRoleTypesFixture extends TestFixture
      * @return void
      */
     public function init(): void
-{
+    {
         $this->records = [
             [
                 'capability_id' => 1, // Level 5

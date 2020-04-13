@@ -56,7 +56,7 @@ class UserContactsController extends AppController
      */
     public function add()
     {
-        $userContact = $this->UserContacts->newEntity();
+        $userContact = $this->UserContacts->newEmptyEntity();
         if (key_exists('user_contact_type', $this->request->getQueryParams())) {
             $contactType = $this->request->getQueryParams()['user_contact_type'];
         }

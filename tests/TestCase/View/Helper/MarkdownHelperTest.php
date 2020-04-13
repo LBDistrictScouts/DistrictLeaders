@@ -70,6 +70,7 @@ class MarkdownHelperTest extends TestCase
      * @return void
      *
      * @throws \League\Flysystem\FileNotFoundException
+     * @throws \Josbeir\Filesystem\Exception\FilesystemException
      */
     public function testMarkdownToHtml()
     {
@@ -78,9 +79,9 @@ class MarkdownHelperTest extends TestCase
 
         $file = $fileSystem->upload($this->testFile);
         $markdownText = $fileDisk->read($file->getPath());
-        TestCase::assertContains('# CakePHP Application Skeleton', $markdownText);
-        TestCase::assertContains('[![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)', $markdownText);
-        TestCase::assertContains('Then visit `http://localhost:8765` to see the welcome page.', $markdownText);
+        TestCase::assertStringContainsString('# CakePHP Application Skeleton', $markdownText);
+        TestCase::assertStringContainsString('[![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)', $markdownText);
+        TestCase::assertStringContainsString('Then visit `http://localhost:8765` to see the welcome page.', $markdownText);
 
         $htmlText = $this->Markdown->markdownToHtml($markdownText);
 

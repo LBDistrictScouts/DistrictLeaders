@@ -50,7 +50,7 @@ class UserStatesController extends AppController
      */
     public function add()
     {
-        $userState = $this->UserStates->newEntity();
+        $userState = $this->UserStates->newEmptyEntity();
         if ($this->request->is('post')) {
             $userState = $this->UserStates->patchEntity($userState, $this->request->getData());
             if ($this->UserStates->save($userState)) {

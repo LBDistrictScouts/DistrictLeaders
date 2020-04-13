@@ -50,7 +50,7 @@ class SectionsController extends AppController
      */
     public function add()
     {
-        $section = $this->Sections->newEntity();
+        $section = $this->Sections->newEmptyEntity();
         if ($this->request->is('post')) {
             $section = $this->Sections->patchEntity($section, $this->request->getData());
             if ($this->Sections->save($section)) {

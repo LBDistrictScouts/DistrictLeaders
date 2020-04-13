@@ -47,7 +47,7 @@ class NotificationTypesController extends AppController
      */
     public function add()
     {
-        $notificationType = $this->NotificationTypes->newEntity();
+        $notificationType = $this->NotificationTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $notificationType = $this->NotificationTypes->patchEntity($notificationType, $this->request->getData());
             if ($this->NotificationTypes->save($notificationType)) {

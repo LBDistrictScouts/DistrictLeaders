@@ -14,7 +14,7 @@ class DocumentsCollection extends FilterCollection
      *
      * {@inheritDoc}
      */
-    public function initialize():void
+    public function initialize(): void
     {
         $this
             ->add('q', 'Search.Like', [
@@ -24,7 +24,7 @@ class DocumentsCollection extends FilterCollection
                 'comparison' => 'ILIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => [
+                'fields' => [
                     Document::FIELD_DOCUMENT,
                     'DocumentTypes.' . DocumentType::FIELD_DOCUMENT_TYPE,
                 ],

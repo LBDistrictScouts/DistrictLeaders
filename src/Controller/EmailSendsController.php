@@ -50,7 +50,7 @@ class EmailSendsController extends AppController
      */
     public function add()
     {
-        $emailSend = $this->EmailSends->newEntity();
+        $emailSend = $this->EmailSends->newEmptyEntity();
         if ($this->request->is('post')) {
             $emailSend = $this->EmailSends->patchEntity($emailSend, $this->request->getData());
             if ($this->EmailSends->save($emailSend)) {

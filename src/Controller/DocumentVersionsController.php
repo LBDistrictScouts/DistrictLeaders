@@ -53,7 +53,7 @@ class DocumentVersionsController extends AppController
      */
     public function add()
     {
-        $documentVersion = $this->DocumentVersions->newEntity();
+        $documentVersion = $this->DocumentVersions->newEmptyEntity();
         if ($this->request->is('post')) {
             $documentVersion = $this->DocumentVersions->patchEntity($documentVersion, $this->request->getData());
             if ($this->DocumentVersions->save($documentVersion)) {

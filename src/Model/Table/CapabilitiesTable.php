@@ -215,10 +215,10 @@ class CapabilitiesTable extends Table
         try {
             $record = $table->find()->first();
             if (!($record instanceof $entityClass)) {
-                $record = $table->newEntity();
+                $record = $table->newEmptyEntity();
             }
         } catch (Exception $exception) {
-            $record = $table->newEntity();
+            $record = $table->newEmptyEntity();
         }
         $fields = $record->getVisible();
 
@@ -253,7 +253,7 @@ class CapabilitiesTable extends Table
                 ->where([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])
                 ->first();
         } else {
-            $capability = $this->newEntity();
+            $capability = $this->newEmptyEntity();
         }
 
         $capability = $this->patchEntity($capability, $objectArray);

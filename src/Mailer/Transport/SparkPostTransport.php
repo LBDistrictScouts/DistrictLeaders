@@ -21,7 +21,7 @@ namespace App\Mailer\Transport;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Mailer\AbstractTransport;
-use Cake\Mailer\Email;
+use Cake\Mailer\Message;
 use Cake\ORM\TableRegistry;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
@@ -42,11 +42,11 @@ class SparkPostTransport extends AbstractTransport
     /**
      * Send mail via SparkPost REST API
      *
-     * @param \Cake\Mailer\Email $email Email message
+     * @param \Cake\Mailer\Message $emailMessage Email message
      *
-     * @return void
+     * @return array
      */
-    public function send(Email $email): void
+    public function send(Message $emailMessage): array
     {
         // Load SparkPost configuration settings
         $apiKey = Configure::read('SparkPost.Api.key');
@@ -55,17 +55,17 @@ class SparkPostTransport extends AbstractTransport
         $sparky = new SparkPost($httpClient, ['key' => $apiKey]);
 
         // Pre-process CakePHP email object fields
-        $from = (array)$email->getSender();
+        $from = (array)$emailMessage->getSender();
         $sender = sprintf('%s <%s>', array_values($from)[0], array_keys($from)[0]);
-        $sendTo = (array)$email->getTo();
+        $sendTo = (array)$emailMessage->getTo();
         $recipients = [[ 'address' => [ 'name' => array_values($sendTo)[0], 'email' => array_keys($sendTo)[0] ]]];
 
         // Build message to send
         $message = [
             'from' => $sender,
-            'html' => empty($email->message('html')) ? $email->message('text') : $email->message('html'),
-            'text' => $email->message('text'),
-            'subject' => $email->getSubject(),
+            'html' => empty($emailMessage->getBodyHtml()) ? $emailMessage->getBodyText() : $emailMessage->getBodyHtml(),
+            'text' => $emailMessage->getBodyText(),
+            'subject' => $emailMessage->getSubject(),
         ];
 
         $body = [
@@ -80,12 +80,22 @@ class SparkPostTransport extends AbstractTransport
             /** @var \SparkPost\SparkPostResponse $response */
 
             $results = $response->getBody();
-            $sendHeaders = $email->getHeaders(['X-Email-Gen-Code', 'X-Gen-ID']);
+            $sendHeaders = $emailMessage->getHeaders(['X-Email-Gen-Code', 'X-Gen-ID']);
 
             $this->EmailSends = TableRegistry::getTableLocator()->get('EmailSends');
             $this->EmailSends->sendRegister($results, $sendHeaders);
+
+            return [
+                'headers' => $sendHeaders,
+                'message' => $results,
+            ];
         } catch (SparkPostException $e) {
-            Log::error($e->getCode());
+            Log::error((string)$e->getCode());
+
+            return [
+                'headers' => 'Fail',
+                'message' => 'Error',
+            ];
         }
     }
 }

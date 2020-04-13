@@ -90,9 +90,10 @@ class PagesControllerTest extends TestCase
     /**
      * Test that missing template renders 404 page in production
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     *
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testMissingTemplate()
     {
@@ -108,9 +109,10 @@ class PagesControllerTest extends TestCase
     /**
      * Test that missing template in debug mode renders missing_template error page
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     *
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testMissingTemplateInDebug()
     {
@@ -128,9 +130,10 @@ class PagesControllerTest extends TestCase
     /**
      * Test directory traversal protection
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     *
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testDirectoryTraversalProtection()
     {

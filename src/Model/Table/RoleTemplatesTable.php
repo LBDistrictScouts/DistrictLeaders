@@ -198,7 +198,7 @@ class RoleTemplatesTable extends Table
                 ->where([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])
                 ->first();
         } else {
-            $roleTemplate = $this->newEntity();
+            $roleTemplate = $this->newEmptyEntity();
         }
 
         return $this->patchEntity($roleTemplate, $objectArray);

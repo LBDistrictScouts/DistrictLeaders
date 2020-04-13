@@ -47,7 +47,7 @@ class EmailResponseTypesController extends AppController
      */
     public function add()
     {
-        $emailResponseType = $this->EmailResponseTypes->newEntity();
+        $emailResponseType = $this->EmailResponseTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $emailResponseType = $this->EmailResponseTypes->patchEntity($emailResponseType, $this->request->getData());
             if ($this->EmailResponseTypes->save($emailResponseType)) {

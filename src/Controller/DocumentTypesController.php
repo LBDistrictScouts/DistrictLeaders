@@ -47,7 +47,7 @@ class DocumentTypesController extends AppController
      */
     public function add()
     {
-        $documentType = $this->DocumentTypes->newEntity();
+        $documentType = $this->DocumentTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $documentType = $this->DocumentTypes->patchEntity($documentType, $this->request->getData());
             if ($this->DocumentTypes->save($documentType)) {

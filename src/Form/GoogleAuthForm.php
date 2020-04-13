@@ -17,7 +17,7 @@ class GoogleAuthForm extends Form
      * @param \Cake\Form\Schema $schema From schema
      * @return \Cake\Form\Schema
      */
-    protected function _buildSchema(Schema $schema): Schema
+    protected function buildSchema(Schema $schema): Schema
     {
         $schema->addField('auth_code', 'string');
 

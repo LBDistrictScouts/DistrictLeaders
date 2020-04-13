@@ -29,7 +29,7 @@ class QueueMailingListTask extends QueueTask
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId)
+    public function run(array $data, $jobId): void
     {
         if (!key_exists('email_generation_code', $data)) {
             throw new QueueException('Email generation code not specified.');
