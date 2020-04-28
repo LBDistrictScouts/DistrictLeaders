@@ -31,7 +31,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_EMAIL_SEND'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($emailSends as $emailSend): ?>
+    <?php foreach ($emailSends as $emailSend) : ?>
     <tr>
         <td><?= h($emailSend->id) ?></td>
                 <td class="actions">

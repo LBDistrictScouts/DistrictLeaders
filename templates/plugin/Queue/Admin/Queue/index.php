@@ -14,44 +14,44 @@ use Cake\Core\Configure;
 ?>
 
 <nav class="col-md-3 col-xs-12 large-3 medium-4 columns" id="actions-sidebar">
-	<ul class="side-nav nav nav-pills nav-stacked">
-		<li class="heading"><?= __d('queue', 'Actions') ?></li>
+    <ul class="side-nav nav nav-pills nav-stacked">
+        <li class="heading"><?= __d('queue', 'Actions') ?></li>
 
-	</ul>
+    </ul>
 </nav>
 
 <div class="content col-md-9 col-xs-12 large-9 medium-8 columns">
 <h1><?php echo __d('queue', 'Queue');?> Jacob</h1>
 
 <div class="row">
-	<div class="col-md-6 col-xs-12 medium-6 columns">
+    <div class="col-md-6 col-xs-12 medium-6 columns">
 
-		<h2><?php echo __d('queue', 'Status'); ?></h2>
-		<?php if ($status) { ?>
-			<?php
+        <h2><?php echo __d('queue', 'Status'); ?></h2>
+        <?php if ($status) { ?>
+            <?php
             /** @var \Cake\I18n\FrozenTime $time */
             $time = $status['time'];
             $running = $time->addMinute()->isFuture();
             ?>
-			<?php echo $this->Format->yesNo($running); ?> <?php echo $running ? __d('queue', 'Running') : __d('queue', 'Not running'); ?> (<?php echo __d('queue', 'last {0}', $this->Time->relLengthOfTime($status['time']))?>)
+            <?php echo $this->Format->yesNo($running); ?> <?php echo $running ? __d('queue', 'Running') : __d('queue', 'Not running'); ?> (<?php echo __d('queue', 'last {0}', $this->Time->relLengthOfTime($status['time']))?>)
 
-			<?php
+            <?php
             echo '<div><small>Currently ' . $this->Html->link($status['workers'] . ' worker(s)', ['action' => 'processes']) . ' total.</small></div>';
             ?>
-			<?php
-            echo '<div><small>' . count($servers) . ' CLI server(s): ' . implode(', ', $servers) .'</small></div>';
+            <?php
+            echo '<div><small>' . count($servers) . ' CLI server(s): ' . implode(', ', $servers) . '</small></div>';
             ?>
 
-		<?php } else { ?>
-			n/a
-		<?php } ?>
+        <?php } else { ?>
+            n/a
+        <?php } ?>
 
-		<h2><?php echo __d('queue', 'Queued Jobs'); ?></h2>
-		<p>
-		<?php echo __d('queue', '{0} task(s) newly await processing.', $new . '/' . $current); ?>
-		</p>
-		<ol>
-			<?php
+        <h2><?php echo __d('queue', 'Queued Jobs'); ?></h2>
+        <p>
+        <?php echo __d('queue', '{0} task(s) newly await processing.', $new . '/' . $current); ?>
+        </p>
+        <ol>
+            <?php
             foreach ($pendingDetails as $pendingJob) {
                 echo '<li>' . $this->Html->link($pendingJob->job_type, ['controller' => 'QueuedJobs', 'action' => 'view', $pendingJob->id]) . ' (ref <code>' . h($pendingJob->reference ?: '-') . '</code>, prio ' . $pendingJob->priority . '):';
                 echo '<ul>';
@@ -98,11 +98,11 @@ use Cake\Core\Configure;
                 echo '</li>';
             }
             ?>
-		</ol>
+        </ol>
 
-		<h2><?php echo __d('queue', 'Statistics'); ?></h2>
-		<ul>
-			<?php
+        <h2><?php echo __d('queue', 'Statistics'); ?></h2>
+        <ul>
+            <?php
             foreach ($data as $row) {
                 echo '<li>' . h($row['job_type']) . ':';
                 echo '<ul>';
@@ -117,26 +117,26 @@ use Cake\Core\Configure;
                 echo 'n/a';
             }
             ?>
-		</ul>
+        </ul>
 
-		<?php if (Configure::read('Queue.isStatisticEnabled')) { ?>
-		<p><?php echo $this->Html->link(__d('queue', 'Detailed Statistics'), ['controller' => 'QueuedJobs', 'action' => 'stats']); ?></p>
-		<?php } ?>
-	</div>
+        <?php if (Configure::read('Queue.isStatisticEnabled')) { ?>
+        <p><?php echo $this->Html->link(__d('queue', 'Detailed Statistics'), ['controller' => 'QueuedJobs', 'action' => 'stats']); ?></p>
+        <?php } ?>
+    </div>
 
-	<div class="col-md-6 col-xs-12 medium-6 columns">
+    <div class="col-md-6 col-xs-12 medium-6 columns">
 
-		<h2>Settings</h2>
-		Server:
-		<ul>
-			<li>
-				<code>posix</code> extension enabled (optional, recommended): <?php echo $this->Format->yesNo(function_exists('posix_kill')); ?>
-			</li>
-		</ul>
+        <h2>Settings</h2>
+        Server:
+        <ul>
+            <li>
+                <code>posix</code> extension enabled (optional, recommended): <?php echo $this->Format->yesNo(function_exists('posix_kill')); ?>
+            </li>
+        </ul>
 
-		Current runtime configuration:
-		<ul>
-			<?php
+        Current runtime configuration:
+        <ul>
+            <?php
             $configurations = Configure::read('Queue');
             foreach ($configurations as $key => $configuration) {
                 echo '<li>';
@@ -151,11 +151,11 @@ use Cake\Core\Configure;
             }
 
             ?>
-		</ul>
+        </ul>
 
-		<h2>Trigger Test/Demo Jobs</h2>
-		<ul>
-			<?php
+        <h2>Trigger Test/Demo Jobs</h2>
+        <ul>
+            <?php
             foreach ($tasks as $task) {
                 if (substr($task, 0, 11) !== 'Queue.Queue') {
                     continue;
@@ -169,13 +169,13 @@ use Cake\Core\Configure;
                 echo '</li>';
             }
             ?>
-		</ul>
+        </ul>
 
-		<p><?php echo $this->Html->link(__d('queue', 'Trigger Delayed Test/Demo Job'), ['controller' => 'QueuedJobs', 'action' => 'test']); ?></p>
-		<?php if (Configure::read('debug')) { ?>
-		<p><?php echo $this->Html->link(__d('queue', 'Trigger Execute Job(s)'), ['controller' => 'QueuedJobs', 'action' => 'execute']); ?></p>
-		<?php } ?>
-	</div>
+        <p><?php echo $this->Html->link(__d('queue', 'Trigger Delayed Test/Demo Job'), ['controller' => 'QueuedJobs', 'action' => 'test']); ?></p>
+        <?php if (Configure::read('debug')) { ?>
+        <p><?php echo $this->Html->link(__d('queue', 'Trigger Execute Job(s)'), ['controller' => 'QueuedJobs', 'action' => 'execute']); ?></p>
+        <?php } ?>
+    </div>
 </div>
 
 </div>

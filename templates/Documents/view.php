@@ -19,7 +19,7 @@
         </div>
     </div>
 </div>
-<?php foreach ($document->document_versions as $documentVersions): ?>
+<?php foreach ($document->document_versions as $documentVersions) : ?>
 <div class="row">
     <div class="col">
         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
@@ -31,7 +31,7 @@
                     <div class="col-12 col-md-12 col-lg-6 col-xl-6"><img class="img-fluid" src="/img/bg-showcase-2.jpg"></div>
                     <div class="col">
                         <div class="row text-center">
-                            <?php foreach ($documentVersions->document_editions as $documentEditions): ?>
+                            <?php foreach ($documentVersions->document_editions as $documentEditions) : ?>
                                 <div class="col-auto"><i class="fal fa-file-pdf fa-5x"></i>
                                     <p><?= $this->Number->toReadableSize($documentEditions->size) ?></p>
                                 </div>

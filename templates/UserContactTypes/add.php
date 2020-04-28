@@ -24,5 +24,5 @@ $this->assign('entity', 'UserContactTypes');
         $args[4] = $userContactType::FIELD_USER_CONTACT_TYPE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($userContactType::FIELD_USER_CONTACT_TYPE) : '';
 
-    ?>
+        ?>
 </fieldset>

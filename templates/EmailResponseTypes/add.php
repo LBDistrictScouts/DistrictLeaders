@@ -27,5 +27,5 @@ $this->assign('entity', 'EmailResponseTypes');
         $args[4] = $emailResponseType::FIELD_BOUNCE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailResponseType::FIELD_BOUNCE) : '';
 
-    ?>
+        ?>
 </fieldset>

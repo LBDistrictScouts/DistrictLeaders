@@ -41,7 +41,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Notifications') ?></h4>
-        <?php if (!empty($notificationType->notifications)): ?>
+        <?php if (!empty($notificationType->notifications)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -60,7 +60,7 @@
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($notificationType->notifications as $notifications): ?>
+            <?php foreach ($notificationType->notifications as $notifications) : ?>
             <tr>
                 <td><?= h($notifications->id) ?></td>
                 <td><?= h($notifications->user_id) ?></td>

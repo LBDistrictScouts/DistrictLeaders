@@ -37,7 +37,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Users') ?></h4>
-        <?php if (!empty($passwordState->users)): ?>
+        <?php if (!empty($passwordState->users)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -60,7 +60,7 @@
                 <th scope="col"><?= __('Password State Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($passwordState->users as $users): ?>
+            <?php foreach ($passwordState->users as $users) : ?>
             <tr>
                 <td><?= h($users->id) ?></td>
                 <td><?= h($users->username) ?></td>

@@ -22,7 +22,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_NOTIFICATION_TYPE'
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($notificationTypes as $notificationType): ?>
+    <?php foreach ($notificationTypes as $notificationType) : ?>
     <tr>
         <td><?= h($notificationType->id) ?></td>
                 <td class="actions">

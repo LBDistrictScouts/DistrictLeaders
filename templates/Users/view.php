@@ -32,7 +32,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                         </div>
                     </div>
                 </div>
-                <?php if (!empty($user->roles)): ?>
+                <?php if (!empty($user->roles)) : ?>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -44,7 +44,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($user->roles as $roles): ?>
+                        <?php foreach ($user->roles as $roles) : ?>
                         <tr>
                             <td><?= $roles->has('role_type') ? h($roles->role_type->role_type) : '' ?> <?= $roles->has('role_status') && $roles->role_status->role_status != 'Active' ? '<span class="badge badge-info">' . h($roles->role_status->role_status) . '</span>' : '' ?></td>
                             <td><?= $roles->has('section') ? h($roles->section->section) : '' ?></td>
@@ -94,7 +94,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="changes" role="tabpanel" aria-labelledby="changes-tab">
-                <?php if (!empty($user->changes)): ?>
+                <?php if (!empty($user->changes)) : ?>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <tr>
@@ -104,7 +104,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                                 <th scope="col"><?= __('New Value') ?></th>
                                 <th scope="col"><?= __('Change Date') ?></th>
                             </tr>
-                            <?php foreach ($user->changes as $audit): ?>
+                            <?php foreach ($user->changes as $audit) : ?>
                                 <tr>
                                     <td><?= $audit->has('changed_user') ? $this->Html->link($audit->changed_user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->changed_user->id]) : '' ?></td>
                                     <td><?= $this->Inflection->space($audit->audit_field) ?></td>
@@ -115,12 +115,12 @@ $authUser = $this->getRequest()->getAttribute('identity');
                             <?php endforeach; ?>
                         </table>
                     </div>
-                <?php else: ?>
+                <?php else : ?>
                     <p>No Changes</p>
                 <?php endif; ?>
             </div>
             <div class="tab-pane fade" id="audit" role="tabpanel" aria-labelledby="audit-tab">
-                <?php if (!empty($user->audits)): ?>
+                <?php if (!empty($user->audits)) : ?>
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <tr>
@@ -130,7 +130,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                                 <th scope="col"><?= __('Changed By') ?></th>
                                 <th scope="col"><?= __('Change Date') ?></th>
                             </tr>
-                            <?php foreach ($user->audits as $audit): ?>
+                            <?php foreach ($user->audits as $audit) : ?>
                                 <tr>
                                     <td><?= $this->Inflection->space($audit->audit_field) ?></td>
                                     <td><?= h($audit->original_value) ?></td>
@@ -141,7 +141,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                             <?php endforeach; ?>
                         </table>
                     </div>
-                <?php else: ?>
+                <?php else : ?>
                     <p>No Changes</p>
                 <?php endif; ?>
             </div>

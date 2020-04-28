@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <?php if (!empty($roleType->capabilities)): ?>
+        <?php if (!empty($roleType->capabilities)) : ?>
             <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                 <div class="card-header">
                     <h3>Capabilities on Role</h3>
@@ -46,7 +46,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <?php foreach ($capabilities['Special'] as $capability => $templated): ?>
+                                                        <?php foreach ($capabilities['Special'] as $capability => $templated) : ?>
                                                             <span class="badge badge-<?= $templated ? 'success' : 'info' ?>"><?= h($capability) ?></span>
                                                         <?php endforeach; ?>
                                                     </td>
@@ -64,29 +64,29 @@
                                         <tr>
                                             <th><?= __('Model') ?></th>
                                             <th><?= __('Field') ?></th>
-                                            <?php foreach ($crudList as $crud): ?>
+                                            <?php foreach ($crudList as $crud) : ?>
                                                 <th><?= ucwords(strtolower($crud)) ?></th>
                                             <?php endforeach; ?>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($models as $knownModel => $modelConfig): ?>
+                                        <?php foreach ($models as $knownModel => $modelConfig) : ?>
                                             <tr>
                                                 <td><?= $this->Inflection->space($knownModel) ?></td>
                                                 <td></td>
-                                                <?php foreach ($crudList as $crud): ?>
+                                                <?php foreach ($crudList as $crud) : ?>
                                                     <?php
-                                                        if (key_exists($knownModel, $capabilities)) {
-                                                            $modelMatrix = $capabilities[$knownModel];
-                                                        } else {
-                                                            $modelMatrix = [];
-                                                        }
+                                                    if (key_exists($knownModel, $capabilities)) {
+                                                        $modelMatrix = $capabilities[$knownModel];
+                                                    } else {
+                                                        $modelMatrix = [];
+                                                    }
 
-                                                        if (key_exists($crud, $modelMatrix) && $modelMatrix[$crud]) {
-                                                            $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
-                                                        } else {
-                                                            $isTemplate = '<icon class="fal fa-check-circle"></icon>';
-                                                        }
+                                                    if (key_exists($crud, $modelMatrix) && $modelMatrix[$crud]) {
+                                                        $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
+                                                    } else {
+                                                        $isTemplate = '<icon class="fal fa-check-circle"></icon>';
+                                                    }
                                                     ?>
                                                     <td><?= key_exists($crud, $modelMatrix) ? $isTemplate : '' ?></td>
                                                 <?php endforeach; ?>
@@ -96,22 +96,22 @@
                                                     <tr>
                                                         <td></td>
                                                         <td><?= ucwords($this->Inflection->space(strtolower($field))) ?></td>
-                                                        <?php foreach ($crudList as $crud): ?>
+                                                        <?php foreach ($crudList as $crud) : ?>
                                                             <?php if ($crud != 'CHANGE') : ?>
                                                                 <?php
-                                                                    if ($crud == 'UPDATE') {
-                                                                        $crud = 'CHANGE';
-                                                                    }
+                                                                if ($crud == 'UPDATE') {
+                                                                    $crud = 'CHANGE';
+                                                                }
                                                                     $isActive = '';
-                                                                    if ($crud == 'CREATE' || $crud == 'DELETE') {
-                                                                        $isActive = '<icon class="fal fa-ellipsis-h"></icon>';
-                                                                    }
+                                                                if ($crud == 'CREATE' || $crud == 'DELETE') {
+                                                                    $isActive = '<icon class="fal fa-ellipsis-h"></icon>';
+                                                                }
 
-                                                                    if (key_exists($crud, $fieldCrud) && $fieldCrud[$crud]) {
-                                                                        $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
-                                                                    } else {
-                                                                        $isTemplate = '<icon class="fal fa-check-circle"></icon>';
-                                                                    }
+                                                                if (key_exists($crud, $fieldCrud) && $fieldCrud[$crud]) {
+                                                                    $isTemplate = '<icon class="fal fa-clipboard-check"></icon>';
+                                                                } else {
+                                                                    $isTemplate = '<icon class="fal fa-check-circle"></icon>';
+                                                                }
                                                                 ?>
                                                                 <td><?= key_exists($crud, $fieldCrud) ? $isTemplate :  $isActive ?></td>
                                                             <?php endif; ?>

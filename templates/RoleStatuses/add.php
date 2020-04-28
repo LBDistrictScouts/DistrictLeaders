@@ -24,5 +24,5 @@ $this->assign('entity', 'RoleStatuses');
         $args[4] = $roleStatus::FIELD_ROLE_STATUS;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleStatus::FIELD_ROLE_STATUS) : '';
 
-    ?>
+        ?>
 </fieldset>

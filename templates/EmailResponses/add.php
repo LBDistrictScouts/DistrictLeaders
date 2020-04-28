@@ -46,5 +46,5 @@ $this->assign('entity', 'EmailResponses');
         $args[4] = $emailResponse::FIELD_MESSAGE_SIZE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailResponse::FIELD_MESSAGE_SIZE) : '';
 
-    ?>
+        ?>
 </fieldset>

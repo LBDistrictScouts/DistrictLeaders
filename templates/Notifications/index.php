@@ -30,7 +30,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_NOTIFICATION'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($notifications as $notification): ?>
+    <?php foreach ($notifications as $notification) : ?>
     <tr>
         <td><?= h($notification->id) ?></td>
                 <td class="actions">

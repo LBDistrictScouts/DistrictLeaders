@@ -17,7 +17,7 @@
                 <?= $this->Form->input('membership_number'); ?>
             </div>
             <div class="card-footer">
-                <?= $this->Form->submit('Request Password Reset',['class' => 'btn btn-success btn-block btn-lg']) ?>
+                <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-success btn-block btn-lg']) ?>
             </div>
             <?= $this->Form->end(); ?>
         </div>

@@ -37,5 +37,5 @@ $this->assign('entity', 'UserContacts');
         $args[4] = $userContact::FIELD_VERIFIED;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($userContact::FIELD_VERIFIED) : '';
 
-    ?>
+        ?>
 </fieldset>

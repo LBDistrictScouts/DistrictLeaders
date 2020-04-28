@@ -25,7 +25,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($roles as $role): ?>
+    <?php foreach ($roles as $role) : ?>
     <tr>
         <td><?= h($role->id) ?></td>
                 <td class="actions">

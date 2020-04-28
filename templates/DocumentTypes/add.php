@@ -4,7 +4,6 @@
  * @var \App\Model\Entity\DocumentType $documentType
  */
 
-
 $this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'DocumentTypes');

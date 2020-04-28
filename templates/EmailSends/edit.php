@@ -58,5 +58,5 @@ $this->assign('entity', 'EmailSends');
         /** @var array $notifications The Notification Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($emailSend::FIELD_NOTIFICATION_ID, ['options' => $notifications, 'empty' => true]) : '';
 
-    ?>
+        ?>
 </fieldset>

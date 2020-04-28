@@ -27,5 +27,5 @@ $this->assign('entity', 'UserStates');
         $args[4] = $userState::FIELD_EXPIRED;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($userState::FIELD_EXPIRED) : '';
 
-    ?>
+        ?>
 </fieldset>

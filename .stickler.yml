@@ -4,6 +4,8 @@ linters:
 files:
   ignore:
     - 'vendor/*'
+    - 'templates/*'
+    - 'tmp/*'
     - 'config/Migrations/*'
     - 'bower_components/*'
 fixers:

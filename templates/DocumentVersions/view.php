@@ -47,7 +47,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Document Editions') ?></h4>
-        <?php if (!empty($documentVersion->document_editions)): ?>
+        <?php if (!empty($documentVersion->document_editions)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -62,7 +62,7 @@
                 <th scope="col"><?= __('Md5 Hash') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($documentVersion->document_editions as $documentEditions): ?>
+            <?php foreach ($documentVersion->document_editions as $documentEditions) : ?>
             <tr>
                 <td><?= h($documentEditions->id) ?></td>
                 <td><?= h($documentEditions->created) ?></td>

@@ -87,7 +87,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Email Responses') ?></h4>
-        <?php if (!empty($emailSend->email_responses)): ?>
+        <?php if (!empty($emailSend->email_responses)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -102,7 +102,7 @@
                 <th scope="col"><?= __('Message Size') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($emailSend->email_responses as $emailResponses): ?>
+            <?php foreach ($emailSend->email_responses as $emailResponses) : ?>
             <tr>
                 <td><?= h($emailResponses->id) ?></td>
                 <td><?= h($emailResponses->email_send_id) ?></td>
@@ -126,7 +126,7 @@
     </div>
     <div class="related">
         <h4><?= __('Related Tokens') ?></h4>
-        <?php if (!empty($emailSend->tokens)): ?>
+        <?php if (!empty($emailSend->tokens)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -143,7 +143,7 @@
                 <th scope="col"><?= __('Email Send Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($emailSend->tokens as $tokens): ?>
+            <?php foreach ($emailSend->tokens as $tokens) : ?>
             <tr>
                 <td><?= h($tokens->id) ?></td>
                 <td><?= h($tokens->token) ?></td>

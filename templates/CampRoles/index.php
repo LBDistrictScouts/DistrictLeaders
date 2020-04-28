@@ -23,7 +23,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_CAMP_ROLE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($campRoles as $campRole): ?>
+    <?php foreach ($campRoles as $campRole) : ?>
     <tr>
         <td><?= h($campRole->id) ?></td>
                 <td class="actions">

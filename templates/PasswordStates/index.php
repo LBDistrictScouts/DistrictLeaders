@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($passwordStates as $passwordState): ?>
+            <?php foreach ($passwordStates as $passwordState) : ?>
             <tr>
                 <td><?= $this->Number->format($passwordState->id) ?></td>
                 <td><?= h($passwordState->password_state) ?></td>

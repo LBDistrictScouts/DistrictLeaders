@@ -20,7 +20,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_CAPABILITY'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($capabilities as $capability): ?>
+    <?php foreach ($capabilities as $capability) : ?>
     <tr>
         <td><?= h($capability->capability_code) ?></td>
                 <td class="actions">

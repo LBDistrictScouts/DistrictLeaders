@@ -26,7 +26,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_EMAIL_RESPONSE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($emailResponses as $emailResponse): ?>
+    <?php foreach ($emailResponses as $emailResponse) : ?>
     <tr>
         <td><?= h($emailResponse->id) ?></td>
                 <td class="actions">

@@ -29,7 +29,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Roles') ?></h4>
-        <?php if (!empty($roleStatus->roles)): ?>
+        <?php if (!empty($roleStatus->roles)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -43,7 +43,7 @@
                 <th scope="col"><?= __('User Contact Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($roleStatus->roles as $roles): ?>
+            <?php foreach ($roleStatus->roles as $roles) : ?>
             <tr>
                 <td><?= h($roles->id) ?></td>
                 <td><?= h($roles->role_type_id) ?></td>

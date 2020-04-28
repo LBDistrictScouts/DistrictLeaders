@@ -33,7 +33,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Email Responses') ?></h4>
-        <?php if (!empty($emailResponseType->email_responses)): ?>
+        <?php if (!empty($emailResponseType->email_responses)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -48,7 +48,7 @@
                 <th scope="col"><?= __('Message Size') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($emailResponseType->email_responses as $emailResponses): ?>
+            <?php foreach ($emailResponseType->email_responses as $emailResponses) : ?>
             <tr>
                 <td><?= h($emailResponses->id) ?></td>
                 <td><?= h($emailResponses->email_send_id) ?></td>

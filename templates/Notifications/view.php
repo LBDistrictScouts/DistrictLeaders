@@ -81,7 +81,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Email Sends') ?></h4>
-        <?php if (!empty($notification->email_sends)): ?>
+        <?php if (!empty($notification->email_sends)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -101,7 +101,7 @@
                 <th scope="col"><?= __('Notification Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($notification->email_sends as $emailSends): ?>
+            <?php foreach ($notification->email_sends as $emailSends) : ?>
             <tr>
                 <td><?= h($emailSends->id) ?></td>
                 <td><?= h($emailSends->email_generation_code) ?></td>

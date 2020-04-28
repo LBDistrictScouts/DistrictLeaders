@@ -31,7 +31,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Role Types') ?></h4>
-        <?php if (!empty($sectionType->role_types)): ?>
+        <?php if (!empty($sectionType->role_types)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -42,7 +42,7 @@
                 <th scope="col"><?= __('Role Template Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($sectionType->role_types as $roleTypes): ?>
+            <?php foreach ($sectionType->role_types as $roleTypes) : ?>
             <tr>
                 <td><?= h($roleTypes->id) ?></td>
                 <td><?= h($roleTypes->role_type) ?></td>
@@ -62,7 +62,7 @@
     </div>
     <div class="related">
         <h4><?= __('Related Sections') ?></h4>
-        <?php if (!empty($sectionType->sections)): ?>
+        <?php if (!empty($sectionType->sections)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -74,7 +74,7 @@
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($sectionType->sections as $sections): ?>
+            <?php foreach ($sectionType->sections as $sections) : ?>
             <tr>
                 <td><?= h($sections->id) ?></td>
                 <td><?= h($sections->section) ?></td>

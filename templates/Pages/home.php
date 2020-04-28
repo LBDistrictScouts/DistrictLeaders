@@ -3,4 +3,4 @@
  * @var \App\View\AppView $this
  */
 ?>
-<?= $this->element('header'); ?>
+<?= $this->element('header');

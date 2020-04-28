@@ -37,7 +37,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Camp Roles') ?></h4>
-        <?php if (!empty($campRoleType->camp_roles)): ?>
+        <?php if (!empty($campRoleType->camp_roles)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -48,7 +48,7 @@
                 <th scope="col"><?= __('Camp Role Type Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($campRoleType->camp_roles as $campRoles): ?>
+            <?php foreach ($campRoleType->camp_roles as $campRoles) : ?>
             <tr>
                 <td><?= h($campRoles->id) ?></td>
                 <td><?= h($campRoles->created) ?></td>

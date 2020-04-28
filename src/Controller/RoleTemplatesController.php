@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
 
 /**
@@ -84,16 +83,7 @@ class RoleTemplatesController extends AppController
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
-        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->find('list', [
-            'keyField' => Capability::FIELD_CAPABILITY_CODE,
-            'valueField' => Capability::FIELD_CAPABILITY,
-//            'groupField' => Capability::FIELD_MIN_LEVEL
-        ]);
-
-        foreach ($capabilities as $capability => $name) {
-            debug($capability);
-            debug($name);
-        }
+        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->getSplitLists();
 
         $this->set(compact('roleTemplate', 'capabilities'));
     }

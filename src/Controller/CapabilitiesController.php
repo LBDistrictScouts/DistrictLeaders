@@ -28,13 +28,13 @@ class CapabilitiesController extends AppController
     /**
      * View method
      *
-     * @param int|null $id Capability id.
+     * @param int|null $capabilityId Capability id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($capabilityId = null)
     {
-        $capability = $this->Capabilities->get($id, [
+        $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
         ]);
 
@@ -93,19 +93,27 @@ class CapabilitiesController extends AppController
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
-        $this->set(compact('capability'));
+        $roleTypes = $this->Capabilities->RoleTypes->find('list', [
+            'conditions' => [
+                'level >=' => $capability->min_level,
+            ],
+            'keyField' => 'id',
+            'valueField' => 'role_abbreviation',
+            'groupField' => 'level',
+        ]);
+        $this->set(compact('capability', 'roleTypes'));
     }
 
     /**
      * Edit method
      *
-     * @param string|null $id Capability id.
+     * @param string|null $capabilityId Capability id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($capabilityId = null)
     {
-        $capability = $this->Capabilities->get($id, [
+        $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -131,14 +139,14 @@ class CapabilitiesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Capability id.
+     * @param string|null $capabilityId Capability id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($capabilityId = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $capability = $this->Capabilities->get($id);
+        $capability = $this->Capabilities->get($capabilityId);
         if ($this->Capabilities->delete($capability)) {
             $this->Flash->success(__('The capability has been deleted.'));
         } else {

@@ -24,5 +24,5 @@ $this->assign('entity', 'CampRoleTypes');
         $args[4] = $campRoleType::FIELD_CAMP_ROLE_TYPE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($campRoleType::FIELD_CAMP_ROLE_TYPE) : '';
 
-    ?>
+        ?>
 </fieldset>

@@ -32,5 +32,5 @@ $this->assign('entity', 'RoleTemplates');
         $args[4] = $roleTemplate::FIELD_INDICATIVE_LEVEL;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleTemplate::FIELD_INDICATIVE_LEVEL) : '';
 
-    ?>
+        ?>
 </fieldset>

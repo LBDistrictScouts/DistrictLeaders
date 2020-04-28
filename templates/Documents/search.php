@@ -24,7 +24,7 @@ $this->assign('add', $this->Identity->checkCapability('ADD_DOCUMENT'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($documents as $document): ?>
+    <?php foreach ($documents as $document) : ?>
     <tr>
         <td><?= h($document->document) ?></td>
                 <td class="actions">

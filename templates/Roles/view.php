@@ -67,7 +67,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Audits') ?></h4>
-        <?php if (!empty($role->audits)): ?>
+        <?php if (!empty($role->audits)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -80,7 +80,7 @@
                 <th scope="col"><?= __('Audit Record Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($role->audits as $audits): ?>
+            <?php foreach ($role->audits as $audits) : ?>
             <tr>
                 <td><?= h($audits->id) ?></td>
                 <td><?= h($audits->audit_field) ?></td>

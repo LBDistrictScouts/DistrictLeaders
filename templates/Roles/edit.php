@@ -41,5 +41,5 @@ $this->assign('entity', 'Roles');
         /** @var array $userContacts The User Contact Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_USER_CONTACT_ID, ['options' => $userContacts, 'empty' => true]) : '';
 
-    ?>
+        ?>
 </fieldset>

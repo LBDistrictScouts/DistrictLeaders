@@ -29,7 +29,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($tokens as $token): ?>
+            <?php foreach ($tokens as $token) : ?>
             <tr>
                 <td><?= $this->Number->format($token->id) ?></td>
                 <td><?= h($token->token) ?></td>

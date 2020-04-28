@@ -22,7 +22,7 @@ $this->assign('add', $this->Identity->checkCapability('CH_DOCTYPE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($documentTypes as $documentType): ?>
+    <?php foreach ($documentTypes as $documentType) : ?>
     <tr>
         <td><?= $this->Number->format($documentType->id) ?></td>
         <td><?= h($documentType->document_type) ?></td>

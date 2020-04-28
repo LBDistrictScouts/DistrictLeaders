@@ -20,7 +20,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_USER_CONTACT_TYPE'
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($userContactTypes as $userContactType): ?>
+    <?php foreach ($userContactTypes as $userContactType) : ?>
     <tr>
         <td><?= h($userContactType->user_contact_type) ?></td>
                 <td class="actions">

@@ -59,7 +59,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Audits') ?></h4>
-        <?php if (!empty($userContact->audits)): ?>
+        <?php if (!empty($userContact->audits)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -72,7 +72,7 @@
                 <th scope="col"><?= __('Audit Record Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($userContact->audits as $audits): ?>
+            <?php foreach ($userContact->audits as $audits) : ?>
             <tr>
                 <td><?= h($audits->id) ?></td>
                 <td><?= h($audits->audit_field) ?></td>
@@ -94,7 +94,7 @@
     </div>
     <div class="related">
         <h4><?= __('Related Roles') ?></h4>
-        <?php if (!empty($userContact->roles)): ?>
+        <?php if (!empty($userContact->roles)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -108,7 +108,7 @@
                 <th scope="col"><?= __('User Contact Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($userContact->roles as $roles): ?>
+            <?php foreach ($userContact->roles as $roles) : ?>
             <tr>
                 <td><?= h($roles->id) ?></td>
                 <td><?= h($roles->role_type_id) ?></td>

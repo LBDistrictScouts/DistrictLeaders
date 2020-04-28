@@ -18,7 +18,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_STATUS'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($roleStatuses as $roleStatus): ?>
+    <?php foreach ($roleStatuses as $roleStatus) : ?>
     <tr>
         <td><?= h($roleStatus->role_status) ?></td>
                 <td class="actions">

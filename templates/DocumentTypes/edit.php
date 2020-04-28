@@ -8,11 +8,11 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $documentType->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $documentType->id)]
-            )
-        ?></li>
+            __('Delete'),
+            ['action' => 'delete', $documentType->id],
+            ['confirm' => __('Are you sure you want to delete # {0}?', $documentType->id)]
+        )
+?></li>
         <li><?= $this->Html->link(__('List Document Types'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Documents'), ['controller' => 'Documents', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Document'), ['controller' => 'Documents', 'action' => 'add']) ?></li>

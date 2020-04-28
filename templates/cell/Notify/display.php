@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var array $capabilities
- * @var integer $loggedInUserId
+ * @var int $loggedInUserId
  * @var string $name
  */
 ?>

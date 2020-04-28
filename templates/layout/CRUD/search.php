@@ -21,7 +21,7 @@ $entity = $this->fetch('entity');
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-hover">
-			            <?= $this->fetch('content') ?>
+                        <?= $this->fetch('content') ?>
                     </table>
                 </div>
             </div>
@@ -46,7 +46,7 @@ $entity = $this->fetch('entity');
         </div>
     </div>
 </div>
-<?php if (key_exists('related', $this->blocks())): ?>
+<?php if (key_exists('related', $this->blocks())) : ?>
     <div class="row">
         <div class="col-lg-12">
             <div class="card">

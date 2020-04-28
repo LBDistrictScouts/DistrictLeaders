@@ -24,5 +24,5 @@ $this->assign('entity', 'CampTypes');
         $args[4] = $campType::FIELD_CAMP_TYPE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($campType::FIELD_CAMP_TYPE) : '';
 
-    ?>
+        ?>
 </fieldset>

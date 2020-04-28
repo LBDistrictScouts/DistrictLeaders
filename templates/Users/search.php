@@ -32,13 +32,13 @@ $this->assign('add', $this->Identity->checkCapability('ADD_USER'))
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($users as $user): ?>
+    <?php foreach ($users as $user) : ?>
     <tr>
         <td><?= h($user->full_name) ?></td>
         <td class="actions">
-		    <?= $this->Identity->checkCapability('DIRECTORY') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $user->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-		    <?= $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $user->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
-		    <?= $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
+            <?= $this->Identity->checkCapability('DIRECTORY') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $user->id], ['title' => __('View'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $user->id], ['title' => __('Edit'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
+            <?= $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) ?>
         </td>
         <td><?= $this->Number->format($user->membership_number, ['pattern' => '#######']) ?></td>
         <td><?= $this->Time->format($user->created, 'dd-MMM-yy HH:mm') ?></td>

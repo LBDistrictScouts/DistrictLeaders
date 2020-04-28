@@ -24,7 +24,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DOCUMENT_VERSION')
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($documentVersions as $documentVersion): ?>
+    <?php foreach ($documentVersions as $documentVersion) : ?>
     <tr>
         <td><?= $documentVersion->has('document') ? $this->Html->link($documentVersion->document->document, ['controller' => 'Documents', 'action' => 'view', $documentVersion->document->id]) : '' ?></td>
         <td><?= h($documentVersion->version_number) ?></td>

@@ -58,5 +58,5 @@ $this->assign('entity', 'Notifications');
         $args[4] = $notification::FIELD_LINK_ACTION;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notification::FIELD_LINK_ACTION) : '';
 
-    ?>
+        ?>
 </fieldset>

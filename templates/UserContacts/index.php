@@ -23,7 +23,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_USER_CONTACT'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($userContacts as $userContact): ?>
+    <?php foreach ($userContacts as $userContact) : ?>
     <tr>
         <td><?= h($userContact->contact_field) ?></td>
                 <td class="actions">

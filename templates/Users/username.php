@@ -15,23 +15,23 @@
                     <h3>Your Username</h3>
                 </div>
                 <div class="card-body text-center">
-					<p>Your username is: <strong><?= h($username) ?></strong></p>
+                    <p>Your username is: <strong><?= h($username) ?></strong></p>
                 </div>
                 <div class="card-footer">
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <a href="<?php echo $this->Url->build([
-			                    'controller' => 'Users',
-			                    'action' => 'login',
-			                    'prefix' => false],['_full']); ?>">
+                                'controller' => 'Users',
+                                'action' => 'login',
+                                'prefix' => false], ['_full']); ?>">
                                 <button type="button" class="btn btn-primary btn-block float-md-right">Login</button></a>
                         </div>
                         <div class="col d-lg-none d-xl-none d-md-none"><br/></div>
                         <div class="col-md-6 col-12">
                             <a href="<?php echo $this->Url->build([
-			                    'controller' => 'Users',
-			                    'action' => 'forgot',
-			                    'prefix' => false],['_full']); ?>">
+                                'controller' => 'Users',
+                                'action' => 'forgot',
+                                'prefix' => false], ['_full']); ?>">
                                 <button type="button" class="btn btn-default btn-block float-md-right">Forgot Password</button></a>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-<?php else  : ?>
+<?php else : ?>
     <div class="row justify-content-center">
         <div class="col-12 col-md-6">
             <div class="login-card card card-default">
@@ -53,7 +53,7 @@
                     <?= $this->Form->input('last_name'); ?>
                 </div>
                 <div class="card-footer">
-                    <?= $this->Form->submit('Lookup Username',['class' => 'btn btn-success btn-block btn-lg']) ?>
+                    <?= $this->Form->submit('Lookup Username', ['class' => 'btn btn-success btn-block btn-lg']) ?>
                 </div>
                 <?= $this->Form->end(); ?>
             </div>

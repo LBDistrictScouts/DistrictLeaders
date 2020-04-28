@@ -20,7 +20,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_EMAIL_RESPONSE_TYP
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($emailResponseTypes as $emailResponseType): ?>
+    <?php foreach ($emailResponseTypes as $emailResponseType) : ?>
     <tr>
         <td><?= h($emailResponseType->id) ?></td>
                 <td class="actions">

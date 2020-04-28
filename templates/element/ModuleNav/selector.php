@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var integer $loggedInUserId
+ * @var int $loggedInUserId
  */
 
 $path = $this->getRequest()->getPath();
@@ -35,12 +35,22 @@ if (preg_match('(admin)', $path) && !$queue) {
 $active = $directory || $documents || $groups || $queue || $admin;
 $this->set('moduleBar', $active);
 
-if ($documents) : echo $this->element('ModuleNav/documents'); endif;
+if ($documents) :
+    echo $this->element('ModuleNav/documents');
+endif;
 
-if ($directory) : echo $this->element('ModuleNav/directory'); endif;
+if ($directory) :
+    echo $this->element('ModuleNav/directory');
+endif;
 
-if ($groups) : echo $this->element('ModuleNav/groups'); endif;
+if ($groups) :
+    echo $this->element('ModuleNav/groups');
+endif;
 
-if ($admin) : echo $this->element('ModuleNav/admin'); endif;
+if ($admin) :
+    echo $this->element('ModuleNav/admin');
+endif;
 
-if ($queue) : echo $this->element('ModuleNav/queue'); endif;
+if ($queue) :
+    echo $this->element('ModuleNav/queue');
+endif;

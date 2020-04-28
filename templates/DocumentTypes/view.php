@@ -29,7 +29,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Documents') ?></h4>
-        <?php if (!empty($documentType->documents)): ?>
+        <?php if (!empty($documentType->documents)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -40,7 +40,7 @@
                 <th scope="col"><?= __('Document') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($documentType->documents as $documents): ?>
+            <?php foreach ($documentType->documents as $documents) : ?>
             <tr>
                 <td><?= h($documents->id) ?></td>
                 <td><?= h($documents->document_type_id) ?></td>

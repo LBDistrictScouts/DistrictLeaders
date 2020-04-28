@@ -25,7 +25,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_SECTION'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($sections as $section): ?>
+    <?php foreach ($sections as $section) : ?>
     <tr>
         <td><?= h($section->section) ?></td>
                 <td class="actions">

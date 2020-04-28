@@ -18,7 +18,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_CAMP_TYPE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($campTypes as $campType): ?>
+    <?php foreach ($campTypes as $campType) : ?>
     <tr>
         <td><?= h($campType->camp_type) ?></td>
                 <td class="actions">

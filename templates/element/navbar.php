@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var integer $loggedInUserId
+ * @var int $loggedInUserId
  */
 ?>
 
@@ -23,8 +23,8 @@
             <?= $this->cell('NavBar', [$identity], [
                 'cache' => [
                     'config' => 'cell_cache',
-                    'key' => 'nav_' . $identity->get('id')
-                ]
+                    'key' => 'nav_' . $identity->get('id'),
+                ],
             ])->render() ?>
             <ul class="navbar-nav move-right mt-2 mt-lg-0">
                 <li class="nav-item right-align mr-auto">
@@ -35,11 +35,11 @@
                 <?= $this->cell('Profile', [$identity->get('id')], [
                     'cache' => [
                         'config' => 'cell_cache',
-                        'key' => 'profile_' . $identity->get('id')
-                    ]
+                        'key' => 'profile_' . $identity->get('id'),
+                    ],
                 ])->render() ?>
             </ul>
-        <?php else: ?>
+        <?php else : ?>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <?= $this->Html->link('Login', ['controller' => 'Users', 'action' => 'login'], ['class' => 'nav-link'])  ?>

@@ -21,7 +21,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_USER_STATE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($userStates as $userState): ?>
+    <?php foreach ($userStates as $userState) : ?>
     <tr>
         <td><?= h($userState->id) ?></td>
                 <td class="actions">

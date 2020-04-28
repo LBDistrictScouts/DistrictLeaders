@@ -20,7 +20,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TEMPLATE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($roleTemplates as $roleTemplate): ?>
+    <?php foreach ($roleTemplates as $roleTemplate) : ?>
     <tr>
         <td><?= h($roleTemplate->role_template) ?></td>
                 <td class="actions">

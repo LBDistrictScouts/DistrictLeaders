@@ -37,7 +37,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related User Contacts') ?></h4>
-        <?php if (!empty($userContactType->user_contacts)): ?>
+        <?php if (!empty($userContactType->user_contacts)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -50,7 +50,7 @@
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($userContactType->user_contacts as $userContacts): ?>
+            <?php foreach ($userContactType->user_contacts as $userContacts) : ?>
             <tr>
                 <td><?= h($userContacts->id) ?></td>
                 <td><?= h($userContacts->contact_field) ?></td>

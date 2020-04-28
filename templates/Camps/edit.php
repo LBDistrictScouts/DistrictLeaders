@@ -9,11 +9,11 @@
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $camp->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $camp->id)]
-            )
-        ?></li>
+            __('Delete'),
+            ['action' => 'delete', $camp->id],
+            ['confirm' => __('Are you sure you want to delete # {0}?', $camp->id)]
+        )
+?></li>
         <li><?= $this->Html->link(__('List Camps'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Camp Types'), ['controller' => 'CampTypes', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New Camp Type'), ['controller' => 'CampTypes', 'action' => 'add']) ?></li>

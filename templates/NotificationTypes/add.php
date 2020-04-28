@@ -33,5 +33,5 @@ $this->assign('entity', 'NotificationTypes');
         $args[4] = $notificationType::FIELD_TYPE_CODE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($notificationType::FIELD_TYPE_CODE) : '';
 
-    ?>
+        ?>
 </fieldset>

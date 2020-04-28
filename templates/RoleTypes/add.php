@@ -43,5 +43,5 @@ $this->assign('entity', 'RoleTypes');
 
         /** @var array $capabilities The Capabilities List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('capabilities._ids', ['options' => $capabilities]) : '';
-    ?>
+        ?>
 </fieldset>

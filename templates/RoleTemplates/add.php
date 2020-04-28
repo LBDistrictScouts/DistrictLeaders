@@ -29,5 +29,5 @@ $this->assign('entity', 'RoleTemplates');
         /** @var array $capabilities */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['options' => $capabilities, 'label' => false, 'multiple' => 'checkbox']) : '';
 
-    ?>
+        ?>
 </fieldset>

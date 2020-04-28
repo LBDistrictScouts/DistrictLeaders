@@ -12,7 +12,7 @@
 <p><strong>Full Name:</strong> <?= h($entity->full_name) ?></p>
 <h3>Actions</h3>
 <ul>
-	<li><?= $this->Html->link('Reset Password', ['_full' => true, 'controller' => 'Tokens', 'action' => 'validate', 'prefix' => false, $token]) ?></li>
+    <li><?= $this->Html->link('Reset Password', ['_full' => true, 'controller' => 'Tokens', 'action' => 'validate', 'prefix' => false, $token]) ?></li>
 </ul>
 
 <p>This link will work for a week.</p>

@@ -22,7 +22,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_SCOUT_GROUP'));
 </tr>
 </thead>
 <tbody>
-    <?php foreach ($scoutGroups as $scoutGroup): ?>
+    <?php foreach ($scoutGroups as $scoutGroup) : ?>
     <tr>
         <td><?= h($scoutGroup->group_alias) ?></td>
                 <td class="actions">

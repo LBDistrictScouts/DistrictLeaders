@@ -21,7 +21,7 @@
             <div class="card-footer">
                 <?= $this->Form->submit('Change Password', ['class' => 'btn btn-success btn-block btn-lg']) ?>
             </div>
-			<?= $this->Form->end(); ?>
+            <?= $this->Form->end(); ?>
         </div>
     </div>
 </div>

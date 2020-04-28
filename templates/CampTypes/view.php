@@ -29,7 +29,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Camps') ?></h4>
-        <?php if (!empty($campType->camps)): ?>
+        <?php if (!empty($campType->camps)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -42,7 +42,7 @@
                 <th scope="col"><?= __('Camp End') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($campType->camps as $camps): ?>
+            <?php foreach ($campType->camps as $camps) : ?>
             <tr>
                 <td><?= h($camps->id) ?></td>
                 <td><?= h($camps->created) ?></td>

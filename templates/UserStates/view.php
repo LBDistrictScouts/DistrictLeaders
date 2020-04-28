@@ -37,7 +37,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Users') ?></h4>
-        <?php if (!empty($userState->users)): ?>
+        <?php if (!empty($userState->users)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -61,7 +61,7 @@
                 <th scope="col"><?= __('User State Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($userState->users as $users): ?>
+            <?php foreach ($userState->users as $users) : ?>
             <tr>
                 <td><?= h($users->id) ?></td>
                 <td><?= h($users->username) ?></td>

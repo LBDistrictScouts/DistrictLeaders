@@ -49,5 +49,5 @@ $this->assign('entity', 'Users');
         $args[4] = $user::FIELD_POSTCODE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_POSTCODE) : '';
 
-    ?>
+        ?>
 </fieldset>

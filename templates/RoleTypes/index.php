@@ -22,7 +22,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TYPE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($roleTypes as $roleType): ?>
+    <?php foreach ($roleTypes as $roleType) : ?>
     <tr>
         <td><?= h($roleType->role_abbreviation) ?></td>
                 <td class="actions">

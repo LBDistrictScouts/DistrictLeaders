@@ -41,5 +41,5 @@ $this->assign('entity', 'Roles');
         /** @var array $roleStatuses The Role Status Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_ROLE_STATUS_ID, ['options' => $roleStatuses]) : '';
 
-    ?>
+        ?>
 </fieldset>

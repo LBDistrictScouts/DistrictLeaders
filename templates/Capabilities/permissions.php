@@ -22,7 +22,7 @@
                         <h6 class="text-muted mb-2"><strong>Primary Email:</strong> <?= h($user->email) ?></h6>
                     </div>
                 </div>
-                <?php if (!empty($capabilities) &&  !empty($capabilities['User'])): ?>
+                <?php if (!empty($capabilities) && !empty($capabilities['User'])) : ?>
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                         <div class="card-header">
                             <h3>User Level</h3>
@@ -42,7 +42,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <td>
-                                                                <?php foreach ($capabilities['User']['Special'] as $capability): ?>
+                                                                <?php foreach ($capabilities['User']['Special'] as $capability) : ?>
                                                                     <span class="badge badge-info"><?= h($capability) ?></span>
                                                                 <?php endforeach; ?>
                                                             </td>
@@ -59,7 +59,7 @@
                                                 <tr>
                                                     <th><?= __('Model') ?></th>
                                                     <th><?= __('Field') ?></th>
-                                                    <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                    <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                         <?php if ($crud != 'CHANGE') : ?>
                                                             <th><?= ucwords(strtolower($crud)) ?></th>
                                                         <?php endif; ?>
@@ -67,18 +67,18 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach ($models as $knownModel => $modelConfig): ?>
+                                                <?php foreach ($models as $knownModel => $modelConfig) : ?>
                                                     <tr>
                                                         <td><?= $this->Inflection->space($knownModel) ?></td>
                                                         <td></td>
-                                                        <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                        <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                             <?php if ($crud != 'CHANGE') : ?>
                                                                 <?php
-                                                                    if (key_exists($knownModel, $capabilities['User'])) {
-                                                                        $modelMatrix = $capabilities['User'][$knownModel];
-                                                                    } else {
-                                                                        $modelMatrix = [];
-                                                                    }
+                                                                if (key_exists($knownModel, $capabilities['User'])) {
+                                                                    $modelMatrix = $capabilities['User'][$knownModel];
+                                                                } else {
+                                                                    $modelMatrix = [];
+                                                                }
                                                                 ?>
                                                                 <td><?= key_exists($crud, $modelMatrix) && $modelMatrix[$crud] ? '<icon class="fal fa-check-circle"></icon>' : '' ?></td>
                                                             <?php endif; ?>
@@ -89,16 +89,16 @@
                                                             <tr>
                                                                 <td></td>
                                                                 <td><?= ucwords($this->Inflection->space(strtolower($field))) ?></td>
-                                                                <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                                <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                                     <?php if ($crud != 'CHANGE') : ?>
                                                                         <?php
-                                                                            if ($crud == 'UPDATE') {
-                                                                                $crud = 'CHANGE';
-                                                                            }
+                                                                        if ($crud == 'UPDATE') {
+                                                                            $crud = 'CHANGE';
+                                                                        }
                                                                             $isActive = '';
-                                                                            if ($crud == 'CREATE' || $crud == 'DELETE') {
-                                                                                $isActive = '<icon class="fal fa-ellipsis-h"></icon>';
-                                                                            }
+                                                                        if ($crud == 'CREATE' || $crud == 'DELETE') {
+                                                                            $isActive = '<icon class="fal fa-ellipsis-h"></icon>';
+                                                                        }
                                                                         ?>
                                                                         <td><?= key_exists($crud, $fieldCrud) && $fieldCrud[$crud] ? '<icon class="fal fa-check-circle"></icon>' :  $isActive ?></td>
                                                                     <?php endif; ?>
@@ -124,17 +124,17 @@
                     ksort($nonUserCapabilities);
                 ?>
 
-                <?php if (!empty($nonUserCapabilities)): ?>
-                    <?php foreach ($nonUserCapabilities as $capabilityMatrixArray): ?>
+                <?php if (!empty($nonUserCapabilities)) : ?>
+                    <?php foreach ($nonUserCapabilities as $capabilityMatrixArray) : ?>
                         <?php $entity = $capabilityMatrixArray['object']; ?>
                         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="card-header">
                                 <?php if ($entity instanceof \App\Model\Entity\Section) : ?>
-                                    <?php /** @var \App\Model\Entity\Section $entity */ ?>
+                                                                                                                            /** @var \App\Model\Entity\Section $entity */ ?>
                                     <h3>Section: <?= $this->Html->link($entity->section, ['controller' => 'Sections', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
                                 <?php if ($entity instanceof \App\Model\Entity\ScoutGroup) : ?>
-                                    <?php /** @var \App\Model\Entity\ScoutGroup $entity */ ?>
+                                                                                                                               /** @var \App\Model\Entity\ScoutGroup $entity */ ?>
                                     <h3>Scout Group: <?= $this->Html->link($entity->scout_group, ['controller' => 'ScoutGroups', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
                             </div>
@@ -153,7 +153,7 @@
                                                         <tbody>
                                                         <tr>
                                                             <td>
-                                                                <?php foreach ($capabilityMatrixArray['Special'] as $capability): ?>
+                                                                <?php foreach ($capabilityMatrixArray['Special'] as $capability) : ?>
                                                                     <span class="badge badge-info"><?= h($capability) ?></span>
                                                                 <?php endforeach; ?>
                                                             </td>
@@ -170,7 +170,7 @@
                                                 <tr>
                                                     <th><?= __('Model') ?></th>
                                                     <th><?= __('Field') ?></th>
-                                                    <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                    <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                         <?php if ($crud != 'CHANGE') : ?>
                                                             <th><?= ucwords(strtolower($crud)) ?></th>
                                                         <?php endif; ?>
@@ -178,11 +178,11 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php foreach ($models as $knownModel => $modelConfig): ?>
+                                                <?php foreach ($models as $knownModel => $modelConfig) : ?>
                                                     <tr>
                                                         <td><?= $this->Inflection->space($knownModel) ?></td>
                                                         <td></td>
-                                                        <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                        <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                             <?php if ($crud != 'CHANGE') : ?>
                                                                 <?php
                                                                 if (key_exists($knownModel, $capabilityMatrixArray)) {
@@ -200,7 +200,7 @@
                                                             <tr>
                                                                 <td></td>
                                                                 <td><?= ucwords($this->Inflection->space(strtolower($field))) ?></td>
-                                                                <?php foreach ($capabilities['CRUD'] as $crud): ?>
+                                                                <?php foreach ($capabilities['CRUD'] as $crud) : ?>
                                                                     <?php if ($crud != 'CHANGE') : ?>
                                                                         <?php
                                                                         if ($crud == 'UPDATE') {

@@ -36,5 +36,5 @@ $this->assign('entity', 'CampRoles');
         /** @var array $campRoleTypes The Camp Role Type Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($campRole::FIELD_CAMP_ROLE_TYPE_ID, ['options' => $campRoleTypes]) : '';
 
-    ?>
+        ?>
 </fieldset>
