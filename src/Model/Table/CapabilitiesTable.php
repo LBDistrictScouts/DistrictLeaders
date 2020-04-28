@@ -402,4 +402,39 @@ class CapabilitiesTable extends Table
 
         return $models;
     }
+
+    /**
+     * Function to produce an Array of Type Distinct Capability SubArrays
+     *
+     * @return array
+     */
+    public function getSplitLists()
+    {
+        $capabilities = $this->find('list', [
+            'keyField' => Capability::FIELD_CAPABILITY_CODE,
+            'valueField' => Capability::FIELD_CAPABILITY,
+        ]);
+
+        $specialCapabilities = [];
+        $entityCapabilities = [];
+        $fieldCapabilities = [];
+
+        foreach ($capabilities as $capability => $name) {
+            $result = CapBuilder::breakSpecialCode($capability);
+
+            if ($result['type'] == 'Special') {
+                $specialCapabilities[$capability] = $name;
+            } elseif ($result['type'] == 'Entity') {
+                $entityCapabilities[$capability] = $name;
+            } elseif ($result['type'] == 'Field') {
+                $fieldCapabilities[$capability] = $name;
+            }
+        }
+
+        return [
+            'Special' => $specialCapabilities,
+            'Entity' => $entityCapabilities,
+            'Field' => $fieldCapabilities,
+        ];
+    }
 }

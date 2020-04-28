@@ -74,9 +74,13 @@ class RoleTypesController extends AppController
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
         $roleTemplates = $this->RoleTypes->RoleTemplates->find('list', ['limit' => 200]);
+        $roleLevel = $roleType->level;
+        if (is_null($roleLevel)) {
+            $roleLevel = 1;
+        }
         $capabilities = $this->RoleTypes->Capabilities->find('list', [
             'conditions' => [
-                'min_level <=' => $roleType->level,
+                'min_level <=' => $roleLevel,
             ],
         ]);
         $this->set(compact('roleType', 'sectionTypes', 'capabilities', 'roleTemplates'));

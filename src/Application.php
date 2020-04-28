@@ -36,6 +36,7 @@ use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
+use Cake\Http\Middleware\HttpsEnforcerMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\Http\ServerRequest;
@@ -178,14 +179,14 @@ class Application extends BaseApplication implements
                 'httpOnly' => true,
             ]))
 
-            ->add(new BodyParserMiddleware());
+            ->add(new BodyParserMiddleware())
 
-//            ->add(new HttpsEnforcerMiddleware([
-//                'disableOnDebug' => true,
-//                'headers' => ['X-Https-Upgrade' => true],
-//                'redirect' => true,
-//                'statusCode' => 302,
-//            ]));
+            ->add(new HttpsEnforcerMiddleware([
+                'disableOnDebug' => true,
+                'headers' => ['X-Https-Upgrade' => true],
+                'redirect' => true,
+                'statusCode' => 302,
+            ]));
 
 //            ->add(AjaxMiddleware::class);
 

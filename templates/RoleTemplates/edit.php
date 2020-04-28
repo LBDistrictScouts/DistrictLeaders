@@ -27,7 +27,7 @@ $this->assign('entity', 'RoleTemplates');
 
         $args[4] = $roleTemplate::FIELD_TEMPLATE_CAPABILITIES;
         /** @var array $capabilities */
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleTemplate::FIELD_TEMPLATE_CAPABILITIES, $capabilities, ['multiple' => 'checkbox']) : '';
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['options' => $capabilities, 'multiple' => 'checkbox']) : '';
 
         $args[4] = $roleTemplate::FIELD_INDICATIVE_LEVEL;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleTemplate::FIELD_INDICATIVE_LEVEL) : '';

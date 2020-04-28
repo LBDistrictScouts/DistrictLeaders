@@ -84,8 +84,10 @@ class DocumentsTableTest extends TestCase
     {
         $expected = [
             Document::FIELD_ID => 1,
-            Document::FIELD_DOCUMENT => 'Lorem ip',
+            Document::FIELD_DOCUMENT => 'Lorem ipsum dolor sit amet',
             Document::FIELD_DOCUMENT_TYPE_ID => 1,
+            Document::FIELD_DOCUMENT_PREVIEW_ID => 1,
+            Document::FIELD_LATEST_VERSION => 1,
         ];
         $dates = [
             Document::FIELD_CREATED,

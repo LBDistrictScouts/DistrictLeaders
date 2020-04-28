@@ -37,7 +37,7 @@ class PasswordForm extends Form
      * @param \Cake\Validation\Validator $validator to use against the form
      * @return \Cake\Validation\Validator
      */
-    protected function buildValidator(Validator $validator): Validator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->minLength(self::FIELD_POSTCODE, 6, 'Postcode is too Short.')
             ->minLength(self::FIELD_NEW_PASSWORD, User::MINIMUM_PASSWORD_LENGTH, 'Password is too short.')

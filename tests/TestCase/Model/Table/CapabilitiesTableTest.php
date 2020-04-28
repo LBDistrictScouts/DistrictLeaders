@@ -963,7 +963,6 @@ class CapabilitiesTableTest extends TestCase
     public function testEnrichCapability($bare, $enriched)
     {
         $result = $this->Capabilities->enrichUserCapability($bare);
-        debug($result);
 
         TestCase::assertEquals($enriched, $result);
     }
@@ -991,8 +990,125 @@ class CapabilitiesTableTest extends TestCase
     public function testEnrichRoleType($bare, $enriched)
     {
         $result = $this->Capabilities->enrichUserCapability($bare);
-        debug($result);
 
         TestCase::assertEquals($enriched, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerGetSplitLists()
+    {
+        return [
+            'Standard' => [
+                [
+                    'Special' => [
+                        'ALL' => 'SuperUser Permissions',
+                        'OWN_USER' => 'Edit Own User',
+                        'LOGIN' => 'Login',
+                    ],
+                    'Entity' => [
+                        'EDIT_GROUP' => 'Edit Group',
+                        'EDIT_SECT' => 'Edit Section',
+                        'EDIT_USER' => 'Edit User',
+                    ],
+                    'Field' => [],
+                ],
+                false,
+            ],
+            'Installed' => [
+                [
+                    'Special' => [
+                        'ALL' => 'SuperUser Permissions',
+                        'OWN_USER' => 'Edit Own User',
+                        'LOGIN' => 'Login',
+                        'DIRECTORY' => 'Use the District Directory',
+                    ],
+                    'Entity' => [
+                        'EDIT_GROUP' => 'Edit Group',
+                        'EDIT_SECT' => 'Edit Section',
+                        'EDIT_USER' => 'Edit User',
+                        'CREATE_USER' => 'Create a User',
+                        'UPDATE_USER' => 'Update a User',
+                        'VIEW_USER' => 'View a User',
+                        'DELETE_USER' => 'Delete a User',
+                        'CREATE_SCOUT_GROUP' => 'Create a Scout Group',
+                        'UPDATE_SCOUT_GROUP' => 'Update a Scout Group',
+                        'VIEW_SCOUT_GROUP' => 'View a Scout Group',
+                        'DELETE_SCOUT_GROUP' => 'Delete a Scout Group',
+                        'CREATE_SECTION' => 'Create a Section',
+                        'UPDATE_SECTION' => 'Update a Section',
+                        'VIEW_SECTION' => 'View a Section',
+                        'DELETE_SECTION' => 'Delete a Section',
+                        'CREATE_ROLE_TYPE' => 'Create a Role Type',
+                        'UPDATE_ROLE_TYPE' => 'Update a Role Type',
+                        'VIEW_ROLE_TYPE' => 'View a Role Type',
+                        'DELETE_ROLE_TYPE' => 'Delete a Role Type',
+                        'CREATE_DOCUMENT' => 'Create a Document',
+                        'UPDATE_DOCUMENT' => 'Update a Document',
+                        'VIEW_DOCUMENT' => 'View a Document',
+                        'DELETE_DOCUMENT' => 'Delete a Document',
+                    ],
+                    'Field' => [
+                        'FIELD_CHANGE_USER@ID' => 'Change field "Id" on a User',
+                        'FIELD_CHANGE_USER@USERNAME' => 'Change field "Username" on a User',
+                        'FIELD_CHANGE_USER@MEMBERSHIP_NUMBER' => 'Change field "Membership Number" on a User',
+                        'FIELD_CHANGE_USER@FIRST_NAME' => 'Change field "First Name" on a User',
+                        'FIELD_CHANGE_USER@LAST_NAME' => 'Change field "Last Name" on a User',
+                        'FIELD_CHANGE_USER@EMAIL' => 'Change field "Email" on a User',
+                        'FIELD_CHANGE_USER@ADDRESS_LINE_1' => 'Change field "Address Line 1" on a User',
+                        'FIELD_CHANGE_USER@ADDRESS_LINE_2' => 'Change field "Address Line 2" on a User',
+                        'FIELD_CHANGE_USER@CITY' => 'Change field "City" on a User',
+                        'FIELD_CHANGE_USER@COUNTY' => 'Change field "County" on a User',
+                        'FIELD_CHANGE_USER@POSTCODE' => 'Change field "Postcode" on a User',
+                        'FIELD_CHANGE_USER@CREATED' => 'Change field "Created" on a User',
+                        'FIELD_CHANGE_USER@MODIFIED' => 'Change field "Modified" on a User',
+                        'FIELD_CHANGE_USER@LAST_LOGIN' => 'Change field "Last Login" on a User',
+                        'FIELD_CHANGE_USER@DELETED' => 'Change field "Deleted" on a User',
+                        'FIELD_CHANGE_USER@LAST_LOGIN_IP' => 'Change field "Last Login Ip" on a User',
+                        'FIELD_CHANGE_USER@CAPABILITIES' => 'Change field "Capabilities" on a User',
+                        'FIELD_CHANGE_USER@USER_STATE_ID' => 'Change field "User State Id" on a User',
+                        'FIELD_CHANGE_USER@FULL_NAME' => 'Change field "Full Name" on a User',
+                        'FIELD_VIEW_USER@ID' => 'View field "Id" on a User',
+                        'FIELD_VIEW_USER@USERNAME' => 'View field "Username" on a User',
+                        'FIELD_VIEW_USER@MEMBERSHIP_NUMBER' => 'View field "Membership Number" on a User',
+                        'FIELD_VIEW_USER@FIRST_NAME' => 'View field "First Name" on a User',
+                        'FIELD_VIEW_USER@LAST_NAME' => 'View field "Last Name" on a User',
+                        'FIELD_VIEW_USER@EMAIL' => 'View field "Email" on a User',
+                        'FIELD_VIEW_USER@ADDRESS_LINE_1' => 'View field "Address Line 1" on a User',
+                        'FIELD_VIEW_USER@ADDRESS_LINE_2' => 'View field "Address Line 2" on a User',
+                        'FIELD_VIEW_USER@CITY' => 'View field "City" on a User',
+                        'FIELD_VIEW_USER@COUNTY' => 'View field "County" on a User',
+                        'FIELD_VIEW_USER@POSTCODE' => 'View field "Postcode" on a User',
+                        'FIELD_VIEW_USER@CREATED' => 'View field "Created" on a User',
+                        'FIELD_VIEW_USER@MODIFIED' => 'View field "Modified" on a User',
+                        'FIELD_VIEW_USER@LAST_LOGIN' => 'View field "Last Login" on a User',
+                        'FIELD_VIEW_USER@DELETED' => 'View field "Deleted" on a User',
+                        'FIELD_VIEW_USER@LAST_LOGIN_IP' => 'View field "Last Login Ip" on a User',
+                        'FIELD_VIEW_USER@CAPABILITIES' => 'View field "Capabilities" on a User',
+                        'FIELD_VIEW_USER@USER_STATE_ID' => 'View field "User State Id" on a User',
+                        'FIELD_VIEW_USER@FULL_NAME' => 'View field "Full Name" on a User',
+                    ],
+                ],
+                true,
+            ],
+        ];
+    }
+
+    /**
+     * Test Build Capability Method and safety overloads
+     *
+     * @dataProvider providerGetSplitLists
+     * @param array $expected Expected Result
+     * @param bool $installBase Whether to Install Base Capabilities
+     */
+    public function testGetSplitLists($expected, $installBase)
+    {
+        if ($installBase) {
+            $this->Capabilities->installBaseCapabilities();
+        }
+        $result = $this->Capabilities->getSplitLists();
+
+        TestCase::assertEquals($expected, $result);
     }
 }

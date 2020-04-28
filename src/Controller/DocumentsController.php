@@ -19,9 +19,9 @@ use Exception;
 class DocumentsController extends AppController
 {
     /**
-     * @throws \Exception
+     * {@inheritDoc}
      *
-     * {@inheritdoc}
+     * @throws \Exception
      * @return void
      */
     public function initialize(): void

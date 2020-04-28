@@ -380,7 +380,7 @@ class UsersTableTest extends TestCase
      */
     public function testRetrieveCapabilities()
     {
-        Cache::clear(false, 'capability');
+        Cache::clear('capability');
         $user = $this->Users->get(1);
         $capabilities = $this->Users->retrieveCapabilities($user);
 
@@ -437,7 +437,7 @@ class UsersTableTest extends TestCase
      */
     public function testUserCapability()
     {
-        Cache::clear(false, 'capability');
+        Cache::clear('capability');
 
         // Basic Assert Positive
         $user = $this->Users->get(1);

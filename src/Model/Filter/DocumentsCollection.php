@@ -10,9 +10,8 @@ use Search\Model\Filter\FilterCollection;
 class DocumentsCollection extends FilterCollection
 {
     /**
-     * Startup Method
-     *
      * {@inheritDoc}
+     * Startup Method
      *
      * @return void
      */

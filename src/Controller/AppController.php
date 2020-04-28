@@ -95,7 +95,6 @@ class AppController extends Controller
         $service->loadAuthenticator('Authentication.Form');
 
         $this->loadComponent('Flash.Flash');
-//        $this->loadComponent('Cookie');
 
         $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
 

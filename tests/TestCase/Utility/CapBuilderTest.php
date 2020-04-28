@@ -378,19 +378,27 @@ class CapBuilderTest extends TestCase
         return [
             'Is Action Type' => [
                 'CREATE_ACTION',
-                [],
+                [
+                    'crud' => 'CREATE',
+                    'model' => 'Actions',
+                    'is_field' => false,
+                ],
             ],
             'Is Not Action Type' => [
                 'BLAH_GOAT',
-                [],
+                [
+                    'crud' => 'BLAH',
+                    'model' => 'Goats',
+                    'is_field' => false,
+                ],
             ],
             'Not a Field' => [
                 '',
-                [],
+                false,
             ],
             'Is Empty' => [
                 '',
-                [],
+                false,
             ],
         ];
     }
@@ -403,7 +411,6 @@ class CapBuilderTest extends TestCase
      */
     public static function testBreakCode($capabilityCode, $expected)
     {
-        TestCase::markTestIncomplete();
         TestCase::assertEquals($expected, CapBuilder::breakCode($capabilityCode));
     }
 
@@ -437,5 +444,69 @@ class CapBuilderTest extends TestCase
     public static function testIsSpecialCode($capabilityCode, $expected)
     {
         TestCase::assertEquals($expected, CapBuilder::isSpecialCode($capabilityCode));
+    }
+
+    /**
+     * @return array
+     */
+    public function providerBreakSpecialCode()
+    {
+        return [
+            'Entity' => [
+                'CREATE_ACTION',
+                [
+                    'is_special' => false,
+                    'is_field' => false,
+                    'field' => null,
+                    'crud' => 'CREATE',
+                    'model' => 'Actions',
+                    'type' => 'Entity',
+                ],
+            ],
+            'Field' => [
+                'FIELD_CHANGE_USER@EMAIL',
+                [
+                    'is_special' => false,
+                    'is_field' => true,
+                    'field' => 'EMAIL',
+                    'crud' => 'CHANGE',
+                    'model' => 'Users',
+                    'type' => 'Field',
+                ],
+            ],
+            'Special' => [
+                'LOGIN',
+                [
+                    'is_special' => true,
+                    'is_field' => false,
+                    'field' => null,
+                    'crud' => null,
+                    'model' => null,
+                    'type' => 'Special',
+                ],
+            ],
+            'Empty' => [
+                '',
+                [
+                    'is_special' => false,
+                    'is_field' => false,
+                    'field' => null,
+                    'crud' => null,
+                    'model' => null,
+                    'type' => null,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @param string $capabilityCode The Capability Code to be broken
+     * @param array $expected Outcome expected
+     * @dataProvider providerBreakSpecialCode
+     * @return void
+     */
+    public static function testBreakSpecialCode($capabilityCode, $expected)
+    {
+        TestCase::assertEquals($expected, CapBuilder::breakSpecialCode($capabilityCode));
     }
 }

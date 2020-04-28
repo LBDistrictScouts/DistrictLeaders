@@ -59,11 +59,7 @@ class RoleTemplatesController extends AppController
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
-        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->find('list', [
-            'keyField' => Capability::FIELD_CAPABILITY_CODE,
-            'valueField' => Capability::FIELD_CAPABILITY_CODE,
-//            'groupField' => Capability::FIELD_MIN_LEVEL
-        ]);
+        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->getSplitLists();
         $this->set(compact('roleTemplate', 'capabilities'));
     }
 
@@ -90,9 +86,15 @@ class RoleTemplatesController extends AppController
         }
         $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->find('list', [
             'keyField' => Capability::FIELD_CAPABILITY_CODE,
-            'valueField' => Capability::FIELD_CAPABILITY_CODE,
+            'valueField' => Capability::FIELD_CAPABILITY,
 //            'groupField' => Capability::FIELD_MIN_LEVEL
         ]);
+
+        foreach ($capabilities as $capability => $name) {
+            debug($capability);
+            debug($name);
+        }
+
         $this->set(compact('roleTemplate', 'capabilities'));
     }
 

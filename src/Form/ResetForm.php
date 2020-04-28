@@ -35,7 +35,7 @@ class ResetForm extends Form
      * @param \Cake\Validation\Validator $validator The basic Validation to be extended.
      * @return \Cake\Validation\Validator $validator
      */
-    protected function buildValidator(Validator $validator): Validator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence(self::FIELD_MEMBERSHIP_NUMBER)
@@ -44,7 +44,7 @@ class ResetForm extends Form
 
         $validator
             ->requirePresence(self::FIELD_EMAIL)
-            ->email(self::FIELD_EMAIL, 'valid', 'Please Enter Valid Email Address.')
+            ->email(self::FIELD_EMAIL, true, 'Please Enter Valid Email Address.')
             ->notEmptyString(self::FIELD_EMAIL);
 
         $validator

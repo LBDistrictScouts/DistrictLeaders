@@ -151,7 +151,7 @@ class DocumentVersionsTableTest extends TestCase
     public function testFindDocumentList()
     {
         $expected = [
-            1 => 'Lorem ip - 1',
+            1 => 'Lorem ipsum dolor sit amet - 1',
         ];
 
         $actual = $this->DocumentVersions->find('documentList')->toArray();

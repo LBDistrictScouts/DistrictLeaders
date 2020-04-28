@@ -258,6 +258,41 @@ class CapBuilder
      * @param string $capabilityCode The Capability Code to be broken
      * @return array
      */
+    public static function breakSpecialCode($capabilityCode)
+    {
+        $outArray = [
+            'is_special' => false,
+            'is_field' => false,
+            'field' => null,
+            'crud' => null,
+            'model' => null,
+            'type' => null,
+        ];
+
+        if (CapBuilder::isSpecialCode($capabilityCode)) {
+            $outArray['is_special'] = true;
+        } else {
+            $brokenArray = CapBuilder::breakCode($capabilityCode);
+            if (is_array($brokenArray)) {
+                $outArray = array_merge($outArray, $brokenArray);
+            }
+        }
+
+        if ($outArray['is_special']) {
+            $outArray['type'] = 'Special';
+        } elseif ($outArray['is_field']) {
+            $outArray['type'] = 'Field';
+        } elseif (!is_null($outArray['model'])) {
+            $outArray['type'] = 'Entity';
+        }
+
+        return $outArray;
+    }
+
+    /**
+     * @param string $capabilityCode The Capability Code to be broken
+     * @return array|false
+     */
     public static function breakCode($capabilityCode)
     {
         $code = $capabilityCode;
@@ -268,6 +303,9 @@ class CapBuilder
         }
 
         $codeArray = explode('_', $code, 2);
+        if (count($codeArray) < 2) {
+            return false;
+        }
         $outArray['crud'] = $codeArray[0];
         $outArray['model'] = Inflector::pluralize(Inflector::camelize(strtolower($codeArray[1])));
         $outArray['is_field'] = (bool)CapBuilder::isFieldType($capabilityCode);

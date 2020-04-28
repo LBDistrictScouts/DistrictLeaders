@@ -7,9 +7,8 @@ use Authorization\Controller\Component\AuthorizationComponent;
 use Cake\Datasource\ModelAwareTrait;
 
 /**
- * CapAuthorization component
- *
  * {@inheritDoc}
+ * CapAuthorization component
  *
  * @property \App\Model\Table\UsersTable $Users
  */

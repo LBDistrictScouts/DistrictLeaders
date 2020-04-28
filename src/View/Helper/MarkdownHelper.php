@@ -26,9 +26,9 @@ class MarkdownHelper extends Helper
     protected $converter;
 
     /**
-     * @param array $config Array for configuration
-     *
      * {@inheritDoc}
+     *
+     * @param array $config Array for configuration
      * @return void
      */
     public function initialize(array $config): void

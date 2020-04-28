@@ -153,18 +153,21 @@ trait AppTestTrait
      * @param string $controller Name of the Controller being Interrogated.
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
+     * @param array $expectedRedirect Array to Redirect to.
      */
-    protected function tryAddPost($controller, $validData, $newEntityId)
+    protected function tryAddPost($controller, $validData, $newEntityId, $expectedRedirect = null)
     {
         $url = [
             'controller' => $controller,
             'action' => 'add',
         ];
-        $expectedRedirect = [
-            'controller' => $controller,
-            'action' => 'view',
-            $newEntityId,
-        ];
+        if (is_null($expectedRedirect)) {
+            $expectedRedirect = [
+                'controller' => $controller,
+                'action' => 'view',
+                $newEntityId,
+            ];
+        }
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
     }
@@ -198,10 +201,11 @@ trait AppTestTrait
      * @param string $controller Name of the Controller being Interrogated.
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
+     * @param array $expectedRedirect Array for Expected for Add to Redirect to.
      */
-    protected function tryDeletePost($controller, $validData, $newEntityId)
+    protected function tryDeletePost($controller, $validData, $newEntityId, $expectedRedirect = null)
     {
-        $this->tryAddPost($controller, $validData, $newEntityId);
+        $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirect);
 
         $url = [
             'controller' => $controller,

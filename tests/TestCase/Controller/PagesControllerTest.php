@@ -101,7 +101,7 @@ class PagesControllerTest extends TestCase
         Configure::write('debug', false);
         $this->get('/pages/not_existing');
 
-        $this->assertResponseError();
+        $this->assertResponseFailure();
         $this->assertResponseContains('Error');
     }
 
@@ -122,7 +122,6 @@ class PagesControllerTest extends TestCase
         $this->assertResponseFailure();
         $this->assertResponseContains('Missing Template');
         $this->assertResponseContains('Stacktrace');
-        $this->assertResponseContains('not_existing.ctp');
     }
 
     /**

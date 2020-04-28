@@ -42,6 +42,22 @@ class RolesControllerTest extends TestCase
     private $controller = 'Roles';
 
     /**
+     * @param int|null $number The Redirect Array ID
+     * @return array
+     */
+    private function retrieveAddRedirect(int $number = 10)
+    {
+        return [
+            'controller' => $this->controller,
+            'action' => 'edit',
+            $number,
+            '?' => [
+                'contact' => true,
+            ],
+        ];
+    }
+
+    /**
      * Test index method
      *
      * @return void
@@ -78,7 +94,8 @@ class RolesControllerTest extends TestCase
                 'user_id' => 2,
                 'role_status_id' => 1,
             ],
-            10
+            10,
+            $this->retrieveAddRedirect()
         );
     }
 
@@ -118,7 +135,8 @@ class RolesControllerTest extends TestCase
                 'user_id' => 2,
                 'role_status_id' => 1,
             ],
-            10
+            10,
+            $this->retrieveAddRedirect()
         );
     }
 }

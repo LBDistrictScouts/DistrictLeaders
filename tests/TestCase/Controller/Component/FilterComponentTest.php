@@ -113,7 +113,7 @@ class FilterComponentTest extends TestCase
             []
         );
 
-        $viewVars = $this->Controller->viewVars;
+        $viewVars = $this->Controller->viewBuilder()->getVars();
         TestCase::assertArrayHasKey('filterArray', $viewVars);
         TestCase::assertArrayHasKey('appliedFilters', $viewVars);
 
@@ -128,7 +128,8 @@ class FilterComponentTest extends TestCase
             []
         );
 
-        $viewVars = $this->Controller->viewVars;
+        $viewVars = $this->Controller->viewBuilder()->getVars();
+
         TestCase::assertArrayHasKey('filterArray', $viewVars);
         TestCase::assertArrayHasKey('appliedFilters', $viewVars);
 
@@ -169,7 +170,7 @@ class FilterComponentTest extends TestCase
         TestCase::assertArrayHasKey('DocumentTypes', $returnedQuery->getContain());
 
         // Collect View Vars
-        $viewVars = $this->Controller->viewVars;
+        $viewVars = $this->Controller->viewBuilder()->getVars();
 
         // Check Filter Array Variable
         TestCase::assertArrayHasKey('filterArray', $viewVars);
@@ -205,7 +206,8 @@ class FilterComponentTest extends TestCase
             ]
         );
 
-        $viewVars = $this->Controller->viewVars;
+        $viewVars = $this->Controller->viewBuilder()->getVars();
+
         TestCase::assertArrayHasKey('filterArray', $viewVars);
         $expected = [
             1 => 'Lorem ipsum dolor sit amet',
