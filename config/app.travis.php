@@ -55,8 +55,12 @@ return [
         'jsBaseUrl' => 'js/',
         'paths' => [
             'plugins' => [ROOT . DS . 'plugins' . DS],
-            'templates' => [APP . 'Template' . DS],
-            'locales' => [APP . 'Locale' . DS],
+            'templates' => [ROOT . DS . 'templates' . DS],
+            'locales' => [RESOURCES . 'locales' . DS],
+        ],
+        'who' => [
+            'system' => 'System',
+            'email' => 'webmaster@goat.org.uk',
         ],
     ],
 
@@ -101,6 +105,15 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          * If you set 'className' => 'Null' core cache will be disabled.
          */
+        'redis', [
+            'className' => 'Cake\Cache\Engine\FileEngine',
+            'duration' => '+1 hours',
+            'prefix' => 'cake_redis_',
+            'path' => CACHE . 'persistent/',
+            'url' => env('CACHE_CAKECORE_URL', null),
+            'fallback' => 'default',
+        ],
+
         '_cake_core_' => [
             'className' => 'Cake\Cache\Engine\FileEngine',
             'prefix' => 'myapp_cake_core_',
@@ -194,7 +207,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
+        'errorLevel' => E_ALL,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -264,15 +277,18 @@ return [
             'path' => LOGS,
             'file' => 'debug',
             'url' => env('LOG_DEBUG_URL', null),
+            'scopes' => false,
+            'levels' => ['debug'],
         ],
         'error' => [
             'className' => 'Cake\Log\Engine\FileLog',
             'path' => LOGS,
             'file' => 'error',
-            'url' => env('LOG_ERROR_URL', null),
+            'scopes' => false,
+            'levels' => ['notice', 'info', 'warning', 'error', 'critical', 'alert', 'emergency'],
         ],
         'queue' => [
-            'className' => 'DatabaseLog.Database',
+            'className' => 'Cake\Log\Engine\FileLog',
             'type' => 'queue',
             'levels' => ['info'],
             'scopes' => ['queue'],
@@ -285,6 +301,15 @@ return [
             'url' => env('LOG_QUERIES_URL', null),
             'scopes' => ['queriesLog'],
         ],
+    ],
+
+    /**
+     * Configures Database Connection for Logs.
+     */
+    'DatabaseLog' => [
+        'datasource' => 'database_log',
+        'limit' => 9999,
+        'maxLength' => '-1 year',
     ],
 
     /**
@@ -335,14 +360,25 @@ return [
         ],
     ],
 
-    'SparkPost' => [
-        'Api' => [
-            'key' => '',
-        ],
+    'IdeHelper' => [
+        // Always add annotations/meta even if not yet needed
+        'preemptive' => true,
     ],
 
     'GoogleClient' => [
         'TokenPath' => 'config/token.json',
+    ],
+
+    'Muffin/Tokenize' => [
+        'lifetime' => '3 days', // Default value
+        'length' => 32, // Default value
+        'table' => 'tokenize_tokens', // Default value
+    ],
+
+    'SparkPost' => [
+        'Api' => [
+            'key' => '',
+        ],
     ],
 
     'defaultAdmin' => [
