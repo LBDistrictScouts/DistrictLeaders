@@ -6,7 +6,7 @@
  * @var \App\Model\Entity\Camp $camp
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Issues');
 $this->assign('subset', 'All');

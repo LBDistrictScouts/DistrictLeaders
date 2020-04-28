@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\UserContactType[]|\Cake\Collection\CollectionInterface $userContactTypes
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'UserContactTypes');
 $this->assign('subset', 'All');

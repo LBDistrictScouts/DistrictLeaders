@@ -7,7 +7,7 @@
 
 $authUser = $this->getRequest()->getAttribute('identity');
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Sections');
 $this->assign('subset', 'All');

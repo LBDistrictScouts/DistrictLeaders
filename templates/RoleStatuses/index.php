@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\RoleStatus[]|\Cake\Collection\CollectionInterface $roleStatuses
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'RoleStatuses');
 $this->assign('subset', 'All');

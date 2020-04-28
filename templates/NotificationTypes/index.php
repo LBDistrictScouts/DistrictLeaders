@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\NotificationType[]|\Cake\Collection\CollectionInterface $notificationTypes
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'NotificationTypes');
 $this->assign('subset', 'All');

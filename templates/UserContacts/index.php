@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\UserContact[]|\Cake\Collection\CollectionInterface $userContacts
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'UserContacts');
 $this->assign('subset', 'All');

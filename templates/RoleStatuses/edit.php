@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\RoleStatus $roleStatus
  */
 
-$this->extend('../Layout/CRUD/edit');
+$this->extend('../layout/CRUD/edit');
 
 $this->assign('entity', 'RoleStatuses');
 ?>

@@ -7,7 +7,7 @@
 
 $authUser = $this->request->getAttribute('identity');
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'DocumentTypes');
 $this->assign('subset', 'All');

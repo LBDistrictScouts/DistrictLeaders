@@ -5,7 +5,7 @@
  * @var mixed $documents
  */
 
-$this->extend('../Layout/CRUD/edit');
+$this->extend('../layout/CRUD/edit');
 
 $this->assign('entity', 'DocumentVersions');
 ?>

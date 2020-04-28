@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\UserContactType $userContactType
  */
 
-$this->extend('../Layout/CRUD/add');
+$this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'UserContactTypes');
 ?>

@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\SectionType $sectionType
  */
 
-$this->extend('../Layout/CRUD/edit');
+$this->extend('../layout/CRUD/edit');
 
 $this->assign('entity', 'SectionTypes');
 ?>

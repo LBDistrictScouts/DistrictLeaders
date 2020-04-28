@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\EmailResponseType[]|\Cake\Collection\CollectionInterface $emailResponseTypes
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'EmailResponseTypes');
 $this->assign('subset', 'All');

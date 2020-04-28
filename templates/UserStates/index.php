@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\UserState[]|\Cake\Collection\CollectionInterface $userStates
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'UserStates');
 $this->assign('subset', 'All');

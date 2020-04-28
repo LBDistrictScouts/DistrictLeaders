@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\CampRole[]|\Cake\Collection\CollectionInterface $campRoles
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'CampRoles');
 $this->assign('subset', 'All');

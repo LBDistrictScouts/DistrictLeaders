@@ -4,7 +4,7 @@
  * @var \App\Form\FileForm $fileForm
  */
 
-$this->extend('../Layout/CRUD/add');
+$this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'Files');
 $this->assign('icon', 'fa-file');

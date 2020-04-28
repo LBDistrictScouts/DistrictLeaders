@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\CampType[]|\Cake\Collection\CollectionInterface $campTypes
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'CampTypes');
 $this->assign('subset', 'All');
