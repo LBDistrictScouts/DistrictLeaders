@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\EmailResponse[]|\Cake\Collection\CollectionInterface $emailResponses
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'EmailResponses');
 $this->assign('subset', 'All');

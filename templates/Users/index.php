@@ -13,7 +13,7 @@ use App\Model\Entity\User;
 
 $authUser = $this->getRequest()->getAttribute('identity');
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Users');
 $this->assign('subset', 'All');

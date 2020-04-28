@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\EmailSend[]|\Cake\Collection\CollectionInterface $emailSends
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'EmailSends');
 $this->assign('subset', 'All');

@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Capability[]|\Cake\Collection\CollectionInterface $capabilities
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Capabilities');
 $this->assign('subset', 'All');

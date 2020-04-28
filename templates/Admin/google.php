@@ -5,7 +5,7 @@
  * @var \App\Form\GoogleAuthForm $form
  */
 
-$this->extend('../Layout/CRUD/add');
+$this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'GoogleAuthCode');
 $this->assign('icon', 'fa-google');

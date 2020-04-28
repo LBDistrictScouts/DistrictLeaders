@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\RoleTemplate[]|\Cake\Collection\CollectionInterface $roleTemplates
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'RoleTemplates');
 $this->assign('subset', 'All');

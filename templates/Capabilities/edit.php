@@ -5,7 +5,7 @@
  * @var mixed $roleTypes
  */
 
-$this->extend('../Layout/CRUD/edit');
+$this->extend('../layout/CRUD/edit');
 
 $this->assign('entity', 'Capabilities');
 ?>

@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\Audit[]|\Cake\Collection\CollectionInterface $audits
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Changes');
 $this->assign('subset', 'Recent');

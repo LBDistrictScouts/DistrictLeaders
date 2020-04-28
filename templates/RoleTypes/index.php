@@ -4,7 +4,7 @@
  * @var \App\Model\Entity\RoleType[]|\Cake\Collection\CollectionInterface $roleTypes
  */
 
-$this->extend('../Layout/CRUD/index');
+$this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'RoleTypes');
 $this->assign('subset', 'All');

@@ -5,7 +5,7 @@
  * @var mixed $documentTypes
  */
 
-$this->extend('../Layout/CRUD/add');
+$this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'Documents');
 
