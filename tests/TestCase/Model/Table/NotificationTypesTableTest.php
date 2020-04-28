@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\NotificationType;
@@ -6,7 +8,6 @@ use App\Model\Table\NotificationTypesTable;
 use App\Utility\TextSafe;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\NotificationTypesTable Test Case
@@ -28,7 +29,7 @@ class NotificationTypesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.NotificationTypes'
+        'app.NotificationTypes',
     ];
 
     /**
@@ -36,7 +37,7 @@ class NotificationTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('NotificationTypes') ? [] : ['className' => NotificationTypesTable::class];
@@ -48,7 +49,7 @@ class NotificationTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->NotificationTypes);
 
@@ -59,7 +60,6 @@ class NotificationTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()

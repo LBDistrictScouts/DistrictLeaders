@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SectionTypesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class SectionTypesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -33,7 +34,7 @@ class SectionTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('SectionTypes') ? [] : ['className' => SectionTypesTable::class];
@@ -45,7 +46,7 @@ class SectionTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->SectionTypes);
 
@@ -60,7 +61,7 @@ class SectionTypesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'section_type' => 'Llamas'
+            'section_type' => 'Llamas',
         ];
 
         return $good;
@@ -77,7 +78,7 @@ class SectionTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'section_type' => 'Beavers'
+            'section_type' => 'Beavers',
         ];
         TestCase::assertEquals($expected, $actual);
 

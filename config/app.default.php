@@ -55,8 +55,12 @@ return [
         'jsBaseUrl' => 'js/',
         'paths' => [
             'plugins' => [ROOT . DS . 'plugins' . DS],
-            'templates' => [APP . 'Template' . DS],
-            'locales' => [APP . 'Locale' . DS],
+            'templates' => [ROOT . DS . 'templates' . DS],
+            'locales' => [RESOURCES . 'locales' . DS],
+        ],
+        'who' => [
+            'system' => '',
+            'email' => 'webmaster@goat.org.uk',
         ],
     ],
 
@@ -101,6 +105,15 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          * If you set 'className' => 'Null' core cache will be disabled.
          */
+        'redis', [
+            'className' => 'Redis',
+            'duration' => '+1 hours',
+            'prefix' => 'cake_redis_',
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'fallback' => 'default',
+        ],
+
         '_cake_core_' => [
             'className' => 'Cake\Cache\Engine\FileEngine',
             'prefix' => 'myapp_cake_core_',
@@ -260,13 +273,22 @@ return [
      */
     'Log' => [
         'debug' => [
-            'className' => 'DatabaseLog.Database'
+            'className' => 'Cake\Log\Engine\FileLog',
+            'path' => LOGS,
+            'file' => 'debug',
+            'url' => env('LOG_DEBUG_URL', null),
+            'scopes' => false,
+            'levels' => ['debug'],
         ],
         'error' => [
-            'className' => 'DatabaseLog.Database'
+            'className' => 'Cake\Log\Engine\FileLog',
+            'path' => LOGS,
+            'file' => 'error',
+            'scopes' => false,
+            'levels' => ['notice', 'info', 'warning', 'error', 'critical', 'alert', 'emergency'],
         ],
         'queue' => [
-            'className' => 'DatabaseLog.Database',
+            'className' => 'Cake\Log\Engine\FileLog',
             'type' => 'queue',
             'levels' => ['info'],
             'scopes' => ['queue'],
@@ -281,6 +303,9 @@ return [
         ],
     ],
 
+    /**
+     * Configures Database Connection for Logs.
+     */
     'DatabaseLog' => [
         'datasource' => 'database_log',
         'limit' => 9999,
@@ -331,8 +356,8 @@ return [
         'handler' => [
             'engine' => 'ComboSession',
             'model' => 'SiteSessions',
-            'cache' => 'combo'
-        ]
+            'cache' => 'combo',
+        ],
     ],
 
     'IdeHelper' => [
@@ -344,7 +369,7 @@ return [
         'TokenPath' => 'config/token.json',
     ],
 
-    'Muffin/Tokenize', [
+    'Muffin/Tokenize' => [
         'lifetime' => '3 days', // Default value
         'length' => 32, // Default value
         'table' => 'tokenize_tokens', // Default value
@@ -352,8 +377,8 @@ return [
 
     'SparkPost' => [
         'Api' => [
-            'key' => '__API_KEY__'
-        ]
+            'key' => '__API_KEY__',
+        ],
     ],
 
     'defaultAdmin' => [

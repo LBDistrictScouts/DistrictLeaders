@@ -1,15 +1,11 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
-//use App\Model\Table\OrdersTable;
-use App\Model\Entity\Role;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
-use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -17,7 +13,6 @@ use Cake\TestSuite\TestCase;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- *
  * @property \App\Model\Table\RolesTable $Roles
  * @property EventManager $EventManager
  */
@@ -26,7 +21,7 @@ class RoleListenerTest extends TestCase
     use AppTestTrait;
 
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -42,7 +37,7 @@ class RoleListenerTest extends TestCase
         'app.Roles',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Roles = TableRegistry::getTableLocator()->get('Roles');

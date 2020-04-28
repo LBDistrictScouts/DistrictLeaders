@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -46,7 +48,6 @@ trait AppTestTrait
      * Function to do generic feature for Get Integration Test Load.
      *
      * @param array|string $url The Url Array to be tested.
-     *
      * @return void
      */
     protected function tryGet($url)
@@ -134,7 +135,7 @@ trait AppTestTrait
     {
         $this->tryPost($url, $validData, $expectedRedirect);
 
-        $this->assertFlashElement('Flash/success');
+//        $this->assertFlashElement('flash/success');
 
         $verb = 'saved';
         if ($url['action'] == 'delete') {
@@ -152,18 +153,21 @@ trait AppTestTrait
      * @param string $controller Name of the Controller being Interrogated.
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
+     * @param array $expectedRedirect Array to Redirect to.
      */
-    protected function tryAddPost($controller, $validData, $newEntityId)
+    protected function tryAddPost($controller, $validData, $newEntityId, $expectedRedirect = null)
     {
         $url = [
             'controller' => $controller,
-            'action' => 'add'
+            'action' => 'add',
         ];
-        $expectedRedirect = [
-            'controller' => $controller,
-            'action' => 'view',
-            $newEntityId
-        ];
+        if (is_null($expectedRedirect)) {
+            $expectedRedirect = [
+                'controller' => $controller,
+                'action' => 'view',
+                $newEntityId,
+            ];
+        }
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
     }
@@ -180,12 +184,12 @@ trait AppTestTrait
         $url = [
             'controller' => $controller,
             'action' => 'edit',
-            $entityId
+            $entityId,
         ];
         $expectedRedirect = [
             'controller' => $controller,
             'action' => 'view',
-            $entityId
+            $entityId,
         ];
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
@@ -197,19 +201,20 @@ trait AppTestTrait
      * @param string $controller Name of the Controller being Interrogated.
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
+     * @param array $expectedRedirect Array for Expected for Add to Redirect to.
      */
-    protected function tryDeletePost($controller, $validData, $newEntityId)
+    protected function tryDeletePost($controller, $validData, $newEntityId, $expectedRedirect = null)
     {
-        $this->tryAddPost($controller, $validData, $newEntityId);
+        $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirect);
 
         $url = [
             'controller' => $controller,
             'action' => 'delete',
-            $newEntityId
+            $newEntityId,
         ];
         $expectedRedirect = [
             'controller' => $controller,
-            'action' => 'index'
+            'action' => 'index',
         ];
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);

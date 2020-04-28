@@ -1,16 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
-use App\Model\Entity\RoleType;
-use Cake\Datasource\ResultSetInterface;
+use Cake\Core\Configure;
 
 /**
  * RoleTypes Controller
  *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
- *
- * @method RoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController
 {
@@ -22,7 +21,7 @@ class RoleTypesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes']
+            'contain' => ['SectionTypes', 'RoleTemplates'],
         ];
         $roleTypes = $this->paginate($this->RoleTypes);
 
@@ -39,10 +38,21 @@ class RoleTypesController extends AppController
     public function view($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['SectionTypes', 'Capabilities', 'Roles']
+            'contain' => ['SectionTypes', 'Capabilities', 'Roles', 'RoleTemplates'],
         ]);
-
         $this->set('roleType', $roleType);
+
+        $capabilities = $this->RoleTypes->Capabilities->enrichRoleType($roleType->capabilities);
+        $this->set('capabilities', $capabilities);
+
+        $models = Configure::read('allModels');
+        ksort($models);
+        $this->set('models', $models);
+
+        $crud = Configure::read('entityCapabilities');
+        ksort($crud);
+        $crudList = array_keys($crud);
+        $this->set('crudList', $crudList);
     }
 
     /**
@@ -52,7 +62,7 @@ class RoleTypesController extends AppController
      */
     public function add()
     {
-        $roleType = $this->RoleTypes->newEntity();
+        $roleType = $this->RoleTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleType = $this->RoleTypes->patchEntity($roleType, $this->request->getData());
             if ($this->RoleTypes->save($roleType)) {
@@ -64,7 +74,15 @@ class RoleTypesController extends AppController
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
         $roleTemplates = $this->RoleTypes->RoleTemplates->find('list', ['limit' => 200]);
-        $capabilities = $this->RoleTypes->Capabilities->find('list', ['conditions' => ['min_level <=' => $roleType->level]]);
+        $roleLevel = $roleType->level;
+        if (is_null($roleLevel)) {
+            $roleLevel = 1;
+        }
+        $capabilities = $this->RoleTypes->Capabilities->find('list', [
+            'conditions' => [
+                'min_level <=' => $roleLevel,
+            ],
+        ]);
         $this->set(compact('roleType', 'sectionTypes', 'capabilities', 'roleTemplates'));
     }
 
@@ -78,7 +96,7 @@ class RoleTypesController extends AppController
     public function edit($id = null)
     {
         $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['Capabilities']
+            'contain' => ['Capabilities'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleType = $this->RoleTypes->patchEntity($roleType, $this->request->getData());
@@ -91,7 +109,12 @@ class RoleTypesController extends AppController
         }
         $sectionTypes = $this->RoleTypes->SectionTypes->find('list', ['limit' => 200]);
         $roleTemplates = $this->RoleTypes->RoleTemplates->find('list', ['limit' => 200]);
-        $capabilities = $this->RoleTypes->Capabilities->find('list', ['conditions' => ['min_level <=' => $roleType->level]]);
+        $capabilities = $this->RoleTypes->Capabilities
+            ->find('list', [
+                'conditions' => [
+                    'min_level <=' => $roleType->level,
+                ],
+            ]);
         $this->set(compact('roleType', 'sectionTypes', 'capabilities', 'roleTemplates'));
     }
 

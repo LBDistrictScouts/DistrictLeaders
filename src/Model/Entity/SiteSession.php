@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -14,7 +16,6 @@ use Cake\ORM\Entity;
  */
 class SiteSession extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -28,7 +29,7 @@ class SiteSession extends Entity
         'created' => true,
         'modified' => true,
         'data' => true,
-        'expires' => true
+        'expires' => true,
     ];
 
     public const FIELD_ID = 'id';

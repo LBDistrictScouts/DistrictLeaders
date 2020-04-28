@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\GoogleClientComponent;
@@ -10,7 +12,6 @@ use Cake\TestSuite\TestCase;
  */
 class GoogleClientComponentTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -23,7 +24,7 @@ class GoogleClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $registry = new ComponentRegistry();
@@ -35,7 +36,7 @@ class GoogleClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->GoogleClient);
 
@@ -46,7 +47,6 @@ class GoogleClientComponentTest extends TestCase
      * Test initial setup
      *
      * @return void
-     *
      * @throws \Google_Exception
      */
     public function testInitialization()
@@ -56,7 +56,7 @@ class GoogleClientComponentTest extends TestCase
         $out = $this->GoogleClient->getList();
 
         $expected = [
-            'jacob'
+            'jacob',
         ];
 
         TestCase::assertEquals($expected, $out);

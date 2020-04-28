@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
 use Cake\TestSuite\TestCase;
@@ -18,7 +20,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -54,7 +56,6 @@ class ScoutGroupsControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testIndex()
@@ -66,7 +67,6 @@ class ScoutGroupsControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     *
      * @throws
      */
     public function testView()
@@ -78,7 +78,6 @@ class ScoutGroupsControllerTest extends TestCase
      * Test add method
      *
      * @return void
-     *
      * @throws
      */
     public function testAdd()
@@ -96,7 +95,6 @@ class ScoutGroupsControllerTest extends TestCase
      * Test edit method
      *
      * @return void
-     *
      * @throws
      */
     public function testEdit()
@@ -114,7 +112,6 @@ class ScoutGroupsControllerTest extends TestCase
      * Test delete method
      *
      * @return void
-     *
      * @throws
      */
     public function testDelete()

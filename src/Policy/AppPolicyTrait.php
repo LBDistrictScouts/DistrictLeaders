@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -13,6 +15,9 @@
  */
 namespace App\Policy;
 
+use Authorization\Policy\Result;
+use Cake\ORM\Entity;
+
 /**
  * A trait intended to make application tests of your controllers easier.
  */
@@ -22,18 +27,29 @@ trait AppPolicyTrait
      * @param \App\Model\Entity\User $user Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
-     *
-     * @return bool|void
+     * @return \Authorization\Policy\Result|void
      */
-    public function before($user, $resource, $action)
+    public function before($user, $resource, $action): Result
     {
         if (is_null($user)) {
-            return false;
+            return new Result(false, 'User not present. Auth error.');
         }
 
-        if ($user->checkCapability('ALLT')) {
-            return true;
+        if ($user->checkCapability('ALL')) {
+            return new Result(true, 'ALL capability present.');
         }
-        // fall through
+
+        if ($user->checkCapability($action)) {
+            return new Result(true, 'Action specific capability present.');
+        }
+
+        if ($resource instanceof Entity) {
+            /** @var \Cake\ORM\Entity $model */
+            $model = $resource->getSource();
+
+            if ($user->buildAndCheckCapability($action, $model)) {
+                return new Result(true, 'Entity specific capability present.');
+            }
+        }
     }
 }

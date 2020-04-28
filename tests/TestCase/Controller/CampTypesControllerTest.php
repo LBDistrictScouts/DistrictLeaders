@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CampTypesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class CampTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -37,6 +38,8 @@ class CampTypesControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**
@@ -48,7 +51,7 @@ class CampTypesControllerTest extends TestCase
      * @var array $validEntityData Valid creation Data.
      */
     private $validEntityData = [
-        'camp_type' => 'New Camp Type'
+        'camp_type' => 'New Camp Type',
     ];
 
     /**

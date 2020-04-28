@@ -1,25 +1,21 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Token;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Tokens Controller
  *
  * @property \App\Model\Table\TokensTable $Tokens
- *
- * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Token[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {
     /**
      * @throws \Exception
-     *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -30,7 +26,6 @@ class TokensController extends AppController
      * Validation of a Token
      *
      * @param string $token The Token for deciphering.
-     *
      * @return \Cake\Http\Response|null
      */
     public function validate($token = null)
@@ -64,7 +59,7 @@ class TokensController extends AppController
                     '?' => [
                         'token_id' => $validated,
                         'token' => urldecode($token),
-                    ]
+                    ],
                 ];
                 $redirect = array_merge($location, $tokenReData);
 

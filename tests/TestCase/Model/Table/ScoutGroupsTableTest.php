@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\ScoutGroup;
@@ -35,7 +37,7 @@ class ScoutGroupsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
@@ -47,7 +49,7 @@ class ScoutGroupsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->ScoutGroups);
 
@@ -58,7 +60,6 @@ class ScoutGroupsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -95,7 +96,7 @@ class ScoutGroupsTableTest extends TestCase
             ScoutGroup::FIELD_NUMBER_STRIPPED => 4,
             ScoutGroup::FIELD_CHARITY_NUMBER => 134,
             ScoutGroup::FIELD_GROUP_DOMAIN => '4thgoat.org.uk',
-            ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk'
+            ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk',
         ];
 
         $this->validateInitialise($expected, $this->ScoutGroups, 2, $dates);
@@ -245,7 +246,7 @@ class ScoutGroupsTableTest extends TestCase
     {
         $expected = [
             '4thgoat.org.uk',
-            '8thfish.co.uk'
+            '8thfish.co.uk',
         ];
         $actual = $this->ScoutGroups->getDomains();
         TestCase::assertSame($expected, $actual);
@@ -269,9 +270,7 @@ class ScoutGroupsTableTest extends TestCase
      *
      * @param string $emailString String to be encoded
      * @param bool $expected Expected Result
-     *
      * @return void
-     *
      * @dataProvider providerDomainVerifyData
      */
     public function testDomainVerify($emailString, $expected)

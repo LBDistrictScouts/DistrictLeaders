@@ -1,16 +1,13 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\DocumentType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * DocumentTypes Controller
  *
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
- *
- * @method DocumentType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {
@@ -36,7 +33,7 @@ class DocumentTypesController extends AppController
     public function view($id = null)
     {
         $documentType = $this->DocumentTypes->get($id, [
-            'contain' => ['Documents']
+            'contain' => ['Documents'],
         ]);
 
         $this->set('documentType', $documentType);
@@ -49,7 +46,7 @@ class DocumentTypesController extends AppController
      */
     public function add()
     {
-        $documentType = $this->DocumentTypes->newEntity();
+        $documentType = $this->DocumentTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $documentType = $this->DocumentTypes->patchEntity($documentType, $this->request->getData());
             if ($this->DocumentTypes->save($documentType)) {
@@ -72,7 +69,7 @@ class DocumentTypesController extends AppController
     public function edit($id = null)
     {
         $documentType = $this->DocumentTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentType = $this->DocumentTypes->patchEntity($documentType, $this->request->getData());

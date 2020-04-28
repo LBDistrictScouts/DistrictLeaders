@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -13,7 +15,6 @@ use Cake\ORM\Entity;
  */
 class CampType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -25,7 +26,7 @@ class CampType extends Entity
      */
     protected $_accessible = [
         'camp_type' => true,
-        'camps' => true
+        'camps' => true,
     ];
 
     public const FIELD_ID = 'id';

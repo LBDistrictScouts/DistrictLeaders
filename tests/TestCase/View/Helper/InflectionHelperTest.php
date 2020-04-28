@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\InflectionHelper;
@@ -10,7 +12,6 @@ use Cake\View\View;
  */
 class InflectionHelperTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -23,7 +24,7 @@ class InflectionHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $view = new View();
@@ -35,7 +36,7 @@ class InflectionHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Inflection);
 
@@ -60,9 +61,7 @@ class InflectionHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSpaceData
-     *
      * @return void
      */
     public function testSpace($expected, $provided)
@@ -89,9 +88,7 @@ class InflectionHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSpaceSingluarData
-     *
      * @return void
      */
     public function testSinglulariseSpace($expected, $provided)

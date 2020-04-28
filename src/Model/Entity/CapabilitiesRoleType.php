@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -8,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $capability_id
  * @property int $role_type_id
+ * @property bool $template
  *
  * @property \App\Model\Entity\Capability $capability
  * @property \App\Model\Entity\RoleType $role_type
@@ -24,12 +27,14 @@ class CapabilitiesRoleType extends Entity
      * @var array
      */
     protected $_accessible = [
+        'template' => true,
         'capability' => true,
-        'role_type' => true
+        'role_type' => true,
     ];
 
     public const FIELD_CAPABILITY_ID = 'capability_id';
     public const FIELD_ROLE_TYPE_ID = 'role_type_id';
     public const FIELD_CAPABILITY = 'capability';
     public const FIELD_ROLE_TYPE = 'role_type';
+    public const FIELD_TEMPLATE = 'template';
 }

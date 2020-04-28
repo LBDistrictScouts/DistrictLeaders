@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -20,7 +22,6 @@ use Cake\ORM\Entity;
  */
 class Section extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -38,7 +39,7 @@ class Section extends Entity
         'modified' => true,
         'section_type' => true,
         'scout_group' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     public const FIELD_ID = 'id';

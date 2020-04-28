@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -34,7 +36,7 @@ class DocumentVersion extends Entity
         'deleted' => true,
         'version_number' => true,
         'document' => true,
-        'document_editions' => true
+        'document_editions' => true,
     ];
 
     public const FIELD_ID = 'id';

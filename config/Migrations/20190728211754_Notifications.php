@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class Notifications extends AbstractMigration
@@ -8,6 +9,7 @@ class Notifications extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function change()
@@ -32,7 +34,7 @@ class Notifications extends AbstractMigration
             ->addColumn('type_code', 'string', [
                 'limit' => 7,
                 'null' => false,
-                'default' => 'ABC-DEF'
+                'default' => 'ABC-DEF',
             ])
             ->save();
 
@@ -191,7 +193,7 @@ class Notifications extends AbstractMigration
                 ['id'],
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->addForeignKey(
@@ -200,7 +202,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();
@@ -271,7 +273,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->addForeignKey(
@@ -280,7 +282,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();
@@ -340,7 +342,7 @@ class Notifications extends AbstractMigration
                 'id',
                 [
                     'delete' => 'RESTRICT',
-                    'update' => 'CASCADE'
+                    'update' => 'CASCADE',
                 ]
             )
             ->save();

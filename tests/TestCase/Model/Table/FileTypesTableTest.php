@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\FileType;
@@ -35,7 +37,7 @@ class FileTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('FileTypes') ? [] : ['className' => FileTypesTable::class];
@@ -47,7 +49,7 @@ class FileTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->FileTypes);
 
@@ -64,6 +66,7 @@ class FileTypesTableTest extends TestCase
         $good = [
             FileType::FIELD_FILE_TYPE => TextSafe::shuffle(15),
             FileType::FIELD_FILE_EXTENSION => TextSafe::shuffle(3),
+            FileType::FIELD_MIME => strtolower(TextSafe::shuffle(8)) . '/' . strtolower(TextSafe::shuffle(3)),
         ];
 
         return $good;
@@ -79,7 +82,8 @@ class FileTypesTableTest extends TestCase
         $expected = [
             FileType::FIELD_ID => 1,
             FileType::FIELD_FILE_TYPE => 'Word',
-            FileType::FIELD_FILE_EXTENSION => 'docx'
+            FileType::FIELD_FILE_EXTENSION => 'docx',
+            FileType::FIELD_MIME => 'application/docx',
         ];
         $this->validateInitialise($expected, $this->FileTypes, 2);
     }
@@ -99,6 +103,7 @@ class FileTypesTableTest extends TestCase
         $required = [
             FileType::FIELD_FILE_EXTENSION,
             FileType::FIELD_FILE_TYPE,
+            FileType::FIELD_MIME,
         ];
 
         $this->validateRequired($required, $this->FileTypes, [$this, 'getGood']);
@@ -106,6 +111,7 @@ class FileTypesTableTest extends TestCase
         $notEmpties = [
             FileType::FIELD_FILE_TYPE,
             FileType::FIELD_FILE_EXTENSION,
+            FileType::FIELD_MIME,
         ];
 
         $this->validateNotEmpties($notEmpties, $this->FileTypes, [$this, 'getGood']);
@@ -113,6 +119,7 @@ class FileTypesTableTest extends TestCase
         $maxLengths = [
             FileType::FIELD_FILE_TYPE => 31,
             FileType::FIELD_FILE_EXTENSION => 10,
+            FileType::FIELD_MIME => 32,
         ];
 
         $this->validateMaxLengths($maxLengths, $this->FileTypes, [$this, 'getGood']);
@@ -127,6 +134,7 @@ class FileTypesTableTest extends TestCase
     {
         $this->validateUniqueRule(FileType::FIELD_FILE_TYPE, $this->FileTypes, [$this, 'getGood']);
         $this->validateUniqueRule(FileType::FIELD_FILE_EXTENSION, $this->FileTypes, [$this, 'getGood']);
+        $this->validateUniqueRule(FileType::FIELD_MIME, $this->FileTypes, [$this, 'getGood']);
     }
 
     /**

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Form;
 
 use App\Form\GoogleAuthForm;
@@ -9,7 +11,6 @@ use Cake\TestSuite\TestCase;
  */
 class GoogleAuthFormTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -22,7 +23,7 @@ class GoogleAuthFormTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->GoogleAuth = new GoogleAuthForm();
@@ -33,7 +34,7 @@ class GoogleAuthFormTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->GoogleAuth);
 

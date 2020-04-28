@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -14,6 +16,7 @@
  */
 namespace App\Controller;
 
+use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
 use Authentication\AuthenticationService;
@@ -29,10 +32,9 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * @property \App\Model\Table\UsersTable $Users
  *
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
- * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  *
- * @link https://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  * @property \Flash\Controller\Component\FlashComponent $Flash
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
 {
@@ -44,7 +46,6 @@ class AppController extends Controller
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
      * @param null $user The Footprint User
-     *
      * @return bool|\Cake\ORM\Entity
      */
     protected function _setCurrentUser($user = null)
@@ -70,10 +71,9 @@ class AppController extends Controller
      * e.g. `$this->loadComponent('Security');`
      *
      * @return void
-     *
      * @throws \Exception
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -87,7 +87,7 @@ class AppController extends Controller
             'fields' => [
                 'username' => 'username',
                 'password' => 'password',
-            ]
+            ],
         ]);
 
         // Load the authenticators
@@ -95,9 +95,8 @@ class AppController extends Controller
         $service->loadAuthenticator('Authentication.Form');
 
         $this->loadComponent('Flash.Flash');
-        $this->loadComponent('Cookie');
 
-        $this->loadComponent('Authorization.Authorization');
+        $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
 
         $this->loadComponent('RequestHandler', [
             'enableBeforeRedirect' => false,
@@ -115,5 +114,6 @@ class AppController extends Controller
     {
         $this->getEventManager()->on(new UserListener());
         $this->getEventManager()->on(new RoleListener());
+        $this->getEventManager()->on(new CapabilityListener());
     }
 }

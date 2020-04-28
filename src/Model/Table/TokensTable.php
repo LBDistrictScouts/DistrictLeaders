@@ -1,14 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Token;
 use App\Utility\TextSafe;
-use Cake\Database\Schema\TableSchema;
-use Cake\Datasource\EntityInterface;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Security;
@@ -18,29 +18,27 @@ use Cake\Validation\Validator;
  * Tokens Model
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
- *
- * @method Token get($primaryKey, $options = [])
- * @method Token newEntity($data = null, array $options = [])
- * @method Token[] newEntities(array $data, array $options = [])
- * @method Token|false save(EntityInterface $entity, $options = [])
- * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Token[] patchEntities($entities, array $data, array $options = [])
- * @method Token findOrCreate($search, callable $callback = null, $options = [])
- *
+ * @method \App\Model\Entity\Token get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Token[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method Token saveOrFail(EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class TokensTable extends Table
 {
-
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -53,17 +51,17 @@ class TokensTable extends Table
                 'Model.beforeSave' => [
                     'created' => 'new',
                     'modified' => 'always',
-                ]
-            ]
+                ],
+            ],
         ]);
 
         $this->addBehavior('Muffin/Trash.Trash', [
-            'field' => 'deleted'
+            'field' => 'deleted',
         ]);
 
         $this->belongsTo('EmailSends', [
             'foreignKey' => 'email_send_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 
@@ -73,7 +71,7 @@ class TokensTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -114,13 +112,11 @@ class TokensTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchema $schema The Schema to be modified
-     *
-     * @return TableSchema|\Cake\Database\Schema\TableSchema
-     *
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType('token_header', 'json');
 
@@ -134,7 +130,7 @@ class TokensTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['email_send_id'], 'EmailSends'));
 
@@ -142,11 +138,9 @@ class TokensTable extends Table
     }
 
     /**
-     *
      * @param \Cake\Event\Event $event The Event to be processed
-     * @param ArrayObject $data The data to be modified
-     * @param ArrayObject $options The Options Contained
-     *
+     * @param \App\Model\Table\ArrayObject $data The data to be modified
+     * @param \App\Model\Table\ArrayObject $options The Options Contained
      * @return void
      */
     public function beforeMarshal(Event $event, $data, $options)
@@ -161,12 +155,10 @@ class TokensTable extends Table
      * Hashes the password before save
      *
      * @param \Cake\Event\Event $event The event trigger.
-     *
      * @return true
-     *
      * @throws \Exception
      */
-    public function beforeSave(Event $event)
+    public function beforeSave(\Cake\Event\EventInterface $event)
     {
         /** @var \App\Model\Entity\Token $entity */
         $entity = $event->getData('entity');
@@ -184,7 +176,6 @@ class TokensTable extends Table
 
     /**
      * @param int $tokenId The Id of the Token
-     *
      * @return string
      */
     public function prepareToken($tokenId)
@@ -218,7 +209,6 @@ class TokensTable extends Table
 
     /**
      * @param int $tokenId The Id of the Token
-     *
      * @return string
      */
     public function buildToken($tokenId)
@@ -231,7 +221,6 @@ class TokensTable extends Table
 
     /**
      * @param string $token The Token to be Validated & Decrypted
-     *
      * @return int|bool $validation Containing the validation state & id
      */
     public function validateToken($token)
@@ -278,13 +267,12 @@ class TokensTable extends Table
     public const CLEAN_DELETED = 2;
 
     /**
-     * @param Token $token The token to be cleaned.
-     *
+     * @param \App\Model\Entity\Token $token The token to be cleaned.
      * @return int
      */
     public function cleanToken($token)
     {
-        /** @var FrozenTime $expiry */
+        /** @var \Cake\I18n\FrozenTime $expiry */
         $expiry = $token->get(Token::FIELD_EXPIRES);
         /** @var bool $active */
         $active = $token->get(Token::FIELD_ACTIVE);
@@ -346,7 +334,6 @@ class TokensTable extends Table
 
     /**
      * @param array $requestQueryParams Request Query Params
-     *
      * @return false|\App\Model\Entity\Token
      */
     public function validateTokenRequest($requestQueryParams)
@@ -362,7 +349,6 @@ class TokensTable extends Table
             $valid = $this->validateToken($token);
 
             if ($valid && $valid == $tokenId) {
-                /** @var \App\Model\Entity\Token $tokenRow */
                 return $this->get($valid, ['contain' => 'EmailSends.Users']);
             }
         }

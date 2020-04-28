@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
+use Josbeir\Filesystem\FileEntityInterface;
 
 /**
  * DocumentEdition Entity
@@ -12,11 +15,16 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int $document_version_id
  * @property int $file_type_id
+ * @property string|null $file_path
+ * @property string|null $filename
+ * @property int|null $size
+ * @property string|null $md5_hash
  *
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property \App\Model\Entity\FileType $file_type
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  */
-class DocumentEdition extends Entity
+class DocumentEdition extends Entity implements FileEntityInterface
 {
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -33,9 +41,80 @@ class DocumentEdition extends Entity
         'deleted' => true,
         'document_version_id' => true,
         'file_type_id' => true,
+        'file_path' => true,
+        'filename' => true,
+        'size' => true,
+        'md5_hash' => true,
         'document_version' => true,
-        'file_type' => true
+        'file_type' => true,
     ];
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->file_path ?? $this->get('path');
+    }
+
+    /**
+     * @param string $path The Path to be set
+     * @return \Josbeir\Filesystem\FileEntityInterface
+     */
+    public function setPath(string $path): FileEntityInterface
+    {
+        $this->set($this::FIELD_FILE_PATH, $path);
+
+        return $this;
+    }
+
+//    /**
+//     * @return string
+//     */
+//    // phpcs:disable
+//    public function _getHash(): string
+//    {
+//        // phpcs:enable
+//        return $this->md5_hash;
+//    }
+//
+//    /**
+//     * @param string $path The Path to be set
+//     *
+//     * @return \Josbeir\Filesystem\FileEntityInterface
+//     */
+//    // phpcs:disable
+//    public function _setHash(string $path): FileEntityInterface
+//    {
+//        // phpcs:enable
+//        $this->set($this::FIELD_MD5_HASH, $path);
+//
+//        return $this;
+//    }
+
+//    /**
+//     * @return string
+//     */
+//    // phpcs:disable
+//    public function _getPath(): string
+//    {
+//        // phpcs:enable
+//        return $this->file_path;
+//    }
+//
+//    /**
+//     * @param string $path The Path to be set
+//     *
+//     * @return \Josbeir\Filesystem\FileEntityInterface
+//     */
+//    // phpcs:disable
+//    public function _setPath(string $path): FileEntityInterface
+//    {
+//        // phpcs:enable
+//        $this->set($this::FIELD_FILE_PATH, $path);
+//
+//        return $this;
+//    }
 
     public const FIELD_ID = 'id';
     public const FIELD_CREATED = 'created';
@@ -45,4 +124,8 @@ class DocumentEdition extends Entity
     public const FIELD_FILE_TYPE_ID = 'file_type_id';
     public const FIELD_DOCUMENT_VERSION = 'document_version';
     public const FIELD_FILE_TYPE = 'file_type';
+    public const FIELD_MD5_HASH = 'md5_hash';
+    public const FIELD_FILE_PATH = 'file_path';
+    public const FIELD_FILENAME = 'filename';
+    public const FIELD_SIZE = 'size';
 }

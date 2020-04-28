@@ -1,14 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Role;
-use App\Model\Entity\User;
-use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -19,19 +17,18 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $RoleStatuses
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $UserContacts
- *
- * @method Role get($primaryKey, $options = [])
- * @method Role newEntity($data = null, array $options = [])
- * @method Role[] newEntities(array $data, array $options = [])
- * @method Role|false save(EntityInterface $entity, $options = [])
- * @method Role saveOrFail(EntityInterface $entity, $options = [])
- * @method Role patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Role[] patchEntities($entities, array $data, array $options = [])
- * @method Role findOrCreate($search, callable $callback = null, $options = [])
- *
+ * @method \App\Model\Entity\Role get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Role newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Role|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Role[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Role findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class RolesTable extends Table
 {
@@ -41,7 +38,7 @@ class RolesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -59,22 +56,22 @@ class RolesTable extends Table
 
         $this->belongsTo('RoleTypes', [
             'foreignKey' => 'role_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Sections', [
             'foreignKey' => 'section_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('RoleStatuses', [
             'foreignKey' => 'role_status_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('UserContacts', [
-            'foreignKey' => 'user_contact_id'
+            'foreignKey' => 'user_contact_id',
         ]);
     }
 
@@ -84,7 +81,7 @@ class RolesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -104,7 +101,7 @@ class RolesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['role_type_id'], 'RoleTypes'));
         $rules->add($rules->existsIn(['section_id'], 'Sections'));
@@ -119,12 +116,11 @@ class RolesTable extends Table
      * after Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
-     * @param Role $entity The Entity on which the Save is being Called.
+     * @param \App\Model\Entity\Role $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
      */
-    public function afterSave($event, $entity, $options)
+    public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         $user = $this->Users->get($entity->get(Role::FIELD_USER_ID));
         $this->Users->patchCapabilities($user);

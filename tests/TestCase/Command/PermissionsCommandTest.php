@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Command;
 
 use Cake\Console\Command;
@@ -21,7 +23,7 @@ class PermissionsCommandTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -40,7 +42,7 @@ class PermissionsCommandTest extends TestCase
     /**
      * Setup Function
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->useCommandRunner();

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampsTable;
@@ -12,7 +14,6 @@ use Cake\Utility\Security;
  */
 class CampsTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -26,7 +27,7 @@ class CampsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -51,7 +52,7 @@ class CampsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Camps') ? [] : ['className' => CampsTable::class];
@@ -66,7 +67,7 @@ class CampsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Camps);
 
@@ -77,7 +78,6 @@ class CampsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()

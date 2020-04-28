@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * RoleStatusesFixture
- *
  */
 class RoleStatusesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -31,11 +29,11 @@ class RoleStatusesFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
-                'role_status' => 'Lorem ipsum dolor sit amet'
+                'role_status' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

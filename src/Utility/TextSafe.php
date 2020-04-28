@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -26,7 +28,6 @@ class TextSafe
 
     /**
      * @param string $string The String to be Encoded
-     *
      * @return string|string[]|null
      */
     public static function encode($string)
@@ -49,7 +50,6 @@ class TextSafe
 
     /**
      * @param string $string The String to be Decoded
-     *
      * @return string|string[]|null
      */
     public static function decode($string)
@@ -69,7 +69,6 @@ class TextSafe
 
     /**
      * @param int $length The length of the String
-     *
      * @return string
      */
     public static function shuffle($length = 3)

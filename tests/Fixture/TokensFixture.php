@@ -41,7 +41,7 @@ class TokensFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -62,8 +62,8 @@ class TokensFixture extends TestFixture
                         'action' => 'view',
                         'prefix' => false,
                         1,
-                    ]
-                ]
+                    ],
+                ],
             ],
         ];
         parent::init();

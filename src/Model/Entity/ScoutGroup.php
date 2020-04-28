@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -22,7 +24,6 @@ use Cake\ORM\Entity;
  */
 class ScoutGroup extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -40,12 +41,11 @@ class ScoutGroup extends Entity
         'group_domain' => true,
         'created' => true,
         'modified' => true,
-        'sections' => true
+        'sections' => true,
     ];
 
     /**
      * @param string $value The Domain
-     *
      * @return string
      */
     protected function _setGroupDomain($value)

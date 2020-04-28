@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * CampsFixture
- *
  */
 class CampsFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -37,7 +35,7 @@ class CampsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -47,7 +45,7 @@ class CampsFixture extends TestFixture
                 'camp_name' => 'Lorem ipsum dolor sit amet',
                 'camp_type_id' => 1,
                 'camp_start' => 1546807673,
-                'camp_end' => 1546807673
+                'camp_end' => 1546807673,
             ],
             [
                 'created' => 1546807673,
@@ -56,7 +54,7 @@ class CampsFixture extends TestFixture
                 'camp_name' => 'Lorem amet',
                 'camp_type_id' => 1,
                 'camp_start' => 1546807673,
-                'camp_end' => 1546807673
+                'camp_end' => 1546807673,
             ],
         ];
         parent::init();

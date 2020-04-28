@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -15,7 +17,6 @@ use Cake\ORM\Entity;
  */
 class CampRoleType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -29,7 +30,7 @@ class CampRoleType extends Entity
         'created' => true,
         'modified' => true,
         'camp_role_type' => true,
-        'camp_roles' => true
+        'camp_roles' => true,
     ];
 
     public const FIELD_ID = 'id';

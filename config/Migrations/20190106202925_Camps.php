@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class Camps extends AbstractMigration
@@ -8,6 +9,7 @@ class Camps extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function change()
@@ -19,7 +21,7 @@ class Camps extends AbstractMigration
                 'null' => false,
             ])
             ->addIndex('camp_type', [
-                'unique' => true
+                'unique' => true,
             ])
             ->create();
 

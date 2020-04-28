@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\View\Cell;
 
 use App\View\Cell\NotifyCell;
@@ -12,14 +14,14 @@ class NotifyCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
      */
     public $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
      */
     public $response;
 
@@ -36,7 +38,7 @@ class NotifyCellTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -67,7 +69,7 @@ class NotifyCellTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->request = $this->getMockBuilder('Cake\Http\ServerRequest')->getMock();
@@ -80,7 +82,7 @@ class NotifyCellTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Notify);
 

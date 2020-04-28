@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\Section;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,7 +13,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
  * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ScoutGroups
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- *
  * @method \App\Model\Entity\Section get($primaryKey, $options = [])
  * @method \App\Model\Entity\Section newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
@@ -23,9 +21,9 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Section patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Section[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Section findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class SectionsTable extends Table
 {
@@ -35,7 +33,7 @@ class SectionsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -48,14 +46,14 @@ class SectionsTable extends Table
 
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('ScoutGroups', [
             'foreignKey' => 'scout_group_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'section_id'
+            'foreignKey' => 'section_id',
         ]);
     }
 
@@ -65,7 +63,7 @@ class SectionsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -88,7 +86,7 @@ class SectionsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['section']));
         $rules->add($rules->existsIn(['section_type_id'], 'SectionTypes'));

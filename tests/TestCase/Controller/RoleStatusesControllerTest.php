@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\RoleStatusesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class RoleStatusesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -76,7 +77,7 @@ class RoleStatusesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'role_status' => 'New'
+                'role_status' => 'New',
             ],
             2
         );
@@ -110,7 +111,7 @@ class RoleStatusesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'role_status' => 'Deleted'
+                'role_status' => 'Deleted',
             ],
             2
         );

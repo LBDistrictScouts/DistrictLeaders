@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\CampRole;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,7 +13,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\BelongsTo $Camps
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\CampRoleTypesTable&\Cake\ORM\Association\BelongsTo $CampRoleTypes
- *
  * @method \App\Model\Entity\CampRole get($primaryKey, $options = [])
  * @method \App\Model\Entity\CampRole newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampRole[] newEntities(array $data, array $options = [])
@@ -23,19 +21,18 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampRole[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampRole findOrCreate($search, callable $callback = null, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class CampRolesTable extends Table
 {
-
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -47,15 +44,15 @@ class CampRolesTable extends Table
 
         $this->belongsTo('Camps', [
             'foreignKey' => 'camp_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('CampRoleTypes', [
             'foreignKey' => 'camp_role_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
     }
 
@@ -65,7 +62,7 @@ class CampRolesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -81,7 +78,7 @@ class CampRolesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn(['camp_id'], 'Camps'));
         $rules->add($rules->existsIn(['user_id'], 'Users'));

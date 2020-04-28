@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\RolesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class RolesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -39,6 +40,22 @@ class RolesControllerTest extends TestCase
      * @var string $controller The Name of the controller being interrogated.
      */
     private $controller = 'Roles';
+
+    /**
+     * @param int|null $number The Redirect Array ID
+     * @return array
+     */
+    private function retrieveAddRedirect(int $number = 10)
+    {
+        return [
+            'controller' => $this->controller,
+            'action' => 'edit',
+            $number,
+            '?' => [
+                'contact' => true,
+            ],
+        ];
+    }
 
     /**
      * Test index method
@@ -77,7 +94,8 @@ class RolesControllerTest extends TestCase
                 'user_id' => 2,
                 'role_status_id' => 1,
             ],
-            10
+            10,
+            $this->retrieveAddRedirect()
         );
     }
 
@@ -117,7 +135,8 @@ class RolesControllerTest extends TestCase
                 'user_id' => 2,
                 'role_status_id' => 1,
             ],
-            10
+            10,
+            $this->retrieveAddRedirect()
         );
     }
 }

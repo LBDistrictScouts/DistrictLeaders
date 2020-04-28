@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 // Create the file src/Mailer/Preview/UserMailPreview.php
 namespace App\Mailer\Preview;
 
@@ -8,7 +10,6 @@ use DebugKit\Mailer\MailPreview;
  * Class BasicMailPreview
  *
  * @package App\Mailer\Preview
- *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  * @property \App\Model\Table\TokensTable $Tokens
  */

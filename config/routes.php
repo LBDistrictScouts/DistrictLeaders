@@ -17,10 +17,10 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-use Cake\Http\Middleware\CsrfProtectionMiddleware;
+
+use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Cake\Routing\Route\DashedRoute;
 
 /**
  * The default class to use for all routes
@@ -41,7 +41,6 @@ use Cake\Routing\Route\DashedRoute;
  *
  * Cache: Routes are cached to improve performance, check the RoutingMiddleware
  * constructor in your `src/Application.php` file to change this behavior.
- *
  */
 Router::defaultRouteClass(DashedRoute::class);
 
@@ -80,6 +79,15 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::prefix('admin', function (RouteBuilder $routes) {
+    // All routes here will be prefixed with `/admin`
+    // And have the prefix => admin route element added.
+
+    $routes->connect('/', ['controller' => 'Admin', 'action' => 'home']);
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.
@@ -91,3 +99,45 @@ Router::scope('/', function (RouteBuilder $routes) {
  * });
  * ```
  */
+
+Router::plugin('DebugKit', ['path' => '/debug-kit'], function (RouteBuilder $routes) {
+    $routes->setExtensions('json');
+    $routes->setRouteClass(DashedRoute::class);
+
+    $routes->connect(
+        '/toolbar/clear-cache',
+        ['controller' => 'Toolbar', 'action' => 'clearCache']
+    );
+    $routes->connect(
+        '/toolbar/*',
+        ['controller' => 'Requests', 'action' => 'view']
+    );
+    $routes->connect(
+        '/panels/view/*',
+        ['controller' => 'Panels', 'action' => 'view']
+    );
+    $routes->connect(
+        '/panels/*',
+        ['controller' => 'Panels', 'action' => 'index']
+    );
+
+    $routes->connect(
+        '/composer/check-dependencies',
+        ['controller' => 'Composer', 'action' => 'checkDependencies']
+    );
+
+    $routes->scope(
+        '/mail-preview',
+        ['controller' => 'MailPreview'],
+        function (RouteBuilder $routes) {
+            $routes->connect('/', ['action' => 'index']);
+            $routes->connect('/preview', ['action' => 'email']);
+            $routes->connect('/preview/*', ['action' => 'email']);
+            $routes->connect('/sent/{panel}/{id}', ['action' => 'sent'], ['pass' => ['panel', 'id']]);
+        }
+    );
+
+    $routes->get('/', ['controller' => 'Dashboard', 'action' => 'index']);
+    $routes->get('/dashboard', ['controller' => 'Dashboard', 'action' => 'index']);
+    $routes->post('/dashboard/reset', ['controller' => 'Dashboard', 'action' => 'reset']);
+});

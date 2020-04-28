@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\User;
@@ -29,7 +31,7 @@ class UsersTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -60,7 +62,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
@@ -75,7 +77,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Users);
 
@@ -86,7 +88,6 @@ class UsersTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -114,8 +115,8 @@ class UsersTableTest extends TestCase
                 ],
                 'group' => [
                     1 => ['EDIT_SECT'],
-                ]
-            ]
+                ],
+            ],
         ];
 
         return $good;
@@ -150,7 +151,7 @@ class UsersTableTest extends TestCase
             User::FIELD_LAST_LOGIN_IP => '192.168.0.1',
             User::FIELD_FULL_NAME => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
             User::FIELD_CAPABILITIES => null,
-            User::FIELD_PASSWORD_STATE_ID => 1,
+            User::FIELD_USER_STATE_ID => 1,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);
@@ -251,8 +252,9 @@ class UsersTableTest extends TestCase
             User::FIELD_MEMBERSHIP_NUMBER,
             User::FIELD_EMAIL,
         ];
-
         $this->validateUniqueRules($uniques, $this->Users, [$this, 'getGood']);
+
+        $this->validateExistsRule(User::FIELD_USER_STATE_ID, $this->Users, $this->Users->UserStates, [$this, 'getGood']);
     }
 
     /**
@@ -330,18 +332,18 @@ class UsersTableTest extends TestCase
                 (int)6 => 'ALL',
                 (int)4 => 'EDIT_GROUP',
                 (int)1 => 'LOGIN',
-                (int)0 => 'OWN_USER'
+                (int)0 => 'OWN_USER',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -351,21 +353,21 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'user' => [
-                (int)0 => 'LOGIN'
+                (int)0 => 'LOGIN',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)2 => [
-                    (int)0 => 'EDIT_USER'
+                    (int)0 => 'EDIT_USER',
                 ],
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -378,7 +380,7 @@ class UsersTableTest extends TestCase
      */
     public function testRetrieveCapabilities()
     {
-        Cache::clear(false, 'capability');
+        Cache::clear('capability');
         $user = $this->Users->get(1);
         $capabilities = $this->Users->retrieveCapabilities($user);
 
@@ -387,18 +389,18 @@ class UsersTableTest extends TestCase
                 (int)6 => 'ALL',
                 (int)4 => 'EDIT_GROUP',
                 (int)1 => 'LOGIN',
-                (int)0 => 'OWN_USER'
+                (int)0 => 'OWN_USER',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -408,21 +410,21 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'user' => [
-                (int)0 => 'LOGIN'
+                (int)0 => 'LOGIN',
             ],
             'group' => [
                 (int)1 => [
-                    (int)0 => 'EDIT_SECT'
-                ]
+                    (int)0 => 'EDIT_SECT',
+                ],
             ],
             'section' => [
                 (int)2 => [
-                    (int)0 => 'EDIT_USER'
+                    (int)0 => 'EDIT_USER',
                 ],
                 (int)1 => [
-                    (int)0 => 'EDIT_USER'
-                ]
-            ]
+                    (int)0 => 'EDIT_USER',
+                ],
+            ],
         ];
 
         $this->validateCapabilityArray($expected, $capabilities);
@@ -435,7 +437,7 @@ class UsersTableTest extends TestCase
      */
     public function testUserCapability()
     {
-        Cache::clear(false, 'capability');
+        Cache::clear('capability');
 
         // Basic Assert Positive
         $user = $this->Users->get(1);
@@ -475,7 +477,7 @@ class UsersTableTest extends TestCase
 
         $expected = [
             'sections' => [],
-            'groups' => [ 1 ]
+            'groups' => [ 1 ],
         ];
         TestCase::assertEquals($expected, $result);
     }
@@ -517,14 +519,14 @@ class UsersTableTest extends TestCase
             ],
             'section' => [
                 1 => [
-                    'EDIT_USER'
+                    'EDIT_USER',
                 ],
             ],
             'group' => [
                 1 => [
-                    'EDIT_SECT'
-                ]
-            ]
+                    'EDIT_SECT',
+                ],
+            ],
         ];
         $this->validateCapabilityArray($expected, $user->capabilities);
     }

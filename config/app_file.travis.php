@@ -1,5 +1,6 @@
 <?php
-use \Aws\S3\S3Client;
+
+use Aws\S3\S3Client;
 
 $client = S3Client::factory([
     'credentials' => [
@@ -14,19 +15,15 @@ return [
     'Filesystem' => [
         'default' => [
             'adapter' => 'Local', // default
-            'adapterArguments' => [ WWW_ROOT . 'files' ],
+            'adapterArguments' => [ WWW_ROOT . 'default_files' ],
             'normalizer' => [
-                'hashingAlgo' => 'sha1'
+                'hashingAlgo' => 'sha1',
             ],
         ],
-        'other' => [
+        'local' => [
             'adapter' => 'Local',
-            'adapterArguments' => [ WWW_ROOT . 'cache' ],
-            'entityClass' => '\My\Cool\EntityClass',
-            'formatter' => '\My\Cool\Formatter',
-            'normalizer' => [
-                'hashingAlgo' => 'sha1'
-            ],
+            'adapterArguments' => [ WWW_ROOT . 'files' ],
+            'entityClass' => 'App\Model\Entity\DocumentEdition',
         ],
         's3' => [
             'adapter' => '\League\Flysystem\AwsS3v3\AwsS3Adapter',
@@ -35,7 +32,7 @@ return [
                 'your-bucket-name',
             ],
             'normalizer' => [
-                'hashingAlgo' => 'sha1'
+                'hashingAlgo' => 'sha1',
             ],
         ],
     ],
@@ -46,7 +43,7 @@ return [
             'key' => '__INSERT_CC_S3_IAM_KEY__',
             'secret' => '__INSERT_CC_S3_IAM_SECRET__',
             'region' => 'eu-west-1',
-            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__'
-        ]
+            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__',
+        ],
     ],
 ];

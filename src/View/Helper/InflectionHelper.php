@@ -1,16 +1,16 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Helper;
 
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\View\View;
 
 /**
  * Inflection helper
  */
 class InflectionHelper extends Helper
 {
-
     /**
      * Default configuration.
      *
@@ -22,7 +22,6 @@ class InflectionHelper extends Helper
      *  Humanise
      *
      * @param string $text The Text to be humanised
-     *
      * @return string
      */
     public function space($text)
@@ -34,7 +33,6 @@ class InflectionHelper extends Helper
      *  Humanise
      *
      * @param string $text The Text to be humanised
-     *
      * @return string
      */
     public function singleSpace($text)

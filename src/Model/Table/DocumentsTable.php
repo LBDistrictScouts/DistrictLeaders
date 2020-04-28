@@ -1,63 +1,80 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Document;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
+use App\Model\Entity\DocumentEdition;
+use App\Model\Entity\DocumentVersion;
+use App\Model\Entity\FileType;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
+use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
  * Documents Model
  *
  * @property \App\Model\Table\DocumentTypesTable&\Cake\ORM\Association\BelongsTo $DocumentTypes
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\HasMany $DocumentVersions
- *
- * @method Document get($primaryKey, $options = [])
- * @method Document newEntity($data = null, array $options = [])
- * @method Document[] newEntities(array $data, array $options = [])
- * @method Document|false save(EntityInterface $entity, $options = [])
- * @method Document saveOrFail(EntityInterface $entity, $options = [])
- * @method Document patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Document[] patchEntities($entities, array $data, array $options = [])
- * @method Document findOrCreate($search, callable $callback = null, $options = [])
- *
+ * @method \App\Model\Entity\Document get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Document newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Document|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Document[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Document findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\BelongsTo $DocumentPreviews
  */
 class DocumentsTable extends Table
 {
+    use FilesystemAwareTrait;
+
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
         $this->setTable('documents');
-        $this->setDisplayField('id');
+        $this->setDisplayField('document');
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Search.Search');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 Document::FIELD_DOCUMENT => 't',
-            ]
+            ],
         ]);
 
         $this->belongsTo('DocumentTypes', [
             'foreignKey' => 'document_type_id',
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('DocumentVersions', [
-            'foreignKey' => 'document_id'
+            'foreignKey' => 'document_id',
+        ]);
+
+        $this->belongsTo('DocumentPreviews', [
+            'foreignKey' => 'document_preview_id',
+            'className' => 'DocumentEditions',
+            'propertyName' => 'document_preview',
+            'strategy' => 'select',
         ]);
     }
 
@@ -67,7 +84,7 @@ class DocumentsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(Document::FIELD_ID)
@@ -89,11 +106,67 @@ class DocumentsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['document']));
         $rules->add($rules->existsIn(['document_type_id'], 'DocumentTypes'));
 
         return $rules;
+    }
+
+    /**
+     * @param array $postData Post Request Data (file upload array)
+     * @param \App\Model\Entity\Document $documentEntity The Document Entity
+     * @param string $fileSystem The configured Filesystem Name
+     * @return \Cake\Datasource\EntityInterface|bool
+     */
+    public function uploadDocument($postData, $documentEntity, $fileSystem = 'default')
+    {
+        if (!key_exists('uploadedFile', $postData)) {
+            return false;
+        }
+
+        /** @var \Cake\Datasource\EntityInterface $fileEntity */
+        $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
+
+        $mime = $postData['uploadedFile']['type'] ?? $fileEntity->get(FileType::FIELD_MIME);
+
+        try {
+            $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
+                FileType::FIELD_MIME => $mime,
+            ])->firstOrFail();
+        } catch (RecordNotFoundException $exception) {
+            return false;
+        }
+
+        $documentName = explode('.', $fileEntity->get(DocumentEdition::FIELD_FILENAME))[0];
+        $documentName = Inflector::humanize($documentName);
+
+        $documentData = [
+            Document::FIELD_DOCUMENT => $documentName,
+            Document::FIELD_DOCUMENT_TYPE_ID => $postData[Document::FIELD_DOCUMENT_TYPE_ID],
+            Document::FIELD_DOCUMENT_VERSIONS => [
+                [
+                    DocumentVersion::FIELD_VERSION_NUMBER => 1,
+                    DocumentVersion::FIELD_DOCUMENT_EDITIONS => [
+                        [
+                            DocumentEdition::FIELD_FILENAME => $fileEntity->get(DocumentEdition::FIELD_FILENAME),
+                            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
+                            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
+                            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
+                            DocumentEdition::FIELD_SIZE => $fileEntity->get(DocumentEdition::FIELD_SIZE),
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $document = $this->patchEntity($documentEntity, $documentData, [
+            'associated' => [
+                'DocumentVersions.DocumentEditions',
+            ],
+        ]);
+
+        return $this->save($document);
     }
 }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SiteSessionsTable;
@@ -11,7 +13,6 @@ use Cake\TestSuite\TestCase;
  */
 class SiteSessionsTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -25,7 +26,7 @@ class SiteSessionsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.SiteSessions'
+        'app.SiteSessions',
     ];
 
     /**
@@ -33,7 +34,7 @@ class SiteSessionsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('SiteSessions') ? [] : ['className' => SiteSessionsTable::class];
@@ -48,7 +49,7 @@ class SiteSessionsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->SiteSessions);
 
@@ -64,7 +65,7 @@ class SiteSessionsTableTest extends TestCase
     {
         $good = [
             'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'expires' => 1
+            'expires' => 1,
         ];
 
         return $good;
@@ -95,7 +96,7 @@ class SiteSessionsTableTest extends TestCase
         $expected = [
             'id' => 1,
             'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
-            'expires' => 1
+            'expires' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

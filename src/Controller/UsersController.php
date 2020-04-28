@@ -1,22 +1,20 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
-use Cake\Datasource\ResultSetInterface;
+use App\Model\Filter\UsersCollection;
 use Cake\Event\Event;
-use Cake\I18n\Time;
 
 /**
  * Users Controller
  *
  * @property \App\Model\Table\UsersTable $Users
- *
- * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
- *
+ * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  * @property \App\Model\Table\TokensTable $Tokens
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
@@ -24,10 +22,9 @@ class UsersController extends AppController
 {
     /**
      * @throws \Exception
-     *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -48,7 +45,7 @@ class UsersController extends AppController
      */
     public function index()
     {
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
         if (!$user->checkCapability('DIRECTORY')) {
@@ -61,22 +58,47 @@ class UsersController extends AppController
     }
 
     /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
+        /** @var \App\Model\Entity\User $user */
+        $user = $this->request->getAttribute('identity')->getOriginalData();
+
+        if (!$user->checkCapability('DIRECTORY')) {
+            $this->Flash->error('Results limited due to user permissions.');
+        }
+
+        $query = $this->Users->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => UsersCollection::class,
+        ])
+        ->contain([
+            'Roles' => [
+                'RoleTypes',
+                'Sections.SectionTypes',
+            ],
+            'UserContacts',
+        ]);
+        $users = $this->paginate($this->Authorization->applyScope($query));
+        $this->set(compact('users'));
+    }
+
+    /**
      * View method
      *
-     * @param string|null $id User id.
+     * @param string|null $userId User id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($userId = null)
     {
-        $visibleFields = [
-            'id',
-            'first_name',
-            'last_name',
-            'email',
-        ];
+        $user = $this->Users->get($userId);
+        $visibleFields = $this->Authorization->see($user);
 
-        $user = $this->Users->get($id, [
+        $user = $this->Users->get($userId, [
             'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles' => [
                 'RoleTypes',
                 'Sections' => [
@@ -90,7 +112,6 @@ class UsersController extends AppController
         ]);
 
         $this->Authorization->authorize($user);
-        $this->Authorization->can($user, 'view');
 
         $this->set('user', $user);
     }
@@ -102,7 +123,7 @@ class UsersController extends AppController
      */
     public function add()
     {
-        $user = $this->Users->newEntity();
+        $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
@@ -125,7 +146,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         $this->Authorization->authorize($user);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -175,8 +196,8 @@ class UsersController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            $event = new Event('Model.User.login', $this, [
-                'user' => $this->request->getAttribute('identity')->getOriginalData()
+            $event = new Event('Model.Users.login', $this, [
+                'user' => $this->request->getAttribute('identity')->getOriginalData(),
             ]);
             $this->getEventManager()->dispatch($event);
 
@@ -213,7 +234,6 @@ class UsersController extends AppController
      * Password Reset Function - Enables Resetting a User's Password via Email
      *
      * @return \Cake\Http\Response
-     *
      * @throws \Exception
      */
     public function forgot()
@@ -257,8 +277,10 @@ class UsersController extends AppController
                     $sendCode = 'USR-' . $user->id . '-PWD';
                     $this->loadModel('EmailSends');
 
-                    if ($this->EmailSends->makeAndSend($sendCode)) {
-                        $this->Flash->success('We have sent a password reset token to your email. This is valid for a short period of time.');
+                    if ($this->EmailSends->make($sendCode)) {
+                        $message = 'We have sent a password reset token to your email.';
+                        $message .= ' This is valid for a short period of time.';
+                        $this->Flash->success($message);
 
                         return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
                     }
@@ -281,7 +303,6 @@ class UsersController extends AppController
      * Username Clarification Function - Enables Resetting a User's Password via Email
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function username()
@@ -298,7 +319,7 @@ class UsersController extends AppController
                 ->where([
                     'membership_number' => $this->request->getData('membership_number'),
                     'first_name' => $this->request->getData('first_name'),
-                    'last_name' => $this->request->getData('last_name')
+                    'last_name' => $this->request->getData('last_name'),
                 ]);
 
             $count = $found->count();
@@ -351,14 +372,19 @@ class UsersController extends AppController
 
         $passwordForm = new PasswordForm();
 
-        if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && isset($resetUser) && $resetUser instanceof User && $this->request->is('post')) {
+        if (
+            $changeType > self::CHANGE_TYPE_UNAUTHORIZED
+            && isset($resetUser)
+            && $resetUser instanceof User
+            && $this->request->is('post')
+        ) {
             if (!$passwordForm->validate($this->request->getData())) {
                 $this->Flash->error(__('The data provided has errors.'));
             } else {
                 if (
                     $passwordForm->execute([
                     'request' => $this->request->getData(),
-                    'user' => $resetUser
+                    'user' => $resetUser,
                     ])
                 ) {
                     $this->Flash->success('Your password was saved successfully.');

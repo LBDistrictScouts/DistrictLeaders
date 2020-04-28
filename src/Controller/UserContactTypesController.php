@@ -1,15 +1,12 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\UserContactType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * UserContactTypes Controller
  *
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
- *
  * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
@@ -30,15 +27,13 @@ class UserContactTypesController extends AppController
      * View method
      *
      * @param string|null $id User Contact Type id.
-     *
      * @return \Cake\Http\Response|void
-     *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
         $userContactType = $this->UserContactTypes->get($id, [
-            'contain' => ['UserContacts']
+            'contain' => ['UserContacts'],
         ]);
 
         $this->set('userContactType', $userContactType);
@@ -51,7 +46,7 @@ class UserContactTypesController extends AppController
      */
     public function add()
     {
-        $userContactType = $this->UserContactTypes->newEntity();
+        $userContactType = $this->UserContactTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $userContactType = $this->UserContactTypes->patchEntity($userContactType, $this->request->getData());
             if ($this->UserContactTypes->save($userContactType)) {
@@ -74,7 +69,7 @@ class UserContactTypesController extends AppController
     public function edit($id = null)
     {
         $userContactType = $this->UserContactTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userContactType = $this->UserContactTypes->patchEntity($userContactType, $this->request->getData());

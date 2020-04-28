@@ -1,17 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
-use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
-use Cake\Datasource\ResultSetInterface;
 
 /**
  * RoleTemplates Controller
  *
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
- *
- * @method RoleTemplate[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTemplatesController extends AppController
 {
@@ -31,14 +29,13 @@ class RoleTemplatesController extends AppController
      * View method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($templateId = null)
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
-            'contain' => ['RoleTypes']
+            'contain' => ['RoleTypes'],
         ]);
 
         $this->set('roleTemplate', $roleTemplate);
@@ -51,7 +48,7 @@ class RoleTemplatesController extends AppController
      */
     public function add()
     {
-        $roleTemplate = $this->RoleTemplates->newEntity();
+        $roleTemplate = $this->RoleTemplates->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleTemplate = $this->RoleTemplates->patchEntity($roleTemplate, $this->request->getData());
             if ($this->RoleTemplates->save($roleTemplate)) {
@@ -61,11 +58,7 @@ class RoleTemplatesController extends AppController
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
-        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->find('list', [
-            'keyField' => Capability::FIELD_CAPABILITY_CODE,
-            'valueField' => Capability::FIELD_CAPABILITY_CODE,
-//            'groupField' => Capability::FIELD_MIN_LEVEL
-        ]);
+        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->getSplitLists();
         $this->set(compact('roleTemplate', 'capabilities'));
     }
 
@@ -73,14 +66,13 @@ class RoleTemplatesController extends AppController
      * Edit method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function edit($templateId = null)
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleTemplate = $this->RoleTemplates->patchEntity($roleTemplate, $this->request->getData());
@@ -91,11 +83,8 @@ class RoleTemplatesController extends AppController
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
-        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->find('list', [
-            'keyField' => Capability::FIELD_CAPABILITY_CODE,
-            'valueField' => Capability::FIELD_CAPABILITY_CODE,
-//            'groupField' => Capability::FIELD_MIN_LEVEL
-        ]);
+        $capabilities = $this->RoleTemplates->RoleTypes->Capabilities->getSplitLists();
+
         $this->set(compact('roleTemplate', 'capabilities'));
     }
 
@@ -103,7 +92,6 @@ class RoleTemplatesController extends AppController
      * Delete method
      *
      * @param string|null $templateId Role Template id.
-     *
      * @return \Cake\Http\Response|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

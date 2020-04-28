@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Form;
 
 use App\Model\Entity\User;
@@ -20,7 +22,7 @@ class PasswordForm extends Form
      * @param \Cake\Form\Schema $schema From schema
      * @return \Cake\Form\Schema
      */
-    protected function _buildSchema(Schema $schema)
+    protected function buildSchema(Schema $schema): Schema
     {
         $schema->addField(self::FIELD_NEW_PASSWORD, 'string')
             ->addField(self::FIELD_CONFIRM_PASSWORD, 'string')
@@ -35,7 +37,7 @@ class PasswordForm extends Form
      * @param \Cake\Validation\Validator $validator to use against the form
      * @return \Cake\Validation\Validator
      */
-    protected function _buildValidator(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator->minLength(self::FIELD_POSTCODE, 6, 'Postcode is too Short.')
             ->minLength(self::FIELD_NEW_PASSWORD, User::MINIMUM_PASSWORD_LENGTH, 'Password is too short.')
@@ -48,10 +50,9 @@ class PasswordForm extends Form
      * Defines what to execute once the From is being processed
      *
      * @param array $data Form data.
-     *
      * @return bool
      */
-    protected function _execute(array $data)
+    protected function _execute(array $data): bool
     {
         // Check Request is included
         if (key_exists('request', $data)) {
@@ -90,7 +91,11 @@ class PasswordForm extends Form
         }
 
         $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $user = $this->Users->patchEntity($user, [User::FIELD_PASSWORD => $newPassword], [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]);
+        $user = $this->Users->patchEntity(
+            $user,
+            [User::FIELD_PASSWORD => $newPassword],
+            [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]
+        );
 
         if ($this->Users->save($user)) {
             return true;

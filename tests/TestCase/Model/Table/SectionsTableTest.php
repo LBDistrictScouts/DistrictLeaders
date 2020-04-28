@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SectionsTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class SectionsTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -35,7 +36,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Sections') ? [] : ['className' => SectionsTable::class];
@@ -47,7 +48,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Sections);
 
@@ -58,7 +59,6 @@ class SectionsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()

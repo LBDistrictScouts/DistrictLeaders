@@ -1,16 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Listener;
 
-use App\Model\Entity\Role;
 use Cake\Event\EventListenerInterface;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- *
  * @property \App\Model\Table\UsersTable $Users
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
@@ -19,17 +18,16 @@ class RoleListener implements EventListenerInterface
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
-            'Model.Role.roleAdded' => 'newRole',
-            'Model.Role.newAudits' => 'roleChange',
+            'Model.Roles.roleAdded' => 'newRole',
+            'Model.Roles.newAudits' => 'roleChange',
         ];
     }
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function newRole($event)
@@ -46,7 +44,6 @@ class RoleListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event being processed.
-     *
      * @return void
      */
     public function roleChange($event)

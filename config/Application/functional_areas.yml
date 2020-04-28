@@ -1,0 +1,37 @@
+functionalAreas:
+    directory:
+        enabled: true
+        capability:
+            index: DIRECTORY
+    camps:
+        enabled: false
+        capability:
+            index: CAMPS
+    documents:
+        enabled: true
+        exposed: true
+        capability:
+            index: DOCUMENTS
+    articles:
+        enabled: false
+        capability:
+            index: ARTICLES
+    admin:
+        enabled: true
+        capability:
+            index: ALL
+    search:
+        enabled: true
+        capability:
+            index: LOGIN
+
+iconStandards:
+    Camps: campground
+    Directory: address-card
+    Documents: file-alt
+    Articles: newspaper
+    Users: users
+
+searchConfigured:
+    Users: true
+    Documents: true

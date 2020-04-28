@@ -1,18 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
-use Cake\Datasource\ResultSetInterface;
 
 /**
  * UserContacts Controller
  *
  * @property \App\Model\Table\UserContactsTable $UserContacts
- *
- * @method UserContact[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactsController extends AppController
 {
@@ -24,7 +23,7 @@ class UserContactsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Users', 'UserContactTypes']
+            'contain' => ['Users', 'UserContactTypes'],
         ];
         $userContacts = $this->paginate($this->UserContacts);
 
@@ -35,15 +34,13 @@ class UserContactsController extends AppController
      * View method
      *
      * @param string|null $id User Contact id.
-     *
      * @return \Cake\Http\Response|void
-     *
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
         $userContact = $this->UserContacts->get($id, [
-            'contain' => ['Users', 'UserContactTypes', 'Audits', 'Roles']
+            'contain' => ['Users', 'UserContactTypes', 'Audits', 'Roles'],
         ]);
 
         $this->set('userContact', $userContact);
@@ -56,7 +53,7 @@ class UserContactsController extends AppController
      */
     public function add()
     {
-        $userContact = $this->UserContacts->newEntity();
+        $userContact = $this->UserContacts->newEmptyEntity();
         if (key_exists('user_contact_type', $this->request->getQueryParams())) {
             $contactType = $this->request->getQueryParams()['user_contact_type'];
         }
@@ -72,7 +69,10 @@ class UserContactsController extends AppController
             $term = $userContactType->get(UserContactType::FIELD_USER_CONTACT_TYPE);
             $this->set(compact('term'));
 
-            $userContact->set(UserContact::FIELD_USER_CONTACT_TYPE_ID, $userContactType->get(UserContactType::FIELD_ID));
+            $userContact->set(
+                UserContact::FIELD_USER_CONTACT_TYPE_ID,
+                $userContactType->get(UserContactType::FIELD_ID)
+            );
         }
 
         // Set User if known
@@ -86,11 +86,19 @@ class UserContactsController extends AppController
 
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            if (!key_exists(UserContact::FIELD_USER_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_ID))) {
+            if (
+                !key_exists(UserContact::FIELD_USER_ID, $data)
+                && !is_null($userContact->get(UserContact::FIELD_USER_ID))
+            ) {
                 $data[UserContact::FIELD_USER_ID] = $userContact->get(UserContact::FIELD_USER_ID);
             }
-            if (!key_exists(UserContact::FIELD_USER_CONTACT_TYPE_ID, $data) && !is_null($userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID))) {
-                $data[UserContact::FIELD_USER_CONTACT_TYPE_ID] = $userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID);
+            if (
+                !key_exists(UserContact::FIELD_USER_CONTACT_TYPE_ID, $data)
+                && !is_null($userContact->get(UserContact::FIELD_USER_CONTACT_TYPE_ID))
+            ) {
+                $data[UserContact::FIELD_USER_CONTACT_TYPE_ID] = $userContact->get(
+                    UserContact::FIELD_USER_CONTACT_TYPE_ID
+                );
             }
 
             $validator = 'default';
@@ -131,7 +139,7 @@ class UserContactsController extends AppController
     public function edit($id = null)
     {
         $userContact = $this->UserContacts->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $userContact = $this->UserContacts->patchEntity($userContact, $this->request->getData());

@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\RoleTypesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class RoleTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -37,6 +38,12 @@ class RoleTypesControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
     ];
 
     /**

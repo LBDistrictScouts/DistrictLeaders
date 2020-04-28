@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\CapabilitiesRoleType;
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleType;
 use App\Model\Table\CapabilitiesRoleTypesTable;
-use App\Test\TestCase\Model\Table\CapabilitiesTableTest as CTT;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -43,7 +44,7 @@ class CapabilitiesRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('CapabilitiesRoleTypes') ? [] : ['className' => CapabilitiesRoleTypesTable::class];
@@ -55,7 +56,7 @@ class CapabilitiesRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CapabilitiesRoleTypes);
 
@@ -97,6 +98,7 @@ class CapabilitiesRoleTypesTableTest extends TestCase
         $expected = [
             CapabilitiesRoleType::FIELD_CAPABILITY_ID => 1,
             CapabilitiesRoleType::FIELD_ROLE_TYPE_ID => 5,
+            CapabilitiesRoleType::FIELD_TEMPLATE => false,
         ];
         $this->validateInitialise($expected, $this->CapabilitiesRoleTypes, 10, null, $expected);
     }

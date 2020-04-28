@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Mailer;
 
@@ -16,7 +17,6 @@ class BasicMailer extends Mailer
      * @param \App\Model\Entity\EmailSend $emailSend The Email Send Entity
      * @param string|null $token The Encoded Token to be sent.
      * @param \Cake\ORM\Entity|null $entity The Subject Entity
-     *
      * @return void
      */
     public function doSend($emailSend, $token = null, $entity = null)
@@ -26,14 +26,16 @@ class BasicMailer extends Mailer
             ->setTransport('default')
             ->setEmailFormat('both')
             ->setSender(Configure::readOrFail('App.who.email'), Configure::readOrFail('App.who.system'))
-            ->setHelpers(['Html', 'Text', 'Time'])
             ->addHeaders([
                 'X-Email-Gen-Code' => $emailSend->email_generation_code,
                 'X-Gen-ID' => $emailSend->id,
             ])
-            ->setTemplate($emailSend->email_template)
-            ->setLayout('default')
             ->setSubject($emailSend->subject);
+
+        $this->viewBuilder()
+            ->setLayout('default')
+            ->setHelpers(['Html', 'Text', 'Time'])
+            ->setTemplate($emailSend->email_template);
 
         $viewVars = ['emailSend' => $emailSend];
 

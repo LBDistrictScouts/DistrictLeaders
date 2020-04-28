@@ -1,20 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\RoleStatus;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * RoleStatuses Controller
  *
  * @property \App\Model\Table\RoleStatusesTable $RoleStatuses
- *
  * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleStatusesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -37,7 +33,7 @@ class RoleStatusesController extends AppController
     public function view($id = null)
     {
         $roleStatus = $this->RoleStatuses->get($id, [
-            'contain' => ['Roles']
+            'contain' => ['Roles'],
         ]);
 
         $this->set('roleStatus', $roleStatus);
@@ -50,7 +46,7 @@ class RoleStatusesController extends AppController
      */
     public function add()
     {
-        $roleStatus = $this->RoleStatuses->newEntity();
+        $roleStatus = $this->RoleStatuses->newEmptyEntity();
         if ($this->request->is('post')) {
             $roleStatus = $this->RoleStatuses->patchEntity($roleStatus, $this->request->getData());
             if ($this->RoleStatuses->save($roleStatus)) {
@@ -73,7 +69,7 @@ class RoleStatusesController extends AppController
     public function edit($id = null)
     {
         $roleStatus = $this->RoleStatuses->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $roleStatus = $this->RoleStatuses->patchEntity($roleStatus, $this->request->getData());

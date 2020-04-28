@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\UsersController;
 use App\Model\Entity\User;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -10,7 +11,6 @@ use Cake\TestSuite\TestCase;
  * App\Controller\UsersController Test Case
  *
  * @uses \App\Controller\UsersController
- *
  * @property \App\Model\Table\UsersTable $Users
  */
 class UsersControllerTest extends TestCase
@@ -23,7 +23,7 @@ class UsersControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -163,7 +163,7 @@ class UsersControllerTest extends TestCase
             'action' => 'login',
         ]);
 
-        $this->assertResponseContains('Leader Login');
+        $this->assertResponseContains('Remember me on this Computer');
         $this->assertResponseOk();
 
         // Logging In

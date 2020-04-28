@@ -1,5 +1,8 @@
 <?php
 return [
+
+    'elasticEnv' => 'travis',
+
     /**
      * Connection information used by the ORM to connect
      * to your application's datastores.
@@ -13,17 +16,11 @@ return [
      *   E.g set it to 'utf8mb4' in MariaDB and MySQL and 'utf8' for any
      *   other RDBMS.
      */
-
     'Datasources' => [
         'default' => [
             'className' => 'Cake\Database\Connection',
             'driver' => 'Cake\Database\Driver\Postgres',
             'persistent' => false,
-            /**
-             * CakePHP will use the default DB port based on the driver selected
-             * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
-             * the following line and set the port accordingly
-             */
             'host' => '127.0.0.1',
 //            'port' => '5433',
             'username' => 'postgres',
@@ -32,25 +29,24 @@ return [
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
-
-            /**
-             * Set identifier quoting to true if you are using reserved words or
-             * special characters in your table or column names. Enabling this
-             * setting will result in queries built using the Query Builder having
-             * identifiers quoted when creating SQL. It should be noted that this
-             * decreases performance because each query needs to be traversed and
-             * manipulated before being executed.
-             */
             'quoteIdentifiers' => false,
+            'log' => true,
+        ],
 
-            /**
-             * During development, if using MySQL < 5.6, uncommenting the
-             * following line could boost the speed at which schema metadata is
-             * fetched from the database. It can also be set directly with the
-             * mysql configuration directive 'innodb_stats_on_metadata = 0'
-             * which is the recommended value in production environments
-             */
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        'database_log' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
+            'persistent' => false,
+            'host' => '127.0.0.1',
+//            'port' => '5433',
+            'username' => 'postgres',
+            'password' => '',
+            'database' => 'leaders',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'log' => false, // DataSource to use
         ],
 
         /**
@@ -69,23 +65,24 @@ return [
             'timezone' => 'UTC',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
+            'log' => true,
             //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
 
-        'database_log' => [
-            'className' => 'Cake\Database\Connection',
-            'driver' => 'Cake\Database\Driver\Postgres',
-            'persistent' => false,
+        'elastic' => [
+            'className' => 'Cake\ElasticSearch\Datasource\Connection',
+            'driver' => 'Cake\ElasticSearch\Datasource\Connection',
             'host' => '127.0.0.1',
-//            'port' => '5433',
-            'username' => 'postgres',
-            'password' => '',
-            'database' => 'leaders',
-            'encoding' => 'utf8',
-            'timezone' => 'UTC',
-            'cacheMetadata' => true,
-            'quoteIdentifiers' => false,
-            'log' => true, // DataSource to use
+            'port' => 9200,
+            'index' => 'my_apps_index',
+        ],
+
+        'test_elastic' => [
+            'className' => 'Cake\ElasticSearch\Datasource\Connection',
+            'driver' => 'Cake\ElasticSearch\Datasource\Connection',
+            'host' => '127.0.0.1',
+            'port' => 9200,
+            'index' => 'my_apps_index',
         ],
 
         'test_database_log' => [
@@ -101,7 +98,25 @@ return [
             'timezone' => 'UTC',
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
-            'log' => true, // DataSource to use
+            'log' => false, // DataSource to use
+        ],
+
+        'debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Sqlite',
+            'database' => TMP . 'debug_kit.sqlite',
+            'encoding' => 'utf8',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+        ],
+
+        'test_debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Sqlite',
+            'database' => TMP . DS . 'tests' . DS . 'debug_kit.sqlite',
+            'encoding' => 'utf8',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
         ],
     ],
 ];

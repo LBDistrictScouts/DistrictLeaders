@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Form;
 
 use Cake\Form\Form;
@@ -13,11 +15,10 @@ class ResetForm extends Form
     /**
      * Build the Schema of the form.
      *
-     * @param Schema $schema The basic Schema to be Extended
-     *
-     * @return Schema $schema
+     * @param \Cake\Form\Schema $schema The basic Schema to be Extended
+     * @return \Cake\Form\Schema $schema
      */
-    protected function _buildSchema(Schema $schema)
+    protected function buildSchema(Schema $schema): Schema
     {
         $schema
             ->addField(self::FIELD_MEMBERSHIP_NUMBER, 'integer')
@@ -31,11 +32,10 @@ class ResetForm extends Form
     /**
      * Function to Validate the Form
      *
-     * @param Validator $validator The basic Validation to be extended.
-     *
-     * @return Validator $validator
+     * @param \Cake\Validation\Validator $validator The basic Validation to be extended.
+     * @return \Cake\Validation\Validator $validator
      */
-    protected function _buildValidator(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->requirePresence(self::FIELD_MEMBERSHIP_NUMBER)
@@ -44,7 +44,7 @@ class ResetForm extends Form
 
         $validator
             ->requirePresence(self::FIELD_EMAIL)
-            ->email(self::FIELD_EMAIL, 'valid', 'Please Enter Valid Email Address.')
+            ->email(self::FIELD_EMAIL, true, 'Please Enter Valid Email Address.')
             ->notEmptyString(self::FIELD_EMAIL);
 
         $validator

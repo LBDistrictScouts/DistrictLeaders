@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\FunctionalHelper;
@@ -11,7 +13,6 @@ use Cake\View\View;
  */
 class FunctionalHelperTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -24,7 +25,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $view = new View();
@@ -36,7 +37,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Inflection);
 
@@ -53,7 +54,7 @@ class FunctionalHelperTest extends TestCase
         $data = [];
 
         foreach (Configure::read('functionalAreas') as $item => $value) {
-            array_push($data, [$value, $item]);
+            array_push($data, [$value['enabled'], $item]);
         }
 
         array_push($data, [false, 'Cheeses']);
@@ -66,9 +67,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideFunctionalAreaData
-     *
      * @return void
      */
     public function testFunctionalArea($expected, $provided)
@@ -99,9 +98,7 @@ class FunctionalHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     *
      * @dataProvider provideSearchConfigData
-     *
      * @return void
      */
     public function testSearchConfigured($expected, $provided)

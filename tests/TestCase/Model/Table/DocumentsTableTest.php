@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\Document;
@@ -39,7 +41,7 @@ class DocumentsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Documents') ? [] : ['className' => DocumentsTable::class];
@@ -51,7 +53,7 @@ class DocumentsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Documents);
 
@@ -82,8 +84,10 @@ class DocumentsTableTest extends TestCase
     {
         $expected = [
             Document::FIELD_ID => 1,
-            Document::FIELD_DOCUMENT => 'Lorem ip',
+            Document::FIELD_DOCUMENT => 'Lorem ipsum dolor sit amet',
             Document::FIELD_DOCUMENT_TYPE_ID => 1,
+            Document::FIELD_DOCUMENT_PREVIEW_ID => 1,
+            Document::FIELD_LATEST_VERSION => 1,
         ];
         $dates = [
             Document::FIELD_CREATED,
@@ -100,7 +104,9 @@ class DocumentsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $new = $this->Documents->newEntity($this->getGood());
+        $new = $this->Documents->save($new);
+        TestCase::assertInstanceOf($this->Documents->getEntityClass(), $new);
     }
 
     /**

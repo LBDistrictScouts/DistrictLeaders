@@ -29,13 +29,13 @@ class UserContactTypesFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
                 'user_contact_type' => 'Email',
                 'created' => 1564337519,
-                'modified' => 1564337519
+                'modified' => 1564337519,
             ],
         ];
         parent::init();

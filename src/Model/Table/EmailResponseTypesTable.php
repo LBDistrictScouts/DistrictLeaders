@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\EmailResponseType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  * EmailResponseTypes Model
  *
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
- *
  * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailResponseType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])
@@ -21,6 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {
@@ -30,7 +29,7 @@ class EmailResponseTypesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -39,7 +38,7 @@ class EmailResponseTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('EmailResponses', [
-            'foreignKey' => 'email_response_type_id'
+            'foreignKey' => 'email_response_type_id',
         ]);
     }
 
@@ -49,7 +48,7 @@ class EmailResponseTypesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -76,7 +75,7 @@ class EmailResponseTypesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['email_response_type']));
 

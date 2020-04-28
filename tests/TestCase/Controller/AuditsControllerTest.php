@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\AuditsController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class AuditsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -54,7 +55,6 @@ class AuditsControllerTest extends TestCase
      * Test view method
      *
      * @return void
-     *
      * @throws
      */
     public function testView()

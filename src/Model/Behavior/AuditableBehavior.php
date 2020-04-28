@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Behavior;
 
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Exception\MissingBehaviorException;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -30,10 +31,9 @@ class AuditableBehavior extends Behavior
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \Cake\ORM\Entity $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
      */
-    public function afterSave($event, $entity, $options)
+    public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if ($this->getTable()->hasAssociation('Audits')) {
             $this->Audits = TableRegistry::getTableLocator()->get('Audits');

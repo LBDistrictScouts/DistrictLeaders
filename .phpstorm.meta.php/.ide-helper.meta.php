@@ -9,16 +9,18 @@ namespace PHPSTORM_META {
 			'Auth' => \Cake\Controller\Component\AuthComponent::class,
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,
+			'CapAuthorization' => \App\Controller\Component\CapAuthorizationComponent::class,
 			'CloudConvertClient' => \App\Controller\Component\CloudConvertClientComponent::class,
 			'Cookie' => \Cake\Controller\Component\CookieComponent::class,
 			'Csrf' => \Cake\Controller\Component\CsrfComponent::class,
 			'DebugKit.Toolbar' => \DebugKit\Controller\Component\ToolbarComponent::class,
+			'Filter' => \App\Controller\Component\FilterComponent::class,
 			'Flash' => \Cake\Controller\Component\FlashComponent::class,
 			'Flash.Flash' => \Flash\Controller\Component\FlashComponent::class,
 			'GoogleClient' => \App\Controller\Component\GoogleClientComponent::class,
 			'Paginator' => \Cake\Controller\Component\PaginatorComponent::class,
 			'RequestHandler' => \Cake\Controller\Component\RequestHandlerComponent::class,
-			'Search.Prg' => \Search\Controller\Component\PrgComponent::class,
+			'Search.Search' => \Search\Controller\Component\SearchComponent::class,
 			'Security' => \Cake\Controller\Component\SecurityComponent::class,
 			'Tools.Common' => \Tools\Controller\Component\CommonComponent::class,
 			'Tools.Mobile' => \Tools\Controller\Component\MobileComponent::class,
@@ -101,7 +103,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \App\Model\Table\FileTypesTable::class,
 			'NotificationTypes' => \App\Model\Table\NotificationTypesTable::class,
 			'Notifications' => \App\Model\Table\NotificationsTable::class,
-			'PasswordStates' => \App\Model\Table\PasswordStatesTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 			'RoleStatuses' => \App\Model\Table\RoleStatusesTable::class,
@@ -116,6 +117,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 			'UserContactTypes' => \App\Model\Table\UserContactTypesTable::class,
 			'UserContacts' => \App\Model\Table\UserContactsTable::class,
+			'UserStates' => \App\Model\Table\UserStatesTable::class,
 			'Users' => \App\Model\Table\UsersTable::class,
 		])
 	);
@@ -125,6 +127,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -140,6 +143,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -174,7 +178,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \App\Model\Table\FileTypesTable::class,
 			'NotificationTypes' => \App\Model\Table\NotificationTypesTable::class,
 			'Notifications' => \App\Model\Table\NotificationsTable::class,
-			'PasswordStates' => \App\Model\Table\PasswordStatesTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 			'RoleStatuses' => \App\Model\Table\RoleStatusesTable::class,
@@ -189,6 +192,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 			'UserContactTypes' => \App\Model\Table\UserContactTypesTable::class,
 			'UserContacts' => \App\Model\Table\UserContactsTable::class,
+			'UserStates' => \App\Model\Table\UserStatesTable::class,
 			'Users' => \App\Model\Table\UsersTable::class,
 		])
 	);
@@ -245,7 +249,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \Cake\ORM\Association\BelongsToMany::class,
 			'NotificationTypes' => \Cake\ORM\Association\BelongsToMany::class,
 			'Notifications' => \Cake\ORM\Association\BelongsToMany::class,
-			'PasswordStates' => \Cake\ORM\Association\BelongsToMany::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsToMany::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsToMany::class,
 			'RoleStatuses' => \Cake\ORM\Association\BelongsToMany::class,
@@ -260,6 +263,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Cake\ORM\Association\BelongsToMany::class,
 			'UserContactTypes' => \Cake\ORM\Association\BelongsToMany::class,
 			'UserContacts' => \Cake\ORM\Association\BelongsToMany::class,
+			'UserStates' => \Cake\ORM\Association\BelongsToMany::class,
 			'Users' => \Cake\ORM\Association\BelongsToMany::class,
 		])
 	);
@@ -288,7 +292,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \Cake\ORM\Association\BelongsTo::class,
 			'NotificationTypes' => \Cake\ORM\Association\BelongsTo::class,
 			'Notifications' => \Cake\ORM\Association\BelongsTo::class,
-			'PasswordStates' => \Cake\ORM\Association\BelongsTo::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\BelongsTo::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\BelongsTo::class,
 			'RoleStatuses' => \Cake\ORM\Association\BelongsTo::class,
@@ -303,6 +306,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Cake\ORM\Association\BelongsTo::class,
 			'UserContactTypes' => \Cake\ORM\Association\BelongsTo::class,
 			'UserContacts' => \Cake\ORM\Association\BelongsTo::class,
+			'UserStates' => \Cake\ORM\Association\BelongsTo::class,
 			'Users' => \Cake\ORM\Association\BelongsTo::class,
 		])
 	);
@@ -312,6 +316,7 @@ namespace PHPSTORM_META {
 		map([
 			'all' => \Cake\ORM\Query::class,
 			'auth' => \Cake\ORM\Query::class,
+			'documentList' => \Cake\ORM\Query::class,
 			'list' => \Cake\ORM\Query::class,
 			'onlyTrashed' => \Cake\ORM\Query::class,
 			'queued' => \Cake\ORM\Query::class,
@@ -346,7 +351,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \Cake\ORM\Association\HasMany::class,
 			'NotificationTypes' => \Cake\ORM\Association\HasMany::class,
 			'Notifications' => \Cake\ORM\Association\HasMany::class,
-			'PasswordStates' => \Cake\ORM\Association\HasMany::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\HasMany::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\HasMany::class,
 			'RoleStatuses' => \Cake\ORM\Association\HasMany::class,
@@ -361,6 +365,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Cake\ORM\Association\HasMany::class,
 			'UserContactTypes' => \Cake\ORM\Association\HasMany::class,
 			'UserContacts' => \Cake\ORM\Association\HasMany::class,
+			'UserStates' => \Cake\ORM\Association\HasMany::class,
 			'Users' => \Cake\ORM\Association\HasMany::class,
 		])
 	);
@@ -389,7 +394,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \Cake\ORM\Association\HasOne::class,
 			'NotificationTypes' => \Cake\ORM\Association\HasOne::class,
 			'Notifications' => \Cake\ORM\Association\HasOne::class,
-			'PasswordStates' => \Cake\ORM\Association\HasOne::class,
 			'Queue.QueueProcesses' => \Cake\ORM\Association\HasOne::class,
 			'Queue.QueuedJobs' => \Cake\ORM\Association\HasOne::class,
 			'RoleStatuses' => \Cake\ORM\Association\HasOne::class,
@@ -404,6 +408,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Cake\ORM\Association\HasOne::class,
 			'UserContactTypes' => \Cake\ORM\Association\HasOne::class,
 			'UserContacts' => \Cake\ORM\Association\HasOne::class,
+			'UserStates' => \Cake\ORM\Association\HasOne::class,
 			'Users' => \Cake\ORM\Association\HasOne::class,
 		])
 	);
@@ -432,7 +437,6 @@ namespace PHPSTORM_META {
 			'FileTypes' => \App\Model\Table\FileTypesTable::class,
 			'NotificationTypes' => \App\Model\Table\NotificationTypesTable::class,
 			'Notifications' => \App\Model\Table\NotificationsTable::class,
-			'PasswordStates' => \App\Model\Table\PasswordStatesTable::class,
 			'Queue.QueueProcesses' => \Queue\Model\Table\QueueProcessesTable::class,
 			'Queue.QueuedJobs' => \Queue\Model\Table\QueuedJobsTable::class,
 			'RoleStatuses' => \App\Model\Table\RoleStatusesTable::class,
@@ -447,6 +451,7 @@ namespace PHPSTORM_META {
 			'Tools.Tokens' => \Tools\Model\Table\TokensTable::class,
 			'UserContactTypes' => \App\Model\Table\UserContactTypesTable::class,
 			'UserContacts' => \App\Model\Table\UserContactsTable::class,
+			'UserStates' => \App\Model\Table\UserStatesTable::class,
 			'Users' => \App\Model\Table\UsersTable::class,
 		])
 	);
@@ -461,6 +466,12 @@ namespace PHPSTORM_META {
 	override(
 		\Cake\View\View::element(0),
 		map([
+			'ActionMenu/begin' => \Cake\View\View::class,
+			'ActionMenu/crud_item' => \Cake\View\View::class,
+			'ActionMenu/edit_item' => \Cake\View\View::class,
+			'ActionMenu/end' => \Cake\View\View::class,
+			'ActionMenu/list' => \Cake\View\View::class,
+			'ActionMenu/list_item' => \Cake\View\View::class,
 			'BootstrapUI.Flash/default' => \Cake\View\View::class,
 			'DatabaseLog.paging' => \Cake\View\View::class,
 			'DatabaseLog.search' => \Cake\View\View::class,
@@ -482,9 +493,18 @@ namespace PHPSTORM_META {
 			'Flash/default' => \Cake\View\View::class,
 			'Flash/error' => \Cake\View\View::class,
 			'Flash/success' => \Cake\View\View::class,
+			'ModuleNav/admin' => \Cake\View\View::class,
+			'ModuleNav/directory' => \Cake\View\View::class,
+			'ModuleNav/documents' => \Cake\View\View::class,
+			'ModuleNav/groups' => \Cake\View\View::class,
+			'ModuleNav/queue' => \Cake\View\View::class,
+			'ModuleNav/selector' => \Cake\View\View::class,
 			'Queue.search' => \Cake\View\View::class,
+			'Related/entity' => \Cake\View\View::class,
+			'Related/header' => \Cake\View\View::class,
 			'Tools.pagination' => \Cake\View\View::class,
 			'WyriHaximus/TwigView.twig_panel' => \Cake\View\View::class,
+			'dark-footer' => \Cake\View\View::class,
 			'footer' => \Cake\View\View::class,
 			'header' => \Cake\View\View::class,
 			'navbar' => \Cake\View\View::class,
@@ -507,6 +527,7 @@ namespace PHPSTORM_META {
 			'BootstrapUI.Paginator' => \BootstrapUI\View\Helper\PaginatorHelper::class,
 			'Breadcrumbs' => \Cake\View\Helper\BreadcrumbsHelper::class,
 			'CakeDto.Template' => \CakeDto\View\Helper\TemplateHelper::class,
+			'CapIdentity' => \App\View\Helper\CapIdentityHelper::class,
 			'DatabaseLog.Log' => \DatabaseLog\View\Helper\LogHelper::class,
 			'DebugKit.Credentials' => \DebugKit\View\Helper\CredentialsHelper::class,
 			'DebugKit.SimpleGraph' => \DebugKit\View\Helper\SimpleGraphHelper::class,
@@ -520,9 +541,11 @@ namespace PHPSTORM_META {
 			'Icon' => \App\View\Helper\IconHelper::class,
 			'IdeHelper.DocBlock' => \IdeHelper\View\Helper\DocBlockHelper::class,
 			'Inflection' => \App\View\Helper\InflectionHelper::class,
+			'Markdown' => \App\View\Helper\MarkdownHelper::class,
 			'Migrations.Migration' => \Migrations\View\Helper\MigrationHelper::class,
 			'Number' => \Cake\View\Helper\NumberHelper::class,
 			'Paginator' => \Cake\View\Helper\PaginatorHelper::class,
+			'Queue.Queue' => \Queue\View\Helper\QueueHelper::class,
 			'Queue.QueueProgress' => \Queue\View\Helper\QueueProgressHelper::class,
 			'Rss' => \Cake\View\Helper\RssHelper::class,
 			'Search.Search' => \Search\View\Helper\SearchHelper::class,
@@ -552,6 +575,7 @@ namespace PHPSTORM_META {
 	override(
 		\Queue\Model\Table\QueuedJobsTable::createJob(0),
 		map([
+			'Capability' => \App\Shell\Task\QueueCapabilityTask::class,
 			'CostsExample' => \Queue\Shell\Task\QueueCostsExampleTask::class,
 			'Email' => \App\Shell\Task\QueueEmailTask::class,
 			'Example' => \Queue\Shell\Task\QueueExampleTask::class,

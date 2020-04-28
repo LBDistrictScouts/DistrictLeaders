@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\CloudConvertClientComponent;
@@ -10,7 +12,6 @@ use Cake\TestSuite\TestCase;
  */
 class CloudConvertClientComponentTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -23,7 +24,7 @@ class CloudConvertClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $registry = new ComponentRegistry();
@@ -35,7 +36,7 @@ class CloudConvertClientComponentTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CloudConvertClient);
 

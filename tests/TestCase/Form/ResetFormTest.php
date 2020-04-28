@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Form;
 
 use App\Form\ResetForm;
@@ -9,7 +11,6 @@ use Cake\TestSuite\TestCase;
  */
 class ResetFormTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -23,7 +24,7 @@ class ResetFormTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -54,7 +55,7 @@ class ResetFormTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Reset = new ResetForm();
@@ -65,7 +66,7 @@ class ResetFormTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Reset);
 
@@ -181,16 +182,14 @@ class ResetFormTest extends TestCase
      * @param array $outcome The error and error field etc
      * @param string|null $firstName The First Name
      * @param string|null $lastName The Last Name
-     *
      * @dataProvider provideValidateData
-     *
      * @return void
      */
     public function testValidate($membershipNumber, $email, $outcome, $firstName = null, $lastName = null)
     {
         $resultArray = [
             ResetForm::FIELD_MEMBERSHIP_NUMBER => $membershipNumber,
-            ResetForm::FIELD_EMAIL => $email
+            ResetForm::FIELD_EMAIL => $email,
         ];
 
         if (!is_null($firstName)) {

@@ -28,11 +28,11 @@ class DocumentTypesFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
-                'document_type' => 'Lorem ipsum dolor sit amet'
+                'document_type' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

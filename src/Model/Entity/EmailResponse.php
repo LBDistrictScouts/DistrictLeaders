@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -42,7 +44,7 @@ class EmailResponse extends Entity
         'bounce_reason' => true,
         'message_size' => true,
         'email_send' => true,
-        'email_response_type' => true
+        'email_response_type' => true,
     ];
 
     public const FIELD_ID = 'id';

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -56,7 +58,7 @@ class EmailSend extends Entity
         'user' => true,
         'notification' => true,
         'email_responses' => true,
-        'tokens' => true
+        'tokens' => true,
     ];
 
     public const FIELD_ID = 'id';

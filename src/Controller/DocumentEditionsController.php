@@ -1,19 +1,21 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\DocumentEdition;
-use Cake\Datasource\ResultSetInterface;
+use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
  * DocumentEditions Controller
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
- *
- * @method DocumentEdition[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {
+    use FilesystemAwareTrait;
+
     /**
      * Index method
      *
@@ -22,7 +24,7 @@ class DocumentEditionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['DocumentVersions', 'FileTypes']
+            'contain' => ['DocumentVersions.Documents', 'FileTypes'],
         ];
         $documentEditions = $this->paginate($this->DocumentEditions);
 
@@ -39,7 +41,7 @@ class DocumentEditionsController extends AppController
     public function view($id = null)
     {
         $documentEdition = $this->DocumentEditions->get($id, [
-            'contain' => ['DocumentVersions', 'FileTypes']
+            'contain' => ['DocumentVersions', 'FileTypes'],
         ]);
 
         $this->set('documentEdition', $documentEdition);
@@ -50,11 +52,16 @@ class DocumentEditionsController extends AppController
      *
      * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function upload()
     {
-        $documentEdition = $this->DocumentEditions->newEntity();
+        $documentEdition = $this->DocumentEditions->newEmptyEntity();
         if ($this->request->is('post')) {
-            $documentEdition = $this->DocumentEditions->patchEntity($documentEdition, $this->request->getData());
+//            debug($this->request->getData());
+
+            $documentEdition = $this->DocumentEditions->uploadDocument($this->request->getData());
+
+//            debug($documentEdition);
+
             if ($this->DocumentEditions->save($documentEdition)) {
                 $this->Flash->success(__('The document edition has been saved.'));
 
@@ -62,7 +69,7 @@ class DocumentEditionsController extends AppController
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
-        $documentVersions = $this->DocumentEditions->DocumentVersions->find('list', ['limit' => 200]);
+        $documentVersions = $this->DocumentEditions->DocumentVersions->find('documentList', ['limit' => 200]);
         $fileTypes = $this->DocumentEditions->FileTypes->find('list', ['limit' => 200]);
         $this->set(compact('documentEdition', 'documentVersions', 'fileTypes'));
     }
@@ -77,7 +84,7 @@ class DocumentEditionsController extends AppController
     public function edit($id = null)
     {
         $documentEdition = $this->DocumentEditions->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $documentEdition = $this->DocumentEditions->patchEntity($documentEdition, $this->request->getData());
@@ -88,7 +95,7 @@ class DocumentEditionsController extends AppController
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
-        $documentVersions = $this->DocumentEditions->DocumentVersions->find('list', ['limit' => 200]);
+        $documentVersions = $this->DocumentEditions->DocumentVersions->find('documentList', ['limit' => 200]);
         $fileTypes = $this->DocumentEditions->FileTypes->find('list', ['limit' => 200]);
         $this->set(compact('documentEdition', 'documentVersions', 'fileTypes'));
     }

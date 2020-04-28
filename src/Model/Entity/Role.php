@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -46,7 +48,7 @@ class Role extends Entity
         'role_type' => true,
         'section' => true,
         'user' => true,
-        'role_status' => true
+        'role_status' => true,
     ];
 
     public const FIELD_ID = 'id';

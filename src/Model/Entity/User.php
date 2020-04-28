@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
-use App\Form\PasswordForm;
 use Authentication\IdentityInterface as AuthenticationIdentity;
-use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityInterface as AuthorizationIdentity;
+use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * User Entity
@@ -38,18 +40,19 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\CampRole[] $camp_roles
  * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\PasswordState|null $password_state
+ * @property \App\Model\Entity\UserState|null $user_state
  * @property \App\Model\Entity\EmailSend[] $email_sends
  * @property \App\Model\Entity\Notification[] $notifications
  * @property \App\Model\Entity\UserContact[] $user_contacts
  *
- * @property int|null $password_state_id
+ * @property int|null $user_state_id
  *
  * @property \Authorization\AuthorizationService $authorization
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @property \App\Model\Entity\PasswordState|null $password_state
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -76,11 +79,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'last_login' => true,
         'last_login_ip' => true,
         'capabilities' => true,
-        'password_state_id' => true,
+        'user_state_id' => true,
         'changes' => true,
         'audits' => true,
         'camp_roles' => true,
-        'roles' => true
+        'roles' => true,
     ];
 
     /**
@@ -89,12 +92,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @var array
      */
     protected $_hidden = [
-        'password'
+        'password',
     ];
 
     /**
      * @param string $value The un-hashed password string
-     *
      * @return bool|string|void
      */
     protected function _setPassword($value)
@@ -126,9 +128,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return bool
      */
-    public function can($action, $resource)
+    public function can($action, $resource): bool
     {
         return $this->authorization->can($this, $action, $resource);
     }
@@ -136,7 +140,21 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return \Authorization\Policy\ResultInterface
+     */
+    public function canResult(string $action, $resource): ResultInterface
+    {
+        return $this->authorization->canResult($this, $action, $resource);
+    }
+
+    /**
+     * Authorization\IdentityInterface method
+     *
+     * @param string $action The action/operation being performed.
+     * @param mixed $resource The resource being operated on.
+     * @return mixed The modified resource.
      */
     public function applyScope($action, $resource)
     {
@@ -146,7 +164,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * {@inheritDoc}
+     * @return array|\ArrayAccess
      */
     public function getOriginalData()
     {
@@ -157,7 +175,6 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * Setter to be used by the middleware.
      *
      * @param \Authorization\AuthorizationService $service The Auth Service
-     *
      * @return \App\Model\Entity\User
      */
     public function setAuthorization($service)
@@ -178,12 +195,27 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     }
 
     /**
+     * @param string $action The Action Method
+     * @param string $model The Model being Referenced
+     * @param int|array|null $group The Group ID for checking against
+     * @param int|array|null $section The Section ID for checking against
+     * @param string|null $field The field for action
+     * @return bool
+     */
+    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
+    {
+        $capTable = TableRegistry::getTableLocator()->get('Capabilities');
+        $capability = $capTable->buildCapability($action, $model, $field);
+
+        return $this->checkCapability($capability, $group, $section);
+    }
+
+    /**
      * Function to Check Capability Exists
      *
      * @param string $capability The Capability being checked.
-     * @param int|null $group A Group ID if applicable
-     * @param int|null $section A Section ID if applicable
-     *
+     * @param int|array|null $group A Group ID if applicable
+     * @param int|array|null $section A Section ID if applicable
      * @return bool
      */
     public function checkCapability($capability, $group = null, $section = null)
@@ -221,22 +253,44 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Check for Subset of Capabilities Array.
      *
-     * @param string $capability The Capability being Verified
+     * @param string $capability The Capability being verified
      * @param string $subset The Authorisation Subset
-     * @param int $entityID The Entity ID
-     *
+     * @param int $entities The Entity ID or Array of IDs
      * @return bool
      */
-    private function subSetCapabilityCheck($capability, $subset, $entityID)
+    private function subSetCapabilityCheck($capability, $subset, $entities)
     {
         if (key_exists($subset, $this->capabilities)) {
             $subsetCapabilities = $this->capabilities[$subset];
 
-            if (key_exists($entityID, $subsetCapabilities)) {
-                foreach ($subsetCapabilities as $idx => $set) {
-                    if (in_array($capability, $set) && $idx == $entityID) {
+            if (is_integer($entities) && $this->capabilitySubsetArray($capability, $entities, $subsetCapabilities)) {
+                return true;
+            }
+
+            if (is_array($entities)) {
+                foreach ($entities as $entity) {
+                    if ($this->capabilitySubsetArray($capability, $entity, $subsetCapabilities)) {
                         return true;
                     }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $capability The Capability being verified
+     * @param int $entityID The Entity ID
+     * @param array $subsetCapabilities The Capabilities for the level being checked
+     * @return bool
+     */
+    private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities)
+    {
+        if (key_exists($entityID, $subsetCapabilities)) {
+            foreach ($subsetCapabilities as $idx => $set) {
+                if (in_array($capability, $set) && $idx == $entityID) {
+                    return true;
                 }
             }
         }
@@ -268,11 +322,12 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_AUTHORIZATION = 'authorization';
     public const FIELD_DELETED = 'deleted';
     public const FIELD_CAMP_ROLES = 'camp_roles';
-    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_USER_STATE = 'user_state';
     public const FIELD_EMAIL_SENDS = 'email_sends';
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_USER_CONTACTS = 'user_contacts';
-    public const FIELD_PASSWORD_STATE_ID = 'password_state_id';
+    public const FIELD_USER_STATE_ID = 'user_state_id';
+    public const FIELD_PASSWORD_STATE = 'password_state';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 }

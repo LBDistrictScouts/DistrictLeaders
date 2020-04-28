@@ -1,9 +1,8 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
-//use App\Model\Table\OrdersTable;
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;
@@ -18,7 +17,6 @@ use Cake\TestSuite\TestCase;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- *
  * @property \App\Model\Table\UsersTable $Users
  * @property \App\Model\Table\RolesTable $Roles
  * @property EventManager $EventManager
@@ -29,7 +27,7 @@ class UserListenerTest extends TestCase
     use AppTestTrait;
 
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -45,7 +43,7 @@ class UserListenerTest extends TestCase
         'app.Roles',
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->Users = TableRegistry::getTableLocator()->get('Users');
@@ -90,7 +88,7 @@ class UserListenerTest extends TestCase
         $this->assertRedirect($redirect);
         TestCase::assertArrayHasKey('Auth', $this->_session);
 
-        $this->assertEventFired('Model.User.login', $this->EventManager);
+        $this->assertEventFired('Model.Users.login', $this->EventManager);
 
         $afterUser = $this->Users->get(1);
 
@@ -98,12 +96,12 @@ class UserListenerTest extends TestCase
         TestCase::assertNotEquals($now, $afterUser->modified);
     }
 
-    public function testRolePatch()
+    public function testCapabilityChange()
     {
         $role = $this->Roles->get(1);
         $role->set(Role::FIELD_USER_CONTACT_ID, 2);
         TestCase::assertNotFalse($this->Roles->save($role));
 
-        $this->assertEventFired('Model.User.capabilityChange', $this->EventManager);
+        $this->assertEventFired('Model.Users.capabilityChange', $this->EventManager);
     }
 }

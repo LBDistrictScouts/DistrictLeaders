@@ -1,0 +1,68 @@
+{#
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @since         2.0.0
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+#}
+{% set fields = Bake.filterFields(fields, schema, modelObject) %}
+<?= $this->Form->create(${{ singularVar }}) ?>
+<fieldset>
+    <?php
+        $args = [
+            'CHANGE',
+            ${{ singularVar }}->getSource(),
+            null,
+            null,
+        ];
+
+{% if field not in primaryKey  %}
+{% for field in fields %}
+{%- if keyFields[field] %}
+        $args[4] = ${{ singularVar }}::FIELD_{{ field|upper }};
+        {{- "\n" }}
+    {%- set fieldData = Bake.columnData(field, schema) %}
+        /** @var array ${{ keyFields[field] }} The {{ field|humanize }} List */
+        {{- "\n" }}
+    {%- if fieldData.null %}
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}, 'empty' => true]) : '';
+        {{- "\n" }}
+    {%- else %}
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['options' => ${{ keyFields[field] }}]) : '';
+        {{- "\n" }}
+    {%- endif %}
+    {{- "\n" }}
+{%- elseif field not in ['created', 'modified', 'updated', 'deleted'] %}
+        $args[4] = ${{ singularVar }}::FIELD_{{ field|upper }};
+        {{- "\n" }}
+    {%- set fieldData = Bake.columnData(field, schema) %}
+    {%- if fieldData.type in ['date', 'datetime', 'time'] and fieldData.null %}
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}, ['empty' => true]) : '';
+        {{- "\n" }}
+    {%- else %}
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control(${{ singularVar }}::FIELD_{{ field|upper }}) : '';
+        {{- "\n" }}
+    {%- endif %}
+    {{- "\n" }}
+{%- endif %}
+
+{%- endfor %}
+{% endif %}
+
+{%- if associations.BelongsToMany %}
+{%- for assocName, assocData in associations.BelongsToMany %}
+        /** @var array ${{ assocData.variable }} The {{ assocName }} List */
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('{{ assocData.property }}._ids', ['options' => ${{ assocData.variable }}]) : '';
+        {{- "\n" }}
+{%- endfor %}
+{% endif %}
+    ?>
+</fieldset>

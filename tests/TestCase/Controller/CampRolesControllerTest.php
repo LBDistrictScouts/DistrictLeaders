@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CampRolesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class CampRolesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -37,6 +38,8 @@ class CampRolesControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**
@@ -78,7 +81,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             2
         );
@@ -98,7 +101,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             1
         );
@@ -116,7 +119,7 @@ class CampRolesControllerTest extends TestCase
             [
                 'camp_id' => 1,
                 'user_id' => 2,
-                'camp_role_type_id' => 1
+                'camp_role_type_id' => 1,
             ],
             2
         );

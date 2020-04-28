@@ -29,21 +29,23 @@ require __DIR__ . '/paths.php';
  */
 require CORE_PATH . 'config' . DS . 'bootstrap.php';
 
+use App\Configure\Engine\YamlConfig;
+use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
 use Cake\Cache\Cache;
-use Cake\Console\ConsoleErrorHandler;
 use Cake\Core\Configure;
+use Cake\Core\Configure\Engine\JsonConfig;
 use Cake\Core\Configure\Engine\PhpConfig;
 use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
+use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
 use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Mailer\Email;
 use Cake\Mailer\TransportFactory;
-use Cake\Utility\Inflector;
 use Cake\Utility\Security;
 use Detection\MobileDetect;
 
@@ -57,14 +59,29 @@ use Detection\MobileDetect;
  */
 try {
     Configure::config('default', new PhpConfig());
+    Configure::config('json', new JsonConfig());
+    Configure::config('yaml', new YamlConfig());
+} catch (Exception $e) {
+    exit($e->getMessage() . "\n");
+}
+
+/** Core Config Values */
+try {
     Configure::load('app', 'default', false);
     Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
-    Configure::load('capabilities', 'default', false);
-    Configure::load('functional_areas', 'default', false);
-    Configure::load('known_entities', 'default', false);
-    Configure::load('settings', 'default', false);
-    Configure::load('webservices', 'default', false);
+    Configure::load('app_queue', 'default', false);
+} catch (Exception $e) {
+    exit($e->getMessage() . "\n");
+}
+
+/** Yaml Application Values */
+try {
+    Configure::load('Application' . DS . 'capabilities', 'yaml', false);
+    Configure::load('Application' . DS . 'daily_crons', 'yaml', false);
+    Configure::load('Application' . DS . 'functional_areas', 'yaml', false);
+    Configure::load('Application' . DS . 'settings', 'yaml', false);
+    Configure::load('Application' . DS . 'webservices', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -198,3 +215,4 @@ Type::build('timestamp')
 
 EventManager::instance()->on(new UserListener());
 EventManager::instance()->on(new RoleListener());
+EventManager::instance()->on(new CapabilityListener());

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -14,7 +16,6 @@
  */
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\PagesController;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 
@@ -33,7 +34,7 @@ class PagesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -89,9 +90,9 @@ class PagesControllerTest extends TestCase
     /**
      * Test that missing template renders 404 page in production
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testMissingTemplate()
     {
@@ -100,16 +101,16 @@ class PagesControllerTest extends TestCase
         Configure::write('debug', false);
         $this->get('/pages/not_existing');
 
-        $this->assertResponseError();
+        $this->assertResponseFailure();
         $this->assertResponseContains('Error');
     }
 
     /**
      * Test that missing template in debug mode renders missing_template error page
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testMissingTemplateInDebug()
     {
@@ -121,15 +122,14 @@ class PagesControllerTest extends TestCase
         $this->assertResponseFailure();
         $this->assertResponseContains('Missing Template');
         $this->assertResponseContains('Stacktrace');
-        $this->assertResponseContains('not_existing.ctp');
     }
 
     /**
      * Test directory traversal protection
      *
-     * @throws \PHPUnit\Exception
-     *
      * @return void
+     * @throws \Throwable
+     * @throws \PHPUnit\Exception
      */
     public function testDirectoryTraversalProtection()
     {

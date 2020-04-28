@@ -7,7 +7,7 @@ os: linux
 version: ~> 1.0
 
 addons:
-  postgresql: "9.6"
+  postgresql: "11"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
@@ -19,6 +19,7 @@ cache:
 services:
   - postgresql
   - redis
+  - elasticsearch
 
 env:
   - DB=postgres
@@ -31,11 +32,17 @@ jobs:
     - name: "PHP 7.3"
       php: 7.3
 
+    - name: "PHP 7.4"
+      php: 7.4
+
 before_install:
-  - cp config/app_db.travis.php config/app_db.php
-  - cp config/app_file.travis.php config/app_file.php
-  - cp config/app.travis.php config/app.php
-  - cp config/app_queue.travis.php config/app_queue.php
+  - mv config/app_db.travis.php config/app_db.php
+  - mv config/app_file.travis.php config/app_file.php
+  - mv config/app.travis.php config/app.php
+  - rm config/app_queue.php
+  - mv config/app_queue.travis.php config/app_queue.php
+  - rm phpunit.xml.dist
+  - mv phpunit-travis.xml.dist phpunit.xml.dist
 
 install:
   - psql --command='create database leaders;' --username=postgres

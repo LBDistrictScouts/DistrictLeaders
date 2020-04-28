@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\SectionTypesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class SectionTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -72,7 +73,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'section_type' => 'Llamas'
+                'section_type' => 'Llamas',
             ],
             9
         );
@@ -90,7 +91,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryEditPost(
             $this->controller,
             [
-                'section_type' => 'Llamas Kids'
+                'section_type' => 'Llamas Kids',
             ],
             1
         );
@@ -106,7 +107,7 @@ class SectionTypesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'section_type' => 'Llamas'
+                'section_type' => 'Llamas',
             ],
             9
         );

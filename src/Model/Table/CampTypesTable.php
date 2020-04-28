@@ -1,9 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
-use App\Model\Entity\CampType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  * CampTypes Model
  *
  * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\HasMany $Camps
- *
  * @method \App\Model\Entity\CampType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CampType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])
@@ -21,6 +19,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class CampTypesTable extends Table
 {
@@ -30,7 +29,7 @@ class CampTypesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -39,7 +38,7 @@ class CampTypesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('Camps', [
-            'foreignKey' => 'camp_type_id'
+            'foreignKey' => 'camp_type_id',
         ]);
     }
 
@@ -49,7 +48,7 @@ class CampTypesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer('id')
@@ -72,7 +71,7 @@ class CampTypesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['camp_type']));
 

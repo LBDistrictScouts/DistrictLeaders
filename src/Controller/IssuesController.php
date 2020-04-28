@@ -1,18 +1,15 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Model\Entity\Issue;
 use Cake\Controller\Controller;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Event\Event;
 
 /**
  * Issues Controller
  *
- *
- * @method Issue[]|ResultSetInterface paginate($object = null, array $settings = [])
- *
+ * @method \App\Model\Entity\Issue[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  * @property \Cake\ORM\Table $Issues
  */
 class IssuesController extends Controller
@@ -21,10 +18,9 @@ class IssuesController extends Controller
 
     /**
      * @param \Cake\Event\Event $event The event being interrupted
-     *
      * @return \Cake\Http\Response|void|null
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->modelFactory('Endpoint', ['Muffin\Webservice\Model\EndpointRegistry', 'get']);
         $this->loadModel('CvoTechnologies/GitHub.Issues', 'Endpoint');
@@ -55,7 +51,7 @@ class IssuesController extends Controller
     public function view($id = null)
     {
         $issue = $this->Issues->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
 
         $this->set('issue', $issue);
@@ -68,7 +64,7 @@ class IssuesController extends Controller
      */
     public function add()
     {
-        $issue = $this->Issues->newEntity();
+        $issue = $this->Issues->newEmptyEntity();
         if ($this->request->is('post')) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());
             if ($this->Issues->save($issue)) {
@@ -91,7 +87,7 @@ class IssuesController extends Controller
     public function edit($id = null)
     {
         $issue = $this->Issues->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $issue = $this->Issues->patchEntity($issue, $this->request->getData());

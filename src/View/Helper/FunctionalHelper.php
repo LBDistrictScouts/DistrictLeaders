@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
-use Cake\View\View;
 
 class FunctionalHelper extends Helper
 {
@@ -33,10 +34,9 @@ class FunctionalHelper extends Helper
 
     /**
      * @param array $config The Config Array
-     *
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->FunctionalAreas = Configure::read('functionalAreas');
         $this->SearchConfigured = Configure::read('searchConfigured');
@@ -46,13 +46,12 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $function The Function to be Checked
-     *
      * @return bool
      */
     public function checkFunction($function)
     {
         if (key_exists($function, $this->FunctionalAreas)) {
-            return (bool)$this->FunctionalAreas[$function];
+            return (bool)$this->FunctionalAreas[$function]['enabled'];
         }
 
         return false;
@@ -61,8 +60,34 @@ class FunctionalHelper extends Helper
     /**
      * Set Functional Areas Values
      *
-     * @param string $searchModel The Function to be Checked
+     * @param string $function The Function to be Checked
+     * @param \App\Model\Entity\User|null $identity The User Identity
+     * @param string|null $action The action being checked
+     * @return bool
+     */
+    public function checkFunctionAuth($function, $identity = false, $action = 'index')
+    {
+        $exposed = $this->FunctionalAreas[$function]['exposed'] ?? false;
+
+        if (is_null($identity) && !$exposed) {
+            return false;
+        }
+
+        $area = $this->checkFunction($function);
+        $can = $exposed;
+
+        if (!$exposed) {
+            $methodAuth = $this->FunctionalAreas[$function]['capability'][$action];
+            $can = $identity->checkCapability($methodAuth);
+        }
+
+        return (bool)($can && $area);
+    }
+
+    /**
+     * Set Functional Areas Values
      *
+     * @param string $searchModel The Function to be Checked
      * @return bool
      */
     public function checkSearchConfigured($searchModel)

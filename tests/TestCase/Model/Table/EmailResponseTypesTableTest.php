@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\EmailResponseTypesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class EmailResponseTypesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -33,7 +34,7 @@ class EmailResponseTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('EmailResponseTypes') ? [] : ['className' => EmailResponseTypesTable::class];
@@ -45,7 +46,7 @@ class EmailResponseTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->EmailResponseTypes);
 
@@ -56,7 +57,6 @@ class EmailResponseTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -150,7 +150,6 @@ class EmailResponseTypesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     *
      * @throws
      */
     public function testBuildRules()

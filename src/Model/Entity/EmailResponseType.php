@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -26,7 +28,7 @@ class EmailResponseType extends Entity
     protected $_accessible = [
         'email_response_type' => true,
         'bounce' => true,
-        'email_responses' => true
+        'email_responses' => true,
     ];
 
     public const FIELD_ID = 'id';

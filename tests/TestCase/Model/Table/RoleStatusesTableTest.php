@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\RoleStatusesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class RoleStatusesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -33,7 +34,7 @@ class RoleStatusesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('RoleStatuses') ? [] : ['className' => RoleStatusesTable::class];
@@ -45,7 +46,7 @@ class RoleStatusesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->RoleStatuses);
 
@@ -60,7 +61,7 @@ class RoleStatusesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'role_status' => 'Lorem dolor sit amet'
+            'role_status' => 'Lorem dolor sit amet',
         ];
 
         return $good;
@@ -77,7 +78,7 @@ class RoleStatusesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'role_status' => 'Lorem ipsum dolor sit amet'
+            'role_status' => 'Lorem ipsum dolor sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

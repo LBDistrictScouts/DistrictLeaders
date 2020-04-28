@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\EmailSendsTable;
@@ -24,7 +26,7 @@ class EmailSendsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -55,7 +57,7 @@ class EmailSendsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('EmailSends') ? [] : ['className' => EmailSendsTable::class];
@@ -67,7 +69,7 @@ class EmailSendsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->EmailSends);
 
@@ -78,7 +80,6 @@ class EmailSendsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -107,7 +108,6 @@ class EmailSendsTableTest extends TestCase
      * Get Expected Function
      *
      * @return array
-     *
      * @throws
      */
     private function getExpected()
@@ -138,7 +138,7 @@ class EmailSendsTableTest extends TestCase
                         ],
                         'authenticate' => true,
                     ],
-                ]
+                ],
             ],
             'notification' => [
                 'notification_header' => 'Welcome to Site Llama Fish',
@@ -161,7 +161,6 @@ class EmailSendsTableTest extends TestCase
      * Test initialize method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testInitialize()
@@ -206,7 +205,6 @@ class EmailSendsTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidationDefault()
@@ -278,7 +276,6 @@ class EmailSendsTableTest extends TestCase
      * Test Make method
      *
      * @return void
-     *
      * @throws
      */
     public function testMake()
@@ -300,7 +297,7 @@ class EmailSendsTableTest extends TestCase
         $actual = $this->EmailSends->get(2, [
             'contain' => [
                 'Notifications',
-                'Tokens'
+                'Tokens',
             ]])->toArray();
 
         $dates = [

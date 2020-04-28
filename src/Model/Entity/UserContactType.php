@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -28,7 +30,7 @@ class UserContactType extends Entity
         'user_contact_type' => true,
         'created' => true,
         'modified' => true,
-        'user_contacts' => true
+        'user_contacts' => true,
     ];
 
     public const FIELD_ID = 'id';

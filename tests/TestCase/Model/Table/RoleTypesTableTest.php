@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Role;
+use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
-use Cake\ORM\Query;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\RoleTypesTable Test Case
@@ -28,7 +30,7 @@ class RoleTypesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -49,7 +51,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('RoleTypes') ? [] : ['className' => RoleTypesTable::class];
@@ -61,7 +63,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->RoleTypes);
 
@@ -72,7 +74,6 @@ class RoleTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     public function getGood()
@@ -159,7 +160,7 @@ class RoleTypesTableTest extends TestCase
     {
         $foreignKeys = [
             RoleType::FIELD_SECTION_TYPE_ID => $this->RoleTypes->SectionTypes,
-            RoleType::FIELD_ROLE_TEMPLATE_ID => $this->RoleTypes->RoleTemplates
+            RoleType::FIELD_ROLE_TEMPLATE_ID => $this->RoleTypes->RoleTemplates,
         ];
         $this->validateExistsRules($foreignKeys, $this->RoleTypes, [$this, 'getGood']);
 
@@ -168,5 +169,78 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_ROLE_TYPE,
         ];
         $this->validateUniqueRules($uniques, $this->RoleTypes, [$this, 'getGood']);
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchAllTemplateCapabilities()
+    {
+        $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
+        TestCase::assertInstanceOf(RoleType::class, $this->RoleTypes->save($roleType));
+
+        $roleType = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        TestCase::assertNotSame($roleTypeOriginal->capabilities, $roleType->capabilities);
+
+        $expectedCaps = [
+            'LOGIN' => true,
+            'OWN_USER' => true,
+        ];
+
+        foreach ($roleType->capabilities as $capability) {
+            TestCase::assertTrue(key_exists($capability->capability_code, $expectedCaps));
+            TestCase::assertSame($capability->_joinData->template, $expectedCaps[$capability->capability_code]);
+        }
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchTemplateCapabilities()
+    {
+        $roleTemplate = $this->RoleTypes->RoleTemplates->get(1);
+        $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['DIRECTORY', 'DELETE_USER']);
+        $roleTemplate = $this->RoleTypes->RoleTemplates->save($roleTemplate);
+        TestCase::assertInstanceOf($this->RoleTypes->RoleTemplates->getEntityClass(), $roleTemplate);
+
+        $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
+        TestCase::assertInstanceOf(RoleType::class, $this->RoleTypes->save($roleType));
+
+        $roleType = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
+        TestCase::assertNotSame($roleTypeOriginal->capabilities, $roleType->capabilities);
+
+        $expectedCaps = [
+            'LOGIN' => true,
+            'OWN_USER' => true,
+            'DIRECTORY' => true,
+            'DELETE_USER' => true,
+        ];
+
+        foreach ($roleType->capabilities as $capability) {
+            TestCase::assertTrue(key_exists($capability->capability_code, $expectedCaps));
+            TestCase::assertSame($capability->_joinData->template, $expectedCaps[$capability->capability_code]);
+        }
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testPatchRoleUsers()
+    {
+        $roleType = $this->RoleTypes->find()->first();
+        $users = $this->RoleTypes->Roles->find()->where([Role::FIELD_ROLE_TYPE_ID => $roleType->get(RoleType::FIELD_ID)])->count();
+
+        $result = $this->RoleTypes->patchRoleUsers($roleType);
+
+        TestCase::assertEquals($users, $result);
+        TestCase::assertNotEquals(0, $result);
     }
 }

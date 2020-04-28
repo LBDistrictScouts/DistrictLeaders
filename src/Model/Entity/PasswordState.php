@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -7,7 +9,7 @@ use Cake\ORM\Entity;
  * PasswordState Entity
  *
  * @property int $id
- * @property string $password_state
+ * @property string $user_state
  * @property bool $active
  * @property bool $expired
  *
@@ -15,7 +17,6 @@ use Cake\ORM\Entity;
  */
 class PasswordState extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -26,14 +27,14 @@ class PasswordState extends Entity
      * @var array
      */
     protected $_accessible = [
-        'password_state' => true,
+        'user_state' => true,
         'active' => true,
         'expired' => true,
-        'users' => true
+        'users' => true,
     ];
 
     public const FIELD_ID = 'id';
-    public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_USER_STATE = 'user_state';
     public const FIELD_ACTIVE = 'active';
     public const FIELD_EXPIRED = 'expired';
     public const FIELD_USERS = 'users';

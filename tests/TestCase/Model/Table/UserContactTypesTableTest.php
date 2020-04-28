@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\UserContactTypesTable;
@@ -32,7 +34,7 @@ class UserContactTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('UserContactTypes') ? [] : ['className' => UserContactTypesTable::class];
@@ -44,7 +46,7 @@ class UserContactTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->UserContactTypes);
 
@@ -55,7 +57,6 @@ class UserContactTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws \Exception
      */
     private function getGood()
@@ -91,7 +92,7 @@ class UserContactTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'user_contact_type' => 'Email'
+            'user_contact_type' => 'Email',
         ];
         TestCase::assertEquals($expected, $actual);
 
@@ -103,7 +104,6 @@ class UserContactTypesTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testValidationDefault()
@@ -170,7 +170,6 @@ class UserContactTypesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     *
      * @throws \Exception
      */
     public function testBuildRules()

@@ -1,20 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\CampRole;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * CampRoles Controller
  *
  * @property \App\Model\Table\CampRolesTable $CampRoles
- *
  * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRolesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -23,7 +19,7 @@ class CampRolesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Camps', 'Users', 'CampRoleTypes']
+            'contain' => ['Camps', 'Users', 'CampRoleTypes'],
         ];
         $campRoles = $this->paginate($this->CampRoles);
 
@@ -40,7 +36,7 @@ class CampRolesController extends AppController
     public function view($id = null)
     {
         $campRole = $this->CampRoles->get($id, [
-            'contain' => ['Camps', 'Users', 'CampRoleTypes']
+            'contain' => ['Camps', 'Users', 'CampRoleTypes'],
         ]);
 
         $this->set('campRole', $campRole);
@@ -53,7 +49,7 @@ class CampRolesController extends AppController
      */
     public function add()
     {
-        $campRole = $this->CampRoles->newEntity();
+        $campRole = $this->CampRoles->newEmptyEntity();
         if ($this->request->is('post')) {
             $campRole = $this->CampRoles->patchEntity($campRole, $this->request->getData());
             if ($this->CampRoles->save($campRole)) {
@@ -79,7 +75,7 @@ class CampRolesController extends AppController
     public function edit($id = null)
     {
         $campRole = $this->CampRoles->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $campRole = $this->CampRoles->patchEntity($campRole, $this->request->getData());

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampRolesTable;
@@ -11,7 +13,6 @@ use Cake\TestSuite\TestCase;
  */
 class CampRolesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -25,7 +26,7 @@ class CampRolesTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -50,7 +51,7 @@ class CampRolesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('CampRoles') ? [] : ['className' => CampRolesTable::class];
@@ -65,7 +66,7 @@ class CampRolesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CampRoles);
 
@@ -85,7 +86,7 @@ class CampRolesTableTest extends TestCase
             'modified' => $date,
             'camp_id' => 1,
             'user_id' => 1,
-            'camp_role_type_id' => 1
+            'camp_role_type_id' => 1,
         ];
 
         return $good;
@@ -115,7 +116,7 @@ class CampRolesTableTest extends TestCase
             'id' => 1,
             'camp_id' => 1,
             'user_id' => 1,
-            'camp_role_type_id' => 1
+            'camp_role_type_id' => 1,
         ];
         TestCase::assertEquals($expected, $actual);
 

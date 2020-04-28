@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * CampRoleTypesFixture
- *
  */
 class CampRoleTypesFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -33,13 +31,13 @@ class CampRoleTypesFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
                 'created' => 1546807680,
                 'modified' => 1546807680,
-                'camp_role_type' => 'Lorem ipsum dolor sit amet'
+                'camp_role_type' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

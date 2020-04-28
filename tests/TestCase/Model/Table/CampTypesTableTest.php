@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampTypesTable;
@@ -11,7 +13,6 @@ use Cake\Utility\Security;
  */
 class CampTypesTableTest extends TestCase
 {
-
     /**
      * Test subject
      *
@@ -26,7 +27,7 @@ class CampTypesTableTest extends TestCase
      */
     public $fixtures = [
         'app.CampTypes',
-        'app.Camps'
+        'app.Camps',
     ];
 
     /**
@@ -34,7 +35,7 @@ class CampTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('CampTypes') ? [] : ['className' => CampTypesTable::class];
@@ -46,7 +47,7 @@ class CampTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->CampTypes);
 
@@ -61,7 +62,7 @@ class CampTypesTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'camp_type' => 'Lorem ipsum amet'
+            'camp_type' => 'Lorem ipsum amet',
         ];
 
         return $good;
@@ -78,7 +79,7 @@ class CampTypesTableTest extends TestCase
 
         $expected = [
             'id' => 1,
-            'camp_type' => 'Lorem ipsum sit amet'
+            'camp_type' => 'Lorem ipsum sit amet',
         ];
         TestCase::assertEquals($expected, $actual);
 

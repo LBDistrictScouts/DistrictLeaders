@@ -1,15 +1,12 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\EmailResponseType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * EmailResponseTypes Controller
  *
  * @property \App\Model\Table\EmailResponseTypesTable $EmailResponseTypes
- *
  * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailResponseTypesController extends AppController
@@ -36,7 +33,7 @@ class EmailResponseTypesController extends AppController
     public function view($id = null)
     {
         $emailResponseType = $this->EmailResponseTypes->get($id, [
-            'contain' => ['EmailResponses']
+            'contain' => ['EmailResponses'],
         ]);
 
         $this->set('emailResponseType', $emailResponseType);
@@ -49,7 +46,7 @@ class EmailResponseTypesController extends AppController
      */
     public function add()
     {
-        $emailResponseType = $this->EmailResponseTypes->newEntity();
+        $emailResponseType = $this->EmailResponseTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $emailResponseType = $this->EmailResponseTypes->patchEntity($emailResponseType, $this->request->getData());
             if ($this->EmailResponseTypes->save($emailResponseType)) {
@@ -72,7 +69,7 @@ class EmailResponseTypesController extends AppController
     public function edit($id = null)
     {
         $emailResponseType = $this->EmailResponseTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $emailResponseType = $this->EmailResponseTypes->patchEntity($emailResponseType, $this->request->getData());

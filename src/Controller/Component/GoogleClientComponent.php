@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Google_Client;
 use Google_Service_Directory;
@@ -12,7 +13,6 @@ use Google_Service_Directory;
  */
 class GoogleClientComponent extends Component
 {
-
     /**
      * Default configuration.
      *
@@ -24,8 +24,7 @@ class GoogleClientComponent extends Component
      * Private Google Client Builder
      *
      * @throws \Google_Exception
-     *
-     * @return Google_Client
+     * @return \Google_Client
      */
     public function newClient()
     {
@@ -42,8 +41,7 @@ class GoogleClientComponent extends Component
     /**
      * Get Client for Google
      *
-     * @return \Cake\Http\Response|Google_Client
-     *
+     * @return \Cake\Http\Response|\Google_Client
      * @throws \Google_Exception
      */
     public function getClient()
@@ -68,7 +66,7 @@ class GoogleClientComponent extends Component
             } else {
                 return $this->_registry->getController()->redirect([
                     'controller' => 'admin',
-                    'action' => 'google'
+                    'action' => 'google',
                 ]);
             }
             $this->saveToken($client);
@@ -81,7 +79,6 @@ class GoogleClientComponent extends Component
      * Save Token Method
      *
      * @param \Google_Client $client An Activated Client
-     *
      * @return void
      */
     public function saveToken(Google_Client $client)
@@ -97,7 +94,6 @@ class GoogleClientComponent extends Component
 
     /**
      * @param \Google_Client $client The Google Token to get Token
-     *
      * @return \Google_Client
      */
     public function getToken(Google_Client $client)
@@ -115,7 +111,6 @@ class GoogleClientComponent extends Component
      * get List
      *
      * @return array
-     *
      * @throws \Google_Exception
      */
     public function getList()

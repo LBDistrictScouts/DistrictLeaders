@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Utility;
 
 use App\Utility\TextSafe;
@@ -18,7 +20,7 @@ class TextSafeTest extends TestCase
     {
         return [
             ['Jacob=Llama+Goat/Fish', 'Jacob~Llama-Goat_Fish'],
-            ['Octopus==Random/+Monkey/+Boat', 'Octopus~~Random_-Monkey_-Boat']
+            ['Octopus==Random/+Monkey/+Boat', 'Octopus~~Random_-Monkey_-Boat'],
         ];
     }
 
@@ -27,9 +29,7 @@ class TextSafeTest extends TestCase
      *
      * @param string $string String to be encoded
      * @param string $expected String expected after encoding
-     *
      * @return void
-     *
      * @dataProvider providerEncodeData
      */
     public function testEncode($string, $expected)
@@ -42,9 +42,7 @@ class TextSafeTest extends TestCase
      *
      * @param string $expected String expected after encoding
      * @param string $string String to be encoded
-     *
      * @dataProvider providerEncodeData
-     *
      * @return void
      */
     public function testDecode($expected, $string)
@@ -62,7 +60,7 @@ class TextSafeTest extends TestCase
             [20],
             [99],
             [40],
-            [2]
+            [2],
         ];
     }
 
@@ -70,9 +68,7 @@ class TextSafeTest extends TestCase
      * Test decode()
      *
      * @param int $expected The length of the expected string
-     *
      * @dataProvider providerShuffleData
-     *
      * @return void
      */
     public function testShuffle($expected)

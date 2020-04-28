@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 /**
@@ -11,6 +12,7 @@ class RoleTemplate extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function change()
@@ -34,7 +36,7 @@ class RoleTemplate extends AbstractMigration
             ])
             ->addForeignKey('role_template_id', 'role_templates', 'id', [
                 'delete' => 'SET_NULL',
-                'update' => 'SET_NULL'
+                'update' => 'SET_NULL',
             ])
             ->save();
     }

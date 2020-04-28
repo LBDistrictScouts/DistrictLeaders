@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -13,8 +15,6 @@
  */
 namespace App\View;
 
-use BootstrapUI\View\UIViewTrait;
-use Cake\Core\Configure;
 use Cake\View\View;
 
 /**
@@ -25,18 +25,20 @@ use Cake\View\View;
  * @property \App\View\Helper\FunctionalHelper $Functional
  * @property \App\View\Helper\IconHelper $Icon
  * @property \App\View\Helper\InflectionHelper $Inflection
+ * @property \App\View\Helper\CapIdentityHelper $Identity
+ * @property \App\View\Helper\MarkdownHelper $Markdown
  *
  * @property \BootstrapUI\View\Helper\BreadcrumbsHelper $Breadcrumbs
  * @property \BootstrapUI\View\Helper\FormHelper $Form
  * @property \BootstrapUI\View\Helper\HtmlHelper $Html
  * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
- *
- * @property \Authentication\View\Helper\IdentityHelper $Identity
- *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  * @property \Tools\View\Helper\TimeHelper $Time
  * @property \Tools\View\Helper\FormatHelper $Format
  * @property \Flash\View\Helper\FlashHelper $Flash
+ * @property \Search\View\Helper\SearchHelper $Search
+ * @property \Queue\View\Helper\QueueProgressHelper $QueueProgress
+ * @property \App\View\Helper\CapIdentityHelper $CapIdentity
  */
 class AppView extends View
 {
@@ -49,7 +51,7 @@ class AppView extends View
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadHelper('Html', ['className' => 'BootstrapUI.Html']);
         $this->loadHelper('Form', ['className' => 'BootstrapUI.Form']);
@@ -66,8 +68,10 @@ class AppView extends View
         $this->loadHelper('Inflection');
         $this->loadHelper('Icon');
 
-        $this->loadHelper('Authentication.Identity');
+        $this->loadHelper('Identity', ['className' => 'CapIdentity']);
 
         $this->loadHelper('Functional');
+        $this->loadHelper('Queue.QueueProgress');
+        $this->loadHelper('Search.Search');
     }
 }

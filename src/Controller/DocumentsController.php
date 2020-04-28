@@ -1,19 +1,40 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Controller;
 
-use App\Controller\AppController;
 use App\Model\Entity\Document;
-use Cake\Datasource\ResultSetInterface;
+use App\Model\Filter\DocumentsCollection;
+use Exception;
 
 /**
  * Documents Controller
  *
  * @property \App\Model\Table\DocumentsTable $Documents
  *
- * @method Document[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Controller\Component\FilterComponent $Filter
+ * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \Search\Controller\Component\SearchComponent $Search
  */
 class DocumentsController extends AppController
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @throws \Exception
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Search', [
+            // This is default config. You can modify "actions" as needed to make
+            // the SEARCH component work only for specified methods.
+            'actions' => ['search'],
+        ]);
+    }
+
     /**
      * Index method
      *
@@ -21,10 +42,38 @@ class DocumentsController extends AppController
      */
     public function index()
     {
+        try {
+            $this->loadComponent('Filter');
+            $query = $this->Filter->indexFilters(
+                $this->Documents->getAssociation('DocumentTypes'),
+                $this->getRequest()->getQueryParams()
+            );
+        } catch (Exception $exception) {
+            $query = $this->Documents->find()->contain(['DocumentTypes']);
+        }
+
+        $documents = $this->paginate($query);
+
+        $this->set(compact('documents'));
+    }
+
+    /**
+     * Search method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
         $this->paginate = [
-            'contain' => ['DocumentTypes']
+            'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes'],
         ];
-        $documents = $this->paginate($this->Documents);
+
+        $query = $this->Documents->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => DocumentsCollection::class,
+        ]);
+
+        $documents = $this->paginate($query);
 
         $this->set(compact('documents'));
     }
@@ -39,7 +88,7 @@ class DocumentsController extends AppController
     public function view($id = null)
     {
         $document = $this->Documents->get($id, [
-            'contain' => ['DocumentTypes', 'DocumentVersions']
+            'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes', 'DocumentPreviews'],
         ]);
 
         $this->set('document', $document);
@@ -52,10 +101,11 @@ class DocumentsController extends AppController
      */
     public function add()
     {
-        $document = $this->Documents->newEntity();
-        if ($this->request->is('post')) {
-            $document = $this->Documents->patchEntity($document, $this->request->getData());
-            if ($this->Documents->save($document)) {
+        $document = $this->Documents->newEmptyEntity();
+        $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseFileTypes();
+        if ($this->getRequest()->is('post')) {
+            $document = $this->Documents->uploadDocument($this->getRequest()->getData(), $document);
+            if ($document instanceof Document) {
                 $this->Flash->success(__('The document has been saved.'));
 
                 return $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);
@@ -76,7 +126,7 @@ class DocumentsController extends AppController
     public function edit($id = null)
     {
         $document = $this->Documents->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $document = $this->Documents->patchEntity($document, $this->request->getData());

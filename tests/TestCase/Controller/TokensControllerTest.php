@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\TokensController;
 use App\Model\Entity\Token;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
@@ -21,7 +22,7 @@ class TokensControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -53,29 +54,9 @@ class TokensControllerTest extends TestCase
     private $controller = 'Tokens';
 
     /**
-     * @var array $validEntityData Valid creation Data.
-     */
-    private $validEntityData = [
-        'token' => 'Password Reset for Jacob',
-        'email_send_id' => 1,
-        'active' => true,
-        'random_number' => 1789,
-        'token_header' => [
-            'redirect' => [
-                'controller' => 'Applications',
-                'action' => 'view',
-                'prefix' => false,
-                1
-            ],
-            'authenticate' => true,
-        ]
-    ];
-
-    /**
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidate()
@@ -89,7 +70,7 @@ class TokensControllerTest extends TestCase
             'controller' => 'Tokens',
             'action' => 'validate',
             'prefix' => false,
-            $token
+            $token,
         ]);
 
         $this->assertRedirect([
@@ -100,7 +81,7 @@ class TokensControllerTest extends TestCase
             '?' => [
                 'token_id' => 1,
                 'token' => $token,
-            ]
+            ],
         ]);
     }
 
@@ -108,7 +89,6 @@ class TokensControllerTest extends TestCase
      * Test index method
      *
      * @return void
-     *
      * @throws
      */
     public function testValidateAndAuthenticate()
@@ -124,7 +104,7 @@ class TokensControllerTest extends TestCase
                 'action' => 'view',
                 'prefix' => false,
                 1,
-            ]
+            ],
         ]);
         TestCase::assertNotFalse($tokens->save($tokenRow));
 
@@ -134,7 +114,7 @@ class TokensControllerTest extends TestCase
             'controller' => 'Tokens',
             'action' => 'validate',
             'prefix' => false,
-            $token
+            $token,
         ]);
 
         $this->assertRedirect([
@@ -145,7 +125,7 @@ class TokensControllerTest extends TestCase
             '?' => [
                 'token_id' => 1,
                 'token' => $token,
-            ]
+            ],
         ]);
     }
 }

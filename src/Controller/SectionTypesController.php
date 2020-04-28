@@ -1,18 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
+namespace App\Controller;
 
 /**
  * SectionTypes Controller
  *
  * @property \App\Model\Table\SectionTypesTable $SectionTypes
- *
  * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionTypesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -35,7 +33,7 @@ class SectionTypesController extends AppController
     public function view($id = null)
     {
         $sectionType = $this->SectionTypes->get($id, [
-            'contain' => ['RoleTypes', 'Sections']
+            'contain' => ['RoleTypes', 'Sections'],
         ]);
 
         $this->set('sectionType', $sectionType);
@@ -48,7 +46,7 @@ class SectionTypesController extends AppController
      */
     public function add()
     {
-        $sectionType = $this->SectionTypes->newEntity();
+        $sectionType = $this->SectionTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $sectionType = $this->SectionTypes->patchEntity($sectionType, $this->request->getData());
             if ($this->SectionTypes->save($sectionType)) {
@@ -71,7 +69,7 @@ class SectionTypesController extends AppController
     public function edit($id = null)
     {
         $sectionType = $this->SectionTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $sectionType = $this->SectionTypes->patchEntity($sectionType, $this->request->getData());

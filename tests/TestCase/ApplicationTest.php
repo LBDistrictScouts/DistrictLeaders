@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 /**
  * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
@@ -19,10 +21,10 @@ use Authentication\Middleware\AuthenticationMiddleware;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Authorization\Middleware\RequestAuthorizationMiddleware;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
-use Cake\Http\MiddlewareQueue;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\Middleware\EncryptedCookieMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
+use Cake\Http\MiddlewareQueue;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Cake\TestSuite\IntegrationTestCase;
@@ -34,7 +36,6 @@ use InvalidArgumentException;
  */
 class ApplicationTest extends IntegrationTestCase
 {
-
     /**
      * testBootstrap
      *
@@ -47,6 +48,7 @@ class ApplicationTest extends IntegrationTestCase
         $plugins = $app->getPlugins();
 
         $expectedPlugins = [
+            'Muffin/Webservice',
             'CakeDto',
             'Tools',
             'Search',
@@ -63,13 +65,14 @@ class ApplicationTest extends IntegrationTestCase
             'DatabaseLog',
             'Muffin/Footprint',
             'Flash',
+            'WyriHaximus/TwigView',
         ];
-
-        TestCase::assertCount(count($expectedPlugins), $plugins);
 
         foreach ($expectedPlugins as $plugin) {
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
         }
+
+        TestCase::assertCount(count($expectedPlugins), $plugins);
     }
 
     /**
@@ -104,14 +107,23 @@ class ApplicationTest extends IntegrationTestCase
 
         $middleware = $app->middleware($middleware);
 
-        TestCase::assertInstanceOf(ErrorHandlerMiddleware::class, $middleware->get(0));
-        TestCase::assertInstanceOf(AssetMiddleware::class, $middleware->get(1));
-        TestCase::assertInstanceOf(RoutingMiddleware::class, $middleware->get(2));
-        TestCase::assertInstanceOf(EncryptedCookieMiddleware::class, $middleware->get(3));
-        TestCase::assertInstanceOf(AuthenticationMiddleware::class, $middleware->get(4));
-        TestCase::assertInstanceOf(AuthorizationMiddleware::class, $middleware->get(5));
-        TestCase::assertInstanceOf(RequestAuthorizationMiddleware::class, $middleware->get(6));
-        TestCase::assertInstanceOf(SecurityHeadersMiddleware::class, $middleware->get(7));
-        TestCase::assertInstanceOf(CsrfProtectionMiddleware::class, $middleware->get(8));
+        $middleware->seek(0);
+
+        $middlewareArray = [
+            ErrorHandlerMiddleware::class,
+            AssetMiddleware::class,
+            RoutingMiddleware::class,
+            EncryptedCookieMiddleware::class,
+            AuthenticationMiddleware::class,
+            AuthorizationMiddleware::class,
+            RequestAuthorizationMiddleware::class,
+            SecurityHeadersMiddleware::class,
+            CsrfProtectionMiddleware::class,
+        ];
+
+        foreach ($middlewareArray as $middlewareItem) {
+            TestCase::assertInstanceOf($middlewareItem, $middleware->current());
+            $middleware->next();
+        }
     }
 }

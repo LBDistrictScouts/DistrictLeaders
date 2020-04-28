@@ -1,20 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Section;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Sections Controller
  *
  * @property \App\Model\Table\SectionsTable $Sections
- *
  * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
-
     /**
      * Index method
      *
@@ -23,7 +19,7 @@ class SectionsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['SectionTypes', 'ScoutGroups']
+            'contain' => ['SectionTypes', 'ScoutGroups'],
         ];
         $sections = $this->paginate($this->Sections);
 
@@ -40,7 +36,7 @@ class SectionsController extends AppController
     public function view($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => ['SectionTypes', 'ScoutGroups', 'Roles']
+            'contain' => ['SectionTypes', 'ScoutGroups', 'Roles'],
         ]);
 
         $this->set('section', $section);
@@ -53,7 +49,7 @@ class SectionsController extends AppController
      */
     public function add()
     {
-        $section = $this->Sections->newEntity();
+        $section = $this->Sections->newEmptyEntity();
         if ($this->request->is('post')) {
             $section = $this->Sections->patchEntity($section, $this->request->getData());
             if ($this->Sections->save($section)) {
@@ -78,7 +74,7 @@ class SectionsController extends AppController
     public function edit($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $section = $this->Sections->patchEntity($section, $this->request->getData());

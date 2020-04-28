@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CampsController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class CampsControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -37,6 +38,8 @@ class CampsControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**
@@ -63,7 +66,7 @@ class CampsControllerTest extends TestCase
             'day' => 11,
             'hour' => 9,
             'minute' => 53,
-        ]
+        ],
     ];
 
     /**

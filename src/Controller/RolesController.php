@@ -1,20 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\Role;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * Roles Controller
  *
  * @property \App\Model\Table\RolesTable $Roles
- *
- * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -23,7 +19,7 @@ class RolesController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses']
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
         ];
         $roles = $this->paginate($this->Roles);
 
@@ -40,7 +36,7 @@ class RolesController extends AppController
     public function view($id = null)
     {
         $role = $this->Roles->get($id, [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses']
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts'],
         ]);
 
         $this->set('role', $role);
@@ -53,13 +49,13 @@ class RolesController extends AppController
      */
     public function add()
     {
-        $role = $this->Roles->newEntity();
+        $role = $this->Roles->newEmptyEntity();
         if ($this->request->is('post')) {
             $role = $this->Roles->patchEntity($role, $this->request->getData());
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'view', $role->get('id')]);
+                return $this->redirect(['action' => 'edit', $role->get('id'), '?' => ['contact' => true]]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
@@ -80,8 +76,11 @@ class RolesController extends AppController
      */
     public function edit($id = null)
     {
+        $contact = $this->getRequest()->getQueryParams()['contact'] ?? false;
+        $this->set('contact', $contact);
+
         $role = $this->Roles->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $role = $this->Roles->patchEntity($role, $this->request->getData());
@@ -94,8 +93,11 @@ class RolesController extends AppController
         }
         $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
-        $roleStatuses = $this->Roles->RoleStatuses->find('list', ['limit' => 200]);
-        $userContacts = $this->Roles->UserContacts->find('list', ['limit' => 200])->where(['user_id' => $role->user_id]);
+        $roleStatuses = $this->Roles->RoleStatuses
+            ->find('list', ['limit' => 200]);
+        $userContacts = $this->Roles->UserContacts
+            ->find('list', ['limit' => 200])
+            ->where(['user_id' => $role->user_id]);
 
         $this->set(compact('role', 'roleTypes', 'sections', 'userContacts', 'roleStatuses'));
     }

@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Entity\DocumentType;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentVersionsTable;
-use App\Utility\TextSafe;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -40,7 +40,7 @@ class DocumentVersionsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('DocumentVersions') ? [] : ['className' => DocumentVersionsTable::class];
@@ -52,7 +52,7 @@ class DocumentVersionsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->DocumentVersions);
 
@@ -64,13 +64,16 @@ class DocumentVersionsTableTest extends TestCase
      *
      * @return array
      */
-    private function getGood()
+    public function getGood()
     {
-        $good = [
-            DocumentType::FIELD_DOCUMENT_TYPE => TextSafe::shuffle(15),
-        ];
-
-        return $good;
+        try {
+            return [
+                DocumentVersion::FIELD_DOCUMENT_ID => 1,
+                DocumentVersion::FIELD_VERSION_NUMBER => random_int(1, 9999999),
+            ];
+        } catch (\Exception $exception) {
+            return [];
+        }
     }
 
     /**
@@ -100,7 +103,24 @@ class DocumentVersionsTableTest extends TestCase
      */
     public function testValidationDefault()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->DocumentVersions->newEntity($good);
+        TestCase::assertInstanceOf('App\Model\Entity\DocumentVersion', $this->DocumentVersions->save($new));
+
+        $required = [
+            DocumentVersion::FIELD_VERSION_NUMBER,
+            DocumentVersion::FIELD_DOCUMENT_ID,
+        ];
+
+        $this->validateRequired($required, $this->DocumentVersions, [$this, 'getGood']);
+
+        $notEmpties = [
+            DocumentVersion::FIELD_VERSION_NUMBER,
+            DocumentVersion::FIELD_DOCUMENT_ID,
+        ];
+
+        $this->validateNotEmpties($notEmpties, $this->DocumentVersions, [$this, 'getGood']);
     }
 
     /**
@@ -110,6 +130,31 @@ class DocumentVersionsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->validateExistsRule(
+            DocumentVersion::FIELD_DOCUMENT_ID,
+            $this->DocumentVersions,
+            $this->DocumentVersions->Documents,
+            [$this, 'getGood']
+        );
+        $this->validateUniqueRule(
+            [DocumentVersion::FIELD_VERSION_NUMBER, DocumentVersion::FIELD_DOCUMENT_ID],
+            $this->DocumentVersions,
+            [$this, 'getGood']
+        );
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testFindDocumentList()
+    {
+        $expected = [
+            1 => 'Lorem ipsum dolor sit amet - 1',
+        ];
+
+        $actual = $this->DocumentVersions->find('documentList')->toArray();
+        TestCase::assertEquals($expected, $actual);
     }
 }

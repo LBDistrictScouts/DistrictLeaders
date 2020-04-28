@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
-use Cake\Database\Schema\TableSchema;
-use Cake\Datasource\EntityInterface;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
@@ -14,7 +15,7 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\PasswordStatesTable&\Cake\ORM\Association\BelongsTo $PasswordStates
+ * @property \App\Model\Table\UserStatesTable&\Cake\ORM\Association\BelongsTo $UserStates
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Changes
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
@@ -22,31 +23,30 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
- *
- * @method User get($primaryKey, $options = [])
- * @method User newEntity($data = null, array $options = [])
- * @method User[] newEntities(array $data, array $options = [])
- * @method User|false save(EntityInterface $entity, $options = [])
- * @method User saveOrFail(EntityInterface $entity, $options = [])
- * @method User patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method User[] patchEntities($entities, array $data, array $options = [])
- * @method User findOrCreate($search, callable $callback = null, $options = [])
- *
+ * @method \App\Model\Entity\User get($primaryKey, $options = [])
+ * @method \App\Model\Entity\User newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\User findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UsersTable extends Table
 {
-
     /**
      * Initialize method
      *
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -56,6 +56,7 @@ class UsersTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Search.Search');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [
@@ -67,7 +68,7 @@ class UsersTable extends Table
                 User::FIELD_ADDRESS_LINE_2 => 't',
                 User::FIELD_CITY => 't',
                 User::FIELD_COUNTY => 't',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
@@ -82,11 +83,11 @@ class UsersTable extends Table
                 User::FIELD_CITY,
                 User::FIELD_COUNTY,
                 User::FIELD_POSTCODE,
-            ]
+            ],
         ]);
 
-        $this->belongsTo('PasswordStates', [
-            'foreignKey' => 'password_state_id'
+        $this->belongsTo('UserStates', [
+            'foreignKey' => 'user_state_id',
         ]);
 
         $this->hasMany('Changes', [
@@ -100,13 +101,13 @@ class UsersTable extends Table
         ]);
 
         $this->hasMany('CampRoles', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('EmailSends', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Notifications', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_id',
@@ -114,18 +115,16 @@ class UsersTable extends Table
             'cascadeCallbacks' => true,
         ]);
         $this->hasMany('UserContacts', [
-            'foreignKey' => 'user_id'
+            'foreignKey' => 'user_id',
         ]);
     }
 
     /**
-     * @param TableSchema $schema The Schema to be modified
-     *
-     * @return TableSchema|\Cake\Database\Schema\TableSchema
-     *
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
-    protected function _initializeSchema(TableSchema $schema)
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType(User::FIELD_CAPABILITIES, 'json');
 
@@ -138,7 +137,7 @@ class UsersTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(User::FIELD_ID)
@@ -232,21 +231,19 @@ class UsersTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->isUnique(['email']));
         $rules->add($rules->isUnique(['membership_number']));
-        $rules->add($rules->existsIn(['password_state_id'], 'PasswordStates'));
+        $rules->add($rules->existsIn(['user_state_id'], 'UserStates'));
 
         return $rules;
     }
 
     /**
-     * @param User $user UserEntity
-     *
+     * @param \App\Model\Entity\User $user UserEntity
      * @return array
-     *
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
@@ -256,9 +253,9 @@ class UsersTable extends Table
             'contain' => [
                 'Roles' => [
                     'RoleTypes.Capabilities',
-                    'Sections.ScoutGroups'
-                ]
-            ]
+                    'Sections.ScoutGroups',
+                ],
+            ],
         ]);
 
         $permissions = [];
@@ -334,8 +331,7 @@ class UsersTable extends Table
     /**
      * Retrieve User Capabilities
      *
-     * @param User $user The User to have their capabilities Cache Remembered
-     *
+     * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      * @return array
      */
     public function retrieveCapabilities(User $user)
@@ -348,8 +344,7 @@ class UsersTable extends Table
     /**
      * Patch User Capabilities
      *
-     * @param User $user The User to have their capabilities Cache Remembered
-     *
+     * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      * @return \App\Model\Entity\User|bool
      */
     public function patchCapabilities(User $user)
@@ -364,9 +359,8 @@ class UsersTable extends Table
     /**
      * Check for a User Specific Capability
      *
-     * @param User $user The User to be checked
+     * @param \App\Model\Entity\User $user The User to be checked
      * @param string $capability The Capability to be found
-     *
      * @return bool|array
      */
     public function userCapability(User $user, string $capability)
@@ -407,17 +401,15 @@ class UsersTable extends Table
     /**
      * Finder Method for
      *
-     * @param Query $query The Query to be Modified
+     * @param \Cake\ORM\Query $query The Query to be Modified
      * @param array $options The Options passed
-     *
-     * @return Query
-     *
+     * @return \Cake\ORM\Query
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function findAuth(Query $query, array $options)
     {
         $query
-            ->where(['username IS NOT NULL']);
+            ->where([User::FIELD_USERNAME . ' IS NOT NULL']);
 
         return $query;
     }
@@ -426,18 +418,16 @@ class UsersTable extends Table
      * before Save LifeCycle Callback
      *
      * @param \Cake\Event\Event $event The Event to be Processed
-     * @param User $entity The Entity on which the Save is being Called.
+     * @param \App\Model\Entity\User $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave($event, $entity, $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if ($entity->getOriginal('capabilities') != $entity->capabilities) {
             $this->getEventManager()->dispatch(new Event(
-                'Model.User.capabilityChange',
+                'Model.Users.capabilityChange',
                 $this,
                 ['user' => $entity]
             ));
@@ -461,7 +451,7 @@ class UsersTable extends Table
                 'comparison' => 'ILIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => [
+                'fields' => [
                     'first_name',
                     'last_name',
                     'email',
@@ -480,9 +470,7 @@ class UsersTable extends Table
     /**
      * @param string $value The Entity Value to be validated
      * @param array $context The Validation Context
-     *
      * @return bool
-     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function isValidDomainEmail($value, $context)

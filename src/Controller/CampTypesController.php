@@ -1,20 +1,16 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\CampType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * CampTypes Controller
  *
  * @property \App\Model\Table\CampTypesTable $CampTypes
- *
  * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampTypesController extends AppController
 {
-
     /**
      * Index method
      *
@@ -37,7 +33,7 @@ class CampTypesController extends AppController
     public function view($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => ['Camps']
+            'contain' => ['Camps'],
         ]);
 
         $this->set('campType', $campType);
@@ -50,7 +46,7 @@ class CampTypesController extends AppController
      */
     public function add()
     {
-        $campType = $this->CampTypes->newEntity();
+        $campType = $this->CampTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $campType = $this->CampTypes->patchEntity($campType, $this->request->getData());
             if ($this->CampTypes->save($campType)) {
@@ -73,7 +69,7 @@ class CampTypesController extends AppController
     public function edit($id = null)
     {
         $campType = $this->CampTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $campType = $this->CampTypes->patchEntity($campType, $this->request->getData());

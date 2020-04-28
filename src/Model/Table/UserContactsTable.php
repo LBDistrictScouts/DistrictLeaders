@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\UserContact;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -14,21 +14,20 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
  * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- *
- * @method UserContact get($primaryKey, $options = [])
- * @method UserContact newEntity($data = null, array $options = [])
- * @method UserContact[] newEntities(array $data, array $options = [])
- * @method UserContact|false save(EntityInterface $entity, $options = [])
- * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContact[] patchEntities($entities, array $data, array $options = [])
- * @method UserContact findOrCreate($search, callable $callback = null, $options = [])
- *
+ * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContact newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UserContactsTable extends Table
 {
@@ -38,7 +37,7 @@ class UserContactsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -52,13 +51,13 @@ class UserContactsTable extends Table
         $this->addBehavior('Caseable', [
             'case_columns' => [
                 UserContact::FIELD_CONTACT_FIELD => 'l',
-            ]
+            ],
         ]);
 
         $this->addBehavior('Auditable', [
             'tracked_fields' => [
-                UserContact::FIELD_CONTACT_FIELD
-            ]
+                UserContact::FIELD_CONTACT_FIELD,
+            ],
         ]);
 
         $this->hasMany('Audits', [
@@ -68,14 +67,14 @@ class UserContactsTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => UserContact::FIELD_USER_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->belongsTo('UserContactTypes', [
             'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
-            'joinType' => 'INNER'
+            'joinType' => 'INNER',
         ]);
         $this->hasMany('Roles', [
-            'foreignKey' => 'user_contact_id'
+            'foreignKey' => 'user_contact_id',
         ]);
     }
 
@@ -85,7 +84,7 @@ class UserContactsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(UserContact::FIELD_ID)
@@ -140,7 +139,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->existsIn([UserContact::FIELD_USER_ID], 'Users'));
         $rules->add($rules->existsIn([UserContact::FIELD_USER_CONTACT_TYPE_ID], 'UserContactTypes'));
@@ -153,7 +152,6 @@ class UserContactsTable extends Table
     /**
      * @param string $value The Entity Value to be validated
      * @param array $context The Validation Context
-     *
      * @return bool
      */
     public function isValidDomainEmail($value, $context)

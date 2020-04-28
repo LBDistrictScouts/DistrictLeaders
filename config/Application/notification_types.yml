@@ -1,0 +1,76 @@
+notificationTypes:
+    -
+        notification_type: Generic
+        notification_description: 'Generic Notification.'
+        icon: fa-envelope
+        type_code: GEN-NOT
+    -
+        notification_type: Welcome
+        notification_description: 'Welcome to the System Email & Notification.'
+        icon: fa-user
+        type_code: USR-NEW
+    -
+        notification_type: 'Password Reset'
+        notification_description: 'A password reset password has been triggered.'
+        icon: fa-unlock
+        type_code: USR-PWD
+    -
+        notification_type: 'Capabilities Change'
+        notification_description: 'Permissions / capabilities in the system have changed.'
+        icon: fa-key
+        type_code: USR-CCH
+    -
+        notification_type: 'New Role Added'
+        notification_description: 'A new role has been added in the system.'
+        icon: fa-hierarchy
+        type_code: ROL-NEW
+    -
+        notification_type: 'New Payment Received'
+        notification_description: 'Notification that a payment has been recorded by an administrator.'
+        icon: fa-receipt
+        type_code: INV-PAY
+    -
+        notification_type: 'Surcharge Added'
+        notification_description: 'A Payment Surcharge was added to the Invoice.'
+        icon: fa-tag
+        type_code: INV-SUR
+    -
+        notification_type: 'Outstanding Balance'
+        notification_description: 'Balance Outstanding on Invoice'
+        icon: fa-clock
+        type_code: INV-OUT
+    -
+        notification_type: 'Invoice Attached'
+        notification_description: 'Invoice is attached to the email.'
+        icon: fa-paperclip
+        type_code: INV-ATC
+    -
+        notification_type: 'Deposit Outstanding'
+        notification_description: 'Notification of an Invoice where the deposit is past due.'
+        icon: fa-clock
+        type_code: INV-DEP
+fileTypes:
+    -
+        file_type: Word
+        file_extension: docx
+        mime: application/docx
+    -
+        file_type: 'Scalable Vector Graphic'
+        file_extension: svg
+        mime: image/svg+xml
+    -
+        file_type: PDF
+        file_extension: pdf
+        mime: application/pdf
+    -
+        file_type: 'Old Word'
+        file_extension: doc
+        mime: application/doc
+    -
+        file_type: 'Comma Separated Value'
+        file_extension: csv
+        mime: application/csv
+    -
+        file_type: Markdown
+        file_extension: md
+        mime: text/markdown

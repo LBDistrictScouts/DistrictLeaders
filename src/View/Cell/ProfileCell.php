@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\View\Cell;
 
 use Cake\View\Cell;
@@ -23,7 +25,7 @@ class ProfileCell extends Cell
      *
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
     }
 
@@ -31,16 +33,14 @@ class ProfileCell extends Cell
      * Default display method.
      *
      * @param int $loggedInUserId The Id of the Authenticated User
-     *
      * @return void
      */
     public function display($loggedInUserId)
     {
-        $this->loadModel('Users');
-
-        $name = $this->Users->get($loggedInUserId)->full_name;
-        $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
-
-        $this->set(compact('capabilities', 'loggedInUserId', 'name'));
+        if (is_integer($loggedInUserId)) {
+            $this->loadModel('Users');
+            $name = $this->Users->get($loggedInUserId)->full_name;
+            $this->set(compact('name'));
+        }
     }
 }

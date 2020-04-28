@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
 use App\Model\Entity\RoleType;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
-use Cake\Datasource\EntityInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -15,15 +15,15 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
- *
- * @method SectionType get($primaryKey, $options = [])
- * @method SectionType newEntity($data = null, array $options = [])
- * @method SectionType[] newEntities(array $data, array $options = [])
- * @method SectionType|false save(EntityInterface $entity, $options = [])
- * @method SectionType saveOrFail(EntityInterface $entity, $options = [])
- * @method SectionType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method SectionType[] patchEntities($entities, array $data, array $options = [])
- * @method SectionType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class SectionTypesTable extends Table
 {
@@ -33,7 +33,7 @@ class SectionTypesTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 
@@ -42,10 +42,10 @@ class SectionTypesTable extends Table
         $this->setPrimaryKey(SectionType::FIELD_ID);
 
         $this->hasMany('RoleTypes', [
-            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID
+            'foreignKey' => RoleType::FIELD_SECTION_TYPE_ID,
         ]);
         $this->hasMany('Sections', [
-            'foreignKey' => Section::FIELD_SECTION_TYPE_ID
+            'foreignKey' => Section::FIELD_SECTION_TYPE_ID,
         ]);
     }
 
@@ -55,7 +55,7 @@ class SectionTypesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(SectionType::FIELD_ID)
@@ -78,7 +78,7 @@ class SectionTypesTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
+    public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique([SectionType::FIELD_SECTION_TYPE]));
 

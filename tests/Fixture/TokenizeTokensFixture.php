@@ -5,11 +5,9 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 /**
  * TokenizeTokensFixture
- *
  */
 class TokenizeTokensFixture extends TestFixture
 {
-
     /**
      * Fields
      *
@@ -43,7 +41,7 @@ class TokenizeTokensFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -55,7 +53,7 @@ class TokenizeTokensFixture extends TestFixture
                 'status' => 1,
                 'expired' => 1547918030,
                 'created' => 1547918030,
-                'modified' => 1547918030
+                'modified' => 1547918030,
             ],
         ];
         parent::init();

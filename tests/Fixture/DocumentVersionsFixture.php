@@ -33,7 +33,7 @@ class DocumentVersionsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -41,7 +41,7 @@ class DocumentVersionsFixture extends TestFixture
                 'created' => 1572792442,
                 'modified' => 1572792442,
                 'deleted' => null,
-                'version_number' => 1
+                'version_number' => 1,
             ],
         ];
         parent::init();

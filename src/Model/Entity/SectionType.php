@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -14,7 +16,6 @@ use Cake\ORM\Entity;
  */
 class SectionType extends Entity
 {
-
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -27,7 +28,7 @@ class SectionType extends Entity
     protected $_accessible = [
         'section_type' => true,
         'role_types' => true,
-        'sections' => true
+        'sections' => true,
     ];
 
     public const FIELD_ID = 'id';

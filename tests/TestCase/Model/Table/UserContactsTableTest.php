@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\UserContact;
@@ -6,7 +8,6 @@ use App\Model\Table\UserContactsTable;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\UserContactsTable Test Case
@@ -28,7 +29,7 @@ class UserContactsTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -49,7 +50,7 @@ class UserContactsTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('UserContacts') ? [] : ['className' => UserContactsTable::class];
@@ -64,7 +65,7 @@ class UserContactsTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->UserContacts);
 
@@ -75,7 +76,6 @@ class UserContactsTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -138,7 +138,7 @@ class UserContactsTableTest extends TestCase
         $this->validateNotEmpties($notEmpties, $this->UserContacts, [$this, 'getGood']);
 
         $maxLengths = [
-            UserContact::FIELD_CONTACT_FIELD => '64',
+            UserContact::FIELD_CONTACT_FIELD => 64,
         ];
         $this->validateMaxLengths($maxLengths, $this->UserContacts, [$this, 'getGood']);
     }
@@ -180,7 +180,11 @@ class UserContactsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $this->validateUniqueRule(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood']);
+        $this->validateUniqueRule(
+            [UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD],
+            $this->UserContacts,
+            [$this, 'getGood']
+        );
 
         // User Contact Type Exists
         $this->validateExistsRule(UserContact::FIELD_USER_CONTACT_TYPE_ID, $this->UserContacts, $this->UserContacts->UserContactTypes, [$this, 'getGood']);
@@ -197,7 +201,6 @@ class UserContactsTableTest extends TestCase
     public function testIsValidDomainEmail()
     {
         TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com', []));
-
         TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk', []));
     }
 }

@@ -43,7 +43,7 @@ class NotificationsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -59,7 +59,7 @@ class NotificationsFixture extends TestFixture
                 'link_controller' => 'Invoices',
                 'link_prefix' => null,
                 'link_action' => 'view',
-                'deleted' => null
+                'deleted' => null,
             ],
         ];
         parent::init();

@@ -1,4 +1,5 @@
 <?php
+
 use Migrations\AbstractMigration;
 
 class UserContacts extends AbstractMigration
@@ -8,6 +9,7 @@ class UserContacts extends AbstractMigration
      *
      * More information on this method is available here:
      * http://docs.phinx.org/en/latest/migrations.html#the-change-method
+     *
      * @return void
      */
     public function change()
@@ -32,7 +34,7 @@ class UserContacts extends AbstractMigration
             ])
             ->addForeignKey('user_id', 'users', ['id'], [
                 'delete' => 'CASCADE',
-                'update' => 'CASCADE'
+                'update' => 'CASCADE',
             ])
             ->addColumn('user_contact_type_id', 'integer', [
                 'null' => false,

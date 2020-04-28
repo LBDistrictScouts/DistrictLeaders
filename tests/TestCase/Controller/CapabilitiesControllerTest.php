@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\CapabilitiesController;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -19,7 +20,7 @@ class CapabilitiesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -33,6 +34,12 @@ class CapabilitiesControllerTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**
@@ -46,7 +53,7 @@ class CapabilitiesControllerTest extends TestCase
     private $validEntityData = [
         'capability_code' => 'TEST_NEW',
         'capability' => 'My Test Permissions',
-        'min_level' => 5 // Config Level
+        'min_level' => 5, // Config Level
     ];
 
     /**
@@ -81,7 +88,15 @@ class CapabilitiesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            7
+            7,
+            [
+                'controller' => $this->controller,
+                'action' => 'edit',
+                7,
+                '?' => [
+                    'roleTypes' => 1,
+                ],
+            ]
         );
     }
 
@@ -111,7 +126,15 @@ class CapabilitiesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            7
+            7,
+            [
+                'controller' => $this->controller,
+                'action' => 'edit',
+                7,
+                '?' => [
+                    'roleTypes' => 1,
+                ],
+            ]
         );
     }
 }

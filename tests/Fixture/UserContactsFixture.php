@@ -35,7 +35,7 @@ class UserContactsFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
@@ -45,7 +45,7 @@ class UserContactsFixture extends TestFixture
                 'created' => 1564337533,
                 'modified' => 1564337533,
                 'verified' => 1,
-                'deleted' => null
+                'deleted' => null,
             ],
             [
                 'contact_field' => 'james@goat.com',
@@ -54,7 +54,7 @@ class UserContactsFixture extends TestFixture
                 'created' => 1564337533,
                 'modified' => 1564337533,
                 'verified' => false,
-                'deleted' => null
+                'deleted' => null,
             ],
         ];
         parent::init();

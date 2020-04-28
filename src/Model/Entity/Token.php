@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -20,7 +22,6 @@ use Cake\ORM\Entity;
  * @property array|null $token_header
  *
  * @property \App\Model\Entity\EmailSend $email_send
- *
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Token extends Entity
@@ -46,7 +47,7 @@ class Token extends Entity
         'hash' => true,
         'random_number' => true,
         'token_header' => true,
-        'email_send' => true
+        'email_send' => true,
     ];
 
     /**
@@ -55,7 +56,7 @@ class Token extends Entity
      * @var array
      */
     protected $_hidden = [
-        'hash', 'token'
+        'hash', 'token',
     ];
 
     public const FIELD_ID = 'id';

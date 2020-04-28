@@ -1,15 +1,12 @@
 <?php
-namespace App\Controller;
+declare(strict_types=1);
 
-use App\Controller\AppController;
-use App\Model\Entity\NotificationType;
-use Cake\Datasource\ResultSetInterface;
+namespace App\Controller;
 
 /**
  * NotificationTypes Controller
  *
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
- *
  * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationTypesController extends AppController
@@ -36,7 +33,7 @@ class NotificationTypesController extends AppController
     public function view($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => ['Notifications']
+            'contain' => ['Notifications'],
         ]);
 
         $this->set('notificationType', $notificationType);
@@ -49,7 +46,7 @@ class NotificationTypesController extends AppController
      */
     public function add()
     {
-        $notificationType = $this->NotificationTypes->newEntity();
+        $notificationType = $this->NotificationTypes->newEmptyEntity();
         if ($this->request->is('post')) {
             $notificationType = $this->NotificationTypes->patchEntity($notificationType, $this->request->getData());
             if ($this->NotificationTypes->save($notificationType)) {
@@ -72,7 +69,7 @@ class NotificationTypesController extends AppController
     public function edit($id = null)
     {
         $notificationType = $this->NotificationTypes->get($id, [
-            'contain' => []
+            'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notificationType = $this->NotificationTypes->patchEntity($notificationType, $this->request->getData());

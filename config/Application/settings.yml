@@ -1,0 +1,4 @@
+Passwordable:
+    field: password
+    confirm: true
+    require: true

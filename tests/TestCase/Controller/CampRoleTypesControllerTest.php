@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Controller;
 
 use Cake\TestSuite\TestCase;
@@ -18,7 +20,7 @@ class CampRoleTypesControllerTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -36,6 +38,8 @@ class CampRoleTypesControllerTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
     ];
 
     /**
@@ -75,7 +79,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             [
-                'camp_role_type' => 'Camp Leader'
+                'camp_role_type' => 'Camp Leader',
             ],
             2
         );
@@ -93,7 +97,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryEditPost(
             $this->controller,
             [
-                'camp_role_type' => 'First Aider'
+                'camp_role_type' => 'First Aider',
             ],
             1
         );
@@ -109,7 +113,7 @@ class CampRoleTypesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             [
-                'camp_role_type' => 'Cook'
+                'camp_role_type' => 'Cook',
             ],
             2
         );

@@ -29,13 +29,13 @@ class RoleTemplatesFixture extends TestFixture
      *
      * @return void
      */
-    public function init()
+    public function init(): void
     {
         $this->records = [
             [
                 'role_template' => 'Lorem ipsum dolor sit amet',
                 'template_capabilities' => '',
-                'indicative_level' => 1
+                'indicative_level' => 1,
             ],
         ];
         parent::init();

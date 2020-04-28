@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\Token;
@@ -26,7 +28,7 @@ class TokensTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.PasswordStates',
+        'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
         'app.Capabilities',
@@ -57,7 +59,7 @@ class TokensTableTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('Tokens') ? [] : ['className' => TokensTable::class];
@@ -72,7 +74,7 @@ class TokensTableTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->Tokens);
 
@@ -83,7 +85,6 @@ class TokensTableTest extends TestCase
      * Get Good Entity Data
      *
      * @return array
-     *
      * @throws
      */
     private function getGood()
@@ -98,10 +99,10 @@ class TokensTableTest extends TestCase
                     'controller' => 'Applications',
                     'action' => 'view',
                     'prefix' => false,
-                    1
+                    1,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
     }
 
@@ -140,10 +141,10 @@ class TokensTableTest extends TestCase
                     'controller' => 'Applications',
                     'action' => 'view',
                     'prefix' => false,
-                    1
+                    1,
                 ],
                 'authenticate' => false,
-            ]
+            ],
         ];
         TestCase::assertEquals($expected, $actual);
 
@@ -281,7 +282,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $expected = [
@@ -295,7 +296,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $goodEntity = $this->Tokens->newEntity($goodData);
@@ -308,7 +309,7 @@ class TokensTableTest extends TestCase
                 'email_send_id',
                 'active',
                 'token_header',
-            ]
+            ],
         ]);
 
         $result = $query->toArray();
@@ -318,8 +319,8 @@ class TokensTableTest extends TestCase
         $query = $this->Tokens->get(2, [
             'fields' => [
                 'random_number',
-                'active'
-            ]
+                'active',
+            ],
         ]);
 
         $result = $query->toArray();
@@ -344,7 +345,7 @@ class TokensTableTest extends TestCase
                     'prefix' => false,
                 ],
                 'authenticate' => true,
-            ]
+            ],
         ];
 
         $expected = [
@@ -362,7 +363,7 @@ class TokensTableTest extends TestCase
                 'id',
                 'email_send_id',
                 'active',
-            ]
+            ],
         ]);
 
         $result = $query->toArray();
@@ -372,8 +373,8 @@ class TokensTableTest extends TestCase
         $query = $this->Tokens->get(2, [
             'fields' => [
                 'random_number',
-                'active'
-            ]
+                'active',
+            ],
         ]);
 
         $result = $query->toArray();
