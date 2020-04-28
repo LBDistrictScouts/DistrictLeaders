@@ -63,6 +63,10 @@ class Capability extends Entity
      */
     protected function _getCrudFunction()
     {
+        if (is_null($this->capability_code)) {
+            return 'EMPTY';
+        }
+
         if ($this->specialCode()) {
             return 'SPECIAL';
         }
@@ -77,6 +81,10 @@ class Capability extends Entity
      */
     protected function _getApplicableModel()
     {
+        if (is_null($this->capability_code)) {
+            return 'EMPTY';
+        }
+
         if ($this->specialCode()) {
             return 'SPECIAL';
         }

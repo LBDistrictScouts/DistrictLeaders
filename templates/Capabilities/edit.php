@@ -32,6 +32,6 @@ $this->assign('entity', 'Capabilities');
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($capability::FIELD_MIN_LEVEL) : '';
 
         /** @var array $roleTypes The RoleTypes List */
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('role_types._ids', ['options' => $roleTypes]) : '';
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('role_types._ids', ['options' => $roleTypes, 'multiple' => 'checkbox']) : '';
         ?>
 </fieldset>

@@ -89,19 +89,11 @@ class CapabilitiesController extends AppController
             if ($this->Capabilities->save($capability)) {
                 $this->Flash->success(__('The capability has been saved.'));
 
-                return $this->redirect(['action' => 'view', $capability->get('id')]);
+                return $this->redirect(['action' => 'edit', $capability->get('id'), '?' => ['roleTypes' => true]]);
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
-        $roleTypes = $this->Capabilities->RoleTypes->find('list', [
-            'conditions' => [
-                'level >=' => $capability->min_level,
-            ],
-            'keyField' => 'id',
-            'valueField' => 'role_abbreviation',
-            'groupField' => 'level',
-        ]);
-        $this->set(compact('capability', 'roleTypes'));
+        $this->set(compact('capability'));
     }
 
     /**
@@ -125,13 +117,14 @@ class CapabilitiesController extends AppController
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
+        $this->set('levelSet', $this->getRequest()->getQueryParams()['roleTypes']);
         $roleTypes = $this->Capabilities->RoleTypes->find('list', [
             'conditions' => [
                 'level >=' => $capability->min_level,
             ],
             'keyField' => 'id',
             'valueField' => 'role_abbreviation',
-            'groupField' => 'level',
+//            'groupField' => 'level',
         ]);
         $this->set(compact('capability', 'roleTypes'));
     }

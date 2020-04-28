@@ -216,6 +216,10 @@ class CapBuilder
      */
     public static function isFieldType($capability)
     {
+        if (is_null($capability)) {
+            return false;
+        }
+
         return (bool)(substr($capability, 0, 5) == strtoupper(static::$fieldPrefix));
     }
 
@@ -319,6 +323,10 @@ class CapBuilder
      */
     public static function isSpecialCode($capabilityCode)
     {
+        if (is_null($capabilityCode)) {
+            return false;
+        }
+
         foreach (Configure::read('baseCapabilities') as $cap) {
             if ($capabilityCode == $cap[Capability::FIELD_CAPABILITY_CODE]) {
                 return true;

@@ -88,7 +88,15 @@ class CapabilitiesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            7
+            7,
+            [
+                'controller' => $this->controller,
+                'action' => 'edit',
+                7,
+                '?' => [
+                    'roleTypes' => 1,
+                ],
+            ]
         );
     }
 
@@ -118,7 +126,15 @@ class CapabilitiesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            7
+            7,
+            [
+                'controller' => $this->controller,
+                'action' => 'edit',
+                7,
+                '?' => [
+                    'roleTypes' => 1,
+                ],
+            ]
         );
     }
 }
