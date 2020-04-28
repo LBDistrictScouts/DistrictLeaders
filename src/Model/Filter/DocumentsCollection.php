@@ -11,6 +11,7 @@ class DocumentsCollection extends FilterCollection
 {
     /**
      * {@inheritDoc}
+     *
      * Startup Method
      *
      * @return void
