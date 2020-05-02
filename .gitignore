@@ -1,12 +1,20 @@
 # CakePHP specific files #
 ##########################
 /config/app.php
-/config/app4.php
-/config/app3.php
+/config/app.test.php
+/config/app.prod.php
 
 /config/app_db.php
+/config/app_db.test.php
+/config/app_db.prod.php
+
 /config/app_file.php
+/config/app_file.test.php
+/config/app_file.prod.php
+
 /config/app_queue.php
+/config/app_queue.test.php
+/config/app_queue.prod.php
 
 /config/.env
 /config/token.json
