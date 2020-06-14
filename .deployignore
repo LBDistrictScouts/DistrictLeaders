@@ -18,8 +18,3 @@ config/Migrations/schema-dump-default.lock
 config/app.travis.php
 config/app_db.travis.php
 config/app_file.travis.php
-
-replacements.yml
-gulpfile.js
-environment.yml
-yarn.lock
