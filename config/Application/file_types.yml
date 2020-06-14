@@ -8,6 +8,10 @@ fileTypes:
         file_extension: svg
         mime: image/svg+xml
     -
+        file_type: 'JPEG Image'
+        file_extension: jpeg
+        mime: image/jpeg
+    -
         file_type: PDF
         file_extension: pdf
         mime: application/pdf
@@ -23,3 +27,7 @@ fileTypes:
         file_type: Markdown
         file_extension: md
         mime: text/markdown
+    -
+        file_type: 'PNG Image'
+        file_extension: png
+        mime: image/png

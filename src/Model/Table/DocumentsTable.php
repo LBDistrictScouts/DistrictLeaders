@@ -7,12 +7,15 @@ use App\Model\Entity\Document;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
+use Josbeir\Filesystem\Exception\FilesystemException;
 use Josbeir\Filesystem\FilesystemAwareTrait;
+use League\Flysystem\FileNotFoundException;
 
 /**
  * Documents Model
@@ -116,27 +119,41 @@ class DocumentsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     * @param \App\Model\Entity\Document $documentEntity The Document Entity
+     * @param \Cake\Datasource\EntityInterface $documentEntity The Document Entity
      * @param string $fileSystem The configured Filesystem Name
-     * @return \Cake\Datasource\EntityInterface|bool
+     * @return \Cake\Datasource\EntityInterface|void
      */
-    public function uploadDocument($postData, $documentEntity, $fileSystem = 'default')
-    {
+    public function uploadDocument(
+        array $postData,
+        EntityInterface $documentEntity,
+        string $fileSystem = 'default'
+    ): ?EntityInterface {
         if (!key_exists('uploadedFile', $postData)) {
-            return false;
+            return null;
         }
 
-        /** @var \Cake\Datasource\EntityInterface $fileEntity */
-        $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
 
-        $mime = $postData['uploadedFile']['type'] ?? $fileEntity->get(FileType::FIELD_MIME);
+        try {
+            /** @var \Cake\Datasource\EntityInterface $fileEntity */
+            $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
+        } catch (FilesystemException $e) {
+            return null;
+        } catch (FileNotFoundException $e) {
+            return null;
+        }
+        debug($fileSystem);
+        debug($fileEntity);
+        debug($postData);
+
+        $mime = $fileEntity->get(FileType::FIELD_MIME);
+        debug($mime);
 
         try {
             $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
                 FileType::FIELD_MIME => $mime,
             ])->firstOrFail();
         } catch (RecordNotFoundException $exception) {
-            return false;
+            return null;
         }
 
         $documentName = explode('.', $fileEntity->get(DocumentEdition::FIELD_FILENAME))[0];
@@ -167,6 +184,7 @@ class DocumentsTable extends Table
             ],
         ]);
 
+        debug($document);
         return $this->save($document);
     }
 }

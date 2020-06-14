@@ -2,52 +2,46 @@
 
 use Aws\S3\S3Client;
 
-$client = S3Client::factory([
+$client = new S3Client([
     'credentials' => [
-        'key' => 'your-key-here',
-        'secret' => 'your-secret-key-here',
+        'key' => '<<AWS_API_KEY>>',
+        'secret' => '<<AWS_SECRET_KEY>>',
     ],
-    'region' => 'your-region-here',
+    'region' => '<<AWS_REGION>>',
     'version' => 'latest',
 ]);
 
 return [
     'Filesystem' => [
         'default' => [
-            'adapter' => 'Local', // default
-            'adapterArguments' => [ WWW_ROOT . 'files' ],
-            'normalizer' => [
-                'hashingAlgo' => 'sha1',
-            ],
-        ],
-        'other' => [
-            'adapter' => 'Local',
-            'adapterArguments' => [ WWW_ROOT . 'cache' ],
-            'entityClass' => '\My\Cool\EntityClass',
-            'formatter' => '\My\Cool\Formatter',
-            'normalizer' => [
-                'hashingAlgo' => 'sha1',
-            ],
-        ],
-        's3' => [
             'adapter' => '\League\Flysystem\AwsS3v3\AwsS3Adapter',
             'adapterArguments' => [
                 $client,
-                'your-bucket-name',
+                '<<S3_BUCKET_NAME>>',
             ],
             'normalizer' => [
                 'hashingAlgo' => 'sha1',
             ],
+            'entityClass' => 'App\Model\Entity\DocumentEdition',
+        ],
+        'local' => [
+            'adapter' => 'Local',
+            'adapterArguments' => [ WWW_ROOT . 'files' ],
+            'entityClass' => 'App\Model\Entity\DocumentEdition',
+        ],
+        'cache' => [
+            'adapter' => 'Local',
+            'adapterArguments' => [ WWW_ROOT . 'cached' ],
         ],
     ],
 
     'CloudConvert' => [
-        'api_key' => '__INSERT_CLOUD_CONVERT_API_KEY_HERE__',
+        'api_key' => '<<CLOUD_CONVERT_API_KEY>>',
         's3' => [
-            'key' => '__INSERT_CC_S3_IAM_KEY__',
-            'secret' => '__INSERT_CC_S3_IAM_SECRET__',
-            'region' => 'eu-west-1',
-            'bucket' => '__INSERT_BUCKET_ADDRESS_HERE__',
+            'key' => '<<AWS_API_KEY>>',
+            'secret' => '<<AWS_SECRET_KEY>>',
+            'region' => '<<AWS_REGION>>',
+            'bucket' => '<<S3_BUCKET_NAME>>',
         ],
     ],
 ];

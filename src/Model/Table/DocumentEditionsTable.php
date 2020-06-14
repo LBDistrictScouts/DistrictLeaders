@@ -9,7 +9,9 @@ use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Josbeir\Filesystem\Exception\FilesystemException;
 use Josbeir\Filesystem\FilesystemAwareTrait;
+use League\Flysystem\FileNotFoundException;
 
 /**
  * DocumentEditions Model
@@ -128,12 +130,22 @@ class DocumentEditionsTable extends Table
      */
     public function uploadDocument($postData)
     {
+        debug($postData);
         if (!key_exists('uploadedFile', $postData)) {
             return false;
         }
 
         /** @var \Cake\Datasource\EntityInterface $fileEntity */
-        $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
+        try {
+            $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
+        } catch (FilesystemException $e) {
+            debug('filesys');
+            debug($e);
+            return false;
+        } catch (FileNotFoundException $e) {
+            debug('not found');
+            return false;
+        }
 
         try {
             $fileType = $this->FileTypes

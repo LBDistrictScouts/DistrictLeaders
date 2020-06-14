@@ -6,8 +6,10 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentEditionsTable;
+use Cake\Core\Configure;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
+use League\Flysystem\Adapter\Local;
 
 /**
  * App\Model\Table\DocumentEditionsTable Test Case
@@ -24,6 +26,16 @@ class DocumentEditionsTableTest extends TestCase
     public $DocumentEditions;
 
     /**
+     * @var Local
+     */
+    protected $Adapter;
+
+    /**
+     * @var string
+     */
+    protected $Root;
+
+    /**
      * Fixtures
      *
      * @var array
@@ -36,6 +48,23 @@ class DocumentEditionsTableTest extends TestCase
         'app.DocumentEditions',
     ];
 
+    private $fileSystemTestConfig = [
+        'default' => [
+            'adapter' => 'Local',
+            'adapterArguments' => [ TMP . 'files' ],
+            'entityClass' => 'App\Model\Entity\DocumentEdition',
+        ],
+        'local' => [
+            'adapter' => 'Local',
+            'adapterArguments' => [ TMP . 'files' ],
+            'entityClass' => 'App\Model\Entity\DocumentEdition',
+        ],
+        'cache' => [
+            'adapter' => 'Local',
+            'adapterArguments' => [ TMP . 'cached' ],
+        ],
+    ];
+
     /**
      * setUp method
      *
@@ -46,6 +75,11 @@ class DocumentEditionsTableTest extends TestCase
         parent::setUp();
         $config = TableRegistry::getTableLocator()->exists('DocumentEditions') ? [] : ['className' => DocumentEditionsTable::class];
         $this->DocumentEditions = TableRegistry::getTableLocator()->get('DocumentEditions', $config);
+
+        Configure::write('Filesystem', $this->fileSystemTestConfig);
+
+        $this->Root = __DIR__ . '/files/';
+        $this->Adapter = new Local($this->Root);
     }
 
     /**
@@ -56,6 +90,22 @@ class DocumentEditionsTableTest extends TestCase
     public function tearDown(): void
     {
         unset($this->DocumentEditions);
+
+        $it = new \RecursiveDirectoryIterator($this->Root, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $files = new \RecursiveIteratorIterator(
+            $it,
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($files as $file) {
+            if ($file->getFilename() === '.' || $file->getFilename() === '..') {
+                continue;
+            }
+            if ($file->isDir()) {
+                rmdir($file->getRealPath());
+            } else {
+                unlink($file->getPathname());
+            }
+        }
 
         parent::tearDown();
     }
@@ -177,16 +227,21 @@ class DocumentEditionsTableTest extends TestCase
     {
         TestCase::markTestIncomplete();
         $entityData = [
-            'path' => 'Group_Camp_2020_Poster.pdf',
-            'filename' => 'Group_Camp_2020_Poster.pdf',
-            'size' => 1477920,
-            'mime' => 'application/pdf',
-            'hash' => '8f9ae3cb199ea95cc4f2594cd4fd6033',
+            'uploadedFile' => [
+                'path' => TESTS . 'dummy.png',
+                'filename' => 'dummy.png',
+                'size' => 59992,
+                'mime' => 'image/png',
+                'hash' => '2164a354104c1c01c26a17dce1de7b2ee01d30ac',
+            ],
         ];
 
-        $entityClass = $this->DocumentEditions->getEntityClass();
-        $entity = new $entityClass($entityData);
+//        TestCase::
 
-        debug($entity);
+
+        $return = $this->DocumentEditions->uploadDocument($entityData);
+        debug($return);
+
+        TestCase::assertInstanceOf(DocumentEdition::class, $return);
     }
 }

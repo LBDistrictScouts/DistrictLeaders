@@ -75,6 +75,11 @@ class PasswordCommand extends Command
             $user = $this->Users->newEntity($adminUser);
 
             if (!$this->Users->save($user)) {
+                foreach (array_values($user->getErrors()) as $error) {
+                    foreach ($error as $message) {
+                        $io->warning($message);
+                    }
+                }
                 $io->error('User could not be saved.');
                 $this->abort();
             }

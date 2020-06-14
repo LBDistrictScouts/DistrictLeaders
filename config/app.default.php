@@ -9,7 +9,7 @@ return [
      * Development Mode:
      * true: Errors and warnings shown.
      */
-    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /**
      * Configure basic information about the application.
@@ -59,8 +59,8 @@ return [
             'locales' => [RESOURCES . 'locales' . DS],
         ],
         'who' => [
-            'system' => '',
-            'email' => 'webmaster@goat.org.uk',
+            'system' => '<<SYSTEM_NAME>>',
+            'email' => '<<WEBMASTER_EMAIL>>',
         ],
     ],
 
@@ -72,8 +72,8 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
-        'cookieKey' => env('COOKIE_SALT', '__COOKIE_SALT__'),
+        'salt' => env('SECURITY_SALT', '<<SALT>>'),
+        'cookieKey' => env('COOKIE_SALT', '<<COOKIE_SALT>>'),
     ],
 
     /**
@@ -105,12 +105,12 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          * If you set 'className' => 'Null' core cache will be disabled.
          */
-        'redis', [
+        'redis' => [
             'className' => 'Redis',
             'duration' => '+1 hours',
             'prefix' => 'cake_redis_',
-            'host' => '127.0.0.1',
-            'port' => 6379,
+            'host' => '<<REDIS_HOST>>',
+            'port' => '<<REDIS_PORT>>',
             'fallback' => 'default',
         ],
 
@@ -235,18 +235,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Cake\Mailer\Transport\MailTransport',
-            /*
-             * The following keys are used in SMTP transports:
-             */
-            'host' => 'localhost',
-            'port' => 25,
-            'timeout' => 30,
-            'username' => null,
-            'password' => null,
-            'client' => null,
-            'tls' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'className' => 'SparkPost',
         ],
     ],
 
@@ -262,7 +251,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            'from' => '<<FROM_ADDRESS>>',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
@@ -377,16 +366,16 @@ return [
 
     'SparkPost' => [
         'Api' => [
-            'key' => '__API_KEY__',
+            'key' => '<<SPARKPOST_API_KEY>>',
         ],
     ],
 
     'defaultAdmin' => [
-        'username' => 'admin',
-        'email' => 'webmaster@4thgoat.org.uk',
-        'first_name' => 'Admin',
-        'last_name' => 'MrFace',
-        'membership_number' => 000123,
-        'postcode' => 'POS COD',
+        'username' => '<<DEFAULT_USER_USERNAME>>',
+        'email' => '<<DEFAULT_USER_EMAIL>>',
+        'first_name' => '<<DEFAULT_USER_FIRST_NAME>>',
+        'last_name' => '<<DEFAULT_USER_LAST_NAME>>',
+        'membership_number' => '<<DEFAULT_USER_MEMBERSHIP>>',
+        'postcode' => '<<DEFAULT_USER_POSTCODE>>',
     ],
 ];

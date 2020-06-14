@@ -127,14 +127,13 @@
                 <?php if (!empty($nonUserCapabilities)) : ?>
                     <?php foreach ($nonUserCapabilities as $capabilityMatrixArray) : ?>
                         <?php $entity = $capabilityMatrixArray['object']; ?>
+                        <?php /** @var \App\Model\Entity\Section|\App\Model\Entity\ScoutGroup  $entity */ ?>
                         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="card-header">
                                 <?php if ($entity instanceof \App\Model\Entity\Section) : ?>
-                                                                                                                            /** @var \App\Model\Entity\Section $entity */ ?>
                                     <h3>Section: <?= $this->Html->link($entity->section, ['controller' => 'Sections', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
                                 <?php if ($entity instanceof \App\Model\Entity\ScoutGroup) : ?>
-                                                                                                                               /** @var \App\Model\Entity\ScoutGroup $entity */ ?>
                                     <h3>Scout Group: <?= $this->Html->link($entity->scout_group, ['controller' => 'ScoutGroups', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
                             </div>

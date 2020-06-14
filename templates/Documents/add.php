@@ -14,6 +14,6 @@ $this->assign('entity', 'Documents');
 <fieldset>
     <?php
         echo $this->Form->control('uploadedFile', ['type' => 'file']);
-        echo $this->Form->control($document::FIELD_DOCUMENT_TYPE_ID, ['options' => $documentTypes]);
+        echo $this->Form->control('document_type_id', ['options' => $documentTypes]);
     ?>
 </fieldset>
