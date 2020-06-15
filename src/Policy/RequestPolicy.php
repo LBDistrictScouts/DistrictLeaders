@@ -21,6 +21,9 @@ class RequestPolicy implements RequestPolicyInterface
      * @param \App\Model\Entity\User|null $identity The Identity
      * @param \Cake\Http\ServerRequest $request Server Request
      * @return null|\Authorization\Policy\Result
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function canAccess($identity, ServerRequest $request): ?Result
     {

@@ -73,5 +73,7 @@ class UsersPolicy implements BeforePolicyInterface
         if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true);
         }
+
+        return new Result(false, 'Cannot View Users');
     }
 }
