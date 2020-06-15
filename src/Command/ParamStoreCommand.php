@@ -27,8 +27,6 @@ class ParamStoreCommand extends Command
 
     protected $configFile = 'config_keys';
 
-    protected $defaultConfig = 'default_keys';
-
     protected $outputFile = 'Environment' . DS . 'app_parameters';
 
     protected $configEngine = 'yaml';
@@ -71,6 +69,16 @@ class ParamStoreCommand extends Command
             ->addOption('Remove', [
                 'short' => 'r',
                 'help' => 'Remove Parameters from App Config',
+                'boolean' => true,
+            ])
+            ->addOption('Get', [
+                'short' => 'g',
+                'help' => 'Get App Config from Remote',
+                'boolean' => true,
+            ])
+            ->addOption('Info', [
+                'short' => 'i',
+                'help' => 'Output Environment Info',
                 'boolean' => true,
             ])
             ->addOption('Setup', [
@@ -272,33 +280,56 @@ class ParamStoreCommand extends Command
     }
 
     /**
+     * @param \Cake\Console\ConsoleIo $consoleIo
+     *
+     * @return void
+     */
+    protected function echoInfo(ConsoleIo $consoleIo)
+    {
+        $indent = '     ';
+
+        $consoleIo->out('Environment');
+        $consoleIo->warning($indent . 'Root Path: ' .  $this->pathRoot);
+        $consoleIo->warning($indent . 'Application: ' . Configure::read('App.app_ref'));
+        $consoleIo->warning($indent . 'Environment: ' . Configure::read('environment'));
+
+        $consoleIo->out('Active Config Keys:');
+        foreach ($this->getList() as $listKey){
+            $consoleIo->warning($indent . $listKey);
+        }
+    }
+
+    /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
-        if ($args->getOption('Write')) {
-            $count = $this->writeParameters();
-            $io->info('Wrote ' . $count . ' Parameters');
+        if ($args->getOption('Info')) {
+            $this->echoInfo($consoleIo);
         }
 
-        if (!$args->getOption('Write') && !$args->getOption('setup')) {
+        if ($args->getOption('Write')) {
+            $count = $this->writeParameters();
+            $consoleIo->info('Wrote ' . $count . ' Parameters');
+        }
+
+        if ($args->getOption('Get')) {
             $this->getParameters();
-            $io->info('Got Parameters');
+            $consoleIo->info('Got Parameters');
 
             if ($args->getOption('Remove')) {
                 $this->removeParameters();
-                $io->info('Removed Parameters from App Config File');
+                $consoleIo->info('Removed Parameters from App Config File');
             }
         }
 
         if ($args->getOption('Setup')) {
             $this->setupParameters();
-            $io->info('Setup Parameters');
+            $consoleIo->info('Setup Parameters');
         }
     }
 }
