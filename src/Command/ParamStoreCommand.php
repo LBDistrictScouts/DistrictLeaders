@@ -43,11 +43,12 @@ class ParamStoreCommand extends Command
     public function initialize(): void
     {
         Configure::load('environment', $this->configEngine);
+        Configure::load($this->outputFile, $this->configEngine);
         Configure::load('app', 'default');
 
         $pathR = '/' . Configure::read('App.app_ref', 'leaders');
         $pathR .= '/' . Configure::read('Environment');
-        $this->pathRoot = $pathR;
+        $this->pathRoot = strtolower($pathR);
 
         parent::initialize();
     }
@@ -294,7 +295,7 @@ class ParamStoreCommand extends Command
         $consoleIo->out('Environment');
         $consoleIo->warning($indent . 'Root Path: ' .  $this->pathRoot);
         $consoleIo->warning($indent . 'Application: ' . Configure::read('App.app_ref'));
-        $consoleIo->warning($indent . 'Environment: ' . Configure::read('environment'));
+        $consoleIo->warning($indent . 'Environment: ' . Configure::read('Environment'));
 
         $consoleIo->out('Active Config Keys:');
         foreach ($this->getList() as $listKey){
