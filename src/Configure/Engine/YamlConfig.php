@@ -61,7 +61,7 @@ class YamlConfig implements ConfigEngineInterface
     {
         $filename = $this->_getFilePath($key);
 
-        $yamlBody = Yaml::dump($data, 3);
+        $yamlBody = Yaml::dump($data, 5);
 
         return file_put_contents($filename, $yamlBody) > 0;
     }

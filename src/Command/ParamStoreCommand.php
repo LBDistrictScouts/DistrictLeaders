@@ -45,7 +45,7 @@ class ParamStoreCommand extends Command
         Configure::load('environment', $this->configEngine);
         Configure::load('app', 'default');
 
-        $pathR = '/' . Configure::read('App.app_ref');
+        $pathR = '/' . Configure::read('App.app_ref', 'leaders');
         $pathR .= '/' . Configure::read('environment');
         $this->pathRoot = $pathR;
 
