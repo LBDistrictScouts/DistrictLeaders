@@ -36,7 +36,6 @@ jobs:
       php: 7.4
 
 before_install:
-  - mv config/app_db.travis.php config/app_db.php
   - mv config/app_file.travis.php config/app_file.php
   - mv config/app.travis.php config/app.php
   - mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
