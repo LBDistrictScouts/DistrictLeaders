@@ -155,7 +155,9 @@ class ParamStoreCommand extends Command
      */
     protected function dumpParameters(array $storeList)
     {
-        Configure::dump($this->outputFile, $this->configEngine, $storeList);
+        if (!empty($storeList)) {
+            Configure::dump($this->outputFile, $this->configEngine, $storeList);
+        }
     }
 
     /**
