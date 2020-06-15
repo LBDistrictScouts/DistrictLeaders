@@ -1,15 +1,13 @@
 <?php
 
-use Aws\S3\S3Client;
+use Aws\Sdk;
 
-$client = new S3Client([
-    'credentials' => [
-        'key' => '<<AWS_API_KEY>>',
-        'secret' => '<<AWS_SECRET_KEY>>',
-    ],
-    'region' => '<<AWS_REGION>>',
+$sharedConfig = [
+    'region' => 'your-region-here',
     'version' => 'latest',
-]);
+];
+$sdk = new Sdk($sharedConfig);
+$client =  $sdk->createS3();
 
 return [
     'Filesystem' => [
@@ -32,16 +30,6 @@ return [
         'cache' => [
             'adapter' => 'Local',
             'adapterArguments' => [ WWW_ROOT . 'cached' ],
-        ],
-    ],
-
-    'CloudConvert' => [
-        'api_key' => '<<CLOUD_CONVERT_API_KEY>>',
-        's3' => [
-            'key' => '<<AWS_API_KEY>>',
-            'secret' => '<<AWS_SECRET_KEY>>',
-            'region' => '<<AWS_REGION>>',
-            'bucket' => '<<S3_BUCKET_NAME>>',
         ],
     ],
 ];

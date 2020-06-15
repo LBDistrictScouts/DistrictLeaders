@@ -132,7 +132,6 @@ class DocumentsTable extends Table
             return null;
         }
 
-
         try {
             /** @var \Cake\Datasource\EntityInterface $fileEntity */
             $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
@@ -185,6 +184,7 @@ class DocumentsTable extends Table
         ]);
 
         debug($document);
+
         return $this->save($document);
     }
 }

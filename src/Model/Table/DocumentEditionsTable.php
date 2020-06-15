@@ -135,15 +135,17 @@ class DocumentEditionsTable extends Table
             return false;
         }
 
-        /** @var \Cake\Datasource\EntityInterface $fileEntity */
         try {
+            /** @var \Cake\Datasource\EntityInterface $fileEntity */
             $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
         } catch (FilesystemException $e) {
             debug('filesys');
             debug($e);
+
             return false;
         } catch (FileNotFoundException $e) {
             debug('not found');
+
             return false;
         }
 

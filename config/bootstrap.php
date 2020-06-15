@@ -68,9 +68,8 @@ try {
 /** Core Config Values */
 try {
     Configure::load('app', 'default', false);
-    Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
-    Configure::load('app_queue', 'default', false);
+    Configure::load('Environment' . DS . 'app_parameters', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }

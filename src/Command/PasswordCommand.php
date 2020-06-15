@@ -64,7 +64,7 @@ class PasswordCommand extends Command
             $this->abort();
         }
 
-        $adminUser = Configure::readOrFail('defaultAdmin');
+        $adminUser = Configure::readOrFail('DefaultAdmin');
 
         $user = $this->Users->find()->where([
             User::FIELD_USERNAME => $adminUser['username'],

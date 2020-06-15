@@ -127,7 +127,7 @@
                 <?php if (!empty($nonUserCapabilities)) : ?>
                     <?php foreach ($nonUserCapabilities as $capabilityMatrixArray) : ?>
                         <?php $entity = $capabilityMatrixArray['object']; ?>
-                        <?php /** @var \App\Model\Entity\Section|\App\Model\Entity\ScoutGroup  $entity */ ?>
+                                                                                                                                  /** @var \App\Model\Entity\Section|\App\Model\Entity\ScoutGroup  $entity */ ?>
                         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="card-header">
                                 <?php if ($entity instanceof \App\Model\Entity\Section) : ?>

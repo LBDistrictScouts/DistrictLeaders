@@ -1,0 +1,48 @@
+ConfigKeys:
+  - Queue
+  - Security
+  - CloudConvert
+  - Datasources
+  - DefaultAdmin
+  - SparkPost
+  - Session
+  - GoogleClient
+  - IdeHelper
+  - DatabaseLog
+  - Log
+  - Email
+  - EmailTransport
+  - Error
+  - Cache
+  - App
+
+SecureKeys:
+  - Security
+  - CloudConvert
+  - Datasources
+  - SparkPost
+  - Cache
+
+IncludedAppConfigKeys:
+  - debug
+
+ExcludedAppConfigKeys:
+  - Filesystem
+
+ApplicationConfigKeys:
+  - baseCapabilities
+  - entityCapabilities
+  - fieldCapabilities
+  - actionOverrides
+  - allModels
+  - allCapabilities
+  - UnauthorizedExceptions
+  - baseRoleTemplates
+  - dailyCrons
+  - fileTypes
+  - functionalAreas
+  - iconStandards
+  - searchConfigured
+  - notificationTypes
+  - Passwordable
+  - Webservices

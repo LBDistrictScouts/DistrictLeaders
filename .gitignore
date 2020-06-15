@@ -1,22 +1,21 @@
 # CakePHP specific files #
 ##########################
 /config/app.php
-/config/app.backup.php
-/config/app.test.php
+/config/Archived/app.backup.php
+/config/Archived/app.test.php
 /config/app.prod.php
 
 /config/app_db.php
-/config/app_db.backup.php
+/config/Archived/app_db.backup.php
 /config/app_db.test.php
 /config/app_db.prod.php
 
 /config/app_file.php
-/config/app_file.backup.php
+/config/Archived/app_file.backup.php
 /config/app_file.test.php
 /config/app_file.prod.php
 
-/config/app_queue.php
-/config/app_queue.backup.php
+/config/Archived/
 /config/app_queue.test.php
 /config/app_queue.prod.php
 
@@ -25,6 +24,8 @@
 /config/credentials.json
 
 /config/Migrations/*.lock
+
+/config/Environment/app_parameters.yml
 
 /logs/*
 /tmp/*

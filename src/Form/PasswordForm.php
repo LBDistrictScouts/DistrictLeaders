@@ -80,8 +80,8 @@ class PasswordForm extends Form
             /** @var \App\Model\Entity\User $user */
             $user = $data['user'];
 
-            $formPostcode = str_replace(" ", "", strtoupper($requestData[self::FIELD_POSTCODE]));
-            $userPostcode = str_replace(" ", "", strtoupper($user->get($user::FIELD_POSTCODE)));
+            $formPostcode = str_replace(' ', '', strtoupper($requestData[self::FIELD_POSTCODE]));
+            $userPostcode = str_replace(' ', '', strtoupper($user->get($user::FIELD_POSTCODE)));
 
             if ($formPostcode != $userPostcode) {
                 return false;

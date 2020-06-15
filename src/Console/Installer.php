@@ -50,8 +50,6 @@ class Installer
     public const CONFIG_FILES = [
         'app',
         'app_file',
-        'app_db',
-        'app_queue',
     ];
 
     /**
