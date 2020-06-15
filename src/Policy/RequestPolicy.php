@@ -20,9 +20,9 @@ class RequestPolicy implements RequestPolicyInterface
      *
      * @param \App\Model\Entity\User|null $identity The Identity
      * @param \Cake\Http\ServerRequest $request Server Request
-     * @return bool|void|\Authorization\Policy\Result
+     * @return null|\Authorization\Policy\Result
      */
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess($identity, ServerRequest $request): ?Result
     {
         $action = $request->getParam('action');
         $controller = $request->getParam('controller');
@@ -68,5 +68,7 @@ class RequestPolicy implements RequestPolicyInterface
                 return new Result(true);
             }
         }
+
+        return null;
     }
 }
