@@ -161,11 +161,11 @@ class CapabilitiesTableTest extends TestCase
     {
         return [
             'Level 0' => [ 0, 1 ],
-            'Level 1' => [ 1, 8 ],
-            'Level 2' => [ 2, 30 ],
-            'Level 3' => [ 3, 52 ],
-            'Level 4' => [ 4, 55 ],
-            'Level 5' => [ 5, 65 ],
+            'Level 1' => [ 1, 9 ],
+            'Level 2' => [ 2, 31 ],
+            'Level 3' => [ 3, 53 ],
+            'Level 4' => [ 4, 56 ],
+            'Level 5' => [ 5, 66 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -1023,6 +1023,7 @@ class CapabilitiesTableTest extends TestCase
                         'OWN_USER' => 'Edit Own User',
                         'LOGIN' => 'Login',
                         'DIRECTORY' => 'Use the District Directory',
+                        'HISTORY' => 'View User Changes',
                     ],
                     'Entity' => [
                         'EDIT_GROUP' => 'Edit Group',

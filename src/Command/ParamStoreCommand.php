@@ -284,8 +284,7 @@ class ParamStoreCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleIo $consoleIo
-     *
+     * @param \Cake\Console\ConsoleIo $consoleIo The console for Output
      * @return void
      */
     protected function echoInfo(ConsoleIo $consoleIo)
@@ -293,12 +292,12 @@ class ParamStoreCommand extends Command
         $indent = '     ';
 
         $consoleIo->out('Environment');
-        $consoleIo->warning($indent . 'Root Path: ' .  $this->pathRoot);
+        $consoleIo->warning($indent . 'Root Path: ' . $this->pathRoot);
         $consoleIo->warning($indent . 'Application: ' . Configure::read('App.app_ref'));
         $consoleIo->warning($indent . 'Environment: ' . Configure::read('Environment'));
 
         $consoleIo->out('Active Config Keys:');
-        foreach ($this->getList() as $listKey){
+        foreach ($this->getList() as $listKey) {
             $consoleIo->warning($indent . $listKey);
         }
     }

@@ -16,11 +16,11 @@ declare(strict_types=1);
  */
 namespace App;
 
+use App\Authenticator\CognitoAuthenticationService;
+use App\Middleware\CognitoAuthenticationMiddleware;
 use App\Policy\RequestPolicy;
-use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Middleware\AuthenticationMiddleware;
 use Authorization\AuthorizationService;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\AuthorizationServiceProviderInterface;
@@ -153,7 +153,9 @@ class Application extends BaseApplication implements
             ))
 
             // Add the authentication middleware to the middleware queue
-            ->add(new AuthenticationMiddleware($this))
+            ->add(new CognitoAuthenticationMiddleware($this, [
+                'passwordUrl' => '/users/password',
+            ]))
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [
@@ -163,7 +165,7 @@ class Application extends BaseApplication implements
                 },
                 'unauthorizedHandler' => [
                     'className' => 'Authorization.Redirect',
-                    'url' => self::LOGIN_URL,
+                    'url' => '/',
                     'queryParam' => 'redirectUrl',
                     'exceptions' => Configure::read('UnauthorizedExceptions'),
                 ],
@@ -219,7 +221,7 @@ class Application extends BaseApplication implements
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        $service = new AuthenticationService();
+        $service = new CognitoAuthenticationService();
 
         $fields = [
             'username' => 'username',
@@ -232,18 +234,21 @@ class Application extends BaseApplication implements
         ]);
 
         // Load identifiers
-        $service->loadIdentifier('Authentication.Password', compact('fields'));
+        $service->loadIdentifier('Cognito', compact('fields'));
 
         // Load the authenticators, you want session first
-        $service->loadAuthenticator('Authentication.Session');
-        $service->loadAuthenticator('Authentication.Form', [
+        $service->loadAuthenticator('App.CognitoSession', [
             compact('fields'),
             'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
-        $service->loadAuthenticator('Authentication.Cookie', [
-            'rememberMeField' => 'remember_me',
+        $service->loadAuthenticator('App.Cognito', [
             compact('fields'),
+            'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
+//        $service->loadAuthenticator('Authentication.Cookie', [
+//            'rememberMeField' => 'remember_me',
+//            compact('fields'),
+//        ]);
 
         return $service;
     }

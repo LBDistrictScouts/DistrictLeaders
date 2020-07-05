@@ -506,4 +506,13 @@ return [
             'bucket' => '<<S3_BUCKET_NAME>>',
         ],
     ],
+
+    'Aws' => [
+        'region' => 'eu-west-1',
+        'version' => 'latest',
+        'cognito' => [
+            'ClientId' => '<<APP_CLIENT_ID>>',
+            'UserPoolId' => '<<USER_POOL_ID>>',
+        ],
+    ],
 ];

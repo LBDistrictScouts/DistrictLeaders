@@ -36,7 +36,7 @@ trait AppPolicyTrait
         }
 
         if ($user->checkCapability('ALL')) {
-            return new Result(true, 'ALL capability present.');
+            return new Result(true, '900');
         }
 
         if ($user->checkCapability($action)) {

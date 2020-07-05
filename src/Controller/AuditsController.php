@@ -12,6 +12,17 @@ namespace App\Controller;
 class AuditsController extends AppController
 {
     /**
+     * @throws \Exception
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->whyPermitted($this->Audits);
+    }
+
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|void

@@ -28,7 +28,7 @@ class UserPolicy implements BeforePolicyInterface
         }
 
         if ($user->buildAndCheckCapability('UPDATE', 'Users')) {
-            return new Result(true);
+            return new Result(true, 'Has Update Capability.');
         }
 
         // Results let you define a 'reason' for the failure.
@@ -55,7 +55,7 @@ class UserPolicy implements BeforePolicyInterface
         }
 
         // Results let you define a 'reason' for the failure.
-        return new Result(false, 'not-owner');
+        return new Result(false, 'Not Own User and Cannot View Users.');
     }
 
     /**
@@ -71,5 +71,7 @@ class UserPolicy implements BeforePolicyInterface
         if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true);
         }
+
+        return new Result(false, 'Cannot View Users');
     }
 }

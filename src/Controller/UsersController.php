@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Authenticator\CognitoResult;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Token;
@@ -29,12 +30,12 @@ class UsersController extends AppController
         parent::initialize();
 
         $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
+        $this->Authentication->addUnauthenticatedActions(['password']);
 
         $this->Authorization->mapActions([
             'index' => 'list',
-            'delete' => 'remove',
             'edit' => 'update',
-            'add' => 'insert',
+            'add' => 'create',
         ]);
     }
 
@@ -55,6 +56,8 @@ class UsersController extends AppController
         $query = $this->Users->find();
         $users = $this->paginate($this->Authorization->applyScope($query));
         $this->set(compact('users'));
+
+        $this->whyPermitted($this->Users);
     }
 
     /**
@@ -84,6 +87,8 @@ class UsersController extends AppController
         ]);
         $users = $this->paginate($this->Authorization->applyScope($query));
         $this->set(compact('users'));
+
+        $this->whyPermitted($this->Users);
     }
 
     /**
@@ -114,6 +119,8 @@ class UsersController extends AppController
         $this->Authorization->authorize($user);
 
         $this->set('user', $user);
+
+        $this->whyPermitted($this->Users);
     }
 
     /**
@@ -126,6 +133,7 @@ class UsersController extends AppController
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());
+
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -134,6 +142,8 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
+
+        $this->whyPermitted($this->Users);
     }
 
     /**
@@ -159,6 +169,8 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
         $this->set(compact('user'));
+
+        $this->whyPermitted($this->Users);
     }
 
     /**
@@ -192,12 +204,22 @@ class UsersController extends AppController
         // Set the layout.
         $this->viewBuilder()->setLayout('landing');
 
+        /** @var \App\Authenticator\CognitoResult $result */
         $result = $this->Authentication->getResult();
+
+        // Redirect if challenged
+        if ($result instanceof CognitoResult && $result->isChallenge()) {
+            return $this->redirect([
+                'controller' => 'Challenges',
+                'action' => 'expired',
+                '?' => $this->request->getQuery(),
+            ]);
+        }
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $event = new Event('Model.Users.login', $this, [
-                'user' => $this->request->getAttribute('identity')->getOriginalData(),
+                'user' => $result->getData(),
             ]);
             $this->getEventManager()->dispatch($event);
 
@@ -219,6 +241,8 @@ class UsersController extends AppController
      */
     public function logout()
     {
+        $this->Authorization->skipAuthorization();
+
         $logout = $this->Authentication->logout();
 
         if ($logout != false) {
@@ -365,7 +389,7 @@ class UsersController extends AppController
         }
 
         if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
-            $this->Flash->error('Password Reset Token could not be validated.');
+//            $this->Flash->error('Password Reset Token could not be validated.');
 
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }

@@ -8,6 +8,10 @@ baseCapabilities:
         capability: 'Use the District Directory'
         min_level: 1
     -
+        capability_code: HISTORY
+        capability: 'View User Changes'
+        min_level: 1
+    -
         capability_code: OWN_USER
         capability: 'Edit Own User'
         min_level: 0

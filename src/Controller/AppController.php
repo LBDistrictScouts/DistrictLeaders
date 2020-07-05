@@ -19,7 +19,6 @@ namespace App\Controller;
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
-use Authentication\AuthenticationService;
 use Cake\Controller\Controller;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
@@ -79,21 +78,6 @@ class AppController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
 
-        // Instantiate the service
-        $service = new AuthenticationService();
-
-        // Load identifiers
-        $service->loadIdentifier('Authentication.Password', [
-            'fields' => [
-                'username' => 'username',
-                'password' => 'password',
-            ],
-        ]);
-
-        // Load the authenticators
-        $service->loadAuthenticator('Authentication.Session');
-        $service->loadAuthenticator('Authentication.Form');
-
         $this->loadComponent('Flash.Flash');
 
         $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
@@ -103,6 +87,16 @@ class AppController extends Controller
         ]);
 
         $this->eventListeners();
+    }
+
+    /**
+     * @param \Cake\ORM\Table $model Table to be authenticated with credentials.
+     * @return void
+     */
+    public function whyPermitted($model)
+    {
+        $result = $this->Authorization->canResult($model);
+        $this->set('PolicyResult', $result);
     }
 
     /**

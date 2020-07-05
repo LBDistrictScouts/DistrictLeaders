@@ -469,6 +469,7 @@ namespace PHPSTORM_META {
 		'CampTypes::action',
 		'Camps::action',
 		'Capabilities::action',
+		'Challenges::action',
 		'DatabaseLog.DatabaseLog::action',
 		'DatabaseLog.Logs::action',
 		'DebugKit.Composer::action',

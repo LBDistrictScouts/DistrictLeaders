@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var int $loggedInUserId
+ * @var mixed $PolicyResult
  */
 ?>
 
@@ -32,6 +33,13 @@
                         <i class="fal fa-bell"></i>
                     </a>
                 </li>
+                <?php if (isset($PolicyResult)) : ?>
+                    <li class="nav-item right-align mr-auto">
+                        <a class="nav-link" data-toggle="modal" data-target="#whyAuth">
+                            <i class="fal fa-unlock"></i>
+                        </a>
+                    </li>
+                <?php endif; ?>
                 <?= $this->cell('Profile', [$identity->get('id')], [
                     'cache' => [
                         'config' => 'cell_cache',
