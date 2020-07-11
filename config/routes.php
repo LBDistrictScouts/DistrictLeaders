@@ -88,11 +88,10 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
-Router::prefix('api/v1', function (RouteBuilder $routes) {
-
-    $routes->connect('/', ['controller' => 'Sections', 'action' => 'index']);
-
-    $routes->fallbacks(DashedRoute::class);
+Router::prefix('Api/V1', function (RouteBuilder $routes) {
+    $routes->setExtensions(['json']);
+    $routes->connect('/', ['controller' => 'Sections', 'action' => 'index', '_ext' => 'json']);
+    $routes->resources('Sections', ['only' => ['index']]);
 });
 
 /**

@@ -29,7 +29,7 @@ class RequestPolicy implements RequestPolicyInterface
         $controller = $request->getParam('controller');
         $prefix = $request->getParam('prefix');
 
-        if ($prefix === 'Api/v1') {
+        if ($prefix === 'Api/V1') {
             return new Result(true);
         }
 

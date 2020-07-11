@@ -11,7 +11,6 @@ use Cake\Controller\Controller;
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  * @property \Flash\Controller\Component\FlashComponent $Flash
  * @property \App\Controller\Component\CapAuthorizationComponent $Authorization
- * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
 {
@@ -37,6 +36,7 @@ class AppController extends Controller
         ]);
 
         $this->Authentication->allowUnauthenticated(['index']);
+        $this->Authentication->addUnauthenticatedActions(['index']);
         $this->Authorization->skipAuthorization();
     }
 }

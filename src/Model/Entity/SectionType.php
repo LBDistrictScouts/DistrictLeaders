@@ -13,6 +13,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\RoleType[] $role_types
  * @property \App\Model\Entity\Section[] $sections
+ * @property bool $is_young_person_section
  */
 class SectionType extends Entity
 {
@@ -30,6 +31,16 @@ class SectionType extends Entity
         'role_types' => true,
         'sections' => true,
     ];
+
+    protected $_virtual = ['is_young_person_section'];
+
+    /**
+     * @return bool
+     */
+    protected function _getIsYoungPersonSection(): bool
+    {
+        return (bool)($this->get(self::FIELD_SECTION_TYPE) !== 'Team');
+    }
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION_TYPE = 'section_type';

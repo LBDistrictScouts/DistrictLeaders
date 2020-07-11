@@ -34,6 +34,16 @@ class ScoutGroupsControllerTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
     ];
 
     /**
@@ -61,6 +71,28 @@ class ScoutGroupsControllerTest extends TestCase
     public function testIndex()
     {
         $this->tryIndexGet($this->controller);
+    }
+
+    /**
+     * Test index method
+     *
+     * @return void
+     * @throws
+     */
+    public function testGenerate()
+    {
+        $actionArray = [
+            'controller' => 'ScoutGroups',
+            'action' => 'generate',
+        ];
+
+        $this->tryGet($actionArray);
+
+        $dataArray = [
+
+        ];
+
+        $this->post($actionArray, $dataArray);
     }
 
     /**

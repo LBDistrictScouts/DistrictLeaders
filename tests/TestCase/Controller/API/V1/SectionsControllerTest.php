@@ -34,9 +34,8 @@ class SectionsControllerTest extends TestCase
     public function testIndex(): void
     {
         $this->get([
-            'prefix' => 'Api/v1',
+            'prefix' => 'Api/V1',
             'controller' => 'Sections',
-            'action' => 'index',
             '_ext' => 'json',
         ]);
 

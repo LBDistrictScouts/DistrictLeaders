@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\ScoutGroup;
+use App\Model\Entity\Section;
+use App\Model\Entity\SectionType;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -95,5 +98,26 @@ class SectionsTable extends Table
         $rules->add($rules->existsIn(['scout_group_id'], 'ScoutGroups'));
 
         return $rules;
+    }
+
+    /**
+     * @param int $scoutGroupId ID of the Scout Group to be created
+     * @param int $sectionTypeId ID of the Section Type to be created
+     * @return bool
+     */
+    public function makeStandard(int $scoutGroupId, int $sectionTypeId): bool
+    {
+        $section = $this->newEmptyEntity();
+
+        $sectionType = $this->SectionTypes->get($sectionTypeId);
+        $scoutGroup = $this->ScoutGroups->get($scoutGroupId);
+
+        $section->set(Section::FIELD_SCOUT_GROUP_ID, $scoutGroup->get(ScoutGroup::FIELD_ID));
+        $section->set(Section::FIELD_SECTION_TYPE_ID, $sectionType->get(SectionType::FIELD_ID));
+
+        $name = $scoutGroup->group_alias . ' ' . $sectionType->section_type;
+        $section->set(Section::FIELD_SECTION, $name);
+
+        return (bool)$this->save($section);
     }
 }

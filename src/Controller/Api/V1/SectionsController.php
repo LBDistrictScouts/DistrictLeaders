@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\API\V1;
+namespace App\Controller\Api\V1;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
@@ -80,6 +80,6 @@ class SectionsController extends AppController
         });
 
         $this->set('sections', $sections);
-        $this->set('_serialize', ['sections']);
+        $this->viewBuilder()->setOption('serialize', 'sections');
     }
 }

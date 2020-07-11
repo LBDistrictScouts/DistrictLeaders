@@ -79,6 +79,7 @@ class SectionTypesTableTest extends TestCase
         $expected = [
             'id' => 1,
             'section_type' => 'Beavers',
+            'is_young_person_section' => true,
         ];
         TestCase::assertEquals($expected, $actual);
 
