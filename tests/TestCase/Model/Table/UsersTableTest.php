@@ -152,6 +152,7 @@ class UsersTableTest extends TestCase
             User::FIELD_FULL_NAME => 'Lorem ipsum dolor sit amet Lorem ipsum dolor sit amet',
             User::FIELD_CAPABILITIES => null,
             User::FIELD_USER_STATE_ID => 1,
+            User::FIELD_COGNITO_ENABLED => false,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);

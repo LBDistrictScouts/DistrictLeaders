@@ -50,6 +50,7 @@ use Cake\ORM\TableRegistry;
  * @property \Authorization\AuthorizationService $authorization
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @property \App\Model\Entity\PasswordState|null $password_state
+ * @property bool $cognito_enabled
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -328,6 +329,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_USER_CONTACTS = 'user_contacts';
     public const FIELD_USER_STATE_ID = 'user_state_id';
     public const FIELD_PASSWORD_STATE = 'password_state';
+    public const FIELD_COGNITO_ENABLED = 'cognito_enabled';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 }
