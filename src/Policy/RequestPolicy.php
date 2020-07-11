@@ -27,6 +27,11 @@ class RequestPolicy implements RequestPolicyInterface
     {
         $action = $request->getParam('action');
         $controller = $request->getParam('controller');
+        $prefix = $request->getParam('prefix');
+
+        if ($prefix === 'Api/v1') {
+            return new Result(true);
+        }
 
         if ($controller === 'Challenges') {
             return new Result(true);

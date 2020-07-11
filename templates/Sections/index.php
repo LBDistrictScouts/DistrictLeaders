@@ -20,8 +20,8 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_SECTION'));
         <th scope="col" class="actions"><?= __('Actions') ?></th>
         <th scope="col"><?= $this->Paginator->sort('section_type_id') ?></th>
         <th scope="col"><?= $this->Paginator->sort('scout_group_id') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('created') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('meeting_day', 'Meeting Weekday') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('meeting_start_time', 'Meeting Time') ?></th>
     </tr>
 </thead>
 <tbody>
@@ -35,8 +35,8 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_SECTION'));
         </td>
         <td><?= $section->has('section_type') ? $this->Html->link($section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $section->section_type->id]) : '' ?></td>
         <td><?= $section->has('scout_group') ? $this->Html->link($section->scout_group->group_alias, ['controller' => 'ScoutGroups', 'action' => 'view', $section->scout_group->id]) : '' ?></td>
-        <td><?= $this->Time->format($section->created, 'dd-MMM-yy HH:mm') ?></td>
-        <td><?= $this->Time->format($section->modified, 'dd-MMM-yy HH:mm') ?></td>
+        <td><?= h($section->meeting_weekday) ?></td>
+        <td><?= !empty($section->meeting_start_time) ? h($section->meeting_start_time) . ' - ' . h($section->meeting_end_time) : '' ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>

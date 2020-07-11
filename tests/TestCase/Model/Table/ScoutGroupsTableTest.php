@@ -97,6 +97,8 @@ class ScoutGroupsTableTest extends TestCase
             ScoutGroup::FIELD_CHARITY_NUMBER => 134,
             ScoutGroup::FIELD_GROUP_DOMAIN => '4thgoat.org.uk',
             ScoutGroup::FIELD_CLEAN_DOMAIN => '4thgoat.org.uk',
+            ScoutGroup::FIELD_PUBLIC => true,
+            ScoutGroup::FIELD_UUID => '000ee8ce-437f-46c4-a47d-0dca30cf2f12',
         ];
 
         $this->validateInitialise($expected, $this->ScoutGroups, 2, $dates);

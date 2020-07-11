@@ -88,6 +88,13 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::prefix('api/v1', function (RouteBuilder $routes) {
+
+    $routes->connect('/', ['controller' => 'Sections', 'action' => 'index']);
+
+    $routes->fallbacks(DashedRoute::class);
+});
+
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "170f20636b15977020f6a4a5dfeef61e",
+    "content-hash": "1acd223299d9b127cbc188c7c2d753f0",
     "packages": [
         {
             "name": "aura/intl",
@@ -833,6 +833,62 @@
                 "plugin"
             ],
             "time": "2019-12-29T18:58:56+00:00"
+        },
+        {
+            "name": "dereuromark/cakephp-expose",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-expose.git",
+                "reference": "de9f1ee3f32bbc9c2dafc58c9bd8ee1d2bb31315"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-expose/zipball/de9f1ee3f32bbc9c2dafc58c9bd8ee1d2bb31315",
+                "reference": "de9f1ee3f32bbc9c2dafc58c9bd8ee1d2bb31315",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0.4",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "brick/math": "^0.8.14",
+                "ext-bcmath": "*",
+                "fig-r/psr2r-sniffer": "dev-master",
+                "keiko/uuid-shortener": "^0.3.2"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Expose\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "https://www.dereuromark.de",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Other contributors",
+                    "homepage": "https://github.com/dereuromark/cakephp-expose/graphs/contributors",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CakePHP Expose Plugin to expose entities through UUIDs instead of AIIDs",
+            "homepage": "https://github.com/dereuromark/cakephp-expose/",
+            "keywords": [
+                "cakephp",
+                "expose",
+                "obfuscate",
+                "uuid"
+            ],
+            "time": "2020-04-10T21:53:59+00:00"
         },
         {
             "name": "dereuromark/cakephp-flash",

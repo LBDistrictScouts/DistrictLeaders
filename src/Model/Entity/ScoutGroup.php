@@ -21,6 +21,8 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Section[] $sections
  * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property string|null $uuid
+ * @property bool $public
  */
 class ScoutGroup extends Entity
 {
@@ -91,4 +93,6 @@ class ScoutGroup extends Entity
     public const FIELD_MODIFIED = 'modified';
     public const FIELD_SECTIONS = 'sections';
     public const FIELD_DELETED = 'deleted';
+    public const FIELD_UUID = 'uuid';
+    public const FIELD_PUBLIC = 'public';
 }

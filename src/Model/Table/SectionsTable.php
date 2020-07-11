@@ -24,6 +24,7 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
  */
 class SectionsTable extends Table
 {
@@ -43,6 +44,7 @@ class SectionsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Expose.Expose', ['on' => 'beforeSave']);
 
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id',

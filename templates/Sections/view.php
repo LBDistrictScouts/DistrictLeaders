@@ -35,8 +35,24 @@
             <td><?= $section->has('scout_group') ? $this->Html->link($section->scout_group->group_alias, ['controller' => 'ScoutGroups', 'action' => 'view', $section->scout_group->id]) : '' ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Uuid') ?></th>
+            <td><?= h($section->uuid) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Meeting Start Time') ?></th>
+            <td><?= h($section->meeting_start_time) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Meeting End Time') ?></th>
+            <td><?= h($section->meeting_end_time) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($section->id) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Meeting Day') ?></th>
+            <td><?= $this->Number->format($section->meeting_day) ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Created') ?></th>
@@ -49,6 +65,10 @@
         <tr>
             <th scope="row"><?= __('Deleted') ?></th>
             <td><?= h($section->deleted) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Public') ?></th>
+            <td><?= $section->public ? __('Yes') : __('No'); ?></td>
         </tr>
     </table>
     <div class="related">

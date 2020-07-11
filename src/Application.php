@@ -62,6 +62,8 @@ class Application extends BaseApplication implements
      */
     public function bootstrap(): void
     {
+        $this->addPlugin('Expose');
+
         $this->addPlugin('Muffin/Webservice');
 
         $this->addPlugin('Flash');
@@ -178,7 +180,7 @@ class Application extends BaseApplication implements
 
             ->add(new CsrfProtectionMiddleware([
                 'secure' => !Configure::read('debug'),
-                'httpOnly' => true,
+                'httponly' => true,
             ]))
 
             ->add(new BodyParserMiddleware())

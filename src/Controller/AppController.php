@@ -20,6 +20,7 @@ use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\UserListener;
 use Cake\Controller\Controller;
+use Cake\Datasource\EntityInterface;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -28,11 +29,10 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * Add your application-wide methods in the class below, your controllers
  * will inherit them.
  *
- * @property \App\Model\Table\UsersTable $Users
- *
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  *
  * @property \Flash\Controller\Component\FlashComponent $Flash
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization
  * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
@@ -47,7 +47,7 @@ class AppController extends Controller
      * @param null $user The Footprint User
      * @return bool|\Cake\ORM\Entity
      */
-    protected function _setCurrentUser($user = null)
+    protected function _setCurrentUser($user = null): ?EntityInterface
     {
         if (!$user) {
             $user = $this->request->getAttribute('identity');
