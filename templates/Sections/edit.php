@@ -36,20 +36,23 @@ $this->assign('entity', 'Sections');
 
         $args[4] = $section::FIELD_MEETING_DAY;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($section::FIELD_MEETING_DAY, [
-        'options' => $section->dayList(),
-        'type' => 'select',
+            'options' => $section->dayList(),
+            'type' => 'select',
+            'empty' => true,
         ]) : '';
 
         $args[4] = $section::FIELD_MEETING_START_TIME;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($section::FIELD_MEETING_START_TIME, [
-        'options' => $section->timeList(),
-        'type' => 'select',
+            'options' => $section->timeList(),
+            'type' => 'select',
+            'empty' => true,
         ]) : '';
 
         $args[4] = $section::FIELD_MEETING_END_TIME;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($section::FIELD_MEETING_END_TIME, [
-        'options' => $section->timeList(),
-        'type' => 'select',
+            'options' => $section->timeList(),
+            'type' => 'select',
+            'empty' => true,
         ]) : '';
 
         $args[4] = $section::FIELD_PUBLIC;

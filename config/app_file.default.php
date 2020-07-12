@@ -7,7 +7,7 @@ $sharedConfig = [
     'version' => 'latest',
 ];
 $sdk = new Sdk($sharedConfig);
-$client =  $sdk->createS3();
+$client = $sdk->createS3();
 
 return [
     'Filesystem' => [
