@@ -27,16 +27,16 @@ trait AppPolicyTrait
      * @param \App\Model\Entity\User $user Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
-     * @return \Authorization\Policy\Result|void
+     * @return \Authorization\Policy\Result|null
      */
-    public function before($user, $resource, $action): Result
+    public function before($user, $resource, $action): ?Result
     {
         if (is_null($user)) {
             return new Result(false, 'User not present. Auth error.');
         }
 
         if ($user->checkCapability('ALL')) {
-            return new Result(true, 'ALL capability present.');
+            return new Result(true, '900');
         }
 
         if ($user->checkCapability($action)) {
@@ -51,5 +51,7 @@ trait AppPolicyTrait
                 return new Result(true, 'Entity specific capability present.');
             }
         }
+
+        return null;
     }
 }

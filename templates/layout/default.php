@@ -12,6 +12,7 @@
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
+ * @var mixed $PolicyResult
  */
 
 $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
@@ -43,6 +44,9 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
 
             <?php if (!is_null($identity)) : ?>
                 <?= $this->cell('Notify', [$identity->get('id')])->render() ?>
+                <?php if (isset($PolicyResult)) {
+                    echo $this->cell('AuthModal', [$PolicyResult, $identity])->render();
+                } ?>
                 <?= $this->cell('ProfileModal', [$identity->get('id')], [
                     'cache' => [
                         'config' => 'cell_cache',

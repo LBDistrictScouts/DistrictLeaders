@@ -161,11 +161,11 @@ class CapabilitiesTableTest extends TestCase
     {
         return [
             'Level 0' => [ 0, 1 ],
-            'Level 1' => [ 1, 8 ],
-            'Level 2' => [ 2, 30 ],
-            'Level 3' => [ 3, 52 ],
-            'Level 4' => [ 4, 55 ],
-            'Level 5' => [ 5, 65 ],
+            'Level 1' => [ 1, 9 ],
+            'Level 2' => [ 2, 32 ],
+            'Level 3' => [ 3, 55 ],
+            'Level 4' => [ 4, 58 ],
+            'Level 5' => [ 5, 68 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -1023,6 +1023,7 @@ class CapabilitiesTableTest extends TestCase
                         'OWN_USER' => 'Edit Own User',
                         'LOGIN' => 'Login',
                         'DIRECTORY' => 'Use the District Directory',
+                        'HISTORY' => 'View User Changes',
                     ],
                     'Entity' => [
                         'EDIT_GROUP' => 'Edit Group',
@@ -1088,6 +1089,8 @@ class CapabilitiesTableTest extends TestCase
                         'FIELD_VIEW_USER@CAPABILITIES' => 'View field "Capabilities" on a User',
                         'FIELD_VIEW_USER@USER_STATE_ID' => 'View field "User State Id" on a User',
                         'FIELD_VIEW_USER@FULL_NAME' => 'View field "Full Name" on a User',
+                        'FIELD_CHANGE_USER@COGNITO_ENABLED' => 'Change field "Cognito Enabled" on a User',
+                        'FIELD_VIEW_USER@COGNITO_ENABLED' => 'View field "Cognito Enabled" on a User',
                     ],
                 ],
                 true,

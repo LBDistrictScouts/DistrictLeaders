@@ -1,14 +1,14 @@
 <?php
 return [
     'Queue' => [
-        // time (in seconds) after which a job is requeued if the worker doesn't report back
-        'defaultworkertimeout' => 1800,
+        // time (in seconds) after which a job is re-queued if the worker doesn't report back
+        'defaultworkertimeout' => '<<QUEUE_WORKER_DEFAULT_TIMEOUT>>',
         // seconds of running time after which the worker will terminate (0 = unlimited)
-        'workermaxruntime' => 120,
+        'workermaxruntime' => '<<QUEUE_WORKER_RUNTIME>>',
         // minimum time (in seconds) which a task remains in the database before being cleaned up.
-        'cleanuptimeout' => 2592000, // 30 days
+        'cleanuptimeout' => '<<QUEUE_WORKER_CLEANUP_TIMEOUT>>', // 30 days
         // Seconds of running time after which the PHP process of the worker will terminate (0 = unlimited)
-        'workertimeout' => 12000,
+        'workertimeout' => '<<QUEUE_WORKER_RUNTIME_TERMINATION>>',
         /* Optional */
         'isSearchEnabled' => true,
     ],

@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\ScoutGroup;
+use App\Model\Entity\SectionType;
 
 /**
  * ScoutGroups Controller
  *
  * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ScoutGroupsController extends AppController
 {
@@ -23,6 +23,59 @@ class ScoutGroupsController extends AppController
         $scoutGroups = $this->paginate($this->ScoutGroups);
 
         $this->set(compact('scoutGroups'));
+    }
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function generate()
+    {
+//        $this->Authorization->authorize($this->ScoutGroups);
+
+        if ($this->request->is('post')) {
+            $postData = $this->request->getData();
+            foreach ($postData as $groupId => $groupGenerate) {
+                foreach ($groupGenerate as $sectionTypeId => $sectionGenerate) {
+                    if ($sectionGenerate['generate']) {
+                        $this->ScoutGroups->Sections->makeStandard($groupId, $sectionTypeId);
+                    }
+                }
+            }
+        }
+
+        $scoutGroupsFinder = $this->ScoutGroups->find()->contain(['Sections']);
+        $sectionTypes = $this->ScoutGroups->Sections->SectionTypes
+            ->find()
+            ->orderAsc(SectionType::FIELD_SECTION_TYPE);
+        $scoutGroups = [];
+
+        /** @var \App\Model\Entity\ScoutGroup $scoutGroup */
+        foreach ($scoutGroupsFinder as $idx => $scoutGroup) {
+            $matrix = [];
+
+            /** @var \App\Model\Entity\SectionType $sectionType */
+            foreach ($sectionTypes as $sectionType) {
+                if ($sectionType->is_young_person_section) {
+                    $count = 0;
+                    foreach ($scoutGroup->sections as $section) {
+                        if ($section->section_type_id == $sectionType->id) {
+                            $count += 1;
+                        }
+                    }
+                    $array = [
+                        'count' => $count,
+                        'exists' => (bool)($count > 0),
+                    ];
+                    $matrix[$sectionType->id] = $array;
+                }
+            }
+            $scoutGroup->set('matrix', $matrix);
+            $scoutGroups[$idx] = $scoutGroup;
+        }
+
+        $this->set(compact('scoutGroups', 'sectionTypes'));
     }
 
     /**

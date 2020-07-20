@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\Cache\Cache;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -19,6 +21,12 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\ScoutGroup $scout_group
  * @property \App\Model\Entity\Role[] $roles
  * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property string|null $uuid
+ * @property bool $public
+ * @property int|null $meeting_day
+ * @property string|null $meeting_start_time
+ * @property string|null $meeting_end_time
+ * @property string $meeting_weekday
  */
 class Section extends Entity
 {
@@ -32,15 +40,109 @@ class Section extends Entity
      * @var array
      */
     protected $_accessible = [
-        'section' => true,
-        'section_type_id' => true,
-        'scout_group_id' => true,
-        'created' => true,
-        'modified' => true,
-        'section_type' => true,
-        'scout_group' => true,
-        'roles' => true,
+        self::FIELD_SECTION => true,
+        self::FIELD_SECTION_TYPE_ID => true,
+        self::FIELD_SCOUT_GROUP_ID => true,
+        self::FIELD_CREATED => true,
+        self::FIELD_MODIFIED => true,
+        self::FIELD_SECTION_TYPE => true,
+        self::FIELD_SCOUT_GROUP => true,
+        self::FIELD_ROLES => true,
+        self::FIELD_MEETING_DAY => true,
+        self::FIELD_MEETING_START_TIME => true,
+        self::FIELD_MEETING_END_TIME => true,
     ];
+
+    /**
+     * Function to get Reference Time Point
+     *
+     * @return \Cake\I18n\FrozenTime
+     */
+    private function baseTime(): FrozenTime
+    {
+        return FrozenTime::create(2020, 1, 6, 16, 0);
+    }
+
+    /**
+     * @return string
+     */
+    protected function _getMeetingWeekday(): string
+    {
+        $dayIndex = $this->get(self::FIELD_MEETING_DAY) - 1;
+
+        if (is_integer($dayIndex) && $dayIndex > 0 && $dayIndex <= 7) {
+            return $this->baseTime()->addDays($dayIndex)->dayOfWeekName;
+        }
+
+        return 'Unknown';
+    }
+
+    /**
+     * Retrieve User Capabilities
+     *
+     * @return string[]
+     */
+    public function timeList()
+    {
+        return Cache::remember('TIME_LIST', function () {
+            return $this->makeTimeList();
+        });
+    }
+
+    /**
+     * Retrieve User Capabilities
+     *
+     * @return string[]
+     */
+    public function dayList()
+    {
+        return Cache::remember('DAY_LIST', function () {
+            return $this->makeDayList();
+        });
+    }
+
+    /**
+     * function to generate time indexes at 15 minute intervals
+     *
+     * @return string[]
+     */
+    public function makeTimeList(): array
+    {
+        $timeStart = $this->baseTime();
+        $timeEnd = FrozenTime::create(2020, 1, 6, 23, 0);
+
+        $timeGrid = [];
+        $timePoint = $timeStart;
+
+        while ($timePoint->lessThanOrEquals($timeEnd)) {
+            $timeGrid[$timePoint->format('H:i')] = $timePoint->format('H:i');
+            $timePoint = $timePoint->addMinutes(15);
+        }
+
+        return $timeGrid;
+    }
+
+    /**
+     * function to generate time indexes at 15 minute intervals
+     *
+     * @return string[]
+     */
+    public function makeDayList(): array
+    {
+        $dayGrid = [];
+        $idx = 0;
+        $timePoint = $this->baseTime();
+
+        while ($timePoint->dayOfWeek <= 7 && $idx < 7) {
+            $dayGrid[$timePoint->dayOfWeek] = $timePoint->dayOfWeekName;
+            $timePoint = $timePoint->addDay();
+            $idx += 1;
+        }
+
+        return $dayGrid;
+    }
+
+    protected $_virtual = ['meeting_weekday'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION = 'section';
@@ -52,4 +154,9 @@ class Section extends Entity
     public const FIELD_SCOUT_GROUP = 'scout_group';
     public const FIELD_ROLES = 'roles';
     public const FIELD_DELETED = 'deleted';
+    public const FIELD_UUID = 'uuid';
+    public const FIELD_PUBLIC = 'public';
+    public const FIELD_MEETING_DAY = 'meeting_day';
+    public const FIELD_MEETING_START_TIME = 'meeting_start_time';
+    public const FIELD_MEETING_END_TIME = 'meeting_end_time';
 }

@@ -22,6 +22,7 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
  */
 class ScoutGroupsTable extends Table
 {
@@ -41,6 +42,7 @@ class ScoutGroupsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Expose.Expose', ['on' => 'beforeSave']);
 
         $this->hasMany('Sections', [
             'foreignKey' => 'scout_group_id',

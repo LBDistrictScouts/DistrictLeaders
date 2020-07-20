@@ -44,7 +44,7 @@ use Cake\Error\ErrorHandler;
 use Cake\Event\EventManager;
 use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Mailer\Email;
+use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Utility\Security;
 use Detection\MobileDetect;
@@ -68,9 +68,8 @@ try {
 /** Core Config Values */
 try {
     Configure::load('app', 'default', false);
-    Configure::load('app_db', 'default', false);
     Configure::load('app_file', 'default', false);
-    Configure::load('app_queue', 'default', false);
+    Configure::load('Environment' . DS . 'app_parameters', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -85,13 +84,6 @@ try {
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
-
-/*
- * Load an environment local configuration file.
- * You can use a file like app_local.php to provide local overrides to your
- * shared configuration.
- */
-//Configure::load('app_local', 'default');
 
 /*
  * When debug = true the metadata cache should only last
@@ -161,7 +153,7 @@ Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
 ConnectionManager::setConfig(Configure::consume('Webservices'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
-Email::setConfig(Configure::consume('Email'));
+Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));
 Security::setSalt(Configure::consume('Security.salt'));
 

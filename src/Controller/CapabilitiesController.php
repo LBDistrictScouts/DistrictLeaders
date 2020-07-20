@@ -14,6 +14,21 @@ use Cake\Core\Configure;
 class CapabilitiesController extends AppController
 {
     /**
+     * @throws \Exception
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->Authorization->mapActions([
+            'permissions' => 'viewPermissions',
+        ]);
+
+        $this->whyPermitted($this->Capabilities);
+    }
+
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|void

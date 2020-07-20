@@ -6,7 +6,6 @@ namespace App\Configure\Engine;
 use Cake\Core\Configure\ConfigEngineInterface;
 use Cake\Core\Configure\FileConfigTrait;
 use Cake\Core\Exception\Exception;
-use Symfony\Component\Yaml\Dumper;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -62,8 +61,7 @@ class YamlConfig implements ConfigEngineInterface
     {
         $filename = $this->_getFilePath($key);
 
-        $dumper = new Dumper();
-        $yamlBody = $dumper->dump($data);
+        $yamlBody = Yaml::dump($data, 5);
 
         return file_put_contents($filename, $yamlBody) > 0;
     }

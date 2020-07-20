@@ -1,0 +1,17 @@
+Reasons:
+  50: LOGIN user permission. All active users have this permission.
+  900: ALL permission. This is a high trust role, with no capablity restrictions. You are likely a District Digital Team Member.
+  100: DIRECTORY permission. This is the standard permission to see the District Directory.
+  101: VIEW USERS permission. This is an enhanced district permission for administrative users.
+  102: CREATE USER permission. This is an administrative permission and may be limited to certain sections or groups.
+  103: OWN USER permssion. The ability to view and edit your own user record. This is standard to all users.
+  104: HISTORY permission. The ability to see historic changes to a user record. Standard to Leader, Management & Administrative Users.
+  200: VIEW GROUPS permission. The Ability to see Groups in the District. Standard to Active Users.
+  300: VIEW SECTIONS permission.
+  400: VIEW DOCUMENTS permission.
+  500: VIEW CAMPS permssion.
+  800: VIEW CAPABILITIES permission. The ability to view internal permissions capablilities. Limited to Advanced System Admin Users.
+  801: CREATE CAPABILITY permission. The ability to create a capabilty. Limited to Advanced System Admin Users.
+  802: UPDATE CAPABILITY permission. The ability to update a system capabilty. Limited to Advanced System Admin Users.
+  803: DELETE CAPABILITY permission. The ability to remove a system capabilty. Dangerous permission Limited to Advanced System Admin Users.
+

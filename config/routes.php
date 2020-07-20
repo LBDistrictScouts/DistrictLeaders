@@ -88,6 +88,12 @@ Router::prefix('admin', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
+Router::prefix('Api/V1', function (RouteBuilder $routes) {
+    $routes->setExtensions(['json']);
+    $routes->connect('/', ['controller' => 'Sections', 'action' => 'index', '_ext' => 'json']);
+    $routes->resources('Sections', ['only' => ['index']]);
+});
+
 /**
  * If you need a different set of middleware or none at all,
  * open new scope and define routes there.

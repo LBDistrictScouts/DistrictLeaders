@@ -75,6 +75,6 @@ class TextSafe
     {
         $repeats = $length * 2;
 
-        return substr(str_shuffle(str_repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ", $repeats)), 0, $length);
+        return substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZ', $repeats)), 0, $length);
     }
 }

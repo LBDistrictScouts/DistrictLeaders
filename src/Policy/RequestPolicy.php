@@ -6,7 +6,6 @@ namespace App\Policy;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Http\ServerRequest;
-use Cake\Log\Log;
 
 /**
  * Class RequestPolicy
@@ -20,12 +19,23 @@ class RequestPolicy implements RequestPolicyInterface
      *
      * @param \App\Model\Entity\User|null $identity The Identity
      * @param \Cake\Http\ServerRequest $request Server Request
-     * @return bool|void|\Authorization\Policy\Result
+     * @return null|\Authorization\Policy\Result
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function canAccess($identity, ServerRequest $request)
+    public function canAccess($identity, ServerRequest $request): ?Result
     {
         $action = $request->getParam('action');
         $controller = $request->getParam('controller');
+        $prefix = $request->getParam('prefix');
+
+        if ($prefix === 'Api/V1') {
+            return new Result(true);
+        }
+
+        if ($controller === 'Challenges') {
+            return new Result(true);
+        }
 
         // Prevent DebugKit from infinitely looping
         if ($request->getParam('plugin') === 'DebugKit') {
@@ -47,11 +57,16 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         // Own User Validation
-        Log::debug($action);
-        if ($controller === 'Users' && in_array($action, ['edit', 'view', 'password'])) {
-            $object = explode('/', $request->getPath());
-            $object = array_reverse($object)[0];
+        $object = explode('/', $request->getPath());
+        $object = array_reverse($object)[0];
 
+        if ($controller === 'Users' && in_array($action, ['edit', 'view'])) {
+            if ($identity->id == $object && $identity->checkCapability('OWN_USER')) {
+                return new Result(true);
+            }
+        }
+
+        if ($controller === 'Capabilities' && in_array($action, ['permissions'])) {
             if ($identity->id == $object && $identity->checkCapability('OWN_USER')) {
                 return new Result(true);
             }
@@ -68,5 +83,7 @@ class RequestPolicy implements RequestPolicyInterface
                 return new Result(true);
             }
         }
+
+        return new Result(false, 'No Authorisation Rules');
     }
 }

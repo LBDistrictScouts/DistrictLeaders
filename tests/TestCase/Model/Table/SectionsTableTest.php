@@ -100,6 +100,12 @@ class SectionsTableTest extends TestCase
             'section' => 'Lorem ipsum dolor sit amet',
             'section_type_id' => 1,
             'scout_group_id' => 1,
+            'public' => true,
+            'meeting_day' => 3,
+            'meeting_start_time' => '18:00',
+            'meeting_end_time' => '19:00',
+            'uuid' => 'b2da6b3a-e406-4069-bd24-12c28cb816d1',
+            'meeting_weekday' => 'Wednesday',
         ];
         TestCase::assertEquals($expected, $actual);
 

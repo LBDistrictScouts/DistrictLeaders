@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Model\Entity\User;
+use App\Utility\AwsBuilder;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\Form\Form;
 use Cake\Form\Schema;
-use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -16,6 +17,8 @@ use Cake\Validation\Validator;
  */
 class PasswordForm extends Form
 {
+    use ModelAwareTrait;
+
     /**
      * Builds the schema for the modelless form
      *
@@ -54,6 +57,8 @@ class PasswordForm extends Form
      */
     protected function _execute(array $data): bool
     {
+        $this->loadModel('Users');
+
         // Check Request is included
         if (key_exists('request', $data)) {
             $requestData = $data['request'];
@@ -80,8 +85,12 @@ class PasswordForm extends Form
             /** @var \App\Model\Entity\User $user */
             $user = $data['user'];
 
-            $formPostcode = str_replace(" ", "", strtoupper($requestData[self::FIELD_POSTCODE]));
-            $userPostcode = str_replace(" ", "", strtoupper($user->get($user::FIELD_POSTCODE)));
+            if (!$user instanceof User) {
+                return false;
+            }
+
+            $formPostcode = str_replace(' ', '', strtoupper($requestData[self::FIELD_POSTCODE]));
+            $userPostcode = str_replace(' ', '', strtoupper($user->get($user::FIELD_POSTCODE)));
 
             if ($formPostcode != $userPostcode) {
                 return false;
@@ -90,7 +99,24 @@ class PasswordForm extends Form
             return false;
         }
 
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
+        if ($user->get('cognito_enabled')) {
+            $client = AwsBuilder::buildCognitoClient();
+            $challegeData = $data['auth'];
+
+            $result = $client->adminRespondToAuthChallenge([
+                'ChallengeName' => $challegeData['challenge'], // REQUIRED
+                'ChallengeResponses' => [
+                    'USERNAME' => $challegeData['challengeParameters']['USER_ID_FOR_SRP'],
+                    'NEW_PASSWORD' => $newPassword,
+                ],
+                'ClientId' => AwsBuilder::getCognitoAppClientId(), // REQUIRED
+                'Session' => $challegeData['challengeSession'],
+                'UserPoolId' => AwsBuilder::getCognitoUserPoolId(), // REQUIRED
+            ]);
+
+            return false;
+        }
+
         $user = $this->Users->patchEntity(
             $user,
             [User::FIELD_PASSWORD => $newPassword],
@@ -104,7 +130,7 @@ class PasswordForm extends Form
         return false;
     }
 
-    public const FIELD_NEW_PASSWORD = 'newpw';
-    public const FIELD_CONFIRM_PASSWORD = 'confirm';
+    public const FIELD_NEW_PASSWORD = 'new_password';
+    public const FIELD_CONFIRM_PASSWORD = 'confirm_password';
     public const FIELD_POSTCODE = 'postcode';
 }

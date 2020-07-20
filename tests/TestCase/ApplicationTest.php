@@ -66,6 +66,7 @@ class ApplicationTest extends IntegrationTestCase
             'Muffin/Footprint',
             'Flash',
             'WyriHaximus/TwigView',
+            'Expose',
         ];
 
         foreach ($expectedPlugins as $plugin) {

@@ -8,8 +8,8 @@ functionalAreas:
         capability:
             index: CAMPS
     documents:
-        enabled: true
-        exposed: true
+        enabled: false
+        exposed: false
         capability:
             index: DOCUMENTS
     articles:

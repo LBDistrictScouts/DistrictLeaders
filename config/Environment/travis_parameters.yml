@@ -1,0 +1,6 @@
+Queue:
+    defaultworkertimeout: '1800'
+    workermaxruntime: '600'
+    cleanuptimeout: '2592000'
+    workertimeout: '12000'
+    isSearchEnabled: true

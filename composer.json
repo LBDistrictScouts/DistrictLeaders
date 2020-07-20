@@ -16,6 +16,7 @@
         "dereuromark/cakephp-ajax": "^2.0",
         "dereuromark/cakephp-databaselog": "^3.0",
         "dereuromark/cakephp-dto": "^1.0",
+        "dereuromark/cakephp-expose": "^1.4",
         "dereuromark/cakephp-flash": "^2.0",
         "dereuromark/cakephp-queue": "^5.0",
         "dereuromark/cakephp-tools": "^2.0",

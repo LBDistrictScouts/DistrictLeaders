@@ -9,7 +9,7 @@ return [
      * Development Mode:
      * true: Errors and warnings shown.
      */
-    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /**
      * Configure basic information about the application.
@@ -53,14 +53,15 @@ return [
         'imageBaseUrl' => 'img/',
         'cssBaseUrl' => 'css/',
         'jsBaseUrl' => 'js/',
+        'app_ref' => 'leaders',
         'paths' => [
             'plugins' => [ROOT . DS . 'plugins' . DS],
             'templates' => [ROOT . DS . 'templates' . DS],
             'locales' => [RESOURCES . 'locales' . DS],
         ],
         'who' => [
-            'system' => '',
-            'email' => 'webmaster@goat.org.uk',
+            'system' => '<<SYSTEM_NAME>>',
+            'email' => '<<WEBMASTER_EMAIL>>',
         ],
     ],
 
@@ -89,6 +90,129 @@ return [
         // 'cacheTime' => '+1 year'
     ],
 
+    'elasticEnv' => '<<ELASTIC_SEARCH_ENVIRONMENT>>',
+
+    /**
+     * Connection information used by the ORM to connect
+     * to your application's datastores.
+     *
+     * ### Notes
+     * - Drivers include Mysql Postgres Sqlite Sqlserver
+     *   See vendor\cakephp\cakephp\src\Database\Driver for complete list
+     * - Do not use periods in database name - it may lead to error.
+     *   See https://github.com/cakephp/cakephp/issues/6471 for details.
+     * - 'encoding' is recommended to be set to full UTF-8 4-Byte support.
+     *   E.g set it to 'utf8mb4' in MariaDB and MySQL and 'utf8' for any
+     *   other RDBMS.
+     */
+
+    'Datasources' => [
+        'default' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
+            'persistent' => false,
+            'host' => '<<DB_DEFAULT_HOST>>',
+            'port' => '<<DB_DEFAULT_PORT>>',
+            'username' => '<<DB_DEFAULT_USERNAME>>',
+            'password' => '<<DB_DEFAULT_PASSWORD>>',
+            'database' => '<<DB_DEFAULT_DATABASE>>',
+            'schema' => '<<DB_DEFAULT_SCHEMA>>',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'log' => true,
+        ],
+
+        'database_log' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
+            'persistent' => false,
+            'host' => '<<DB_LOGGING_HOST>>',
+            'port' => '<<DB_LOGGING_PORT>>',
+            'username' => '<<DB_LOGGING_USERNAME>>',
+            'password' => '<<DB_LOGGING_PASSWORD>>',
+            'database' => '<<DB_LOGGING_DATABASE>>',
+            'schema' => '<<DB_LOGGING_SCHEMA>>',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'log' => false, // DataSource to use
+        ],
+
+        /**
+         * The test connection is used during the test suite.
+         */
+        'test' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
+            'persistent' => false,
+            'host' => '<<DB_TEST_HOST>>',
+            'port' => '<<DB_TEST_PORT>>',
+            'username' => '<<DB_TEST_USERNAME>>',
+            'password' => '<<DB_TEST_PASSWORD>>',
+            'database' => '<<DB_TEST_DATABASE>>',
+            'schema' => '<<DB_TEST_SCHEMA>>',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'log' => true,
+        ],
+
+        'elastic' => [
+            'className' => 'Cake\ElasticSearch\Datasource\Connection',
+            'driver' => 'Cake\ElasticSearch\Datasource\Connection',
+            'host' => '127.0.0.1',
+            'port' => 9200,
+            'index' => 'my_apps_index',
+        ],
+
+        'test_elastic' => [
+            'className' => 'Cake\ElasticSearch\Datasource\Connection',
+            'driver' => 'Cake\ElasticSearch\Datasource\Connection',
+            'host' => '127.0.0.1',
+            'port' => 9200,
+            'index' => 'my_apps_index',
+        ],
+
+        'test_database_log' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Postgres',
+            'persistent' => false,
+            'host' => '<<DB_TEST_LOGGING_HOST>>',
+            'port' => '<<DB_TEST_LOGGING_PORT>>',
+            'username' => '<<DB_TEST_LOGGING_USERNAME>>',
+            'password' => '<<DB_TEST_LOGGING_PASSWORD>>',
+            'database' => '<<DB_TEST_LOGGING_DATABASE>>',
+            'schema' => '<<DB_TEST_LOGGING_SCHEMA>>',
+            'encoding' => 'utf8',
+            'timezone' => 'UTC',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+            'log' => false, // DataSource to use
+        ],
+
+        'debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Sqlite',
+            'database' => TMP . 'debug_kit.sqlite',
+            'encoding' => 'utf8',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+        ],
+
+        'test_debug_kit' => [
+            'className' => 'Cake\Database\Connection',
+            'driver' => 'Cake\Database\Driver\Sqlite',
+            'database' => TMP . DS . 'tests' . DS . 'debug_kit.sqlite',
+            'encoding' => 'utf8',
+            'cacheMetadata' => true,
+            'quoteIdentifiers' => false,
+        ],
+    ],
+
     /**
      * Configure the cache adapters.
      */
@@ -105,12 +229,12 @@ return [
          * Duration will be set to '+2 minutes' in bootstrap.php when debug = true
          * If you set 'className' => 'Null' core cache will be disabled.
          */
-        'redis', [
+        'redis' => [
             'className' => 'Redis',
             'duration' => '+1 hours',
             'prefix' => 'cake_redis_',
-            'host' => '127.0.0.1',
-            'port' => 6379,
+            'host' => '<<REDIS_HOST>>',
+            'port' => '<<REDIS_PORT>>',
             'fallback' => 'default',
         ],
 
@@ -235,18 +359,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            'className' => 'Cake\Mailer\Transport\MailTransport',
-            /*
-             * The following keys are used in SMTP transports:
-             */
-            'host' => 'localhost',
-            'port' => 25,
-            'timeout' => 30,
-            'username' => null,
-            'password' => null,
-            'client' => null,
-            'tls' => null,
-            'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+            'className' => 'SparkPost',
         ],
     ],
 
@@ -262,7 +375,7 @@ return [
     'Email' => [
         'default' => [
             'transport' => 'default',
-            'from' => 'you@localhost',
+            'from' => '<<FROM_ADDRESS>>',
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
         ],
@@ -369,24 +482,37 @@ return [
         'TokenPath' => 'config/token.json',
     ],
 
-    'Muffin/Tokenize' => [
-        'lifetime' => '3 days', // Default value
-        'length' => 32, // Default value
-        'table' => 'tokenize_tokens', // Default value
-    ],
-
     'SparkPost' => [
         'Api' => [
-            'key' => '__API_KEY__',
+            'key' => '<<SPARKPOST_API_KEY>>',
         ],
     ],
 
-    'defaultAdmin' => [
-        'username' => 'admin',
-        'email' => 'webmaster@4thgoat.org.uk',
-        'first_name' => 'Admin',
-        'last_name' => 'MrFace',
-        'membership_number' => 000123,
-        'postcode' => 'POS COD',
+    'DefaultAdmin' => [
+        'username' => '<<DEFAULT_USER_USERNAME>>',
+        'email' => '<<DEFAULT_USER_EMAIL>>',
+        'first_name' => '<<DEFAULT_USER_FIRST_NAME>>',
+        'last_name' => '<<DEFAULT_USER_LAST_NAME>>',
+        'membership_number' => '<<DEFAULT_USER_MEMBERSHIP>>',
+        'postcode' => '<<DEFAULT_USER_POSTCODE>>',
+    ],
+
+    'CloudConvert' => [
+        'api_key' => '<<CLOUD_CONVERT_API_KEY>>',
+        's3' => [
+            'key' => '<<AWS_API_KEY>>',
+            'secret' => '<<AWS_SECRET_KEY>>',
+            'region' => '<<AWS_REGION>>',
+            'bucket' => '<<S3_BUCKET_NAME>>',
+        ],
+    ],
+
+    'Aws' => [
+        'region' => 'eu-west-1',
+        'version' => 'latest',
+        'cognito' => [
+            'ClientId' => '<<APP_CLIENT_ID>>',
+            'UserPoolId' => '<<USER_POOL_ID>>',
+        ],
     ],
 ];
