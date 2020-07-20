@@ -1,0 +1,19 @@
+RoleTemplates:
+  - template_name: Restricted
+    core_level: 0
+  - template_name: Standard
+    core_level: 1
+  - template_name: Section
+    core_level: 2
+  - template_name: Group
+    core_level: 3
+  - template_name: District
+    core_level: 4
+  - template_name: Digital Admin
+    core_level: 5
+  - template_name: Exec
+    core_level: 2
+    capabilities:
+      - CREATE_USER
+  - template_name: Digital Admin
+    core_level: 5

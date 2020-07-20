@@ -1,0 +1,5 @@
+DirectoryTypes:
+  - directory_type: Google G Suite
+    directory_type_code: GOOGLE
+  - directory_type: Microsoft 365
+    directory_type_code: MICROSOFT

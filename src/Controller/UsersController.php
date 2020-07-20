@@ -18,6 +18,7 @@ use Cake\Event\Event;
  * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  * @property \App\Model\Table\TokensTable $Tokens
  * @property \App\Model\Table\EmailSendsTable $EmailSends
+ * @property \App\Controller\Component\GoogleClientComponent $GoogleClient
  */
 class UsersController extends AppController
 {
@@ -130,6 +131,37 @@ class UsersController extends AppController
      */
     public function add()
     {
+        $user = $this->Users->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'view', $user->id]);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
+
+        $this->whyPermitted($this->Users);
+    }
+
+    /**
+     * Add method
+     *
+     * @param string $userDirectoryId
+     *
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @throws \Google_Exception
+     */
+    public function import($userDirectoryId)
+    {
+        $this->loadComponent('GoogleClient');
+
+        $serviceUser = $this->GoogleClient->getUser($userDirectoryId);
+        debug($serviceUser);
+
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->getData());

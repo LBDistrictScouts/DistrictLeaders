@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Utility\GoogleBuilder;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Google_Client;
@@ -14,45 +15,19 @@ use Google_Service_Directory;
 class GoogleClientComponent extends Component
 {
     /**
-     * Default configuration.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [];
-
-    /**
-     * Private Google Client Builder
-     *
-     * @throws \Google_Exception
-     * @return \Google_Client
-     */
-    public function newClient()
-    {
-        $client = new Google_Client();
-        $client->setApplicationName('G Suite Directory API PHP Quickstart');
-        $client->setScopes(Google_Service_Directory::ADMIN_DIRECTORY_USER_READONLY);
-        $client->setAuthConfig('config/credentials.json');
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
-
-        return $client;
-    }
-
-    /**
      * Get Client for Google
      *
      * @return \Cake\Http\Response|\Google_Client
-     * @throws \Google_Exception
      */
     public function getClient()
     {
-        $client = $this->newClient();
+        $client = GoogleBuilder::newClient();
 
         // Load previously authorized token from a file, if it exists.
         // The file token.json stores the user's access and refresh tokens, and is
         // created automatically when the authorization flow completes for the first
         // time.
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/token.json');
+        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
         if (file_exists($tokenPath)) {
             $accessToken = json_decode(file_get_contents($tokenPath), true);
             $client->setAccessToken($accessToken);
@@ -76,6 +51,16 @@ class GoogleClientComponent extends Component
     }
 
     /**
+     * @return \Google_Service_Directory
+     * @throws \Google_Exception
+     */
+    public function getService()
+    {
+        $client = $this->getClient();
+        return new Google_Service_Directory($client);
+    }
+
+    /**
      * Save Token Method
      *
      * @param \Google_Client $client An Activated Client
@@ -83,7 +68,7 @@ class GoogleClientComponent extends Component
      */
     public function saveToken(Google_Client $client)
     {
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/token.json');
+        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
 
         // Save the token to a file.
         if (!file_exists(dirname($tokenPath))) {
@@ -98,7 +83,7 @@ class GoogleClientComponent extends Component
      */
     public function getToken(Google_Client $client)
     {
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/token.json');
+        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
         if (file_exists($tokenPath)) {
             $accessToken = json_decode(file_get_contents($tokenPath), true);
             $client->setAccessToken($accessToken);
@@ -110,27 +95,46 @@ class GoogleClientComponent extends Component
     /**
      * get List
      *
-     * @return array
+     * @return \Google_Service_Directory_Users
      * @throws \Google_Exception
      */
-    public function getList()
+    public function getList($domain = null)
     {
-        // Get the API client and construct the service object.
-        $client = $this->getClient();
-        $service = new Google_Service_Directory($client);
+        $service = $this->getService();
 
         // Print the first 10 users in the domain.
         $optParams = [
             'customer' => 'my_customer',
-            'maxResults' => 10,
+            'domain' => $domain,
+            'maxResults' => 50,
             'orderBy' => 'email',
         ];
-        $results = $service->users->listUsers($optParams);
+        return $service->users->listUsers($optParams);
+    }
 
-        if (count($results->getUsers()) == 0) {
-            return [];
-        } else {
-            return $results->getUsers()->toSimpleObject();
-        }
+    /**
+     * get List
+     *
+     * @return \Google_Service_Directory_User
+     * @throws \Google_Exception
+     */
+    public function getUser($userId)
+    {
+        $service = $this->getService();
+
+        return $service->users->get($userId);
+    }
+
+    /**
+     * get List
+     *
+     * @return \Google_Service_Directory_Domains2
+     * @throws \Google_Exception
+     */
+    public function getDomainList()
+    {
+        $service = $this->getService();
+
+        return $service->domains->listDomains('my_customer');
     }
 }

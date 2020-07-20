@@ -129,4 +129,14 @@ class UserStatesTableTest extends TestCase
     {
         $this->validateUniqueRule(UserState::FIELD_USER_STATE, $this->UserStates, [$this, 'getGood']);
     }
+
+    /**
+     * Test installBaseStatuses method
+     *
+     * @return void
+     */
+    public function testInstallBaseTypes()
+    {
+        $this->validateInstallBase($this->UserStates);
+    }
 }

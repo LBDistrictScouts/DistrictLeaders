@@ -1,95 +1,56 @@
 baseCapabilities:
-    -
-        capability_code: ALL
-        capability: 'SuperUser Permissions'
-        min_level: 5
-    -
-        capability_code: DIRECTORY
-        capability: 'Use the District Directory'
-        min_level: 1
-    -
-        capability_code: HISTORY
-        capability: 'View User Changes'
-        min_level: 1
-    -
-        capability_code: OWN_USER
-        capability: 'Edit Own User'
-        min_level: 0
-    -
-        capability_code: LOGIN
-        capability: Login
-        min_level: 0
-
+  - capability_code: ALL
+    capability: SuperUser Permissions
+    min_level: 5
+  - capability_code: DIRECTORY
+    capability: Use the District Directory
+    min_level: 1
+  - capability_code: HISTORY
+    capability: View User Changes
+    min_level: 1
+  - capability_code: OWN_USER
+    capability: Edit Own User
+    min_level: 0
+  - capability_code: LOGIN
+    capability: Login
+    min_level: 0
 entityCapabilities:
-    CREATE: 1
-    UPDATE: 1
-    VIEW: -5
-    DELETE: 5
-
+  CREATE: 1
+  UPDATE: 1
+  VIEW: -5
+  DELETE: 5
 fieldCapabilities:
-    CHANGE: 1
-    VIEW: 0
-
+  CHANGE: 1
+  VIEW: 0
 actionOverrides:
-    INDEX: VIEW
-    ADD: CREATE
-    EDIT: UPDATE
-    SEARCH: VIEW
-
+  INDEX: VIEW
+  ADD: CREATE
+  EDIT: UPDATE
+  SEARCH: VIEW
 allModels:
-    Users:
-        baseLevel: 1
-        viewRestricted: false
-        fieldLock: 2
-    ScoutGroups:
-        baseLevel: 3
-        viewRestricted: false
-        fieldLock: false
-    Sections:
-        baseLevel: 2
-        viewRestricted: false
-        fieldLock: false
-    RoleTypes:
-        baseLevel: 4
-        viewRestricted: false
-        fieldLock: false
-    Documents:
-        baseLevel: 4
-        viewRestricted: false
-        fieldLock: false
-
+  Users:
+    baseLevel: 1
+    viewRestricted: false
+    fieldLock: 2
+  ScoutGroups:
+    baseLevel: 3
+    viewRestricted: false
+    fieldLock: false
+  Sections:
+    baseLevel: 2
+    viewRestricted: false
+    fieldLock: false
+  RoleTypes:
+    baseLevel: 4
+    viewRestricted: false
+    fieldLock: false
+  Documents:
+    baseLevel: 4
+    viewRestricted: false
+    fieldLock: false
 allCapabilities:
-    - LOGIN
-    - OWN_USER
-
+  - LOGIN
+  - OWN_USER
 UnauthorizedExceptions:
-    - 'Authorization\Exception\ForbiddenException'
-    - 'Authorization\Exception\MissingIdentityException'
-
-baseRoleTemplates:
-    -
-        template_name: Restricted
-        core_level: 0
-    -
-        template_name: Standard
-        core_level: 1
-    -
-        template_name: Section
-        core_level: 2
-    -
-        template_name: Group
-        core_level: 3
-    -
-        template_name: District
-        core_level: 4
-    -
-        template_name: 'Digital Admin'
-        core_level: 5
-    -
-        template_name: Exec
-        core_level: 2
-        capabilities:
-            - CREATE_USER
-    -
-        template_name: 'Digital Admin'
-        core_level: 5
+  - Authorization\Exception\ForbiddenException
+  - Authorization\Exception\MissingIdentityException

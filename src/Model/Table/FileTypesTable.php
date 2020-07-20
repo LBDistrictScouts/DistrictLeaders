@@ -25,6 +25,8 @@ use Cake\Validation\Validator;
  */
 class FileTypesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -99,28 +101,10 @@ class FileTypesTable extends Table
     /**
      * install the application status config
      *
-     * @return mixed
+     * @return int
      */
     public function installBaseFileTypes()
     {
-        Configure::load('Application' . DS . 'file_types', 'yaml', false);
-        $base = Configure::read('fileTypes');
-
-        $total = 0;
-
-        foreach ($base as $baseType) {
-            $query = $this->find()
-                          ->where([FileType::FIELD_FILE_EXTENSION => $baseType[FileType::FIELD_FILE_EXTENSION]]);
-            $status = $this->newEmptyEntity();
-            if ($query->count() > 0) {
-                $status = $query->first();
-            }
-            $this->patchEntity($status, $baseType);
-            if ($this->save($status)) {
-                $total += 1;
-            }
-        }
-
-        return $total;
+        return $this->installBase($this);
     }
 }

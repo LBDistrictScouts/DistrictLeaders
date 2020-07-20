@@ -26,6 +26,8 @@ use Cake\Validation\Validator;
  */
 class RoleTemplatesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -110,8 +112,7 @@ class RoleTemplatesTable extends Table
     public function installBaseRoleTemplates()
     {
         $count = 0;
-        /** @var array[] $roleTemplates */
-        $roleTemplates = Configure::read('baseRoleTemplates');
+        $roleTemplates = $this->getBaseValues($this);
 
         foreach ($roleTemplates as $roleTemplate) {
             if ($this->installBaseRoleTemplate($roleTemplate)) {
