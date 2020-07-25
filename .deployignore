@@ -11,9 +11,13 @@ CODE_OF_CONDUCT.md
 README.md
 LICENSE
 
+.phpstorm.meta.php
 .phpstorm.meta.php/*
 
 .github/*.md
+
+phpunit.xml.dist
+phpcs.xml.dist
 
 **/*.default.php
 config/Migrations/schema-dump-default.lock
