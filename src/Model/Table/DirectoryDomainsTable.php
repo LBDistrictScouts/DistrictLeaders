@@ -40,7 +40,7 @@ class DirectoryDomainsTable extends Table
 
         $this->setTable('directory_domains');
         $this->setDisplayField(DirectoryDomain::FIELD_DIRECTORY_DOMAIN);
-        $this->setPrimaryKey(DirectoryDomain::FIELD_DIRECTORY_ID);
+        $this->setPrimaryKey(DirectoryDomain::FIELD_ID);
 
         $this->belongsTo('Directories', [
             'foreignKey' => DirectoryDomain::FIELD_DIRECTORY_ID,
@@ -58,7 +58,8 @@ class DirectoryDomainsTable extends Table
     {
         $validator
             ->integer(DirectoryDomain::FIELD_DIRECTORY_ID)
-            ->allowEmptyString(DirectoryDomain::FIELD_DIRECTORY_ID, null, 'create');
+            ->requirePresence(DirectoryDomain::FIELD_DIRECTORY_ID)
+            ->notEmptyString(DirectoryDomain::FIELD_DIRECTORY_ID, null, 'create');
 
         $validator
             ->scalar(DirectoryDomain::FIELD_DIRECTORY_DOMAIN)
@@ -86,8 +87,8 @@ class DirectoryDomainsTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['directory_domain']));
-        $rules->add($rules->existsIn(['directory_id'], 'Directories'));
+        $rules->add($rules->isUnique([DirectoryDomain::FIELD_DIRECTORY_DOMAIN]));
+        $rules->add($rules->existsIn([DirectoryDomain::FIELD_DIRECTORY_ID], 'Directories'));
 
         return $rules;
     }
@@ -95,6 +96,7 @@ class DirectoryDomainsTable extends Table
     /**
      * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
      * @return int|null
+     * @throws \Google_Exception
      */
     public function populate(Directory $directory): ?int
     {
@@ -104,7 +106,6 @@ class DirectoryDomainsTable extends Table
         /** @var \Google_Service_Directory_Domains $domain */
         foreach ($domainList->getDomains() as $domain) {
             $result = $this->findOrMake($domain, $directory->id);
-            debug($result);
             if ($result) {
                 $count += 1;
             }
@@ -124,7 +125,6 @@ class DirectoryDomainsTable extends Table
             DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
             DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,
         ];
-        debug($search);
 
         return $this->findOrCreate($search);
     }

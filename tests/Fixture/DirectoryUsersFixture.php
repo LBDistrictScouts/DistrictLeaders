@@ -40,7 +40,6 @@ class DirectoryUsersFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'directory_id' => 1,
                 'directory_user_reference' => 'Lorem ipsum dolor sit amet',
                 'given_name' => 'Lorem ipsum dolor sit amet',

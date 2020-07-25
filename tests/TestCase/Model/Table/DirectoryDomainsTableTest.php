@@ -103,7 +103,7 @@ class DirectoryDomainsTableTest extends TestCase
     {
         $expected = [
             DirectoryDomain::FIELD_ID => 1,
-            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => 'Lorem ipsum dolor sit amet',
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => 'goatface.org.uk',
             DirectoryDomain::FIELD_DIRECTORY_ID => 1,
             DirectoryDomain::FIELD_INGEST => true,
         ];
@@ -118,7 +118,31 @@ class DirectoryDomainsTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $new = $this->DirectoryDomains->newEntity($this->getGood());
+        TestCase::assertInstanceOf(DirectoryDomain::class, $this->DirectoryDomains->save($new));
+
+        $required = [
+            DirectoryDomain::FIELD_DIRECTORY_ID,
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN,
+        ];
+        $this->validateRequired($required, $this->DirectoryDomains, [$this, 'getGood']);
+
+        $notRequired = [
+            DirectoryDomain::FIELD_INGEST,
+        ];
+        $this->validateNotRequired($notRequired, $this->DirectoryDomains, [$this, 'getGood']);
+
+        $notEmpties = [
+            DirectoryDomain::FIELD_DIRECTORY_ID,
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN,
+            DirectoryDomain::FIELD_INGEST,
+        ];
+        $this->validateNotEmpties($notEmpties, $this->DirectoryDomains, [$this, 'getGood']);
+
+        $maxLengths = [
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => 255,
+        ];
+        $this->validateMaxLengths($maxLengths, $this->DirectoryDomains, [$this, 'getGood']);
     }
 
     /**
@@ -128,6 +152,17 @@ class DirectoryDomainsTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->validateExistsRule(
+            DirectoryDomain::FIELD_DIRECTORY_ID,
+            $this->DirectoryDomains,
+            $this->DirectoryDomains->Directories,
+            [$this, 'getGood']
+        );
+
+        $this->validateUniqueRule(
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN,
+            $this->DirectoryDomains,
+            [$this, 'getGood']
+        );
     }
 }

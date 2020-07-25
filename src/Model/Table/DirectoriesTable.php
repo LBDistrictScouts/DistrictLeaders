@@ -126,11 +126,14 @@ class DirectoriesTable extends Table
     /**
      * @param \App\Model\Entity\Directory $directory The directory to be Populated
      * @return array
+     * @throws \Google_Exception
      */
     public function populate(Directory $directory)
     {
-        $domainCount = $this->DirectoryDomains->populate($directory);
+        $domainsCount = $this->DirectoryDomains->populate($directory);
+        $usersCount = $this->DirectoryUsers->populate($directory);
+        $groupsCount = $this->DirectoryGroups->populate($directory);
 
-        return compact('domainCount');
+        return compact('domainsCount', 'usersCount', 'groupsCount');
     }
 }

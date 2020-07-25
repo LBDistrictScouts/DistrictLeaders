@@ -27,10 +27,10 @@ class DirectoryDomain extends Entity
      * @var array
      */
     protected $_accessible = [
-        'directory_domain' => true,
-        'directory_id' => true,
-        'ingest' => true,
-        'directory' => true,
+        self::FIELD_DIRECTORY_DOMAIN => true,
+        self::FIELD_DIRECTORY_ID => true,
+        self::FIELD_INGEST => true,
+        self::FIELD_DIRECTORY => true,
     ];
 
     public const FIELD_ID = 'id';

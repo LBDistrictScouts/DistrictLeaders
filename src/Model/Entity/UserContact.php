@@ -63,4 +63,5 @@ class UserContact extends Entity
     public const FIELD_ROLES = 'roles';
     public const FIELD_USER_CONTACT_TYPE = 'user_contact_type';
     public const FIELD_AUDITS = 'audits';
+    public const FIELD_DIRECTORY_USER = 'directory_user';
 }

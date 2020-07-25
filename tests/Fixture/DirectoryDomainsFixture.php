@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\Fixture;
 
+use App\Model\Entity\DirectoryDomain;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -37,10 +38,9 @@ class DirectoryDomainsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
-                'directory_domain' => 'Lorem ipsum dolor sit amet',
-                'directory_id' => 1,
-                'ingest' => 1,
+                DirectoryDomain::FIELD_DIRECTORY_DOMAIN => 'goatface.org.uk',
+                DirectoryDomain::FIELD_DIRECTORY_ID => 1,
+                DirectoryDomain::FIELD_INGEST => true,
             ],
         ];
         parent::init();

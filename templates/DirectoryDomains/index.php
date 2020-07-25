@@ -8,7 +8,6 @@ $this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'DirectoryDomains');
 $this->assign('subset', 'All');
-$this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_DOMAIN'));
 
 ?>
 <thead>
@@ -30,8 +29,8 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_DOMAIN')
             <?= $this->Identity->checkCapability('DELETE_DIRECTORY_DOMAIN') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $directoryDomain->id], ['confirm' => __('Are you sure you want to delete # {0}?', $directoryDomain->id), 'title' => __('Delete Directory Domain'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= h($directoryDomain->directory_domain) ?></td>
-        <td><?= $this->Number->format($directoryDomain->directory_id) ?></td>
-        <td><?= h($directoryDomain->ingest) ?></td>
+        <td><?= $directoryDomain->has($directoryDomain::FIELD_DIRECTORY) ? $this->Html->link($directoryDomain->directory->directory, ['controller' => 'Directories', 'action' => 'view', $directoryDomain->directory->id]) : '' ?></td>
+        <td><?= $this->Icon->iconBoolean($directoryDomain->ingest) ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>

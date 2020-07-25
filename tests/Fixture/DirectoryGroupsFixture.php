@@ -39,7 +39,6 @@ class DirectoryGroupsFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'directory_id' => 1,
                 'directory_group_name' => 'Lorem ipsum dolor sit amet',
                 'directory_group_email' => 'Lorem ipsum dolor sit amet',

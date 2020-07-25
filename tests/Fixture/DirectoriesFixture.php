@@ -41,7 +41,6 @@ class DirectoriesFixture extends TestFixture
     {
         $this->records = [
             [
-                'id' => 1,
                 'directory' => 'Lorem ipsum dolor sit amet',
                 'configuration_payload' => '',
                 'directory_type_id' => 1,

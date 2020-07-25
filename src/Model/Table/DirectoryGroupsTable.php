@@ -3,9 +3,14 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Directory;
+use App\Model\Entity\DirectoryDomain;
+use App\Model\Entity\DirectoryGroup;
+use App\Utility\GoogleBuilder;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Service_Directory_Group;
 
 /**
  * DirectoryGroups Model
@@ -97,5 +102,81 @@ class DirectoryGroupsTable extends Table
         $rules->add($rules->existsIn(['directory_id'], 'Directories'));
 
         return $rules;
+    }
+
+    /**
+     * @param \App\Model\Entity\Directory $directory The directory to be Populated with Groups
+     * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to a Domain
+     * @return int
+     * @throws \Google_Exception
+     */
+    public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
+    {
+        $domain = null;
+        if ($directoryDomain instanceof DirectoryDomain) {
+            $domain = $directoryDomain->directory_domain;
+        }
+
+        $groupCount = 0;
+        $continue = true;
+        $pageToken = null;
+
+        while ($continue) {
+            $result = $this->populateFromList($directory, $domain, $groupCount, $pageToken);
+            $groupCount += $result['count'];
+            $pageToken = $result['pageToken'];
+
+            if (is_null($pageToken) || empty($pageToken)) {
+                $continue = false;
+            }
+        }
+
+        return $groupCount;
+    }
+
+    /**
+     * @param \App\Model\Entity\Directory $directory The Directory
+     * @param string|null $directoryDomain The Directory Domain
+     * @param int $count The Count start point
+     * @param null $pageToken The Next Page Token
+     * @return array
+     * @throws \Google_Exception
+     */
+    public function populateFromList(
+        Directory $directory,
+        ?string $directoryDomain = null,
+        $count = 0,
+        $pageToken = null
+    ): array {
+        $userList = GoogleBuilder::getGroupList($directory, $directoryDomain, 20, $pageToken);
+        $pageToken = $userList->getNextPageToken();
+
+        /** @var \Google_Service_Directory_Group $group */
+        foreach ($userList->getGroups() as $group) {
+            $result = $this->findOrMake($group, $directory->id);
+            if ($result) {
+                $count += 1;
+            }
+        }
+
+        return compact('count', 'pageToken');
+    }
+
+    /**
+     * @param \Google_Service_Directory_Group $directoryGroup Google Response Object
+     * @param int $directoryId ID of the Parent Directory
+     * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
+     */
+    public function findOrMake(Google_Service_Directory_Group $directoryGroup, int $directoryId)
+    {
+        $search = [
+            DirectoryGroup::FIELD_DIRECTORY_GROUP_REFERENCE => $directoryGroup->getId(),
+            DirectoryGroup::FIELD_DIRECTORY_ID => $directoryId,
+        ];
+
+        return $this->findOrCreate($search, function (DirectoryGroup $entity) use ($directoryGroup) {
+            $entity->set($entity::FIELD_DIRECTORY_GROUP_NAME, $directoryGroup->getName());
+            $entity->set($entity::FIELD_DIRECTORY_GROUP_EMAIL, $directoryGroup->getEmail());
+        });
     }
 }

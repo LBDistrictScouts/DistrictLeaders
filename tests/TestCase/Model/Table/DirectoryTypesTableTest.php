@@ -64,12 +64,10 @@ class DirectoryTypesTableTest extends TestCase
      */
     public function getGood()
     {
-        $good = [
+        return [
             DirectoryType::FIELD_DIRECTORY_TYPE => TextSafe::shuffle(15),
             DirectoryType::FIELD_DIRECTORY_TYPE_CODE => TextSafe::shuffle(3),
         ];
-
-        return $good;
     }
 
     /**

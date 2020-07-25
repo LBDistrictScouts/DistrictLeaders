@@ -9,6 +9,7 @@ use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Google_Client;
 use Google_Service_Directory;
+use Google_Service_Directory_Groups;
 
 /**
  * GoogleClient component
@@ -150,7 +151,7 @@ class GoogleBuilder
      * @return \Google_Service_Directory_Users
      * @throws \Google_Exception
      */
-    public static function getList(
+    public static function getUserList(
         ?Directory $directory = null,
         $domain = null,
         int $limit = 50,
@@ -159,7 +160,7 @@ class GoogleBuilder
         $service = GoogleBuilder::getService($directory);
 
         $optParams = [
-            'customer' => 'my_customer',
+            'customer' => $directory->customer_reference,
             'maxResults' => $limit,
             'orderBy' => 'email',
         ];
@@ -173,6 +174,41 @@ class GoogleBuilder
         }
 
         return $service->users->listUsers($optParams);
+    }
+
+    /**
+     * get List
+     *
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
+     * @param null $domain Domain Limit
+     * @param int $limit Page Size
+     * @param string|null $pageToken String for Next Result Set
+     * @return \Google_Service_Directory_Groups
+     * @throws \Google_Exception
+     */
+    public static function getGroupList(
+        ?Directory $directory = null,
+        $domain = null,
+        int $limit = 50,
+        ?string $pageToken = null
+    ): Google_Service_Directory_Groups {
+        $service = GoogleBuilder::getService($directory);
+
+        $optParams = [
+            'customer' => $directory->customer_reference,
+            'maxResults' => $limit,
+            'orderBy' => 'email',
+        ];
+
+        if (!is_null($pageToken)) {
+            $optParams['pageToken'] = $pageToken;
+        }
+
+        if (!is_null($domain)) {
+            $optParams['domain'] = $domain;
+        }
+
+        return $service->groups->listGroups($optParams);
     }
 
     /**

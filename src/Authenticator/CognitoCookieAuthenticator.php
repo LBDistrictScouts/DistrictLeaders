@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Authenticator;
 
 use Authentication\Authenticator\PersistenceInterface;
+use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
 use Authentication\Identifier\IdentifierInterface;
 use Authentication\PasswordHasher\PasswordHasherTrait;
@@ -84,7 +85,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
     /**
      * @inheritDoc
      */
-    public function authenticate(ServerRequestInterface $request): CognitoResult
+    public function authenticate(ServerRequestInterface $request): ResultInterface
     {
         $cookies = $request->getCookieParams();
         $cookieName = $this->getConfig('cookie.name');
