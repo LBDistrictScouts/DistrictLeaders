@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Table\ScoutGroupsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -40,8 +39,8 @@ class ScoutGroupsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
-        $this->ScoutGroups = TableRegistry::getTableLocator()->get('ScoutGroups', $config);
+        $config = $this->getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
+        $this->ScoutGroups = $this->getTableLocator()->get('ScoutGroups', $config);
     }
 
     /**

@@ -6,7 +6,7 @@ namespace App\Model\Behavior;
 use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Exception\MissingBehaviorException;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\Utility\Inflector;
 
 /**
@@ -16,6 +16,8 @@ use Cake\Utility\Inflector;
  */
 class AuditableBehavior extends Behavior
 {
+    use LocatorAwareTrait;
+
     /**
      * Default configuration.
      *
@@ -36,7 +38,7 @@ class AuditableBehavior extends Behavior
     public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
         if ($this->getTable()->hasAssociation('Audits')) {
-            $this->Audits = TableRegistry::getTableLocator()->get('Audits');
+            $this->Audits = $this->getTableLocator()->get('Audits');
         } else {
             throw new MissingBehaviorException('Audits Association is not present.');
         }

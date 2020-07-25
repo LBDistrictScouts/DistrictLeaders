@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\RoleStatusesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -37,8 +36,8 @@ class RoleStatusesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('RoleStatuses') ? [] : ['className' => RoleStatusesTable::class];
-        $this->RoleStatuses = TableRegistry::getTableLocator()->get('RoleStatuses', $config);
+        $config = $this->getTableLocator()->exists('RoleStatuses') ? [] : ['className' => RoleStatusesTable::class];
+        $this->RoleStatuses = $this->getTableLocator()->get('RoleStatuses', $config);
     }
 
     /**

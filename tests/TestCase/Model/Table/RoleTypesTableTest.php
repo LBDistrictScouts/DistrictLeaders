@@ -7,7 +7,6 @@ use App\Model\Entity\Role;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
 use App\Model\Table\RoleTypesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -54,8 +53,8 @@ class RoleTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('RoleTypes') ? [] : ['className' => RoleTypesTable::class];
-        $this->RoleTypes = TableRegistry::getTableLocator()->get('RoleTypes', $config);
+        $config = $this->getTableLocator()->exists('RoleTypes') ? [] : ['className' => RoleTypesTable::class];
+        $this->RoleTypes = $this->getTableLocator()->get('RoleTypes', $config);
     }
 
     /**

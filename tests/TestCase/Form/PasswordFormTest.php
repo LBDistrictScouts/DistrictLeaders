@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Form;
 
 use App\Form\PasswordForm;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -274,7 +273,7 @@ class PasswordFormTest extends TestCase
     public function testExecute($requestArray, $outcomeArray)
     {
         if (key_exists('user', $requestArray) && $requestArray['user']) {
-            $this->Users = TableRegistry::getTableLocator()->get('Users');
+            $this->Users = $this->getTableLocator()->get('Users');
             $user = $this->Users->get(2);
             $requestArray['user'] = $user;
         }

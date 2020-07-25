@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\Token;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -62,7 +61,7 @@ class TokensControllerTest extends TestCase
     public function testValidate()
     {
         /** @var \App\Model\Table\TokensTable $tokens */
-        $tokens = TableRegistry::getTableLocator()->get('Tokens');
+        $tokens = $this->getTableLocator()->get('Tokens');
 
         $token = $tokens->prepareToken(1);
 
@@ -94,7 +93,7 @@ class TokensControllerTest extends TestCase
     public function testValidateAndAuthenticate()
     {
         /** @var \App\Model\Table\TokensTable $tokens */
-        $tokens = TableRegistry::getTableLocator()->get($this->controller);
+        $tokens = $this->getTableLocator()->get($this->controller);
 
         $tokenRow = $tokens->get(1);
         $tokenRow->set(Token::FIELD_TOKEN_HEADER, [

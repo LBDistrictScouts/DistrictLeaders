@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\NotificationType;
 use App\Model\Table\NotificationTypesTable;
 use App\Utility\TextSafe;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -40,8 +39,8 @@ class NotificationTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('NotificationTypes') ? [] : ['className' => NotificationTypesTable::class];
-        $this->NotificationTypes = TableRegistry::getTableLocator()->get('NotificationTypes', $config);
+        $config = $this->getTableLocator()->exists('NotificationTypes') ? [] : ['className' => NotificationTypesTable::class];
+        $this->NotificationTypes = $this->getTableLocator()->get('NotificationTypes', $config);
     }
 
     /**

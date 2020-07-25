@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\DirectoryUsersTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -37,8 +36,8 @@ class DirectoryUsersTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DirectoryUsers') ? [] : ['className' => DirectoryUsersTable::class];
-        $this->DirectoryUsers = TableRegistry::getTableLocator()->get('DirectoryUsers', $config);
+        $config = $this->getTableLocator()->exists('DirectoryUsers') ? [] : ['className' => DirectoryUsersTable::class];
+        $this->DirectoryUsers = $this->getTableLocator()->get('DirectoryUsers', $config);
     }
 
     /**

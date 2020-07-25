@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampRoleTypesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -54,8 +53,8 @@ class CampRoleTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('CampRoleTypes') ? [] : ['className' => CampRoleTypesTable::class];
-        $this->CampRoleTypes = TableRegistry::getTableLocator()->get('CampRoleTypes', $config);
+        $config = $this->getTableLocator()->exists('CampRoleTypes') ? [] : ['className' => CampRoleTypesTable::class];
+        $this->CampRoleTypes = $this->getTableLocator()->get('CampRoleTypes', $config);
     }
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\User;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -169,7 +168,7 @@ class UsersControllerTest extends TestCase
         // Logging In
         $testPassword = 'ThisTestPassword';
 
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
+        $this->Users = $this->getTableLocator()->get('Users');
         $user = $this->Users->get(1);
 
         $user->set(User::FIELD_PASSWORD, $testPassword);

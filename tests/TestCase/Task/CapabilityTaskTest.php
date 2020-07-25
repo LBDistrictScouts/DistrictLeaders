@@ -7,7 +7,6 @@ use App\Model\Entity\RoleTemplate;
 use App\Shell\Task\QueueCapabilityTask;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOutput;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -91,7 +90,7 @@ class CapabilityTaskTest extends TestCase
      */
     public function testCapabilityQueueJob()
     {
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $originalJobCount = $this->QueuedJobs->find('all')->count();
         TestCase::assertEquals(0, $originalJobCount);
 
@@ -124,8 +123,8 @@ class CapabilityTaskTest extends TestCase
      */
     public function testWholeCapabilityQueueJob()
     {
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
-        $this->RoleTemplates = TableRegistry::getTableLocator()->get('RoleTemplates');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $this->RoleTemplates = $this->getTableLocator()->get('RoleTemplates');
         $originalJobCount = $this->QueuedJobs->find('all')->count();
         $originalRoleType = $this->RoleTemplates->RoleTypes->get(1, ['contain' => 'Capabilities']);
 
@@ -164,7 +163,7 @@ class CapabilityTaskTest extends TestCase
      */
     public function testCapabilityQueueJobEntityMissing()
     {
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $originalJobCount = $this->QueuedJobs->find('all')->count();
 
         $this->QueuedJobs->createJob(

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Directory;
 use App\Model\Table\DirectoriesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,6 +12,8 @@ use Cake\TestSuite\TestCase;
  */
 class DirectoriesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -40,8 +42,8 @@ class DirectoriesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Directories') ? [] : ['className' => DirectoriesTable::class];
-        $this->Directories = TableRegistry::getTableLocator()->get('Directories', $config);
+        $config = $this->getTableLocator()->exists('Directories') ? [] : ['className' => DirectoriesTable::class];
+        $this->Directories = $this->getTableLocator()->get('Directories', $config);
     }
 
     /**
@@ -63,7 +65,16 @@ class DirectoriesTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [
+            Directory::FIELD_ID => 1,
+            Directory::FIELD_DIRECTORY => 'Lorem ipsum dolor sit amet',
+            Directory::FIELD_CONFIGURATION_PAYLOAD => '',
+            Directory::FIELD_DIRECTORY_TYPE_ID => 1,
+            Directory::FIELD_ACTIVE => true,
+            Directory::FIELD_CUSTOMER_REFERENCE => 'Lorem ipsu',
+        ];
+
+        $this->validateInitialise($expected, $this->Directories, 1);
     }
 
     /**

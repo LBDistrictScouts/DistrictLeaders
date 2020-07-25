@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\DirectoryGroupsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -25,9 +24,37 @@ class DirectoryGroupsTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.DirectoryGroups',
-        'app.Directories',
+        'app.UserStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTemplates',
         'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -38,8 +65,8 @@ class DirectoryGroupsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DirectoryGroups') ? [] : ['className' => DirectoryGroupsTable::class];
-        $this->DirectoryGroups = TableRegistry::getTableLocator()->get('DirectoryGroups', $config);
+        $config = $this->getTableLocator()->exists('DirectoryGroups') ? [] : ['className' => DirectoryGroupsTable::class];
+        $this->DirectoryGroups = $this->getTableLocator()->get('DirectoryGroups', $config);
     }
 
     /**

@@ -7,7 +7,6 @@ use App\Model\Entity\CapabilitiesRoleType;
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleType;
 use App\Model\Table\CapabilitiesRoleTypesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -47,8 +46,8 @@ class CapabilitiesRoleTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('CapabilitiesRoleTypes') ? [] : ['className' => CapabilitiesRoleTypesTable::class];
-        $this->CapabilitiesRoleTypes = TableRegistry::getTableLocator()->get('CapabilitiesRoleTypes', $config);
+        $config = $this->getTableLocator()->exists('CapabilitiesRoleTypes') ? [] : ['className' => CapabilitiesRoleTypesTable::class];
+        $this->CapabilitiesRoleTypes = $this->getTableLocator()->get('CapabilitiesRoleTypes', $config);
     }
 
     /**

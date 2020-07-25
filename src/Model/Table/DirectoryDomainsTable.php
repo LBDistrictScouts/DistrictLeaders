@@ -103,7 +103,9 @@ class DirectoryDomainsTable extends Table
 
         /** @var \Google_Service_Directory_Domains $domain */
         foreach ($domainList->getDomains() as $domain) {
-            if ($this->findOrMake($domain, $directory->id)) {
+            $result = $this->findOrMake($domain, $directory->id);
+            debug($result);
+            if ($result) {
                 $count += 1;
             }
         }
@@ -118,21 +120,12 @@ class DirectoryDomainsTable extends Table
      */
     public function findOrMake(Google_Service_Directory_Domains $directoryDomains, int $directoryId)
     {
-        $found = $this->find()
-            ->where([
-                DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
-                DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,
-            ]);
+        $search = [
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
+            DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,
+        ];
+        debug($search);
 
-        if ($found->count() == 0) {
-            $directoryDomain = $this->newEntity([
-                DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
-                DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,
-            ]);
-
-            return $this->save($directoryDomain);
-        }
-
-        return $found->first();
+        return $this->findOrCreate($search);
     }
 }

@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\EmailResponse;
 use App\Model\Table\EmailResponsesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -62,8 +61,8 @@ class EmailResponsesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('EmailResponses') ? [] : ['className' => EmailResponsesTable::class];
-        $this->EmailResponses = TableRegistry::getTableLocator()->get('EmailResponses', $config);
+        $config = $this->getTableLocator()->exists('EmailResponses') ? [] : ['className' => EmailResponsesTable::class];
+        $this->EmailResponses = $this->getTableLocator()->get('EmailResponses', $config);
     }
 
     /**

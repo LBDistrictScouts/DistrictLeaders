@@ -8,7 +8,6 @@ use App\Model\Table\UsersTable;
 use App\Utility\TextSafe;
 use Cake\Cache\Cache;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -65,8 +64,8 @@ class UsersTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = TableRegistry::getTableLocator()->get('Users', $config);
+        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
+        $this->Users = $this->getTableLocator()->get('Users', $config);
 
         $now = new Time('2018-12-26 23:22:30');
         Time::setTestNow($now);

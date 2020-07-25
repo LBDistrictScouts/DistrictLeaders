@@ -8,9 +8,9 @@ use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\Database\Exception;
 use Cake\Log\Log;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\Validation\Validator;
 
@@ -31,6 +31,8 @@ use Cake\Validation\Validator;
  */
 class CapabilitiesTable extends Table
 {
+    use LocatorAwareTrait;
+
     /**
      * Initialize method
      *
@@ -201,7 +203,7 @@ class CapabilitiesTable extends Table
     {
         $fieldActions = Configure::read('fieldCapabilities');
 
-        $table = TableRegistry::getTableLocator()->get($entity);
+        $table = $this->getTableLocator()->get($entity);
         if (!($table instanceof Table) || $table->getEntityClass() == 'Cake\ORM\Entity') {
             return false;
         }

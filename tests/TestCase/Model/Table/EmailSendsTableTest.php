@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\EmailSendsTable;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -60,8 +59,8 @@ class EmailSendsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('EmailSends') ? [] : ['className' => EmailSendsTable::class];
-        $this->EmailSends = TableRegistry::getTableLocator()->get('EmailSends', $config);
+        $config = $this->getTableLocator()->exists('EmailSends') ? [] : ['className' => EmailSendsTable::class];
+        $this->EmailSends = $this->getTableLocator()->get('EmailSends', $config);
     }
 
     /**

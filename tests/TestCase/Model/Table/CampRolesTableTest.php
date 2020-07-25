@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampRolesTable;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -54,8 +53,8 @@ class CampRolesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('CampRoles') ? [] : ['className' => CampRolesTable::class];
-        $this->CampRoles = TableRegistry::getTableLocator()->get('CampRoles', $config);
+        $config = $this->getTableLocator()->exists('CampRoles') ? [] : ['className' => CampRolesTable::class];
+        $this->CampRoles = $this->getTableLocator()->get('CampRoles', $config);
 
         $now = new Time('2018-12-26 23:22:30');
         Time::setTestNow($now);

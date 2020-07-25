@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\CampsTable;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -55,8 +54,8 @@ class CampsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Camps') ? [] : ['className' => CampsTable::class];
-        $this->Camps = TableRegistry::getTableLocator()->get('Camps', $config);
+        $config = $this->getTableLocator()->exists('Camps') ? [] : ['className' => CampsTable::class];
+        $this->Camps = $this->getTableLocator()->get('Camps', $config);
 
         $now = new Time('2018-12-26 23:22:30');
         Time::setTestNow($now);

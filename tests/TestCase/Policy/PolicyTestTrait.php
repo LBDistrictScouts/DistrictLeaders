@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Policy;
 use App\Model\Entity\User;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\Utility\Inflector;
 use PHPUnit\Exception;
@@ -77,7 +76,7 @@ trait PolicyTestTrait
      */
     protected function userWithCapability($capability, $level = 'user')
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
+        $users = $this->getTableLocator()->get('Users');
         $user = $users->find()->first();
 
         if (empty($user) || is_null($user)) {
@@ -96,7 +95,7 @@ trait PolicyTestTrait
      */
     protected function userWithOutCapability($capability)
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
+        $users = $this->getTableLocator()->get('Users');
         $user = $users->find()->first();
         $capabilities = $user->get('capabilities')['user'];
 

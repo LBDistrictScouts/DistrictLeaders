@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Listener;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -40,7 +39,7 @@ class RoleListenerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Roles = TableRegistry::getTableLocator()->get('Roles');
+        $this->Roles = $this->getTableLocator()->get('Roles');
         // enable event tracking
         $this->EventManager = EventManager::instance();
         $this->EventManager->setEventList(new EventList());

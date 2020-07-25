@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
 
@@ -54,8 +53,8 @@ class CapabilitiesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Capabilities') ? [] : ['className' => CapabilitiesTable::class];
-        $this->Capabilities = TableRegistry::getTableLocator()->get('Capabilities', $config);
+        $config = $this->getTableLocator()->exists('Capabilities') ? [] : ['className' => CapabilitiesTable::class];
+        $this->Capabilities = $this->getTableLocator()->get('Capabilities', $config);
     }
 
     /**

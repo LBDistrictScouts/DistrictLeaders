@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\DirectoryDomain;
 use App\Model\Table\DirectoryDomainsTable;
-use Cake\ORM\TableRegistry;
+use App\Utility\TextSafe;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,6 +13,8 @@ use Cake\TestSuite\TestCase;
  */
 class DirectoryDomainsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -25,8 +28,37 @@ class DirectoryDomainsTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.DirectoryDomains',
+        'app.UserStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.RoleTemplates',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+        'app.Sections',
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+        'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+
+        'app.DirectoryTypes',
         'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -37,8 +69,8 @@ class DirectoryDomainsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DirectoryDomains') ? [] : ['className' => DirectoryDomainsTable::class];
-        $this->DirectoryDomains = TableRegistry::getTableLocator()->get('DirectoryDomains', $config);
+        $config = $this->getTableLocator()->exists('DirectoryDomains') ? [] : ['className' => DirectoryDomainsTable::class];
+        $this->DirectoryDomains = $this->getTableLocator()->get('DirectoryDomains', $config);
     }
 
     /**
@@ -53,6 +85,15 @@ class DirectoryDomainsTableTest extends TestCase
         parent::tearDown();
     }
 
+    public function getGood(): array
+    {
+        return [
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => TextSafe::shuffle(20),
+            DirectoryDomain::FIELD_DIRECTORY_ID => 1,
+            DirectoryDomain::FIELD_INGEST => true,
+        ];
+    }
+
     /**
      * Test initialize method
      *
@@ -60,7 +101,14 @@ class DirectoryDomainsTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [
+            DirectoryDomain::FIELD_ID => 1,
+            DirectoryDomain::FIELD_DIRECTORY_DOMAIN => 'Lorem ipsum dolor sit amet',
+            DirectoryDomain::FIELD_DIRECTORY_ID => 1,
+            DirectoryDomain::FIELD_INGEST => true,
+        ];
+
+        $this->validateInitialise($expected, $this->DirectoryDomains, 1);
     }
 
     /**

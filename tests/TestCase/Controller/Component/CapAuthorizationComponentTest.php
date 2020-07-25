@@ -13,7 +13,6 @@ use Authorization\Policy\OrmResolver;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -105,8 +104,8 @@ class CapAuthorizationComponentTest extends TestCase
         $this->ComponentRegistry = new ComponentRegistry($this->Controller);
         $this->Authorization = new CapAuthorizationComponent($this->ComponentRegistry);
 
-        $config = TableRegistry::getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = TableRegistry::getTableLocator()->get('Users', $config);
+        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
+        $this->Users = $this->getTableLocator()->get('Users', $config);
     }
 
     /**

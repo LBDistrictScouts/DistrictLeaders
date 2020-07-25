@@ -8,7 +8,7 @@ use Authorization\IdentityInterface as AuthorizationIdentity;
 use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\ORM\Entity;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * User Entity
@@ -54,6 +54,8 @@ use Cake\ORM\TableRegistry;
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
+    use LocatorAwareTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -205,7 +207,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
     {
-        $capTable = TableRegistry::getTableLocator()->get('Capabilities');
+        $capTable = $this->getTableLocator()->get('Capabilities');
         $capability = $capTable->buildCapability($action, $model, $field);
 
         return $this->checkCapability($capability, $group, $section);

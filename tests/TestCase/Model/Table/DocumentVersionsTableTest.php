@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentVersionsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -43,8 +42,8 @@ class DocumentVersionsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DocumentVersions') ? [] : ['className' => DocumentVersionsTable::class];
-        $this->DocumentVersions = TableRegistry::getTableLocator()->get('DocumentVersions', $config);
+        $config = $this->getTableLocator()->exists('DocumentVersions') ? [] : ['className' => DocumentVersionsTable::class];
+        $this->DocumentVersions = $this->getTableLocator()->get('DocumentVersions', $config);
     }
 
     /**

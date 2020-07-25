@@ -129,8 +129,8 @@ class DirectoriesTable extends Table
      */
     public function populate(Directory $directory)
     {
-        $directoryCount = $this->DirectoryDomains->populate($directory);
+        $domainCount = $this->DirectoryDomains->populate($directory);
 
-        return compact('directoryCount');
+        return compact('domainCount');
     }
 }

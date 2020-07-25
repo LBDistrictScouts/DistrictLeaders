@@ -10,7 +10,6 @@ use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -46,8 +45,8 @@ class UserListenerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
-        $this->Roles = TableRegistry::getTableLocator()->get('Roles');
+        $this->Users = $this->getTableLocator()->get('Users');
+        $this->Roles = $this->getTableLocator()->get('Roles');
 
         // enable event tracking
         $this->EventManager = EventManager::instance();

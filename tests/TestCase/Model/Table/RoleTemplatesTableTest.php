@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Table\RoleTemplatesTable;
 use Cake\Event\EventList;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -49,8 +48,8 @@ class RoleTemplatesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('RoleTemplates') ? [] : ['className' => RoleTemplatesTable::class];
-        $this->RoleTemplates = TableRegistry::getTableLocator()->get('RoleTemplates', $config);
+        $config = $this->getTableLocator()->exists('RoleTemplates') ? [] : ['className' => RoleTemplatesTable::class];
+        $this->RoleTemplates = $this->getTableLocator()->get('RoleTemplates', $config);
     }
 
     /**
