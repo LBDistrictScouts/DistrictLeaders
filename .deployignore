@@ -15,6 +15,9 @@ LICENSE
 .phpstorm.meta.php
 .phpstorm.meta.php/*
 
+.phan
+.phan/*
+
 .github/*.md
 
 phpunit.xml.dist
