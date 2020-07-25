@@ -6,6 +6,7 @@
 .gitignore
 codeclimate.yml
 codecov.yml
+.deployignore
 
 CODE_OF_CONDUCT.md
 README.md
@@ -17,6 +18,7 @@ LICENSE
 .github/*.md
 
 phpunit.xml.dist
+phpunit-travis.xml.dist
 phpcs.xml.dist
 
 **/*.default.php
