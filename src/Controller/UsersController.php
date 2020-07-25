@@ -150,10 +150,9 @@ class UsersController extends AppController
     /**
      * Add method
      *
-     * @param string $userDirectoryId
-     *
+     * @param string $userDirectoryId The API ID of the User
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
-     * @throws \Google_Exception
+     * @throws \Exception
      */
     public function import($userDirectoryId)
     {

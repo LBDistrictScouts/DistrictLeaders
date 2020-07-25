@@ -43,7 +43,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Role Types') ?></h4>
-        <?php if (!empty($directoryGroup->role_types)): ?>
+        <?php if (!empty($directoryGroup->role_types)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -54,7 +54,7 @@
                 <th scope="col"><?= __('Role Template Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($directoryGroup->role_types as $roleTypes): ?>
+            <?php foreach ($directoryGroup->role_types as $roleTypes) : ?>
             <tr>
                 <td><?= h($roleTypes->id) ?></td>
                 <td><?= h($roleTypes->role_type) ?></td>

@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryGroup;
+
 /**
  * DirectoryGroups Controller
  *
  * @property \App\Model\Table\DirectoryGroupsTable $DirectoryGroups
- *
  * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
+
 class DirectoryGroupsController extends AppController
 {
     /**
@@ -31,7 +32,7 @@ class DirectoryGroupsController extends AppController
     /**
      * View method
      *
-     * @param string|null $DirectoryGroupId Directory Group id.
+     * @param null $id Directory Group id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

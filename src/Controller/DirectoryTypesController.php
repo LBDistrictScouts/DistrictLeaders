@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryType;
+
 /**
  * DirectoryTypes Controller
  *
  * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
- *
  * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
+
 class DirectoryTypesController extends AppController
 {
     /**
@@ -28,7 +29,7 @@ class DirectoryTypesController extends AppController
     /**
      * View method
      *
-     * @param string|null $DirectoryTypeId Directory Type id.
+     * @param null $id Directory Type id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

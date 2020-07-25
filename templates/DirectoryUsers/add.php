@@ -38,5 +38,5 @@ $this->assign('entity', 'DirectoryUsers');
         $args[4] = $directoryUser::FIELD_PRIMARY_EMAIL;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($directoryUser::FIELD_PRIMARY_EMAIL) : '';
 
-    ?>
+        ?>
 </fieldset>

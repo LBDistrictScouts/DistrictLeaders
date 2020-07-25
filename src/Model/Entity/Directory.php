@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  * @property int $directory_type_id
  * @property bool $active
  * @property string|null $customer_reference
+ * @property array|null $authorisation_token
  *
  * @property \App\Model\Entity\DirectoryType $directory_type
  * @property \App\Model\Entity\DirectoryDomain[] $directory_domains
@@ -37,10 +38,20 @@ class Directory extends Entity
         'directory_type_id' => true,
         'active' => true,
         'customer_reference' => true,
+        'authorisation_token' => false,
         'directory_type' => true,
         'directory_domains' => true,
         'directory_groups' => true,
         'directory_users' => true,
+    ];
+
+    /**
+     * Fields that are excluded from JSON versions of the entity.
+     *
+     * @var array
+     */
+    protected $_hidden = [
+        'authorisation_token',
     ];
 
     public const FIELD_ID = 'id';
@@ -49,6 +60,7 @@ class Directory extends Entity
     public const FIELD_DIRECTORY_TYPE_ID = 'directory_type_id';
     public const FIELD_ACTIVE = 'active';
     public const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
+    public const FIELD_AUTHORISATION_TOKEN = 'authorisation_token';
     public const FIELD_DIRECTORY_TYPE = 'directory_type';
     public const FIELD_DIRECTORY_DOMAINS = 'directory_domains';
     public const FIELD_DIRECTORY_GROUPS = 'directory_groups';

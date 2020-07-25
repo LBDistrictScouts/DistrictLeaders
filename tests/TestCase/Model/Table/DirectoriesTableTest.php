@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\DirectoriesTable;
-use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
@@ -13,8 +12,6 @@ use Cake\TestSuite\TestCase;
  */
 class DirectoriesTableTest extends TestCase
 {
-    use LocatorAwareTrait;
-
     /**
      * Test subject
      *
@@ -43,8 +40,8 @@ class DirectoriesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = $this->getTableLocator()->exists('Directories') ? [] : ['className' => DirectoriesTable::class];
-        $this->Directories = $this->getTableLocator()->get('Directories', $config);
+        $config = TableRegistry::getTableLocator()->exists('Directories') ? [] : ['className' => DirectoriesTable::class];
+        $this->Directories = TableRegistry::getTableLocator()->get('Directories', $config);
     }
 
     /**

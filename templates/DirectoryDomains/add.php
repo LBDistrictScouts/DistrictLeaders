@@ -32,5 +32,5 @@ $this->assign('entity', 'DirectoryDomains');
         $args[4] = $directoryDomain::FIELD_INGEST;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($directoryDomain::FIELD_INGEST) : '';
 
-    ?>
+        ?>
 </fieldset>

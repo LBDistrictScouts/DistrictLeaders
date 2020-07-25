@@ -27,5 +27,5 @@ $this->assign('entity', 'DirectoryTypes');
         $args[4] = $directoryType::FIELD_DIRECTORY_TYPE_CODE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($directoryType::FIELD_DIRECTORY_TYPE_CODE) : '';
 
-    ?>
+        ?>
 </fieldset>

@@ -20,7 +20,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_TYPE'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($directoryTypes as $directoryType): ?>
+    <?php foreach ($directoryTypes as $directoryType) : ?>
     <tr>
         <td><?= h($directoryType->id) ?></td>
                 <td class="actions">

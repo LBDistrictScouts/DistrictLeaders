@@ -7,7 +7,6 @@ use App\Model\Entity\FileType;
 use App\Model\Table\FileTypesTable;
 use App\Utility\TextSafe;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**

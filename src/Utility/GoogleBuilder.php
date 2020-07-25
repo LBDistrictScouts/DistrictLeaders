@@ -5,6 +5,8 @@ namespace App\Utility;
 
 use App\Model\Entity\Directory;
 use Cake\Core\Configure;
+use Cake\Datasource\FactoryLocator;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Google_Client;
 use Google_Service_Directory;
 
@@ -13,14 +15,18 @@ use Google_Service_Directory;
  */
 class GoogleBuilder
 {
-    /**
-     * Default configuration.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [];
+    use LocatorAwareTrait;
 
-    public static function newClient(Directory $directory = null): Google_Client
+    protected const ACCESS_TYPE = 'offline';
+
+    protected const ACCESS_PROMPT = 'select_account consent';
+
+    /**
+     * @param \App\Model\Entity\Directory|null $directory The Directory to take Config From
+     * @return \Google_Client
+     * @throws \Google_Exception
+     */
+    public static function newClient(?Directory $directory = null): Google_Client
     {
         $client = new Google_Client();
         $client->setApplicationName(Configure::read('App.who.system', 'District Leaders System'));
@@ -29,7 +35,7 @@ class GoogleBuilder
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
         ]);
-        if (is_null($directory)) {
+        if (!is_null($directory)) {
             try {
                 $client->setAuthConfig($directory->get(Directory::FIELD_CONFIGURATION_PAYLOAD));
             } catch (\Google_Exception $e) {
@@ -39,30 +45,24 @@ class GoogleBuilder
             $client->setAuthConfig('config/Credentials/credentials.json');
         }
 
-        $client->setAccessType('offline');
-        $client->setPrompt('select_account consent');
+        $client->setAccessType(GoogleBuilder::ACCESS_TYPE);
+        $client->setPrompt(GoogleBuilder::ACCESS_PROMPT);
+
+        return $client;
     }
 
     /**
      * Get Client for Google
      *
-     * @param \App\Model\Entity\Directory|null $directory
-     *
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Client|false
+     * @throws \Google_Exception
      */
-    public static function getClient(Directory $directory = null)
+    public static function getClient(?Directory $directory = null)
     {
         $client = GoogleBuilder::newClient($directory);
 
-        // Load previously authorized token from a file, if it exists.
-        // The file token.json stores the user's access and refresh tokens, and is
-        // created automatically when the authorization flow completes for the first
-        // time.
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
-        if (file_exists($tokenPath)) {
-            $accessToken = json_decode(file_get_contents($tokenPath), true);
-            $client->setAccessToken($accessToken);
-        }
+        $client = GoogleBuilder::getToken($client, $directory);
 
         // If there is no previous token or it's expired.
         if ($client->isAccessTokenExpired()) {
@@ -72,19 +72,21 @@ class GoogleBuilder
             } else {
                 return false;
             }
-            GoogleBuilder::saveToken($client);
+            GoogleBuilder::saveToken($client, $directory);
         }
 
         return $client;
     }
 
     /**
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Service_Directory
      * @throws \Google_Exception
      */
-    public function getService()
+    public static function getService(?Directory $directory = null)
     {
-        $client = GoogleBuilder::getClient();
+        $client = GoogleBuilder::getClient($directory);
+
         return new Google_Service_Directory($client);
     }
 
@@ -92,11 +94,21 @@ class GoogleBuilder
      * Save Token Method
      *
      * @param \Google_Client $client An Activated Client
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return void
      */
-    public static function saveToken(Google_Client $client)
+    public static function saveToken(Google_Client $client, ?Directory $directory = null)
     {
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
+        if ($directory instanceof Directory) {
+            $directory->set(Directory::FIELD_AUTHORISATION_TOKEN, $client->getAccessToken());
+
+            $directories = FactoryLocator::get('Table')->get('Directories');
+            $directories->save($directory, ['validator' => false]);
+
+            return;
+        }
+
+        $tokenPath = 'config/Credentials/token.json';
 
         // Save the token to a file.
         if (!file_exists(dirname($tokenPath))) {
@@ -107,11 +119,19 @@ class GoogleBuilder
 
     /**
      * @param \Google_Client $client The Google Token to get Token
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Client
      */
-    public function getToken(Google_Client $client)
+    public static function getToken(Google_Client $client, ?Directory $directory = null)
     {
-        $tokenPath = Configure::read('GoogleClient.TokenPath', 'config/Credentials/token.json');
+        if ($directory instanceof Directory && $directory->has(Directory::FIELD_AUTHORISATION_TOKEN)) {
+            $accessToken = $directory->get(Directory::FIELD_AUTHORISATION_TOKEN);
+            $client->setAccessToken($accessToken);
+
+            return $client;
+        }
+
+        $tokenPath = 'config/Credentials/token.json';
         if (file_exists($tokenPath)) {
             $accessToken = json_decode(file_get_contents($tokenPath), true);
             $client->setAccessToken($accessToken);
@@ -123,32 +143,50 @@ class GoogleBuilder
     /**
      * get List
      *
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
+     * @param null $domain Domain Limit
+     * @param int $limit Page Size
+     * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Users
      * @throws \Google_Exception
      */
-    public function getList($domain = null)
-    {
-        $service = $this->getService();
+    public static function getList(
+        ?Directory $directory = null,
+        $domain = null,
+        int $limit = 50,
+        ?string $pageToken = null
+    ) {
+        $service = GoogleBuilder::getService($directory);
 
-        // Print the first 10 users in the domain.
         $optParams = [
             'customer' => 'my_customer',
-            'domain' => $domain,
-            'maxResults' => 50,
+            'maxResults' => $limit,
             'orderBy' => 'email',
         ];
+
+        if (!is_null($pageToken)) {
+            $optParams['pageToken'] = $pageToken;
+        }
+
+        if (!is_null($domain)) {
+            $optParams['domain'] = $domain;
+        }
+
         return $service->users->listUsers($optParams);
     }
 
     /**
      * get List
      *
+     * @param string $userId ID for the Directory User
+     *
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Service_Directory_User
      * @throws \Google_Exception
      */
-    public function getUser($userId)
+    public static function getUser($userId, ?Directory $directory = null)
     {
-        $service = $this->getService();
+        $service = GoogleBuilder::getService($directory);
 
         return $service->users->get($userId);
     }
@@ -156,12 +194,13 @@ class GoogleBuilder
     /**
      * get List
      *
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Service_Directory_Domains2
      * @throws \Google_Exception
      */
-    public function getDomainList()
+    public static function getDomainList(?Directory $directory = null)
     {
-        $service = $this->getService();
+        $service = GoogleBuilder::getService($directory);
 
         return $service->domains->listDomains('my_customer');
     }

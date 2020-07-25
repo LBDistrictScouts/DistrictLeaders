@@ -10,6 +10,7 @@ class GoogleDirectories extends AbstractMigration
      *
      * More information on this method is available here:
      * https://book.cakephp.org/phinx/0/en/migrations.html#the-change-method
+     *
      * @return void
      */
     public function change()
@@ -75,7 +76,7 @@ class GoogleDirectories extends AbstractMigration
             ->addForeignKey('directory_id', 'directories')
             ->addColumn('directory_group_name', 'string', [
                 'limit' => 255,
-                'null' => false
+                'null' => false,
             ])
             ->addColumn('directory_group_email', 'string', [
                 'limit' => 100,

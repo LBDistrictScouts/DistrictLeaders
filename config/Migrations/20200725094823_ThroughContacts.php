@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 use Migrations\AbstractMigration;
 
-class TokenDirectory extends AbstractMigration
+class ThroughContacts extends AbstractMigration
 {
     /**
      * Change Method.
@@ -15,10 +15,14 @@ class TokenDirectory extends AbstractMigration
      */
     public function change()
     {
-        $this->table('directories')
-            ->addColumn('authorisation_token', 'json', [
+        $this->table('user_contacts')
+            ->addColumn('directory_user_id', 'integer', [
                 'null' => true,
             ])
-            ->save();
+            ->addForeignKey('directory_user_id', 'directory_users', ['id'], [
+                'delete' => 'SET_NULL',
+                'update' => 'NO_ACTION',
+            ])
+            ->update();
     }
 }

@@ -23,7 +23,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_USER'));
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($directoryUsers as $directoryUser): ?>
+    <?php foreach ($directoryUsers as $directoryUser) : ?>
     <tr>
         <td><?= h($directoryUser->id) ?></td>
                 <td class="actions">

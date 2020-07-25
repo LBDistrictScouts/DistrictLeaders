@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,7 +12,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
- *
  * @method \App\Model\Entity\DirectoryGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryGroup newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup[] newEntities(array $data, array $options = [])

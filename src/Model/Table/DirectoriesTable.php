@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Directory;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -17,7 +16,6 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DirectoryDomainsTable&\Cake\ORM\Association\HasMany $DirectoryDomains
  * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\HasMany $DirectoryGroups
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\HasMany $DirectoryUsers
- *
  * @method \App\Model\Entity\Directory get($primaryKey, $options = [])
  * @method \App\Model\Entity\Directory newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Directory[] newEntities(array $data, array $options = [])
@@ -90,6 +88,9 @@ class DirectoriesTable extends Table
             ->allowEmptyString('customer_reference')
             ->add('customer_reference', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->allowEmptyString('authorisation_token');
+
         return $validator;
     }
 
@@ -101,6 +102,7 @@ class DirectoriesTable extends Table
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType(Directory::FIELD_CONFIGURATION_PAYLOAD, 'json');
+        $schema->setColumnType(Directory::FIELD_AUTHORISATION_TOKEN, 'json');
 
         return $schema;
     }
@@ -119,5 +121,16 @@ class DirectoriesTable extends Table
         $rules->add($rules->existsIn(['directory_type_id'], 'DirectoryTypes'));
 
         return $rules;
+    }
+
+    /**
+     * @param \App\Model\Entity\Directory $directory The directory to be Populated
+     * @return array
+     */
+    public function populate(Directory $directory)
+    {
+        $directoryCount = $this->DirectoryDomains->populate($directory);
+
+        return compact('directoryCount');
     }
 }

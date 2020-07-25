@@ -22,7 +22,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_GROUP'))
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($directoryGroups as $directoryGroup): ?>
+    <?php foreach ($directoryGroups as $directoryGroup) : ?>
     <tr>
         <td><?= h($directoryGroup->id) ?></td>
                 <td class="actions">

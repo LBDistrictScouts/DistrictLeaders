@@ -21,7 +21,7 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_DIRECTORY_DOMAIN')
     </tr>
 </thead>
 <tbody>
-    <?php foreach ($directoryDomains as $directoryDomain): ?>
+    <?php foreach ($directoryDomains as $directoryDomain) : ?>
     <tr>
         <td><?= h($directoryDomain->id) ?></td>
                 <td class="actions">

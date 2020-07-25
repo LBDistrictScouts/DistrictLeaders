@@ -33,7 +33,7 @@
     </table>
     <div class="related">
         <h4><?= __('Related Directories') ?></h4>
-        <?php if (!empty($directoryType->directories)): ?>
+        <?php if (!empty($directoryType->directories)) : ?>
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th scope="col"><?= __('Id') ?></th>
@@ -44,7 +44,7 @@
                 <th scope="col"><?= __('Customer Reference') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
-            <?php foreach ($directoryType->directories as $directories): ?>
+            <?php foreach ($directoryType->directories as $directories) : ?>
             <tr>
                 <td><?= h($directories->id) ?></td>
                 <td><?= h($directories->directory) ?></td>

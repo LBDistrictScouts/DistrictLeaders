@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\UserContact;
 use App\Model\Table\UserContactsTable;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -21,14 +20,14 @@ class UserContactsTableTest extends TestCase
      *
      * @var \App\Model\Table\UserContactsTable
      */
-    public $UserContacts;
+    protected $UserContacts;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
@@ -43,6 +42,13 @@ class UserContactsTableTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -53,8 +59,8 @@ class UserContactsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('UserContacts') ? [] : ['className' => UserContactsTable::class];
-        $this->UserContacts = TableRegistry::getTableLocator()->get('UserContacts', $config);
+        $config = $this->getTableLocator()->exists('UserContacts') ? [] : ['className' => UserContactsTable::class];
+        $this->UserContacts = $this->getTableLocator()->get('UserContacts', $config);
 
         $now = new FrozenTime('2018-12-26 23:22:30');
         FrozenTime::setTestNow($now);
@@ -94,7 +100,7 @@ class UserContactsTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $dates = [
             UserContact::FIELD_MODIFIED,
@@ -107,7 +113,8 @@ class UserContactsTableTest extends TestCase
             UserContact::FIELD_CONTACT_FIELD => 'james@peach.com',
             UserContact::FIELD_USER_ID => 1,
             UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
-            UserContact::FIELD_VERIFIED => 1,
+            UserContact::FIELD_VERIFIED => true,
+            UserContact::FIELD_DIRECTORY_USER_ID => 1,
         ];
 
         $this->validateInitialise($expected, $this->UserContacts, 2, $dates);
@@ -118,7 +125,7 @@ class UserContactsTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -144,11 +151,11 @@ class UserContactsTableTest extends TestCase
     }
 
     /**
-     * Test validationDefault method
+     * Test validationEmail method
      *
      * @return void
      */
-    public function testValidationEmail()
+    public function testValidationEmail(): void
     {
         $good = $this->getGood();
 
@@ -178,7 +185,7 @@ class UserContactsTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->validateUniqueRule(
             [UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD],
@@ -191,14 +198,17 @@ class UserContactsTableTest extends TestCase
 
         // User Exists
         $this->validateExistsRule(UserContact::FIELD_USER_ID, $this->UserContacts, $this->UserContacts->Users, [$this, 'getGood']);
+
+        // Directory User Exists
+        $this->validateExistsRule(UserContact::FIELD_DIRECTORY_USER_ID, $this->UserContacts, $this->UserContacts->DirectoryUsers, [$this, 'getGood']);
     }
 
     /**
-     * Test case for IsValidDomainEmail method
+     * Test isValidDomainEmail method
      *
      * @return void
      */
-    public function testIsValidDomainEmail()
+    public function testIsValidDomainEmail(): void
     {
         TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com', []));
         TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk', []));

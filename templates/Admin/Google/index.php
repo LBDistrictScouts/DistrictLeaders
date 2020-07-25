@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>
                         <?php foreach ($googleUsers->getUsers() as $user) : ?>
-                            <?php /** @var \Google_Service_Directory_User $user */ ?>
+                                                                                                               /** @var \Google_Service_Directory_User $user */ ?>
                             <tr>
                                 <td><?= h($user->getName()->getFullName()) ?></td>
                                 <td><?= h($user->getPrimaryEmail()) ?></td>

@@ -4,13 +4,14 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryUser;
+
 /**
  * DirectoryUsers Controller
  *
  * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
- *
  * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
+
 class DirectoryUsersController extends AppController
 {
     /**
@@ -31,7 +32,7 @@ class DirectoryUsersController extends AppController
     /**
      * View method
      *
-     * @param string|null $DirectoryUserId Directory User id.
+     * @param null $id Directory User id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */

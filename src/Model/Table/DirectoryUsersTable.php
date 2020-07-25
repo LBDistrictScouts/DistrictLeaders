@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,7 +11,6 @@ use Cake\Validation\Validator;
  * DirectoryUsers Model
  *
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
- *
  * @method \App\Model\Entity\DirectoryUser get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryUser newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DirectoryUser[] newEntities(array $data, array $options = [])
@@ -41,6 +39,10 @@ class DirectoryUsersTable extends Table
         $this->belongsTo('Directories', [
             'foreignKey' => 'directory_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->belongsToMany('Users', [
+            'through' => 'UserContacts',
         ]);
     }
 

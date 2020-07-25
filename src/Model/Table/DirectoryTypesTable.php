@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\DirectoryType;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,7 +12,6 @@ use Cake\Validation\Validator;
  * DirectoryTypes Model
  *
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\HasMany $Directories
- *
  * @method \App\Model\Entity\DirectoryType get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DirectoryType[] newEntities(array $data, array $options = [])

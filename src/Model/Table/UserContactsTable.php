@@ -28,6 +28,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsTo $DirectoryUsers
  */
 class UserContactsTable extends Table
 {
@@ -72,6 +73,9 @@ class UserContactsTable extends Table
         $this->belongsTo('UserContactTypes', [
             'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
             'joinType' => 'INNER',
+        ]);
+        $this->belongsTo('DirectoryUsers', [
+            'foreignKey' => UserContact::FIELD_DIRECTORY_USER_ID,
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_contact_id',
@@ -143,6 +147,7 @@ class UserContactsTable extends Table
     {
         $rules->add($rules->existsIn([UserContact::FIELD_USER_ID], 'Users'));
         $rules->add($rules->existsIn([UserContact::FIELD_USER_CONTACT_TYPE_ID], 'UserContactTypes'));
+        $rules->add($rules->existsIn(['directory_user_id'], 'DirectoryUsers'));
 
         $rules->add($rules->isUnique([UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD]));
 

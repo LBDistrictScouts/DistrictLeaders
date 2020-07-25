@@ -14,6 +14,10 @@ use App\Form\GoogleAuthForm;
  */
 class GoogleController extends AppController
 {
+    /**
+     * @throws \Exception
+     * @return void
+     */
     public function initialize(): void
     {
         parent::initialize();
@@ -25,7 +29,6 @@ class GoogleController extends AppController
      * Index method
      *
      * @return \Cake\Http\Response|void
-     * @throws
      */
     public function index()
     {
@@ -49,7 +52,7 @@ class GoogleController extends AppController
     /**
      * View method
      *
-     * @param string|null $GoogleId Google id.
+     * @param null $id Google id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
@@ -69,14 +72,12 @@ class GoogleController extends AppController
      */
     public function status()
     {
-
     }
 
     /**
      * Google Integration Method method
      *
      * @throws \Exception
-     *
      * @return \Cake\Http\Response|void
      */
     public function auth()

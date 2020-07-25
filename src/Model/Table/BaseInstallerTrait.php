@@ -1,10 +1,8 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Model\Table;
 
-
-use App\Model\Entity\FileType;
 use Cake\Core\Configure;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -18,7 +16,6 @@ trait BaseInstallerTrait
 {
     /**
      * @param \Cake\ORM\Table $table The Table being Called
-     *
      * @return array
      */
     public function getBaseValues(Table $table)
@@ -27,6 +24,7 @@ trait BaseInstallerTrait
         $fileName = Inflector::underscore($tableName);
 
         Configure::load('Application' . DS . $fileName, 'yaml', false);
+
         return Configure::readOrFail($tableName);
     }
 
@@ -34,11 +32,10 @@ trait BaseInstallerTrait
      * install the application status config
      *
      * @param \Cake\ORM\Table $table The Table being Called
-     * @param string $businessKey
-     *
+     * @param string $businessKey The Business Key of the Table
      * @return int
      */
-    public function installBase(Table $table, string $businessKey = null): int
+    public function installBase(Table $table, ?string $businessKey = null): int
     {
         if (is_null($businessKey)) {
             $businessKey = $table->getDisplayField();

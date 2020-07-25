@@ -23,6 +23,7 @@ class DirectoriesFixture extends TestFixture
         'directory_type_id' => ['type' => 'integer', 'length' => 10, 'default' => '1', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         'customer_reference' => ['type' => 'string', 'length' => 12, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'authorisation_token' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'directories_directory' => ['type' => 'unique', 'columns' => ['directory'], 'length' => []],
@@ -46,6 +47,7 @@ class DirectoriesFixture extends TestFixture
                 'directory_type_id' => 1,
                 'active' => 1,
                 'customer_reference' => 'Lorem ipsu',
+                'authorisation_token' => '',
             ],
         ];
         parent::init();
