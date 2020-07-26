@@ -34,9 +34,7 @@ class UsersController extends AppController
         $this->Authentication->addUnauthenticatedActions(['password']);
 
         $this->Authorization->mapActions([
-            'index' => 'list',
-            'edit' => 'update',
-            'add' => 'create',
+            'search' => 'index',
         ]);
     }
 
@@ -180,13 +178,13 @@ class UsersController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id User id.
+     * @param string|null $userId User id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($userId = null)
     {
-        $user = $this->Users->get($id, [
+        $user = $this->Users->get($userId, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($user);

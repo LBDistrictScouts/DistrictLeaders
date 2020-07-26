@@ -21,7 +21,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeList($user, $query)
+    public function scopeIndex($user, $query)
     {
         if ($user->checkCapability('DIRECTORY')) {
             return $query;
@@ -49,7 +49,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeUpdate($user, $query)
+    public function scopeEdit($user, $query)
     {
         if ($user->checkCapability('EDIT_USER')) {
             return $query;
@@ -62,7 +62,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result
      */
-    public function canList(User $user)
+    public function canIndex(User $user)
     {
         if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true, '101');
@@ -96,7 +96,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result|null
      */
-    public function canCreate(User $user)
+    public function canAdd(User $user)
     {
         if ($user->buildAndCheckCapability('CREATE', 'Users')) {
             return new Result(true, '102');

@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
 use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Log\Log;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
@@ -208,8 +210,13 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      */
     public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
     {
-        $capTable = $this->getTableLocator()->get('Capabilities');
-        $capability = $capTable->buildCapability($action, $model, $field);
+        if (!CapBuilder::isActionType($action)) {
+            Log::debug('NotActionType');
+
+            return false;
+        }
+
+        $capability = CapBuilder::capabilityCodeFormat($action, $model, $field);
 
         return $this->checkCapability($capability, $group, $section);
     }
