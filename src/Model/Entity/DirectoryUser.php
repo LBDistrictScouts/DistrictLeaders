@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property string $primary_email
  *
  * @property \App\Model\Entity\Directory $directory
+ * @property \App\Model\Entity\User[] $users
  */
 class DirectoryUser extends Entity
 {

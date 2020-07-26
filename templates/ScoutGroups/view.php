@@ -27,35 +27,29 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Section</th>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Meeting Day</th>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Start Time</th>
-                            <th>End Time</th>
-                            <th>Section Contact</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Section Type</th>
+                            <th scope="col">Meeting Day</th>
+                            <th scope="col">Meeting Time</th>
+                            <th scope="col">Section Contact</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Beavers</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Tuesday</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">18:15</td>
-                            <td>19:30</td>
-                            <td>beavers@4thletchworth.com</td>
-                        </tr>
-                        <tr>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Cubs</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Friday</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">18:00</td>
-                            <td>19:30</td>
-                            <td>cubs@4thletchworth.com</td>
-                        </tr>
-                        <tr>
-                            <td>Scouts</td>
-                            <td>Friday</td>
-                            <td>19:45</td>
-                            <td>21:30</td>
-                            <td>scouts@4thletchworth.com</td>
-                        </tr>
+                            <?php foreach ($scoutGroup->sections as $section) : ?>
+                                <tr>
+                                    <td><?= $section->has($section::FIELD_SECTION) ? h($section->section) : '' ?></td>
+                                    <td><?= $section->has($section::FIELD_SECTION_TYPE) ? $this->Html->link($section->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $section->section_type->id]) : '' ?></td>
+                                    <td><?= h($section->meeting_weekday) ?></td>
+                                    <td><?= !empty($section->meeting_start_time) ? h($section->meeting_start_time) . ' - ' . h($section->meeting_end_time) : '' ?></td>
+                                    <td>info@email.com</td>
+                                    <td class="actions">
+                                        <?= $this->Identity->checkCapability('VIEW_SECTION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        <?= $this->Identity->checkCapability('UPDATE_SECTION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        <?= $this->Identity->checkCapability('DELETE_SECTION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $section->id], ['confirm' => __('Are you sure you want to delete # {0}?', $section->id), 'title' => __('Delete Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>
@@ -82,8 +76,10 @@
                 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                     <div class="card-body">
                         <h5 style="font-family: 'Nunito Sans', sans-serif;">Group Information</h5>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Charity Number:</strong>&nbsp;8272012</p>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Domain:</strong> <?= $this->Html->link($scoutGroup->clean_domain, $scoutGroup->group_domain) ?></p>
+                        <?php if ($scoutGroup->hasValue($scoutGroup::FIELD_CHARITY_NUMBER)) : ?>
+                        <p class="card-text"><strong>Charity Number:</strong>&nbsp;<?= h($scoutGroup->charity_number) ?></p>
+                        <?php endif; ?>
+                        <p class="card-text"><strong>Domain:</strong> <?= $this->Html->link($scoutGroup->clean_domain, $scoutGroup->group_domain) ?></p>
                     </div>
                 </div>
             </div>
@@ -100,31 +96,28 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Leader</th>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Leader Contact</th>
-                            <th style="font-family: 'Nunito Sans', sans-serif;">Section</th>
-                            <th>Actions</th>
+                            <th scope="col">Leader</th>
+                            <th scope="col">Leader Contact</th>
+                            <th scope="col">Section</th>
+                            <th scope="col">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Jacob Tyler</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">jacob@4thletchworth.com</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">4th Letchworth Cubs</td>
-                            <td><i class="fa fa-eye"></i>&nbsp;<i class="fa fa-pencil"></i>&nbsp;<i class="fa fa-trash"></i></td>
-                        </tr>
-                        <tr>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">Russell Wake</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">russell@4thletchworth.com</td>
-                            <td style="font-family: 'Nunito Sans', sans-serif;">4th Letchworth Cubs</td>
-                            <td><i class="fa fa-eye"></i>&nbsp;<i class="fa fa-pencil"></i>&nbsp;<i class="fa fa-trash"></i></td>
-                        </tr>
-                        <tr>
-                            <td>Vicki Gage</td>
-                            <td>vicki@4thletchworth.com</td>
-                            <td>4th Letchworth Beavers</td>
-                            <td><i class="fa fa-eye"></i>&nbsp;<i class="fa fa-pencil"></i>&nbsp;<i class="fa fa-trash"></i></td>
-                        </tr>
+                            <?php foreach ($scoutGroup->sections as $section) : ?>
+                                <?php foreach ($section->roles as $role) : ?>
+                                    <tr>
+                                        <td><?= $role->user->full_name ?></td>
+                                        <td><?= $this->Text->autoLinkEmails($role->has('user_contact') ? $role->user_contact->contact_field : $role->user->email) ?></td>
+                                        <td><?= $section->section ?></td>
+                                        <td><?= $role->has($role::FIELD_ROLE_TYPE) ? $role->role_type->role_type : '' ?></td>
+                                        <td class="actions">
+                                            <?= $this->Identity->checkCapability('VIEW_ROLE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->checkCapability('UPDATE_ROLE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->checkCapability('DELETE_ROLE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

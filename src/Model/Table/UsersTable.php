@@ -37,6 +37,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsToMany $DirectoryUsers
  */
 class UsersTable extends Table
 {

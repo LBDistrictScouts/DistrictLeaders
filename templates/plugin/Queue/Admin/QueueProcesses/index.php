@@ -9,7 +9,7 @@ use Queue\Queue\Config;
     <ul class="side-nav nav nav-pills nav-stacked">
         <li class="heading"><?= __d('queue', 'Actions') ?></li>
         <li><?= $this->Html->link(__d('queue', 'Dashboard'), ['controller' => 'Queue', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__d('queue', 'Back'), ['controller' => 'Queue', 'action' => 'processes'], ['class' => 'btn margin btn-default']) ?></li>
+        <li><?= $this->Html->link(__d('queue', 'Back'), ['controller' => 'Queue', 'action' => 'processes'], ['class' => 'btn btn-default']) ?></li>
         <li><?= $this->Form->postLink(__d('queue', 'Cleanup'), ['action' => 'cleanup'], ['confirm' => 'Sure to remove all outdated ones (>' . (Config::defaultworkertimeout() * 2) . 's)?', 'class' => 'btn margin btn-warning']) ?></li>
     </ul>
 </nav>

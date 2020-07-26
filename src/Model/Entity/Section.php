@@ -27,6 +27,7 @@ use Cake\ORM\Entity;
  * @property string|null $meeting_start_time
  * @property string|null $meeting_end_time
  * @property string $meeting_weekday
+ * @property \App\Model\Entity\User[] $users
  */
 class Section extends Entity
 {

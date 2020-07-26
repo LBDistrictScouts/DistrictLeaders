@@ -51,6 +51,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @property \App\Model\Entity\PasswordState|null $password_state
  * @property bool $cognito_enabled
+ * @property \App\Model\Entity\DirectoryUser[] $directory_users
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
