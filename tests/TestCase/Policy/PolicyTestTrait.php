@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Policy;
 use App\Model\Entity\User;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\Utility\Inflector;
 use PHPUnit\Exception;
@@ -18,6 +19,7 @@ use PHPUnit\Exception;
 trait PolicyTestTrait
 {
     use IntegrationTestTrait;
+    use LocatorAwareTrait;
 
     protected function setupForbiddenError()
     {
@@ -48,16 +50,22 @@ trait PolicyTestTrait
             'deleted' => null,
             'last_login_ip' => 'null',
             'capabilities' => [
-                'user' => [],
-                'group' => [],
-                'section' => [],
+                'user' => ['BLAH-NOT-A-REAL-KEY'],
+                'group' => [
+                    1 => ['BLAH-NOT-A-REAL-KEY'],
+                    9 => ['BLAH-NOT-A-REAL-KEY'],
+                ],
+                'section' => [
+                    4 => ['BLAH-NOT-A-REAL-KEY'],
+                    8 => ['BLAH-NOT-A-REAL-KEY'],
+                ],
             ],
             'user_state_id' => null,
             'full_name' => 'Juliet Bravo',
         ];
 
         $user = new User($userTestData, ['validate' => false]);
-        $user->isNew(false);
+        $user->setNew(false);
 
         return $user;
     }
@@ -97,24 +105,72 @@ trait PolicyTestTrait
     {
         $users = $this->getTableLocator()->get('Users');
         $user = $users->find()->first();
-        $capabilities = $user->get('capabilities')['user'];
 
-        if (!is_array($capability)) {
-            $capability = [$capability];
+        if (empty($user) || is_null($user)) {
+            $user = $this->getFakeUser();
         }
 
-        foreach ($capability as $cap) {
-            if (array_search($cap, $capabilities) !== false) {
-                foreach (array_keys($capabilities, $cap) as $key) {
-                    unset($capabilities[$key]);
-                }
+        $capabilities = $user->get('capabilities');
+        if (empty($capabilities) || is_null($capabilities)) {
+            $capabilities = $this->getFakeUser()->capabilities;
+        }
+
+        if (is_array($capability)) {
+            foreach ($capability as $cap) {
+                $capabilities = $this->popCapability($capabilities, $cap);
             }
+        } else {
+            $capabilities = $this->popCapability($capabilities, 'BLAH-NOT-A-REAL-KEY');
         }
 
         $user->set('capabilities', $capabilities);
         $user->clean();
 
         $this->session(['Auth' => $user]);
+    }
+
+    /**
+     * @param array $capabilityArray Array of User's Capabilities
+     * @param string $capability Capability Key
+     * @return array
+     */
+    private function popCapability(array $capabilityArray, string $capability): array
+    {
+        if (in_array($capability, $capabilityArray['user']) !== false) {
+            foreach ($capabilityArray['user'] as $key => $value) {
+                if ($value == $capability) {
+                    unset($capabilityArray['user'][$key]);
+                }
+            }
+        }
+
+        foreach (array_keys($capabilityArray['group']) as $groupKey) {
+            if (
+                is_array($capabilityArray['group'][$groupKey]) &&
+                in_array($capability, $capabilityArray['group'][$groupKey]) !== false
+            ) {
+                foreach ($capabilityArray['group'][$groupKey] as $key => $value) {
+                    if ($value == $capability) {
+                        unset($capabilityArray['group'][$groupKey][$key]);
+                    }
+                }
+            }
+        }
+
+        foreach (array_keys($capabilityArray['section']) as $groupKey) {
+            if (
+                is_array($capabilityArray['section'][$groupKey]) &&
+                in_array($capability, $capabilityArray['section'][$groupKey]) !== false
+            ) {
+                foreach ($capabilityArray['section'][$groupKey] as $key => $value) {
+                    if ($value == $capability) {
+                        unset($capabilityArray['section'][$groupKey][$key]);
+                    }
+                }
+            }
+        }
+
+        return $capabilityArray;
     }
 
     /**
