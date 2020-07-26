@@ -6,9 +6,9 @@ namespace App\Model\Entity;
 use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentity;
 use Authorization\IdentityInterface as AuthorizationIdentity;
+use Authorization\Policy\Result;
 use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
-use Cake\Log\Log;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
@@ -170,9 +170,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     /**
      * Authorization\IdentityInterface method
      *
-     * @return array|\ArrayAccess
+     * @return self
      */
-    public function getOriginalData()
+    public function getOriginalData(): User
     {
         return $this;
     }
@@ -181,9 +181,9 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * Setter to be used by the middleware.
      *
      * @param \Authorization\AuthorizationService $service The Auth Service
-     * @return \App\Model\Entity\User
+     * @return self
      */
-    public function setAuthorization($service)
+    public function setAuthorization($service): User
     {
         $this->authorization = $service;
 
@@ -195,7 +195,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * @return int
      */
-    public function getIdentifier()
+    public function getIdentifier(): int
     {
         return $this->id;
     }
@@ -208,17 +208,33 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
+    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null): bool
     {
-        if (!CapBuilder::isActionType($action)) {
-            Log::debug('NotActionType');
+        return $this->buildAndCheckCapabilityResult($action, $model, $group, $section, $field)->getStatus();
+    }
 
-            return false;
+    /**
+     * @param string $action The Action Method
+     * @param string $model The Model being Referenced
+     * @param int|array|null $group The Group ID for checking against
+     * @param int|array|null $section The Section ID for checking against
+     * @param string|null $field The field for action
+     * @return \Authorization\Policy\ResultInterface
+     */
+    public function buildAndCheckCapabilityResult(
+        $action,
+        $model,
+        $group = null,
+        $section = null,
+        $field = null
+    ): ResultInterface {
+        if (!CapBuilder::isActionType($action)) {
+            return new Result(false, 'Action Supplied is Invalid.');
         }
 
         $capability = CapBuilder::capabilityCodeFormat($action, $model, $field);
 
-        return $this->checkCapability($capability, $group, $section);
+        return $this->checkCapabilityResult($capability, $group, $section);
     }
 
     /**
@@ -229,10 +245,23 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param int|array|null $section A Section ID if applicable
      * @return bool
      */
-    public function checkCapability($capability, $group = null, $section = null)
+    public function checkCapability($capability, $group = null, $section = null): bool
+    {
+        return $this->checkCapabilityResult($capability, $group, $section)->getStatus();
+    }
+
+    /**
+     * Function to Check Capability Exists
+     *
+     * @param string $capability The Capability being checked.
+     * @param int|array|null $group A Group ID if applicable
+     * @param int|array|null $section A Section ID if applicable
+     * @return \Authorization\Policy\ResultInterface
+     */
+    public function checkCapabilityResult($capability, $group = null, $section = null): ResultInterface
     {
         if (!is_array($this->capabilities)) {
-            return false;
+            return new Result(false, 'Array Not String Passed.');
         }
 
         // User Check
@@ -240,25 +269,25 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
             $capabilities = $this->capabilities['user'];
 
             if (in_array('ALL', $capabilities)) {
-                return true;
+                return new Result(true, 'Admin Capability Found.');
             }
 
             if (in_array($capability, $capabilities)) {
-                return true;
+                return new Result(true, 'Capability Found in User.');
             }
         }
 
         // Group Check
         if ($this->subSetCapabilityCheck($capability, 'group', $group)) {
-            return true;
+            return new Result(true, 'Capability Found in Group.');
         }
 
         // Section Check
         if ($this->subSetCapabilityCheck($capability, 'section', $section)) {
-            return true;
+            return new Result(true, 'Capability Found in Section.');
         }
 
-        return false;
+        return new Result(false, 'No Valid Capability Found.');
     }
 
     /**
@@ -269,7 +298,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param int $entities The Entity ID or Array of IDs
      * @return bool
      */
-    private function subSetCapabilityCheck($capability, $subset, $entities)
+    private function subSetCapabilityCheck($capability, $subset, $entities): bool
     {
         if (key_exists($subset, $this->capabilities)) {
             $subsetCapabilities = $this->capabilities[$subset];
@@ -340,6 +369,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_USER_STATE_ID = 'user_state_id';
     public const FIELD_PASSWORD_STATE = 'password_state';
     public const FIELD_COGNITO_ENABLED = 'cognito_enabled';
+    public const FIELD_DIRECTORY_USERS = 'directory_users';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 }

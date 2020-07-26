@@ -14,6 +14,7 @@ $entity = $this->fetch('entity');
 ?>
 <div class="row">
     <div class="col-lg-12">
+        <?= $this->element('image-header') ?>
         <div class="card">
             <div class="card-header">
                 <div class="row">

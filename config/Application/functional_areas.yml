@@ -33,3 +33,4 @@ iconStandards:
 searchConfigured:
   Users: true
   Documents: true
+  Sections: true

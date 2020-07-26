@@ -15,7 +15,7 @@ $this->assign('entity', 'CampRoles');
 <fieldset>
     <?php
         $args = [
-            'CHANGE',
+            'CREATE',
             $campRole->getSource(),
             null,
             null,

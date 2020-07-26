@@ -56,7 +56,6 @@ class RolesTable extends Table
 
         $this->belongsTo('RoleTypes', [
             'foreignKey' => 'role_type_id',
-            'joinType' => 'INNER',
         ]);
         $this->belongsTo('Sections', [
             'foreignKey' => 'section_id',
@@ -64,7 +63,6 @@ class RolesTable extends Table
         ]);
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
-            'joinType' => 'INNER',
         ]);
         $this->belongsTo('RoleStatuses', [
             'foreignKey' => 'role_status_id',

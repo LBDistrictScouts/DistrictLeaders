@@ -124,7 +124,7 @@ class UserContactsController extends AppController
 
         if (!isset($user)) {
             $users = $this->UserContacts->Users->find('list', ['limit' => 200]);
-            $users = $this->Authorization->applyScope($users, 'update');
+            $users = $this->Authorization->applyScope($users, 'edit');
             $this->set(compact('users'));
         }
     }

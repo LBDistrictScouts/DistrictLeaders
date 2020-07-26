@@ -14,6 +14,9 @@ baseCapabilities:
   - capability_code: LOGIN
     capability: Login
     min_level: 0
+  - capability_code: NON_PUBLIC_GROUP
+    capability: View Hidden Scout Group Details
+    min_level: 3
 entityCapabilities:
   CREATE: 1
   UPDATE: 1

@@ -161,4 +161,5 @@ class Section extends Entity
     public const FIELD_MEETING_START_TIME = 'meeting_start_time';
     public const FIELD_MEETING_END_TIME = 'meeting_end_time';
     public const FIELD_MEETING_WEEKDAY = 'meeting_weekday';
+    public const FIELD_USERS = 'users';
 }

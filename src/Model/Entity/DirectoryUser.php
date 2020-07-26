@@ -45,4 +45,5 @@ class DirectoryUser extends Entity
     public const FIELD_FAMILY_NAME = 'family_name';
     public const FIELD_PRIMARY_EMAIL = 'primary_email';
     public const FIELD_DIRECTORY = 'directory';
+    public const FIELD_USERS = 'users';
 }

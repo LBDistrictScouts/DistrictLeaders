@@ -442,37 +442,6 @@ class UsersTable extends Table
     }
 
     /**
-     * @return \Search\Manager
-     * @uses \Search\Model\Behavior\SearchBehavior
-     */
-    public function searchManager()
-    {
-        $searchManager = $this->behaviors()->Search->searchManager();
-        $searchManager
-            ->add('q_text', 'Search.Like', [
-                'before' => true,
-                'after' => true,
-                'mode' => 'or',
-                'comparison' => 'ILIKE',
-                'wildcardAny' => '*',
-                'wildcardOne' => '?',
-                'fields' => [
-                    'first_name',
-                    'last_name',
-                    'email',
-                    'preferred_name',
-                    'postcode',
-                    'address_line_1',
-                    'address_line_2',
-                    'city',
-                ],
-                'filterEmpty' => true,
-            ]);
-
-        return $searchManager;
-    }
-
-    /**
      * @param string $value The Entity Value to be validated
      * @param array $context The Validation Context
      * @return bool

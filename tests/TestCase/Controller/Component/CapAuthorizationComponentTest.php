@@ -10,6 +10,7 @@ use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationService;
 use Authorization\IdentityDecorator;
 use Authorization\Policy\OrmResolver;
+use Authorization\Policy\ResultInterface;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
@@ -68,12 +69,20 @@ class CapAuthorizationComponentTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
-        'app.Notifications',
         'app.NotificationTypes',
+        'app.Notifications',
         'app.EmailSends',
         'app.Tokens',
         'app.EmailResponseTypes',
         'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.FileTypes',
         'app.DocumentTypes',
         'app.Documents',
@@ -84,14 +93,26 @@ class CapAuthorizationComponentTest extends TestCase
     /**
      * setUp method
      *
+     * @param bool $admin
      * @return void
      */
-    public function setUp(): void
+    public function setUp(bool $admin = true): void
     {
         parent::setUp();
 
+        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
+        $this->Users = $this->getTableLocator()->get('Users', $config);
+
+        $user = $this->Users->patchCapabilities($this->Users->get(1));
+        if (!$admin) {
+            $capabilities = $user->capabilities;
+            $key = array_search('ALL', $capabilities['user']);
+            unset($capabilities['user'][$key]);
+            $user->set($user::FIELD_CAPABILITIES, $capabilities);
+        }
+
         $service = new AuthorizationService(new OrmResolver());
-        $identity = new IdentityDecorator($service, ['id' => 1, 'role' => 'user']);
+        $identity = new IdentityDecorator($service, $user);
 
         $request = new ServerRequest([
             'params' => ['controller' => 'Articles', 'action' => 'edit'],
@@ -103,9 +124,6 @@ class CapAuthorizationComponentTest extends TestCase
         $this->Controller = new Controller($request);
         $this->ComponentRegistry = new ComponentRegistry($this->Controller);
         $this->Authorization = new CapAuthorizationComponent($this->ComponentRegistry);
-
-        $config = $this->getTableLocator()->exists('Users') ? [] : ['className' => UsersTable::class];
-        $this->Users = $this->getTableLocator()->get('Users', $config);
     }
 
     /**
@@ -121,30 +139,21 @@ class CapAuthorizationComponentTest extends TestCase
     }
 
     /**
-     * Test initialize method
-     *
-     * @return void
-     */
-    public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test see method
      *
      * @return void
      */
     public function testSee()
     {
-        // Unauthorised User
-        $user = $this->Users->get(1);
+        $user = $this->Users->get(2);
+
+        // Not Admin User
+        $this->setUp(false);
         $result = $this->Authorization->see($user);
         TestCase::assertEquals([], $result);
 
-        // Processed User
-        $user = $this->Users->patchCapabilities($user);
-        $this->setUp();
+        // Admin User
+        $this->setUp(true);
         $result = $this->Authorization->see($user);
         TestCase::assertEquals([
             User::FIELD_ID,
@@ -170,22 +179,215 @@ class CapAuthorizationComponentTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function providerCheckCapability()
+    {
+        return [
+            'Valid Special' => [
+                'ALL',
+                true,
+                null,
+                null,
+                'Admin Capability Found.',
+            ],
+            'Valid Standard' => [
+                'EDIT_GROUP',
+                true,
+                null,
+                null,
+                'Capability Found in User.',
+            ],
+            'Valid Standard Group' => [
+                'EDIT_SECT',
+                true,
+                1,
+                null,
+                'Capability Found in Group.',
+            ],
+            'Invalid Standard Group' => [
+                'EDIT_SECT',
+                false,
+                2,
+                null,
+                'No Valid Capability Found.',
+            ],
+            'Valid Standard Section' => [
+                'EDIT_USER',
+                true,
+                null,
+                1,
+                'Capability Found in Section.',
+            ],
+            'Invalid Standard Section' => [
+                'EDIT_USER',
+                false,
+                null,
+                2,
+                'No Valid Capability Found.',
+            ],
+            'Invalid Type' => [
+                'GOAT',
+                false,
+                null,
+                null,
+                'No Valid Capability Found.',
+            ],
+            'Is Empty' => [
+                '',
+                false,
+                null,
+                null,
+                'No Valid Capability Found.',
+            ],
+        ];
+    }
+
+    /**
      * Test checkCapability method
      *
+     * @dataProvider providerCheckCapability
+     * @param string $capability Capabilty to be Checked
+     * @param bool $expected Expected Boolean Outcome
      * @return void
      */
-    public function testCheckCapability()
+    public function testCheckCapability(string $capability, bool $expected, ?int $group = null, ?int $section = null)
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $admin = (bool)($capability == 'ALL');
+        $this->setUp($admin);
+
+        $result = $this->Authorization->checkCapability($capability, $group, $section);
+
+        if ($result instanceof ResultInterface) {
+            $result = $result->getStatus();
+        }
+
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * Test checkCapability method
+     *
+     * @dataProvider providerCheckCapability
+     * @param string $capability Capability to be Checked
+     * @param bool $expected Expected Boolean Outcome
+     * @param int|null $group The Group ID
+     * @param int|null $section The Section ID
+     * @param string $expectedReason The Reason Expected
+     * @return void
+     */
+    public function testCheckCapabilityResult(
+        string $capability,
+        bool $expected,
+        ?int $group,
+        ?int $section,
+        string $expectedReason
+    ): void {
+        $admin = (bool)($capability == 'ALL');
+        $this->setUp($admin);
+
+        $result = $this->Authorization->checkCapabilityResult($capability, $group, $section);
+
+        TestCase::assertInstanceOf(ResultInterface::class, $result);
+        TestCase::assertSame($expectedReason, $result->getReason());
+        $result = $result->getStatus();
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerBuildCapability()
+    {
+        return [
+            'All Standard' => [
+                [
+                    'VIEW',
+                    'Sections',
+                ],
+                true, // Admin
+                true, // Expected
+                'Admin Capability Found.',
+            ],
+            'Invalid Standard Section' => [
+                [
+                    'EDIT',
+                    'Users',
+                    null,
+                    2,
+                ],
+                false, // Admin
+                false, // Expected
+                'No Valid Capability Found.',
+            ],
+            'Invalid Type' => [
+                [
+                    'GOAT',
+                    'Users',
+                ],
+                false, // Admin
+                false, // Expected
+                'Action Supplied is Invalid.',
+            ],
+            'Is Empty' => [
+                [
+                    null,
+                    null,
+                ],
+                false, // Admin
+                false, // Expected
+                'Action Supplied is Invalid.',
+            ],
+        ];
     }
 
     /**
      * Test buildAndCheckCapability method
      *
+     * @dataProvider providerBuildCapability
+     * @param array $capArray Array for Build
+     * @param bool $admin ALL cap present
+     * @param bool $expected Expected Boolean Outcome
+     * @param string $expectedReason The Reason Expected
      * @return void
      */
-    public function testBuildAndCheckCapability()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
+    public function testBuildAndCheckCapability(
+        array $capArray,
+        bool $admin,
+        bool $expected,
+        string $expectedReason
+    ): void {
+        $this->setUp($admin);
+        $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
+
+        TestCase::assertInstanceOf(ResultInterface::class, $result);
+        TestCase::assertSame($expectedReason, $result->getReason());
+        $result = $result->getStatus();
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * Test buildAndCheckCapability method
+     *
+     * @dataProvider providerBuildCapability
+     * @param array $capArray Array for Build
+     * @param bool $admin ALL cap present
+     * @param bool $expected Expected Boolean Outcome
+     * @param string $expectedReason The Reason Expected
+     * @return void
+     */
+    public function testBuildAndCheckCapabilityResult(
+        array $capArray,
+        bool $admin,
+        bool $expected,
+        string $expectedReason
+    ): void {
+        $this->setUp($admin);
+        $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
+
+        TestCase::assertInstanceOf(ResultInterface::class, $result);
+        TestCase::assertSame($expectedReason, $result->getReason());
+        $result = $result->getStatus();
+        TestCase::assertEquals($expected, $result);
     }
 }

@@ -23,6 +23,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class ScoutGroup extends Entity
 {

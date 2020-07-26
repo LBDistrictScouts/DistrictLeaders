@@ -15,15 +15,30 @@ use App\Model\Entity\SectionType;
 class ScoutGroupsController extends AppController
 {
     /**
+     * @inheritDoc
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->whyPermitted($this->ScoutGroups);
+    }
+
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
     public function index()
     {
-        $scoutGroups = $this->paginate($this->ScoutGroups);
+        $this->Authorization->authorize($this->ScoutGroups);
+
+        $query = $this->ScoutGroups->find()->contain(['Sections.SectionTypes']);
+        $scoutGroups = $this->paginate($this->Authorization->applyScope($query));
 
         $this->set(compact('scoutGroups'));
+
+        $this->whyPermitted($this->ScoutGroups);
     }
 
     /**
@@ -33,7 +48,7 @@ class ScoutGroupsController extends AppController
      */
     public function generate()
     {
-//        $this->Authorization->authorize($this->ScoutGroups);
+        $this->Authorization->authorize($this->ScoutGroups);
 
         if ($this->request->is('post')) {
             $postData = $this->request->getData();
@@ -77,6 +92,8 @@ class ScoutGroupsController extends AppController
         }
 
         $this->set(compact('scoutGroups', 'sectionTypes'));
+
+        $this->whyPermitted($this->ScoutGroups);
     }
 
     /**
@@ -98,6 +115,7 @@ class ScoutGroupsController extends AppController
                         'RoleTypes',
                     ],
                 ],
+                'Audits.Users',
             ],
         ]);
 

@@ -68,11 +68,9 @@ class UserContactsTable extends Table
 
         $this->belongsTo('Users', [
             'foreignKey' => UserContact::FIELD_USER_ID,
-            'joinType' => 'INNER',
         ]);
         $this->belongsTo('UserContactTypes', [
             'foreignKey' => UserContact::FIELD_USER_CONTACT_TYPE_ID,
-            'joinType' => 'INNER',
         ]);
         $this->belongsTo('DirectoryUsers', [
             'foreignKey' => UserContact::FIELD_DIRECTORY_USER_ID,

@@ -7,10 +7,13 @@ Reasons:
   103: OWN USER permssion. The ability to view and edit your own user record. This is standard to all users.
   104: HISTORY permission. The ability to see historic changes to a user record. Standard to Leader, Management & Administrative Users.
   200: VIEW GROUPS permission. The Ability to see Groups in the District. Standard to Active Users.
-  300: VIEW SECTIONS permission.
-  400: VIEW DOCUMENTS permission.
-  500: VIEW CAMPS permssion.
-  800: VIEW CAPABILITIES permission. The ability to view internal permissions capablilities. Limited to Advanced System Admin Users.
+  201: CREATE GROUP permission. An adminstrative function for those curating district Data.
+  202: UPDATE GROUP permission. A group administrative function for group administrators and those curating district data.
+  203: NON_PUBLIC_GROUP PERMISSION. View groups marked as not listed on the website.
+  300: VIEW SECTION permission.
+  400: VIEW DOCUMENT permission.
+  500: VIEW CAMP permssion.
+  800: VIEW CAPABILITY permission. The ability to view internal permissions capablilities. Limited to Advanced System Admin Users.
   801: CREATE CAPABILITY permission. The ability to create a capabilty. Limited to Advanced System Admin Users.
   802: UPDATE CAPABILITY permission. The ability to update a system capabilty. Limited to Advanced System Admin Users.
   803: DELETE CAPABILITY permission. The ability to remove a system capabilty. Dangerous permission Limited to Advanced System Admin Users.

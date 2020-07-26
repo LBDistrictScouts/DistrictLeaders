@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\ScoutGroup;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -23,6 +24,8 @@ use Cake\Validation\Validator;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class ScoutGroupsTable extends Table
 {
@@ -44,8 +47,22 @@ class ScoutGroupsTable extends Table
         $this->addBehavior('Muffin/Trash.Trash');
         $this->addBehavior('Expose.Expose', ['on' => 'beforeSave']);
 
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                ScoutGroup::FIELD_SCOUT_GROUP,
+                ScoutGroup::FIELD_CHARITY_NUMBER,
+                ScoutGroup::FIELD_GROUP_DOMAIN,
+                ScoutGroup::FIELD_PUBLIC,
+            ],
+        ]);
+
         $this->hasMany('Sections', [
             'foreignKey' => 'scout_group_id',
+        ]);
+
+        $this->hasMany('Audits', [
+            'foreignKey' => 'audit_record_id',
+            'finder' => 'scoutGroups',
         ]);
     }
 
