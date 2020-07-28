@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Directory $directory
  * @property \App\Model\Entity\User[] $users
+ * @property string $full_name
  */
 class DirectoryUser extends Entity
 {
@@ -37,6 +38,23 @@ class DirectoryUser extends Entity
         'primary_email' => true,
         'directory' => true,
     ];
+
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return $this->given_name . ' ' . $this->family_name;
+    }
+
+    /**
+     * Exposed Virtual Properties
+     *
+     * @var array
+     */
+    protected $_virtual = ['full_name'];
 
     public const FIELD_ID = 'id';
     public const FIELD_DIRECTORY_ID = 'directory_id';

@@ -44,6 +44,13 @@ class UserContactsControllerTest extends TestCase
         'app.Tokens',
         'app.EmailResponseTypes',
         'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**

@@ -39,31 +39,29 @@ class DirectoryUsersController extends AppController
     public function view($id = null)
     {
         $directoryUser = $this->DirectoryUsers->get($id, [
-            'contain' => ['Directories'],
+            'contain' => ['Directories', 'Users'],
         ]);
 
-        $this->set('directoryUser', $directoryUser);
+        $user = $this->DirectoryUsers->detectUser($directoryUser);
+
+        $this->set(compact('directoryUser', 'user'));
     }
 
     /**
      * Add method
      *
+     * @param int $directoryUserId The ID of the Directory User
+     * @param int $userId The ID of the User
      * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function link($directoryUserId, $userId)
     {
-        $directoryUser = $this->DirectoryUsers->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $directoryUser = $this->DirectoryUsers->patchEntity($directoryUser, $this->request->getData());
-            if ($this->DirectoryUsers->save($directoryUser)) {
-                $this->Flash->success(__('The directory user has been saved.'));
+        $directoryUser = $this->DirectoryUsers->get((int)$directoryUserId);
+        $user = $this->DirectoryUsers->Users->get((int)$userId);
 
-                return $this->redirect(['action' => 'view', $directoryUser->get(DirectoryUser::FIELD_ID)]);
-            }
-            $this->Flash->error(__('The directory user could not be saved. Please, try again.'));
-        }
-        $directories = $this->DirectoryUsers->Directories->find('list', ['limit' => 200]);
-        $this->set(compact('directoryUser', 'directories'));
+        $this->DirectoryUsers->linkUser($directoryUser, $user);
+
+        $this->redirect(['action' => 'view', $directoryUserId]);
     }
 
     /**

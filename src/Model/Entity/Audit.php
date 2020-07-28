@@ -56,4 +56,7 @@ class Audit extends Entity
     public const FIELD_CHANGE_DATE = 'change_date';
     public const FIELD_USER = 'user';
     public const FIELD_CHANGED_USER = 'changed_user';
+    public const FIELD_CHANGED_ROLE = 'changed_role';
+    public const FIELD_CHANGED_SCOUT_GROUP = 'changed_scout_group';
+    public const FIELD_CHANGED_USER_CONTACT = 'changed_user_contact';
 }

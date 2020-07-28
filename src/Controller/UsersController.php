@@ -145,6 +145,8 @@ class UsersController extends AppController
                         'RoleStatuses',
                         'UserContacts',
                     ],
+                    'ContactEmails.DirectoryUsers',
+                    'ContactNumbers',
                 ],
                 'fields' => $visibleFields,
             ]);

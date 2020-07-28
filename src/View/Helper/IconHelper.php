@@ -78,7 +78,7 @@ class IconHelper extends Helper
             return $this->iconHtml('check');
         }
 
-        return $this->iconHtml('cross');
+        return $this->iconHtml('times');
     }
 
     /**

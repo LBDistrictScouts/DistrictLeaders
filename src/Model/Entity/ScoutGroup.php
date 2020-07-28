@@ -96,4 +96,5 @@ class ScoutGroup extends Entity
     public const FIELD_DELETED = 'deleted';
     public const FIELD_UUID = 'uuid';
     public const FIELD_PUBLIC = 'public';
+    public const FIELD_AUDITS = 'audits';
 }

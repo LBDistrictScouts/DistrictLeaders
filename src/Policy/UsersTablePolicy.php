@@ -106,6 +106,23 @@ class UsersTablePolicy implements BeforePolicyInterface
     }
 
     /**
+     * @param \App\Model\Entity\User $user The User Editing
+     * @return \Authorization\Policy\Result|null
+     */
+    public function canEdit(User $user)
+    {
+        if ($user->buildAndCheckCapability('UPDATE', 'Users')) {
+            return new Result(true, '105');
+        }
+
+        if ($user->checkCapability('OWN_USER')) {
+            return new Result(true, '103');
+        }
+
+        return null;
+    }
+
+    /**
      * @param \App\Model\Entity\User $user The User Logging In
      * @return \Authorization\Policy\Result
      */

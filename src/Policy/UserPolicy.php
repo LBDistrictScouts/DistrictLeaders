@@ -21,7 +21,7 @@ class UserPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $subject The User being Edited
      * @return \Authorization\Policy\Result
      */
-    public function canUpdate(User $user, User $subject)
+    public function canEdit(User $user, User $subject)
     {
         if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
             return new Result(true);

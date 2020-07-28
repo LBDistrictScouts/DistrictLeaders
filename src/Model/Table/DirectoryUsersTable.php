@@ -6,6 +6,9 @@ namespace App\Model\Table;
 use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Model\Entity\DirectoryUser;
+use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
+use App\Model\Entity\UserContactType;
 use App\Utility\GoogleBuilder;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -46,6 +49,10 @@ class DirectoryUsersTable extends Table
         $this->belongsTo('Directories', [
             'foreignKey' => 'directory_id',
             'joinType' => 'INNER',
+        ]);
+
+        $this->hasMany('UserContacts', [
+            'foreignKey' => 'directory_user_id',
         ]);
 
         $this->belongsToMany('Users', [
@@ -186,4 +193,103 @@ class DirectoryUsersTable extends Table
             $entity->set($entity::FIELD_PRIMARY_EMAIL, $directoryUser->getPrimaryEmail());
         });
     }
+
+    /**
+     * @param \App\Model\Entity\DirectoryUser $directoryUser User to be estimated
+     * @return \App\Model\Entity\User|null
+     */
+    public function detectUser(DirectoryUser $directoryUser): ?User
+    {
+        $existing = $this->UserContacts->find()->where([
+            UserContact::FIELD_DIRECTORY_USER_ID => $directoryUser->id,
+        ]);
+
+        if ($existing->count() == 1) {
+            $foundExisting = $this->get($directoryUser->id, ['contain' => 'Users'])->users;
+            foreach ($foundExisting as $user) {
+                return $user;
+            }
+        }
+
+        $nameMatches = $this->Users->find()
+            ->select([DirectoryUser::FIELD_ID])
+            ->distinct([DirectoryUser::FIELD_ID])
+            ->where([
+                User::FIELD_FIRST_NAME => $directoryUser->given_name,
+                User::FIELD_LAST_NAME => $directoryUser->family_name,
+            ]);
+
+        $primaryEmailMatches = $this->Users->find()
+            ->select([DirectoryUser::FIELD_ID])
+            ->distinct([DirectoryUser::FIELD_ID])
+            ->where([User::FIELD_EMAIL => $directoryUser->primary_email]);
+
+        $matches = $nameMatches->union($primaryEmailMatches);
+
+        if ($matches->count() == 1) {
+            $result = $matches->first();
+            $result = $this->Users->get($result->id);
+            if (isset($result) && $result instanceof User) {
+                return $result;
+            }
+        }
+
+//        $otherEmailMatches = $this->UserContacts->find()->where([])
+
+
+        if ($matches->count() > 1) {
+            $matchingNames = $nameMatches
+                ->select([User::FIELD_ID])
+                ->distinct();
+
+            $intersection = $primaryEmailMatches
+                ->where([User::FIELD_ID . ' IS IN' => $matchingNames]);
+
+            if ($intersection->count() == 1) {
+                $result = $intersection->first();
+                if (isset($result) && $result instanceof User) {
+                    return $result;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \App\Model\Entity\DirectoryUser $directoryUser Source Directory User
+     * @param \App\Model\Entity\User $user User to be Linked via UserContact
+     * @return bool
+     */
+    public function linkUser(DirectoryUser $directoryUser, User $user): bool
+    {
+        $contacts = $this->UserContacts->find()->where([
+            UserContact::FIELD_CONTACT_FIELD => $directoryUser->primary_email,
+            UserContact::FIELD_USER_ID => $user->id,
+        ]);
+
+        if ($contacts->count() == 1) {
+            $contact = $contacts->first();
+        } else {
+            $contact = $this->UserContacts->newEmptyEntity();
+            $emailTypeId = $this->UserContacts->UserContactTypes->find()
+                ->where([
+                    UserContactType::FIELD_USER_CONTACT_TYPE => 'Email',
+                ])
+                ->first()
+                ->id;
+            $contact->set(UserContact::FIELD_USER_CONTACT_TYPE_ID, $emailTypeId);
+            $contact->set(UserContact::FIELD_USER_ID, $user->id);
+            $contact->set(UserContact::FIELD_CONTACT_FIELD, $directoryUser->primary_email);
+        }
+
+        $contact->set(UserContact::FIELD_DIRECTORY_USER_ID, $directoryUser->id);
+
+        return (bool)$this->UserContacts->save($contact);
+    }
+
+//    public function convertUser(DirectoryUser $directoryUser)
+//    {
+//
+//    }
 }

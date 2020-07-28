@@ -161,4 +161,30 @@ class UserContactsTable extends Table
     {
         return $this->Users->Roles->Sections->ScoutGroups->domainVerify($value);
     }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findContactEmails($query)
+    {
+        $query
+            ->contain(['UserContactTypes'])
+            ->where(['UserContactTypes.user_contact_type' => 'Email']);
+
+        return $query;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findContactNumbers($query)
+    {
+        $query
+            ->contain(['UserContactTypes'])
+            ->where(['UserContactTypes.user_contact_type' => 'Phone']);
+
+        return $query;
+    }
 }

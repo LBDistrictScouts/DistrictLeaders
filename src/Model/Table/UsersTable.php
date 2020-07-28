@@ -119,6 +119,18 @@ class UsersTable extends Table
             'foreignKey' => 'user_id',
         ]);
 
+        $this->hasMany('ContactEmails', [
+            'className' => 'UserContacts',
+            'foreignKey' => 'user_id',
+            'finder' => 'contactEmails',
+        ]);
+
+        $this->hasMany('ContactNumbers', [
+            'className' => 'UserContacts',
+            'foreignKey' => 'user_id',
+            'finder' => 'contactNumbers',
+        ]);
+
         $this->belongsToMany('DirectoryUsers', [
             'through' => 'UserContacts',
         ]);

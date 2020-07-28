@@ -6,6 +6,7 @@ Reasons:
   102: CREATE USER permission. This is an administrative permission and may be limited to certain sections or groups.
   103: OWN USER permssion. The ability to view and edit your own user record. This is standard to all users.
   104: HISTORY permission. The ability to see historic changes to a user record. Standard to Leader, Management & Administrative Users.
+  105: UPDATE USER permission. A group administrative function for group administrators and those curating district data.
   200: VIEW GROUPS permission. The Ability to see Groups in the District. Standard to Active Users.
   201: CREATE GROUP permission. An adminstrative function for those curating district Data.
   202: UPDATE GROUP permission. A group administrative function for group administrators and those curating district data.

@@ -52,8 +52,17 @@ class CapAuthorizationComponent extends AuthorizationComponent
         $section = null;
 
         $virtual = $resource->getVirtual();
+        $resourceFields = $resource->getVisible();
 
-        foreach ($resource->getVisible() as $visibleField) {
+        foreach ($virtual as $vValue) {
+            unset($resourceFields[array_search($vValue, $resourceFields)]);
+        }
+
+        if ($resource instanceof User && $resource->id == $this->capUser->id) {
+            return $resourceFields;
+        }
+
+        foreach ($resourceFields as $visibleField) {
             if (in_array($visibleField, $virtual)) {
                 continue;
             }
