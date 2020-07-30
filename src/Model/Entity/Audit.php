@@ -19,6 +19,9 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\User $changed_user
+ * @property \App\Model\Entity\Role $changed_role
+ * @property \App\Model\Entity\ScoutGroup $changed_scout_group
+ * @property \App\Model\Entity\UserContact $changed_user_contact
  */
 class Audit extends Entity
 {
@@ -53,4 +56,7 @@ class Audit extends Entity
     public const FIELD_CHANGE_DATE = 'change_date';
     public const FIELD_USER = 'user';
     public const FIELD_CHANGED_USER = 'changed_user';
+    public const FIELD_CHANGED_ROLE = 'changed_role';
+    public const FIELD_CHANGED_SCOUT_GROUP = 'changed_scout_group';
+    public const FIELD_CHANGED_USER_CONTACT = 'changed_user_contact';
 }

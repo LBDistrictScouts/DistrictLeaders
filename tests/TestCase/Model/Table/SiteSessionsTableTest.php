@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SiteSessionsTable;
 use Cake\I18n\Time;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -37,8 +36,8 @@ class SiteSessionsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('SiteSessions') ? [] : ['className' => SiteSessionsTable::class];
-        $this->SiteSessions = TableRegistry::getTableLocator()->get('SiteSessions', $config);
+        $config = $this->getTableLocator()->exists('SiteSessions') ? [] : ['className' => SiteSessionsTable::class];
+        $this->SiteSessions = $this->getTableLocator()->get('SiteSessions', $config);
 
         $now = new Time('2018-12-26 23:22:30');
         Time::setTestNow($now);

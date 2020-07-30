@@ -10,13 +10,13 @@ $authUser = $this->getRequest()->getAttribute('identity');
 ?>
 <div class="row">
     <div class="col">
-        <div class="jumbotron d-none d-sm-none d-md-flex d-lg-flex d-xl-flex" style="background-image: url(/img/activity-bg-2.jpg);background-size: cover;height: 300px;"></div>
+        <?= $this->element('image-header') ?>
         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
             <div class="card-body">
                 <div class="row">
                     <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
                         <h4><?= $user->full_name ?></h4>
-                        <h6 class="text-muted mb-2">475931</h6>
+                        <h6 class="text-muted mb-2"><?= $user->membership_number ?></h6>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
                         <div class="dropdown d-lg-none"><button class="btn btn-primary dropdown-toggle d-sm-block d-md-block" data-toggle="dropdown" aria-expanded="false" type="button">Actions&nbsp;</button>
@@ -72,18 +72,50 @@ $authUser = $this->getRequest()->getAttribute('identity');
                     </div>
                 </div>
             </div>
+            <?php
+                $ownUser = $user->id === $this->Identity->getId();
+                $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
+                $canCreateUCs =  $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
+            ?>
             <div class="col-sm-12 col-lg-6">
-                <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
-                    <div class="card-body">
-                        <h5>Contact Numbers</h5>
-                        <p class="card-text"><i class="fas fa-phone"></i>&nbsp;01462 682165</p>
-                        <p class="card-text"><i class="fas fa-phone"></i>&nbsp;07804 918252</p>
+                <?php if (!empty($user->contact_emails)) : ?>
+                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-body">
+                            <h5>Email Addresses</h5>
+                            <?php foreach ($user->contact_emails as $contactEmail) : ?>
+                                <?php if ($contactEmail->user_contact_type->user_contact_type == 'Email') : ?>
+                                    <?php
+                                    $isPrimary = $contactEmail->contact_field == $user->email ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle');
+                                    $directoryLink = ' ( ' . $this->Html->link($this->Icon->iconHtml('book-open') . ' Directory Record', ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['escape' => false]) . ' )'; ?>
+                                    <p class="card-text"><?= $isPrimary ?> <?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?><?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) && $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $directoryLink : '' ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ($canCreateUCs) : ?>
+                                <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
+                <?php if (!empty($user->contact_numbers)) : ?>
+                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-body">
+                            <h5>Contact Numbers</h5>
+                            <?php foreach ($user->contact_numbers as $contactNumber) : ?>
+                                <?php if ($contactNumber->user_contact_type->user_contact_type == 'Phone') : ?>
+                                    <p class="card-text"><?= $this->Icon->iconHtml('phone') ?> <?= h($contactNumber->contact_field) ?></p>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                            <?php if ($canCreateUCs) : ?>
+                                <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('phone-plus') . ' Add a Phone Number', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'phone', 'user_id' => $user->id]], ['escape' => false])?></p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
+<?php if ($this->Identity->checkCapability('HISTORY')) : ?>
 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
     <div class="card-header">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -98,7 +130,8 @@ $authUser = $this->getRequest()->getAttribute('identity');
                     <div class="table-responsive">
                         <table class="table table-hover">
                             <tr>
-                                <th scope="col"><?= __('Changed User') ?></th>
+                                <th scope="col"><?= __('Changed Record') ?></th>
+                                <th scope="col"><?= __('Actions') ?></th>
                                 <th scope="col"><?= __('Audit Field') ?></th>
                                 <th scope="col"><?= __('Old Value') ?></th>
                                 <th scope="col"><?= __('New Value') ?></th>
@@ -106,11 +139,42 @@ $authUser = $this->getRequest()->getAttribute('identity');
                             </tr>
                             <?php foreach ($user->changes as $audit) : ?>
                                 <tr>
-                                    <td><?= $audit->has('changed_user') ? $this->Html->link($audit->changed_user->full_name, ['controller' => 'Users', 'action' => 'view', $audit->changed_user->id]) : '' ?></td>
+                                    <?php if ($audit->has('changed_user')) : ?>
+                                        <td><?= h($audit->changed_user->full_name) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Users', 'action' => 'view', $audit->changed_user->id], ['title' => __('View User'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Users', 'action' => 'edit', $audit->changed_user->id], ['title' => __('Edit User'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'Users') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Users', 'action' => 'delete', $audit->changed_user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id), 'title' => __('Delete User'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    <?php endif; ?>
+                                    <?php if ($audit->has('changed_scout_group')) : ?>
+                                        <td><?= h($audit->changed_scout_group->group_alias) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'ScoutGroups') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'ScoutGroups', 'action' => 'view', $audit->changed_scout_group->id], ['title' => __('View Scout Group'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'ScoutGroups') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'ScoutGroups', 'action' => 'edit', $audit->changed_scout_group->id], ['title' => __('Edit Scout Group'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'ScoutGroups') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'ScoutGroups', 'action' => 'delete', $audit->changed_scout_group->id], ['confirm' => __('Are you sure you want to delete # {0}?', $audit->changed_scout_group->id), 'title' => __('Delete Scout Group'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    <?php endif; ?>
+                                    <?php if ($audit->has('changed_role')) : ?>
+                                        <td><?= is_null($audit->changed_role->user->full_name) ? 'User' : $this->Text->truncate($audit->changed_role->user->full_name, 20) ?> @ <?= is_null($audit->changed_role->role_type->role_type) ? 'Role' : $this->Text->truncate($audit->changed_role->role_type->role_abbreviation, 15) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'Roles') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Roles', 'action' => 'view', $audit->changed_role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Roles') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Roles', 'action' => 'edit', $audit->changed_role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'Roles') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Roles', 'action' => 'delete', $audit->changed_role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $audit->changed_role->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    <?php endif; ?>
+                                    <?php if ($audit->has('changed_user_contact')) : ?>
+                                        <td><?= h($audit->changed_user_contact->user->full_name) . ' : ' . h($audit->changed_user_contact->user_contact_type->user_contact_type) ?></td>
+                                        <td class="actions">
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Users', 'action' => 'view', $audit->changed_user_contact->user_id], ['title' => __('View User Contact'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'UserContacts', 'action' => 'edit', $audit->changed_user_contact->id], ['title' => __('Edit User Contact'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'Users') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $audit->changed_user_contact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $audit->changed_user_contact->id), 'title' => __('Delete User Contact'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    <?php endif; ?>
                                     <td><?= $this->Inflection->space($audit->audit_field) ?></td>
-                                    <td><?= h($audit->original_value) ?></td>
-                                    <td><?= h($audit->modified_value) ?></td>
-                                    <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy HH:mm') ?></td>
+                                    <td><?= is_null($audit->original_value) ? '' : $this->Text->truncate($audit->original_value, 20) ?></td>
+                                    <td><?= is_null($audit->modified_value) ? '' : $this->Text->truncate($audit->modified_value, 20) ?></td>
+                                    <td><?= $this->Time->format($audit->change_date, 'dd-MMM-yy') ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </table>
@@ -148,3 +212,5 @@ $authUser = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 </div>
+<?php endif; ?>
+

@@ -48,6 +48,13 @@ class InstallBaseCommandTest extends TestCase
         'app.EmailResponseTypes',
         'app.EmailResponses',
 
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.FileTypes',
         'app.DocumentTypes',
         'app.Documents',
@@ -128,6 +135,19 @@ class InstallBaseCommandTest extends TestCase
         $this->assertExitCode(Command::CODE_SUCCESS);
 
         $this->assertOutputContains('Notification Types Installed:');
+    }
+
+    /**
+     * Description Output
+     *
+     * @return void
+     */
+    public function testInstallDirectoryTypes()
+    {
+        $this->exec('install_base -d');
+        $this->assertExitCode(Command::CODE_SUCCESS);
+
+        $this->assertOutputContains('Directory Types Installed:');
     }
 
     /**

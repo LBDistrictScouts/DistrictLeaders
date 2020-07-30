@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\UserState;
+use Cake\Core\Configure;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -85,5 +87,33 @@ class UserStatesTable extends Table
         $rules->add($rules->isUnique(['user_state']));
 
         return $rules;
+    }
+
+    /**
+     * install the application status config
+     *
+     * @return mixed
+     */
+    public function installBaseUserStates()
+    {
+        Configure::load('Application' . DS . 'user_states', 'yaml', false);
+        $base = Configure::read('userStates');
+
+        $total = 0;
+
+        foreach ($base as $baseState) {
+            $query = $this->find()
+                ->where([UserState::FIELD_USER_STATE => $baseState[UserState::FIELD_USER_STATE]]);
+            $status = $this->newEmptyEntity();
+            if ($query->count() > 0) {
+                $status = $query->first();
+            }
+            $this->patchEntity($status, $baseState);
+            if ($this->save($status)) {
+                $total += 1;
+            }
+        }
+
+        return $total;
     }
 }

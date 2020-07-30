@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\DocumentType;
 use App\Model\Table\DocumentTypesTable;
 use App\Utility\TextSafe;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -40,8 +39,8 @@ class DocumentTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DocumentTypes') ? [] : ['className' => DocumentTypesTable::class];
-        $this->DocumentTypes = TableRegistry::getTableLocator()->get('DocumentTypes', $config);
+        $config = $this->getTableLocator()->exists('DocumentTypes') ? [] : ['className' => DocumentTypesTable::class];
+        $this->DocumentTypes = $this->getTableLocator()->get('DocumentTypes', $config);
     }
 
     /**

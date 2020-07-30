@@ -5,9 +5,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Table\ScoutGroupsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\ScoutGroupsTable Test Case
@@ -40,8 +38,8 @@ class ScoutGroupsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
-        $this->ScoutGroups = TableRegistry::getTableLocator()->get('ScoutGroups', $config);
+        $config = $this->getTableLocator()->exists('ScoutGroups') ? [] : ['className' => ScoutGroupsTable::class];
+        $this->ScoutGroups = $this->getTableLocator()->get('ScoutGroups', $config);
     }
 
     /**
@@ -119,13 +117,7 @@ class ScoutGroupsTableTest extends TestCase
         $required = [
             'scout_group',
         ];
-
-        foreach ($required as $require) {
-            $reqArray = $this->getGood();
-            unset($reqArray[$require]);
-            $new = $this->ScoutGroups->newEntity($reqArray);
-            TestCase::assertFalse($this->ScoutGroups->save($new));
-        }
+        $this->validateRequired($required, $this->ScoutGroups, [$this, 'getGood']);
 
         $empties = [
             'group_alias',
@@ -133,46 +125,19 @@ class ScoutGroupsTableTest extends TestCase
             'charity_number',
             'group_domain',
         ];
-
-        foreach ($empties as $empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$empty] = '';
-            $new = $this->ScoutGroups->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
-        }
+        $this->validateEmpties($empties, $this->ScoutGroups, [$this, 'getGood']);
 
         $notEmpties = [
             'scout_group',
         ];
-
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$not_empty] = '';
-            $new = $this->ScoutGroups->newEntity($reqArray);
-            TestCase::assertFalse($this->ScoutGroups->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->ScoutGroups, [$this, 'getGood']);
 
         $maxLengths = [
             'group_domain' => 247,
             'group_alias' => 30,
             'scout_group' => 255,
         ];
-
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->ScoutGroups->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->ScoutGroups->newEntity($reqArray);
-            TestCase::assertFalse($this->ScoutGroups->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->ScoutGroups, [$this, 'getGood']);
     }
 
     /**
@@ -182,17 +147,7 @@ class ScoutGroupsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        $values = $this->getGood();
-
-        $existing = $this->ScoutGroups->get(1)->toArray();
-
-        $values['scout_group'] = 'My new Camp Role Type';
-        $new = $this->ScoutGroups->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\ScoutGroup', $this->ScoutGroups->save($new));
-
-        $values['scout_group'] = $existing['scout_group'];
-        $new = $this->ScoutGroups->newEntity($values);
-        TestCase::assertFalse($this->ScoutGroups->save($new));
+        $this->validateUniqueRule(ScoutGroup::FIELD_SCOUT_GROUP, $this->ScoutGroups, [$this, 'getGood']);
     }
 
     /**

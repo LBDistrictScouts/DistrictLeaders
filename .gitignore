@@ -20,8 +20,8 @@
 /config/app_queue.prod.php
 
 /config/.env
-/config/token.json
-/config/credentials.json
+/config/Credentials/token.json
+/config/Credentials/credentials.json
 
 /config/Migrations/*.lock
 

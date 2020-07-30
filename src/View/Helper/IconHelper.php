@@ -69,6 +69,19 @@ class IconHelper extends Helper
     }
 
     /**
+     * @param bool $booleanAttribute The Boolean Attribute
+     * @return string
+     */
+    public function iconBoolean($booleanAttribute)
+    {
+        if ($booleanAttribute) {
+            return $this->iconHtml('check');
+        }
+
+        return $this->iconHtml('times');
+    }
+
+    /**
      * @param string $iconName The name of the Icon
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string

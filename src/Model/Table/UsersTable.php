@@ -37,6 +37,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsToMany $DirectoryUsers
  */
 class UsersTable extends Table
 {
@@ -116,6 +117,22 @@ class UsersTable extends Table
         ]);
         $this->hasMany('UserContacts', [
             'foreignKey' => 'user_id',
+        ]);
+
+        $this->hasMany('ContactEmails', [
+            'className' => 'UserContacts',
+            'foreignKey' => 'user_id',
+            'finder' => 'contactEmails',
+        ]);
+
+        $this->hasMany('ContactNumbers', [
+            'className' => 'UserContacts',
+            'foreignKey' => 'user_id',
+            'finder' => 'contactNumbers',
+        ]);
+
+        $this->belongsToMany('DirectoryUsers', [
+            'through' => 'UserContacts',
         ]);
     }
 
@@ -434,37 +451,6 @@ class UsersTable extends Table
         }
 
         return true;
-    }
-
-    /**
-     * @return \Search\Manager
-     * @uses \Search\Model\Behavior\SearchBehavior
-     */
-    public function searchManager()
-    {
-        $searchManager = $this->behaviors()->Search->searchManager();
-        $searchManager
-            ->add('q_text', 'Search.Like', [
-                'before' => true,
-                'after' => true,
-                'mode' => 'or',
-                'comparison' => 'ILIKE',
-                'wildcardAny' => '*',
-                'wildcardOne' => '?',
-                'fields' => [
-                    'first_name',
-                    'last_name',
-                    'email',
-                    'preferred_name',
-                    'postcode',
-                    'address_line_1',
-                    'address_line_2',
-                    'city',
-                ],
-                'filterEmpty' => true,
-            ]);
-
-        return $searchManager;
     }
 
     /**

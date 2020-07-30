@@ -46,4 +46,5 @@ class SectionType extends Entity
     public const FIELD_SECTION_TYPE = 'section_type';
     public const FIELD_ROLE_TYPES = 'role_types';
     public const FIELD_SECTIONS = 'sections';
+    public const FIELD_IS_YOUNG_PERSON_SECTION = 'is_young_person_section';
 }

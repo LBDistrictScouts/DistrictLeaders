@@ -239,18 +239,18 @@ class Application extends BaseApplication implements
         $service->loadIdentifier('Cognito', compact('fields'));
 
         // Load the authenticators, you want session first
-        $service->loadAuthenticator('App.CognitoSession', [
+        $service->loadAuthenticator('CognitoSession', [
             compact('fields'),
             'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
-        $service->loadAuthenticator('App.Cognito', [
+        $service->loadAuthenticator('Cognito', [
             compact('fields'),
             'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
-//        $service->loadAuthenticator('Authentication.Cookie', [
-//            'rememberMeField' => 'remember_me',
-//            compact('fields'),
-//        ]);
+        $service->loadAuthenticator('CognitoCookie', [
+            'rememberMeField' => 'remember_me',
+            compact('fields'),
+        ]);
 
         return $service;
     }

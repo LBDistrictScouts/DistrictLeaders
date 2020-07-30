@@ -23,6 +23,9 @@ use Cake\Validation\Validator;
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\BelongsTo $ChangedRoles
+ * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ChangedScoutGroups
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $ChangedUserContacts
  */
 class AuditsTable extends Table
 {
@@ -65,7 +68,41 @@ class AuditsTable extends Table
         $this->belongsTo('ChangedUsers', [
             'className' => 'Users',
             'foreignKey' => 'audit_record_id',
-            'strategy' => 'select',
+            'strategy' => 'join',
+            'conditions' => [
+                'audit_table' => 'Users',
+            ],
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('ChangedRoles', [
+            'className' => 'Roles',
+            'foreignKey' => 'audit_record_id',
+            'strategy' => 'join',
+            'conditions' => [
+                'audit_table' => 'Roles',
+            ],
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('ChangedUserContacts', [
+            'className' => 'UserContacts',
+            'foreignKey' => 'audit_record_id',
+            'strategy' => 'join',
+            'conditions' => [
+                'audit_table' => 'UserContacts',
+            ],
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('ChangedScoutGroups', [
+            'className' => 'ScoutGroups',
+            'foreignKey' => 'audit_record_id',
+            'strategy' => 'join',
+            'conditions' => [
+                'audit_table' => 'ScoutGroups',
+            ],
+            'finder' => 'withTrashed',
         ]);
 
         $this->belongsTo('Users', [
@@ -148,6 +185,17 @@ class AuditsTable extends Table
     public function findRoles($query)
     {
         $query->where(['audit_table' => 'Roles']);
+
+        return $query;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findScoutGroups($query)
+    {
+        $query->where(['audit_table' => 'ScoutGroups']);
 
         return $query;
     }

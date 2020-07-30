@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\NotificationType;
-use Cake\Core\Configure;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -25,6 +24,8 @@ use Cake\Validation\Validator;
  */
 class NotificationTypesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -36,8 +37,8 @@ class NotificationTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('notification_types');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(NotificationType::FIELD_NOTIFICATION_TYPE);
+        $this->setPrimaryKey(NotificationType::FIELD_ID);
 
         $this->hasMany('Notifications', [
             'foreignKey' => 'notification_type_id',
@@ -101,30 +102,11 @@ class NotificationTypesTable extends Table
     /**
      * install the application status config
      *
-     * @return mixed
+     * @return int
      */
     public function installBaseNotificationTypes()
     {
-        Configure::load('Application' . DS . 'notification_types', 'yaml', false);
-        $base = Configure::read('notificationTypes');
-
-        $total = 0;
-
-        foreach ($base as $baseType) {
-            $query = $this->find()->where([
-                NotificationType::FIELD_NOTIFICATION_TYPE => $baseType[NotificationType::FIELD_NOTIFICATION_TYPE],
-            ]);
-            $status = $this->newEmptyEntity();
-            if ($query->count() > 0) {
-                $status = $query->first();
-            }
-            $this->patchEntity($status, $baseType);
-            if ($this->save($status)) {
-                $total += 1;
-            }
-        }
-
-        return $total;
+        return $this->installBase($this);
     }
 
     /**

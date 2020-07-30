@@ -6,7 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\FileType;
 use App\Model\Table\FileTypesTable;
 use App\Utility\TextSafe;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -15,6 +15,7 @@ use Cake\TestSuite\TestCase;
 class FileTypesTableTest extends TestCase
 {
     use ModelTestTrait;
+    use LocatorAwareTrait;
 
     /**
      * Test subject
@@ -40,8 +41,8 @@ class FileTypesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('FileTypes') ? [] : ['className' => FileTypesTable::class];
-        $this->FileTypes = TableRegistry::getTableLocator()->get('FileTypes', $config);
+        $config = $this->getTableLocator()->exists('FileTypes') ? [] : ['className' => FileTypesTable::class];
+        $this->FileTypes = $this->getTableLocator()->get('FileTypes', $config);
     }
 
     /**

@@ -7,7 +7,6 @@ use App\Controller\Component\FilterComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -106,7 +105,7 @@ class FilterComponentTest extends TestCase
      */
     public function testNoIndexFilters()
     {
-        $baseTable = TableRegistry::getTableLocator()->get('Documents');
+        $baseTable = $this->getTableLocator()->get('Documents');
         $association = $baseTable->getAssociation('DocumentTypes');
         $returnedQuery = $this->Filter->indexFilters(
             $association,
@@ -121,7 +120,7 @@ class FilterComponentTest extends TestCase
 
         TestCase::assertArrayHasKey('DocumentTypes', $returnedQuery->getContain());
 
-        $baseTable = TableRegistry::getTableLocator()->get('Roles');
+        $baseTable = $this->getTableLocator()->get('Roles');
         $association = $baseTable->getAssociation('RoleTypes');
         $returnedQuery = $this->Filter->indexFilters(
             $association,
@@ -155,7 +154,7 @@ class FilterComponentTest extends TestCase
     public function testActiveIndexFilters()
     {
         // Setup Base Table & Association
-        $baseTable = TableRegistry::getTableLocator()->get('Documents');
+        $baseTable = $this->getTableLocator()->get('Documents');
         $association = $baseTable->getAssociation('DocumentTypes');
 
         // Pass Component
@@ -197,7 +196,7 @@ class FilterComponentTest extends TestCase
         ];
         TestCase::assertSame($expected, $returnedQuery->getValueBinder()->bindings());
 
-        $baseTable = TableRegistry::getTableLocator()->get('Roles');
+        $baseTable = $this->getTableLocator()->get('Roles');
         $association = $baseTable->getAssociation('RoleTypes');
         $returnedQuery = $this->Filter->indexFilters(
             $association,

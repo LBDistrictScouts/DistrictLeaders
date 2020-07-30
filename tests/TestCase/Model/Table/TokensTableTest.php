@@ -7,7 +7,6 @@ use App\Model\Entity\Token;
 use App\Model\Table\TokensTable;
 use App\Utility\TextSafe;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -62,8 +61,8 @@ class TokensTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Tokens') ? [] : ['className' => TokensTable::class];
-        $this->Tokens = TableRegistry::getTableLocator()->get('Tokens', $config);
+        $config = $this->getTableLocator()->exists('Tokens') ? [] : ['className' => TokensTable::class];
+        $this->Tokens = $this->getTableLocator()->get('Tokens', $config);
 
         $now = new FrozenTime('2016-12-26 23:22:30');
         FrozenTime::setTestNow($now);

@@ -18,7 +18,7 @@
     </ul>
 </nav>
 <div class="camps view large-9 medium-8 columns content">
-    <h3><?= h($camp->id) ?></h3>
+    <h3><?= h($camp->camp_name) ?></h3>
     <table class="vertical-table">
         <tr>
             <th scope="row"><?= __('Camp Name') ?></th>
@@ -26,7 +26,7 @@
         </tr>
         <tr>
             <th scope="row"><?= __('Camp Type') ?></th>
-            <td><?= $camp->has('camp_type') ? $this->Html->link($camp->camp_type->id, ['controller' => 'CampTypes', 'action' => 'view', $camp->camp_type->id]) : '' ?></td>
+            <td><?= $camp->has('camp_type') ? $this->Html->link($camp->camp_type->camp_type, ['controller' => 'CampTypes', 'action' => 'view', $camp->camp_type->id]) : '' ?></td>
         </tr>
         <tr>
             <th scope="row"><?= __('Id') ?></th>

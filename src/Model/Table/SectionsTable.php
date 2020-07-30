@@ -28,6 +28,8 @@ use Cake\Validation\Validator;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
+ * @mixin \Search\Model\Behavior\SearchBehavior
  */
 class SectionsTable extends Table
 {
@@ -47,6 +49,7 @@ class SectionsTable extends Table
 
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
+        $this->addBehavior('Search.Search');
         $this->addBehavior('Expose.Expose', ['on' => 'beforeSave']);
 
         $this->belongsTo('SectionTypes', [
@@ -59,6 +62,10 @@ class SectionsTable extends Table
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'section_id',
+        ]);
+
+        $this->belongsToMany('Users', [
+            'through' => 'Roles',
         ]);
     }
 

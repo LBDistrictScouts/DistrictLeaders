@@ -5,7 +5,6 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\UserState;
 use App\Model\Table\UserStatesTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -39,8 +38,8 @@ class UserStatesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('UserStates') ? [] : ['className' => UserStatesTable::class];
-        $this->UserStates = TableRegistry::getTableLocator()->get('UserStates', $config);
+        $config = $this->getTableLocator()->exists('UserStates') ? [] : ['className' => UserStatesTable::class];
+        $this->UserStates = $this->getTableLocator()->get('UserStates', $config);
     }
 
     /**
@@ -128,5 +127,15 @@ class UserStatesTableTest extends TestCase
     public function testBuildRules()
     {
         $this->validateUniqueRule(UserState::FIELD_USER_STATE, $this->UserStates, [$this, 'getGood']);
+    }
+
+    /**
+     * Test installBaseStatuses method
+     *
+     * @return void
+     */
+    public function testInstallBaseTypes()
+    {
+        $this->validateInstallBase($this->UserStates);
     }
 }

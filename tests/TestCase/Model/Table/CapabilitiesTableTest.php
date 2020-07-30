@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
 
@@ -44,6 +43,19 @@ class CapabilitiesTableTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -54,8 +66,8 @@ class CapabilitiesTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Capabilities') ? [] : ['className' => CapabilitiesTable::class];
-        $this->Capabilities = TableRegistry::getTableLocator()->get('Capabilities', $config);
+        $config = $this->getTableLocator()->exists('Capabilities') ? [] : ['className' => CapabilitiesTable::class];
+        $this->Capabilities = $this->getTableLocator()->get('Capabilities', $config);
     }
 
     /**
@@ -163,9 +175,9 @@ class CapabilitiesTableTest extends TestCase
             'Level 0' => [ 0, 1 ],
             'Level 1' => [ 1, 9 ],
             'Level 2' => [ 2, 32 ],
-            'Level 3' => [ 3, 55 ],
-            'Level 4' => [ 4, 58 ],
-            'Level 5' => [ 5, 68 ],
+            'Level 3' => [ 3, 56 ],
+            'Level 4' => [ 4, 59 ],
+            'Level 5' => [ 5, 69 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -1024,6 +1036,7 @@ class CapabilitiesTableTest extends TestCase
                         'LOGIN' => 'Login',
                         'DIRECTORY' => 'Use the District Directory',
                         'HISTORY' => 'View User Changes',
+                        'NON_PUBLIC_GROUP' => 'View Hidden Scout Group Details',
                     ],
                     'Entity' => [
                         'EDIT_GROUP' => 'Edit Group',

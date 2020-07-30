@@ -17,6 +17,7 @@ use Cake\Mailer\MailerAwareTrait;
  * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
  * @property \App\Model\Table\FileTypesTable $FileTypes
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
+ * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
  */
 class InstallBaseCommand extends Command
 {
@@ -34,6 +35,7 @@ class InstallBaseCommand extends Command
         $this->loadModel('NotificationTypes');
         $this->loadModel('FileTypes');
         $this->loadModel('RoleTemplates');
+        $this->loadModel('DirectoryTypes');
     }
 
     /**
@@ -60,6 +62,11 @@ class InstallBaseCommand extends Command
                 'help' => 'File Types',
                 'boolean' => true,
             ])
+            ->addOption('directory_types', [
+                'short' => 'd',
+                'help' => 'Directory Types',
+                'boolean' => true,
+            ])
             ->addOption('role_templates', [
                 'short' => 'r',
                 'help' => 'Role Templates',
@@ -81,6 +88,7 @@ class InstallBaseCommand extends Command
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function execute(Arguments $args, ConsoleIo $io)
     {
@@ -94,6 +102,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->NotificationTypes->installBaseNotificationTypes();
 
             $io->info('Notification Types Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('directory_types')) {
+            $happenings = $this->DirectoryTypes->installBaseDirectoryTypes();
+
+            $io->info('Directory Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('file_types')) {

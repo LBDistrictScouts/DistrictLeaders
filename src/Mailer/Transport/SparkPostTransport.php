@@ -22,7 +22,7 @@ use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Mailer\AbstractTransport;
 use Cake\Mailer\Message;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use SparkPost\SparkPost;
@@ -38,6 +38,8 @@ use SparkPost\SparkPostException;
  */
 class SparkPostTransport extends AbstractTransport
 {
+    use LocatorAwareTrait;
+
     /**
      * Send mail via SparkPost REST API
      *
@@ -80,7 +82,7 @@ class SparkPostTransport extends AbstractTransport
             $results = $response->getBody();
             $sendHeaders = $emailMessage->getHeaders(['X-Email-Gen-Code', 'X-Gen-ID']);
 
-            $this->EmailSends = TableRegistry::getTableLocator()->get('EmailSends');
+            $this->EmailSends = $this->getTableLocator()->get('EmailSends');
             $this->EmailSends->sendRegister($results, $sendHeaders);
 
             return [

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use Cake\Event\EventListenerInterface;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class LoginEvent
@@ -15,6 +15,8 @@ use Cake\ORM\TableRegistry;
  */
 class RoleListener implements EventListenerInterface
 {
+    use LocatorAwareTrait;
+
     /**
      * @return array
      */
@@ -35,7 +37,7 @@ class RoleListener implements EventListenerInterface
         /** @var \App\Model\Entity\Role $role */
         $role = $event->getData('role');
 
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Email',
             ['email_generation_code' => 'ROL-' . $role->id . '-NEW']
@@ -51,7 +53,7 @@ class RoleListener implements EventListenerInterface
         /** @var \App\Model\Entity\Role $role */
         $role = $event->getData('role');
 
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Email',
             ['email_generation_code' => 'ROL-' . $role->id . '-CNG']

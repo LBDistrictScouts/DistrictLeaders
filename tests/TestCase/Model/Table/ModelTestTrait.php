@@ -295,7 +295,6 @@ trait ModelTestTrait
         $before = $table->find('all')->count();
 
         $installAlias = 'installBase' . $table->getRegistryAlias();
-
         $installed = call_user_func([$table, $installAlias]);
 
         TestCase::assertNotEquals($before, $installed);

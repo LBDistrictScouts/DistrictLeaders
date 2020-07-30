@@ -2,22 +2,35 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Camp $camp
- *
- * @var array $campTypes
+ * @var mixed $campTypes
  */
 
 $this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'Camps');
-
 ?>
 <?= $this->Form->create($camp) ?>
 <fieldset>
     <?php
-        echo $this->Form->control($camp::FIELD_CAMP_NAME);
-        echo $this->Form->control($camp::FIELD_CAMP_TYPE_ID, ['options' => $campTypes]);
-        echo $this->Form->control($camp::FIELD_CAMP_START, ['class' => 'datetime']);
-        echo $this->Form->control($camp::FIELD_CAMP_END);
-    ?>
-</fieldset>
+        $args = [
+            'CREATE',
+            $camp->getSource(),
+            null,
+            null,
+        ];
 
+        $args[4] = $camp::FIELD_CAMP_NAME;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($camp::FIELD_CAMP_NAME) : '';
+
+        $args[4] = $camp::FIELD_CAMP_TYPE_ID;
+        /** @var array $campTypes The Camp Type Id List */
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($camp::FIELD_CAMP_TYPE_ID, ['options' => $campTypes]) : '';
+
+        $args[4] = $camp::FIELD_CAMP_START;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($camp::FIELD_CAMP_START) : '';
+
+        $args[4] = $camp::FIELD_CAMP_END;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($camp::FIELD_CAMP_END) : '';
+
+        ?>
+</fieldset>

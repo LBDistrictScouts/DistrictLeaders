@@ -5,7 +5,7 @@ namespace App\Listener;
 
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class LoginEvent
@@ -16,6 +16,8 @@ use Cake\ORM\TableRegistry;
  */
 class UserListener implements EventListenerInterface
 {
+    use LocatorAwareTrait;
+
     /**
      * @return array
      */
@@ -35,7 +37,7 @@ class UserListener implements EventListenerInterface
     {
         /** @var \App\Model\Entity\User $user */
         $user = $event->getData('user');
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
+        $this->Users = $this->getTableLocator()->get('Users');
 
         $user->set('last_login', FrozenTime::now());
         $user->setDirty('modified', true);
@@ -55,7 +57,7 @@ class UserListener implements EventListenerInterface
         $user = $event->getData('user');
 
         // Dispatch ASync Notification Task
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Email',
             ['email_generation_code' => 'USR-' . $user->id . '-CCH']

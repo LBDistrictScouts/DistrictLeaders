@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Entity;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -41,7 +40,7 @@ class DocumentEditionTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->DocumentEditions = TableRegistry::getTableLocator()->get('DocumentEditions');
+        $this->DocumentEditions = $this->getTableLocator()->get('DocumentEditions');
         $this->DocumentEdition = $this->DocumentEditions->get(1);
     }
 

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Policy;
 
-use PHPUnit\Framework\TestCase;
+use Cake\TestSuite\TestCase;
 
 /**
  * Class UserPolicyTest
@@ -38,12 +38,26 @@ class UserPolicyTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
-        'app.Notifications',
         'app.NotificationTypes',
+        'app.Notifications',
         'app.EmailSends',
         'app.Tokens',
         'app.EmailResponseTypes',
         'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
+        'app.FileTypes',
+        'app.DocumentTypes',
+        'app.Documents',
+        'app.DocumentVersions',
+        'app.DocumentEditions',
+
     ];
 
     /**

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\SectionsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -39,8 +38,8 @@ class SectionsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Sections') ? [] : ['className' => SectionsTable::class];
-        $this->Sections = TableRegistry::getTableLocator()->get('Sections', $config);
+        $config = $this->getTableLocator()->exists('Sections') ? [] : ['className' => SectionsTable::class];
+        $this->Sections = $this->getTableLocator()->get('Sections', $config);
     }
 
     /**

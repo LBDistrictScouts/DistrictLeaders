@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -26,6 +25,8 @@ use Cake\Validation\Validator;
  */
 class RoleTemplatesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -110,8 +111,7 @@ class RoleTemplatesTable extends Table
     public function installBaseRoleTemplates()
     {
         $count = 0;
-        /** @var array[] $roleTemplates */
-        $roleTemplates = Configure::read('baseRoleTemplates');
+        $roleTemplates = $this->getBaseValues($this);
 
         foreach ($roleTemplates as $roleTemplate) {
             if ($this->installBaseRoleTemplate($roleTemplate)) {

@@ -23,6 +23,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class ScoutGroup extends Entity
 {
@@ -95,4 +96,5 @@ class ScoutGroup extends Entity
     public const FIELD_DELETED = 'deleted';
     public const FIELD_UUID = 'uuid';
     public const FIELD_PUBLIC = 'public';
+    public const FIELD_AUDITS = 'audits';
 }

@@ -11,7 +11,6 @@ use Authorization\IdentityDecorator;
 use Authorization\IdentityInterface;
 use Authorization\Middleware\AuthorizationMiddleware;
 use Cake\Http\ServerRequest;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
@@ -83,7 +82,7 @@ class UserTest extends TestCase
         $this->User = new User();
         $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
 
-        $this->Users = TableRegistry::getTableLocator()->get('Users');
+        $this->Users = $this->getTableLocator()->get('Users');
     }
 
     /**
@@ -198,7 +197,7 @@ class UserTest extends TestCase
      */
     public function testGetIdentifier()
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
+        $users = $this->getTableLocator()->get('Users');
         $testUser = $users->get(1);
 
         TestCase::assertEquals(1, $testUser->getIdentifier());
@@ -210,7 +209,7 @@ class UserTest extends TestCase
      */
     private function notAll($user)
     {
-        $roleTypes = TableRegistry::getTableLocator()->get('RoleTypes');
+        $roleTypes = $this->getTableLocator()->get('RoleTypes');
         $superUser = $roleTypes->get(5, ['contain' => ['Capabilities']]);
 
         $allPermission = $roleTypes->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])->toList();

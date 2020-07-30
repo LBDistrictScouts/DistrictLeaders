@@ -16,11 +16,13 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property bool $verified
  * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property int|null $directory_user_id
  *
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\UserContactType $user_contact_type
  * @property \App\Model\Entity\Audit[] $audits
+ * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\UserContactType $user_contact_type
+ * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\DirectoryUser|null $directory_user
  */
 class UserContact extends Entity
 {
@@ -41,6 +43,7 @@ class UserContact extends Entity
         'modified' => true,
         'verified' => true,
         'deleted' => true,
+        'directory_user_id' => true,
         'audits' => true,
         'user' => true,
         'user_contact_type' => true,
@@ -55,8 +58,10 @@ class UserContact extends Entity
     public const FIELD_MODIFIED = 'modified';
     public const FIELD_VERIFIED = 'verified';
     public const FIELD_DELETED = 'deleted';
+    public const FIELD_DIRECTORY_USER_ID = 'directory_user_id';
     public const FIELD_USER = 'user';
     public const FIELD_ROLES = 'roles';
     public const FIELD_USER_CONTACT_TYPE = 'user_contact_type';
     public const FIELD_AUDITS = 'audits';
+    public const FIELD_DIRECTORY_USER = 'directory_user';
 }

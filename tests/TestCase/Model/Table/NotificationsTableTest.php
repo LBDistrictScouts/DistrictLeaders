@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Table\NotificationsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -60,8 +59,8 @@ class NotificationsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Notifications') ? [] : ['className' => NotificationsTable::class];
-        $this->Notifications = TableRegistry::getTableLocator()->get('Notifications', $config);
+        $config = $this->getTableLocator()->exists('Notifications') ? [] : ['className' => NotificationsTable::class];
+        $this->Notifications = $this->getTableLocator()->get('Notifications', $config);
     }
 
     /**

@@ -5,7 +5,7 @@ namespace App\Cron;
 
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\TableRegistry;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class Cron
@@ -14,6 +14,8 @@ use Cake\ORM\TableRegistry;
  */
 class Cron
 {
+    use LocatorAwareTrait;
+
     /**
      * @var \App\Model\Table\QueuedJobsTable
      */
@@ -46,7 +48,7 @@ class Cron
      */
     public function __construct()
     {
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         $className = static::class;
         $className = array_reverse(explode('\\', $className))[0];

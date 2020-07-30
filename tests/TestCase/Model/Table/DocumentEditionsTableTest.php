@@ -7,7 +7,6 @@ use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentEditionsTable;
 use Cake\Core\Configure;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 use League\Flysystem\Adapter\Local;
 
@@ -73,8 +72,8 @@ class DocumentEditionsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('DocumentEditions') ? [] : ['className' => DocumentEditionsTable::class];
-        $this->DocumentEditions = TableRegistry::getTableLocator()->get('DocumentEditions', $config);
+        $config = $this->getTableLocator()->exists('DocumentEditions') ? [] : ['className' => DocumentEditionsTable::class];
+        $this->DocumentEditions = $this->getTableLocator()->get('DocumentEditions', $config);
 
         Configure::write('Filesystem', $this->fileSystemTestConfig);
 

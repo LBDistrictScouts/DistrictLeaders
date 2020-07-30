@@ -6,7 +6,6 @@ namespace App\Test\TestCase\Task;
 use App\Shell\Task\QueueEmailTask;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOutput;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -79,7 +78,7 @@ class EmailTaskTest extends TestCase
     {
         parent::setUp();
 
-        $this->QueuedJobs = TableRegistry::getTableLocator()->get('Queue.QueuedJobs');
+        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
         $this->out = new ConsoleOutput();
         $this->err = new ConsoleOutput();

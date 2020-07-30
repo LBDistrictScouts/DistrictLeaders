@@ -6,10 +6,13 @@ namespace App\Controller;
 use App\Authenticator\CognitoResult;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
+use App\Model\Entity\Audit;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use App\Model\Filter\UsersCollection;
+use Authorization\Policy\ResultInterface;
 use Cake\Event\Event;
+use Cake\ORM\Query;
 
 /**
  * Users Controller
@@ -18,6 +21,7 @@ use Cake\Event\Event;
  * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  * @property \App\Model\Table\TokensTable $Tokens
  * @property \App\Model\Table\EmailSendsTable $EmailSends
+ * @property \App\Controller\Component\GoogleClientComponent $GoogleClient
  */
 class UsersController extends AppController
 {
@@ -33,9 +37,7 @@ class UsersController extends AppController
         $this->Authentication->addUnauthenticatedActions(['password']);
 
         $this->Authorization->mapActions([
-            'index' => 'list',
-            'edit' => 'update',
-            'add' => 'create',
+            'search' => 'index',
         ]);
     }
 
@@ -46,6 +48,8 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->Authorization->authorize($this->Users);
+
         /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
@@ -67,6 +71,8 @@ class UsersController extends AppController
      */
     public function search()
     {
+        $this->Authorization->authorize($this->Users);
+
         /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
@@ -103,18 +109,63 @@ class UsersController extends AppController
         $user = $this->Users->get($userId);
         $visibleFields = $this->Authorization->see($user);
 
-        $user = $this->Users->get($userId, [
-            'contain' => ['Audits.Users', 'Changes.ChangedUsers', 'Roles' => [
-                'RoleTypes',
-                'Sections' => [
-                    'ScoutGroups',
-                    'SectionTypes',
+        $result = $this->Authorization->checkCapability('HISTORY');
+
+        if ($result instanceof ResultInterface) {
+            $result = $result->getStatus();
+        }
+
+        if ($result) {
+            $user = $this->Users->get($userId, [
+                'contain' => [
+                    'Audits.Users',
+                    'Changes' => function (Query $q) {
+                        return $q
+                            ->limit(50)
+                            ->orderDesc(Audit::FIELD_CHANGE_DATE)
+                            ->contain([
+                                'ChangedUsers',
+                                'ChangedRoles' => [
+                                    'Users',
+                                    'RoleTypes',
+                                ],
+                                'ChangedScoutGroups',
+                                'ChangedUserContacts' => [
+                                    'Users',
+                                    'UserContactTypes',
+                                ],
+                            ]);
+                    },
+                    'Roles' => [
+                        'RoleTypes',
+                        'Sections' => [
+                            'ScoutGroups',
+                            'SectionTypes',
+                        ],
+                        'RoleStatuses',
+                        'UserContacts',
+                    ],
+                    'ContactEmails.DirectoryUsers',
+                    'ContactNumbers',
                 ],
-                'RoleStatuses',
-                'UserContacts',
-            ]],
-            'fields' => $visibleFields,
-        ]);
+                'fields' => $visibleFields,
+            ]);
+        } else {
+            $user = $this->Users->get($userId, [
+                'contain' => [
+                    'Roles' => [
+                        'RoleTypes',
+                        'Sections' => [
+                            'ScoutGroups',
+                            'SectionTypes',
+                        ],
+                        'RoleStatuses',
+                        'UserContacts',
+                    ],
+                ],
+                'fields' => $visibleFields,
+            ]);
+        }
 
         $this->Authorization->authorize($user);
 
@@ -147,15 +198,45 @@ class UsersController extends AppController
     }
 
     /**
+     * Add method
+     *
+     * @param string $userDirectoryId The API ID of the User
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @throws \Exception
+     */
+    public function import($userDirectoryId)
+    {
+        $this->loadComponent('GoogleClient');
+
+        $serviceUser = $this->GoogleClient->getUser($userDirectoryId);
+        debug($serviceUser);
+
+        $user = $this->Users->newEmptyEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+
+                return $this->redirect(['action' => 'view', $user->id]);
+            }
+            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+        }
+        $this->set(compact('user'));
+
+        $this->whyPermitted($this->Users);
+    }
+
+    /**
      * Edit method
      *
-     * @param string|null $id User id.
+     * @param string|null $userId User id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($userId = null)
     {
-        $user = $this->Users->get($id, [
+        $user = $this->Users->get($userId, [
             'contain' => [],
         ]);
         $this->Authorization->authorize($user);

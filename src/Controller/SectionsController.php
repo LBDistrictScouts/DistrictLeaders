@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Filter\SectionsCollection;
+
 /**
  * Sections Controller
  *
@@ -12,18 +14,54 @@ namespace App\Controller;
 class SectionsController extends AppController
 {
     /**
+     * @throws \Exception
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->Authorization->mapActions([
+            'search' => 'index',
+        ]);
+    }
+
+    /**
      * Index method
      *
      * @return \Cake\Http\Response|void
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['SectionTypes', 'ScoutGroups'],
-        ];
-        $sections = $this->paginate($this->Sections);
+        $this->Authorization->authorize($this->Sections);
+
+        $query = $this->Sections->find()->contain(['SectionTypes', 'ScoutGroups', 'Users']);
+        $sections = $this->paginate($this->Authorization->applyScope($query));
 
         $this->set(compact('sections'));
+
+        $this->whyPermitted($this->Sections);
+    }
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
+        $query = $this->Sections->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => SectionsCollection::class,
+        ])
+        ->contain([
+            'SectionTypes',
+            'ScoutGroups',
+        ]);
+        $sections = $this->paginate($this->Authorization->applyScope($query));
+        $this->set(compact('sections'));
+
+        $this->whyPermitted($this->Sections);
     }
 
     /**

@@ -6,14 +6,23 @@
 .gitignore
 codeclimate.yml
 codecov.yml
+.deployignore
 
 CODE_OF_CONDUCT.md
 README.md
 LICENSE
 
+.phpstorm.meta.php
 .phpstorm.meta.php/*
 
+.phan
+.phan/*
+
 .github/*.md
+
+phpunit.xml.dist
+phpunit-travis.xml.dist
+phpcs.xml.dist
 
 **/*.default.php
 config/Migrations/schema-dump-default.lock

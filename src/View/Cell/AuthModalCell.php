@@ -60,10 +60,9 @@ class AuthModalCell extends Cell
      * Default display method.
      *
      * @param \Authorization\Policy\Result $policyResult The result of the Policy Authorisation
-     * @param \Authorization\IdentityInterface $identity The User
      * @return void
      */
-    public function display($policyResult, $identity)
+    public function display($policyResult)
     {
         $reason = $policyResult->getReason();
 

@@ -1,0 +1,16 @@
+userStates:
+  - user_state: Active Directory User
+    active: true
+    expired: false
+  - user_state: Provisional User
+    active: false
+    expired: false
+  - user_state: Invited User
+    active: false
+    expired: false
+  - user_state: Inactive User
+    active: false
+    expired: true
+  - user_state: Prevalidation
+    active: false
+    expired: false

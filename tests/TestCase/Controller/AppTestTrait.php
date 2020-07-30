@@ -15,7 +15,6 @@ declare(strict_types=1);
  */
 namespace App\Test\TestCase\Controller;
 
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\Utility\Inflector;
 use PHPUnit\Exception as Exp;
@@ -34,7 +33,7 @@ trait AppTestTrait
      */
     protected function login($userId = 1)
     {
-        $users = TableRegistry::getTableLocator()->get('Users');
+        $users = $this->getTableLocator()->get('Users');
         $user = $users->get($userId);
 
         // Add the Capabilities retrieval method

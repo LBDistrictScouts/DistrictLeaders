@@ -12,7 +12,7 @@ $this->assign('entity', 'CampRoleTypes');
 <fieldset>
     <?php
         $args = [
-            'CHANGE',
+            'CREATE',
             $campRoleType->getSource(),
             null,
             null,
