@@ -202,6 +202,9 @@ class DirectoriesController extends AppController
                 $this->Flash->success('Token Authorised Successfully.');
                 $this->GoogleClient->saveToken($client, $directory);
 
+                $directory->set(Directory::FIELD_ACTIVE, true);
+                $this->Directories->save($directory);
+
                 return $this->redirect(['action' => 'view', $directory->id]);
             }
         }

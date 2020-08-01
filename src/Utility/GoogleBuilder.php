@@ -35,7 +35,8 @@ class GoogleBuilder
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
         ]);
-        $client->setAuthConfig(Configure::read('GoogleClient.TokenPath', 'config/Credentials/credentials.json'));
+        $path = CONFIG . 'Credentials' . DS . 'credentials.json';
+        $client->setAuthConfig($path);
         $client->setAccessType(GoogleBuilder::ACCESS_TYPE);
         $client->setPrompt(GoogleBuilder::ACCESS_PROMPT);
 
