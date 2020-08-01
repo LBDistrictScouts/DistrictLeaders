@@ -144,6 +144,9 @@ class DirectoriesController extends AppController
 
                 return $this->redirect(['action' => 'view', $directoryID]);
             } else {
+                $directory->set(Directory::FIELD_ACTIVE, false);
+                $this->Directories->save($directory);
+
                 // Request authorization from the user.
                 $authUrl = $client->createAuthUrl();
                 $this->set(compact('authUrl', 'form'));
@@ -168,6 +171,44 @@ class DirectoriesController extends AppController
 
             return $this->redirect(['action' => 'view', $directoryID]);
         }
+    }
+
+    /**
+     * @return \Cake\Http\Response
+     * @throws \Google_Exception
+     */
+    public function response()
+    {
+        $responseParams = $this->getRequest()->getQueryParams();
+
+        if (key_exists('code', $responseParams)) {
+            $query = $this->Directories->find()->where([Directory::FIELD_ACTIVE => false]);
+
+            if ($query->count() == 1) {
+                /** @var \App\Model\Entity\Directory $directory */
+                $directory = $query->firstOrFail();
+
+                $client = $this->GoogleClient->newClient();
+                $accessToken = $client->fetchAccessTokenWithAuthCode($responseParams['code']);
+                $client->setAccessToken($accessToken);
+
+                // Check to see if there was an error.
+                if (array_key_exists('error', $accessToken)) {
+                    $this->log(join(', ', $accessToken), 'error');
+                    $this->Flash->error('Error in Authorising Token.');
+
+                    return $this->redirect(['action' => 'view', $directory->id]);
+                }
+                $this->Flash->success('Token Authorised Successfully.');
+                $this->GoogleClient->saveToken($client, $directory);
+
+                return $this->redirect(['action' => 'view', $directory->id]);
+            }
+        }
+
+        $this->Flash->error('Code unprocessed. Token not Authorised.');
+
+        return $this->redirect('/');
     }
 
     /**
