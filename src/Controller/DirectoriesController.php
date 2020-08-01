@@ -3,17 +3,30 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Form\GoogleAuthForm;
 use App\Model\Entity\Directory;
 
 /**
  * Directories Controller
  *
  * @property \App\Model\Table\DirectoriesTable $Directories
+ * @property \App\Controller\Component\GoogleClientComponent GoogleClient
  * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoriesController extends AppController
 {
+    /**
+     * @throws \Exception
+     * @return void
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        $this->loadComponent('GoogleClient');
+    }
+
     /**
      * Index method
      *
@@ -32,13 +45,13 @@ class DirectoriesController extends AppController
     /**
      * View method
      *
-     * @param null $id Directory id.
+     * @param null $directoryID Directory id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($directoryID = null)
     {
-        $directory = $this->Directories->get($id, [
+        $directory = $this->Directories->get($directoryID, [
             'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers'],
         ]);
 
@@ -69,13 +82,13 @@ class DirectoriesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Directory id.
+     * @param string|null $directoryID Directory id.
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($directoryID = null)
     {
-        $directory = $this->Directories->get($id, [
+        $directory = $this->Directories->get($directoryID, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -92,16 +105,82 @@ class DirectoriesController extends AppController
     }
 
     /**
+     * Edit method
+     *
+     * @param string|null $directoryID Directory id.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @throws \Google_Exception
+     */
+    public function auth($directoryID = null)
+    {
+        $directory = $this->Directories->get($directoryID, [
+            'contain' => [],
+        ]);
+        $form = new GoogleAuthForm();
+
+        $client = $this->GoogleClient->newClient();
+
+        // Load previously authorized token from a file, if it exists.
+        // The file token.json stores the user's access and refresh tokens, and is
+        // created automatically when the authorization flow completes for the first
+        // time.
+        $client = $this->GoogleClient->getToken($client, $directory);
+
+        // Get state of url
+        if ($this->request->is('get')) {
+            // If there is no previous token or it's expired.
+            if (!$client->isAccessTokenExpired()) {
+                $this->Flash->success('Token is Active');
+
+                return $this->redirect(['action' => 'view', $directoryID]);
+            }
+
+            // Refresh the token if possible, else fetch a new one.
+            if ($client->getRefreshToken()) {
+                $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+                $this->GoogleClient->saveToken($client, $directory);
+                $this->Flash->success('Token Successfully Renewed.');
+
+                return $this->redirect(['action' => 'view', $directoryID]);
+            } else {
+                // Request authorization from the user.
+                $authUrl = $client->createAuthUrl();
+                $this->set(compact('authUrl', 'form'));
+            }
+        }
+
+        // Post the Authorisation Response
+        if ($this->request->is('post')) {
+            // Exchange authorization code for an access token.
+            $accessToken = $client->fetchAccessTokenWithAuthCode($this->request->getData('auth_code'));
+            $client->setAccessToken($accessToken);
+
+            // Check to see if there was an error.
+            if (array_key_exists('error', $accessToken)) {
+                $this->log(join(', ', $accessToken), 'error');
+                $this->Flash->error('Error in Authorising Token.');
+
+                return $this->redirect(['action' => 'view', $directoryID]);
+            }
+            $this->Flash->success('Token Authorised Successfully.');
+            $this->GoogleClient->saveToken($client, $directory);
+
+            return $this->redirect(['action' => 'view', $directoryID]);
+        }
+    }
+
+    /**
      * Delete method
      *
-     * @param string|null $id Directory id.
+     * @param string|null $directoryID Directory id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($directoryID = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $directory = $this->Directories->get($id);
+        $directory = $this->Directories->get($directoryID);
         if ($this->Directories->delete($directory)) {
             $this->Flash->success(__('The directory has been deleted.'));
         } else {

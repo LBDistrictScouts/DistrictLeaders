@@ -23,11 +23,10 @@ class GoogleBuilder
     protected const ACCESS_PROMPT = 'select_account consent';
 
     /**
-     * @param \App\Model\Entity\Directory|null $directory The Directory to take Config From
      * @return \Google_Client
      * @throws \Google_Exception
      */
-    public static function newClient(?Directory $directory = null): Google_Client
+    public static function newClient(): Google_Client
     {
         $client = new Google_Client();
         $client->setApplicationName(Configure::read('App.who.system', 'District Leaders System'));
@@ -36,16 +35,7 @@ class GoogleBuilder
             Google_Service_Directory::ADMIN_DIRECTORY_USER,
             Google_Service_Directory::ADMIN_DIRECTORY_GROUP,
         ]);
-        if (!is_null($directory)) {
-            try {
-                $client->setAuthConfig($directory->get(Directory::FIELD_CONFIGURATION_PAYLOAD));
-            } catch (\Google_Exception $e) {
-                $client->setAuthConfig('config/Credentials/credentials.json');
-            }
-        } else {
-            $client->setAuthConfig('config/Credentials/credentials.json');
-        }
-
+        $client->setAuthConfig(Configure::read('GoogleClient.TokenPath', 'config/Credentials/credentials.json'));
         $client->setAccessType(GoogleBuilder::ACCESS_TYPE);
         $client->setPrompt(GoogleBuilder::ACCESS_PROMPT);
 
@@ -61,7 +51,7 @@ class GoogleBuilder
      */
     public static function getClient(?Directory $directory = null)
     {
-        $client = GoogleBuilder::newClient($directory);
+        $client = GoogleBuilder::newClient();
 
         $client = GoogleBuilder::getToken($client, $directory);
 
@@ -95,7 +85,7 @@ class GoogleBuilder
      * Save Token Method
      *
      * @param \Google_Client $client An Activated Client
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
+     * @param \App\Model\Entity\Directory|null $directory The Directory to Save Config To
      * @return void
      */
     public static function saveToken(Google_Client $client, ?Directory $directory = null)
@@ -108,14 +98,6 @@ class GoogleBuilder
 
             return;
         }
-
-        $tokenPath = 'config/Credentials/token.json';
-
-        // Save the token to a file.
-        if (!file_exists(dirname($tokenPath))) {
-            mkdir(dirname($tokenPath), 0700, true);
-        }
-        file_put_contents($tokenPath, json_encode($client->getAccessToken()));
     }
 
     /**
@@ -130,12 +112,6 @@ class GoogleBuilder
             $client->setAccessToken($accessToken);
 
             return $client;
-        }
-
-        $tokenPath = 'config/Credentials/token.json';
-        if (file_exists($tokenPath)) {
-            $accessToken = json_decode(file_get_contents($tokenPath), true);
-            $client->setAccessToken($accessToken);
         }
 
         return $client;
@@ -159,8 +135,13 @@ class GoogleBuilder
     ) {
         $service = GoogleBuilder::getService($directory);
 
+        $customerReference = 'my_customer';
+        if (!empty($directory->customer_reference)) {
+            $customerReference = $directory->customer_reference;
+        }
+
         $optParams = [
-            'customer' => $directory->customer_reference,
+            'customer' => $customerReference,
             'maxResults' => $limit,
             'orderBy' => 'email',
         ];
@@ -194,10 +175,14 @@ class GoogleBuilder
     ): Google_Service_Directory_Groups {
         $service = GoogleBuilder::getService($directory);
 
+        $customerReference = 'my_customer';
+        if (!empty($directory->customer_reference)) {
+            $customerReference = $directory->customer_reference;
+        }
+
         $optParams = [
-            'customer' => $directory->customer_reference,
+            'customer' => $customerReference,
             'maxResults' => $limit,
-            'orderBy' => 'email',
         ];
 
         if (!is_null($pageToken)) {

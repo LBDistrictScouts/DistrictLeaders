@@ -63,7 +63,6 @@ class DirectoriesTableTest extends TestCase
     {
         return [
             Directory::FIELD_DIRECTORY => TextSafe::shuffle(8) . ' Directory',
-            Directory::FIELD_CONFIGURATION_PAYLOAD => null,
             Directory::FIELD_DIRECTORY_TYPE_ID => 1,
             Directory::FIELD_ACTIVE => true,
             Directory::FIELD_CUSTOMER_REFERENCE => TextSafe::shuffle(10),
@@ -80,7 +79,6 @@ class DirectoriesTableTest extends TestCase
         $expected = [
             Directory::FIELD_ID => 1,
             Directory::FIELD_DIRECTORY => 'Lorem ipsum dolor sit amet',
-            Directory::FIELD_CONFIGURATION_PAYLOAD => '',
             Directory::FIELD_DIRECTORY_TYPE_ID => 1,
             Directory::FIELD_ACTIVE => true,
             Directory::FIELD_CUSTOMER_REFERENCE => 'Lorem ipsu',
@@ -105,7 +103,6 @@ class DirectoriesTableTest extends TestCase
         $this->validateRequired($required, $this->Directories, [$this, 'getGood']);
 
         $notRequired = [
-            Directory::FIELD_CONFIGURATION_PAYLOAD,
             Directory::FIELD_CUSTOMER_REFERENCE,
             Directory::FIELD_AUTHORISATION_TOKEN,
             Directory::FIELD_ACTIVE,
@@ -113,7 +110,6 @@ class DirectoriesTableTest extends TestCase
         $this->validateNotRequired($notRequired, $this->Directories, [$this, 'getGood']);
 
         $empties = [
-            Directory::FIELD_CONFIGURATION_PAYLOAD,
             Directory::FIELD_CUSTOMER_REFERENCE,
             Directory::FIELD_AUTHORISATION_TOKEN,
         ];

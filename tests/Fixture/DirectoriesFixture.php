@@ -19,7 +19,6 @@ class DirectoriesFixture extends TestFixture
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
         'directory' => ['type' => 'string', 'length' => 64, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null],
-        'configuration_payload' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'directory_type_id' => ['type' => 'integer', 'length' => 10, 'default' => '1', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'active' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         'customer_reference' => ['type' => 'string', 'length' => 12, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
@@ -42,7 +41,6 @@ class DirectoriesFixture extends TestFixture
         $this->records = [
             [
                 'directory' => 'Lorem ipsum dolor sit amet',
-                'configuration_payload' => '',
                 'directory_type_id' => 1,
                 'active' => 1,
                 'customer_reference' => 'Lorem ipsu',

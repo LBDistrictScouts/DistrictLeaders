@@ -166,7 +166,7 @@ class DirectoryUsersTable extends Table
 
         /** @var \Google_Service_Directory_user $user */
         foreach ($userList->getUsers() as $user) {
-            $result = $this->findOrMake($user, $directory->id);
+            $result = $this->findOrMake($user, $directory);
             if ($result) {
                 $count += 1;
             }
@@ -177,15 +177,19 @@ class DirectoryUsersTable extends Table
 
     /**
      * @param \Google_Service_Directory_User $directoryUser Google Response Object
-     * @param int $directoryId ID of the Parent Directory
+     * @param \App\Model\Entity\Directory $directory The Parent Directory
      * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
      */
-    public function findOrMake(Google_Service_Directory_User $directoryUser, int $directoryId)
+    public function findOrMake(Google_Service_Directory_User $directoryUser, Directory $directory)
     {
         $search = [
             DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE => $directoryUser->getId(),
-            DirectoryUser::FIELD_DIRECTORY_ID => $directoryId,
+            DirectoryUser::FIELD_DIRECTORY_ID => $directory->id,
         ];
+
+        if (empty($directory->customer_reference) || $directory->customer_reference == 'my_customer') {
+            $this->Directories->setCustomerReference($directory, $directoryUser);
+        }
 
         return $this->findOrCreate($search, function (DirectoryUser $entity) use ($directoryUser) {
             $entity->set($entity::FIELD_GIVEN_NAME, $directoryUser->getName()->getGivenName());

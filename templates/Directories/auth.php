@@ -5,7 +5,7 @@
  * @var \App\Form\GoogleAuthForm $form
  */
 
-$this->extend('../../layout/CRUD/add');
+$this->extend('../layout/CRUD/add');
 
 $this->assign('entity', 'GoogleAuthCode');
 $this->assign('icon', 'fa-google');
@@ -13,7 +13,7 @@ $this->assign('icon', 'fa-google');
 ?>
 <div class="row">
     <div class="col-12">
-        <a class="btn btn-lg btn-outline-primary" href="<?= $authUrl ?>">AuthLink</a>
+        <a class="btn btn-lg btn-outline-primary" href="<?= $authUrl ?>">Authorise Directory</a>
     </div>
 </div>
 <br/>

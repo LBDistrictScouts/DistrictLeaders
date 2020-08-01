@@ -163,8 +163,8 @@ class CapAuthorizationComponent extends AuthorizationComponent
         $request = $this->getController()->getRequest();
         $identity = $this->getIdentity($request);
 
+        /** @var \App\Model\Entity\User $identity */
         if ($identity instanceof IdentityInterface) {
-            /** @var \App\Model\Entity\User $identity */
             return $identity->getOriginalData();
         }
 

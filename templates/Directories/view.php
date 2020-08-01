@@ -20,10 +20,6 @@
             <td><?= $this->Icon->iconBoolean($directory->has($directory::FIELD_AUTHORISATION_TOKEN)) ?></td>
         </tr>
         <tr>
-            <th scope="row"><?= __('Configuration Payload') ?></th>
-            <td><?= $this->Icon->iconBoolean($directory->has($directory::FIELD_CONFIGURATION_PAYLOAD)) ?></td>
-        </tr>
-        <tr>
             <th scope="row"><?= __('Active') ?></th>
             <td><?= $this->Icon->iconBoolean($directory->active) ?></td>
         </tr>

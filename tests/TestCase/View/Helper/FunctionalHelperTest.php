@@ -52,6 +52,7 @@ class FunctionalHelperTest extends TestCase
     public function provideFunctionalAreaData()
     {
         $data = [];
+        Configure::load('Application' . DS . 'functional_areas', 'yaml', false);
 
         foreach (Configure::read('functionalAreas') as $item => $value) {
             array_push($data, [$value['enabled'], $item]);
@@ -72,7 +73,7 @@ class FunctionalHelperTest extends TestCase
      */
     public function testFunctionalArea($expected, $provided)
     {
-        TestCase::assertEquals($expected, $this->Functional->checkFunction($provided));
+        TestCase::assertEquals($expected, $this->Functional->checkFunctionEnabled($provided));
     }
 
     /**

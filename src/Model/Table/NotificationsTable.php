@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Notification;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -128,5 +130,14 @@ class NotificationsTable extends Table
         $rules->add($rules->existsIn(['notification_type_id'], 'NotificationTypes'));
 
         return $rules;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query Query for Modification
+     * @return \Cake\ORM\Query
+     */
+    public function findUnread(Query $query): Query
+    {
+        return $query->where([Notification::FIELD_NEW => true]);
     }
 }

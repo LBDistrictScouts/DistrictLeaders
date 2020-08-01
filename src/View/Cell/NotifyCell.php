@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use App\Model\Entity\Notification;
 use Cake\View\Cell;
 
 /**
@@ -20,6 +21,14 @@ class NotifyCell extends Cell
      * @var array
      */
     protected $_validCellOptions = [];
+
+    /**
+     * @var string[] Helper Array
+     */
+    public $helpers = [
+        'Html',
+        'Time',
+    ];
 
     /**
      * Initialization logic run at the end of object construction.
@@ -41,12 +50,12 @@ class NotifyCell extends Cell
     public function display($loggedInUserId)
     {
         if (is_integer($loggedInUserId)) {
-            $notifications = $this->Notifications->find('all');
+            $notifications = $this->Notifications->find('unread', ['contain' => 'NotificationTypes'])
+                ->where([Notification::FIELD_USER_ID => $loggedInUserId])
+                ->limit(5)
+                ->orderDesc(Notification::FIELD_CREATED);
 
-            $name = $this->Users->get($loggedInUserId)->full_name;
-            $capabilities = $this->Users->retrieveCapabilities($this->Users->get($loggedInUserId));
-
-            $this->set(compact('capabilities', 'loggedInUserId', 'name', 'notifications'));
+            $this->set(compact('notifications', 'loggedInUserId'));
         }
     }
 }

@@ -13,8 +13,8 @@
             </div>
             <div class="card-body">
                 <?= $this->Form->create($resForm); ?>
-                <?= $this->Form->input('email'); ?>
-                <?= $this->Form->input('membership_number'); ?>
+                <?= $this->Form->control('email'); ?>
+                <?= $this->Form->control('membership_number'); ?>
             </div>
             <div class="card-footer">
                 <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-success btn-block btn-lg']) ?>

@@ -5,17 +5,13 @@ functionalAreas:
       index: DIRECTORY
   camps:
     enabled: false
-    capability:
-      index: CAMPS
+  tasks:
+    enabled: false
   documents:
     enabled: false
     exposed: false
-    capability:
-      index: DOCUMENTS
   articles:
     enabled: false
-    capability:
-      index: ARTICLES
   admin:
     enabled: true
     capability:
@@ -24,12 +20,14 @@ functionalAreas:
     enabled: true
     capability:
       index: LOGIN
+
 iconStandards:
   Camps: campground
   Directory: address-card
   Documents: file-alt
   Articles: newspaper
   Users: users
+
 searchConfigured:
   Users: true
   Documents: true
