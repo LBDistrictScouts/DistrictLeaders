@@ -15,7 +15,7 @@ class AdminController extends AppController
      *
      * @return \Cake\Http\Response|void
      */
-    public function home()
+    public function index()
     {
     }
 

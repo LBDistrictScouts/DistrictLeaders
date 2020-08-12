@@ -79,15 +79,6 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->fallbacks(DashedRoute::class);
 });
 
-Router::prefix('admin', function (RouteBuilder $routes) {
-    // All routes here will be prefixed with `/admin`
-    // And have the prefix => admin route element added.
-
-    $routes->connect('/', ['controller' => 'Admin', 'action' => 'home']);
-
-    $routes->fallbacks(DashedRoute::class);
-});
-
 Router::prefix('Api/V1', function (RouteBuilder $routes) {
     $routes->setExtensions(['json']);
     $routes->connect('/', ['controller' => 'Sections', 'action' => 'index', '_ext' => 'json']);

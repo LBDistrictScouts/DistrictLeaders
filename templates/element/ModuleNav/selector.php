@@ -28,7 +28,7 @@ if (preg_match('(queue)', $path)) {
     $queue = true;
 }
 
-if (preg_match('(admin)', $path) && !$queue) {
+if (preg_match('(admin|directories|directory)', $path) && !$queue) {
     $admin = true;
 }
 
@@ -39,11 +39,11 @@ if ($documents) :
     echo $this->element('ModuleNav/documents');
 endif;
 
-if ($directory) :
+if ($directory && !$admin) :
     echo $this->element('ModuleNav/directory');
 endif;
 
-if ($groups) :
+if ($groups && !$admin) :
     echo $this->element('ModuleNav/groups');
 endif;
 

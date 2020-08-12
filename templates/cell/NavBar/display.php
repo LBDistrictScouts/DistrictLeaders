@@ -30,7 +30,7 @@
     <?php endif; ?>
     <?php if ($this->Functional->checkFunction('admin', $identity)) : ?>
         <li class="nav-item">
-            <?= $this->Html->link('Admin', ['controller' => 'Admin', 'action' => 'home', 'prefix' => 'Admin', 'plugin' => false], ['class' => 'nav-link'])  ?>
+            <?= $this->Html->link('Admin', ['controller' => 'Admin', 'action' => 'index', 'prefix' => false, 'plugin' => false], ['class' => 'nav-link'])  ?>
         </li>
     <?php endif; ?>
 </ul>
