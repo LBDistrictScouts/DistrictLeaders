@@ -20,6 +20,12 @@ LICENSE
 
 .github/*.md
 
+webroot/css/node_modules
+webroot/css/node_modules/*
+webroot/css/*.scss
+webroot/css/yarn.lock
+webroot/css/package.json
+
 phpunit.xml.dist
 phpunit-travis.xml.dist
 phpcs.xml.dist

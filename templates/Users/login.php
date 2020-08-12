@@ -12,7 +12,7 @@ $backgrounds = [
 try {
     $background = $backgrounds[random_int(0, 2)];
 } catch (Exception $e) {
-    $background = $background[0];
+    $background = $backgrounds[0];
 }
 
 ?>
@@ -22,7 +22,7 @@ try {
         <div>
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="fal fa-unlock-alt"></i></div>
-            <?= $this->Form->input('username', ['class' => 'form-control form-control-lg', 'label' => false, 'type' => 'username d-inline', 'id' => 'username', 'name' => 'username', 'placeholder' => 'Username']) ?>
+            <?= $this->Form->control('username', ['class' => 'form-control form-control-lg', 'label' => false, 'type' => 'username d-inline', 'id' => 'username', 'name' => 'username', 'placeholder' => 'Username']) ?>
 
             <?= $this->Form->password('username', ['class' => 'form-control form-control-lg', 'label' => false, 'type' => 'password', 'id' => 'password', 'name' => 'password', 'placeholder' => 'Password']) ?>
 

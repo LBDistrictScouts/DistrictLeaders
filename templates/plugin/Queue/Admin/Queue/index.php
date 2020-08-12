@@ -13,7 +13,7 @@ use Cake\Core\Configure;
 
 ?>
 <div class="row">
-    <div class="col-6">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
                 <div class="row">
@@ -115,8 +115,9 @@ use Cake\Core\Configure;
                 </div>
             </div>
         </div>
+        <br/>
     </div>
-    <div class="col-6">
+    <div class="col-lg-6">
         <div class="card">
             <div class="card-header">
                 <div class="row">

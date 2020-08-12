@@ -77,3 +77,7 @@ nbproject/*
 !/webroot/files/empty
 /webroot/bootstrap_u_i
 /webroot/debug_kit
+
+/webroot/css/node_modules/
+/webroot/css/*.css
+/webroot/css/*.css.map

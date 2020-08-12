@@ -1,0 +1,8 @@
+#site-top-bar-brand {
+  color: #7413db;
+  font-family: 'Nunito Sans', sans-serif;
+
+  @media (max-width:500px) {
+    font-size: 0.75rem;
+  }
+}
