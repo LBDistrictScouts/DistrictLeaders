@@ -2,7 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var int $loggedInUserId
- * @var \App\Model\Entity\Notification[] $notifications
+ * @var \App\Model\Entity\Notification[]|\Cake\Collection\CollectionInterface $notifications
  */
 ?>
 <!-- Modal -->

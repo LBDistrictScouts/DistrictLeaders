@@ -100,9 +100,6 @@ class UserStateTest extends TestCase
         parent::tearDown();
     }
 
-    /**
-     *
-     */
     public function provideEvaluatedConstants()
     {
         return [
@@ -132,7 +129,6 @@ class UserStateTest extends TestCase
     /**
      * @param string $constantName Name of the Constant
      * @param int $expected Binary Value as an Integer
-     *
      * @dataProvider provideEvaluatedConstants
      */
     public function testEvaluateConstants($constantName, $expected)

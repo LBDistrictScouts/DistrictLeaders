@@ -54,7 +54,8 @@ class UserStatesTableTest extends TestCase
         'EVALUATE_LOGIN_EVER',
         'EVALUATE_LOGIN_QUARTER',
         'EVALUATE_LOGIN_CAPABILITY',
-//        'EVALUATE_ACTIVE_ROLE',
+        'EVALUATE_ACTIVE_ROLE',
+        'EVALUATE_VALIDATED_EMAIL',
     ];
 
     /**
@@ -235,7 +236,6 @@ class UserStatesTableTest extends TestCase
                 $user = $user->set(User::FIELD_LAST_LOGIN, $lastLogin);
             }
 
-
             $return['Not ' . $name] = [$case, $negativeUser, false];
 
             switch ($case) {
@@ -259,7 +259,10 @@ class UserStatesTableTest extends TestCase
                     $user = new User($userTestData, ['validate' => false]);
                     break;
                 case 'EVALUATE_ACTIVE_ROLE':
-                    $user = new User();
+                    $user = $user->set(User::FIELD_ACTIVE_ROLE_COUNT, 1);
+                    break;
+                case 'EVALUATE_VALIDATED_EMAIL':
+                    $user = $user->set(User::FIELD_VALIDATED_EMAIL_COUNT, 1);
                     break;
                 case 'EVALUATE_LOGIN_QUARTER':
                 case 'EVALUATE_LOGIN_EVER':
@@ -297,7 +300,6 @@ class UserStatesTableTest extends TestCase
      * @param string $evaluation Binary Mask Expectation
      * @param User $user Known User to be Evaluated
      * @param bool $expected The Outcome Expected
-     *
      * @dataProvider provideEvaluationData
      */
     public function testEvaluateUser(string $evaluation, User $user, bool $expected): void

@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Directory $directory
  * @property \App\Model\Entity\User[] $users
  * @property string $full_name
+ * @property \App\Model\Entity\UserContact[] $user_contacts
  */
 class DirectoryUser extends Entity
 {
@@ -64,4 +65,6 @@ class DirectoryUser extends Entity
     public const FIELD_PRIMARY_EMAIL = 'primary_email';
     public const FIELD_DIRECTORY = 'directory';
     public const FIELD_USERS = 'users';
+    public const FIELD_FULL_NAME = 'full_name';
+    public const FIELD_USER_CONTACTS = 'user_contacts';
 }

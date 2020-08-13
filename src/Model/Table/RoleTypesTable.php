@@ -21,6 +21,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleTemplatesTable&\Cake\ORM\Association\BelongsTo $RoleTemplates
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
@@ -29,8 +30,9 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
- * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
  * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
+ * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\BelongsToMany $DirectoryGroups
  */
 class RoleTypesTable extends Table
 {
@@ -62,6 +64,11 @@ class RoleTypesTable extends Table
             'targetForeignKey' => CapabilitiesRoleType::FIELD_CAPABILITY_ID,
             'through' => 'CapabilitiesRoleTypes',
         ]);
+        $this->belongsToMany('DirectoryGroups', [
+            'foreignKey' => 'role_type_id',
+            'targetForeignKey' => 'directory_group_id',
+            'joinTable' => 'role_types_directory_groups',
+        ]);
     }
 
     /**
@@ -91,6 +98,14 @@ class RoleTypesTable extends Table
             ->integer(RoleType::FIELD_LEVEL)
             ->requirePresence(RoleType::FIELD_LEVEL, 'create')
             ->notEmptyString(RoleType::FIELD_LEVEL);
+
+        $validator
+            ->integer(RoleType::FIELD_ALL_ROLE_COUNT)
+            ->allowEmptyString(RoleType::FIELD_ALL_ROLE_COUNT);
+
+        $validator
+            ->integer(RoleType::FIELD_ACTIVE_ROLE_COUNT)
+            ->allowEmptyString(RoleType::FIELD_ACTIVE_ROLE_COUNT);
 
         return $validator;
     }

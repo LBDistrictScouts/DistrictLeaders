@@ -38,6 +38,8 @@ use Cake\Validation\Validator;
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsToMany $DirectoryUsers
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $ContactEmails
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $ContactNumbers
  */
 class UsersTable extends Table
 {
@@ -237,6 +239,30 @@ class UsersTable extends Table
 
         $validator
             ->allowEmptyString('capabilities');
+
+        $validator
+            ->boolean('cognito_enabled')
+            ->notEmptyString('cognito_enabled');
+
+        $validator
+            ->integer('all_role_count')
+            ->allowEmptyString('all_role_count');
+
+        $validator
+            ->integer('active_role_count')
+            ->allowEmptyString('active_role_count');
+
+        $validator
+            ->integer('all_email_count')
+            ->allowEmptyString('all_email_count');
+
+        $validator
+            ->integer('all_phone_count')
+            ->allowEmptyString('all_phone_count');
+
+        $validator
+            ->boolean('receive_emails')
+            ->notEmptyString('receive_emails');
 
         return $validator;
     }

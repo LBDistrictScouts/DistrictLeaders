@@ -36,24 +36,34 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  *
  * @property array|null $capabilities
  *
+ * @property int|null $user_state_id
+ *
+ * @property bool $cognito_enabled
+ * @property bool $receive_emails
+ *
+ * @property int|null $all_role_count
+ * @property int|null $active_role_count
+ * @property int|null $all_email_count
+ * @property int|null $all_phone_count
+ *
  * @property string $full_name
  *
- * @property \App\Model\Entity\Audit[] $audits
- * @property \App\Model\Entity\Audit[] $changes
- * @property \App\Model\Entity\CampRole[] $camp_roles
- * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\UserState|null $user_state
+ * @property \App\Model\Entity\Audit[] $changes
+ * @property \App\Model\Entity\Audit[] $audits
+ * @property \App\Model\Entity\CampRole[] $camp_roles
  * @property \App\Model\Entity\EmailSend[] $email_sends
  * @property \App\Model\Entity\Notification[] $notifications
+ * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\UserContact[] $user_contacts
- *
- * @property int|null $user_state_id
+ * @property \App\Model\Entity\UserContact[] $contact_emails
+ * @property \App\Model\Entity\UserContact[] $contact_numbers
+ * @property \App\Model\Entity\DirectoryUser[] $directory_users
  *
  * @property \Authorization\AuthorizationService $authorization
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- * @property \App\Model\Entity\PasswordState|null $password_state
- * @property bool $cognito_enabled
- * @property \App\Model\Entity\DirectoryUser[] $directory_users
+ * @property int|null $validated_email_count
+ * @property int|null $validated_phone_count
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -86,10 +96,23 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         'last_login_ip' => true,
         'capabilities' => true,
         'user_state_id' => true,
+        'cognito_enabled' => true,
+        'all_role_count' => true,
+        'active_role_count' => true,
+        'all_email_count' => true,
+        'all_phone_count' => true,
+        'receive_emails' => true,
+        'user_state' => true,
         'changes' => true,
         'audits' => true,
         'camp_roles' => true,
+        'email_sends' => true,
+        'notifications' => true,
         'roles' => true,
+        'user_contacts' => true,
+        'contact_emails' => true,
+        'contact_numbers' => true,
+        'directory_users' => true,
     ];
 
     /**
@@ -370,6 +393,15 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_PASSWORD_STATE = 'password_state';
     public const FIELD_COGNITO_ENABLED = 'cognito_enabled';
     public const FIELD_DIRECTORY_USERS = 'directory_users';
+    public const FIELD_RECEIVE_EMAILS = 'receive_emails';
+    public const FIELD_ALL_ROLE_COUNT = 'all_role_count';
+    public const FIELD_ACTIVE_ROLE_COUNT = 'active_role_count';
+    public const FIELD_ALL_EMAIL_COUNT = 'all_email_count';
+    public const FIELD_ALL_PHONE_COUNT = 'all_phone_count';
+    public const FIELD_CONTACT_EMAILS = 'contact_emails';
+    public const FIELD_CONTACT_NUMBERS = 'contact_numbers';
+    public const FIELD_VALIDATED_EMAIL_COUNT = 'validated_email_count';
+    public const FIELD_VALIDATED_PHONE_COUNT = 'validated_phone_count';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 }

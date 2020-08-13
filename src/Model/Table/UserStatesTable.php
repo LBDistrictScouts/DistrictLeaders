@@ -5,7 +5,6 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
-use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -105,7 +104,6 @@ class UserStatesTable extends Table
 
     /**
      * @param \App\Model\Entity\User $user The User to be Evaluated
-     *
      * @return int
      */
     public function evaluateUser(User $user): int
@@ -132,6 +130,14 @@ class UserStatesTable extends Table
         }
 
         // Active Role
+        if ($user->active_role_count > 0) {
+            $userEvaluation |= UserState::EVALUATE_ACTIVE_ROLE;
+        }
+
+        // Valid Email
+        if ($user->validated_email_count > 0) {
+            $userEvaluation |= UserState::EVALUATE_VALIDATED_EMAIL;
+        }
 
         return $userEvaluation;
     }

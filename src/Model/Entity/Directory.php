@@ -64,4 +64,5 @@ class Directory extends Entity
     public const FIELD_DIRECTORY_DOMAINS = 'directory_domains';
     public const FIELD_DIRECTORY_GROUPS = 'directory_groups';
     public const FIELD_DIRECTORY_USERS = 'directory_users';
+    public const FIELD_CONFIGURATION_PAYLOAD = 'configuration_payload';
 }

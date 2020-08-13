@@ -44,4 +44,5 @@ class UserState extends Entity
     public const EVALUATE_LOGIN_QUARTER = 0b100;
     public const EVALUATE_LOGIN_CAPABILITY = 0b1000;
     public const EVALUATE_ACTIVE_ROLE = 0b10000;
+    public const EVALUATE_VALIDATED_EMAIL = 0b100000;
 }
