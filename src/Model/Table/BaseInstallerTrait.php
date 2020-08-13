@@ -18,7 +18,7 @@ trait BaseInstallerTrait
      * @param \Cake\ORM\Table $table The Table being Called
      * @return array
      */
-    public function getBaseValues(Table $table)
+    private function getBaseValues(Table $table)
     {
         $tableName = $table->getRegistryAlias();
         $fileName = Inflector::underscore($tableName);

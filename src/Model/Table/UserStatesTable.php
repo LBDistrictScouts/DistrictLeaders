@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
 use App\Model\Entity\UserState;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -25,6 +27,8 @@ use Cake\Validation\Validator;
  */
 class UserStatesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -36,11 +40,11 @@ class UserStatesTable extends Table
         parent::initialize($config);
 
         $this->setTable('user_states');
-        $this->setDisplayField('user_state');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(UserState::FIELD_USER_STATE);
+        $this->setPrimaryKey(UserState::FIELD_ID);
 
         $this->hasMany('Users', [
-            'foreignKey' => 'user_state_id',
+            'foreignKey' => User::FIELD_USER_STATE_ID,
         ]);
     }
 
@@ -53,24 +57,24 @@ class UserStatesTable extends Table
     public function validationDefault(Validator $validator): \Cake\Validation\Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(UserState::FIELD_ID)
+            ->allowEmptyString(UserState::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('user_state')
-            ->maxLength('user_state', 255)
-            ->requirePresence('user_state', 'create')
-            ->notEmptyString('user_state');
+            ->scalar(UserState::FIELD_USER_STATE)
+            ->maxLength(UserState::FIELD_USER_STATE, 255)
+            ->requirePresence(UserState::FIELD_USER_STATE, 'create')
+            ->notEmptyString(UserState::FIELD_USER_STATE);
 
         $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmptyString('active');
+            ->boolean(UserState::FIELD_ACTIVE)
+            ->requirePresence(UserState::FIELD_ACTIVE, 'create')
+            ->notEmptyString(UserState::FIELD_ACTIVE);
 
         $validator
-            ->boolean('expired')
-            ->requirePresence('expired', 'create')
-            ->notEmptyString('expired');
+            ->boolean(UserState::FIELD_EXPIRED)
+            ->requirePresence(UserState::FIELD_EXPIRED, 'create')
+            ->notEmptyString(UserState::FIELD_EXPIRED);
 
         return $validator;
     }
@@ -84,7 +88,7 @@ class UserStatesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['user_state']));
+        $rules->add($rules->isUnique([UserState::FIELD_USER_STATE]));
 
         return $rules;
     }
@@ -92,28 +96,43 @@ class UserStatesTable extends Table
     /**
      * install the application status config
      *
-     * @return mixed
+     * @return int
      */
-    public function installBaseUserStates()
+    public function installBaseUserStates(): int
     {
-        Configure::load('Application' . DS . 'user_states', 'yaml', false);
-        $base = Configure::read('userStates');
+        return $this->installBase($this);
+    }
 
-        $total = 0;
+    /**
+     * @param \App\Model\Entity\User $user The User to be Evaluated
+     *
+     * @return int
+     */
+    public function evaluateUser(User $user): int
+    {
+        $userEvaluation = 0;
 
-        foreach ($base as $baseState) {
-            $query = $this->find()
-                ->where([UserState::FIELD_USER_STATE => $baseState[UserState::FIELD_USER_STATE]]);
-            $status = $this->newEmptyEntity();
-            if ($query->count() > 0) {
-                $status = $query->first();
-            }
-            $this->patchEntity($status, $baseState);
-            if ($this->save($status)) {
-                $total += 1;
+        // Username
+        if (!is_null($user->username)) {
+            $userEvaluation |= UserState::EVALUATE_USERNAME;
+        }
+
+        // Login Ever & Quarter
+        if ($user->last_login instanceof FrozenTime) {
+            $userEvaluation |= UserState::EVALUATE_LOGIN_EVER;
+
+            if ($user->last_login->diffInMonths(FrozenTime::now()) <= 3) {
+                $userEvaluation |= UserState::EVALUATE_LOGIN_QUARTER;
             }
         }
 
-        return $total;
+        // Login Capability
+        if ($user->checkCapability('LOGIN')) {
+            $userEvaluation |= UserState::EVALUATE_LOGIN_CAPABILITY;
+        }
+
+        // Active Role
+
+        return $userEvaluation;
     }
 }

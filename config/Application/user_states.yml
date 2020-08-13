@@ -1,4 +1,4 @@
-userStates:
+UserStates:
   - user_state: Active Directory User
     active: true
     expired: false
