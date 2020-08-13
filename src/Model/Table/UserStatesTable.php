@@ -103,6 +103,29 @@ class UserStatesTable extends Table
     }
 
     /**
+     * @param \App\Model\Entity\UserState $state The State Object to be enriched
+     * @param array $stateData The Data Array to be processed
+     *
+     * @return \App\Model\Entity\UserState
+     */
+    public function evaluationSignatures(UserState $state, array $stateData): UserState
+    {
+        $prefix = UserState::class . '::';
+        $signature = 0;
+
+        foreach ($stateData as $evaluation) {
+            $result = constant($prefix . $evaluation);
+            if (!is_null($result)) {
+                $signature |= $result;
+            }
+        }
+
+//        $state->set(UserState, $signature)
+
+        return $state;
+    }
+
+    /**
      * @param \App\Model\Entity\User $user The User to be Evaluated
      * @return int
      */
