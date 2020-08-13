@@ -30,6 +30,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsTo $DirectoryUsers
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class UserContactsTable extends Table
 {

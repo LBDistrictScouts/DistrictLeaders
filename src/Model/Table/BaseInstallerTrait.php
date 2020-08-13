@@ -18,7 +18,7 @@ trait BaseInstallerTrait
      * @param \Cake\ORM\Table $table The Table being Called
      * @return array
      */
-    private function getBaseValues(Table $table)
+    public function getBaseValues(Table $table)
     {
         $tableName = $table->getRegistryAlias();
         $fileName = Inflector::underscore($tableName);
@@ -35,7 +35,6 @@ trait BaseInstallerTrait
      * @param string|null $businessKey The Business Key of the Table
      * @param callable|null $callback The Callback Function for Additional Processing
      * @param string|null $callbackKey The Key of the Data Array for Callback
-     *
      * @return int
      */
     public function installBase(
@@ -43,8 +42,7 @@ trait BaseInstallerTrait
         ?string $businessKey = null,
         ?callable $callback = null,
         ?string $callbackKey = null
-    ): int
-    {
+    ): int {
         if (is_null($businessKey)) {
             $businessKey = $table->getDisplayField();
         }
@@ -63,13 +61,9 @@ trait BaseInstallerTrait
 
             if (!is_null($callbackKey) && key_exists($callbackKey, $baseType)) {
                 $callbackData = $baseType[$callbackKey];
-                debug($callbackData);
-
                 $installedEntity = call_user_func($callback, $installedEntity, $callbackData);
                 unset($baseType[$callbackKey]);
             }
-
-
 
             $this->patchEntity($installedEntity, $baseType);
             if ($this->save($installedEntity)) {

@@ -22,7 +22,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\UserState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserState[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserState findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UserStatesTable extends Table
 {
@@ -53,7 +52,7 @@ class UserStatesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): \Cake\Validation\Validator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
             ->integer(UserState::FIELD_ID)
@@ -75,6 +74,15 @@ class UserStatesTable extends Table
             ->requirePresence(UserState::FIELD_EXPIRED, 'create')
             ->notEmptyString(UserState::FIELD_EXPIRED);
 
+        $validator
+            ->integer(UserState::FIELD_PRECEDENCE_ORDER)
+            ->allowEmptyString(UserState::FIELD_PRECEDENCE_ORDER)
+            ->add(UserState::FIELD_PRECEDENCE_ORDER, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->integer(UserState::FIELD_SIGNATURE)
+            ->notEmptyString(UserState::FIELD_SIGNATURE);
+
         return $validator;
     }
 
@@ -88,6 +96,7 @@ class UserStatesTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique([UserState::FIELD_USER_STATE]));
+        $rules->add($rules->isUnique([UserState::FIELD_PRECEDENCE_ORDER]));
 
         return $rules;
     }
@@ -99,16 +108,26 @@ class UserStatesTable extends Table
      */
     public function installBaseUserStates(): int
     {
-        return $this->installBase($this);
+        return $this->installBase($this, null, [$this, 'evaluationSignatures'], 'required');
     }
 
     /**
      * @param \App\Model\Entity\UserState $state The State Object to be enriched
      * @param array $stateData The Data Array to be processed
-     *
      * @return \App\Model\Entity\UserState
      */
     public function evaluationSignatures(UserState $state, array $stateData): UserState
+    {
+        $state->set(UserState::FIELD_SIGNATURE, $this->evaluateSignature($stateData));
+
+        return $state;
+    }
+
+    /**
+     * @param array $stateData The Data Array to be processed
+     * @return int
+     */
+    public function evaluateSignature(array $stateData): int
     {
         $prefix = UserState::class . '::';
         $signature = 0;
@@ -120,9 +139,7 @@ class UserStatesTable extends Table
             }
         }
 
-//        $state->set(UserState, $signature)
-
-        return $state;
+        return $signature;
     }
 
     /**

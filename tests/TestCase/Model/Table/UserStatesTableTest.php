@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
+use App\Model\Table\BaseInstallerTrait;
 use App\Model\Table\UsersTable;
 use App\Model\Table\UserStatesTable;
 use Cake\I18n\FrozenTime;
@@ -17,39 +18,40 @@ use Cake\Utility\Inflector;
 class UserStatesTableTest extends TestCase
 {
     use ModelTestTrait;
+    use BaseInstallerTrait;
 
     /**
      * Test subject
      *
      * @var \App\Model\Table\UserStatesTable
      */
-    private $UserStates;
+    protected $UserStates;
 
     /**
      * Test subject
      *
      * @var \App\Model\Table\UsersTable
      */
-    private $Users;
+    protected $Users;
 
     /**
      * Test subject
      *
      * @var \App\Model\Entity\User
      */
-    private $User;
+    protected $User;
 
     /**
      * Test subject
      *
      * @var \App\Model\Entity\UserState
      */
-    private $UserState;
+    protected $UserState;
 
     /**
      * @var string[]
      */
-    private $cases = [
+    protected $cases = [
         'EVALUATE_USERNAME',
         'EVALUATE_LOGIN_EVER',
         'EVALUATE_LOGIN_QUARTER',
@@ -63,7 +65,7 @@ class UserStatesTableTest extends TestCase
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
@@ -139,15 +141,13 @@ class UserStatesTableTest extends TestCase
      * @return array
      * @throws
      */
-    private function getGood()
+    private function getGood(): array
     {
-        $good = [
+        return [
             'user_state' => 'Status ' . random_int(111, 999) . ' ' . random_int(111, 999),
             'active' => true,
             'expired' => false,
         ];
-
-        return $good;
     }
 
     /**
@@ -155,13 +155,15 @@ class UserStatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
-            'id' => 1,
-            'user_state' => 'Lorem ipsum dolor sit amet',
-            'active' => true,
-            'expired' => true,
+            UserState::FIELD_ID => 1,
+            UserState::FIELD_USER_STATE => 'Lorem ipsum dolor sit amet',
+            UserState::FIELD_ACTIVE => true,
+            UserState::FIELD_EXPIRED => true,
+            UserState::FIELD_PRECEDENCE_ORDER => 1,
+            UserState::FIELD_SIGNATURE => 1,
         ];
         $this->validateInitialise($expected, $this->UserStates, 1);
     }
@@ -171,7 +173,7 @@ class UserStatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -203,19 +205,146 @@ class UserStatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->validateUniqueRule(UserState::FIELD_USER_STATE, $this->UserStates, [$this, 'getGood']);
     }
 
     /**
-     * Test installBaseStatuses method
+     * Test installBaseUserStates method
      *
      * @return void
      */
-    public function testInstallBaseTypes()
+    public function testInstallBaseUserStates(): void
     {
         $this->validateInstallBase($this->UserStates);
+    }
+
+    /**
+     * Test installBaseUserStates method
+     *
+     * @return void
+     */
+    public function testInstallBaseUserStateSignatures(): void
+    {
+        $this->UserStates->installBaseUserStates();
+
+        $values = $this->getBaseValues($this->UserStates);
+
+        foreach ($values as $baseState) {
+            /** @var UserState $installedState */
+            $installedState = $this->UserStates
+                ->find()
+                ->where([UserState::FIELD_USER_STATE => $baseState[UserState::FIELD_USER_STATE]])
+                ->first();
+
+            $expectedSignature = $this->UserStates->evaluateSignature($baseState['required']);
+
+            TestCase::assertEquals($expectedSignature, $installedState->signature);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function provideRandomSignature(): array
+    {
+        $caseCount = count($this->cases);
+        $binMax = 2 ** $caseCount;
+        $pos = 0;
+        $return = [];
+
+        while ($pos <= 10) {
+            try {
+                $randKey = random_int(0, $binMax);
+            } catch (\Exception $e) {
+                $randKey = 5;
+            }
+            $applicableCases = [];
+
+            foreach ($this->cases as $case) {
+                $binValue = constant(UserState::class . '::' . $case);
+                if ($randKey & $binValue) {
+                    array_push($applicableCases, $case);
+                }
+            }
+
+            $return[$pos] = [
+                $applicableCases,
+                $randKey,
+            ];
+            $pos++;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Test evaluationSignatures method
+     *
+     * @dataProvider provideRandomSignature
+     * @param array $applicableCases Array of Boolean Constants
+     * @param int $expectedSignature Signature Expected to be Derived
+     * @return void
+     */
+    public function testEvaluationSignatures(array $applicableCases, int $expectedSignature): void
+    {
+        $state = new UserState();
+        $state = $this->UserStates->evaluationSignatures($state, $applicableCases);
+
+        TestCase::assertEquals($expectedSignature, $state->signature);
+    }
+
+    /**
+     * @return array
+     */
+    public function provideEvaluateSignature(): array
+    {
+        $caseCount = count($this->cases);
+        $binMax = 2 ** $caseCount;
+        $pos = 0;
+        $return = [];
+
+        while ($pos < $binMax) {
+            $applicableCases = [];
+
+            foreach ($this->cases as $case) {
+                $binValue = constant(UserState::class . '::' . $case);
+                if ($pos & $binValue) {
+                    array_push($applicableCases, $case);
+                }
+            }
+
+            $return[$pos] = [
+                $applicableCases,
+                $pos,
+            ];
+            $pos++;
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return void
+     */
+    public function testEvaluateSignatureProvider(): void
+    {
+        $result = $this->provideEvaluateSignature();
+        TestCase::assertIsArray($result);
+    }
+
+    /**
+     * Test evaluationSignatures method
+     *
+     * @dataProvider provideEvaluateSignature
+     * @param array $applicableCases Array of Boolean Constants
+     * @param int $expectedSignature Signature Expected to be Derived
+     * @return void
+     */
+    public function testEvaluateSignature(array $applicableCases, int $expectedSignature): void
+    {
+        TestCase::assertEquals($expectedSignature, $this->UserStates->evaluateSignature($applicableCases));
     }
 
     /**

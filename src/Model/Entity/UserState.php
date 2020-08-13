@@ -12,6 +12,8 @@ use Cake\ORM\Entity;
  * @property string $user_state
  * @property bool $active
  * @property bool $expired
+ * @property int|null $precedence_order
+ * @property int $signature
  *
  * @property \App\Model\Entity\User[] $users
  */
@@ -30,6 +32,8 @@ class UserState extends Entity
         'user_state' => true,
         'active' => true,
         'expired' => true,
+        'precedence_order' => true,
+        'signature' => true,
         'users' => true,
     ];
 
@@ -38,6 +42,8 @@ class UserState extends Entity
     public const FIELD_ACTIVE = 'active';
     public const FIELD_EXPIRED = 'expired';
     public const FIELD_USERS = 'users';
+    public const FIELD_PRECEDENCE_ORDER = 'precedence_order';
+    public const FIELD_SIGNATURE = 'signature';
 
     public const EVALUATE_USERNAME = 0b1;
     public const EVALUATE_LOGIN_EVER = 0b10;
