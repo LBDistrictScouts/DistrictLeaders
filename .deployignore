@@ -18,6 +18,9 @@ LICENSE
 .phan
 .phan/*
 
+.circle-ci
+.circle-ci/*
+
 .github/*.md
 
 phpunit.xml.dist
