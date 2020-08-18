@@ -54,4 +54,12 @@ class CapIdentityHelper extends IdentityHelper
     {
         return $this->_identity->buildAndCheckCapability($action, $model, $group, $section, $field);
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_identity->full_name;
+    }
 }

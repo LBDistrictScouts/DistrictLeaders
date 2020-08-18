@@ -4,34 +4,16 @@
  * @var int $loggedInUserId
  */
 ?>
-<nav class="navbar navbar-light navbar-expand-md text-white-50 bg-dark navigation-clean-search sticky-top">
-    <div class="container"><?= $this->Html->link('Directory', ['controller' => $this->fetch('entity'), 'action' => 'index'], ['class' => 'navbar-brand text-white-50'])  ?>
-        <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse"
-             id="navcol-1">
-            <ul class="nav navbar-nav">
-                <?php if ($this->Identity->buildAndCheckCapability('CREATE', 'Users')) : ?>
-                    <li class="nav-item" role="presentation"><?= $this->Html->link('Add New User', ['controller' => 'Users', 'action' => 'add'], ['class' => 'nav-link text-white-50'])  ?></li>
-                <?php endif; ?>
-                <?php if ($this->Identity->buildAndCheckCapability('CREATE', 'Roles')) : ?>
-                    <li class="nav-item" role="presentation"><?= $this->Html->link('Add User Role', ['controller' => 'Roles', 'action' => 'add'], ['class' => 'nav-link text-white-50'])  ?></li>
-                <?php endif; ?>
-                <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'RoleTypes')) : ?>
-                    <li class="nav-item" role="presentation"><?= $this->Html->link('List Users by Role Type', ['controller' => 'RoleTypes', 'action' => 'index'], ['class' => 'nav-link text-white-50'])  ?></li>
-                <?php endif; ?>
-            </ul>
-            <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Users') || $this->Identity->checkCapability('DIRECTORY')) : ?>
-                <?= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'search'], 'class' => 'form-inline ml-auto', 'valueSources' => 'query']) ?>
-                    <div class="form-group text-white-50">
-                        <?= $this->Form->label('q', '<i class="fal fa-search"></i>', ['escape' => false]) ?>
-                        <?= $this->Form->control('q', ['class' => 'form-control flex-fill search-field', 'type' => 'search', 'label' => false, 'placeholder' => 'Search Users...']) ?>
-                    </div>
-                <?= $this->Form->end() ?>
-            <?php endif; ?>
-        </div>
-    </div>
-</nav>
+<?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Users') || $this->Identity->checkCapability('DIRECTORY')) : ?>
+    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Members</a>
+<?php endif; ?>
+<?php if ($this->Identity->buildAndCheckCapability('CREATE', 'Users')) : ?>
+    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'add'])  ?>">Add New User</a>
+<?php endif; ?>
+<?php if ($this->Identity->buildAndCheckCapability('CREATE', 'Roles')) : ?>
+    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Roles', 'action' => 'add'])  ?>">Add User Role</a>
+<?php endif; ?>
+<?php if ($this->Identity->buildAndCheckCapability('VIEW', 'RoleTypes')) : ?>
+    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'RoleTypes', 'action' => 'index'])  ?>">List Users by Role Type</a>
+<?php endif; ?>
 

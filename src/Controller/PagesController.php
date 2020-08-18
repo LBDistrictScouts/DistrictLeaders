@@ -42,6 +42,8 @@ class PagesController extends AppController
      */
     public function display(...$path)
     {
+        $this->viewBuilder()->setLayout('welcome');
+
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');
@@ -67,8 +69,6 @@ class PagesController extends AppController
             }
             throw new NotFoundException();
         }
-
-        $this->viewBuilder()->setLayout('welcome');
     }
 
     /**

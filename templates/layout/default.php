@@ -35,7 +35,6 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
     </head>
     <body>
         <?= $this->element('navbar'); ?>
-        <?= $this->element('ModuleNav/selector'); ?>
         <div class="container" style="padding-bottom: 120px; padding-top: 20px;">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
@@ -47,12 +46,6 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
                 <?php if (isset($PolicyResult)) {
                     echo $this->cell('AuthModal', [$PolicyResult])->render();
                 } ?>
-                <?= $this->cell('ProfileModal', [$identity->get('id')], [
-                    'cache' => [
-                        'config' => 'cell_cache',
-                        'key' => 'profile_modal_' . $identity->get('id'),
-                    ],
-                ])->render() ?>
             <?php endif; ?>
         </div>
         <br/>

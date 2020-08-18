@@ -33,9 +33,9 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
         <?= $this->element('style'); ?>
 
     </head>
-    <body>
+    <body style="font-family: 'Nunito Sans', sans-serif;">
+        <div data-bs-parallax-bg="true" style="height: 500px;background: url('/img/firelighting-with-steve-backshall-jpg.jpg') top / cover;"></div>
         <?= $this->element('navbar'); ?>
-        <?= $this->element('ModuleNav/selector'); ?>
         <div class="container" style="padding-bottom: 120px; padding-top: 20px;">
             <?= $this->Flash->render() ?>
             <?= $this->fetch('content') ?>
@@ -47,12 +47,6 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
                 <?php if (isset($PolicyResult)) {
                     echo $this->cell('AuthModal', [$PolicyResult])->render();
                 } ?>
-                <?= $this->cell('ProfileModal', [$identity->get('id')], [
-                    'cache' => [
-                        'config' => 'cell_cache',
-                        'key' => 'profile_modal_' . $identity->get('id'),
-                    ],
-                ])->render() ?>
             <?php endif; ?>
         </div>
         <br/>
