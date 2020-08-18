@@ -43,7 +43,7 @@ before_install:
   - mv phpunit-travis.xml.dist phpunit.xml.dist
 
 install:
-  - psql --command='create database leaders;' --username=postgres --password=ILIKECAKE
+  - psql --command='create database leaders;' --username=postgres
   - composer install
   - composer validate
 
