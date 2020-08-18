@@ -19,9 +19,6 @@ $this->assign('entity', 'Capabilities');
             null,
         ];
 
-        $args[4] = $capability::FIELD_ID;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($capability::FIELD_ID) : '';
-
         $args[4] = $capability::FIELD_CAPABILITY_CODE;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($capability::FIELD_CAPABILITY_CODE) : '';
 

@@ -54,8 +54,8 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
             'expire' => null,
             'path' => '/',
             'domain' => '',
-            'secure' => false,
-            'httpOnly' => false,
+            'secure' => true,
+            'httpOnly' => true,
         ],
         'passwordHasher' => 'Authentication.Default',
     ];
@@ -65,7 +65,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      */
     public function __construct(IdentifierCollection $identifiers, array $config = [])
     {
-        $this->_checkCakeVersion();
+        $this->checkCakeVersion();
 
         parent::__construct($identifiers, $config);
     }
@@ -75,7 +75,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      *
      * @return void
      */
-    protected function _checkCakeVersion(): void
+    protected function checkCakeVersion(): void
     {
         if (!class_exists(Cookie::class)) {
             throw new RuntimeException('Install CakePHP version >=3.5.0 to use the `CookieAuthenticator`.');
@@ -115,7 +115,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
             return new CognitoResult(null, CognitoResult::FAILURE_IDENTITY_NOT_FOUND, $this->_identifier->getErrors());
         }
 
-        if (!$this->_checkToken($identity, $tokenHash)) {
+        if (!$this->checkToken($identity, $tokenHash)) {
             return new CognitoResult(null, CognitoResult::FAILURE_CREDENTIALS_INVALID, [
                 'Cookie token does not match',
             ]);
@@ -139,8 +139,8 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
             ];
         }
 
-        $value = $this->_createToken($identity);
-        $cookie = $this->_createCookie($value);
+        $value = $this->createToken($identity);
+        $cookie = $this->createCookie($value);
 
         return [
             'request' => $request,
@@ -156,7 +156,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * @param array|\ArrayAccess $identity Identity data.
      * @return string
      */
-    protected function _createPlainToken($identity): string
+    protected function createPlainToken($identity): string
     {
         $usernameField = $this->getConfig('fields.username');
         $passwordField = $this->getConfig('fields.password');
@@ -172,9 +172,9 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * @param array|\ArrayAccess $identity Identity data.
      * @return string
      */
-    protected function _createToken($identity): string
+    public function createToken($identity): string
     {
-        $plain = $this->_createPlainToken($identity);
+        $plain = $this->createPlainToken($identity);
         $hash = $this->getPasswordHasher()->hash($plain);
 
         $usernameField = $this->getConfig('fields.username');
@@ -189,9 +189,9 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * @param string $tokenHash Hashed part of a cookie token.
      * @return bool
      */
-    protected function _checkToken($identity, $tokenHash): bool
+    protected function checkToken($identity, $tokenHash): bool
     {
-        $plain = $this->_createPlainToken($identity);
+        $plain = $this->createPlainToken($identity);
 
         return $this->getPasswordHasher()->check($plain, $tokenHash);
     }
@@ -201,7 +201,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      */
     public function clearIdentity(ServerRequestInterface $request, ResponseInterface $response): array
     {
-        $cookie = $this->_createCookie('')->withExpired();
+        $cookie = $this->createCookie('')->withExpired();
 
         return [
             'request' => $request,
@@ -215,11 +215,11 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * @param mixed $value Cookie value.
      * @return \Cake\Http\Cookie\CookieInterface
      */
-    protected function _createCookie($value): CookieInterface
+    protected function createCookie($value): CookieInterface
     {
         $data = $this->getConfig('cookie');
 
-        $cookie = new Cookie(
+        return new Cookie(
             $data['name'],
             $value,
             $data['expire'],
@@ -228,7 +228,5 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
             $data['secure'],
             $data['httpOnly']
         );
-
-        return $cookie;
     }
 }

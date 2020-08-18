@@ -228,6 +228,15 @@ class Application extends BaseApplication implements
             'password' => 'password',
         ];
 
+        $cookie = [
+            'name' => 'CookieAuth',
+            'expire' => null,
+            'path' => '/',
+            'domain' => '',
+            'secure' => true,
+            'httpOnly' => true,
+        ];
+
         $service->setConfig([
             'unauthenticatedRedirect' => self::LOGIN_URL,
             'queryParam' => 'redirect',
@@ -247,7 +256,7 @@ class Application extends BaseApplication implements
         ]);
         $service->loadAuthenticator('CognitoCookie', [
             'rememberMeField' => 'remember_me',
-            compact('fields'),
+            compact('fields', 'cookie'),
         ]);
 
         return $service;

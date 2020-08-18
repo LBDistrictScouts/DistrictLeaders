@@ -70,7 +70,7 @@ class CognitoResult extends Result implements ResultInterface
                 $this->_challenge = true;
                 break;
             default:
-                $this->_status = self::FAILURE_OTHER;
+                $this->_status = $status;
         }
 
         $this->_data = $data;

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94927bff2b77225eaa5b2888b7b57a0b",
+    "content-hash": "7d2ad695c5bb0d4531a822f88822efcd",
     "packages": [
         {
             "name": "aura/intl",
@@ -54,16 +54,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.149.0",
+            "version": "3.149.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "0ab4ac60f94d53d55f2c7374deb75d9a58961970"
+                "reference": "e8a0d608e8379ad8b283812064136229ba2c1d11"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/0ab4ac60f94d53d55f2c7374deb75d9a58961970",
-                "reference": "0ab4ac60f94d53d55f2c7374deb75d9a58961970",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/e8a0d608e8379ad8b283812064136229ba2c1d11",
+                "reference": "e8a0d608e8379ad8b283812064136229ba2c1d11",
                 "shasum": ""
             },
             "require": {
@@ -135,7 +135,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-08-13T18:10:50+00:00"
+            "time": "2020-08-17T18:11:59+00:00"
         },
         {
             "name": "cakephp/authentication",
@@ -256,16 +256,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "dev-master",
+            "version": "4.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "7d6415788c4d1f9390bd806904891e59f6d2e78f"
+                "reference": "2c0273a37023044b96a4d6471092f48f51225f8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/7d6415788c4d1f9390bd806904891e59f6d2e78f",
-                "reference": "7d6415788c4d1f9390bd806904891e59f6d2e78f",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/2c0273a37023044b96a4d6471092f48f51225f8d",
+                "reference": "2c0273a37023044b96a4d6471092f48f51225f8d",
                 "shasum": ""
             },
             "require": {
@@ -349,7 +349,7 @@
                 "rapid-development",
                 "validation"
             ],
-            "time": "2020-08-13T13:43:17+00:00"
+            "time": "2020-08-15T23:29:20+00:00"
         },
         {
             "name": "cakephp/chronos",
@@ -1053,16 +1053,16 @@
         },
         {
             "name": "dereuromark/cakephp-tools",
-            "version": "2.1.0",
+            "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dereuromark/cakephp-tools.git",
-                "reference": "3b7a21a9a9fe918545db780a0a0ed1788b275bc0"
+                "reference": "8395a4c662ddcbb504467e00f6be1d95c2f40524"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dereuromark/cakephp-tools/zipball/3b7a21a9a9fe918545db780a0a0ed1788b275bc0",
-                "reference": "3b7a21a9a9fe918545db780a0a0ed1788b275bc0",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-tools/zipball/8395a4c662ddcbb504467e00f6be1d95c2f40524",
+                "reference": "8395a4c662ddcbb504467e00f6be1d95c2f40524",
                 "shasum": ""
             },
             "require": {
@@ -1109,7 +1109,7 @@
                 "tools",
                 "utils"
             ],
-            "time": "2020-07-13T14:46:12+00:00"
+            "time": "2020-08-17T13:32:32+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -2166,16 +2166,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "1.5.3",
+            "version": "1.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "2574454b97e4103dc4e36917bd783b25624aefcd"
+                "reference": "21819c989e69bab07e933866ad30c7e3f32984ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/2574454b97e4103dc4e36917bd783b25624aefcd",
-                "reference": "2574454b97e4103dc4e36917bd783b25624aefcd",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/21819c989e69bab07e933866ad30c7e3f32984ba",
+                "reference": "21819c989e69bab07e933866ad30c7e3f32984ba",
                 "shasum": ""
             },
             "require": {
@@ -2231,76 +2231,20 @@
                 "md",
                 "parser"
             ],
-            "time": "2020-07-19T22:47:30+00:00"
-        },
-        {
-            "name": "league/commonmark-extras",
-            "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/thephpleague/commonmark-extras.git",
-                "reference": "b1961aa4a85465bf884235106a7517e315f14f41"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark-extras/zipball/b1961aa4a85465bf884235106a7517e315f14f41",
-                "reference": "b1961aa4a85465bf884235106a7517e315f14f41",
-                "shasum": ""
-            },
-            "require": {
-                "league/commonmark": "^1.3",
-                "php": "^7.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.5"
-            },
-            "type": "commonmark-extension",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.3-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "League\\CommonMark\\Extras\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Colin O'Dell",
-                    "email": "colinodell@gmail.com",
-                    "homepage": "https://www.colinodell.com",
-                    "role": "Lead Developer"
-                }
-            ],
-            "description": "Useful extensions for customizing the league/commonmark Markdown parser",
-            "homepage": "https://github.com/thephpleague/commonmark-extras",
-            "keywords": [
-                "Extras",
-                "commonmark",
-                "extensions",
-                "gfm",
-                "markdown"
-            ],
-            "abandoned": "league/commonmark",
-            "time": "2020-04-04T16:03:32+00:00"
+            "time": "2020-08-18T01:19:12+00:00"
         },
         {
             "name": "league/flysystem",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "6e96f54d82e71f71c4108da33ee96a7f57083710"
+                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/6e96f54d82e71f71c4108da33ee96a7f57083710",
-                "reference": "6e96f54d82e71f71c4108da33ee96a7f57083710",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
+                "reference": "63cd8c14708b9544d3f61d3c15b747fda1c95c6e",
                 "shasum": ""
             },
             "require": {
@@ -2372,24 +2316,24 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-08-12T14:23:41+00:00"
+            "time": "2020-08-18T10:57:55+00:00"
         },
         {
             "name": "league/flysystem-aws-s3-v3",
-            "version": "1.0.25",
+            "version": "1.0.26",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem-aws-s3-v3.git",
-                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea"
+                "reference": "580838fd732838c0d2e8751c403e5a415363da79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/d409b97a50bf85fbde30cbc9fc10237475e696ea",
-                "reference": "d409b97a50bf85fbde30cbc9fc10237475e696ea",
+                "url": "https://api.github.com/repos/thephpleague/flysystem-aws-s3-v3/zipball/580838fd732838c0d2e8751c403e5a415363da79",
+                "reference": "580838fd732838c0d2e8751c403e5a415363da79",
                 "shasum": ""
             },
             "require": {
-                "aws/aws-sdk-php": "^3.0.0",
+                "aws/aws-sdk-php": "^3.20.0",
                 "league/flysystem": "^1.0.40",
                 "php": ">=5.5.0"
             },
@@ -2419,7 +2363,7 @@
                 }
             ],
             "description": "Flysystem adapter for the AWS S3 SDK v3.x",
-            "time": "2020-06-02T18:41:58+00:00"
+            "time": "2020-08-18T10:54:07+00:00"
         },
         {
             "name": "league/mime-type-detection",
@@ -2768,22 +2712,23 @@
         },
         {
             "name": "muffin/webservice",
-            "version": "3.0.0-beta",
+            "version": "3.0.0-RC2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/UseMuffin/Webservice.git",
-                "reference": "60ecc30e3143ad9915cb4ca286b24020f46659fb"
+                "reference": "a7d761baed43ce64473d247ad92f0a744a10da61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/UseMuffin/Webservice/zipball/60ecc30e3143ad9915cb4ca286b24020f46659fb",
-                "reference": "60ecc30e3143ad9915cb4ca286b24020f46659fb",
+                "url": "https://api.github.com/repos/UseMuffin/Webservice/zipball/a7d761baed43ce64473d247ad92f0a744a10da61",
+                "reference": "a7d761baed43ce64473d247ad92f0a744a10da61",
                 "shasum": ""
             },
             "require": {
-                "cakephp/cakephp": "^4.0"
+                "cakephp/orm": "^4.1"
             },
             "require-dev": {
+                "cakephp/cakephp": "^4.1",
                 "cakephp/cakephp-codesniffer": "^4.0",
                 "phpunit/phpunit": "~8.5.0"
             },
@@ -2828,7 +2773,7 @@
                 "orm",
                 "webservice"
             ],
-            "time": "2019-12-26T12:52:26+00:00"
+            "time": "2020-07-26T15:49:24+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -3437,16 +3382,16 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "5.2.0",
+            "version": "5.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "3170448f5769fe19f456173d833734e0ff1b84df"
+                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/3170448f5769fe19f456173d833734e0ff1b84df",
-                "reference": "3170448f5769fe19f456173d833734e0ff1b84df",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/d870572532cd70bc3fab58f2e23ad423c8404c44",
+                "reference": "d870572532cd70bc3fab58f2e23ad423c8404c44",
                 "shasum": ""
             },
             "require": {
@@ -3485,7 +3430,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2020-07-20T20:05:34+00:00"
+            "time": "2020-08-15T11:14:08+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -6841,16 +6786,16 @@
         },
         {
             "name": "cakephp/debug_kit",
-            "version": "4.3.1",
+            "version": "4.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/debug_kit.git",
-                "reference": "6ca239b0ec403a4b0632e3a294a1e2b39ba5c57c"
+                "reference": "98eba199a847ddaae7f2fcfcb0f4df873fa71adf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/6ca239b0ec403a4b0632e3a294a1e2b39ba5c57c",
-                "reference": "6ca239b0ec403a4b0632e3a294a1e2b39ba5c57c",
+                "url": "https://api.github.com/repos/cakephp/debug_kit/zipball/98eba199a847ddaae7f2fcfcb0f4df873fa71adf",
+                "reference": "98eba199a847ddaae7f2fcfcb0f4df873fa71adf",
                 "shasum": ""
             },
             "require": {
@@ -6897,7 +6842,7 @@
                 "debug",
                 "kit"
             ],
-            "time": "2020-07-29T15:31:40+00:00"
+            "time": "2020-08-11T20:21:51+00:00"
         },
         {
             "name": "composer/composer",
@@ -8464,17 +8409,9 @@
             "time": "2020-06-24T13:36:18+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "4.1.1",
-            "alias_normalized": "4.1.1.0",
-            "version": "9999999-dev",
-            "package": "cakephp/cakephp"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "cakephp/cakephp": 20,
         "wyrihaximus/twig-view": 20,
         "phpunit/php-code-coverage": 0,
         "psy/psysh": 0,

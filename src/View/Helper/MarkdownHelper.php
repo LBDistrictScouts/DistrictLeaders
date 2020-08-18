@@ -6,7 +6,6 @@ namespace App\View\Helper;
 use Cake\View\Helper;
 use League\CommonMark\CommonMarkConverter;
 use League\CommonMark\Environment;
-use League\CommonMark\Extras\CommonMarkExtrasExtension;
 
 /**
  * Markdown helper
@@ -35,9 +34,6 @@ class MarkdownHelper extends Helper
     {
         // Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
         $environment = Environment::createCommonMarkEnvironment();
-
-        // REGISTER THIS EXTENSION HERE
-        $environment->addExtension(new CommonMarkExtrasExtension());
 
         // Define your configuration:
         $config = [];

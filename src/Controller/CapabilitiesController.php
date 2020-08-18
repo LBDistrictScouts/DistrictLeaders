@@ -132,7 +132,6 @@ class CapabilitiesController extends AppController
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
-        $this->set('levelSet', $this->getRequest()->getQueryParams()['roleTypes']);
         $roleTypes = $this->Capabilities->RoleTypes->find('list', [
             'conditions' => [
                 'level >=' => $capability->min_level,
