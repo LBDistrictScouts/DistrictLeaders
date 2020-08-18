@@ -14,7 +14,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # Using the RAM variation mitigates I/O contention
       # for database intensive operations.
-      - image: circleci/postgres:12.4-ram
+      - image: circleci/postgres:11.4-ram
         environment:
             POSTGRES_USER: postgres
             POSTGRES_HOST_AUTH_METHOD: trust
@@ -27,7 +27,7 @@ jobs:
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
-      - run: sudo apt install postgresql-client-12
+      - run: sudo apt install postgresql-client-11
       - run: export COMPOSER_PROCESS_TIMEOUT=900
       - run: mv config/app_file.travis.php config/app_file.php
       - run: mv config/app.travis.php config/app.php
