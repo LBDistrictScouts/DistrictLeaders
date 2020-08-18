@@ -7,7 +7,6 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Cake\Mailer\MailerAwareTrait;
 
 /**
  * Class PasswordCommand
@@ -18,11 +17,10 @@ use Cake\Mailer\MailerAwareTrait;
  * @property \App\Model\Table\FileTypesTable $FileTypes
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
+ * @property \App\Model\Table\UserStatesTable $UserStates
  */
 class InstallBaseCommand extends Command
 {
-    use MailerAwareTrait;
-
     /**
      * Initialise method
      *
@@ -36,6 +34,7 @@ class InstallBaseCommand extends Command
         $this->loadModel('FileTypes');
         $this->loadModel('RoleTemplates');
         $this->loadModel('DirectoryTypes');
+        $this->loadModel('UserStates');
     }
 
     /**
@@ -120,6 +119,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->RoleTemplates->installBaseRoleTemplates();
 
             $io->info('Role Templates Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('user_states')) {
+            $happenings = $this->UserStates->installBaseUserStates();
+
+            $io->info('User States Installed: ' . $happenings);
         }
     }
 }

@@ -3,4 +3,8 @@
  * @var \App\View\AppView $this
  */
 ?>
-<?= $this->element('features');
+<div class="features-boxed">
+    <?= $this->element('header') ?>
+    <?= $this->element('search') ?>
+    <?= $this->element('features') ?>
+</div>

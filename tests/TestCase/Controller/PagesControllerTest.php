@@ -83,7 +83,7 @@ class PagesControllerTest extends TestCase
         $this->tryGet('/pages/home');
 
         $this->assertResponseOk();
-        $this->assertResponseContains('District Leader Information System');
+        $this->assertResponseContains('District Leader System');
         $this->assertResponseContains('<html>');
     }
 

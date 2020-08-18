@@ -30,8 +30,8 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_USER_STATE'));
             <?= $this->Identity->checkCapability('DELETE_USER_STATE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $userState->id], ['confirm' => __('Are you sure you want to delete # {0}?', $userState->id), 'title' => __('Delete User State'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= h($userState->user_state) ?></td>
-        <td><?= h($userState->active) ?></td>
-        <td><?= h($userState->expired) ?></td>
+        <td><?= $this->Icon->iconCheck($userState->active) ?></td>
+        <td><?= $this->Icon->iconCheck($userState->expired) ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>

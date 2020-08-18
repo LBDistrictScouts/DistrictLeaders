@@ -38,9 +38,9 @@ $this->set('searchBar', $active);
 
 <ul class="navbar-nav move-right mt-2 mt-lg-0">
     <?= $documents ? $this->element('Search/documents') : '' ?>
-    <?= ($directory && !$admin) ? $this->element('Search/directory') : '' ?>
-    <?= ($groups && !$admin) ? $this->element('Search/groups') : '' ?>
-    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: #7413db;font-family: 'Nunito Sans', sans-serif;"><i class="fw fal fa-user"></i><?= (isset($active) && $active) ? '' : ' ' . h($this->Identity->getName()) ?></a>
+    <?= $directory && !$admin ? $this->element('Search/directory') : '' ?>
+    <?= $groups && !$admin ? $this->element('Search/groups') : '' ?>
+    <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: #7413db;font-family: 'Nunito Sans', sans-serif;"><i class="fw fal fa-user"></i><?= isset($active) && $active ? '' : ' ' . h($this->Identity->getName()) ?></a>
         <div class="dropdown-menu" role="menu">
             <?= $this->cell('ProfileModal', [$this->Identity->getId()], [
                 'cache' => [

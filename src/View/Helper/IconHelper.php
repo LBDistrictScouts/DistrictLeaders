@@ -6,6 +6,11 @@ namespace App\View\Helper;
 use Cake\Core\Configure;
 use Cake\View\Helper;
 
+/**
+ * Class IconHelper
+ *
+ * @package App\View\Helper
+ */
 class IconHelper extends Helper
 {
     protected $_defaultConfig = [
@@ -75,10 +80,23 @@ class IconHelper extends Helper
     public function iconBoolean($booleanAttribute)
     {
         if ($booleanAttribute) {
-            return $this->iconHtml('check');
+            return $this->iconCheck($booleanAttribute);
         }
 
         return $this->iconHtml('times');
+    }
+
+    /**
+     * @param bool $booleanAttribute The Boolean Attribute
+     * @return string
+     */
+    public function iconCheck($booleanAttribute)
+    {
+        if ($booleanAttribute) {
+            return $this->iconHtml('check');
+        }
+
+        return '';
     }
 
     /**
