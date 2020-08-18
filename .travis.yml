@@ -8,6 +8,10 @@ version: ~> 1.0
 
 addons:
   postgresql: "12"
+  apt:
+    packages:
+      - postgresql-12
+      - postgresql-client-12
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
