@@ -27,6 +27,12 @@ jobs:
 
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
+      - run: export COMPOSER_PROCESS_TIMEOUT=900
+      - run: mv config/app_file.travis.php config/app_file.php
+      - run: mv config/app.travis.php config/app.php
+      - run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+      - run: rm phpunit.xml.dist
+      - run: mv phpunit-travis.xml.dist phpunit.xml.dist
 
       # Download and cache dependencies
       - restore_cache:
@@ -37,6 +43,7 @@ jobs:
             - v1-dependencies-
 
       - run: composer install -n --prefer-dist
+      - run: composer validate
 
       - save_cache:
           key: v1-dependencies-{{ checksum "composer.json" }}
@@ -44,6 +51,7 @@ jobs:
             - ./vendor
 
       # run tests with phpunit or codecept
+      - run: composer cs-check
       - run: composer test
       
       - store_test_results:
