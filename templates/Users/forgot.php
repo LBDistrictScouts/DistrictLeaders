@@ -13,7 +13,7 @@
         <?= $this->Form->control('membership_number'); ?>
 
         <div class="form-group d-inline">
-            <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-success btn-block btn-lg']) ?>
+            <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-primary btn-block btn-lg']) ?>
         </div>
         <div class="form-row" style="margin-top: 20px;">
             <div class="col"><a class="forgot" href="<?php echo $this->Url->build([

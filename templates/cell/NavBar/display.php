@@ -33,8 +33,10 @@
         </li>
     <?php endif; ?>
     <?php if ($this->Functional->checkFunction('admin', $identity)) : ?>
-        <li class="nav-item">
-            <?= $this->Html->link('Admin', ['controller' => 'Admin', 'action' => 'index', 'prefix' => false, 'plugin' => false], ['class' => 'nav-link'])  ?>
+        <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: #7413db;font-family: 'Nunito Sans', sans-serif;">Admin</a>
+            <div class="dropdown-menu" role="menu">
+                <?= $this->element('ModuleNav/admin') ?>
+            </div>
         </li>
     <?php endif; ?>
 </ul>

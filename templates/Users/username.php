@@ -38,7 +38,7 @@
                 <?= $this->Form->control('last_name'); ?>
 
                 <div class="form-group d-inline">
-                    <?= $this->Form->button('Lookup Username', ['class' => 'btn btn-success btn-block btn-lg', 'type' => 'submit']) ?>
+                    <?= $this->Form->button('Lookup Username', ['class' => 'btn btn-primary btn-block btn-lg', 'type' => 'submit']) ?>
                 </div>
                 <div class="form-row" style="margin-top: 20px;">
                     <div class="col"><a class="forgot" href="<?php echo $this->Url->build([
