@@ -22,8 +22,9 @@ services:
   - elasticsearch
 
 env:
-  - DB=postgres
-  - PGPORT=5432
+  global:
+    - DB=postgres
+    - PGPORT=5432
 
 jobs:
   include:
