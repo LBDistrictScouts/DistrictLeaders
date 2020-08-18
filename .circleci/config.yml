@@ -47,4 +47,4 @@ jobs:
       - run: composer test
       
       - store_test_results:
-        path: clover.xml
+          path: clover.xml
