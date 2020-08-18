@@ -36,6 +36,7 @@ jobs:
       php: 7.4
 
 before_install:
+  - export COMPOSER_PROCESS_TIMEOUT=900
   - mv config/app_file.travis.php config/app_file.php
   - mv config/app.travis.php config/app.php
   - mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
