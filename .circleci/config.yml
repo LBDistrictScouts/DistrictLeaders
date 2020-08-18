@@ -28,6 +28,7 @@ jobs:
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
       - run: sudo apt install postgresql-client-11
+      - run: echo 'export PATH=/usr/lib/postgresql/11/bin/:$PATH' >> $BASH_ENV
       - run: export COMPOSER_PROCESS_TIMEOUT=900
       - run: mv config/app_file.travis.php config/app_file.php
       - run: mv config/app.travis.php config/app.php
