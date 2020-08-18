@@ -17,6 +17,8 @@ jobs:
       - image: circleci/postgres:12.4-ram
         environment:
             POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: ''
+            POSTGRES_DB: leaders
       
       - image: redis:latest
 
@@ -26,9 +28,6 @@ jobs:
       - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
       - run: sudo apt install postgresql-client-12.4
-
-      # prepare the database
-      - run: touch storage/testing.sqlit
 
       # Download and cache dependencies
       - restore_cache:
