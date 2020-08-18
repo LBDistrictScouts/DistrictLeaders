@@ -20,6 +20,7 @@ class TokensController extends AppController
         parent::initialize();
 
         $this->Authentication->allowUnauthenticated(['validate']);
+        $this->Authorization->skipAuthorization();
     }
 
     /**

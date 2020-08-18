@@ -77,7 +77,7 @@ class AppController extends Controller
 
         $this->loadComponent('Authentication.Authentication');
 
-        $this->loadComponent('Flash.Flash');
+        $this->loadComponent('Flash');
 
         $this->loadComponent('Authorization.Authorization', ['className' => 'CapAuthorization']);
 

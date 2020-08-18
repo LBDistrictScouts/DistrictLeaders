@@ -22,13 +22,11 @@ services:
   - elasticsearch
 
 env:
-  - DB=postgres
+  global:
+    - DB=postgres
 
 jobs:
   include:
-    - name: "PHP 7.2"
-      php: 7.2
-
     - name: "PHP 7.3"
       php: 7.3
 
@@ -36,6 +34,7 @@ jobs:
       php: 7.4
 
 before_install:
+  - export COMPOSER_PROCESS_TIMEOUT=900
   - mv config/app_file.travis.php config/app_file.php
   - mv config/app.travis.php config/app.php
   - mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml

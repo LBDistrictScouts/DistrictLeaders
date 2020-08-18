@@ -43,9 +43,7 @@ use Authentication\PasswordHasher\PasswordHasherTrait;
  */
 class CognitoIdentifier extends AbstractIdentifier
 {
-    use PasswordHasherTrait {
-        getPasswordHasher as protected _getPasswordHasher;
-    }
+    use PasswordHasherTrait;
     use ResolverAwareTrait;
 
     /**
@@ -114,14 +112,14 @@ class CognitoIdentifier extends AbstractIdentifier
      *
      * @return \Authentication\PasswordHasher\PasswordHasherInterface Password hasher instance.
      */
-    public function getPasswordHasher(): PasswordHasherInterface
+    public function buildPasswordHasher(): PasswordHasherInterface
     {
         if ($this->_passwordHasher === null) {
             $passwordHasher = $this->getConfig('passwordHasher');
             if ($passwordHasher !== null) {
                 $passwordHasher = PasswordHasherFactory::build($passwordHasher);
             } else {
-                $passwordHasher = $this->_getPasswordHasher();
+                $passwordHasher = $this->getPasswordHasher();
             }
             $this->_passwordHasher = $passwordHasher;
         }
@@ -138,16 +136,16 @@ class CognitoIdentifier extends AbstractIdentifier
             return null;
         }
 
-        $identity = $this->_findIdentity($data[self::CREDENTIAL_USERNAME]);
+        $identity = $this->findIdentity($data[self::CREDENTIAL_USERNAME]);
         if (array_key_exists(self::CREDENTIAL_PASSWORD, $data)) {
             $password = $data[self::CREDENTIAL_PASSWORD];
 
             // Normal Identity (Password in User)
-            if (!$this->_checkCognito($identity) && $this->_checkPassword($identity, $password)) {
+            if (!$this->checkCognito($identity) && $this->checkPassword($identity, $password)) {
                 return $identity;
             }
 
-            if ($this->_checkCognito($identity)) {
+            if ($this->checkCognito($identity)) {
                 $result = $this->client->adminInitiateAuth([
                     'AuthFlow' => 'ADMIN_USER_PASSWORD_AUTH', // REQUIRED
                     'AuthParameters' => [
@@ -172,12 +170,14 @@ class CognitoIdentifier extends AbstractIdentifier
                 }
 
                 if ($result->offsetExists('AuthenticationResult')) {
-                    return $this->_findIdentity($data[self::CREDENTIAL_USERNAME]);
+                    return $this->findIdentity($data[self::CREDENTIAL_USERNAME]);
                 }
             }
+
+            return null;
         }
 
-        return null;
+        return $identity;
     }
 
     /**
@@ -189,7 +189,7 @@ class CognitoIdentifier extends AbstractIdentifier
      * @param string|null $password The password.
      * @return bool
      */
-    protected function _checkPassword($identity, ?string $password): bool
+    protected function checkPassword($identity, ?string $password): bool
     {
         $passwordField = $this->getConfig('fields.' . self::CREDENTIAL_PASSWORD);
 
@@ -199,7 +199,7 @@ class CognitoIdentifier extends AbstractIdentifier
             ];
         }
 
-        $hasher = $this->getPasswordHasher();
+        $hasher = $this->buildPasswordHasher();
         $hashedPassword = $identity[$passwordField];
         if (!$hasher->check((string)$password, $hashedPassword)) {
             return false;
@@ -216,9 +216,13 @@ class CognitoIdentifier extends AbstractIdentifier
      * @param array|\ArrayAccess|null $identity The identity or null.
      * @return bool
      */
-    protected function _checkCognito($identity): bool
+    protected function checkCognito($identity): bool
     {
         if ($identity === null) {
+            return false;
+        }
+
+        if (!property_exists($identity, 'cognito_enabled')) {
             return false;
         }
 
@@ -231,7 +235,7 @@ class CognitoIdentifier extends AbstractIdentifier
      * @param string $identifier The username/identifier.
      * @return \ArrayAccess|array|null
      */
-    protected function _findIdentity(string $identifier)
+    protected function findIdentity(string $identifier)
     {
         $fields = $this->getConfig('fields.' . self::CREDENTIAL_USERNAME);
         $conditions = [];

@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+$theme-colors: (
+  "primary":    #7413dc,
+  "secondary":  #00b8a3,
+  "success":    #25b755,
+  "info":       #006ddf,
+  "warning":    #ffe627,
+  "danger":     #ed3f23,
+);
+
+@import "node_modules/bootstrap/scss/bootstrap";

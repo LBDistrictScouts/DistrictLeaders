@@ -1,0 +1,305 @@
+
+
+.features-icons, body, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Nunito Sans', sans-serif
+}
+
+
+
+button.btn.btn-default.login {
+    padding: 5px;
+    width: 90%;
+    border-radius: 0;
+    height: 2em;
+    background: #26C281;
+    border: 0;
+    margin: 5px 10px
+}
+
+input.styled {
+    background: #888 !important;
+    border: none !important;
+    color: #000 !important
+}
+
+.checkbox:before {
+    border-radius: 0
+}
+
+nav.navbar.navbar-default.navbar-fixed-top {
+    background: #26C281;
+    border: 0;
+    color: #fff
+}
+
+.checkbox label, .radio label {
+    color: gray
+}
+
+.checkbox, .radio {
+    float: left;
+    margin: 5px 10px
+}
+
+.register, .remember {
+    float: right;
+    margin: 5px 20px 5px 10px
+}
+
+.login-dark.form-group {
+    margin-bottom: 15px;
+    width: 300px
+}
+
+.input-login {
+    width: 90%;
+    margin: 5px 10px
+}
+
+input[type=checkbox].css-checkbox {
+    position: absolute;
+    z-index: -1000;
+    left: -1000px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0
+}
+
+input[type=checkbox].css-checkbox + label.css-label {
+    padding-left: 35px;
+    height: 15px;
+    width: 15px;
+    display: inline-block;
+    line-height: 30px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    vertical-align: middle;
+    cursor: pointer
+}
+
+input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-position: 0 -30px
+}
+
+label.css-label {
+    background-image: url(http://csscheckbox.com/checkboxes/u/csscheckbox_2e5ac342c462fb9a5023b3d13705e60b.png);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+    background-color: transparent
+}
+
+li.active {
+    background: #00B16A;
+    box-shadow: 0 1px 0 0 #00B16A
+}
+
+.navbar-default .navbar-nav > .active > a {
+    background-color: #00B16A;
+    box-shadow: 0 1px 0 0 #00B16A;
+    background-image: none
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    background: #00B16A
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background-color: #00B16A;
+    color: #fff
+}
+
+.dropdown-menu > li > a:focus, .dropdown-menu > li > a:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #2c3e50
+}
+
+.login-dark {
+    height: 1000px;
+    background: url(../../assets/img/star-sky.jpg) #475d62;
+    background-size: cover;
+    position: relative
+}
+
+.login-dark form {
+    max-width: 460px;
+    width: 90%;
+    background-color: #1e2833;
+    padding: 40px;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: #fff;
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, .2)
+}
+
+.login-dark .illustration {
+    text-align: center;
+    padding: 15px 0 20px;
+    font-size: 100px;
+    color: $colour-primary;
+}
+
+.login-dark form .form-control {
+    background: 0 0;
+    border: none;
+    border-bottom: 1px solid #434a52;
+    border-radius: 0;
+    box-shadow: none;
+    outline: 0;
+    color: inherit
+}
+
+.login-dark form .btn-primary {
+    background: $colour-primary;
+    border: none;
+    border-radius: 4px;
+    padding: 11px;
+    box-shadow: none;
+    margin-top: 26px;
+    text-shadow: none;
+    outline: 0
+}
+
+.login-dark form .btn-primary:active, .login-dark form .btn-primary:hover {
+    background: $colour-hover-primary;
+    outline: 0
+}
+
+.login-dark form .forgot {
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #6f7a85;
+    opacity: .9;
+    text-decoration: none
+}
+
+.login-dark form .forgot:active, .login-dark form .forgot:hover {
+    opacity: 1;
+    text-decoration: none
+}
+
+.login-dark form .btn-primary:active {
+    transform: translateY(1px)
+}
+
+.navigation-clean-search {
+    background: #fff;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    color: #333;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    margin-bottom: 0
+}
+
+@media (min-width: 768px) {
+    .navigation-clean-search {
+        padding-top: 1rem;
+        padding-bottom: 1rem
+    }
+}
+
+.navigation-clean-search .navbar-brand {
+    font-weight: 700;
+    color: inherit
+}
+
+.navigation-clean-search .navbar-brand:hover {
+    color: #222
+}
+
+.navigation-clean-search .navbar-toggler {
+    border-color: #ddd;
+    color: #888
+}
+
+.navigation-clean-search .navbar-toggler:focus, .navigation-clean-search .navbar-toggler:hover {
+    background: 0 0
+}
+
+.navigation-clean-search .form-inline, .navigation-clean-search .navbar-collapse {
+    border-top-color: #ddd
+}
+
+.navigation-clean-search .navbar-nav a.active, .navigation-clean-search .navbar-nav > .show > a {
+    background: 0 0;
+    box-shadow: none
+}
+
+.navigation-clean-search.navbar-light .navbar-nav a.active, .navigation-clean-search.navbar-light .navbar-nav a.active:focus, .navigation-clean-search.navbar-light .navbar-nav a.active:hover {
+    color: #8f8f8f;
+    box-shadow: none;
+    background: 0 0;
+    pointer-events: none
+}
+
+.navigation-clean-search.navbar .navbar-nav .nav-link {
+    padding-left: 18px;
+    padding-right: 18px
+}
+
+.navigation-clean-search.navbar-light .navbar-nav .nav-link {
+    color: #465765
+}
+
+.navigation-clean-search.navbar-light .navbar-nav .nav-link:focus, .navigation-clean-search.navbar-light .navbar-nav .nav-link:hover {
+    color: #37434d !important;
+    background-color: transparent
+}
+
+.navigation-clean-button .action-button:active, .navigation-clean-search .action-button {
+    background: #56c6c6;
+    border-radius: 20px;
+    font-size: inherit;
+    color: #fff !important;
+    box-shadow: none;
+    border: none;
+    text-shadow: none;
+    padding: 8px 20px;
+    transition: background-color .25s
+}
+
+.navigation-clean-search .action-button:focus, .navigation-clean-search .action-button:hover {
+    background: #66d7d7
+}
+
+.navigation-clean-search .form-inline label {
+    color: #ccc
+}
+
+.navigation-clean-search .form-inline .search-field {
+    background: 0 0;
+    border: none;
+    border-bottom: 1px solid transparent;
+    border-radius: 0;
+    box-shadow: none;
+    color: inherit;
+    transition: border-bottom-color .3s
+}
+
+@media (max-width: 767px) {
+    .navigation-clean-search .form-inline .search-field {
+        display: inline-block;
+        width: 80%
+    }
+}
+
+.navigation-clean-search .form-inline .search-field:focus {
+    border-bottom: 1px solid #ccc
+}

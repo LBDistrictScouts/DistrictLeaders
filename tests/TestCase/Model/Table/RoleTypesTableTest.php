@@ -21,14 +21,14 @@ class RoleTypesTableTest extends TestCase
      *
      * @var \App\Model\Table\RoleTypesTable
      */
-    public $RoleTypes;
+    protected $RoleTypes;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
@@ -90,7 +90,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             RoleType::FIELD_ID => 1,
@@ -99,6 +99,8 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_SECTION_TYPE_ID => 1,
             RoleType::FIELD_LEVEL => 1,
             RoleType::FIELD_ROLE_TEMPLATE_ID => 1,
+            RoleType::FIELD_ALL_ROLE_COUNT => 0,
+            RoleType::FIELD_ACTIVE_ROLE_COUNT => 0,
         ];
 
         $this->validateInitialise($expected, $this->RoleTypes, 7);
@@ -109,7 +111,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -155,7 +157,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $foreignKeys = [
             RoleType::FIELD_SECTION_TYPE_ID => $this->RoleTypes->SectionTypes,
@@ -175,7 +177,7 @@ class RoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testPatchAllTemplateCapabilities()
+    public function testPatchAllTemplateCapabilities(): void
     {
         $roleTypeOriginal = $this->RoleTypes->get(1, ['contain' => ['Capabilities']]);
         $roleType = $this->RoleTypes->patchTemplateCapabilities($roleTypeOriginal);
@@ -196,11 +198,11 @@ class RoleTypesTableTest extends TestCase
     }
 
     /**
-     * Test buildRules method
+     * Test patchTemplateCapabilities method
      *
      * @return void
      */
-    public function testPatchTemplateCapabilities()
+    public function testPatchTemplateCapabilities(): void
     {
         $roleTemplate = $this->RoleTypes->RoleTemplates->get(1);
         $roleTemplate->set(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, ['DIRECTORY', 'DELETE_USER']);
@@ -228,11 +230,11 @@ class RoleTypesTableTest extends TestCase
     }
 
     /**
-     * Test buildRules method
+     * Test patchRoleUsers method
      *
      * @return void
      */
-    public function testPatchRoleUsers()
+    public function testPatchRoleUsers(): void
     {
         $roleType = $this->RoleTypes->find()->first();
         $users = $this->RoleTypes->Roles->find()->where([Role::FIELD_ROLE_TYPE_ID => $roleType->get(RoleType::FIELD_ID)])->count();

@@ -38,8 +38,8 @@ class DirectoriesTable extends Table
         parent::initialize($config);
 
         $this->setTable('directories');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(Directory::FIELD_DIRECTORY);
+        $this->setPrimaryKey(Directory::FIELD_ID);
 
         $this->belongsTo('DirectoryTypes', [
             'foreignKey' => 'directory_type_id',
@@ -65,31 +65,28 @@ class DirectoriesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(Directory::FIELD_ID)
+            ->allowEmptyString(Directory::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('directory')
-            ->maxLength('directory', 64)
-            ->requirePresence('directory', 'create')
-            ->notEmptyString('directory')
-            ->add('directory', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(Directory::FIELD_DIRECTORY)
+            ->maxLength(Directory::FIELD_DIRECTORY, 64)
+            ->requirePresence(Directory::FIELD_DIRECTORY, 'create')
+            ->notEmptyString(Directory::FIELD_DIRECTORY)
+            ->add(Directory::FIELD_DIRECTORY, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->allowEmptyString('configuration_payload');
+            ->boolean(Directory::FIELD_ACTIVE)
+            ->notEmptyString(Directory::FIELD_ACTIVE);
 
         $validator
-            ->boolean('active')
-            ->notEmptyString('active');
+            ->scalar(Directory::FIELD_CUSTOMER_REFERENCE)
+            ->maxLength(Directory::FIELD_CUSTOMER_REFERENCE, 12)
+            ->allowEmptyString(Directory::FIELD_CUSTOMER_REFERENCE)
+            ->add(Directory::FIELD_CUSTOMER_REFERENCE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->scalar('customer_reference')
-            ->maxLength('customer_reference', 12)
-            ->allowEmptyString('customer_reference')
-            ->add('customer_reference', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
-
-        $validator
-            ->allowEmptyString('authorisation_token');
+            ->allowEmptyString(Directory::FIELD_AUTHORISATION_TOKEN);
 
         return $validator;
     }
@@ -101,7 +98,6 @@ class DirectoriesTable extends Table
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
-        $schema->setColumnType(Directory::FIELD_CONFIGURATION_PAYLOAD, 'json');
         $schema->setColumnType(Directory::FIELD_AUTHORISATION_TOKEN, 'json');
 
         return $schema;
@@ -116,9 +112,9 @@ class DirectoriesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['directory']));
-        $rules->add($rules->isUnique(['customer_reference']));
-        $rules->add($rules->existsIn(['directory_type_id'], 'DirectoryTypes'));
+        $rules->add($rules->isUnique([Directory::FIELD_DIRECTORY]));
+        $rules->add($rules->isUnique([Directory::FIELD_CUSTOMER_REFERENCE]));
+        $rules->add($rules->existsIn([Directory::FIELD_DIRECTORY_TYPE_ID], 'DirectoryTypes'));
 
         return $rules;
     }
@@ -135,5 +131,17 @@ class DirectoriesTable extends Table
         $groupsCount = $this->DirectoryGroups->populate($directory);
 
         return compact('domainsCount', 'usersCount', 'groupsCount');
+    }
+
+    /**
+     * @param \App\Model\Entity\Directory $directory The Parent Directory
+     * @param \Google_Service_Directory_User $directoryUser The Google API Response for User
+     * @return \App\Model\Entity\Directory|false
+     */
+    public function setCustomerReference(Directory $directory, \Google_Service_Directory_User $directoryUser): Directory
+    {
+        $directory->set(Directory::FIELD_CUSTOMER_REFERENCE, $directoryUser->getCustomerId());
+
+        return $this->save($directory);
     }
 }

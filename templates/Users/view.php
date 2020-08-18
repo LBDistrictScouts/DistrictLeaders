@@ -64,7 +64,24 @@ $authUser = $this->getRequest()->getAttribute('identity');
             </div>
         </div>
         <div class="row">
+            <?php
+            if (!$user->has($user::FIELD_USER_STATE)) {
+                $userStateColour = 'light';
+            } elseif ($user->user_state->expired) {
+                $userStateColour = 'warning';
+            } elseif ($user->user_state->active) {
+                $userStateColour = 'success';
+            } else {
+                $userStateColour = 'dark';
+            }
+            ?>
+
             <div class="col-sm-12 col-lg-6">
+                <?php if ($user->has($user::FIELD_USER_STATE)) : ?>
+                    <div class="card bg-<?= $userStateColour ?>" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-header"><?= $user->user_state->user_state ?></div>
+                    </div>
+                <?php endif; ?>
                 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                     <div class="card-body">
                         <h5>Address</h5>

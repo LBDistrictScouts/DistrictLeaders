@@ -6,57 +6,50 @@
  * @var mixed $username
  */
 ?>
+<?= $this->Form->create($resForm); ?>
+    <?php if (isset($username)) : ?>
+        <div>
+            <h2 class="sr-only">Lookup Your Username</h2>
+            <div class="illustration"><i class="fal fa-user-tag"></i></div>
 
-<?php if (isset($username)) : ?>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <div class="login-card card card-default">
-                <div class="card-header">
-                    <h3>Your Username</h3>
-                </div>
-                <div class="card-body text-center">
-                    <p>Your username is: <strong><?= h($username) ?></strong></p>
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <a href="<?php echo $this->Url->build([
-                                'controller' => 'Users',
-                                'action' => 'login',
-                                'prefix' => false], ['_full']); ?>">
-                                <button type="button" class="btn btn-primary btn-block float-md-right">Login</button></a>
-                        </div>
-                        <div class="col d-lg-none d-xl-none d-md-none"><br/></div>
-                        <div class="col-md-6 col-12">
-                            <a href="<?php echo $this->Url->build([
-                                'controller' => 'Users',
-                                'action' => 'forgot',
-                                'prefix' => false], ['_full']); ?>">
-                                <button type="button" class="btn btn-default btn-block float-md-right">Forgot Password</button></a>
-                        </div>
-                    </div>
-                </div>
+            <?= $this->Form->control('your_username_is', ['value' => $username, 'disabled' => true]) ?>
+
+            <div class="form-group d-inline">
+                <a href="<?php echo $this->Url->build([
+                    'controller' => 'Users',
+                    'action' => 'login',
+                    'prefix' => false], ['_full']); ?>">
+                    <button type="button" class="btn btn-primary btn-block">Login</button></a>
+            </div>
+            <div class="form-row" style="margin-top: 20px;">
+                <div class="col"><a href="<?php echo $this->Url->build([
+                        'controller' => 'Users',
+                        'action' => 'forgot',
+                        'prefix' => false], ['_full']); ?>" class="forgot">Forgot your password?</a></div>
             </div>
         </div>
-    </div>
-<?php else : ?>
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-6">
-            <div class="login-card card card-default">
-                <div class="card-header">
-                    <h3>Lookup Your Username</h3>
+    <?php else : ?>
+            <div>
+                <h2 class="sr-only">Lookup Your Username</h2>
+                <div class="illustration"><i class="fal fa-user-tag"></i></div>
+
+                <?= $this->Form->control('membership_number'); ?>
+                <?= $this->Form->control('first_name'); ?>
+                <?= $this->Form->control('last_name'); ?>
+
+                <div class="form-group d-inline">
+                    <?= $this->Form->button('Lookup Username', ['class' => 'btn btn-primary btn-block btn-lg', 'type' => 'submit']) ?>
                 </div>
-                <div class="card-body">
-                    <?= $this->Form->create($resForm); ?>
-                    <?= $this->Form->input('membership_number'); ?>
-                    <?= $this->Form->input('first_name'); ?>
-                    <?= $this->Form->input('last_name'); ?>
+                <div class="form-row" style="margin-top: 20px;">
+                    <div class="col"><a class="forgot" href="<?php echo $this->Url->build([
+                            'controller' => 'Users',
+                            'action' => 'login',
+                            'prefix' => false], ['_full']); ?>">Login</a></div>
+                    <div class="col"><a href="<?php echo $this->Url->build([
+                            'controller' => 'Users',
+                            'action' => 'forgot',
+                            'prefix' => false], ['_full']); ?>" class="forgot">Forgot your password?</a></div>
                 </div>
-                <div class="card-footer">
-                    <?= $this->Form->submit('Lookup Username', ['class' => 'btn btn-success btn-block btn-lg']) ?>
-                </div>
-                <?= $this->Form->end(); ?>
             </div>
-        </div>
-    </div>
-<?php endif; ?>
+    <?php endif; ?>
+<?= $this->Form->end(); ?>

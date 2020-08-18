@@ -175,6 +175,13 @@ class CapAuthorizationComponentTest extends TestCase
             User::FIELD_CAPABILITIES,
             User::FIELD_USER_STATE_ID,
             User::FIELD_COGNITO_ENABLED,
+            User::FIELD_ALL_ROLE_COUNT,
+            User::FIELD_ACTIVE_ROLE_COUNT,
+            User::FIELD_ALL_EMAIL_COUNT,
+            User::FIELD_ALL_PHONE_COUNT,
+            User::FIELD_RECEIVE_EMAILS,
+            User::FIELD_VALIDATED_EMAIL_COUNT,
+            User::FIELD_VALIDATED_PHONE_COUNT,
         ], $result);
     }
 

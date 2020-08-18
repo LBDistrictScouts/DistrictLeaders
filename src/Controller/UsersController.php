@@ -118,6 +118,7 @@ class UsersController extends AppController
         if ($result) {
             $user = $this->Users->get($userId, [
                 'contain' => [
+                    'UserStates',
                     'Audits.Users',
                     'Changes' => function (Query $q) {
                         return $q
@@ -153,6 +154,7 @@ class UsersController extends AppController
         } else {
             $user = $this->Users->get($userId, [
                 'contain' => [
+                    'UserStates',
                     'Roles' => [
                         'RoleTypes',
                         'Sections' => [
@@ -283,7 +285,7 @@ class UsersController extends AppController
     public function login()
     {
         // Set the layout.
-        $this->viewBuilder()->setLayout('landing');
+        $this->viewBuilder()->setLayout('login');
 
         /** @var \App\Authenticator\CognitoResult $result */
         $result = $this->Authentication->getResult();
@@ -343,7 +345,7 @@ class UsersController extends AppController
      */
     public function forgot()
     {
-        $this->viewBuilder()->setLayout('landing');
+        $this->viewBuilder()->setLayout('login');
 
         $resForm = new ResetForm();
 
@@ -412,7 +414,7 @@ class UsersController extends AppController
      */
     public function username()
     {
-        $this->viewBuilder()->setLayout('landing');
+        $this->viewBuilder()->setLayout('login');
 
         $resForm = new ResetForm();
         $this->set(compact('resForm'));

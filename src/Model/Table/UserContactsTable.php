@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -29,6 +30,7 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsTo $DirectoryUsers
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class UserContactsTable extends Table
 {
@@ -77,6 +79,23 @@ class UserContactsTable extends Table
         ]);
         $this->hasMany('Roles', [
             'foreignKey' => 'user_contact_id',
+        ]);
+
+        $this->addBehavior('CounterCache', [
+            'Users' => [
+                User::FIELD_ALL_EMAIL_COUNT => [
+                    'finder' => 'contactEmails',
+                ],
+                User::FIELD_ALL_PHONE_COUNT => [
+                    'finder' => 'contactNumbers',
+                ],
+                User::FIELD_VALIDATED_EMAIL_COUNT => [
+                    'finder' => 'validatedEmails',
+                ],
+                User::FIELD_VALIDATED_PHONE_COUNT => [
+                    'finder' => 'validatedNumbers',
+                ],
+            ],
         ]);
     }
 
@@ -145,7 +164,7 @@ class UserContactsTable extends Table
     {
         $rules->add($rules->existsIn([UserContact::FIELD_USER_ID], 'Users'));
         $rules->add($rules->existsIn([UserContact::FIELD_USER_CONTACT_TYPE_ID], 'UserContactTypes'));
-        $rules->add($rules->existsIn(['directory_user_id'], 'DirectoryUsers'));
+        $rules->add($rules->existsIn([UserContact::FIELD_DIRECTORY_USER_ID], 'DirectoryUsers'));
 
         $rules->add($rules->isUnique([UserContact::FIELD_USER_ID, UserContact::FIELD_CONTACT_FIELD]));
 
@@ -166,13 +185,32 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
+    public function findValidated($query)
+    {
+        return $query
+            ->where([UserContact::FIELD_VERIFIED => true]);
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
     public function findContactEmails($query)
     {
-        $query
+        return $query
             ->contain(['UserContactTypes'])
             ->where(['UserContactTypes.user_contact_type' => 'Email']);
+    }
 
-        return $query;
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findValidatedEmails($query)
+    {
+        return $query
+            ->find('validated')
+            ->find('contactEmails');
     }
 
     /**
@@ -181,10 +219,19 @@ class UserContactsTable extends Table
      */
     public function findContactNumbers($query)
     {
-        $query
+        return $query
             ->contain(['UserContactTypes'])
             ->where(['UserContactTypes.user_contact_type' => 'Phone']);
+    }
 
-        return $query;
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findValidatedNumbers($query)
+    {
+        return $query
+            ->find('validated')
+            ->find('contactNumbers');
     }
 }

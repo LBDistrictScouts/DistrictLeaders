@@ -1,16 +1,54 @@
-userStates:
+UserStates:
   - user_state: Active Directory User
     active: true
     expired: false
+    precedence_order: 2
+    required:
+      - EVALUATE_USERNAME
+      - EVALUATE_LOGIN_EVER
+      - EVALUATE_LOGIN_QUARTER
+      - EVALUATE_LOGIN_CAPABILITY
+      - EVALUATE_ACTIVE_ROLE
+      - EVALUATE_VALIDATED_EMAIL
+
   - user_state: Provisional User
     active: false
     expired: false
-  - user_state: Invited User
-    active: false
-    expired: false
-  - user_state: Inactive User
-    active: false
-    expired: true
+    precedence_order: 3
+    required:
+      - EVALUATE_USERNAME
+      - EVALUATE_LOGIN_EVER
+      - EVALUATE_LOGIN_QUARTER
+      - EVALUATE_LOGIN_CAPABILITY
+
   - user_state: Prevalidation
     active: false
     expired: false
+    precedence_order: 4
+    required:
+      - EVALUATE_USERNAME
+      - EVALUATE_LOGIN_CAPABILITY
+      - EVALUATE_ACTIVE_ROLE
+
+  - user_state: Invited User
+    active: false
+    expired: false
+    precedence_order: 5
+    required:
+      - EVALUATE_ACTIVE_ROLE
+
+  - user_state: Inactive User
+    active: false
+    expired: true
+    precedence_order: 6
+    required:
+      - EVALUATE_USERNAME
+      - EVALUATE_LOGIN_EVER
+      - EVALUATE_LOGIN_CAPABILITY
+      - EVALUATE_VALIDATED_EMAIL
+
+  - user_state: Draft User
+    active: false
+    expired: false
+    precedence_order: 7
+    required:

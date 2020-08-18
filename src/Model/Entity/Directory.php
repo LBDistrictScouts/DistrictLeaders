@@ -56,7 +56,6 @@ class Directory extends Entity
 
     public const FIELD_ID = 'id';
     public const FIELD_DIRECTORY = 'directory';
-    public const FIELD_CONFIGURATION_PAYLOAD = 'configuration_payload';
     public const FIELD_DIRECTORY_TYPE_ID = 'directory_type_id';
     public const FIELD_ACTIVE = 'active';
     public const FIELD_CUSTOMER_REFERENCE = 'customer_reference';
@@ -65,4 +64,5 @@ class Directory extends Entity
     public const FIELD_DIRECTORY_DOMAINS = 'directory_domains';
     public const FIELD_DIRECTORY_GROUPS = 'directory_groups';
     public const FIELD_DIRECTORY_USERS = 'directory_users';
+    public const FIELD_CONFIGURATION_PAYLOAD = 'configuration_payload';
 }

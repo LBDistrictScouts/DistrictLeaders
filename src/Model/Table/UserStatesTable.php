@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\User;
 use App\Model\Entity\UserState;
-use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -21,10 +22,11 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\UserState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserState[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserState findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class UserStatesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -36,11 +38,11 @@ class UserStatesTable extends Table
         parent::initialize($config);
 
         $this->setTable('user_states');
-        $this->setDisplayField('user_state');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(UserState::FIELD_USER_STATE);
+        $this->setPrimaryKey(UserState::FIELD_ID);
 
         $this->hasMany('Users', [
-            'foreignKey' => 'user_state_id',
+            'foreignKey' => User::FIELD_USER_STATE_ID,
         ]);
     }
 
@@ -50,27 +52,36 @@ class UserStatesTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator): \Cake\Validation\Validator
+    public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(UserState::FIELD_ID)
+            ->allowEmptyString(UserState::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('user_state')
-            ->maxLength('user_state', 255)
-            ->requirePresence('user_state', 'create')
-            ->notEmptyString('user_state');
+            ->scalar(UserState::FIELD_USER_STATE)
+            ->maxLength(UserState::FIELD_USER_STATE, 255)
+            ->requirePresence(UserState::FIELD_USER_STATE, 'create')
+            ->notEmptyString(UserState::FIELD_USER_STATE);
 
         $validator
-            ->boolean('active')
-            ->requirePresence('active', 'create')
-            ->notEmptyString('active');
+            ->boolean(UserState::FIELD_ACTIVE)
+            ->requirePresence(UserState::FIELD_ACTIVE, 'create')
+            ->notEmptyString(UserState::FIELD_ACTIVE);
 
         $validator
-            ->boolean('expired')
-            ->requirePresence('expired', 'create')
-            ->notEmptyString('expired');
+            ->boolean(UserState::FIELD_EXPIRED)
+            ->requirePresence(UserState::FIELD_EXPIRED, 'create')
+            ->notEmptyString(UserState::FIELD_EXPIRED);
+
+        $validator
+            ->integer(UserState::FIELD_PRECEDENCE_ORDER)
+            ->allowEmptyString(UserState::FIELD_PRECEDENCE_ORDER)
+            ->add(UserState::FIELD_PRECEDENCE_ORDER, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->integer(UserState::FIELD_SIGNATURE)
+            ->notEmptyString(UserState::FIELD_SIGNATURE);
 
         return $validator;
     }
@@ -84,7 +95,8 @@ class UserStatesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['user_state']));
+        $rules->add($rules->isUnique([UserState::FIELD_USER_STATE]));
+        $rules->add($rules->isUnique([UserState::FIELD_PRECEDENCE_ORDER]));
 
         return $rules;
     }
@@ -92,28 +104,120 @@ class UserStatesTable extends Table
     /**
      * install the application status config
      *
-     * @return mixed
+     * @return int
      */
-    public function installBaseUserStates()
+    public function installBaseUserStates(): int
     {
-        Configure::load('Application' . DS . 'user_states', 'yaml', false);
-        $base = Configure::read('userStates');
+        return $this->installBase($this, null, [$this, 'evaluationSignatures'], 'required');
+    }
 
-        $total = 0;
+    /**
+     * @param \App\Model\Entity\UserState $state The State Object to be enriched
+     * @param array|null $stateData The Data Array to be processed
+     * @return \App\Model\Entity\UserState
+     */
+    public function evaluationSignatures(UserState $state, ?array $stateData = null): UserState
+    {
+        $state->set(UserState::FIELD_SIGNATURE, $this->evaluateSignature($stateData));
 
-        foreach ($base as $baseState) {
-            $query = $this->find()
-                ->where([UserState::FIELD_USER_STATE => $baseState[UserState::FIELD_USER_STATE]]);
-            $status = $this->newEmptyEntity();
-            if ($query->count() > 0) {
-                $status = $query->first();
-            }
-            $this->patchEntity($status, $baseState);
-            if ($this->save($status)) {
-                $total += 1;
+        return $state;
+    }
+
+    /**
+     * @param array|null $stateData The Data Array to be processed
+     * @return int
+     */
+    public function evaluateSignature(?array $stateData = null): int
+    {
+        $prefix = UserState::class . '::';
+        $signature = 0;
+
+        if (is_null($stateData)) {
+            return $signature;
+        }
+
+        foreach ($stateData as $evaluation) {
+            $result = constant($prefix . $evaluation);
+            if (!is_null($result)) {
+                $signature |= $result;
             }
         }
 
-        return $total;
+        return $signature;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User to be Evaluated
+     * @return int
+     */
+    public function evaluateUser(User $user): int
+    {
+        $userEvaluation = 0;
+
+        // Username
+        if (!is_null($user->username)) {
+            $userEvaluation |= UserState::EVALUATE_USERNAME;
+        }
+
+        // Login Ever & Quarter
+        if ($user->last_login instanceof FrozenTime) {
+            $userEvaluation |= UserState::EVALUATE_LOGIN_EVER;
+
+            if ($user->last_login->diffInMonths(FrozenTime::now()) <= 3) {
+                $userEvaluation |= UserState::EVALUATE_LOGIN_QUARTER;
+            }
+        }
+
+        // Login Capability
+        if ($user->checkCapability('LOGIN')) {
+            $userEvaluation |= UserState::EVALUATE_LOGIN_CAPABILITY;
+        }
+
+        // Active Role
+        if ($user->active_role_count > 0) {
+            $userEvaluation |= UserState::EVALUATE_ACTIVE_ROLE;
+        }
+
+        // Valid Email
+        if ($user->validated_email_count > 0) {
+            $userEvaluation |= UserState::EVALUATE_VALIDATED_EMAIL;
+        }
+
+        return $userEvaluation;
+    }
+
+    /**
+     * @param int $signature Signature to be Evaluated
+     * @return \App\Model\Entity\UserState
+     */
+    public function determineSignatureState(int $signature): UserState
+    {
+        /** @var \App\Model\Entity\UserState[] $states */
+        $states = $this->find()->orderAsc(UserState::FIELD_PRECEDENCE_ORDER);
+
+        foreach ($states as $state) {
+            $output = ($signature & $state->signature);
+            $mask = (bool)( $output == $state->signature);
+            if ($mask) {
+                return $state;
+            }
+        }
+
+        return $state;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The user to be processed
+     * @return \App\Model\Entity\User
+     */
+    public function determineUserState(User $user): User
+    {
+        $projectedState = $this->determineSignatureState($this->evaluateUser($user));
+
+        if ($user->user_state_id != $projectedState->id) {
+            $user->set(User::FIELD_USER_STATE_ID, $projectedState->id);
+        }
+
+        return $user;
     }
 }

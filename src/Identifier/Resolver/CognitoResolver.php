@@ -14,8 +14,9 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
-namespace Authentication\Identifier\Resolver;
+namespace App\Identifier\Resolver;
 
+use Authentication\Identifier\Resolver\ResolverInterface;
 use Cake\Core\InstanceConfigTrait;
 use Cake\ORM\Locator\LocatorAwareTrait;
 

@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Role;
+use App\Model\Entity\RoleType;
+use App\Model\Entity\User;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -29,6 +33,7 @@ use Cake\Validation\Validator;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class RolesTable extends Table
 {
@@ -71,6 +76,21 @@ class RolesTable extends Table
         $this->belongsTo('UserContacts', [
             'foreignKey' => 'user_contact_id',
         ]);
+
+        $this->addBehavior('CounterCache', [
+            'Users' => [
+                User::FIELD_ALL_ROLE_COUNT,
+                User::FIELD_ACTIVE_ROLE_COUNT => [
+                    'finder' => 'active',
+                ],
+            ],
+            'RoleTypes' => [
+                RoleType::FIELD_ALL_ROLE_COUNT,
+                RoleType::FIELD_ACTIVE_ROLE_COUNT => [
+                    'finder' => 'active',
+                ],
+            ],
+        ]);
     }
 
     /**
@@ -111,14 +131,31 @@ class RolesTable extends Table
     }
 
     /**
+     * Finder Method for
+     *
+     * @param \Cake\ORM\Query $query The Query to be Modified
+     * @param array $options The Options passed
+     * @return \Cake\ORM\Query
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function findActive(Query $query, array $options)
+    {
+        $query
+            ->contain('RoleStatuses')
+            ->where(['RoleStatuses.role_status' => 'Active']);
+
+        return $query;
+    }
+
+    /**
      * after Save LifeCycle Callback
      *
-     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\Role $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      * @return bool
      */
-    public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, $entity, $options)
     {
         $user = $this->Users->get($entity->get(Role::FIELD_USER_ID));
         $this->Users->patchCapabilities($user);

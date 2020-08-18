@@ -22,14 +22,14 @@ class UsersTableTest extends TestCase
      *
      * @var \App\Model\Table\UsersTable
      */
-    public $Users;
+    protected $Users;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.UserStates',
         'app.Users',
         'app.CapabilitiesRoleTypes',
@@ -48,12 +48,19 @@ class UsersTableTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
-        'app.Notifications',
         'app.NotificationTypes',
+        'app.Notifications',
         'app.EmailSends',
         'app.Tokens',
         'app.EmailResponseTypes',
         'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -116,6 +123,11 @@ class UsersTableTest extends TestCase
                     1 => ['EDIT_SECT'],
                 ],
             ],
+            User::FIELD_ALL_ROLE_COUNT => 1,
+            User::FIELD_ACTIVE_ROLE_COUNT => 1,
+            User::FIELD_ALL_EMAIL_COUNT => 1,
+            User::FIELD_ALL_PHONE_COUNT => 1,
+            User::FIELD_RECEIVE_EMAILS => true,
         ];
 
         return $good;
@@ -126,7 +138,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $dates = [
             User::FIELD_MODIFIED,
@@ -152,6 +164,13 @@ class UsersTableTest extends TestCase
             User::FIELD_CAPABILITIES => null,
             User::FIELD_USER_STATE_ID => 1,
             User::FIELD_COGNITO_ENABLED => false,
+            User::FIELD_ALL_ROLE_COUNT => 1,
+            User::FIELD_ACTIVE_ROLE_COUNT => 1,
+            User::FIELD_ALL_EMAIL_COUNT => 1,
+            User::FIELD_ALL_PHONE_COUNT => 1,
+            User::FIELD_RECEIVE_EMAILS => true,
+            User::FIELD_VALIDATED_EMAIL_COUNT => 1,
+            User::FIELD_VALIDATED_PHONE_COUNT => 1,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);
@@ -162,7 +181,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -244,7 +263,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         // Is Unique
         $uniques = [
@@ -262,7 +281,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testPasswordHashing()
+    public function testPasswordHashing(): void
     {
         $good = $this->getGood();
 
@@ -276,7 +295,7 @@ class UsersTableTest extends TestCase
      * @param array $expected Array of Expected Capabilities
      * @param array $actual Actual Array
      */
-    private function validateCapabilityArray($expected, $actual)
+    private function validateCapabilityArray($expected, $actual): void
     {
         if (key_exists('user', $expected)) {
             TestCase::assertArrayHasKey('user', $actual);
@@ -322,7 +341,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testRetrieveAllCapabilities()
+    public function testRetrieveAllCapabilities(): void
     {
         $user = $this->Users->get(1);
         $capabilities = $this->Users->retrieveAllCapabilities($user);
@@ -378,7 +397,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testRetrieveCapabilities()
+    public function testRetrieveCapabilities(): void
     {
         Cache::clear('capability');
         $user = $this->Users->get(1);
@@ -435,7 +454,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testUserCapability()
+    public function testUserCapability(): void
     {
         Cache::clear('capability');
 
@@ -487,7 +506,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testFindAuth()
+    public function testFindAuth(): void
     {
         $allQuery = $this->Users->find('all');
         $authQuery = $this->Users->find('auth');
@@ -500,7 +519,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testPatchCapabilities()
+    public function testPatchCapabilities(): void
     {
         $user = $this->Users->get(1);
         TestCase::assertNull($user->capabilities);
@@ -536,7 +555,7 @@ class UsersTableTest extends TestCase
      *
      * @return void
      */
-    public function testIsValidDomainEmail()
+    public function testIsValidDomainEmail(): void
     {
         TestCase::assertFalse($this->Users->isValidDomainEmail('cheese@buttons.com', []));
 

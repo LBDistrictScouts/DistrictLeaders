@@ -301,7 +301,7 @@ trait ModelTestTrait
         TestCase::assertNotEquals(0, $installed);
 
         $after = $table->find('all')->count();
-        TestCase::assertTrue($after > $before);
+        TestCase::assertTrue($after >= $before);
     }
 
     /**

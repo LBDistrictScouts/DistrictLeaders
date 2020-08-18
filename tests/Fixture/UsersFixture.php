@@ -36,20 +36,26 @@ class UsersFixture extends TestFixture
         'last_login_ip' => ['type' => 'string', 'length' => 255, 'default' => 'null', 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
         'capabilities' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'user_state_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
-        'cognito_enabled' => ['type' => 'boolean', 'length' => null, 'default' => false, 'null' => false, 'comment' => null, 'precision' => null],
+        'cognito_enabled' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => null, 'precision' => null],
+        'all_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'active_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'all_email_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'all_phone_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'receive_emails' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
+        'validated_email_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'validated_phone_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_indexes' => [
-            'users_user_state_id' => ['type' => 'index', 'columns' => ['user_state_id'], 'length' => []],
+            'users_password_state_id' => ['type' => 'index', 'columns' => ['user_state_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'users_username' => ['type' => 'unique', 'columns' => ['username'], 'length' => []],
             'users_membership_number' => ['type' => 'unique', 'columns' => ['membership_number'], 'length' => []],
             'users_email' => ['type' => 'unique', 'columns' => ['email'], 'length' => []],
-            'users_user_state_id_fkey' => ['type' => 'foreign', 'columns' => ['user_state_id'], 'references' => ['user_states', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
+            'users_password_state_id_fkey' => ['type' => 'foreign', 'columns' => ['user_state_id'], 'references' => ['user_states', 'id'], 'update' => 'cascade', 'delete' => 'restrict', 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd
-
     /**
      * Init method
      *
@@ -78,6 +84,13 @@ class UsersFixture extends TestFixture
                 'deleted' => null,
                 'user_state_id' => 1,
                 'cognito_enabled' => false,
+                'all_role_count' => 1,
+                'active_role_count' => 1,
+                'all_email_count' => 1,
+                'all_phone_count' => 1,
+                'receive_emails' => true,
+                'validated_email_count' => 1,
+                'validated_phone_count' => 1,
             ],
             [
                 'username' => 'FishyLlama',
@@ -99,6 +112,13 @@ class UsersFixture extends TestFixture
                 'deleted' => null,
                 'user_state_id' => 1,
                 'cognito_enabled' => false,
+                'all_role_count' => 1,
+                'active_role_count' => 1,
+                'all_email_count' => 1,
+                'all_phone_count' => 1,
+                'receive_emails' => true,
+                'validated_email_count' => 1,
+                'validated_phone_count' => 1,
             ],
         ];
         parent::init();

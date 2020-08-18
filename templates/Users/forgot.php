@@ -4,22 +4,26 @@
  * @var \App\Form\ResetForm $resForm
  */
 ?>
+<?= $this->Form->create($resForm); ?>
+    <div>
+        <h2 class="sr-only">Request Password Reset Email</h2>
+        <div class="illustration"><i class="fal fa-user-shield"></i></div>
 
-<div class="row justify-content-center">
-    <div class="col-12 col-md-6">
-        <div class="login-card card card-default">
-            <div class="card-header">
-                <h3>Request Password Reset Email</h3>
-            </div>
-            <div class="card-body">
-                <?= $this->Form->create($resForm); ?>
-                <?= $this->Form->input('email'); ?>
-                <?= $this->Form->input('membership_number'); ?>
-            </div>
-            <div class="card-footer">
-                <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-success btn-block btn-lg']) ?>
-            </div>
-            <?= $this->Form->end(); ?>
+        <?= $this->Form->control('email'); ?>
+        <?= $this->Form->control('membership_number'); ?>
+
+        <div class="form-group d-inline">
+            <?= $this->Form->submit('Request Password Reset', ['class' => 'btn btn-primary btn-block btn-lg']) ?>
+        </div>
+        <div class="form-row" style="margin-top: 20px;">
+            <div class="col"><a class="forgot" href="<?php echo $this->Url->build([
+                    'controller' => 'Users',
+                    'action' => 'login',
+                    'prefix' => false], ['_full']); ?>">Login</a></div>
+            <div class="col"><a href="<?php echo $this->Url->build([
+                    'controller' => 'Users',
+                    'action' => 'username',
+                    'prefix' => false], ['_full']); ?>" class="forgot">Forgot your username?</a></div>
         </div>
     </div>
-</div>
+<?= $this->Form->end(); ?>
