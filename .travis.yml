@@ -23,6 +23,8 @@ services:
 
 env:
   - DB=postgres
+  global:
+    - PGPORT=5432
 
 jobs:
   include:
