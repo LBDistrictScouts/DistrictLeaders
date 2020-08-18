@@ -159,13 +159,13 @@ class UserStatesTableTest extends TestCase
     {
         $expected = [
             UserState::FIELD_ID => 1,
-            UserState::FIELD_USER_STATE => 'Lorem ipsum dolor sit amet',
+            UserState::FIELD_USER_STATE => 'Active Directory User',
             UserState::FIELD_ACTIVE => true,
-            UserState::FIELD_EXPIRED => true,
+            UserState::FIELD_EXPIRED => false,
             UserState::FIELD_PRECEDENCE_ORDER => 1,
-            UserState::FIELD_SIGNATURE => 1,
+            UserState::FIELD_SIGNATURE => 63,
         ];
-        $this->validateInitialise($expected, $this->UserStates, 1);
+        $this->validateInitialise($expected, $this->UserStates, 6);
     }
 
     /**
@@ -440,5 +440,73 @@ class UserStatesTableTest extends TestCase
         $result = $this->UserStates->evaluateUser($user);
         $mask = (bool)(($result & constant(UserState::class . '::' . $evaluation)) > 0);
         TestCase::assertEquals($expected, $mask);
+    }
+
+    /**
+     * @return \int[][]
+     */
+    public function provideBaseSignatureState()
+    {
+        return [
+            'Active Directory User' => [
+                63,
+                1,
+            ],
+            'Provisional User' => [
+                15,
+                2,
+            ],
+            'Prevalidation' => [
+                25,
+                3,
+            ],
+            'Invited User' => [
+                16,
+                4,
+            ],
+            'Inactive User' => [
+                43,
+                5,
+            ],
+            'Draft User' => [
+                0,
+                6,
+            ],
+        ];
+    }
+
+    /**
+     * @return \int[][]
+     */
+    public function provideDetermineSignatureState()
+    {
+        $data = $this->provideBaseSignatureState();
+
+        foreach ($data as $index => $datum) {
+            $newIndex = 'Modified ' . $index;
+
+            $signature = $datum[0];
+            if ($signature == 43) {
+                continue;
+            }
+
+            $signature |= UserState::EVALUATE_LOGIN_QUARTER;
+            $data[$newIndex] = [$signature, $datum[1]];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param int $signature Binary Mask Signature
+     * @param int $stateExpectedId The Outcome State Expected
+     * @dataProvider provideDetermineSignatureState
+     */
+    public function testDetermineSignatureState(int $signature, int $stateExpectedId): void
+    {
+        $this->UserStates->installBaseUserStates();
+
+        $result = $this->UserStates->determineSignatureState($signature);
+        TestCase::assertEquals($stateExpectedId, $result->id);
     }
 }

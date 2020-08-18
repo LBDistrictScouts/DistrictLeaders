@@ -113,10 +113,10 @@ class UserStatesTable extends Table
 
     /**
      * @param \App\Model\Entity\UserState $state The State Object to be enriched
-     * @param array $stateData The Data Array to be processed
+     * @param array|null $stateData The Data Array to be processed
      * @return \App\Model\Entity\UserState
      */
-    public function evaluationSignatures(UserState $state, array $stateData): UserState
+    public function evaluationSignatures(UserState $state, ?array $stateData = null): UserState
     {
         $state->set(UserState::FIELD_SIGNATURE, $this->evaluateSignature($stateData));
 
@@ -124,13 +124,17 @@ class UserStatesTable extends Table
     }
 
     /**
-     * @param array $stateData The Data Array to be processed
+     * @param array|null $stateData The Data Array to be processed
      * @return int
      */
-    public function evaluateSignature(array $stateData): int
+    public function evaluateSignature(?array $stateData = null): int
     {
         $prefix = UserState::class . '::';
         $signature = 0;
+
+        if (is_null($stateData)) {
+            return $signature;
+        }
 
         foreach ($stateData as $evaluation) {
             $result = constant($prefix . $evaluation);
@@ -180,5 +184,40 @@ class UserStatesTable extends Table
         }
 
         return $userEvaluation;
+    }
+
+    /**
+     * @param int $signature Signature to be Evaluated
+     * @return \App\Model\Entity\UserState
+     */
+    public function determineSignatureState(int $signature): UserState
+    {
+        /** @var \App\Model\Entity\UserState[] $states */
+        $states = $this->find()->orderAsc(UserState::FIELD_PRECEDENCE_ORDER);
+
+        foreach ($states as $state) {
+            $output = ($signature & $state->signature);
+            $mask = (bool)( $output == $state->signature);
+            if ($mask) {
+                return $state;
+            }
+        }
+
+        return $state;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The user to be processed
+     * @return \App\Model\Entity\User
+     */
+    public function determineUserState(User $user): User
+    {
+        $projectedState = $this->determineSignatureState($this->evaluateUser($user));
+
+        if ($user->user_state_id != $projectedState->id) {
+            $user->set(User::FIELD_USER_STATE_ID, $projectedState->id);
+        }
+
+        return $user;
     }
 }

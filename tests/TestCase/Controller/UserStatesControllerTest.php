@@ -34,6 +34,23 @@ class UserStatesControllerTest extends TestCase
         'app.UserContactTypes',
         'app.UserContacts',
         'app.Roles',
+        'app.CampTypes',
+        'app.Camps',
+        'app.CampRoleTypes',
+        'app.CampRoles',
+        'app.NotificationTypes',
+        'app.Notifications',
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -80,7 +97,7 @@ class UserStatesControllerTest extends TestCase
                 'active' => true,
                 'expired' => false,
             ],
-            2
+            7
         );
     }
 
@@ -120,7 +137,7 @@ class UserStatesControllerTest extends TestCase
                 'active' => true,
                 'expired' => false,
             ],
-            2
+            7
         );
     }
 }

@@ -38,11 +38,46 @@ class UserStatesFixture extends TestFixture
     {
         $this->records = [
             [
-                'user_state' => 'Lorem ipsum dolor sit amet',
+                'user_state' => 'Active Directory User',
                 'active' => true,
-                'expired' => true,
+                'expired' => false,
                 'precedence_order' => 1,
-                'signature' => 1,
+                'signature' => 63,
+            ],
+            [
+                'user_state' => 'Provisional User',
+                'active' => false,
+                'expired' => false,
+                'precedence_order' => 3,
+                'signature' => 15,
+            ],
+            [
+                'user_state' => 'Prevalidation',
+                'active' => false,
+                'expired' => false,
+                'precedence_order' => 4,
+                'signature' => 25,
+            ],
+            [
+                'user_state' => 'Invited User',
+                'active' => false,
+                'expired' => false,
+                'precedence_order' => 5,
+                'signature' => 16,
+            ],
+            [
+                'user_state' => 'Inactive User',
+                'active' => false,
+                'expired' => false,
+                'precedence_order' => 6,
+                'signature' => 43,
+            ],
+            [
+                'user_state' => 'Monkey User',
+                'active' => false,
+                'expired' => false,
+                'precedence_order' => 7,
+                'signature' => 0,
             ],
         ];
         parent::init();

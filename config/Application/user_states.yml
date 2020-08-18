@@ -46,3 +46,9 @@ UserStates:
       - EVALUATE_LOGIN_EVER
       - EVALUATE_LOGIN_CAPABILITY
       - EVALUATE_VALIDATED_EMAIL
+
+  - user_state: Draft User
+    active: false
+    expired: false
+    precedence_order: 7
+    required:

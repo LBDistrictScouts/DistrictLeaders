@@ -460,23 +460,25 @@ class UsersTable extends Table
     /**
      * before Save LifeCycle Callback
      *
-     * @param \Cake\Event\Event $event The Event to be Processed
-     * @param \App\Model\Entity\User $entity The Entity on which the Save is being Called.
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
+     * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
      * @param array $options Options Values
-     * @return bool
+     * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
+    public function beforeSave(\Cake\Event\EventInterface $event, $user, $options): User
     {
-        if ($entity->getOriginal('capabilities') != $entity->capabilities) {
+        $user = $this->UserStates->determineUserState($user);
+
+        if ($user->getOriginal('capabilities') != $user->capabilities) {
             $this->getEventManager()->dispatch(new Event(
                 'Model.Users.capabilityChange',
                 $this,
-                ['user' => $entity]
+                ['user' => $user]
             ));
         }
 
-        return true;
+        return $user;
     }
 
     /**

@@ -118,6 +118,7 @@ class UsersController extends AppController
         if ($result) {
             $user = $this->Users->get($userId, [
                 'contain' => [
+                    'UserStates',
                     'Audits.Users',
                     'Changes' => function (Query $q) {
                         return $q
@@ -153,6 +154,7 @@ class UsersController extends AppController
         } else {
             $user = $this->Users->get($userId, [
                 'contain' => [
+                    'UserStates',
                     'Roles' => [
                         'RoleTypes',
                         'Sections' => [
