@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9e488d0f9ca7f03ef07db0a3aa7a7398",
+    "content-hash": "3478d4fe5dc7892715e503c844109c7b",
     "packages": [
         {
             "name": "aura/intl",
@@ -7836,6 +7836,48 @@
             "time": "2020-04-13T16:28:46+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "0.12.38",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4",
+                "reference": "ad606c5f1c641b465b739e79a3a0f1a5a57cf1b4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "time": "2020-08-19T08:13:30+00:00"
+        },
+        {
             "name": "psy/psysh",
             "version": "v0.10.4",
             "source": {
@@ -8412,10 +8454,10 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "wyrihaximus/twig-view": 20,
+        "phpmd/phpmd": 0,
         "phpunit/php-code-coverage": 0,
         "psy/psysh": 0,
-        "phpmd/phpmd": 0
+        "wyrihaximus/twig-view": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

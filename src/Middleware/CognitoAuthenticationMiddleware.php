@@ -45,9 +45,9 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
         $body = new Stream('php://memory', 'rw');
         $body->write($error->getBody());
         $response = new Response();
-        $response = $response->withStatus((int)$e->getCode())
+        $response = $response->withStatus((int)$error->getCode())
             ->withBody($body);
-        foreach ($e->getHeaders() as $header => $value) {
+        foreach ($error->getHeaders() as $header => $value) {
             $response = $response->withHeader($header, $value);
         }
 
@@ -77,7 +77,7 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
         } catch (AuthenticationRequiredException $e) {
             return $this->responseReturn($e);
         } catch (NewPasswordRequiredException $e) {
-            debug($e);
+//            debug($e);
 
             return new RedirectResponse($passwordUrl);
         }
