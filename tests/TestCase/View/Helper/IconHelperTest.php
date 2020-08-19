@@ -43,14 +43,32 @@ class IconHelperTest extends TestCase
         parent::tearDown();
     }
 
+    public function provideIconStandard(): array
+    {
+        return [
+            'Prefixed Sitemap' => [
+                'fa-sitemap',
+                'fal fa-sitemap',
+            ],
+            'Just Sitemap' => [
+                'sitemap',
+                'fal fa-sitemap',
+            ],
+        ];
+    }
+
     /**
      * Test iconStandard method
      *
+     * @param string|null $value The Value to be Parsed
+     * @param string|null $expected The Expected Outcome
+     * @dataProvider provideIconStandard
      * @return void
      */
-    public function testIconStandard(): void
+    public function testIconStandard(?string $value, ?string $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $result = $this->Icon->iconStandard($value);
+        TestCase::assertEquals($expected, $result);
     }
 
     public function provideIconBoolean(): array
@@ -123,32 +141,127 @@ class IconHelperTest extends TestCase
     }
 
     /**
+     * @return array[]
+     */
+    public function provideIconHtml(): array
+    {
+        return [
+            'Prefixed Sitemap' => [
+                'fa-sitemap',
+                '<i class="fal fa-sitemap"></i>',
+            ],
+            'Just Sitemap' => [
+                'sitemap',
+                '<i class="fal fa-sitemap"></i>',
+            ],
+        ];
+    }
+
+    /**
      * Test iconHtml method
      *
+     * @dataProvider provideIconHtml
+     * @param string $value
+     * @param string $expected
      * @return void
      */
-    public function testIconHtml(): void
+    public function testIconHtml(string $value, string $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $result = $this->Icon->iconHtml($value);
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideStandardEntity(): array
+    {
+        return [
+            'Standard' => [
+                'Mushrooms',
+                false,
+            ],
+            'Camps' => [
+                'Camps',
+                'fal fa-campground',
+            ],
+            'Directory' => [
+                'Directory',
+                'fal fa-address-card',
+            ],
+            'Documents' => [
+                'Documents',
+                'fal fa-file-alt',
+            ],
+            'Articles' => [
+                'Articles',
+                'fal fa-newspaper',
+            ],
+            'Users' => [
+                'Users',
+                'fal fa-users',
+            ],
+        ];
     }
 
     /**
      * Test iconStandardEntity method
      *
+     * @dataProvider provideStandardEntity
+     * @param string $value The value to be looked Up
+     * @param string|false $expected The Expected Outcome
      * @return void
      */
-    public function testIconStandardEntity(): void
+    public function testIconStandardEntity(string $value, $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $result = $this->Icon->iconStandardEntity($value);
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideHtmlEntity(): array
+    {
+        return [
+            'Standard' => [
+                'Mushrooms',
+                false,
+            ],
+            'Camps' => [
+                'Camps',
+                '<i class="fal fa-campground"></i>',
+            ],
+            'Directory' => [
+                'Directory',
+                '<i class="fal fa-address-card"></i>',
+            ],
+            'Documents' => [
+                'Documents',
+                '<i class="fal fa-file-alt"></i>',
+            ],
+            'Articles' => [
+                'Articles',
+                '<i class="fal fa-newspaper"></i>',
+            ],
+            'Users' => [
+                'Users',
+                '<i class="fal fa-users"></i>',
+            ],
+        ];
     }
 
     /**
      * Test iconHtmlEntity method
      *
+     * @dataProvider provideHtmlEntity
+     * @param string $value The value to be looked Up
+     * @param string|false $expected The Expected Outcome
      * @return void
      */
-    public function testIconHtmlEntity(): void
+    public function testIconHtmlEntity(string $value, $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $result = $this->Icon->iconHtmlEntity($value);
+        TestCase::assertEquals($expected, $result);
     }
 }

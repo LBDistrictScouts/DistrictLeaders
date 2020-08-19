@@ -54,11 +54,12 @@ class IconHelper extends Helper
 
     /**
      * @param string $entityName The Name of the Entity
-     * @return string|bool
+     * @return string|false
      */
     private function getEntityIcon($entityName)
     {
-        $iconStandard = Configure::read('iconStandards');
+        Configure::load('Application' . DS . 'icon_standards', 'yaml', false);
+        $iconStandard = Configure::read('IconStandards');
 
         if (key_exists($entityName, $iconStandard)) {
             return (string)$iconStandard[$entityName];
@@ -125,7 +126,7 @@ class IconHelper extends Helper
     public function iconStandardEntity($entityName, $modifiers = null)
     {
         $iconName = $this->getEntityIcon($entityName);
-        if ($iconName == false) {
+        if (!$iconName) {
             return false;
         }
 
