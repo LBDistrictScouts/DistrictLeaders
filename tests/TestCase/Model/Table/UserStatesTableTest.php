@@ -256,7 +256,7 @@ class UserStatesTableTest extends TestCase
 
         while ($pos <= 10) {
             try {
-                $randKey = random_int(0, $binMax);
+                $randKey = random_int(0, $binMax - 1);
             } catch (\Exception $e) {
                 $randKey = 5;
             }
