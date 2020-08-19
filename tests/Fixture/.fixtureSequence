@@ -35,4 +35,5 @@
 'app.Documents',
 'app.DocumentVersions',
 'app.DocumentEditions',
+'app.CompassRecords',
 

@@ -17,7 +17,7 @@ NotificationTypes:
     type_code: USR-CCH
   - notification_type: New Role Added
     notification_description: A new role has been added in the system.
-    icon: fa-hierarchy
+    icon: fa-sitemap
     type_code: ROL-NEW
   - notification_type: New Payment Received
     notification_description: Notification that a payment has been recorded by an administrator.

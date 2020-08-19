@@ -90,7 +90,7 @@ class DocumentEditionsTable extends Table
         $validator
             ->scalar(DocumentEdition::FIELD_MD5_HASH)
             ->requirePresence(DocumentEdition::FIELD_MD5_HASH, false)
-            ->maxLength(DocumentEdition::FIELD_MD5_HASH, 32)
+            ->maxLength(DocumentEdition::FIELD_MD5_HASH, 40)
             ->allowEmptyString(DocumentEdition::FIELD_MD5_HASH);
 
         $validator

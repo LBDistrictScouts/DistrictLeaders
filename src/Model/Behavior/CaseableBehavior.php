@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Behavior;
 
+use App\Utility\TextSafe;
 use Cake\ORM\Behavior;
 
 /**
@@ -24,7 +25,7 @@ class CaseableBehavior extends Behavior
     /**
      * Stores emails as lower case.
      *
-     * @param \Cake\Event\Event $event The event being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
      * @param \Cake\ORM\Entity $entity The Entity being processed.
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
@@ -44,6 +45,9 @@ class CaseableBehavior extends Behavior
                         break;
                     case 't':
                         $changed = ucwords(strtolower($value));
+                        break;
+                    case 'p':
+                        $changed = TextSafe::properName($value);
                         break;
                     case 'u':
                         $changed = strtoupper($value);

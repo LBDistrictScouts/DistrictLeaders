@@ -17,7 +17,7 @@ class IconHelperTest extends TestCase
      *
      * @var \App\View\Helper\IconHelper
      */
-    public $Icon;
+    protected $Icon;
 
     /**
      * setUp method
@@ -48,9 +48,78 @@ class IconHelperTest extends TestCase
      *
      * @return void
      */
-    public function testIconStandard()
+    public function testIconStandard(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    public function provideIconBoolean(): array
+    {
+        $result = $this->provideIconCheck();
+        $expected = '<i class="fal fa-times"></i>';
+
+        unset($result['False : ""']);
+        $result['False : Times'] = [
+            false,
+            $expected,
+        ];
+
+        unset($result['Null : ""']);
+        $result['Null : Times'] = [
+            false,
+            $expected,
+        ];
+
+        return $result;
+    }
+
+    /**
+     * Test iconBoolean method
+     *
+     * @param bool|null $value The Test Input Value
+     * @param string $expected The Expected HTML String
+     * @dataProvider provideIconBoolean
+     * @return void
+     */
+    public function testIconBoolean(?bool $value, string $expected): void
+    {
+        $result = $this->Icon->iconBoolean($value);
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function provideIconCheck(): array
+    {
+        return [
+            'True : Check' => [
+                true,
+                '<i class="fal fa-check"></i>',
+            ],
+            'False : ""' => [
+                false,
+                '',
+            ],
+            'Null : ""' => [
+                null,
+                '',
+            ],
+        ];
+    }
+
+    /**
+     * Test iconCheck method
+     *
+     * @dataProvider provideIconCheck
+     * @param bool|null $value The Test Input Value
+     * @param string $expected The Expected HTML String
+     * @return void
+     */
+    public function testIconCheck(?bool $value, string $expected): void
+    {
+        $result = $this->Icon->iconCheck($value);
+        TestCase::assertEquals($expected, $result);
     }
 
     /**
@@ -58,7 +127,7 @@ class IconHelperTest extends TestCase
      *
      * @return void
      */
-    public function testIconHtml()
+    public function testIconHtml(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -68,7 +137,7 @@ class IconHelperTest extends TestCase
      *
      * @return void
      */
-    public function testIconStandardEntity()
+    public function testIconStandardEntity(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -78,7 +147,7 @@ class IconHelperTest extends TestCase
      *
      * @return void
      */
-    public function testIconHtmlEntity()
+    public function testIconHtmlEntity(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

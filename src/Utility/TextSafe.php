@@ -77,4 +77,41 @@ class TextSafe
 
         return substr(str_shuffle(str_repeat('ABCDEFGHIJKLMNOPQRSTUVWXYZ', $repeats)), 0, $length);
     }
+
+    /**
+     * @param string $name The Name to be Proper Cased
+     * @return string
+     */
+    public static function properName(string $name): string
+    {
+        $name = strtolower($name);
+        $name = ucwords($name);
+
+        // Hold Space as Special Char
+        $spacePattern = '[ ]';
+        if (preg_match($spacePattern, $name)) {
+            $name = preg_replace($spacePattern, '#', $name);
+        }
+
+        $otherSeparators = [
+            'Apostrophe' => '\'',
+            'Hyphen' => '-',
+        ];
+
+        foreach ($otherSeparators as $separator) {
+            $separatorPattern = '[' . $separator . ']';
+            if (preg_match($separatorPattern, $name)) {
+                $name = preg_replace($separatorPattern, ' ', $name);
+                $name = ucwords($name);
+                $name = preg_replace($spacePattern, $separator, $name);
+            }
+        }
+
+        // Reverse Space Hold
+        if (preg_match('[#]', $name)) {
+            $name = preg_replace('[#]', ' ', $name);
+        }
+
+        return $name;
+    }
 }

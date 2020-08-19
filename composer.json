@@ -82,10 +82,11 @@
             "@phpstan"
         ],
         "fix": [
-            "@cs-fix",
             "@annotate",
+            "@illuminate",
             "@code-complete",
-            "@phpstorm"
+            "@phpstorm",
+            "@cs-fix"
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
@@ -95,7 +96,8 @@
         ],
         "phpstan-test": "phpstan analyse -c tests/phpstan.neon -l 5 src/",
         "phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan && mv composer.backup composer.json",
-        "annotate": "bin/cake annotate all && bin/cake illuminator illuminate",
+        "annotate": "bin/cake annotate all",
+        "illuminate": "bin/cake illuminator illuminate",
         "phpstorm": "bin/cake phpstorm generate",
         "code-complete": "bin/cake code_completion generate",
         "test": "phpunit --colors=always",

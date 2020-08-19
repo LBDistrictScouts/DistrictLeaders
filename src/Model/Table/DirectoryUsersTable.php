@@ -29,6 +29,7 @@ use Google_Service_Directory_User;
  * @method \App\Model\Entity\DirectoryUser findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
+ * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DirectoryUsersTable extends Table
 {
@@ -43,8 +44,16 @@ class DirectoryUsersTable extends Table
         parent::initialize($config);
 
         $this->setTable('directory_users');
-        $this->setDisplayField('id');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(DirectoryUser::FIELD_FULL_NAME);
+        $this->setPrimaryKey(DirectoryUser::FIELD_ID);
+
+        $this->addBehavior('Caseable', [
+            'case_columns' => [
+                DirectoryUser::FIELD_PRIMARY_EMAIL => 'l',
+                DirectoryUser::FIELD_GIVEN_NAME => 'p',
+                DirectoryUser::FIELD_FAMILY_NAME => 'p',
+            ],
+        ]);
 
         $this->belongsTo('Directories', [
             'foreignKey' => 'directory_id',
@@ -69,34 +78,38 @@ class DirectoryUsersTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(DirectoryUser::FIELD_ID)
+            ->allowEmptyString(DirectoryUser::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('directory_user_reference')
-            ->maxLength('directory_user_reference', 64)
-            ->requirePresence('directory_user_reference', 'create')
-            ->notEmptyString('directory_user_reference')
-            ->add('directory_user_reference', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE)
+            ->maxLength(DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE, 64)
+            ->requirePresence(DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE, 'create')
+            ->notEmptyString(DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE)
+            ->add(
+                DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE,
+                'unique',
+                ['rule' => 'validateUnique', 'provider' => 'table']
+            );
 
         $validator
-            ->scalar('given_name')
-            ->maxLength('given_name', 64)
-            ->requirePresence('given_name', 'create')
-            ->notEmptyString('given_name');
+            ->scalar(DirectoryUser::FIELD_GIVEN_NAME)
+            ->maxLength(DirectoryUser::FIELD_GIVEN_NAME, 64)
+            ->requirePresence(DirectoryUser::FIELD_GIVEN_NAME, 'create')
+            ->notEmptyString(DirectoryUser::FIELD_GIVEN_NAME);
 
         $validator
-            ->scalar('family_name')
-            ->maxLength('family_name', 64)
-            ->requirePresence('family_name', 'create')
-            ->notEmptyString('family_name');
+            ->scalar(DirectoryUser::FIELD_FAMILY_NAME)
+            ->maxLength(DirectoryUser::FIELD_FAMILY_NAME, 64)
+            ->requirePresence(DirectoryUser::FIELD_FAMILY_NAME, 'create')
+            ->notEmptyString(DirectoryUser::FIELD_FAMILY_NAME);
 
         $validator
-            ->scalar('primary_email')
-            ->maxLength('primary_email', 64)
-            ->requirePresence('primary_email', 'create')
-            ->notEmptyString('primary_email')
-            ->add('primary_email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(DirectoryUser::FIELD_PRIMARY_EMAIL)
+            ->maxLength(DirectoryUser::FIELD_PRIMARY_EMAIL, 64)
+            ->requirePresence(DirectoryUser::FIELD_PRIMARY_EMAIL, 'create')
+            ->notEmptyString(DirectoryUser::FIELD_PRIMARY_EMAIL)
+            ->add(DirectoryUser::FIELD_PRIMARY_EMAIL, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
@@ -110,9 +123,9 @@ class DirectoryUsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['directory_user_reference']));
-        $rules->add($rules->isUnique(['primary_email']));
-        $rules->add($rules->existsIn(['directory_id'], 'Directories'));
+        $rules->add($rules->isUnique([DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE]));
+        $rules->add($rules->isUnique([DirectoryUser::FIELD_PRIMARY_EMAIL]));
+        $rules->add($rules->existsIn([DirectoryUser::FIELD_DIRECTORY_ID], 'Directories'));
 
         return $rules;
     }

@@ -197,7 +197,7 @@ class DocumentEditionsTableTest extends TestCase
         $maxLengths = [
             DocumentEdition::FIELD_FILENAME => 255,
             DocumentEdition::FIELD_FILE_PATH => 255,
-            DocumentEdition::FIELD_MD5_HASH => 32,
+            DocumentEdition::FIELD_MD5_HASH => 40,
         ];
         $this->validateMaxLengths($maxLengths, $this->DocumentEditions, [$this, 'getGood']);
     }

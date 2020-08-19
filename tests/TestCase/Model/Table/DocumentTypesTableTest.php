@@ -20,14 +20,14 @@ class DocumentTypesTableTest extends TestCase
      *
      * @var \App\Model\Table\DocumentTypesTable
      */
-    public $DocumentTypes;
+    protected $DocumentTypes;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.DocumentTypes',
     ];
 
@@ -62,11 +62,9 @@ class DocumentTypesTableTest extends TestCase
      */
     public function getGood()
     {
-        $good = [
+        return [
             DocumentType::FIELD_DOCUMENT_TYPE => TextSafe::shuffle(15),
         ];
-
-        return $good;
     }
 
     /**
@@ -74,11 +72,12 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             DocumentType::FIELD_ID => 1,
             DocumentType::FIELD_DOCUMENT_TYPE => 'Lorem ipsum dolor sit amet',
+            DocumentType::FIELD_SPECIAL_CAPABILITY => 'HISTORY',
         ];
         $this->validateInitialise($expected, $this->DocumentTypes, 1);
     }
@@ -88,7 +87,7 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $required = [
             DocumentType::FIELD_DOCUMENT_TYPE,
@@ -99,6 +98,16 @@ class DocumentTypesTableTest extends TestCase
             DocumentType::FIELD_DOCUMENT_TYPE,
         ];
         $this->validateNotEmpties($notEmpty, $this->DocumentTypes, [$this, 'getGood']);
+
+        $notRequired = [
+            DocumentType::FIELD_SPECIAL_CAPABILITY,
+        ];
+        $this->validateNotRequired($notRequired, $this->DocumentTypes, [$this, 'getGood']);
+
+        $empties = [
+            DocumentType::FIELD_SPECIAL_CAPABILITY,
+        ];
+        $this->validateEmpties($empties, $this->DocumentTypes, [$this, 'getGood']);
     }
 
     /**
@@ -106,7 +115,7 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->validateUniqueRule(DocumentType::FIELD_DOCUMENT_TYPE, $this->DocumentTypes, [$this, 'getGood']);
     }

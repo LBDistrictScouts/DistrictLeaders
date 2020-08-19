@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $document_type
+ * @property string|null $special_capability
  *
  * @property \App\Model\Entity\Document[] $documents
  */
@@ -26,10 +27,12 @@ class DocumentType extends Entity
      */
     protected $_accessible = [
         'document_type' => true,
+        'special_capability' => true,
         'documents' => true,
     ];
 
     public const FIELD_ID = 'id';
     public const FIELD_DOCUMENT_TYPE = 'document_type';
+    public const FIELD_SPECIAL_CAPABILITY = 'special_capability';
     public const FIELD_DOCUMENTS = 'documents';
 }

@@ -1,0 +1,5 @@
+DocumentTypes:
+  - document_type: Invoice
+    special_capability:
+  - document_type: Compass Upload
+    special_capability: CREATE_COMPASS_RECORD

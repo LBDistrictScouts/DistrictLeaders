@@ -75,4 +75,66 @@ class TextSafeTest extends TestCase
     {
         TestCase::assertEquals($expected, strlen(TextSafe::shuffle($expected)));
     }
+
+    /**
+     * @return array
+     */
+    public function providerProperName()
+    {
+        return [
+            'Camel Cased' => [
+                'JacobTyler',
+                'Jacobtyler',
+            ],
+            'Hyphenated Name' => [
+                'Lucy-May',
+                'Lucy-May',
+            ],
+            'Upper Hyphenated Name' => [
+                'LUCY-MAY',
+                'Lucy-May',
+            ],
+            'Lower Hyphenated Name' => [
+                'lucy-may',
+                'Lucy-May',
+            ],
+            'Apostrophe Name' => [
+                'D\'Arcy',
+                'D\'Arcy',
+            ],
+            'Upper Apostrophe Name' => [
+                'D\'ARCY',
+                'D\'Arcy',
+            ],
+            'Lower Apostrophe Name' => [
+                'd\'arcy',
+                'D\'Arcy',
+            ],
+            'Hyphenated Name Two Names' => [
+                'Lucy-May Gillian',
+                'Lucy-May Gillian',
+            ],
+            'Upper Hyphenated Two Names' => [
+                'LUCY-MAY GILLIAN',
+                'Lucy-May Gillian',
+            ],
+            'Lower Hyphenated Two Names' => [
+                'lucy-may gillian',
+                'Lucy-May Gillian',
+            ],
+        ];
+    }
+
+    /**
+     * Test decode()
+     *
+     * @param string $input The Wrong Cased Input Name
+     * @param string $expected The length of the expected string
+     * @return void
+     * @dataProvider providerProperName
+     */
+    public function testProperName(string $input, string $expected)
+    {
+        TestCase::assertEquals($expected, TextSafe::properName($input));
+    }
 }

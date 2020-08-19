@@ -28,6 +28,10 @@ class IconHelper extends Helper
         $weight = $this->getConfig('iconWeight');
         $prefix = $this->getConfig('iconPrefix');
 
+        if (!str_contains($iconName, $prefix)) {
+            $iconName = $prefix . '-' . $iconName;
+        }
+
         $modifierString = '';
 
         if (!is_null($modifiers)) {
@@ -36,7 +40,7 @@ class IconHelper extends Helper
             }
         }
 
-        return $weight . ' ' . $prefix . '-' . $iconName . $modifierString;
+        return $weight . ' ' . $iconName . $modifierString;
     }
 
     /**
@@ -74,10 +78,10 @@ class IconHelper extends Helper
     }
 
     /**
-     * @param bool $booleanAttribute The Boolean Attribute
+     * @param bool|null $booleanAttribute The Boolean Attribute
      * @return string
      */
-    public function iconBoolean($booleanAttribute)
+    public function iconBoolean(?bool $booleanAttribute): string
     {
         if ($booleanAttribute) {
             return $this->iconCheck($booleanAttribute);
@@ -87,10 +91,12 @@ class IconHelper extends Helper
     }
 
     /**
-     * @param bool $booleanAttribute The Boolean Attribute
+     * Provides an HTML Icon Check String
+     *
+     * @param bool|null $booleanAttribute The Boolean Attribute
      * @return string
      */
-    public function iconCheck($booleanAttribute)
+    public function iconCheck(?bool $booleanAttribute): string
     {
         if ($booleanAttribute) {
             return $this->iconHtml('check');
