@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Controller\Api\V1;
+namespace App\Controller\API\V1;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;

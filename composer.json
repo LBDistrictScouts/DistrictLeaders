@@ -39,18 +39,19 @@
         "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {
-        "cakephp/cakephp-codesniffer": "^4.0",
-        "dereuromark/cakephp-ide-helper": "^1.0",
-        "cakephp/debug_kit": "^4.0",
-        "josegonzalez/dotenv": "3.*",
         "cakephp/bake": "^2.0",
+        "cakephp/cakephp-codesniffer": "^4.0",
+        "cakephp/debug_kit": "^4.0",
+        "dereuromark/cakephp-ide-helper": "^1.0",
+        "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
-        "wyrihaximus/twig-view": "dev-master",
+        "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "^0.12.38",
         "phpunit/php-code-coverage": "@stable",
         "phpunit/phpunit": "^8.0",
         "psy/psysh": "@stable",
-        "phpmd/phpmd": "@stable",
-        "slevomat/coding-standard": "^6.1"
+        "slevomat/coding-standard": "^6.1",
+        "wyrihaximus/twig-view": "dev-master"
     },
     "suggest": {
         "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."
@@ -78,8 +79,8 @@
         "console-install": "App\\Console\\Installer::postInstall",
         "check": [
             "@cs-check",
-            "@validate",
-            "@phpstan"
+            "composer validate",
+            "@phpstan-check"
         ],
         "fix": [
             "@cs-fix",
@@ -89,12 +90,7 @@
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
-        "phpstan": [
-            "@phpstan-setup",
-            "@phpstan-test"
-        ],
-        "phpstan-test": "phpstan analyse -c tests/phpstan.neon -l 5 src/",
-        "phpstan-setup": "cp composer.json composer.backup && composer require --dev phpstan/phpstan && mv composer.backup composer.json",
+        "phpstan-check": "vendor/bin/phpstan analyse src tests",
         "annotate": "bin/cake annotate all && bin/cake illuminator illuminate",
         "phpstorm": "bin/cake phpstorm generate",
         "code-complete": "bin/cake code_completion generate",
