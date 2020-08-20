@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Queue\Model\Entity\QueuedJob;
+
 /**
  * DocumentVersions Controller
  *
@@ -32,13 +34,13 @@ class DocumentVersionsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Document Version id.
+     * @param string|null $documentVersionId Document Version id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($documentVersionId = null)
     {
-        $documentVersion = $this->DocumentVersions->get($id, [
+        $documentVersion = $this->DocumentVersions->get($documentVersionId, [
             'contain' => ['Documents', 'DocumentEditions'],
         ]);
 
@@ -69,13 +71,13 @@ class DocumentVersionsController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Document Version id.
+     * @param string|null $documentVersionId Document Version id.
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($documentVersionId = null)
     {
-        $documentVersion = $this->DocumentVersions->get($id, [
+        $documentVersion = $this->DocumentVersions->get($documentVersionId, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -94,14 +96,14 @@ class DocumentVersionsController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Document Version id.
+     * @param string|null $documentVersionId Document Version id.
      * @return \Cake\Http\Response|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($documentVersionId = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $documentVersion = $this->DocumentVersions->get($id);
+        $documentVersion = $this->DocumentVersions->get($documentVersionId);
         if ($this->DocumentVersions->delete($documentVersion)) {
             $this->Flash->success(__('The document version has been deleted.'));
         } else {
@@ -109,5 +111,26 @@ class DocumentVersionsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $documentVersionId Document Version id.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function compass($documentVersionId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $documentVersion = $this->DocumentVersions->get($documentVersionId);
+        $job = $this->DocumentVersions->setImport($documentVersion);
+        if ($job instanceof QueuedJob) {
+            $this->Flash->success(__('The document version has been sent for processing. Queue ID {0}', $job->id));
+        } else {
+            $this->Flash->error(__('The document version could not be queued. Please, try again.'));
+        }
+
+        return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 use Josbeir\Filesystem\FileEntityInterface;
+use Josbeir\Filesystem\FilesystemAwareTrait;
+use League\Flysystem\FileNotFoundException;
 
 /**
  * DocumentEdition Entity
@@ -26,6 +28,8 @@ use Josbeir\Filesystem\FileEntityInterface;
  */
 class DocumentEdition extends Entity implements FileEntityInterface
 {
+    use FilesystemAwareTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -68,53 +72,20 @@ class DocumentEdition extends Entity implements FileEntityInterface
         return $this;
     }
 
-//    /**
-//     * @return string
-//     */
-//    // phpcs:disable
-//    public function _getHash(): string
-//    {
-//        // phpcs:enable
-//        return $this->md5_hash;
-//    }
-//
-//    /**
-//     * @param string $path The Path to be set
-//     *
-//     * @return \Josbeir\Filesystem\FileEntityInterface
-//     */
-//    // phpcs:disable
-//    public function _setHash(string $path): FileEntityInterface
-//    {
-//        // phpcs:enable
-//        $this->set($this::FIELD_MD5_HASH, $path);
-//
-//        return $this;
-//    }
+    /**
+     * @return string|false
+     */
+    public function read()
+    {
+        /** @var \League\Flysystem\Filesystem $fileSystem */
+        $fileSystem = $this->getFilesystem();
 
-//    /**
-//     * @return string
-//     */
-//    // phpcs:disable
-//    public function _getPath(): string
-//    {
-//        // phpcs:enable
-//        return $this->file_path;
-//    }
-//
-//    /**
-//     * @param string $path The Path to be set
-//     *
-//     * @return \Josbeir\Filesystem\FileEntityInterface
-//     */
-//    // phpcs:disable
-//    public function _setPath(string $path): FileEntityInterface
-//    {
-//        // phpcs:enable
-//        $this->set($this::FIELD_FILE_PATH, $path);
-//
-//        return $this;
-//    }
+        try {
+            return $fileSystem->read($this->getPath());
+        } catch (FileNotFoundException $e) {
+            return false;
+        }
+    }
 
     public const FIELD_ID = 'id';
     public const FIELD_CREATED = 'created';

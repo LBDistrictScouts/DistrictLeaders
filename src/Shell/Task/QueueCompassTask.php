@@ -11,15 +11,15 @@ use Queue\Shell\Task\QueueTaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\EmailSendsTable EmailSends
+ * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
-class QueueCompassUploadTask extends QueueTask implements QueueTaskInterface
+class QueueCompassTask extends QueueTask implements QueueTaskInterface
 {
     /**
      * @var int
      */
-    public $timeout = 20;
+    public $timeout = 900;
 
     /**
      * @var int
@@ -33,21 +33,23 @@ class QueueCompassUploadTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId): void
     {
-        if (!key_exists('email_generation_code', $data)) {
-            throw new QueueException('Email generation code not specified.');
+        if (!key_exists('version', $data)) {
+            throw new QueueException('Document Version Number not specified.');
         }
 
-        $this->loadModel('EmailSends');
+        $this->loadModel('DocumentVersions');
         $this->loadModel('Queue.QueuedJobs');
 
-        $email = $this->EmailSends->make($data['email_generation_code']);
+        $version = $this->DocumentVersions->get($data['version']);
 
-        if (!$email) {
-            throw new QueueException('Make Failed.');
+        $result = $this->DocumentVersions->importCompassRecords($version);
+
+        if (!$result) {
+            throw new QueueException('Compass Import Failed.');
         }
 
         $job = $this->QueuedJobs->get($jobId);
-        $data['email_send_id'] = $email;
+        $data['records'] = $result;
         $job->set('data', serialize($data));
         $this->QueuedJobs->save($job);
     }

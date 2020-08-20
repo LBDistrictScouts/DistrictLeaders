@@ -122,6 +122,7 @@ class CompassRecordsTableTest extends TestCase
             CompassRecord::FIELD_FIRST_NAME => 'Lorem',
             CompassRecord::FIELD_LAST_NAME => 'Lorem Ipsum Dolor Sit Amet',
             CompassRecord::FIELD_CLEAN_SECTION_TYPE => 'Group',
+            CompassRecord::FIELD_FULL_NAME => 'Lorem Lorem Ipsum Dolor Sit Amet',
         ];
 
         $this->validateInitialise($expected, $this->CompassRecords, 1);

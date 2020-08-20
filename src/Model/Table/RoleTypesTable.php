@@ -6,7 +6,9 @@ namespace App\Model\Table;
 use App\Model\Entity\CapabilitiesRoleType;
 use App\Model\Entity\Capability;
 use App\Model\Entity\Role;
+use App\Model\Entity\RoleTemplate;
 use App\Model\Entity\RoleType;
+use App\Model\Entity\SectionType;
 use App\Model\Entity\User;
 use Cake\Core\Configure;
 use Cake\ORM\Query;
@@ -183,5 +185,43 @@ class RoleTypesTable extends Table
         }
 
         return $count;
+    }
+
+    /**
+     * @param string $roleType The RoleType String for Creation
+     * @param string $sectionType The Section Type String for Context
+     * @return \App\Model\Entity\RoleType
+     */
+    public function findOrMake(string $roleType, string $sectionType): RoleType
+    {
+        $sectionTypeEntity = $this->SectionTypes->find()
+            ->where([SectionType::FIELD_SECTION_TYPE => $sectionType])
+            ->firstOrFail();
+
+        $conditions = [
+            RoleType::FIELD_ROLE_TYPE => $roleType,
+            RoleType::FIELD_SECTION_TYPE_ID => $sectionTypeEntity->id,
+        ];
+
+        $query = $this->find()->where($conditions);
+
+        if ($query->count() == 1) {
+            /** @var \App\Model\Entity\RoleType $roleTypeEntity */
+            $roleTypeEntity = $query->first();
+
+            if ($roleTypeEntity instanceof RoleType) {
+                return $roleTypeEntity;
+            }
+        }
+
+        /** @var \App\Model\Entity\RoleTemplate $lowestTemplate */
+        $lowestTemplate = $this->RoleTemplates->find()->orderAsc(RoleTemplate::FIELD_INDICATIVE_LEVEL)->first();
+
+        $conditions[RoleType::FIELD_ROLE_TEMPLATE_ID] = $lowestTemplate->id;
+        $conditions[RoleType::FIELD_LEVEL] = $lowestTemplate->indicative_level;
+
+        $roleTypeEntity = $this->newEntity($conditions);
+
+        return $this->save($roleTypeEntity);
     }
 }

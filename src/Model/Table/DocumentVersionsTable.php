@@ -4,17 +4,22 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Document;
+use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
+use App\Model\Entity\FileType;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
  * DocumentVersions Model
  *
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\BelongsTo $Documents
  * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
+ * @property \App\Model\Table\CompassRecordsTable&\Cake\ORM\Association\HasMany $CompassRecords
  * @method \App\Model\Entity\DocumentVersion get($primaryKey, $options = [])
  * @method \App\Model\Entity\DocumentVersion newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] newEntities(array $data, array $options = [])
@@ -23,11 +28,20 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DocumentVersion patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class DocumentVersionsTable extends Table
 {
+    use FilesystemAwareTrait;
+    use ModelAwareTrait;
+
+    /**
+     * @var \Queue\Model\Table\QueuedJobsTable
+     */
+    private $QueuedJobs;
+
     /**
      * Initialize method
      *
@@ -49,6 +63,9 @@ class DocumentVersionsTable extends Table
             'joinType' => 'INNER',
         ]);
         $this->hasMany('DocumentEditions', [
+            'foreignKey' => 'document_version_id',
+        ]);
+        $this->hasMany('CompassRecords', [
             'foreignKey' => 'document_version_id',
         ]);
     }
@@ -114,5 +131,60 @@ class DocumentVersionsTable extends Table
                            . $document_version->get(DocumentVersion::FIELD_VERSION_NUMBER);
                 },
             ]));
+    }
+
+    /**
+     * @param string $mime The FileType for Selection
+     * @param \App\Model\Entity\DocumentVersion $version The DocumentVersion
+     * @return \App\Model\Entity\DocumentEdition|false
+     */
+    public function getFileTypeEdition(string $mime, DocumentVersion $version)
+    {
+        $where = [FileType::FIELD_MIME => $mime];
+
+        if ($this->DocumentEditions->FileTypes->exists($where)) {
+            $fileType = $this->DocumentEditions->FileTypes->find()->where($where)->first();
+
+            $editionQuery = $this->DocumentEditions->find()->where([
+                DocumentEdition::FIELD_DOCUMENT_VERSION_ID => $version->id,
+                DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->id,
+            ]);
+
+            /** @var \App\Model\Entity\DocumentEdition $edition */
+            $edition = $editionQuery->first();
+            if ($editionQuery->count() == 1) {
+                return $edition;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
+     * @return \Queue\Model\Entity\QueuedJob
+     */
+    public function setImport(DocumentVersion $documentVersion)
+    {
+        $this->loadModel('Queue.QueuedJobs');
+
+        return $this->QueuedJobs->createJob('Compass', ['version' => $documentVersion->id]);
+    }
+
+    /**
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Parsing
+     * @return int
+     */
+    public function importCompassRecords(DocumentVersion $documentVersion): int
+    {
+        $edition = $this->getFileTypeEdition('text/csv', $documentVersion);
+
+        if ($edition instanceof DocumentEdition) {
+            $data = $this->CompassRecords->importCsv($edition->read(), [], ['text' => true]);
+
+            return $this->CompassRecords->parseImportedData($data, $documentVersion);
+        }
+
+        return 0;
     }
 }

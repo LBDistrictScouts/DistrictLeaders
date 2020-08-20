@@ -5,6 +5,8 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Model\Entity\UserContactType;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -233,5 +235,49 @@ class UserContactsTable extends Table
         return $query
             ->find('validated')
             ->find('contactNumbers');
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User for Attaching
+     * @param string $email The Email String for Creation
+     * @return \App\Model\Entity\UserContact
+     */
+    public function makeEmail(User $user, string $email): UserContact
+    {
+        $emailType = $this->UserContactTypes->find()
+            ->where([UserContactType::FIELD_USER_CONTACT_TYPE => 'Email'])
+            ->first();
+
+        if (!$emailType instanceof UserContactType) {
+            throw new RecordNotFoundException();
+        }
+
+        return $this->findOrCreate([
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => $emailType->id,
+            UserContact::FIELD_USER_ID => $user->id,
+            UserContact::FIELD_CONTACT_FIELD => $email,
+        ]);
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User for Attaching
+     * @param string $number The Phone Number String for Creation
+     * @return \App\Model\Entity\UserContact
+     */
+    public function makePhone(User $user, string $number): UserContact
+    {
+        $numberType = $this->UserContactTypes->find()
+            ->where([UserContactType::FIELD_USER_CONTACT_TYPE => 'Phone'])
+            ->first();
+
+        if (!$numberType instanceof UserContactType) {
+            throw new RecordNotFoundException();
+        }
+
+        return $this->findOrCreate([
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => $numberType->id,
+            UserContact::FIELD_USER_ID => $user->id,
+            UserContact::FIELD_CONTACT_FIELD => $number,
+        ]);
     }
 }

@@ -176,11 +176,9 @@ class DocumentsTable extends Table
             DocumentEdition::FIELD_SIZE => $fileEntity->get(DocumentEdition::FIELD_SIZE),
         ]);
 
-        debug($document);
         $document = $this->save($document);
         $documentVersion->set(DocumentVersion::FIELD_DOCUMENT_ID, $document->get(Document::FIELD_ID));
 
-        debug($documentVersion);
         $documentVersion = $this->DocumentVersions->save($documentVersion);
         $documentEdition->set(
             DocumentEdition::FIELD_DOCUMENT_VERSION_ID,
@@ -188,7 +186,6 @@ class DocumentsTable extends Table
         );
 
         $this->DocumentVersions->DocumentEditions->save($documentEdition);
-        debug($documentEdition);
 
         return $this->get($document->id, ['contain' => 'DocumentVersions.DocumentEditions']);
     }

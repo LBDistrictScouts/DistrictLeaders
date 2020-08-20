@@ -37,6 +37,7 @@ use Cake\ORM\Entity;
  * @property string $clean_section_type
  * @property null|string $first_name
  * @property string $last_name
+ * @property string $full_name
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -162,11 +163,15 @@ class CompassRecord extends Entity
 
         $section = $this->parseSection();
 
+        $section = GroupParser::aliasSectionType($section);
+
         if ($section == $this->clean_group) {
+            if ($section == 'District') {
+                return $section;
+            }
+
             return 'Group';
         }
-
-        $section = GroupParser::aliasSectionType($section);
 
         if ($section <> $this->clean_group) {
             return $section;
@@ -189,7 +194,13 @@ class CompassRecord extends Entity
         $section = $this->parseSection();
 
         if ($section == $this->clean_group) {
-            return $this->clean_group . ' Group';
+            if ($this->clean_section_type == 'District') {
+                $suffix = 'District';
+            } else {
+                $suffix = 'Group';
+            }
+
+            return $this->clean_group . ' ' . $suffix;
         }
 
         if (preg_match('/(' . $this->clean_section_type . ')/', $this->clean_group)) {
@@ -229,6 +240,16 @@ class CompassRecord extends Entity
         return TextSafe::properName($this->surname);
     }
 
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return string
+     */
+    protected function _getFullName()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
     protected $_virtual = [
         'provisional',
         'clean_role',
@@ -237,6 +258,7 @@ class CompassRecord extends Entity
         'clean_section_type',
         'first_name',
         'last_name',
+        'full_name',
     ];
 
     public const FIELD_ID = 'id';
@@ -265,4 +287,5 @@ class CompassRecord extends Entity
     public const FIELD_CLEAN_SECTION_TYPE = 'clean_section_type';
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
+    public const FIELD_FULL_NAME = 'full_name';
 }

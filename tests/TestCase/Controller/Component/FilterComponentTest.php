@@ -55,17 +55,26 @@ class FilterComponentTest extends TestCase
         'app.Camps',
         'app.CampRoleTypes',
         'app.CampRoles',
-        'app.Notifications',
         'app.NotificationTypes',
+        'app.Notifications',
         'app.EmailSends',
         'app.Tokens',
         'app.EmailResponseTypes',
         'app.EmailResponses',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.FileTypes',
         'app.DocumentTypes',
         'app.Documents',
         'app.DocumentVersions',
         'app.DocumentEditions',
+        'app.CompassRecords',
     ];
 
     /**
@@ -231,6 +240,61 @@ class FilterComponentTest extends TestCase
         $expected = [
             ':c0' => [
                 'value' => 7,
+                'type' => 'integer',
+                'placeholder' => 'c0',
+            ],
+        ];
+        TestCase::assertSame($expected, $returnedQuery->getValueBinder()->bindings());
+    }
+
+    /**
+     * Test indexFilters method
+     *
+     * @return void
+     */
+    public function testSpacedIndexFilters()
+    {
+        // Setup Base Table & Association
+        $baseTable = $this->getTableLocator()->get('Documents');
+        $association = $baseTable->getAssociation('DocumentTypes');
+
+        $baseTable->DocumentTypes->installBaseDocumentTypes();
+
+        // Pass Component
+        $returnedQuery = $this->Filter->indexFilters(
+            $association,
+            [
+                urlencode('Compass Upload') => true,
+            ]
+        );
+
+        // Check Result Contains Association
+        TestCase::assertArrayHasKey('DocumentTypes', $returnedQuery->getContain());
+
+        // Collect View Vars
+        $viewVars = $this->Controller->viewBuilder()->getVars();
+
+        // Check Filter Array Variable
+        TestCase::assertArrayHasKey('filterArray', $viewVars);
+        $expected = [
+            1 => 'Lorem ipsum dolor sit amet',
+            2 => 'Invoice',
+            3 => 'Compass Upload',
+        ];
+        TestCase::assertSame($expected, $viewVars['filterArray']);
+
+        // Check Applied Filters Variable
+        TestCase::assertArrayHasKey('appliedFilters', $viewVars);
+        $expected = [
+            0 => 'Compass Upload',
+        ];
+        TestCase::assertSame($expected, $viewVars['appliedFilters']);
+
+        // Check Filter Applied
+        TestCase::assertStringContainsString($association->getForeignKey() . ' in (:c0)', $returnedQuery->sql());
+        $expected = [
+            ':c0' => [
+                'value' => 3,
                 'type' => 'integer',
                 'placeholder' => 'c0',
             ],
