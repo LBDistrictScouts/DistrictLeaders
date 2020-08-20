@@ -1,4 +1,0 @@
-Webservices:
-  git_hub:
-    className: Muffin\Webservice\Datasource\Connection
-    service: GitHub

@@ -118,9 +118,10 @@ class CompassRecordsTableTest extends TestCase
             CompassRecord::FIELD_PROVISIONAL => false,
             CompassRecord::FIELD_CLEAN_ROLE => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_CLEAN_GROUP => 'Lorem ipsum dolor sit amet',
-            CompassRecord::FIELD_CLEAN_SECTION => 'Group',
+            CompassRecord::FIELD_CLEAN_SECTION => 'Lorem ipsum dolor sit amet Group',
             CompassRecord::FIELD_FIRST_NAME => 'Lorem',
             CompassRecord::FIELD_LAST_NAME => 'Lorem Ipsum Dolor Sit Amet',
+            CompassRecord::FIELD_CLEAN_SECTION_TYPE => 'Group',
         ];
 
         $this->validateInitialise($expected, $this->CompassRecords, 1);

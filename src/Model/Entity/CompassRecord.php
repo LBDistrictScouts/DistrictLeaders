@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Utility\GroupParser;
 use App\Utility\TextSafe;
 use Cake\ORM\Entity;
 
@@ -33,6 +34,7 @@ use Cake\ORM\Entity;
  * @property string $clean_role
  * @property string $clean_group
  * @property string $clean_section
+ * @property string $clean_section_type
  * @property null|string $first_name
  * @property string $last_name
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
@@ -91,16 +93,34 @@ class CompassRecord extends Entity
      */
     protected function _getCleanRole(): ?string
     {
-        if (empty($this->role)) {
+        if (empty($this->role) | empty($this->clean_section_type)) {
             return null;
         }
 
-        $role = preg_replace('/[(](Pre-)*(Prov)[)]/', '', $this->role);
-        $roles = explode(' - ', $role);
-        $role = $roles[0];
-        $role = trim($role);
+        return GroupParser::parseRole($this->role, $this->clean_section_type);
+    }
 
-        return $role;
+    /**
+     * @param bool $last The Component Position
+     * @return string
+     */
+    private function locationComponent(bool $last): string
+    {
+        $locationComponents = explode('-', $this->location);
+
+        if ($last) {
+            $component = count($locationComponents) - 1;
+        } else {
+            $component = 0;
+        }
+
+        if (!empty($locationComponents[$component])) {
+            $componentString = $locationComponents[$component];
+        } else {
+            $componentString = $locationComponents[0];
+        }
+
+        return trim($componentString);
     }
 
     /**
@@ -114,16 +134,45 @@ class CompassRecord extends Entity
             return null;
         }
 
-        $groupArr = explode('@', $this->location);
+        $group = $this->locationComponent(false);
 
-        if (!empty($groupArr[1])) {
-            $group = $groupArr[1];
-        } else {
-            $group = $groupArr[0];
+        return GroupParser::aliasGroup($group);
+    }
+
+    /**
+     * @return string
+     */
+    private function parseSection(): string
+    {
+        $section = $this->locationComponent(true);
+
+        return GroupParser::parseSection($section, $this->clean_group);
+    }
+
+    /**
+     * Cleaned Section
+     *
+     * @return string
+     */
+    protected function _getCleanSectionType()
+    {
+        if (empty($this->location)) {
+            return null;
         }
-        $group = trim($group);
 
-        return $group;
+        $section = $this->parseSection();
+
+        if ($section == $this->clean_group) {
+            return 'Group';
+        }
+
+        $section = GroupParser::aliasSectionType($section);
+
+        if ($section <> $this->clean_group) {
+            return $section;
+        }
+
+        return null;
     }
 
     /**
@@ -133,45 +182,21 @@ class CompassRecord extends Entity
      */
     protected function _getCleanSection()
     {
-        if (empty($this->location)) {
+        if (empty($this->clean_section_type) || empty($this->location)) {
             return null;
         }
 
-        $groupArr = explode('@', $this->location);
+        $section = $this->parseSection();
 
-        if (!empty($groupArr[1])) {
-            $group = $groupArr[1];
-        } else {
-            $group = $groupArr[0];
-        }
-        $group = trim($group);
-
-        $sectionArr = explode('@', $this->location);
-        $section = $sectionArr[0];
-        $section = trim($section);
-
-        $entityMap = [
-            'Hertfordshire' => 'County',
-            'Bedfordshire' => 'County',
-            'Letchworth And Baldock' => 'District',
-            'UK Scout Network' => 'Network',
-            'Derbyshire' => 'County',
-            'Scout Active Support Unit' => 'SAS',
-        ];
-
-        if (key_exists($group, $entityMap)) {
-            return $entityMap[$group];
+        if ($section == $this->clean_group) {
+            return $this->clean_group . ' Group';
         }
 
-        if ($section <> $group) {
-            return $section;
+        if (preg_match('/(' . $this->clean_section_type . ')/', $this->clean_group)) {
+            return $this->clean_group;
         }
 
-        if ($section == $group) {
-            return 'Group';
-        }
-
-        return null;
+        return $this->clean_group . ' ' . $section;
     }
 
     /**
@@ -204,7 +229,15 @@ class CompassRecord extends Entity
         return TextSafe::properName($this->surname);
     }
 
-    protected $_virtual = ['provisional', 'clean_role', 'clean_group', 'clean_section', 'first_name', 'last_name'];
+    protected $_virtual = [
+        'provisional',
+        'clean_role',
+        'clean_group',
+        'clean_section',
+        'clean_section_type',
+        'first_name',
+        'last_name',
+    ];
 
     public const FIELD_ID = 'id';
     public const FIELD_DOCUMENT_VERSION_ID = 'document_version_id';
@@ -229,6 +262,7 @@ class CompassRecord extends Entity
     public const FIELD_CLEAN_ROLE = 'clean_role';
     public const FIELD_CLEAN_GROUP = 'clean_group';
     public const FIELD_CLEAN_SECTION = 'clean_section';
+    public const FIELD_CLEAN_SECTION_TYPE = 'clean_section_type';
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
 }

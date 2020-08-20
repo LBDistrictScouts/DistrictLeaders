@@ -1,0 +1,10 @@
+SectionEntityMap:
+  Hertfordshire: County
+  Bedfordshire: County
+  Letchworth And Baldock: District
+  Derbyshire: County
+
+SectionSpecificMap:
+  Knights: Cubs
+  Templars: Cubs
+  Wednesday: Beavers
