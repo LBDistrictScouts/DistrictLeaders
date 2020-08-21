@@ -116,7 +116,7 @@ class UserStatesTable extends Table
      * @param array|null $stateData The Data Array to be processed
      * @return \App\Model\Entity\UserState
      */
-    public function evaluationSignatures(UserState $state, ?array $stateData = null): UserState
+    public function evaluationSignatures(UserState $state, ?array $stateData = []): UserState
     {
         $state->set(UserState::FIELD_SIGNATURE, $this->evaluateSignature($stateData));
 
@@ -127,12 +127,12 @@ class UserStatesTable extends Table
      * @param array|null $stateData The Data Array to be processed
      * @return int
      */
-    public function evaluateSignature(?array $stateData = null): int
+    public function evaluateSignature(?array $stateData = []): int
     {
         $prefix = UserState::class . '::';
         $signature = 0;
 
-        if (is_null($stateData)) {
+        if (empty($stateData)) {
             return $signature;
         }
 

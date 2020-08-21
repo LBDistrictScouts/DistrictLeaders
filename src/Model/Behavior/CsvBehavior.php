@@ -188,11 +188,11 @@ class CsvBehavior extends Behavior
     }
 
     /**
-     * @param callable $callback Callback Function
+     * @param string $callback Event Callback Name
      * @param array $parameters Parameters for Callback Event
      * @return bool
      */
-    protected function eventTrigger(callable $callback, array $parameters): bool
+    protected function eventTrigger(string $callback, array $parameters): bool
     {
         if (method_exists($this->_table, $callback)) {
             return call_user_func_array([$this->_table, $callback], $parameters);

@@ -76,7 +76,7 @@ class UserStatesFixture extends TestFixture
                 'user_state' => 'Monkey User',
                 'active' => false,
                 'expired' => false,
-                'precedence_order' => 7,
+                'precedence_order' => 8,
                 'signature' => 0,
             ],
         ];

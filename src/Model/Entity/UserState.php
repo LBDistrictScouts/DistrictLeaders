@@ -45,6 +45,7 @@ class UserState extends Entity
     public const FIELD_PRECEDENCE_ORDER = 'precedence_order';
     public const FIELD_SIGNATURE = 'signature';
 
+    public const EVALUATE_BLANK = 0;
     public const EVALUATE_USERNAME = 0b1;
     public const EVALUATE_LOGIN_EVER = 0b10;
     public const EVALUATE_LOGIN_QUARTER = 0b100;

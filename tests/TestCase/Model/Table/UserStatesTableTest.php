@@ -227,9 +227,9 @@ class UserStatesTableTest extends TestCase
      */
     public function testInstallBaseUserStateSignatures(): void
     {
-        $this->UserStates->installBaseUserStates();
-
+        $result = $this->UserStates->installBaseUserStates();
         $values = $this->getBaseValues($this->UserStates);
+        TestCase::assertEquals(count($values), $result);
 
         foreach ($values as $baseState) {
             /** @var UserState $installedState */
@@ -240,6 +240,11 @@ class UserStatesTableTest extends TestCase
 
             $expectedSignature = $this->UserStates->evaluateSignature($baseState['required']);
 
+            TestCase::assertInstanceOf(
+                UserState::class,
+                $installedState,
+                __('State: {0} not installed.', $baseState[UserState::FIELD_USER_STATE])
+            );
             TestCase::assertEquals($expectedSignature, $installedState->signature);
         }
     }

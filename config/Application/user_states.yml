@@ -52,3 +52,4 @@ UserStates:
     expired: false
     precedence_order: 7
     required:
+      - EVALUATE_BLANK

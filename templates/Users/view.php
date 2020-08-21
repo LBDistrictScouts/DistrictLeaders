@@ -37,9 +37,9 @@ $authUser = $this->getRequest()->getAttribute('identity');
                     <table class="table">
                         <thead>
                         <tr>
-                            <th><?= __('Role Type') ?></th>
-                            <th><?= __('Section') ?></th>
-                            <th><?= __('Email') ?></th>
+                            <th scope="col"><?= __('Role Type') ?></th>
+                            <th scope="col"><?= __('Section') ?></th>
+                            <th scope="col"><?= __('Email') ?></th>
                             <th scope="col" class="actions"><?= __('Actions') ?></th>
                         </tr>
                         </thead>
@@ -93,20 +93,38 @@ $authUser = $this->getRequest()->getAttribute('identity');
                 $ownUser = $user->id === $this->Identity->getId();
                 $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
                 $canCreateUCs =  $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
+                $canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
             ?>
             <div class="col-sm-12 col-lg-6">
                 <?php if (!empty($user->contact_emails)) : ?>
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                         <div class="card-body">
                             <h5>Email Addresses</h5>
-                            <?php foreach ($user->contact_emails as $contactEmail) : ?>
-                                <?php if ($contactEmail->user_contact_type->user_contact_type == 'Email') : ?>
-                                    <?php
-                                    $isPrimary = $contactEmail->contact_field == $user->email ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle');
-                                    $directoryLink = ' ( ' . $this->Html->link($this->Icon->iconHtml('book-open') . ' Directory Record', ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['escape' => false]) . ' )'; ?>
-                                    <p class="card-text"><?= $isPrimary ?> <?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?><?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) && $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $directoryLink : '' ?></p>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"><?= __('Primary') ?></th>
+                                        <th scope="col"><?= __('Email') ?></th>
+                                        <th scope="col" class="actions"><?= __('Actions') ?></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($user->contact_emails as $contactEmail) : ?>
+                                        <?php $isPrimary = (bool)($contactEmail->contact_field == $user->email); ?>
+                                        <tr>
+                                            <td><?= $isPrimary ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle') ?></td>
+                                            <td><?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?></td>
+                                            <td>
+                                                <?= $canMakePrimary && !$isPrimary && $contactEmail->validated ? $this->Form->postLink($this->Icon->iconHtml('check-circle'), ['controller' => 'UserContacts', 'action' => 'primary', $contactEmail->id], ['confirm' => __('Are you sure you want to make {0} the primary email for {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Make Primary'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                <?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) && $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $this->Html->link($this->Icon->iconHtml('book-open'), ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['title' => 'Directory Record', 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                <?= ( $this->Identity->buildAndCheckCapability('DELETE', 'UserContacts') || $editOwn ) && $user->all_email_count > 1 ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $contactEmail->id], ['confirm' => __('Are you sure you want to delete email {0} for user {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Delete User Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
                             <?php if ($canCreateUCs) : ?>
                                 <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
                             <?php endif; ?>

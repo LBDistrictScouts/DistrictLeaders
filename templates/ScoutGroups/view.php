@@ -49,9 +49,9 @@
                                         <td><?= !empty($section->meeting_start_time) ? h($section->meeting_start_time) . ' - ' . h($section->meeting_end_time) : '' ?></td>
                                         <td>info@email.com</td>
                                         <td class="actions">
-                                            <?= $this->Identity->checkCapability('VIEW_SECTION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            <?= $this->Identity->checkCapability('UPDATE_SECTION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            <?= $this->Identity->checkCapability('DELETE_SECTION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $section->id], ['confirm' => __('Are you sure you want to delete # {0}?', $section->id), 'title' => __('Delete Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'Sections') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Sections', 'action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Sections') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Sections', 'action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'Sections') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Sections', 'action' => 'delete', $section->id], ['confirm' => __('Are you sure you want to delete # {0}?', $section->id), 'title' => __('Delete Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
