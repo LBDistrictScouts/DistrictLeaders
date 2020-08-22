@@ -29,6 +29,9 @@ env:
 
 jobs:
   include:
+    - name: "PHP 7.2"
+      php: 7.2
+
     - name: "PHP 7.3"
       php: 7.3
 
@@ -53,10 +56,11 @@ before_install:
 
 install:
   - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
-  - if [[ $DEFAULT = 1 ]]; then composer install; fi
+  - composer install --no-scripts
   - composer validate
 
 before_script:
+  - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
