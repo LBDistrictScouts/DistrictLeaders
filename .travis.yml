@@ -58,10 +58,10 @@ before_install:
 install:
   - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
   - composer install --no-scripts
-  - composer validate
 
 before_script:
   - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
+  - if [[ $DEFAULT = 1 ]]; then composer validate; fi
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
