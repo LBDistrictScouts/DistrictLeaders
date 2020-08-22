@@ -26,6 +26,7 @@ env:
     - DB=postgres
     - DEFAULT=1
     - ASYNC=0
+    - PGPORT=5433
 
 jobs:
   include:
@@ -41,7 +42,11 @@ jobs:
     - name: "PHP 7.4 Focal"
       php: 7.4
       dist: focal
-      postgresql: 12.2
+      postgresql: "12.2"
+      apt:
+        packages:
+          - postgresql-12.2
+          - postgresql-client-12.2
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
