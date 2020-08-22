@@ -21,13 +21,6 @@ functionalAreas:
     capability:
       index: LOGIN
 
-iconStandards:
-  Camps: campground
-  Directory: address-card
-  Documents: file-alt
-  Articles: newspaper
-  Users: users
-
 searchConfigured:
   Users: true
   Documents: true

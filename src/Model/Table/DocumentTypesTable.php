@@ -21,10 +21,11 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\DocumentType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class DocumentTypesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -63,6 +64,11 @@ class DocumentTypesTable extends Table
             ->requirePresence(DocumentType::FIELD_DOCUMENT_TYPE)
             ->add(DocumentType::FIELD_DOCUMENT_TYPE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->scalar(DocumentType::FIELD_SPECIAL_CAPABILITY)
+            ->maxLength(DocumentType::FIELD_SPECIAL_CAPABILITY, 64)
+            ->allowEmptyString(DocumentType::FIELD_SPECIAL_CAPABILITY);
+
         return $validator;
     }
 
@@ -78,5 +84,15 @@ class DocumentTypesTable extends Table
         $rules->add($rules->isUnique([DocumentType::FIELD_DOCUMENT_TYPE]));
 
         return $rules;
+    }
+
+    /**
+     * install the application status config
+     *
+     * @return int
+     */
+    public function installBaseDocumentTypes()
+    {
+        return $this->installBase($this);
     }
 }

@@ -26,8 +26,8 @@ use League\Flysystem\FileNotFoundException;
  * @method \App\Model\Entity\DocumentEdition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class DocumentEditionsTable extends Table
 {
@@ -90,7 +90,7 @@ class DocumentEditionsTable extends Table
         $validator
             ->scalar(DocumentEdition::FIELD_MD5_HASH)
             ->requirePresence(DocumentEdition::FIELD_MD5_HASH, false)
-            ->maxLength(DocumentEdition::FIELD_MD5_HASH, 32)
+            ->maxLength(DocumentEdition::FIELD_MD5_HASH, 40)
             ->allowEmptyString(DocumentEdition::FIELD_MD5_HASH);
 
         $validator

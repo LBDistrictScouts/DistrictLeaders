@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Test\TestCase\Controller\API\V1;
+namespace App\Test\TestCase\Controller\Api\V1;
 
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\API\V1\SectionsController Test Case
+ * App\Controller\Api\V1\SectionsController Test Case
  *
- * @uses \App\Controller\API\V1\SectionsController
+ * @uses \App\Controller\Api\V1\SectionsController
  */
 class SectionsControllerTest extends TestCase
 {

@@ -127,4 +127,34 @@ class SectionsTable extends Table
 
         return (bool)$this->save($section);
     }
+
+    /**
+     * @param string $section Section String
+     * @param string $group Group String
+     * @param string $sectionType The Section Type for Context
+     * @return \App\Model\Entity\Section
+     */
+    public function findOrMake(string $section, string $group, string $sectionType): Section
+    {
+        $query = $this->find()->where([Section::FIELD_SECTION => $section]);
+
+        if ($query->count() == 1) {
+            $sectionEntity = $query->first();
+            if ($sectionEntity instanceof Section) {
+                return $sectionEntity;
+            }
+        }
+
+        $scoutGroup = $this->ScoutGroups->find()
+            ->where([ScoutGroup::FIELD_GROUP_ALIAS => $group])
+            ->firstOrFail();
+
+        $sectionTypeEntity = $this->SectionTypes->findOrCreate([SectionType::FIELD_SECTION_TYPE => $sectionType]);
+
+        return $this->findOrCreate([
+            Section::FIELD_SECTION => $section,
+            Section::FIELD_SCOUT_GROUP_ID => $scoutGroup->id,
+            Section::FIELD_SECTION_TYPE_ID => $sectionTypeEntity->id,
+        ]);
+    }
 }

@@ -30,14 +30,14 @@ trait ModelTestTrait
     /**
      * @param \Cake\Datasource\EntityInterface $entity
      * @param string $field The Field expected to error
-     * @param string $message
-     * @param string $errorType
+     * @param string $message The expected error message output
+     * @param string $errorType the expected error type
      * @return void
      */
     private function checkError($entity, $field, $errorType, $message = null)
     {
         if (!key_exists($errorType, $this->defaultErrorMessages)) {
-            TestCase::assertTrue(false);
+            TestCase::assertTrue(false, 'No Error type exists for this field: ' . $field);
         }
 
         if (
@@ -52,7 +52,11 @@ trait ModelTestTrait
             $message = $this->defaultErrorMessages[$errorType];
         }
 
-        TestCase::assertSame($message, $entity->getError($field)[$errorType]);
+        TestCase::assertSame(
+            $message,
+            $entity->getError($field)[$errorType],
+            'Error Type Message doesn\'t match for field: ' . $field
+        );
     }
 
     /**
@@ -134,7 +138,11 @@ trait ModelTestTrait
             $emptyArray = call_user_func($good);
             $emptyArray[$empty] = '';
             $new = $table->newEntity($emptyArray, ['validate' => $validator]);
-            TestCase::assertInstanceOf($table->getEntityClass(), $table->save($new));
+            TestCase::assertInstanceOf(
+                $table->getEntityClass(),
+                $table->save($new),
+                $empty . ' Field was not valid as empty.'
+            );
         }
     }
 
@@ -292,16 +300,20 @@ trait ModelTestTrait
      */
     protected function validateInstallBase($table)
     {
-        $before = $table->find('all')->count();
+        $before = $table->find('all');
+        $beforeKeys = array_keys($before->toArray());
 
         $installAlias = 'installBase' . $table->getRegistryAlias();
         $installed = call_user_func([$table, $installAlias]);
 
-        TestCase::assertNotEquals($before, $installed);
-        TestCase::assertNotEquals(0, $installed);
+        TestCase::assertGreaterThan(0, $installed);
 
-        $after = $table->find('all')->count();
-        TestCase::assertTrue($after >= $before);
+        $after = $table->find('all');
+        TestCase::assertGreaterThanOrEqual($before->count(), $after->count());
+        TestCase::assertGreaterThanOrEqual($installed, $after->count());
+
+        $new = $after->whereNotInList($table->getPrimaryKey(), $beforeKeys);
+        TestCase::assertGreaterThan(0, $new->count());
     }
 
     /**

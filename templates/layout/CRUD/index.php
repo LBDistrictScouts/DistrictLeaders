@@ -62,7 +62,7 @@ $entity = $this->fetch('entity');
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-striped">
                         <?= $this->fetch('content') ?>
                     </table>
                 </div>

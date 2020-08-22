@@ -79,7 +79,6 @@ try {
     Configure::load('Application' . DS . 'capabilities', 'yaml', false);
     Configure::load('Application' . DS . 'daily_crons', 'yaml', false);
     Configure::load('Application' . DS . 'settings', 'yaml', false);
-    Configure::load('Application' . DS . 'webservices', 'yaml', false);
 } catch (Exception $e) {
     exit($e->getMessage() . "\n");
 }
@@ -150,7 +149,6 @@ if (!Configure::read('App.fullBaseUrl')) {
 
 Cache::setConfig(Configure::consume('Cache'));
 ConnectionManager::setConfig(Configure::consume('Datasources'));
-ConnectionManager::setConfig(Configure::consume('Webservices'));
 TransportFactory::setConfig(Configure::consume('EmailTransport'));
 Mailer::setConfig(Configure::consume('Email'));
 Log::setConfig(Configure::consume('Log'));

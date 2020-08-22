@@ -11,6 +11,7 @@ use Cake\TestSuite\TestCase;
  * Class InstallBaseCommandTest
  *
  * @package App\Test\TestCase\Command
+ * @uses \App\Command\ImportCompassRecordsCommand
  * @uses \App\Command\InstallBaseCommand
  */
 class InstallBaseCommandTest extends TestCase

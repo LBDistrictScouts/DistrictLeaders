@@ -24,28 +24,47 @@
     <div class="col">
         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
             <div class="card-body">
-                <h5 style="font-family: 'Nunito Sans', sans-serif;">Version <?= $this->Number->format($documentVersions->version_number) ?></h5>
-                <br />
+                <div class="row">
+                    <div class="col">
+                        <h5 style="font-family: 'Nunito Sans', sans-serif;">Version <?= $this->Number->format($documentVersions->version_number) ?></h5>
+                    </div>
+                    <div class="col align-right">
+                        <div class="d-inline">
+                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                            <div class="dropdown-menu" role="menu">
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') ? $this->Form->postLink('Parse Compass Upload', ['controller' => 'DocumentVersions', 'action' => 'compass', $documentVersions->id], ['confirm' => __('Are you sure you want to parse upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Parse Compass'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <a class="dropdown-item" role="presentation" href="#">First Item</a>
+                                <a class="dropdown-item" role="presentation" href="#">Second Item</a>
+                                <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <h6 class="text-muted card-subtitle mb-2" style="font-family: 'Nunito Sans', sans-serif;"><?= $this->Time->format($documentVersions->created, 'dd-MMM-yyyy HH:mm') ?></h6>
                 <div class="row">
-                    <div class="col-12 col-md-12 col-lg-6 col-xl-6"><img class="img-fluid" src="/img/bg-showcase-2.jpg"></div>
+                    <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+                        <img class="img-fluid" src="/img/bg-showcase-2.jpg">
+                    </div>
                     <div class="col">
-                        <div class="row text-center">
-                            <?php foreach ($documentVersions->document_editions as $documentEditions) : ?>
-                                <div class="col-auto"><i class="fal fa-file-pdf fa-5x"></i>
-                                    <p><?= $this->Number->toReadableSize($documentEditions->size) ?></p>
-                                </div>
-                            <?php endforeach; ?>
-
-                            <div class="col-auto"><i class="fal fa-file-word fa-5x"></i>
-                                <p>47GB</p>
-                            </div>
-                            <div class="col-auto"><i class="fab fa-markdown fa-5x"></i>
-                                <p>12TB</p>
-                            </div>
-                            <div class="col-auto"><i class="fal fa-file-image fa-5x"></i>
-                                <p>19KB</p>
-                            </div>
+                        <div class="table-responsive table-hover">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">File Type</th>
+                                        <th scope="col">Size</th>
+                                        <th scope="col">Created</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($documentVersions->document_editions as $documentEditions) : ?>
+                                    <tr>
+                                        <td><i class="fal fa-file-csv fa-3x"></i></td>
+                                        <td><?= $this->Number->toReadableSize($documentEditions->size) ?></td>
+                                        <td><?= $this->Time->format($documentEditions->created, 'dd-MMM-yyyy HH:mm') ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

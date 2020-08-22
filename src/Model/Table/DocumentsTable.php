@@ -9,6 +9,7 @@ use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Log\Log;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -119,13 +120,13 @@ class DocumentsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     * @param \Cake\Datasource\EntityInterface $documentEntity The Document Entity
+     * @param \App\Model\Entity\Document $document The Document Entity
      * @param string $fileSystem The configured Filesystem Name
      * @return \Cake\Datasource\EntityInterface|void
      */
     public function uploadDocument(
         array $postData,
-        EntityInterface $documentEntity,
+        ?Document $document = null,
         string $fileSystem = 'default'
     ): ?EntityInterface {
         if (!key_exists('uploadedFile', $postData)) {
@@ -140,51 +141,52 @@ class DocumentsTable extends Table
         } catch (FileNotFoundException $e) {
             return null;
         }
-        debug($fileSystem);
-        debug($fileEntity);
-        debug($postData);
+
+        if (is_null($document)) {
+            $document = $this->newEmptyEntity();
+        }
 
         $mime = $fileEntity->get(FileType::FIELD_MIME);
-        debug($mime);
 
         try {
             $fileType = $this->DocumentVersions->DocumentEditions->FileTypes->find()->where([
                 FileType::FIELD_MIME => $mime,
             ])->firstOrFail();
         } catch (RecordNotFoundException $exception) {
+            Log::error('File with mime type: ' . $mime . ' failed upload.');
+
             return null;
         }
 
         $documentName = explode('.', $fileEntity->get(DocumentEdition::FIELD_FILENAME))[0];
-        $documentName = Inflector::humanize($documentName);
+        $documentName = Inflector::humanize(Inflector::underscore($documentName));
 
-        $documentData = [
+        $document = $this->patchEntity($document, [
             Document::FIELD_DOCUMENT => $documentName,
             Document::FIELD_DOCUMENT_TYPE_ID => $postData[Document::FIELD_DOCUMENT_TYPE_ID],
-            Document::FIELD_DOCUMENT_VERSIONS => [
-                [
-                    DocumentVersion::FIELD_VERSION_NUMBER => 1,
-                    DocumentVersion::FIELD_DOCUMENT_EDITIONS => [
-                        [
-                            DocumentEdition::FIELD_FILENAME => $fileEntity->get(DocumentEdition::FIELD_FILENAME),
-                            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
-                            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
-                            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
-                            DocumentEdition::FIELD_SIZE => $fileEntity->get(DocumentEdition::FIELD_SIZE),
-                        ],
-                    ],
-                ],
-            ],
-        ];
-
-        $document = $this->patchEntity($documentEntity, $documentData, [
-            'associated' => [
-                'DocumentVersions.DocumentEditions',
-            ],
+        ]);
+        $documentVersion = $this->DocumentVersions->newEntity([
+            DocumentVersion::FIELD_VERSION_NUMBER => 1,
+        ]);
+        $documentEdition = $this->DocumentVersions->DocumentEditions->newEntity([
+            DocumentEdition::FIELD_FILENAME => $fileEntity->get(DocumentEdition::FIELD_FILENAME),
+            DocumentEdition::FIELD_MD5_HASH => $fileEntity->get('hash'),
+            DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->get(FileType::FIELD_ID),
+            DocumentEdition::FIELD_FILE_PATH => $fileEntity->get('path'),
+            DocumentEdition::FIELD_SIZE => $fileEntity->get(DocumentEdition::FIELD_SIZE),
         ]);
 
-        debug($document);
+        $document = $this->save($document);
+        $documentVersion->set(DocumentVersion::FIELD_DOCUMENT_ID, $document->get(Document::FIELD_ID));
 
-        return $this->save($document);
+        $documentVersion = $this->DocumentVersions->save($documentVersion);
+        $documentEdition->set(
+            DocumentEdition::FIELD_DOCUMENT_VERSION_ID,
+            $documentVersion->get(DocumentVersion::FIELD_ID)
+        );
+
+        $this->DocumentVersions->DocumentEditions->save($documentEdition);
+
+        return $this->get($document->id, ['contain' => 'DocumentVersions.DocumentEditions']);
     }
 }

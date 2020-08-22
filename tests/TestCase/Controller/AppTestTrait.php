@@ -130,11 +130,11 @@ trait AppTestTrait
      * @param array $validData Valid data for the Entity.
      * @param array $expectedRedirect Expected Redirect URL.
      */
-    protected function tryFlashPost($url, $validData, $expectedRedirect)
+    protected function tryFlashPost($url, $validData, $expectedRedirect, $expectedMessage = null)
     {
         $this->tryPost($url, $validData, $expectedRedirect);
 
-//        $this->assertFlashElement('flash/success');
+        $this->assertFlashElement('flash/success');
 
         $verb = 'saved';
         if ($url['action'] == 'delete') {
@@ -142,7 +142,7 @@ trait AppTestTrait
         }
 
         $entity = strtolower(Inflector::singularize(Inflector::humanize(Inflector::underscore($url['controller']))));
-        $successMessage = 'The ' . $entity . ' has been ' . $verb . '.';
+        $successMessage = $expectedMessage ?? 'The ' . $entity . ' has been ' . $verb . '.';
         $this->assertFlashMessage($successMessage);
     }
 
@@ -154,19 +154,23 @@ trait AppTestTrait
      * @param int $newEntityId Id for next Entity.
      * @param array $expectedRedirect Array to Redirect to.
      */
-    protected function tryAddPost($controller, $validData, $newEntityId, $expectedRedirect = null)
-    {
+    protected function tryAddPost(
+        string $controller,
+        array $validData,
+        int $newEntityId,
+        ?array $expectedRedirect = null,
+        ?array $expectedMessage = null
+    ) {
         $url = [
             'controller' => $controller,
             'action' => 'add',
         ];
-        if (is_null($expectedRedirect)) {
-            $expectedRedirect = [
-                'controller' => $controller,
-                'action' => 'view',
-                $newEntityId,
-            ];
-        }
+        $expectedRedirect = $this->getRedirect($expectedRedirect, 'add', [
+            'controller' => $controller,
+            'action' => 'view',
+            $newEntityId,
+        ]);
+        $message = $this->getMessage($expectedMessage, 'add', null);
 
         $this->tryFlashPost($url, $validData, $expectedRedirect);
     }
@@ -200,22 +204,61 @@ trait AppTestTrait
      * @param string $controller Name of the Controller being Interrogated.
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
-     * @param array $expectedRedirect Array for Expected for Add to Redirect to.
+     * @param array|null $expectedRedirects Redirect Array or Array of Redirects with Action Keys.
+     * @param array|null $expectedMessages Array of Expected Flash Messages
      */
-    protected function tryDeletePost($controller, $validData, $newEntityId, $expectedRedirect = null)
-    {
-        $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirect);
+    protected function tryDeletePost(
+        string $controller,
+        array $validData,
+        int $newEntityId,
+        ?array $expectedRedirects = null,
+        ?array $expectedMessages = null
+    ): void {
+        $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirects, $expectedMessages);
 
         $url = [
             'controller' => $controller,
             'action' => 'delete',
             $newEntityId,
         ];
-        $expectedRedirect = [
-            'controller' => $controller,
-            'action' => 'index',
-        ];
 
-        $this->tryFlashPost($url, $validData, $expectedRedirect);
+        $redir = $this->getRedirect($expectedRedirects, 'delete', ['controller' => $controller, 'action' => 'index']);
+        $message = $this->getMessage($expectedMessages, 'delete', null);
+
+        $this->tryFlashPost($url, $validData, $redir, $message);
+    }
+
+    /**
+     * @param array|null $redirectArray The Redirect Array for Parsing
+     * @param string $action The Action for Processing
+     * @param array|null $default The Default Return if array not set
+     * @return array|null
+     */
+    private function getRedirect(?array $redirectArray, string $action, ?array $default): ?array
+    {
+        if (is_null($redirectArray)) {
+            return $default;
+        }
+
+        if (key_exists('action', $redirectArray)) {
+            return $redirectArray;
+        }
+
+        return $redirectArray[$action];
+    }
+
+    /**
+     * @param array|null $redirectArray The Redirect Array for Parsing
+     * @param string $action The Action for Processing
+     * @param string|null $default The Default Return if array not set
+     * @return string|null
+     */
+    private function getMessage(?array $redirectArray, string $action, ?string $default): ?string
+    {
+        if (is_null($redirectArray)) {
+            return $default;
+        }
+
+        return $redirectArray[$action];
     }
 }

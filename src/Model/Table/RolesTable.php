@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Role;
+use App\Model\Entity\RoleStatus;
 use App\Model\Entity\RoleType;
 use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query;
@@ -218,5 +220,47 @@ class RolesTable extends Table
         }
 
         return true;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User for Role Creation
+     * @param string $section Section for merge
+     * @param string $group Group for Section Context
+     * @param string $roleType RoleType for merge
+     * @param string $sectionType The Section Type
+     * @param string|null $status The Role Status
+     * @param \App\Model\Entity\UserContact|null $userContact The User Contact entity
+     * @return bool
+     */
+    public function mergeRole(
+        User $user,
+        string $section,
+        string $group,
+        string $roleType,
+        string $sectionType,
+        ?string $status = null,
+        ?UserContact $userContact = null
+    ): bool {
+        $sectionEntity = $this->Sections->findOrMake($section, $group, $sectionType);
+        $roleTypeEntity = $this->RoleTypes->findOrMake($roleType, $sectionType);
+
+        if (!empty($status)) {
+            $status = $this->RoleStatuses->findOrCreate([RoleStatus::FIELD_ROLE_STATUS => $status]);
+        } else {
+            $status = $this->RoleStatuses->find()->first();
+        }
+
+        $newRole = [
+            Role::FIELD_USER_ID => $user->id,
+            Role::FIELD_ROLE_STATUS_ID => $status->id,
+            Role::FIELD_SECTION_ID => $sectionEntity->id,
+            Role::FIELD_ROLE_TYPE_ID => $roleTypeEntity->id,
+        ];
+
+        if (!empty($userContact)) {
+            $newRole[Role::FIELD_USER_CONTACT_ID] = $userContact->id;
+        }
+
+        return (bool)($this->findOrCreate($newRole) instanceof Role);
     }
 }

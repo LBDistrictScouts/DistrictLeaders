@@ -32,6 +32,7 @@ class FilterComponent extends Component
         $filterArray = $associatedTable->find('list')->toArray();
         $urlFilters = [];
         foreach ($queryParams as $param => $value) {
+            $param = urldecode($param);
             if (in_array($param, $filterArray)) {
                 $urlFilters[$param] = $value;
             }

@@ -144,7 +144,7 @@ class ScoutGroupsTable extends Table
      * @param string $emailAddress The Email Address to be verified
      * @return bool
      */
-    public function domainVerify($emailAddress)
+    public function domainVerify(string $emailAddress): bool
     {
         $domains = $this->getDomains();
         if (strpos($emailAddress, '@') !== false) {

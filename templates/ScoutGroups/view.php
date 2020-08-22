@@ -49,9 +49,9 @@
                                         <td><?= !empty($section->meeting_start_time) ? h($section->meeting_start_time) . ' - ' . h($section->meeting_end_time) : '' ?></td>
                                         <td>info@email.com</td>
                                         <td class="actions">
-                                            <?= $this->Identity->checkCapability('VIEW_SECTION') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            <?= $this->Identity->checkCapability('UPDATE_SECTION') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            <?= $this->Identity->checkCapability('DELETE_SECTION') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $section->id], ['confirm' => __('Are you sure you want to delete # {0}?', $section->id), 'title' => __('Delete Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('VIEW', 'Sections') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Sections', 'action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Sections') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Sections', 'action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->buildAndCheckCapability('DELETE', 'Sections') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Sections', 'action' => 'delete', $section->id], ['confirm' => __('Are you sure you want to delete # {0}?', $section->id), 'title' => __('Delete Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -111,9 +111,10 @@
                                     <thead>
                                     <tr>
                                         <th scope="col">Leader</th>
+                                        <th scope="col">Actions</th>
                                         <th scope="col">Leader Contact</th>
                                         <th scope="col">Section</th>
-                                        <th scope="col">Actions</th>
+                                        <th scope="col">Role Type</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -121,14 +122,14 @@
                                             <?php foreach ($section->roles as $role) : ?>
                                                 <tr>
                                                     <td><?= $role->user->full_name ?></td>
-                                                    <td><?= $this->Text->autoLinkEmails($role->has('user_contact') ? $role->user_contact->contact_field : $role->user->email) ?></td>
-                                                    <td><?= $section->section ?></td>
-                                                    <td><?= $role->has($role::FIELD_ROLE_TYPE) ? $role->role_type->role_type : '' ?></td>
                                                     <td class="actions">
                                                         <?= $this->Identity->checkCapability('VIEW_ROLE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->checkCapability('UPDATE_ROLE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->checkCapability('DELETE_ROLE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                     </td>
+                                                    <td><?= $this->Text->autoLinkEmails($role->has('user_contact') ? $role->user_contact->contact_field : $role->user->email) ?></td>
+                                                    <td><?= $section->section ?></td>
+                                                    <td><?= $role->has($role::FIELD_ROLE_TYPE) ? $role->role_type->role_type : '' ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php endforeach; ?>

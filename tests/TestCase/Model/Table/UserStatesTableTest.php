@@ -227,9 +227,9 @@ class UserStatesTableTest extends TestCase
      */
     public function testInstallBaseUserStateSignatures(): void
     {
-        $this->UserStates->installBaseUserStates();
-
+        $result = $this->UserStates->installBaseUserStates();
         $values = $this->getBaseValues($this->UserStates);
+        TestCase::assertEquals(count($values), $result);
 
         foreach ($values as $baseState) {
             /** @var UserState $installedState */
@@ -240,6 +240,11 @@ class UserStatesTableTest extends TestCase
 
             $expectedSignature = $this->UserStates->evaluateSignature($baseState['required']);
 
+            TestCase::assertInstanceOf(
+                UserState::class,
+                $installedState,
+                __('State: {0} not installed.', $baseState[UserState::FIELD_USER_STATE])
+            );
             TestCase::assertEquals($expectedSignature, $installedState->signature);
         }
     }
@@ -256,7 +261,7 @@ class UserStatesTableTest extends TestCase
 
         while ($pos <= 10) {
             try {
-                $randKey = random_int(0, $binMax);
+                $randKey = random_int(0, $binMax - 1);
             } catch (\Exception $e) {
                 $randKey = 5;
             }
@@ -269,7 +274,9 @@ class UserStatesTableTest extends TestCase
                 }
             }
 
-            $return[$pos] = [
+            $index = 'Random Key Value ' . $randKey;
+
+            $return[$index] = [
                 $applicableCases,
                 $randKey,
             ];
@@ -296,48 +303,18 @@ class UserStatesTableTest extends TestCase
     }
 
     /**
-     * @return array
-     */
-    public function provideEvaluateSignature(): array
-    {
-        $caseCount = count($this->cases);
-        $binMax = 2 ** $caseCount;
-        $pos = 0;
-        $return = [];
-
-        while ($pos < $binMax) {
-            $applicableCases = [];
-
-            foreach ($this->cases as $case) {
-                $binValue = constant(UserState::class . '::' . $case);
-                if ($pos & $binValue) {
-                    array_push($applicableCases, $case);
-                }
-            }
-
-            $return[$pos] = [
-                $applicableCases,
-                $pos,
-            ];
-            $pos++;
-        }
-
-        return $return;
-    }
-
-    /**
      * @return void
      */
     public function testEvaluateSignatureProvider(): void
     {
-        $result = $this->provideEvaluateSignature();
+        $result = $this->provideRandomSignature();
         TestCase::assertIsArray($result);
     }
 
     /**
      * Test evaluationSignatures method
      *
-     * @dataProvider provideEvaluateSignature
+     * @dataProvider provideRandomSignature
      * @param array $applicableCases Array of Boolean Constants
      * @param int $expectedSignature Signature Expected to be Derived
      * @return void
@@ -470,7 +447,7 @@ class UserStatesTableTest extends TestCase
             ],
             'Draft User' => [
                 0,
-                6,
+                7,
             ],
         ];
     }

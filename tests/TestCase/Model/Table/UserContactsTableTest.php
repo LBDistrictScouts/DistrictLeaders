@@ -115,6 +115,7 @@ class UserContactsTableTest extends TestCase
             UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
             UserContact::FIELD_VERIFIED => true,
             UserContact::FIELD_DIRECTORY_USER_ID => 1,
+            UserContact::FIELD_VALIDATED => true,
         ];
 
         $this->validateInitialise($expected, $this->UserContacts, 2, $dates);

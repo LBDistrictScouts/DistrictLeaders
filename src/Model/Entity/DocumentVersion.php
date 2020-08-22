@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Document $document
  * @property \App\Model\Entity\DocumentEdition[] $document_editions
+ * @property \App\Model\Entity\CompassRecord[] $compass_records
  */
 class DocumentVersion extends Entity
 {
@@ -47,4 +48,5 @@ class DocumentVersion extends Entity
     public const FIELD_VERSION_NUMBER = 'version_number';
     public const FIELD_DOCUMENT = 'document';
     public const FIELD_DOCUMENT_EDITIONS = 'document_editions';
+    public const FIELD_COMPASS_RECORDS = 'compass_records';
 }

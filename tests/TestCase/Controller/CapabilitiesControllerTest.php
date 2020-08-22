@@ -26,18 +26,25 @@ class CapabilitiesControllerTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.Sections',
+
         'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
-        'app.Sections',
+
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
+
         'app.NotificationTypes',
         'app.Notifications',
     ];
@@ -128,12 +135,15 @@ class CapabilitiesControllerTest extends TestCase
             $this->validEntityData,
             7,
             [
-                'controller' => $this->controller,
-                'action' => 'edit',
-                7,
-                '?' => [
-                    'roleTypes' => 1,
+                'add' => [
+                    'controller' => $this->controller,
+                    'action' => 'edit',
+                    7,
+                    '?' => [
+                        'roleTypes' => 1,
+                    ],
                 ],
+                'delete' => null,
             ]
         );
     }

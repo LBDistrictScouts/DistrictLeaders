@@ -18,7 +18,7 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-borderless table-hover" id="modal-notify-table">
                         <tbody>
                         <?php foreach ($notifications as $notification) : ?>
                             <tr>

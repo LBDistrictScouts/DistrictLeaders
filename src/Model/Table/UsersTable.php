@@ -65,8 +65,8 @@ class UsersTable extends Table
             'case_columns' => [
                 User::FIELD_EMAIL => 'l',
                 User::FIELD_POSTCODE => 'u',
-                User::FIELD_FIRST_NAME => 't',
-                User::FIELD_LAST_NAME => 't',
+                User::FIELD_FIRST_NAME => 'p',
+                User::FIELD_LAST_NAME => 'p',
                 User::FIELD_ADDRESS_LINE_1 => 't',
                 User::FIELD_ADDRESS_LINE_2 => 't',
                 User::FIELD_CITY => 't',
@@ -151,6 +151,46 @@ class UsersTable extends Table
     }
 
     /**
+     * Basic Values required for new user validation rules.
+     *
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
+     */
+    public function validationNew(Validator $validator): Validator
+    {
+        $validator
+            ->scalar(User::FIELD_FIRST_NAME)
+            ->maxLength(User::FIELD_FIRST_NAME, 255)
+            ->requirePresence(User::FIELD_FIRST_NAME, 'create')
+            ->notEmptyString(User::FIELD_FIRST_NAME);
+
+        $validator
+            ->scalar(User::FIELD_LAST_NAME)
+            ->maxLength(User::FIELD_LAST_NAME, 255)
+            ->requirePresence(User::FIELD_LAST_NAME, 'create')
+            ->notEmptyString(User::FIELD_LAST_NAME);
+
+        $validator
+            ->email(User::FIELD_EMAIL)
+            ->add(User::FIELD_EMAIL, 'validDomainEmail', [
+                'rule' => 'isValidDomainEmail',
+                'message' => __('You must use a Scouting Email Address'),
+                'provider' => 'table',
+            ])
+            ->requirePresence(User::FIELD_EMAIL, 'create')
+            ->notEmptyString(User::FIELD_EMAIL)
+            ->add(User::FIELD_EMAIL, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        $validator
+            ->integer(User::FIELD_MEMBERSHIP_NUMBER)
+            ->requirePresence(User::FIELD_MEMBERSHIP_NUMBER, 'create')
+            ->notEmptyString(User::FIELD_MEMBERSHIP_NUMBER, 'A unique, valid TSA membership number is required.')
+            ->add(User::FIELD_MEMBERSHIP_NUMBER, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+
+        return $validator;
+    }
+
+    /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
@@ -158,111 +198,68 @@ class UsersTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
+        $validator = $this->validationNew($validator);
+
         $validator
             ->integer(User::FIELD_ID)
             ->allowEmptyString(User::FIELD_ID, 'An ID must be set.', 'create');
 
         $validator
-            ->scalar('username')
-            ->maxLength('username', 255)
-            ->allowEmptyString('username')
-            ->add('username', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(User::FIELD_USERNAME)
+            ->maxLength(User::FIELD_USERNAME, 255)
+            ->allowEmptyString(User::FIELD_USERNAME)
+            ->add(User::FIELD_USERNAME, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         $validator
-            ->integer('membership_number')
-            ->requirePresence('membership_number', 'create')
-            ->notEmptyString('membership_number', 'A unique, valid TSA membership number is required.')
-            ->add('membership_number', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(User::FIELD_PASSWORD)
+            ->maxLength(User::FIELD_PASSWORD, 255)
+            ->allowEmptyString(User::FIELD_PASSWORD);
 
         $validator
-            ->scalar('first_name')
-            ->maxLength('first_name', 255)
-            ->requirePresence('first_name', 'create')
-            ->notEmptyString('first_name');
+            ->scalar(User::FIELD_ADDRESS_LINE_1)
+            ->maxLength(User::FIELD_ADDRESS_LINE_1, 255)
+            ->allowEmptyString(User::FIELD_ADDRESS_LINE_1);
 
         $validator
-            ->scalar('last_name')
-            ->maxLength('last_name', 255)
-            ->requirePresence('last_name', 'create')
-            ->notEmptyString('last_name');
+            ->scalar(User::FIELD_ADDRESS_LINE_2)
+            ->maxLength(User::FIELD_ADDRESS_LINE_2, 255)
+            ->allowEmptyString(User::FIELD_ADDRESS_LINE_2);
 
         $validator
-            ->email('email')
-            ->add(User::FIELD_EMAIL, 'validDomainEmail', [
-                'rule' => 'isValidDomainEmail',
-                'message' => __('You must use a Scouting Email Address'),
-                'provider' => 'table',
-            ])
-            ->requirePresence('email', 'create')
-            ->notEmptyString('email')
-            ->add('email', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(User::FIELD_CITY)
+            ->maxLength(User::FIELD_CITY, 255)
+            ->allowEmptyString(User::FIELD_CITY);
 
         $validator
-            ->scalar('password')
-            ->maxLength('password', 255)
-            ->allowEmptyString('password');
+            ->scalar(User::FIELD_COUNTY)
+            ->maxLength(User::FIELD_COUNTY, 255)
+            ->allowEmptyString(User::FIELD_COUNTY);
 
         $validator
-            ->scalar('address_line_1')
-            ->maxLength('address_line_1', 255)
-            ->allowEmptyString('address_line_1');
+            ->scalar(User::FIELD_POSTCODE)
+            ->maxLength(User::FIELD_POSTCODE, 9)
+            ->requirePresence(User::FIELD_POSTCODE, 'create')
+            ->notEmptyString(User::FIELD_POSTCODE);
 
         $validator
-            ->scalar('address_line_2')
-            ->maxLength('address_line_2', 255)
-            ->allowEmptyString('address_line_2');
+            ->dateTime(User::FIELD_LAST_LOGIN)
+            ->allowEmptyDateTime(User::FIELD_LAST_LOGIN);
 
         $validator
-            ->scalar('city')
-            ->maxLength('city', 255)
-            ->allowEmptyString('city');
+            ->scalar(User::FIELD_LAST_LOGIN_IP)
+            ->maxLength(User::FIELD_LAST_LOGIN_IP, 255)
+            ->allowEmptyString(User::FIELD_LAST_LOGIN_IP);
 
         $validator
-            ->scalar('county')
-            ->maxLength('county', 255)
-            ->allowEmptyString('county');
+            ->allowEmptyString(User::FIELD_CAPABILITIES);
 
         $validator
-            ->scalar('postcode')
-            ->maxLength('postcode', 9)
-            ->requirePresence('postcode', 'create')
-            ->notEmptyString('postcode');
+            ->boolean(User::FIELD_COGNITO_ENABLED)
+            ->notEmptyString(User::FIELD_COGNITO_ENABLED);
 
         $validator
-            ->dateTime('last_login')
-            ->allowEmptyDateTime('last_login');
-
-        $validator
-            ->scalar('last_login_ip')
-            ->maxLength('last_login_ip', 255)
-            ->allowEmptyString('last_login_ip');
-
-        $validator
-            ->allowEmptyString('capabilities');
-
-        $validator
-            ->boolean('cognito_enabled')
-            ->notEmptyString('cognito_enabled');
-
-        $validator
-            ->integer('all_role_count')
-            ->allowEmptyString('all_role_count');
-
-        $validator
-            ->integer('active_role_count')
-            ->allowEmptyString('active_role_count');
-
-        $validator
-            ->integer('all_email_count')
-            ->allowEmptyString('all_email_count');
-
-        $validator
-            ->integer('all_phone_count')
-            ->allowEmptyString('all_phone_count');
-
-        $validator
-            ->boolean('receive_emails')
-            ->notEmptyString('receive_emails');
+            ->boolean(User::FIELD_RECEIVE_EMAILS)
+            ->notEmptyString(User::FIELD_RECEIVE_EMAILS);
 
         return $validator;
     }
@@ -276,10 +273,10 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['username']));
-        $rules->add($rules->isUnique(['email']));
-        $rules->add($rules->isUnique(['membership_number']));
-        $rules->add($rules->existsIn(['user_state_id'], 'UserStates'));
+        $rules->add($rules->isUnique([User::FIELD_USERNAME]));
+        $rules->add($rules->isUnique([User::FIELD_EMAIL]));
+        $rules->add($rules->isUnique([User::FIELD_MEMBERSHIP_NUMBER]));
+        $rules->add($rules->existsIn([User::FIELD_USER_STATE_ID], 'UserStates'));
 
         return $rules;
     }

@@ -1,0 +1,13 @@
+table {
+    thead, tbody {
+        tr {
+            td, th {
+                vertical-align: middle !important;
+            }
+        }
+    }
+}
+
+#modal-notify-table {
+    font-size: 0.8rem;
+}

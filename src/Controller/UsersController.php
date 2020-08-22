@@ -211,7 +211,6 @@ class UsersController extends AppController
         $this->loadComponent('GoogleClient');
 
         $serviceUser = $this->GoogleClient->getUser($userDirectoryId);
-        debug($serviceUser);
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {

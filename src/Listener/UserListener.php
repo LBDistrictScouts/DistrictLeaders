@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
+use Cake\Cache\Cache;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Locator\LocatorAwareTrait;
@@ -41,6 +42,12 @@ class UserListener implements EventListenerInterface
 
         $user->set('last_login', FrozenTime::now());
         $user->setDirty('modified', true);
+
+        $cacheKeys = [
+            'nav_' . $user->get('id'),
+            'profile_modal_' . $user->get('id'),
+        ];
+        Cache::deleteMany($cacheKeys, 'cell_cache');
 
         $this->Users->save($user);
 

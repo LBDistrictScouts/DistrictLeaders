@@ -18,6 +18,7 @@ use Cake\Console\ConsoleOptionParser;
  * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
  * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
  */
 class InstallBaseCommand extends Command
 {
@@ -35,6 +36,7 @@ class InstallBaseCommand extends Command
         $this->loadModel('RoleTemplates');
         $this->loadModel('DirectoryTypes');
         $this->loadModel('UserStates');
+        $this->loadModel('DocumentTypes');
     }
 
     /**
@@ -71,6 +73,11 @@ class InstallBaseCommand extends Command
                 'help' => 'Role Templates',
                 'boolean' => true,
             ])
+            ->addOption('document_types', [
+                'short' => 'y',
+                'help' => 'Document Types',
+                'boolean' => true,
+                ])
             ->addOption('notification_types', [
                 'short' => 'n',
                 'help' => 'Notification Types',
@@ -125,6 +132,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->UserStates->installBaseUserStates();
 
             $io->info('User States Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('document_types')) {
+            $happenings = $this->DocumentTypes->installBaseDocumentTypes();
+
+            $io->info('Document Types Installed: ' . $happenings);
         }
     }
 }

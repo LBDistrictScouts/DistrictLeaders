@@ -18,9 +18,6 @@ $this->assign('entity', 'Users');
             null,
         ];
 
-        $args[4] = $user::FIELD_USERNAME;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_USERNAME) : '';
-
         $args[4] = $user::FIELD_MEMBERSHIP_NUMBER;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_MEMBERSHIP_NUMBER) : '';
 
@@ -32,9 +29,6 @@ $this->assign('entity', 'Users');
 
         $args[4] = $user::FIELD_EMAIL;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_EMAIL) : '';
-
-        $args[4] = $user::FIELD_PASSWORD;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_PASSWORD) : '';
 
         $args[4] = $user::FIELD_ADDRESS_LINE_1;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($user::FIELD_ADDRESS_LINE_1) : '';

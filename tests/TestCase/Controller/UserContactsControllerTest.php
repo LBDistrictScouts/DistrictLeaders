@@ -129,7 +129,23 @@ class UserContactsControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            3
+            3,
+            [
+                'add' => [
+                    'controller' => 'UserContacts',
+                    'action' => 'view',
+                    3,
+                ],
+                'delete' => [
+                    'controller' => 'Users',
+                    'action' => 'view',
+                    2,
+                ],
+            ],
+            [
+                'add' => 'The user contact has been saved.',
+                'delete' => 'The user email "james@4thgoat.org.uk" has been deleted.',
+            ]
         );
     }
 }

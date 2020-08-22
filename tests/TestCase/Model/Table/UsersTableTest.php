@@ -259,6 +259,81 @@ class UsersTableTest extends TestCase
     }
 
     /**
+     * Test validationDefault method
+     *
+     * @return void
+     */
+    public function testValidationNew(): void
+    {
+        $good = $this->getGood();
+
+        $new = $this->Users->newEntity($good);
+        TestCase::assertInstanceOf('App\Model\Entity\User', $this->Users->save($new));
+
+        $required = [
+            User::FIELD_MEMBERSHIP_NUMBER,
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+        ];
+
+        $this->validateRequired($required, $this->Users, [$this, 'getGood'], 'new');
+
+        $notRequired = [
+            User::FIELD_USERNAME,
+            User::FIELD_POSTCODE,
+            User::FIELD_PASSWORD,
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
+        ];
+
+        $this->validateNotRequired($notRequired, $this->Users, [$this, 'getGood'], 'new');
+
+        $empties = [
+            User::FIELD_ADDRESS_LINE_1,
+            User::FIELD_ADDRESS_LINE_2,
+            User::FIELD_CITY,
+            User::FIELD_COUNTY,
+            User::FIELD_LAST_LOGIN,
+            User::FIELD_LAST_LOGIN_IP,
+            User::FIELD_PASSWORD,
+            User::FIELD_USERNAME,
+            User::FIELD_POSTCODE,
+        ];
+
+        $this->validateEmpties($empties, $this->Users, [$this, 'getGood'], 'new');
+
+        $notEmpties = [
+            User::FIELD_FIRST_NAME,
+            User::FIELD_LAST_NAME,
+            User::FIELD_EMAIL,
+        ];
+
+        $this->validateNotEmpties($notEmpties, $this->Users, [$this, 'getGood'], 'new');
+
+        $this->validateNotEmpty(
+            User::FIELD_MEMBERSHIP_NUMBER,
+            $this->Users,
+            [$this, 'getGood'],
+            'default',
+            'A unique, valid TSA membership number is required.'
+        );
+
+        $maxLengths = [
+            User::FIELD_FIRST_NAME => 255,
+            User::FIELD_LAST_NAME => 255,
+        ];
+
+        $this->validateMaxLengths($maxLengths, $this->Users, [$this, 'getGood'], 'new');
+
+        $this->validateEmail(User::FIELD_EMAIL, $this->Users, [$this, 'getGood'], 'new');
+    }
+
+    /**
      * Test buildRules method
      *
      * @return void

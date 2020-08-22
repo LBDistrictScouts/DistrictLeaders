@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Authenticator\CognitoResult;
 use App\Form\PasswordForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
@@ -93,7 +92,7 @@ class ChallengesController extends Controller
             }
         }
 
-        debug(CognitoResult::CHALLENGE_EXPIRED_PASSWORD);
+//        debug(CognitoResult::CHALLENGE_EXPIRED_PASSWORD);
 
         $authSession = $this->request->getSession()->read('Auth');
         if (isset($authSession['challenge']) && $authSession['challenge'] == 'NEW_PASSWORD_REQUIRED') {
@@ -104,8 +103,8 @@ class ChallengesController extends Controller
             $resetUser = $this->Users->find()->where(['username ILIKE' => $username])->firstOrFail();
         }
 
-        debug($authSession);
-        debug($changeType);
+//        debug($authSession);
+//        debug($changeType);
 
 //        if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
 ////            $this->Flash->error('Password Reset Token could not be validated.');
@@ -116,7 +115,7 @@ class ChallengesController extends Controller
         $passwordForm = new PasswordForm();
 
         if ($changeType > self::CHANGE_TYPE_UNAUTHORIZED && $this->request->is('post')) {
-            debug('Post');
+//            debug('Post');
             if (!$passwordForm->validate($this->request->getData())) {
                 $this->Flash->error(__('The data provided has errors.'));
             } else {
@@ -125,7 +124,7 @@ class ChallengesController extends Controller
                     'user' => $resetUser,
                     'auth' => $authSession,
                 ]);
-                debug($result);
+//                debug($result);
 
                 if ($result) {
                     $this->Flash->success('Your password was saved successfully.');

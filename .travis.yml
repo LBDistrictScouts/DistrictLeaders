@@ -24,41 +24,65 @@ services:
 env:
   global:
     - DB=postgres
+    - DEFAULT=1
+    - ASYNC=0
 
 jobs:
   include:
+    - name: "PHP 7.2"
+      php: 7.2
+
     - name: "PHP 7.3"
       php: 7.3
 
-    - name: "PHP 7.4"
+    - name: "PHP 7.4 Bionic"
       php: 7.4
 
+#    - name: "PHP 7.4 Focal"
+#      php: 7.4
+#      dist: focal
+#      addons:
+#        postgresql: "12.2"
+#      apt:
+#        packages:
+#          - postgresql-12.2
+#          - postgresql-client-12.2
+
+# Removed as Queue is currently unable to work on Travis Env
+#    - name: "PHP 7.4 ASync"
+#      php: 7.4
+#      env: ASYNC=1
+
+    - name: "PHPCS"
+      php: 7.4
+      env: PHPCS=1 DEFAULT=0
+
 before_install:
-  - export COMPOSER_PROCESS_TIMEOUT=900
-  - mv config/app_file.travis.php config/app_file.php
-  - mv config/app.travis.php config/app.php
-  - mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
-  - rm phpunit.xml.dist
-  - mv phpunit-travis.xml.dist phpunit.xml.dist
+  - if [[ $DEFAULT = 1 ]]; then export COMPOSER_PROCESS_TIMEOUT=900; fi
+  - if [[ $DEFAULT = 1 ]]; then mv config/app_file.travis.php config/app_file.php; fi
+  - if [[ $DEFAULT = 1 ]]; then mv config/app.travis.php config/app.php; fi
+  - if [[ $DEFAULT = 1 ]]; then mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml; fi
+  - if [[ $ASYNC = 0 ]]; then rm phpunit.xml.dist; fi
+  - if [[ $ASYNC = 0 ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
 
 install:
-  - psql --command='create database leaders;' --username=postgres
-  - composer install
+  - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
+  - composer install --no-scripts
   - composer validate
 
 before_script:
-  - composer run-script post-install-cmd --no-interaction
+  - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
 
 script:
-  - sh -c "bin/cake code_completion generate -d"
-  - composer cs-check
-  - composer test
+  - if [[ $PHPCS = 1 ]]; then bin/cake code_completion generate -d; fi
+  - if [[ $PHPCS = 1 ]]; then composer cs-check; fi
+  - if [[ $DEFAULT = 1 ]]; then composer test; fi
 
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - if [[ $DEFAULT = 1 ]]; then bash <(curl -s https://codecov.io/bash); fi
 
 after_script:
   - ./cc-test-reporter after-build --coverage-input-type clover --id CodeClimateTokenForReplacement --exit-code $TRAVIS_TEST_RESULT

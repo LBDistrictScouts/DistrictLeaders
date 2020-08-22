@@ -8,7 +8,7 @@ $this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'RoleTypes');
 $this->assign('subset', 'All');
-$this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TYPE'));
+$this->assign('add', $this->Identity->buildAndCheckCapability('CREATE', 'RoleTypes'));
 
 ?>
 <thead>
@@ -16,8 +16,8 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TYPE'));
         <th scope="col"><?= $this->Paginator->sort('role_abbreviation') ?></th>
         <th scope="col" class="actions"><?= __('Actions') ?></th>
         <th scope="col"><?= $this->Paginator->sort('role_type') ?></th>
-        <th scope="col"><?= $this->Paginator->sort('section_type_id') ?></th>
         <th scope="col"><?= $this->Paginator->sort('level') ?></th>
+        <th scope="col"><?= $this->Paginator->sort('section_type_id') ?></th>
         <th scope="col"><?= $this->Paginator->sort('role_template_id') ?></th>
     </tr>
 </thead>
@@ -26,14 +26,14 @@ $this->assign('add', $this->Identity->checkCapability('CREATE_ROLE_TYPE'));
     <tr>
         <td><?= h($roleType->role_abbreviation) ?></td>
                 <td class="actions">
-            <?= $this->Identity->checkCapability('VIEW_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $roleType->id], ['title' => __('View Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $this->Identity->checkCapability('UPDATE_ROLE_TYPE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $roleType->id], ['title' => __('Edit Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-            <?= $this->Identity->checkCapability('DELETE_ROLE_TYPE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $roleType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleType->id), 'title' => __('Delete Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTypes') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $roleType->id], ['title' => __('View Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->buildAndCheckCapability('UPDATE', 'RoleTypes') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $roleType->id], ['title' => __('Edit Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+            <?= $this->Identity->buildAndCheckCapability('DELETE', 'RoleTypes') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $roleType->id], ['confirm' => __('Are you sure you want to delete # {0}?', $roleType->id), 'title' => __('Delete Role Type'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
         </td>
         <td><?= h($roleType->role_type) ?></td>
-        <td><?= $this->Number->format($roleType->section_type_id) ?></td>
         <td><?= $this->Number->format($roleType->level) ?></td>
-        <td><?= $this->Number->format($roleType->role_template_id) ?></td>
+        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'SectionTypes') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : h($roleType->section_type->section_type) ?></td>
+        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTemplates') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->role_template->id]) : h($roleType->role_template->role_template) ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>
