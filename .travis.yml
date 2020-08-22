@@ -38,9 +38,10 @@ jobs:
     - name: "PHP 7.4"
       php: 7.4
 
-    - name: "PHP 7.4 ASync"
-      php: 7.4
-      env: ASYNC=1
+# Removed as Queue is currently unable to work on Travis Env
+#    - name: "PHP 7.4 ASync"
+#      php: 7.4
+#      env: ASYNC=1
 
     - name: "PHPCS"
       php: 7.4
