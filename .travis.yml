@@ -38,15 +38,15 @@ jobs:
     - name: "PHP 7.4 Bionic"
       php: 7.4
 
-    - name: "PHP 7.4 Focal"
-      php: 7.4
-      dist: focal
-      addons:
-        postgresql: "12.2"
-      apt:
-        packages:
-          - postgresql-12.2
-          - postgresql-client-12.2
+#    - name: "PHP 7.4 Focal"
+#      php: 7.4
+#      dist: focal
+#      addons:
+#        postgresql: "12.2"
+#      apt:
+#        packages:
+#          - postgresql-12.2
+#          - postgresql-client-12.2
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
