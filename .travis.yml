@@ -42,7 +42,8 @@ jobs:
     - name: "PHP 7.4 Focal"
       php: 7.4
       dist: focal
-      postgresql: "12.2"
+      addons:
+        postgresql: "12.2"
       apt:
         packages:
           - postgresql-12.2
