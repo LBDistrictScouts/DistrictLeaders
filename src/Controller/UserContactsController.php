@@ -170,7 +170,7 @@ class UserContactsController extends AppController
             $this->Flash->success(__(
                 'The user {0} "{1}" has been deleted.',
                 strtolower($userContact->user_contact_type->user_contact_type),
-                $userContact->contact_field,
+                $userContact->contact_field
             ));
         } else {
             $this->Flash->error(__('The user contact could not be deleted. Please, try again.'));
