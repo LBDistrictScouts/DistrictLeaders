@@ -32,7 +32,6 @@ phpunit.xml.dist
 phpunit-travis.xml.dist
 phpcs.xml.dist
 
-**/*.default.php
 config/Migrations/schema-dump-default.lock
 config/app.travis.php
 config/app_db.travis.php
