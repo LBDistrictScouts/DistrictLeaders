@@ -26,7 +26,6 @@ env:
     - DB=postgres
     - DEFAULT=1
     - ASYNC=0
-    - PGPORT=5433
 
 jobs:
   include:
