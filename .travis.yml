@@ -35,8 +35,12 @@ jobs:
     - name: "PHP 7.3"
       php: 7.3
 
-    - name: "PHP 7.4"
+    - name: "PHP 7.4 Bionic"
       php: 7.4
+
+    - name: "PHP 7.4 Focal"
+      php: 7.4
+      dist: focal
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
