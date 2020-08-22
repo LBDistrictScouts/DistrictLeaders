@@ -41,6 +41,7 @@ jobs:
     - name: "PHP 7.4 Focal"
       php: 7.4
       dist: focal
+      postgresql: 12.2
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
