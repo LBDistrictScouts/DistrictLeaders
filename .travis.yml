@@ -77,8 +77,8 @@ before_install:
   - if [[ $ASYNC = 0 ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
 
 install:
-  - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
-  - if [[ $DEFAULT = 1 ]]; then psql -c "CREATE USER app WITH PASSWORD \'cake\';" -U postgres' --username=postgres; fi
+  - if [[ $DEFAULT = 1 ]]; then psql --command='CREATE DATABASE leaders;' --username=postgres; fi
+  - if [[ $DEFAULT = 1 ]]; then psql --command="CREATE USER app WITH PASSWORD 'cake';" --username=postgres; fi
   - composer install --no-scripts
   - composer validate
 
