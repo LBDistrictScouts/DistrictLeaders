@@ -47,7 +47,7 @@ jobs:
       addons:
         postgresql: "11"
 
-    - name: "Focal PHP 7.4 Postgres 12"
+    - name: "PHP 7.4 Focal Postgres 12"
       dist: focal
       addons:
         postgresql: "12"
@@ -78,7 +78,7 @@ before_install:
 
 install:
   - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
-  - if [[ $DEFAULT = 1 ]]; then psql -c "CREATE USER app WITH PASSWORD 'cake';" -U postgres;' --username=postgres; fi
+  - if [[ $DEFAULT = 1 ]]; then psql -c "CREATE USER app WITH PASSWORD 'cake';" -U postgres' --username=postgres; fi
   - composer install --no-scripts
   - composer validate
 
