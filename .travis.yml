@@ -1,13 +1,10 @@
 language: php
 
-dist: bionic
-
 os: linux
 
 version: ~> 1.0
 
 addons:
-  postgresql: "11"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
@@ -15,11 +12,6 @@ cache:
   directories:
     - $HOME/.composer/cache
     - vendor
-
-services:
-  - postgresql
-  - redis
-  - elasticsearch
 
 env:
   global:
@@ -29,33 +21,74 @@ env:
 
 jobs:
   include:
+    - name: "PHPCS"
+      php: 7.4
+      env: PHPCS=1 DEFAULT=0
+
     - name: "PHP 7.2"
       php: 7.2
+      services:
+        - postgresql
+        - redis
+        - elasticsearch
 
     - name: "PHP 7.3"
       php: 7.3
+      services:
+        - postgresql
+        - redis
+        - elasticsearch
 
     - name: "PHP 7.4 Bionic"
       php: 7.4
+      services:
+        - postgresql
+        - redis
+        - elasticsearch
 
-#    - name: "PHP 7.4 Focal"
-#      php: 7.4
-#      dist: focal
-#      addons:
-#        postgresql: "12.2"
-#      apt:
-#        packages:
-#          - postgresql-12.2
-#          - postgresql-client-12.2
+    - name: "Focal PHP 7.4 Postgres 12"
+      dist: focal
+      php: 7.4
+      services:
+        - redis
+        - elasticsearch
+      addons:
+        postgresql: "12"
+        apt:
+          packages:
+            - postgresql-12
+
+    - name: "PHP 7.4 Bionic Postgres 11"
+      dist: bionic
+      php: 7.4
+      services:
+        - redis
+        - elasticsearch
+      addons:
+        postgresql: "11"
+
+    - name: "PHP 7.4 Bionic Postgres 10"
+      dist: bionic
+      php: 7.4
+      services:
+        - redis
+        - elasticsearch
+      addons:
+        postgresql: "10"
+
+    - name: "PHP 7.4 Bionic Postgres 9.6"
+      dist: bionic
+      php: 7.4
+      services:
+        - redis
+        - elasticsearch
+      addons:
+        postgresql: "9.6"
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
 #      php: 7.4
 #      env: ASYNC=1
-
-    - name: "PHPCS"
-      php: 7.4
-      env: PHPCS=1 DEFAULT=0
 
 before_install:
   - if [[ $DEFAULT = 1 ]]; then export COMPOSER_PROCESS_TIMEOUT=900; fi
