@@ -107,7 +107,7 @@ class Installer
      */
     public static function createAppConfig($dir, $io)
     {
-        $configDir = $dir . '/config/';
+        $configDir = $dir . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
 
         foreach (static::CONFIG_FILES as $config) {
             $appConfig = $configDir . $config . '.php';
@@ -116,6 +116,14 @@ class Installer
                 copy($defaultConfig, $appConfig);
                 $io->write('Created `config/' . $config . '.php` file');
             }
+        }
+
+        $yamlDir = $configDir . 'Environment' . DIRECTORY_SEPARATOR;
+        $defaultYamlPath = $yamlDir . 'app_parameters.default.yml';
+        $yamlPath = $yamlDir . 'app_parameters.yml';
+        if (!file_exists($yamlPath)) {
+            copy($defaultYamlPath, $yamlPath);
+            $io->write('Yaml Placeholder Set.');
         }
     }
 
