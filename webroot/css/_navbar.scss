@@ -11,11 +11,14 @@
 .navbar-light .navbar-nav .nav-link {
   font-family: 'Nunito Sans', sans-serif;
   color: $colour-primary;
-
-  @media (min-width: 768px) and (max-width: 1200px) {
-    font-size: 0.5rem;
-  }
 }
+
+.navigation-clean.navbar .navbar-nav .nav-link {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+
 
 .navbar-light .navbar-nav .nav-link:hover, .navbar-light .navbar-nav .nav-link:focus {
   color: $colour-primary;
@@ -97,11 +100,6 @@
   box-shadow: none;
   background: none;
   pointer-events: none;
-}
-
-.navigation-clean.navbar .navbar-nav .nav-link {
-  padding-left: 18px;
-  padding-right: 18px;
 }
 
 .navigation-clean.navbar-light .navbar-nav .nav-link {

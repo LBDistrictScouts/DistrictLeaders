@@ -1,0 +1,47 @@
+@media (min-width: 768px) and (max-width: 1200px) {
+    .navigation-clean.navbar .navbar-nav .nav-link{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .table-responsive table > tbody > tr {
+
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar-light .navbar-nav .nav-link {
+        font-size: .8rem;
+    }
+
+    .form-inline .form-control {
+        width: 10rem !important;
+    }
+
+    .table-responsive table {
+        tbody, thead {
+            tr {
+                td, th {
+                    font-size: 0.8rem;
+                    padding: 0.3rem;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .form-inline .form-control {
+        width: 15rem !important;
+    }
+
+    .table-responsive table {
+        tbody, thead {
+            tr {
+                td, th {
+                    font-size: 0.8rem;
+                }
+            }
+        }
+    }
+}

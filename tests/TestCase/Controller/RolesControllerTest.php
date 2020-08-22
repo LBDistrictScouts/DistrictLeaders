@@ -136,7 +136,10 @@ class RolesControllerTest extends TestCase
                 'role_status_id' => 1,
             ],
             10,
-            $this->retrieveAddRedirect()
+            [
+                'add' => $this->retrieveAddRedirect(),
+                'delete' => null,
+            ]
         );
     }
 }

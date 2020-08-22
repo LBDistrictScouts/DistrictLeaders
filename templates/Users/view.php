@@ -100,7 +100,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                         <div class="card-body">
                             <h5>Email Addresses</h5>
-                            <div class="table-responsive">
+                            <div class="table-responsive table-borderless">
                                 <table class="table">
                                     <thead>
                                     <tr>

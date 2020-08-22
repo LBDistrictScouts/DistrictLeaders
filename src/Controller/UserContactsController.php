@@ -176,7 +176,7 @@ class UserContactsController extends AppController
             $this->Flash->error(__('The user contact could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
+        return $this->redirect(['controller' => 'Users', 'action' => 'view', $userContact->user_id]);
     }
 
     /**

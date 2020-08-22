@@ -300,16 +300,20 @@ trait ModelTestTrait
      */
     protected function validateInstallBase($table)
     {
-        $before = $table->find('all')->count();
+        $before = $table->find('all');
+        $beforeKeys = array_keys($before->toArray());
 
         $installAlias = 'installBase' . $table->getRegistryAlias();
         $installed = call_user_func([$table, $installAlias]);
 
-        TestCase::assertNotEquals($before, $installed);
-        TestCase::assertNotEquals(0, $installed);
+        TestCase::assertGreaterThan(0, $installed);
 
-        $after = $table->find('all')->count();
-        TestCase::assertTrue($after >= $before);
+        $after = $table->find('all');
+        TestCase::assertGreaterThanOrEqual($before->count(), $after->count());
+        TestCase::assertGreaterThanOrEqual($installed, $after->count());
+
+        $new = $after->whereNotInList($table->getPrimaryKey(), $beforeKeys);
+        TestCase::assertGreaterThan(0, $new->count());
     }
 
     /**
