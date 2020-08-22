@@ -497,7 +497,7 @@ class CompassRecordsTable extends Table
                 $record->clean_role,
                 $record->clean_section_type,
                 null,
-                $emailContact,
+                $emailContact
             )
         ) {
             return false;
