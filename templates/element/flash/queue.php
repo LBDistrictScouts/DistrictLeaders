@@ -3,11 +3,12 @@
  * @var \App\View\AppView $this
  * @var array $params
  * @var string $message
+ * @var int $job_id
  */
 $class = [
     'alert',
     'alert-dismissible',
-    'alert-info',
+    'alert-success',
 ];
 
 if (isset($params) && key_exists('class', $params) && is_array($params['class'])) {
@@ -22,6 +23,19 @@ if (key_exists('error', $class)) {
 
 if (!isset($params['escape']) || $params['escape'] !== false) {
     $message = h($message);
+}
+
+if (isset($params['job_id'])) {
+    $message = $message . ' ' . $this->Html->link(
+        __('Queue ID {0}', $params['job_id']),
+        [
+            'controller' => 'QueuedJobs',
+            'prefix' => 'Admin',
+            'plugin' => 'queue',
+            'action' => 'view',
+            $params['job_id'],
+        ]
+    );
 }
 
 if (in_array('alert-dismissible', $class)) {

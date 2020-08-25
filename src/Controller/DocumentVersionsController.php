@@ -126,7 +126,10 @@ class DocumentVersionsController extends AppController
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
         $job = $this->DocumentVersions->setImport($documentVersion);
         if ($job instanceof QueuedJob) {
-            $this->Flash->success(__('The document version has been sent for processing. Queue ID {0}', $job->id));
+            $this->Flash->queue(
+                'The document version has been sent for processing.',
+                ['params' => ['job_id' => $job->id]]
+            );
         } else {
             $this->Flash->error(__('The document version could not be queued. Please, try again.'));
         }

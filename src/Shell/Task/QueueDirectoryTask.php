@@ -11,10 +11,10 @@ use Queue\Shell\Task\QueueTaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property \App\Model\Table\DirectoriesTable $Directories
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
-class QueueCompassTask extends QueueTask implements QueueTaskInterface
+class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
 {
     /**
      * @var int
@@ -29,7 +29,7 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
     /**
      * @var string The Data Key
      */
-    private $entityKey = 'version';
+    private $entityKey = 'directory';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
@@ -42,19 +42,19 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
             throw new QueueException('Document Version Number not specified.');
         }
 
-        $this->loadModel('DocumentVersions');
+        $this->loadModel('Directories');
         $this->loadModel('Queue.QueuedJobs');
 
-        $version = $this->DocumentVersions->get($data[$this->entityKey]);
+        $directory = $this->Directories->get($data[$this->entityKey]);
 
-        $result = $this->DocumentVersions->importCompassRecords($version);
+        $result = $this->Directories->populate($directory);
 
         if (!$result) {
-            throw new QueueException('Compass Import Failed.');
+            throw new QueueException('Directory Process Failed.');
         }
 
         $job = $this->QueuedJobs->get($jobId);
-        $data['records'] = $result;
+        $data = array_merge($data, $result);
         $job->set('data', serialize($data));
         $this->QueuedJobs->save($job);
     }

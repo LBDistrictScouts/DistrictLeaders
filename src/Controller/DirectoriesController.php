@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Form\GoogleAuthForm;
 use App\Model\Entity\Directory;
+use Queue\Model\Entity\QueuedJob;
 
 /**
  * Directories Controller
@@ -232,5 +233,29 @@ class DirectoriesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $directoryId Directory id.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function populate($directoryId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $directory = $this->Directories->get($directoryId);
+        $job = $this->Directories->setImport($directory);
+        if ($job instanceof QueuedJob) {
+            $this->Flash->queue(
+                'The directory has been set for sync.',
+                ['params' => ['job_id' => $job->id]]
+            );
+        } else {
+            $this->Flash->error(__('The directory sync could not be queued. Please, try again.'));
+        }
+
+        return $this->redirect(['controller' => 'Directories', 'action' => 'view', $directoryId]);
     }
 }

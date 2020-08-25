@@ -99,7 +99,7 @@ class UserContactsControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            3
+            4
         );
     }
 
@@ -129,12 +129,12 @@ class UserContactsControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            3,
+            4,
             [
                 'add' => [
                     'controller' => 'UserContacts',
                     'action' => 'view',
-                    3,
+                    4,
                 ],
                 'delete' => [
                     'controller' => 'Users',

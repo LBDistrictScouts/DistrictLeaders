@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Directory;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -16,6 +17,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DirectoryDomainsTable&\Cake\ORM\Association\HasMany $DirectoryDomains
  * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\HasMany $DirectoryGroups
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\HasMany $DirectoryUsers
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  * @method \App\Model\Entity\Directory get($primaryKey, $options = [])
  * @method \App\Model\Entity\Directory newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Directory[] newEntities(array $data, array $options = [])
@@ -27,6 +29,8 @@ use Cake\Validation\Validator;
  */
 class DirectoriesTable extends Table
 {
+    use ModelAwareTrait;
+
     /**
      * Initialize method
      *
@@ -122,7 +126,6 @@ class DirectoriesTable extends Table
     /**
      * @param \App\Model\Entity\Directory $directory The directory to be Populated
      * @return array
-     * @throws \Google_Exception
      */
     public function populate(Directory $directory)
     {
@@ -143,5 +146,16 @@ class DirectoriesTable extends Table
         $directory->set(Directory::FIELD_CUSTOMER_REFERENCE, $directoryUser->getCustomerId());
 
         return $this->save($directory);
+    }
+
+    /**
+     * @param \App\Model\Entity\Directory $directory The Document Version for Queuing
+     * @return \Queue\Model\Entity\QueuedJob
+     */
+    public function setImport(Directory $directory)
+    {
+        $this->loadModel('Queue.QueuedJobs');
+
+        return $this->QueuedJobs->createJob('Directory', ['directory' => $directory->id]);
     }
 }

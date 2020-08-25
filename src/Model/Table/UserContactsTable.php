@@ -279,6 +279,15 @@ class UserContactsTable extends Table
     }
 
     /**
+     * @param \App\Model\Entity\User $user User to have User Contact Made
+     * @return bool
+     */
+    public function associatePrimary(User $user): bool
+    {
+        return (bool)($this->makeEmail($user, $user->email) instanceof UserContact);
+    }
+
+    /**
      * @param \App\Model\Entity\User $user The User for Attaching
      * @param string $number The Phone Number String for Creation
      * @return \App\Model\Entity\UserContact

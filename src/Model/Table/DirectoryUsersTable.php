@@ -134,7 +134,6 @@ class DirectoryUsersTable extends Table
      * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
      * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to Domain
      * @return int
-     * @throws \Google_Exception
      */
     public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
     {
@@ -148,7 +147,11 @@ class DirectoryUsersTable extends Table
         $pageToken = null;
 
         while ($continue) {
-            $result = $this->populateFromList($directory, $domain, $count, $pageToken);
+            try {
+                $result = $this->populateFromList($directory, $domain, $count, $pageToken);
+            } catch (\Google_Exception $e) {
+                return $count;
+            }
             $count += $result['count'];
             $pageToken = $result['pageToken'];
 

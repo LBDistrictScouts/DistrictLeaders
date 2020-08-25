@@ -660,7 +660,7 @@ namespace PHPSTORM_META {
 			'Form' => \Cake\View\Helper\FormHelper::class,
 			'Functional' => \App\View\Helper\FunctionalHelper::class,
 			'Html' => \Cake\View\Helper\HtmlHelper::class,
-			'Icon' => \App\View\Helper\IconHelper::class,
+			'Icon' => \App\View\Helper\JobHelper::class,
 			'IdeHelper.DocBlock' => \IdeHelper\View\Helper\DocBlockHelper::class,
 			'Inflection' => \App\View\Helper\InflectionHelper::class,
 			'Markdown' => \App\View\Helper\MarkdownHelper::class,

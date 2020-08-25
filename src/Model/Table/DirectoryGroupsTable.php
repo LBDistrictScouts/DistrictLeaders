@@ -108,7 +108,6 @@ class DirectoryGroupsTable extends Table
      * @param \App\Model\Entity\Directory $directory The directory to be Populated with Groups
      * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to a Domain
      * @return int
-     * @throws \Google_Exception
      */
     public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
     {
@@ -122,7 +121,11 @@ class DirectoryGroupsTable extends Table
         $pageToken = null;
 
         while ($continue) {
-            $result = $this->populateFromList($directory, $domain, $groupCount, $pageToken);
+            try {
+                $result = $this->populateFromList($directory, $domain, $groupCount, $pageToken);
+            } catch (\Google_Exception $e) {
+                return $groupCount;
+            }
             $groupCount += $result['count'];
             $pageToken = $result['pageToken'];
 

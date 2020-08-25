@@ -23,6 +23,7 @@ use Cake\View\View;
  * Your application’s default view class
  *
  * @property \App\View\Helper\FunctionalHelper $Functional
+ * @property \App\View\Helper\JobHelper $Job
  * @property \App\View\Helper\IconHelper $Icon
  * @property \App\View\Helper\InflectionHelper $Inflection
  * @property \App\View\Helper\CapIdentityHelper $Identity
@@ -67,6 +68,7 @@ class AppView extends View
         $this->loadHelper('Flash.Flash');
         $this->loadHelper('Inflection');
         $this->loadHelper('Icon');
+        $this->loadHelper('Job');
 
         $this->loadHelper('Identity', ['className' => 'CapIdentity']);
 

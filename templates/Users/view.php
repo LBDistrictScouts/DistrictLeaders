@@ -11,7 +11,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
 <div class="row">
     <div class="col">
         <?= $this->element('image-header') ?>
-        <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+        <div class="card thick-card"">
             <div class="card-body">
                 <div class="row">
                     <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
@@ -82,7 +82,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                         <div class="card-header"><?= $user->user_state->user_state ?></div>
                     </div>
                 <?php endif; ?>
-                <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                <div class="card thick-card">
                     <div class="card-body">
                         <h5>Address</h5>
                         <p class="card-text"><?= h($user->address_line_1) ?>,<br><?= h($user->city) ?>,<br><?= h($user->county) ?>.<br><strong><?= h($user->postcode) ?></strong></p>
@@ -97,7 +97,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
             ?>
             <div class="col-sm-12 col-lg-6">
                 <?php if (!empty($user->contact_emails)) : ?>
-                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                    <div class="card thick-card">
                         <div class="card-body">
                             <h5>Email Addresses</h5>
                             <div class="table-responsive table-borderless">
@@ -191,7 +191,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                                         </td>
                                     <?php endif; ?>
                                     <?php if ($audit->has('changed_role')) : ?>
-                                        <td><?= is_null($audit->changed_role->user->full_name) ? 'User' : $this->Text->truncate($audit->changed_role->user->full_name, 20) ?> @ <?= is_null($audit->changed_role->role_type->role_type) ? 'Role' : $this->Text->truncate($audit->changed_role->role_type->role_abbreviation, 15) ?></td>
+                                        <td><?= is_null($audit->changed_role->user->full_name) ? 'User' : $this->Text->truncate($audit->changed_role->user->full_name, 20) ?> @ <?= is_null($audit->changed_role->role_type->role_abbreviation) ? 'Role' : $this->Text->truncate($audit->changed_role->role_type->role_abbreviation, 15) ?></td>
                                         <td class="actions">
                                             <?= $this->Identity->buildAndCheckCapability('VIEW', 'Roles') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Roles', 'action' => 'view', $audit->changed_role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                             <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Roles') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Roles', 'action' => 'edit', $audit->changed_role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>

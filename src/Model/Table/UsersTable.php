@@ -6,7 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -463,17 +463,23 @@ class UsersTable extends Table
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(\Cake\Event\EventInterface $event, $user, $options): User
+    public function beforeSave(EventInterface $event, $user, $options): User
     {
-        $user = $this->UserStates->determineUserState($user);
+        return $this->UserStates->determineUserState($user);
+    }
 
-        if ($user->getOriginal('capabilities') != $user->capabilities) {
-            $this->getEventManager()->dispatch(new Event(
-                'Model.Users.capabilityChange',
-                $this,
-                ['user' => $user]
-            ));
-        }
+    /**
+     * after Save LifeCycle Callback
+     *
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
+     * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     * @return \App\Model\Entity\User
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function afterSave(EventInterface $event, $user, $options): User
+    {
+        $this->UserContacts->associatePrimary($user);
 
         return $user;
     }

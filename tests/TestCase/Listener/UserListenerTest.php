@@ -97,6 +97,8 @@ class UserListenerTest extends TestCase
 
     public function testCapabilityChange()
     {
+        static::markTestSkipped('Event Deactivated');
+
         $role = $this->Roles->get(1);
         $role->set(Role::FIELD_USER_CONTACT_ID, 2);
         TestCase::assertNotFalse($this->Roles->save($role));

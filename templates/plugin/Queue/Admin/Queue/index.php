@@ -12,6 +12,7 @@
 use Cake\Core\Configure;
 
 ?>
+<?= $this->element('header', ['data' => ['current' => 'dashboard']]) ?>
 <div class="row">
     <div class="col-lg-6">
         <div class="card">
