@@ -16,6 +16,9 @@ use Cake\ORM\Entity;
  * @property int $signature
  *
  * @property \App\Model\Entity\User[] $users
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class UserState extends Entity
 {

@@ -15,7 +15,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime $created
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property bool $verified
- * @property bool $validated
+ * @property bool|null $validated
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int|null $directory_user_id
  *
@@ -24,6 +24,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\UserContactType $user_contact_type
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\DirectoryUser|null $directory_user
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class UserContact extends Entity
 {

@@ -28,6 +28,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Notification|null $notification
  * @property \App\Model\Entity\EmailResponse[] $email_responses
  * @property \App\Model\Entity\Token[] $tokens
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class EmailSend extends Entity
 {

@@ -14,11 +14,14 @@ use Cake\ORM\Entity;
  * @property string $given_name
  * @property string $family_name
  * @property string $primary_email
+ * @property string $full_name
  *
  * @property \App\Model\Entity\Directory $directory
  * @property \App\Model\Entity\User[] $users
- * @property string $full_name
  * @property \App\Model\Entity\UserContact[] $user_contacts
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class DirectoryUser extends Entity
 {

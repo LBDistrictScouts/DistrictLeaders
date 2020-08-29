@@ -18,9 +18,11 @@ use Cake\ORM\Entity;
  *
  * @property string $crud_function
  * @property string $applicable_model
- * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @property bool $is_field_capability
  * @property string $applicable_field
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Capability extends Entity
 {

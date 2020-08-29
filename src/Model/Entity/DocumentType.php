@@ -13,6 +13,9 @@ use Cake\ORM\Entity;
  * @property string|null $special_capability
  *
  * @property \App\Model\Entity\Document[] $documents
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class DocumentType extends Entity
 {

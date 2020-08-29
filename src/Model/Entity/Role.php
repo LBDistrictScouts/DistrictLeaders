@@ -24,6 +24,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\RoleStatus $role_status
  * @property \App\Model\Entity\UserContact|null $user_contact
  * @property \App\Model\Entity\Audit[] $audits
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Role extends Entity
 {

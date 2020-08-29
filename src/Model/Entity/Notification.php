@@ -26,6 +26,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\NotificationType|null $notification_type
  * @property \App\Model\Entity\EmailSend[] $email_sends
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Notification extends Entity
 {

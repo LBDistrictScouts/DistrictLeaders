@@ -45,6 +45,8 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property int|null $active_role_count
  * @property int|null $all_email_count
  * @property int|null $all_phone_count
+ * @property int|null $validated_email_count
+ * @property int|null $validated_phone_count
  *
  * @property string $full_name
  *
@@ -61,9 +63,9 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property \App\Model\Entity\DirectoryUser[] $directory_users
  *
  * @property \Authorization\AuthorizationService $authorization
+ *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
- * @property int|null $validated_email_count
- * @property int|null $validated_phone_count
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {

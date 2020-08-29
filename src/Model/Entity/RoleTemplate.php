@@ -14,6 +14,9 @@ use Cake\ORM\Entity;
  * @property int $indicative_level
  *
  * @property \App\Model\Entity\RoleType[] $role_types
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class RoleTemplate extends Entity
 {

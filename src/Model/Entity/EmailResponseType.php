@@ -13,6 +13,9 @@ use Cake\ORM\Entity;
  * @property bool $bounce
  *
  * @property \App\Model\Entity\EmailResponse[] $email_responses
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class EmailResponseType extends Entity
 {

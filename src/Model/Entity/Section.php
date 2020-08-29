@@ -28,6 +28,9 @@ use Cake\ORM\Entity;
  * @property string|null $meeting_end_time
  * @property string $meeting_weekday
  * @property \App\Model\Entity\User[] $users
+ *
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Section extends Entity
 {
