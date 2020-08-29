@@ -48,20 +48,20 @@ class MakeAndSendCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
-        $io->info('Code "' . $args->getArgument('code') . '" initiated.');
+        $consoleIo->info('Code "' . $args->getArgument('code') . '" initiated.');
 
         $result = $this->EmailSends->make($args->getArgument('code'));
 
         if (!$result) {
-            $io->error('Email did not "Make" successfully.');
+            $consoleIo->error('Email did not "Make" successfully.');
 
             return;
         }
@@ -69,11 +69,11 @@ class MakeAndSendCommand extends Command
         $result = $this->EmailSends->send($result);
 
         if (!$result) {
-            $io->error('Email did not "Send" successfully.');
+            $consoleIo->error('Email did not "Send" successfully.');
 
             return;
         }
 
-        $io->info('Email Sent Successfully.');
+        $consoleIo->info('Email Sent Successfully.');
     }
 }

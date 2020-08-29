@@ -43,13 +43,13 @@ class UnsentCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         /** @var \App\Model\Entity\EmailSend[] $unsent */
         $unsent = $this->EmailSends->find('unsent');
@@ -65,6 +65,6 @@ class UnsentCommand extends Command
             }
         }
 
-        $io->info($sent . ' Emails sent of ' . $found);
+        $consoleIo->info($sent . ' Emails sent of ' . $found);
     }
 }

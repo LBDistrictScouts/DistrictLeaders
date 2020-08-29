@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Core\Configure;
+use Queue\Model\Entity\QueuedJob;
 
 /**
  * Capabilities Controller
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
@@ -161,5 +163,29 @@ class CapabilitiesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Process method
+     *
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function process()
+    {
+        $this->request->allowMethod(['post']);
+        $this->loadModel('Queue.QueuedJobs');
+
+        $job = $this->QueuedJobs->createJob('Capability');
+        if ($job instanceof QueuedJob) {
+            $this->Flash->queue(
+                'System Capabilities have been set for Processing.',
+                ['params' => ['job_id' => $job->id]]
+            );
+        } else {
+            $this->Flash->error(__('The Capabilities Process could not be triggered.'));
+        }
+
+        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }

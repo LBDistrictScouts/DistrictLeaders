@@ -44,7 +44,7 @@ class DirectoryUsersFixture extends TestFixture
                 'directory_user_reference' => 'Lorem ipsum dolor sit amet',
                 'given_name' => 'Lorem ipsum dolor sit amet',
                 'family_name' => 'Lorem ipsum dolor sit amet',
-                'primary_email' => 'Lorem ipsum dolor sit amet',
+                'primary_email' => 'fish@4thgoat.org.uk',
             ],
         ];
         parent::init();

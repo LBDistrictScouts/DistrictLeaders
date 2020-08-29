@@ -47,18 +47,18 @@ class ImportCompassRecordsCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         $directoryId = (int)$args->getOption('document_version_id');
         if (!is_integer($directoryId)) {
-            return $io->error('Document Version ID not Specified');
+            return $consoleIo->error('Document Version ID not Specified');
         }
 
         $documentVersion = $this->DocumentVersions->get($directoryId);

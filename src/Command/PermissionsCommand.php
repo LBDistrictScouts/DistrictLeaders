@@ -52,13 +52,13 @@ class PermissionsCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         if ($args->getOption('all') || $args->getOption('capabilities')) {
             $users = $this->Users->find('all');
@@ -70,7 +70,7 @@ class PermissionsCommand extends Command
                 }
             }
 
-            $io->info('User Capabilities Patched: ' . $happenings);
+            $consoleIo->info('User Capabilities Patched: ' . $happenings);
         }
     }
 }

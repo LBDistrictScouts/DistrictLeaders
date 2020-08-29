@@ -16,7 +16,6 @@ declare(strict_types=1);
  */
 namespace App\Middleware;
 
-use App\Authenticator\NewPasswordRequiredException;
 use Authentication\Authenticator\AuthenticationRequiredException;
 use Authentication\Authenticator\StatelessInterface;
 use Authentication\Authenticator\UnauthenticatedException;
@@ -63,23 +62,12 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $path = $request->getUri()->getPath();
-        $passwordUrl = $this->getConfig(self::PASSWORD_URL_KEY);
-
         $service = $this->getAuthenticationService($request);
-
-        if ($path == $passwordUrl) {
-            return $handler->handle($request);
-        }
 
         try {
             $result = $service->authenticate($request);
         } catch (AuthenticationRequiredException $e) {
             return $this->responseReturn($e);
-        } catch (NewPasswordRequiredException $e) {
-//            debug($e);
-
-            return new RedirectResponse($passwordUrl);
         }
 
         $request = $request->withAttribute($service->getIdentityAttribute(), $service->getIdentity());

@@ -153,9 +153,7 @@ class Application extends BaseApplication implements
             ))
 
             // Add the authentication middleware to the middleware queue
-            ->add(new CognitoAuthenticationMiddleware($this, [
-                'passwordUrl' => '/users/password',
-            ]))
+            ->add(new CognitoAuthenticationMiddleware($this))
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [

@@ -5,7 +5,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
-use App\Model\Table\BaseInstallerTrait;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use App\Model\Table\UsersTable;
 use App\Model\Table\UserStatesTable;
 use Cake\I18n\FrozenTime;

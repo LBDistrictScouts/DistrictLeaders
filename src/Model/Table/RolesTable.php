@@ -8,6 +8,7 @@ use App\Model\Entity\RoleStatus;
 use App\Model\Entity\RoleType;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query;
@@ -39,6 +40,8 @@ use Cake\Validation\Validator;
  */
 class RolesTable extends Table
 {
+    use UpdateCounterCacheTrait;
+
     /**
      * Initialize method
      *

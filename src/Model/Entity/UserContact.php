@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\Datasource\FactoryLocator;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\Entity;
 
 /**
@@ -25,11 +27,16 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\DirectoryUser|null $directory_user
  *
+ * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
+ * @property \App\Model\Table\CompassRecordsTable $CompassRecords
+ * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class UserContact extends Entity
 {
+    use ModelAwareTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -53,6 +60,38 @@ class UserContact extends Entity
         'user_contact_type' => true,
         'roles' => true,
     ];
+
+    /**
+     * Function to check alternative Verification Methods
+     *
+     * @param string $contactField The Contact Field being Set
+     * @return bool
+     */
+    protected function _setContactField(string $contactField)
+    {
+        if ($this->verified) {
+            return $contactField;
+        }
+
+        $this->UserContactTypes = FactoryLocator::get('Table')->get('UserContactTypes');
+
+        $emailType = $this->UserContactTypes
+            ->find()
+            ->where([UserContactType::FIELD_USER_CONTACT_TYPE => 'Email'])
+            ->first()
+            ->id;
+
+        if ($this->user_contact_type_id == $emailType) {
+            $this->DirectoryUsers = FactoryLocator::get('Table')->get('DirectoryUsers');
+
+            $primaryEmail = [DirectoryUser::FIELD_PRIMARY_EMAIL => $contactField];
+            if ($this->DirectoryUsers->exists($primaryEmail)) {
+                $this->verified = true;
+            }
+        }
+
+        return $contactField;
+    }
 
     /**
      * Prov / PreProv Virtual Field

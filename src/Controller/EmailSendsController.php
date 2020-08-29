@@ -43,6 +43,25 @@ class EmailSendsController extends AppController
     }
 
     /**
+     * Delete method
+     *
+     * @param string|null $emailId Email Send id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function send($emailId = null)
+    {
+        $this->request->allowMethod(['post']);
+        if ($this->EmailSends->send($emailId)) {
+            $this->Flash->success(__('The email has been sent.'));
+        } else {
+            $this->Flash->error(__('The email send could not be sent. Please, try again.'));
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
      * Add method
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.

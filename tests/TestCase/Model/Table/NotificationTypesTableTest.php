@@ -84,6 +84,8 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 'Generic Notification.',
             NotificationType::FIELD_ICON => 'fa-envelope',
             NotificationType::FIELD_TYPE_CODE => 'GEN-NOT',
+            NotificationType::FIELD_TYPE => 'GEN',
+            NotificationType::FIELD_SUB_TYPE => 'NOT',
         ];
 
         $this->validateInitialise($expected, $this->NotificationTypes, 7);

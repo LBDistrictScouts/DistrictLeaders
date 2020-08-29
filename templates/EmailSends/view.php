@@ -21,6 +21,15 @@
         <li><?= $this->Html->link(__('New Token'), ['controller' => 'Tokens', 'action' => 'add']) ?> </li>
     </ul>
 </nav>
+<?= $this->Form->postLink(
+    'Send Email',
+    ['controller' => 'EmailSends', 'action' => 'send', $emailSend->id],
+    [
+        'confirm' => __d('queue', 'Are you sure you want to send email # {0}?', $emailSend->id),
+        'role' => 'button',
+        'class' => 'btn btn-outline-danger',
+    ]
+) ?>
 <div class="emailSends view large-9 medium-8 columns content">
     <h3><?= h($emailSend->id) ?></h3>
     <table class="vertical-table">

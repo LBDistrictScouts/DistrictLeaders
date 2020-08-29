@@ -91,6 +91,7 @@ class UsersTable extends Table
 
         $this->belongsTo('UserStates', [
             'foreignKey' => 'user_state_id',
+            'strategy' => 'select',
         ]);
 
         $this->hasMany('Changes', [
@@ -361,9 +362,9 @@ class UsersTable extends Table
         asort($groupPermissions);
         asort($sectionPermissions);
 
-        $userPermissions['user'] = $permissions;
-        $userPermissions['group'] = $groupPermissions;
-        $userPermissions['section'] = $sectionPermissions;
+        $userPermissions[User::CAP_KEY_USER] = $permissions;
+        $userPermissions[User::CAP_KEY_GROUP] = $groupPermissions;
+        $userPermissions[User::CAP_KEY_SECTION] = $sectionPermissions;
 
         return $userPermissions;
     }
@@ -407,13 +408,13 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveCapabilities($user);
 
-        $userCapabilities = $capabilities['user'];
+        $userCapabilities = $capabilities[User::CAP_KEY_USER];
         if (in_array($capability, $userCapabilities)) {
             return true;
         }
 
         $sections = [];
-        foreach ($capabilities['section'] as $section => $sectionCapabilities) {
+        foreach ($capabilities[User::CAP_KEY_SECTION] as $section => $sectionCapabilities) {
             if (in_array($capability, $sectionCapabilities)) {
                 array_push($sections, $section);
             }
@@ -421,7 +422,7 @@ class UsersTable extends Table
         $sections = array_unique($sections);
 
         $groups = [];
-        foreach ($capabilities['group'] as $group => $groupCapabilities) {
+        foreach ($capabilities[User::CAP_KEY_GROUP] as $group => $groupCapabilities) {
             if (in_array($capability, $groupCapabilities)) {
                 array_push($groups, $group);
             }

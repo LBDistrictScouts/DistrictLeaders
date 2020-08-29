@@ -39,6 +39,14 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
+     * @var array The Array for Permissions which shouldn't be blocked
+     */
+    private $alwaysPermitted = [
+        User::FIELD_ID,
+        User::FIELD_CAPABILITIES,
+    ];
+
+    /**
      * @param \Cake\ORM\Entity $resource The resource to check authorization on.
      * @param string|null $action The action to check authorization for.
      * @return array
@@ -48,11 +56,22 @@ class CapAuthorizationComponent extends AuthorizationComponent
     {
         $fields = [];
 
-        $group = null;
-        $section = null;
+        $groups = null;
+        $sections = null;
+
+        if ($resource instanceof User) {
+            $groups = $resource->groups;
+            $sections = $resource->sections;
+        }
 
         $virtual = $resource->getVirtual();
         $resourceFields = $resource->getVisible();
+
+        foreach (array_keys($resource->getAccessible()) as $accessible) {
+            if (!in_array($accessible, $resourceFields)) {
+                array_push($resourceFields, $accessible);
+            }
+        }
 
         foreach ($virtual as $vValue) {
             unset($resourceFields[array_search($vValue, $resourceFields)]);
@@ -63,10 +82,10 @@ class CapAuthorizationComponent extends AuthorizationComponent
         }
 
         foreach ($resourceFields as $visibleField) {
-            if (in_array($visibleField, $virtual)) {
+            if (in_array($visibleField, $virtual) || in_array($visibleField, $this->alwaysPermitted)) {
                 continue;
             }
-            if ($this->buildAndCheckCapability($action, $resource->getSource(), $group, $section, $visibleField)) {
+            if (!$this->buildAndCheckCapability($action, $resource->getSource(), $groups, $sections, $visibleField)) {
                 array_push($fields, $visibleField);
             }
         }
@@ -118,8 +137,8 @@ class CapAuthorizationComponent extends AuthorizationComponent
      *
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|null $group The Group ID for checking against
-     * @param int|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return \Authorization\Policy\ResultInterface
      */
@@ -145,8 +164,8 @@ class CapAuthorizationComponent extends AuthorizationComponent
      *
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|null $group The Group ID for checking against
-     * @param int|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return bool
      */

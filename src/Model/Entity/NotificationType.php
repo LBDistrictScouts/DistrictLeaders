@@ -15,6 +15,10 @@ use Cake\ORM\Entity;
  * @property string $type_code
  *
  * @property \App\Model\Entity\Notification[] $notifications
+ * @property string $type
+ * @property string $sub_type
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class NotificationType extends Entity
 {
@@ -35,10 +39,50 @@ class NotificationType extends Entity
         'notifications' => true,
     ];
 
+    /**
+     * @return array
+     */
+    private function typeSplitter()
+    {
+        $generationArray = explode('-', $this->type_code, 2);
+
+        $splitArray['type'] = $generationArray[0];
+        $splitArray['subType'] = $generationArray[1];
+
+        return $splitArray;
+    }
+
+    /**
+     * Notification Type
+     *
+     * @return string
+     */
+    protected function _getType(): ?string
+    {
+        return $this->typeSplitter()['type'];
+    }
+
+    /**
+     * Notification SubType
+     *
+     * @return string
+     */
+    protected function _getSubType(): ?string
+    {
+        return $this->typeSplitter()['subType'];
+    }
+
+    protected $_virtual = [
+        'type',
+        'sub_type',
+    ];
+
     public const FIELD_ID = 'id';
     public const FIELD_NOTIFICATION_TYPE = 'notification_type';
     public const FIELD_NOTIFICATION_DESCRIPTION = 'notification_description';
     public const FIELD_ICON = 'icon';
     public const FIELD_TYPE_CODE = 'type_code';
     public const FIELD_NOTIFICATIONS = 'notifications';
+    public const FIELD_TYPE = 'type';
+    public const FIELD_SUB_TYPE = 'sub_type';
 }

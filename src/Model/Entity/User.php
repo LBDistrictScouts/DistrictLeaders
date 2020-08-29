@@ -236,7 +236,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * @return array|null
      */
-    public function _getGroups(): ?array
+    protected function _getGroups(): ?array
     {
         if (is_array($this->capabilities) && key_exists($this->groupKey, $this->capabilities)) {
             return array_keys($this->capabilities[$this->groupKey]);
@@ -250,7 +250,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * @return array|null
      */
-    public function _getSections(): ?array
+    protected function _getSections(): ?array
     {
         if (is_array($this->capabilities) && key_exists($this->sectionKey, $this->capabilities)) {
             return array_keys($this->capabilities[$this->sectionKey]);

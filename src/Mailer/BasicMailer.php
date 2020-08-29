@@ -33,6 +33,7 @@ class BasicMailer extends Mailer
             ->setSubject($emailSend->subject);
 
         $this->viewBuilder()
+            ->setClassName('Email')
             ->setLayout('default')
             ->setHelpers(['Html', 'Text', 'Time'])
             ->setTemplate($emailSend->email_template);

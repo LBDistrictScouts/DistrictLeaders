@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;

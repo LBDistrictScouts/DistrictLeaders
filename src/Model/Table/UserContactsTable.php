@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
+use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -36,6 +37,8 @@ use Cake\Validation\Validator;
  */
 class UserContactsTable extends Table
 {
+    use UpdateCounterCacheTrait;
+
     /**
      * Initialize method
      *

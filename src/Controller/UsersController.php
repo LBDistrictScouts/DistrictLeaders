@@ -33,8 +33,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
-        $this->Authentication->addUnauthenticatedActions(['password']);
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token']);
 
         $this->Authorization->mapActions([
             'search' => 'index',
@@ -106,8 +105,7 @@ class UsersController extends AppController
      */
     public function view($userId = null)
     {
-        $user = $this->Users->get($userId);
-        $visibleFields = $this->Authorization->see($user);
+        $blockedFields = $this->Authorization->see($this->Users->get($userId));
 
         $result = $this->Authorization->checkCapability('HISTORY');
 
@@ -115,63 +113,59 @@ class UsersController extends AppController
             $result = $result->getStatus();
         }
 
-        if ($result) {
-            $user = $this->Users->get($userId, [
-                'contain' => [
-                    'UserStates',
-                    'Audits.Users',
-                    'Changes' => function (Query $q) {
-                        return $q
-                            ->limit(50)
-                            ->orderDesc(Audit::FIELD_CHANGE_DATE)
-                            ->contain([
-                                'ChangedUsers',
-                                'ChangedRoles' => [
-                                    'Users',
-                                    'RoleTypes',
-                                ],
-                                'ChangedScoutGroups',
-                                'ChangedUserContacts' => [
-                                    'Users',
-                                    'UserContactTypes',
-                                ],
-                            ]);
-                    },
-                    'Roles' => [
-                        'RoleTypes',
-                        'Sections' => [
-                            'ScoutGroups',
-                            'SectionTypes',
-                        ],
-                        'RoleStatuses',
-                        'UserContacts',
-                    ],
-                    'ContactEmails.DirectoryUsers',
-                    'ContactNumbers',
+        $containArray = [
+            'UserStates',
+            'Roles' => [
+                'RoleTypes',
+                'Sections' => [
+                    'ScoutGroups',
+                    'SectionTypes',
                 ],
-                'fields' => $visibleFields,
+                'RoleStatuses',
+                'UserContacts',
+            ],
+        ];
+
+        if ($result) {
+            $containArray = array_merge($containArray, [
+                'ContactEmails.DirectoryUsers',
+                'ContactNumbers',
+                'Audits.Users',
+                'Changes' => function (Query $q) {
+                    return $q
+                        ->limit(50)
+                        ->orderDesc(Audit::FIELD_CHANGE_DATE)
+                        ->contain([
+                            'ChangedUsers',
+                            'ChangedRoles' => [
+                                'Users',
+                                'RoleTypes',
+                            ],
+                            'ChangedScoutGroups',
+                            'ChangedUserContacts' => [
+                                'Users',
+                                'UserContactTypes',
+                            ],
+                        ]);
+                },
             ]);
         } else {
-            $user = $this->Users->get($userId, [
-                'contain' => [
-                    'UserStates',
-                    'Roles' => [
-                        'RoleTypes',
-                        'Sections' => [
-                            'ScoutGroups',
-                            'SectionTypes',
-                        ],
-                        'RoleStatuses',
-                        'UserContacts',
-                    ],
-                ],
-                'fields' => $visibleFields,
+            $containArray = array_merge($containArray, [
+                'ContactEmails',
+                'ContactNumbers',
             ]);
         }
 
+        $user = $this->Users
+            ->find()
+            ->contain($containArray)
+            ->where(['Users.' . User::FIELD_ID => $userId])
+            ->selectAllExcept($this->Users, $blockedFields)
+            ->first();
+
         $this->Authorization->authorize($user);
 
-        $this->set('user', $user);
+        $this->set(compact('user'));
 
         $this->whyPermitted($this->Users);
     }
@@ -471,7 +465,7 @@ class UsersController extends AppController
         }
 
         if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
-//            $this->Flash->error('Password Reset Token could not be validated.');
+            $this->Flash->error('Password Reset Token could not be validated.');
 
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }

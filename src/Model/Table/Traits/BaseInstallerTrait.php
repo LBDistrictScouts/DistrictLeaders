@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Model\Table;
+namespace App\Model\Table\Traits;
 
 use Cake\Core\Configure;
 use Cake\ORM\Table;

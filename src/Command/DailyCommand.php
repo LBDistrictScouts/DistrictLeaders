@@ -39,14 +39,14 @@ class DailyCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         $tasks = Cron::collectCronClasses();
         $success = 0;
@@ -60,6 +60,6 @@ class DailyCommand extends Command
             }
         }
 
-        $io->info('Scheduled daily tasks: ' . (string)$success);
+        $consoleIo->info('Scheduled daily tasks: ' . (string)$success);
     }
 }

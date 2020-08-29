@@ -52,6 +52,7 @@ class TokensController extends AppController
             if (key_exists('authenticate', $header) && $header['authenticate']) {
                 $transactor = $this->Tokens->EmailSends->Users->get($tokenRow->email_send->user_id);
                 $this->Authentication->setIdentity($transactor);
+//                debug($this->Authentication->getIdentity());
             }
 
             if (key_exists('redirect', $header)) {

@@ -44,7 +44,7 @@ use Cake\Core\Configure;
                 <?php } ?>
             </div>
         </div>
-        <br/>
+        <?= $this->element('control') ?>
         <div class="card">
             <div class="card-header">
                 <div class="row">

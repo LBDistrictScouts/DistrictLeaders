@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;

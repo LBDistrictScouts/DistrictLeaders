@@ -43,6 +43,7 @@ class NotificationsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior('Timestamp');
+        $this->addBehavior('Muffin/Trash.Trash');
 
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',

@@ -202,19 +202,21 @@ trait AppTestTrait
      * Function to encapsulate Basic Add Post Tests.
      *
      * @param string $controller Name of the Controller being Interrogated.
-     * @param array $validData Array of Valid Data.
+     * @param array|null $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
      * @param array|null $expectedRedirects Redirect Array or Array of Redirects with Action Keys.
      * @param array|null $expectedMessages Array of Expected Flash Messages
      */
     protected function tryDeletePost(
         string $controller,
-        array $validData,
+        ?array $validData,
         int $newEntityId,
         ?array $expectedRedirects = null,
         ?array $expectedMessages = null
     ): void {
-        $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirects, $expectedMessages);
+        if (is_array($validData) && !empty($validData)) {
+            $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirects, $expectedMessages);
+        }
 
         $url = [
             'controller' => $controller,
@@ -224,6 +226,10 @@ trait AppTestTrait
 
         $redir = $this->getRedirect($expectedRedirects, 'delete', ['controller' => $controller, 'action' => 'index']);
         $message = $this->getMessage($expectedMessages, 'delete', null);
+
+        if (is_null($validData)) {
+            $validData = [];
+        }
 
         $this->tryFlashPost($url, $validData, $redir, $message);
     }

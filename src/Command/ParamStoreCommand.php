@@ -304,35 +304,35 @@ class ParamStoreCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @param \Cake\Console\ConsoleIo $consoleConsoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleConsoleIo)
     {
         if ($args->getOption('Info')) {
-            $this->echoInfo($consoleIo);
+            $this->echoInfo($consoleConsoleIo);
         }
 
         if ($args->getOption('Write')) {
             $count = $this->writeParameters();
-            $consoleIo->info('Wrote ' . $count . ' Parameters');
+            $consoleConsoleIo->info('Wrote ' . $count . ' Parameters');
         }
 
         if ($args->getOption('Get')) {
             $this->getParameters();
-            $consoleIo->info('Got Parameters');
+            $consoleConsoleIo->info('Got Parameters');
 
             if ($args->getOption('Remove')) {
                 $this->removeParameters();
-                $consoleIo->info('Removed Parameters from App Config File');
+                $consoleConsoleIo->info('Removed Parameters from App Config File');
             }
         }
 
         if ($args->getOption('Setup')) {
             $this->setupParameters();
-            $consoleIo->info('Setup Parameters');
+            $consoleConsoleIo->info('Setup Parameters');
         }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
