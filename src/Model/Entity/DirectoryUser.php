@@ -19,7 +19,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Directory $directory
  * @property \App\Model\Entity\User[] $users
  * @property \App\Model\Entity\UserContact[] $user_contacts
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

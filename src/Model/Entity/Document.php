@@ -21,7 +21,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\DocumentType $document_type
  * @property \App\Model\Entity\DocumentVersion[] $document_versions
  * @property \App\Model\Entity\DocumentEdition|null $document_preview
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

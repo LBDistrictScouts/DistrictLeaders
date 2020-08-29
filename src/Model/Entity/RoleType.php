@@ -22,7 +22,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Role[] $roles
  * @property \App\Model\Entity\Capability[] $capabilities
  * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

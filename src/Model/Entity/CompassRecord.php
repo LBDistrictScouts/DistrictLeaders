@@ -38,7 +38,6 @@ use Cake\ORM\Entity;
  * @property null|string $first_name
  * @property string $last_name
  * @property string $full_name
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

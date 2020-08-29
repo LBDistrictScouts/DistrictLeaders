@@ -14,7 +14,6 @@ use Cake\ORM\Entity;
  * @property bool $ingest
  *
  * @property \App\Model\Entity\Directory $directory
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

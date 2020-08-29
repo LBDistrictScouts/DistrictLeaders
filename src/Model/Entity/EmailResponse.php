@@ -21,7 +21,6 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\EmailSend $email_send
  * @property \App\Model\Entity\EmailResponseType $email_response_type
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

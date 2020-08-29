@@ -50,6 +50,9 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  *
  * @property string $full_name
  *
+ * @property array|null $groups
+ * @property array|null $sections
+ *
  * @property \App\Model\Entity\UserState|null $user_state
  * @property \App\Model\Entity\Audit[] $changes
  * @property \App\Model\Entity\Audit[] $audits
@@ -63,7 +66,6 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property \App\Model\Entity\DirectoryUser[] $directory_users
  *
  * @property \Authorization\AuthorizationService $authorization
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -154,7 +156,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      *
      * @var array
      */
-    protected $_virtual = ['full_name'];
+    protected $_virtual = ['full_name', 'sections', 'groups'];
+
+    private $userKey = self::CAP_KEY_USER;
+    private $groupKey = self::CAP_KEY_GROUP;
+    private $sectionKey = self::CAP_KEY_SECTION;
 
     /**
      * Authorization\IdentityInterface method
@@ -226,6 +232,34 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     }
 
     /**
+     * returns an array of User's Groups
+     *
+     * @return array|null
+     */
+    public function _getGroups(): ?array
+    {
+        if (is_array($this->capabilities) && key_exists($this->groupKey, $this->capabilities)) {
+            return array_keys($this->capabilities[$this->groupKey]);
+        }
+
+        return null;
+    }
+
+    /**
+     * returns an array of User's Sections
+     *
+     * @return array|null
+     */
+    public function _getSections(): ?array
+    {
+        if (is_array($this->capabilities) && key_exists($this->sectionKey, $this->capabilities)) {
+            return array_keys($this->capabilities[$this->sectionKey]);
+        }
+
+        return null;
+    }
+
+    /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
      * @param int|array|null $group The Group ID for checking against
@@ -291,7 +325,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
 
         // User Check
         if (key_exists('user', $this->capabilities)) {
-            $capabilities = $this->capabilities['user'];
+            $capabilities = $this->capabilities[$this->userKey];
 
             if (in_array('ALL', $capabilities)) {
                 return new Result(true, 'Admin Capability Found.');
@@ -303,12 +337,12 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
         }
 
         // Group Check
-        if ($this->subSetCapabilityCheck($capability, 'group', $group)) {
+        if ($this->subSetCapabilityCheck($capability, $this->groupKey, $group)) {
             return new Result(true, 'Capability Found in Group.');
         }
 
         // Section Check
-        if ($this->subSetCapabilityCheck($capability, 'section', $section)) {
+        if ($this->subSetCapabilityCheck($capability, $this->sectionKey, $section)) {
             return new Result(true, 'Capability Found in Section.');
         }
 
@@ -381,6 +415,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_LAST_LOGIN_IP = 'last_login_ip';
     public const FIELD_CAPABILITIES = 'capabilities';
     public const FIELD_FULL_NAME = 'full_name';
+    public const FIELD_GROUPS = 'groups';
+    public const FIELD_SECTIONS = 'sections';
     public const FIELD_AUDITS = 'audits';
     public const FIELD_CHANGES = 'changes';
     public const FIELD_ROLES = 'roles';
@@ -406,4 +442,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_VALIDATED_PHONE_COUNT = 'validated_phone_count';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
+
+    public const CAP_KEY_USER = 'user';
+    public const CAP_KEY_GROUP = 'group';
+    public const CAP_KEY_SECTION = 'section';
 }

@@ -14,7 +14,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\RoleType[] $role_types
  * @property \App\Model\Entity\Section[] $sections
  * @property bool $is_young_person_section
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

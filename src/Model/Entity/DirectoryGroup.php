@@ -16,7 +16,6 @@ use Cake\ORM\Entity;
  *
  * @property \App\Model\Entity\Directory $directory
  * @property \App\Model\Entity\RoleType[] $role_types
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

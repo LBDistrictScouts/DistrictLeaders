@@ -20,7 +20,6 @@ use Cake\ORM\Entity;
  * @property string $applicable_model
  * @property bool $is_field_capability
  * @property string $applicable_field
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

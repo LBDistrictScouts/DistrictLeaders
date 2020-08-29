@@ -18,7 +18,6 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Camp $camp
  * @property \App\Model\Entity\User $user
  * @property \App\Model\Entity\CampRoleType $camp_role_type
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

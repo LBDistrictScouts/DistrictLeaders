@@ -12,7 +12,6 @@ use Cake\ORM\Entity;
  * @property string $role_status
  *
  * @property \App\Model\Entity\Role[] $roles
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

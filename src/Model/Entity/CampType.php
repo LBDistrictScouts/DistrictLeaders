@@ -12,7 +12,6 @@ use Cake\ORM\Entity;
  * @property string $camp_type
  *
  * @property \App\Model\Entity\Camp[] $camps
- *
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
