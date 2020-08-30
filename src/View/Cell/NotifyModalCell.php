@@ -11,7 +11,7 @@ use Cake\View\Cell;
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
  */
-class NotifyCell extends Cell
+class NotifyModalCell extends Cell
 {
     /**
      * List of valid options that can be passed into this
@@ -48,13 +48,12 @@ class NotifyCell extends Cell
     public function display($loggedInUserId)
     {
         if (is_integer($loggedInUserId)) {
-            $notificationCount = $this->Notifications
-                ->find('unread')
-                ->contain('NotificationTypes')
+            $notifications = $this->Notifications->find('unread', ['contain' => 'NotificationTypes'])
                 ->where([Notification::FIELD_USER_ID => $loggedInUserId])
-                ->count();
+                ->limit(5)
+                ->orderDesc(Notification::FIELD_CREATED);
 
-            $this->set(compact('notificationCount', 'loggedInUserId'));
+            $this->set(compact('notifications', 'loggedInUserId'));
         }
     }
 }

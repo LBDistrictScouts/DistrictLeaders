@@ -51,11 +51,7 @@ $this->set('searchBar', $active);
             ])->render() ?>
         </div>
     </li>
-    <li class="nav-item right-align mr-auto">
-        <a class="nav-link" data-toggle="modal" data-target="#notify">
-            <i class="fal fa-bell"></i>
-        </a>
-    </li>
+    <?= $this->cell('Notify', [$this->Identity->getId()])->render() ?>
     <?php if (isset($PolicyResult)) : ?>
         <li class="nav-item right-align mr-auto">
             <a class="nav-link" data-toggle="modal" data-target="#whyAuth">

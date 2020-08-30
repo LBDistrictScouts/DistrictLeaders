@@ -8,6 +8,7 @@ use Authorization\Controller\Component\AuthorizationComponent;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 use Authorization\Policy\ResultInterface;
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ModelAwareTrait;
 
 /**
@@ -47,23 +48,49 @@ class CapAuthorizationComponent extends AuthorizationComponent
     ];
 
     /**
-     * @param \Cake\ORM\Entity $resource The resource to check authorization on.
+     * @param \Cake\Datasource\EntityInterface $resource The resource to check authorization on.
      * @param string|null $action The action to check authorization for.
      * @return array
-     * @throws \Authorization\Exception\ForbiddenException when policy check fails.
      */
-    public function see($resource, $action = 'VIEW')
+    public function see(EntityInterface $resource, $action = 'VIEW')
     {
         $fields = [];
 
-        $groups = null;
-        $sections = null;
+        $resourceFields = $this->getResourceFields($resource);
 
-        if ($resource instanceof User) {
-            $groups = $resource->groups;
-            $sections = $resource->sections;
+        if ($resource instanceof User && $resource->id == $this->capUser->id) {
+            return [];
         }
 
+        foreach ($resourceFields as $visibleField) {
+            if (in_array($visibleField, $resource->getVirtual()) || in_array($visibleField, $this->alwaysPermitted)) {
+                continue;
+            }
+            if (preg_match('/(_id)/', $visibleField)) {
+                continue;
+            }
+            if (
+                !$this->buildAndCheckCapability(
+                    $action,
+                    $resource->getSource(),
+                    $this->getGroups($resource),
+                    $this->getSections($resource),
+                    $visibleField
+                )
+            ) {
+                array_push($fields, $visibleField);
+            }
+        }
+
+        return $fields;
+    }
+
+    /**
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @return array
+     */
+    protected function getResourceFields(EntityInterface $resource): array
+    {
         $virtual = $resource->getVirtual();
         $resourceFields = $resource->getVisible();
 
@@ -77,20 +104,37 @@ class CapAuthorizationComponent extends AuthorizationComponent
             unset($resourceFields[array_search($vValue, $resourceFields)]);
         }
 
-        if ($resource instanceof User && $resource->id == $this->capUser->id) {
-            return $resourceFields;
+        return $resourceFields;
+    }
+
+    /**
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @return array
+     */
+    protected function getGroups(EntityInterface $resource): ?array
+    {
+        $groups = null;
+
+        if ($resource instanceof User) {
+            $groups = $resource->groups;
         }
 
-        foreach ($resourceFields as $visibleField) {
-            if (in_array($visibleField, $virtual) || in_array($visibleField, $this->alwaysPermitted)) {
-                continue;
-            }
-            if (!$this->buildAndCheckCapability($action, $resource->getSource(), $groups, $sections, $visibleField)) {
-                array_push($fields, $visibleField);
-            }
+        return $groups;
+    }
+
+    /**
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @return array
+     */
+    protected function getSections(EntityInterface $resource): ?array
+    {
+        $sections = null;
+
+        if ($resource instanceof User) {
+            $sections = $resource->sections;
         }
 
-        return $fields;
+        return $sections;
     }
 
     /**

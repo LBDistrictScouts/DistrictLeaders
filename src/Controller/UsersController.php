@@ -160,10 +160,10 @@ class UsersController extends AppController
             ->find()
             ->contain($containArray)
             ->where(['Users.' . User::FIELD_ID => $userId])
-            ->selectAllExcept($this->Users, $blockedFields)
+//            ->selectAllExcept($this->Users, $blockedFields)
             ->first();
 
-        $this->Authorization->authorize($user);
+        $this->Authorization->authorize($user, 'VIEW');
 
         $this->set(compact('user'));
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Notification;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -25,6 +26,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Notification findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class NotificationsTable extends Table
 {
@@ -139,6 +141,17 @@ class NotificationsTable extends Table
      */
     public function findUnread(Query $query): Query
     {
-        return $query->where([Notification::FIELD_NEW => true]);
+        return $query->whereNull(Notification::FIELD_READ_DATE);
+    }
+
+    /**
+     * @param \App\Model\Entity\Notification $notification Notification to be Read
+     * @return bool
+     */
+    public function markRead(Notification $notification): bool
+    {
+        $notification->set(Notification::FIELD_READ_DATE, FrozenTime::now());
+
+        return (bool)$this->save($notification);
     }
 }

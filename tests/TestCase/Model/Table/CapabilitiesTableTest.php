@@ -173,11 +173,11 @@ class CapabilitiesTableTest extends TestCase
     {
         return [
             'Level 0' => [ 0, 1 ],
-            'Level 1' => [ 1, 9 ],
-            'Level 2' => [ 2, 41 ],
-            'Level 3' => [ 3, 74 ],
-            'Level 4' => [ 4, 77 ],
-            'Level 5' => [ 5, 87 ],
+            'Level 1' => [ 1, 10 ],
+            'Level 2' => [ 2, 42 ],
+            'Level 3' => [ 3, 77 ],
+            'Level 4' => [ 4, 80 ],
+            'Level 5' => [ 5, 91 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -231,8 +231,8 @@ class CapabilitiesTableTest extends TestCase
     {
         $result = $this->Capabilities->generateEntityCapabilities(false);
 
-        $models = Configure::read('allModels');
-        $methods = Configure::read('entityCapabilities');
+        $models = Configure::read('AllModels');
+        $methods = Configure::read('EntityCapabilities');
         $expected = count($models) * count($methods);
 
         TestCase::assertEquals($expected, $result);
@@ -1062,6 +1062,10 @@ class CapabilitiesTableTest extends TestCase
                         'UPDATE_DOCUMENT' => 'Update a Document',
                         'VIEW_DOCUMENT' => 'View a Document',
                         'DELETE_DOCUMENT' => 'Delete a Document',
+                        'CREATE_NOTIFICATION' => 'Create a Notification',
+                        'UPDATE_NOTIFICATION' => 'Update a Notification',
+                        'VIEW_NOTIFICATION' => 'View a Notification',
+                        'DELETE_NOTIFICATION' => 'Delete a Notification',
                     ],
                     'Field' => [
                         'FIELD_CHANGE_USER@ID' => 'Change field "Id" on a User',

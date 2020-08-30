@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Role;
+use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
+
 /**
  * Roles Controller
  *
@@ -49,9 +53,29 @@ class RolesController extends AppController
      */
     public function add()
     {
+        if (key_exists('user_id', $this->request->getQueryParams())) {
+            $user_id = $this->request->getQueryParams()['user_id'];
+        }
+
         $role = $this->Roles->newEmptyEntity();
+
+        if (isset($user_id)) {
+            $user = $this->Roles->Users->find()
+                ->where([User::FIELD_ID => $user_id])->firstOrFail();
+            $this->set(compact('user'));
+
+            $role->set(Role::FIELD_USER_ID, $user->get(User::FIELD_ID));
+        }
+
         if ($this->request->is('post')) {
-            $role = $this->Roles->patchEntity($role, $this->request->getData());
+            $data = $this->request->getData();
+            if (
+                !key_exists(UserContact::FIELD_USER_ID, $data)
+                && !is_null($role->get(UserContact::FIELD_USER_ID))
+            ) {
+                $data[UserContact::FIELD_USER_ID] = $role->get(UserContact::FIELD_USER_ID);
+            }
+            $role = $this->Roles->patchEntity($role, $data);
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
@@ -61,10 +85,16 @@ class RolesController extends AppController
         }
         $roleTypes = $this->Roles->RoleTypes->find('list', ['limit' => 200]);
         $sections = $this->Roles->Sections->find('list', ['limit' => 200]);
-        $users = $this->Roles->Users->find('list', ['limit' => 200]);
+
         $roleStatuses = $this->Roles->RoleStatuses->find('list', ['limit' => 200]);
 
-        $this->set(compact('role', 'roleTypes', 'sections', 'users', 'roleStatuses'));
+        if (!isset($user)) {
+            $users = $this->Roles->Users->find('list', ['limit' => 200]);
+            $users = $this->Authorization->applyScope($users, 'edit');
+            $this->set(compact('users'));
+        }
+
+        $this->set(compact('role', 'roleTypes', 'sections', 'roleStatuses'));
     }
 
     /**

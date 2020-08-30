@@ -5,7 +5,6 @@ namespace App\Policy;
 
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
-use Authorization\Policy\Result;
 
 /**
  * Class UsersPolicy
@@ -23,7 +22,7 @@ class NotificationsTablePolicy implements BeforePolicyInterface
      */
     public function scopeIndex($user, $query)
     {
-        if ($user->buildAndCheckCapability('VIEW', 'Notifications')) {
+        if ($user->checkCapability('ALL')) {
             return $query;
         }
 
@@ -52,40 +51,19 @@ class NotificationsTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
     public function canIndex(User $user)
     {
-        if ($user->buildAndCheckCapability('VIEW', 'Notifications')) {
-            return new Result(true, '101');
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
-     */
-    public function canView(User $user)
-    {
-        if ($user->buildAndCheckCapability('VIEW', 'Notifications')) {
-            return new Result(true, '101');
-        }
-
-        return null;
+        return $this->canBuildAndCheck($user, '106');
     }
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result|null
      */
-    public function canAdd(User $user)
+    public function canView(User $user)
     {
-        if ($user->buildAndCheckCapability('CREATE', 'Users')) {
-            return new Result(true, '102');
-        }
-
-        return null;
+        return $this->canBuildAndCheck($user, '106');
     }
 }

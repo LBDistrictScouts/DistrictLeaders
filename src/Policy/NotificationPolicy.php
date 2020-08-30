@@ -24,12 +24,8 @@ class NotificationPolicy implements BeforePolicyInterface
      */
     public function canView(User $user, Notification $subject)
     {
-        if ($user->id == $subject->user_id && $user->checkCapability('OWN_USER')) {
-            return new Result(true);
-        }
-
-        if ($user->buildAndCheckCapability('VIEW', 'Notifications')) {
-            return new Result(true);
+        if ($user->id == $subject->user_id && $user->buildAndCheckCapability('VIEW', 'Notifications')) {
+            return new Result(true, '106');
         }
 
         // Results let you define a 'reason' for the failure.

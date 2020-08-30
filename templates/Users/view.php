@@ -5,7 +5,8 @@
  * @var \App\Model\Entity\Audit $audit
  */
 
-$authUser = $this->getRequest()->getAttribute('identity');
+$ownUser = $user->id === $this->Identity->getId();
+$editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
 
 ?>
 <div class="row">
@@ -24,10 +25,11 @@ $authUser = $this->getRequest()->getAttribute('identity');
                         </div>
                         <div class="dropleft d-none d-sm-none d-lg-inline"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation'])  ?>
-                                <a class="dropdown-item" role="presentation" href="#">First Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Second Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                <?= $this->Permissions->dropDownButton('Edit User', $user, 'edit') ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn ? $this->Html->link('Add Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn ? $this->Html->link('Add Phone Number', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'phone', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Roles') ? $this->Html->link('Add User Role', ['controller' => 'Roles', 'action' => 'add', '?' => ['user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Permissions->dropDownButton('View User Capabilities', $user, 'permissions', 'Capabilities') ?>
                             </div>
                         </div>
                     </div>
@@ -97,8 +99,6 @@ $authUser = $this->getRequest()->getAttribute('identity');
             </div>
             <?php endif; ?>
             <?php
-                $ownUser = $user->id === $this->Identity->getId();
-                $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
                 $canCreateUCs =  $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
                 $canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
             ?>

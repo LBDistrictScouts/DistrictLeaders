@@ -45,11 +45,11 @@ class RoleTypesController extends AppController
         $capabilities = $this->RoleTypes->Capabilities->enrichRoleType($roleType->capabilities);
         $this->set('capabilities', $capabilities);
 
-        $models = Configure::read('allModels');
+        $models = Configure::read('AllModels');
         ksort($models);
         $this->set('models', $models);
 
-        $crud = Configure::read('entityCapabilities');
+        $crud = Configure::read('EntityCapabilities');
         ksort($crud);
         $crudList = array_keys($crud);
         $this->set('crudList', $crudList);

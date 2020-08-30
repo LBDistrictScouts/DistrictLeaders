@@ -88,7 +88,7 @@ class CapabilitiesController extends AppController
         }
         $this->set('capabilities', $capabilities);
 
-        $models = Configure::read('allModels');
+        $models = Configure::read('AllModels');
         ksort($models);
         $this->set('models', $models);
     }

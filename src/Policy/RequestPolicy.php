@@ -78,10 +78,8 @@ class RequestPolicy implements RequestPolicyInterface
             return new Result(true);
         }
 
-        if (!is_null($identity) && isset($identity)) {
-            if ($identity->buildAndCheckCapability($action, $request->getParam('controller'))) {
-                return new Result(true);
-            }
+        if (isset($identity) && !is_null($identity) && $identity->buildAndCheckCapability($action, $controller)) {
+            return new Result(true, 'Entity Specific Capability Present.');
         }
 
         return new Result(false, 'No Authorisation Rules');

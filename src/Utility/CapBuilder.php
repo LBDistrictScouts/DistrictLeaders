@@ -147,7 +147,7 @@ class CapBuilder
         }
 
         $action = strtoupper($action);
-        $overrides = Configure::read('actionOverrides');
+        $overrides = Configure::read('ActionOverrides');
 
         if (key_exists($action, $overrides)) {
             return $overrides[$action];
@@ -161,7 +161,7 @@ class CapBuilder
      */
     protected static function entityActionTypes()
     {
-        return array_keys(Configure::read('entityCapabilities'));
+        return array_keys(Configure::read('EntityCapabilities'));
     }
 
     /**
@@ -169,7 +169,7 @@ class CapBuilder
      */
     protected static function fieldActionTypes()
     {
-        return array_keys(Configure::read('fieldCapabilities'));
+        return array_keys(Configure::read('FieldCapabilities'));
     }
 
     /**
@@ -179,7 +179,7 @@ class CapBuilder
     {
         $array = [];
 
-        foreach (Configure::read('allModels') as $model => $options) {
+        foreach (Configure::read('AllModels') as $model => $options) {
             if ($options['fieldLock']) {
                 array_push($array, $model);
             }
@@ -327,7 +327,7 @@ class CapBuilder
             return false;
         }
 
-        foreach (Configure::read('baseCapabilities') as $cap) {
+        foreach (Configure::read('BaseCapabilities') as $cap) {
             if ($capabilityCode == $cap[Capability::FIELD_CAPABILITY_CODE]) {
                 return true;
             }

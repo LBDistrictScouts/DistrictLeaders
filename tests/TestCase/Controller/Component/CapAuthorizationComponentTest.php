@@ -159,7 +159,6 @@ class CapAuthorizationComponentTest extends TestCase
                     User::FIELD_LAST_LOGIN,
                     User::FIELD_DELETED,
                     User::FIELD_LAST_LOGIN_IP,
-                    User::FIELD_USER_STATE_ID,
                     User::FIELD_COGNITO_ENABLED,
                     User::FIELD_ALL_ROLE_COUNT,
                     User::FIELD_ACTIVE_ROLE_COUNT,

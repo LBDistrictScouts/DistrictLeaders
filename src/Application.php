@@ -130,6 +130,19 @@ class Application extends BaseApplication implements
             ->noOpen()
             ->noSniff();
 
+        if (Configure::read('debug')) {
+            $unAuthArray = [
+                'className' => 'Authorization.Exception',
+            ];
+        } else {
+            $unAuthArray = [
+                'className' => 'Authorization.Redirect',
+                'url' => '/',
+                'queryParam' => 'redirectUrl',
+                'exceptions' => Configure::read('UnauthorizedExceptions'),
+            ];
+        }
+
         // Catch any exceptions in the lower layers,
         // and make an error page/response
         $middlewareQueue
@@ -161,12 +174,7 @@ class Application extends BaseApplication implements
                     /** @var \App\Model\Entity\User $user */
                     return $user->setAuthorization($auth);
                 },
-                'unauthorizedHandler' => [
-                    'className' => 'Authorization.Redirect',
-                    'url' => '/',
-                    'queryParam' => 'redirectUrl',
-                    'exceptions' => Configure::read('UnauthorizedExceptions'),
-                ],
+                'unauthorizedHandler' => $unAuthArray,
                 'requireAuthorizationCheck' => true,
             ]))
 

@@ -18,12 +18,14 @@ class NotificationsController extends AppController
      */
     public function index()
     {
-        $this->paginate = [
-            'contain' => ['Users', 'NotificationTypes'],
-        ];
-        $notifications = $this->paginate($this->Notifications);
+        $this->Authorization->authorize($this->Notifications);
+
+        $query = $this->Notifications->find()
+            ->contain(['Users', 'NotificationTypes']);
+        $notifications = $this->paginate($this->Authorization->applyScope($query));
 
         $this->set(compact('notifications'));
+        $this->whyPermitted($this->Notifications);
     }
 
     /**
@@ -40,7 +42,12 @@ class NotificationsController extends AppController
         ]);
         $this->Authorization->authorize($notification, 'VIEW');
 
+        if ($notification->user_id == $this->Authentication->getIdentity()->getIdentifier()) {
+            $this->Notifications->markRead($notification);
+        }
+
         $this->set('notification', $notification);
+        $this->whyPermitted($this->Notifications);
     }
 
     /**

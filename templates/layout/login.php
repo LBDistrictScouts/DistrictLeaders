@@ -12,6 +12,7 @@
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
+ * @var mixed $PolicyResult
  */
 
 $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
@@ -50,6 +51,14 @@ try {
             <div class="container" style="padding-bottom: 120px;">
                 <?= $this->Flash->render() ?>
                 <?= $this->fetch('content') ?>
+                <?php $identity = $this->getRequest()->getAttribute('identity'); ?>
+
+                <?php if (!is_null($identity)) : ?>
+                    <?= $this->cell('NotifyModal', [$identity->get('id')])->render() ?>
+                    <?php if (isset($PolicyResult)) {
+                        echo $this->cell('AuthModal', [$PolicyResult])->render();
+                    } ?>
+                <?php endif; ?>
             </div>
         </div>
         <?= $this->element('dark-footer'); ?>

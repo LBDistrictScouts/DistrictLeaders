@@ -15,8 +15,8 @@ declare(strict_types=1);
  */
 namespace App\Policy;
 
+use App\Model\Entity\User;
 use Authorization\Policy\Result;
-use Cake\ORM\Entity;
 
 /**
  * A trait intended to make application tests of your controllers easier.
@@ -43,13 +43,18 @@ trait AppPolicyTrait
             return new Result(true, 'Action specific capability present.');
         }
 
-        if ($resource instanceof Entity) {
-            /** @var \Cake\ORM\Entity $model */
-            $model = $resource->getSource();
+        return null;
+    }
 
-            if ($user->buildAndCheckCapability($action, $model)) {
-                return new Result(true, 'Entity specific capability present.');
-            }
+    /**
+     * @param \App\Model\Entity\User $user The user to be processed
+     * @param string $message The message to record
+     * @return \Authorization\Policy\Result|null
+     */
+    protected function canBuildAndCheck(User $user, string $message): ?Result
+    {
+        if ($user->buildAndCheckCapability('VIEW', 'Notifications')) {
+            return new Result(true, $message);
         }
 
         return null;

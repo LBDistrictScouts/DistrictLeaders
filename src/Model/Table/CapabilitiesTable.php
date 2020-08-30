@@ -133,7 +133,7 @@ class CapabilitiesTable extends Table
      */
     public function installBaseCapabilities()
     {
-        $base = Configure::read('baseCapabilities');
+        $base = Configure::read('BaseCapabilities');
 
         $total = 0;
 
@@ -156,7 +156,7 @@ class CapabilitiesTable extends Table
     public function generateEntityCapabilities($fields = true)
     {
         $count = 0;
-        foreach (Configure::read('allModels') as $model => $options) {
+        foreach (Configure::read('AllModels') as $model => $options) {
             $model = Inflector::camelize($model);
             $count += $this->entityCapability($model, $options['baseLevel'], $options['viewRestricted']);
 
@@ -176,7 +176,7 @@ class CapabilitiesTable extends Table
      */
     public function entityCapability($entity, $baseLevel, $viewRestricted = false)
     {
-        $entityActions = Configure::read('entityCapabilities');
+        $entityActions = Configure::read('EntityCapabilities');
         $count = 0;
 
         foreach ($entityActions as $action => $multiplier) {
@@ -201,7 +201,7 @@ class CapabilitiesTable extends Table
      */
     public function fieldCapability($entity, $baseLevel)
     {
-        $fieldActions = Configure::read('fieldCapabilities');
+        $fieldActions = Configure::read('FieldCapabilities');
 
         $table = $this->getTableLocator()->get($entity);
         if (!($table instanceof Table) || $table->getEntityClass() == 'Cake\ORM\Entity') {

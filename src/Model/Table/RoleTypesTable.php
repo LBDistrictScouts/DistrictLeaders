@@ -49,7 +49,7 @@ class RoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_types');
-        $this->setDisplayField(RoleType::FIELD_ROLE_ABBREVIATION);
+        $this->setDisplayField(RoleType::FIELD_ROLE_TYPE);
         $this->setPrimaryKey(RoleType::FIELD_ID);
 
         $this->belongsTo('SectionTypes', [
@@ -140,7 +140,7 @@ class RoleTypesTable extends Table
         $templateId = $roleType->get(RoleType::FIELD_ROLE_TEMPLATE_ID);
         $template = $this->RoleTemplates->get($templateId);
 
-        $baseCapabilities = Configure::readOrFail('allCapabilities');
+        $baseCapabilities = Configure::readOrFail('AllCapabilities');
         $capabilities = $baseCapabilities;
         if (!empty($template->template_capabilities)) {
             $capabilities = array_merge($capabilities, $template->template_capabilities);

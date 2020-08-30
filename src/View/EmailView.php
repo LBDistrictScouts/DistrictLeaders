@@ -25,7 +25,7 @@ use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  *
  * @property \App\View\Helper\FunctionalHelper $Functional
  * @property \App\View\Helper\JobHelper $Job
- * @property \App\View\Helper\IconHelper $Icon
+ * @property \App\View\Helper\PermissionsHelper $Icon
  * @property \App\View\Helper\InflectionHelper $Inflection
  * @property \App\View\Helper\CapIdentityHelper $Identity
  * @property \App\View\Helper\MarkdownHelper $Markdown

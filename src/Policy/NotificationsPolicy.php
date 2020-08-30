@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
+use App\Model\Entity\Notification;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
@@ -20,39 +21,12 @@ class NotificationsPolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @param \App\Model\Entity\User $subject The User being Edited
+     * @param \App\Model\Entity\Notification $subject The Notification being Viewed
      * @return \Authorization\Policy\ResultInterface
      */
-    public function canUpdate(User $user, User $subject): ResultInterface
+    public function canView(User $user, Notification $subject): ResultInterface
     {
-        if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
-            return new Result(true);
-        }
-
-        if ($user->buildAndCheckCapability('UPDATE', 'Users')) {
-            return new Result(true, 'Has Update Capability.');
-        }
-
-        // Results let you define a 'reason' for the failure.
-        return new Result(false, 'not-owner');
-    }
-
-    /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @param \App\Model\Entity\User $subject The User being Edited
-     * @return \Authorization\Policy\ResultInterface
-     */
-    public function canView(User $user, User $subject): ResultInterface
-    {
-        if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
-            return new Result(true);
-        }
-
-        if ($user->checkCapability('DIRECTORY')) {
-            return new Result(true);
-        }
-
-        if ($user->buildAndCheckCapability('VIEW', 'Users')) {
+        if ($user->id == $subject->user_id && $user->buildAndCheckCapability('VIEW', 'Notifications')) {
             return new Result(true);
         }
 

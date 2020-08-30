@@ -7,7 +7,7 @@
 $this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'Notifications');
-$this->assign('subset', 'All');
+$this->assign('subset', 'Your');
 $this->assign('add', $this->Identity->checkCapability('CREATE_NOTIFICATION'));
 
 ?>

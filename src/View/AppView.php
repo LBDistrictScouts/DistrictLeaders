@@ -22,6 +22,7 @@ use Cake\View\View;
  *
  * Your application’s default view class
  *
+ * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  * @property \App\View\Helper\FunctionalHelper $Functional
  * @property \App\View\Helper\JobHelper $Job
  * @property \App\View\Helper\IconHelper $Icon
@@ -33,13 +34,13 @@ use Cake\View\View;
  * @property \BootstrapUI\View\Helper\FormHelper $Form
  * @property \BootstrapUI\View\Helper\HtmlHelper $Html
  * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
- * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
  * @property \Tools\View\Helper\TimeHelper $Time
  * @property \Tools\View\Helper\FormatHelper $Format
  * @property \Flash\View\Helper\FlashHelper $Flash
  * @property \Search\View\Helper\SearchHelper $Search
  * @property \Queue\View\Helper\QueueProgressHelper $QueueProgress
  * @property \App\View\Helper\CapIdentityHelper $CapIdentity
+ * @property \App\View\Helper\PermissionsHelper $Permissions
  */
 class AppView extends View
 {
@@ -69,6 +70,7 @@ class AppView extends View
         $this->loadHelper('Inflection');
         $this->loadHelper('Icon');
         $this->loadHelper('Job');
+        $this->loadHelper('Permissions');
 
         $this->loadHelper('Identity', ['className' => 'CapIdentity']);
 
