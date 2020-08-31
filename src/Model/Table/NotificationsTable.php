@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\Notification;
+use App\Model\Entity\NotificationType;
+use App\Model\Entity\User;
+use App\Model\Table\Exceptions\MalformedDataException;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Query;
@@ -145,5 +148,106 @@ class NotificationsTable extends Table
         $notification->set(Notification::FIELD_READ_DATE, FrozenTime::now());
 
         return (bool)$this->save($notification);
+    }
+
+    /**
+     * Function to return Email Generation Code String
+     *
+     * @param \App\Model\Entity\Notification $notification The notification entity
+     * @return string
+     */
+    public function getEmailGenerationCode(Notification $notification): string
+    {
+        $notificationType = $this->NotificationTypes->get($notification->notification_type_id);
+
+        return $notificationType->type . '-' . (string)$notification->user_id . '-' . $notificationType->sub_type;
+    }
+
+    /**
+     * @param string $entityTypeCode Email Send Style Notification Entity Code
+     * @param \App\Model\Entity\User $user Notification User Entity
+     * @param string $source Notification Source
+     * @param array|null $body Starting Body for Notification
+     * @param array|null $link Starting Link for Notification
+     * @return \App\Model\Entity\Notification
+     */
+    public function make(
+        string $entityTypeCode,
+        User $user,
+        string $source,
+        ?array $body = [],
+        ?array $link = []
+    ): Notification {
+        $notificationType = $this->NotificationTypes->getTypeCode($entityTypeCode);
+
+        // Prevent none repetitive notifications from repeating
+        $exists = $this->checkShouldMake($notificationType, $user);
+        if ($exists instanceof Notification) {
+            return $exists;
+        }
+
+        $header = $this->NotificationTypes->buildNotificationHeader($notificationType, $user);
+
+        $notification = $this->newEntity([
+            Notification::FIELD_USER_ID => $user->id,
+            Notification::FIELD_NOTIFICATION_TYPE_ID => $notificationType->id,
+            Notification::FIELD_NOTIFICATION_HEADER => $header,
+            Notification::FIELD_NOTIFICATION_SOURCE => $source,
+            Notification::FIELD_BODY_CONTENT => $body,
+            Notification::FIELD_SUBJECT_LINK => $link,
+        ]);
+
+        if ($this->save($notification)) {
+            return $notification;
+        }
+
+        throw new MalformedDataException();
+    }
+
+    /**
+     * Function to determine if a Notification should be made or if it already exists
+     *
+     * @param \App\Model\Entity\NotificationType $notificationType Notification Type for Evaluation
+     * @param \App\Model\Entity\User $user User for Existing Check
+     * @return true|\App\Model\Entity\Notification
+     */
+    protected function checkShouldMake(NotificationType $notificationType, User $user)
+    {
+        if ($notificationType->repetitive) {
+            return true;
+        }
+
+        $findData = [
+            Notification::FIELD_USER_ID => $user->id,
+            Notification::FIELD_NOTIFICATION_TYPE_ID => $notificationType->id,
+        ];
+
+        if ($this->exists($findData)) {
+            $notification = $this->find()->where($findData)->firstOrFail();
+            if ($notification instanceof Notification) {
+                return $notification;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User for initiating welcome notification
+     * @param string|null $source The Notification Source
+     * @return \App\Model\Entity\Notification
+     */
+    public function welcome(User $user, ?string $source = 'System'): Notification
+    {
+        $typeCode = 'USR-' . $user->id . '-NEW';
+
+        $body = [];
+
+        $creator = $this->Users->determineUserCreator($user);
+        if ($creator instanceof User) {
+            $body['creator'] = $creator->full_name;
+        }
+
+        return $this->make($typeCode, $user, $source, $body);
     }
 }

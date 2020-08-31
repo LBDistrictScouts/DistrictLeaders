@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Queue\Model\Entity\QueuedJob;
-
 /**
  * DocumentVersions Controller
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
@@ -118,21 +117,14 @@ class DocumentVersionsController extends AppController
      *
      * @param string|null $documentVersionId Document Version id.
      * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function compass($documentVersionId = null)
     {
         $this->request->allowMethod(['post']);
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
-        $job = $this->DocumentVersions->setImport($documentVersion);
-        if ($job instanceof QueuedJob) {
-            $this->Flash->queue(
-                'The document version has been sent for processing.',
-                ['params' => ['job_id' => $job->id]]
-            );
-        } else {
-            $this->Flash->error(__('The document version could not be queued. Please, try again.'));
-        }
+
+        $this->loadComponent('Queue');
+        $this->Queue->setCompassVersionImport($documentVersion);
 
         return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
     }

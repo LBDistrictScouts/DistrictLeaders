@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Shell\Task;
 
-use Queue\Model\QueueException;
 use Queue\Shell\Task\QueueTask;
 use Queue\Shell\Task\QueueTaskInterface;
 
@@ -11,10 +10,11 @@ use Queue\Shell\Task\QueueTaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\UserStatesTable $UserStates
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
-class QueueCompassTask extends QueueTask implements QueueTaskInterface
+class QueueStateTask extends QueueTask implements QueueTaskInterface
 {
     /**
      * @var int
@@ -29,12 +29,7 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
     /**
      * @var string The Data Key
      */
-    private $entityKey = 'version';
-
-    /**
-     * @var string The Data Key
-     */
-    private $outputKey = 'compass_records';
+    private $outputKey = 'user_records';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
@@ -43,23 +38,23 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId): void
     {
-        if (!key_exists($this->entityKey, $data)) {
-            throw new QueueException('Document Version Number not specified.');
-        }
-
-        $this->loadModel('DocumentVersions');
+        $this->loadModel('UserStates');
+        $this->loadModel('Users');
         $this->loadModel('Queue.QueuedJobs');
 
-        $version = $this->DocumentVersions->get($data[$this->entityKey]);
+        $users = $this->Users->find('all');
+        $total = $users->count();
+        $current = 0;
 
-        $result = $this->DocumentVersions->importCompassRecords($version);
+        foreach ($users as $user) {
+            $this->UserStates->handleUserState($user);
 
-        if (!$result) {
-            throw new QueueException('Compass Import Failed.');
+            $current++;
+            $this->QueuedJobs->updateProgress($jobId, $current / $total);
         }
 
         $job = $this->QueuedJobs->get($jobId);
-        $data[$this->outputKey] = $result;
+        $data[$this->outputKey] = $current;
         $job->set('data', serialize($data));
         $this->QueuedJobs->save($job);
     }

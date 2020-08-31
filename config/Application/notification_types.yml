@@ -7,10 +7,12 @@ NotificationTypes:
     notification_description: Welcome to the System Email & Notification.
     icon: fa-user
     type_code: USR-NEW
+    content_template: welcome
   - notification_type: Password Reset
     notification_description: A password reset password has been triggered.
     icon: fa-unlock
     type_code: USR-PWD
+    content_template: password
   - notification_type: Capabilities Change
     notification_description: Permissions / capabilities in the system have changed.
     icon: fa-key

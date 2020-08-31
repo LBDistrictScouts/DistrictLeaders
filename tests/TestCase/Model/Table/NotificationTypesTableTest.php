@@ -88,6 +88,7 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_TYPE => 'GEN',
             NotificationType::FIELD_SUB_TYPE => 'NOT',
             NotificationType::FIELD_CONTENT_TEMPLATE => 'standard',
+            NotificationType::FIELD_REPETITIVE => false,
         ];
 
         $this->validateInitialise($expected, $this->NotificationTypes, 7);
@@ -192,18 +193,73 @@ class NotificationTypesTableTest extends TestCase
         foreach ($this->NotificationTypes->find() as $type) {
             /** @var array $codes */
             $codes = explode('-', $type->type_code);
-            $actual = $this->NotificationTypes->getTypeCode($codes[0], $codes[1]);
-            TestCase::assertEquals($type->id, $actual);
+            $actual = $this->NotificationTypes->getTypeCode($codes[0] . '-1-' . $codes[1]);
+            TestCase::assertEquals($type, $actual);
         }
 
         // Generic
-        $code = 'GEN';
-        $subCode = 'NOT';
-        $expected = $this->NotificationTypes->getTypeCode($code, $subCode);
+        $code = 'GEN-1-NOT';
+        $expected = $this->NotificationTypes->getTypeCode($code);
 
-        $code = 'NOT';
-        $subCode = TextSafe::shuffle(3);
-        $actual = $this->NotificationTypes->getTypeCode($code, $subCode);
+        $code = 'NOT-1-' . TextSafe::shuffle(3);
+        $actual = $this->NotificationTypes->getTypeCode($code);
         TestCase::assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return \string[][]
+     */
+    public function provideCodeSplitter(): array
+    {
+        return [
+            'Two Code' => [
+                'USR-NEW',
+                [
+                    'type' => 'USR',
+                    'subType' => 'NEW',
+                    'entityId' => null,
+                    'instance' => null,
+                    'typeCode' => 'USR-NEW',
+                    'codeBlocks' => 2,
+                ],
+            ],
+            'Three Code' => [
+                'USR-1-NEW',
+                [
+                    'type' => 'USR',
+                    'subType' => 'NEW',
+                    'entityId' => 1,
+                    'instance' => null,
+                    'typeCode' => 'USR-NEW',
+                    'codeBlocks' => 3,
+                ],
+            ],
+            'Four Code' => [
+                'USR-1-NEW-1',
+                [
+                    'type' => 'USR',
+                    'subType' => 'NEW',
+                    'entityId' => 1,
+                    'instance' => 1,
+                    'typeCode' => 'USR-NEW',
+                    'codeBlocks' => 4,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test getTypeCode method
+     *
+     * @dataProvider provideCodeSplitter
+     * @param string $code Email Code
+     * @param array $expectedReturn Broken Array
+     * @return void
+     */
+    public function testCodeSplitter(string $code, array $expectedReturn): void
+    {
+        $result = $this->NotificationTypes->entityCodeSplitter($code);
+
+        TestCase::assertEquals($expectedReturn, $result);
     }
 }

@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\View\CellTrait;
+
 /**
  * Notifications Controller
  *
@@ -11,6 +13,8 @@ namespace App\Controller;
  */
 class NotificationsController extends AppController
 {
+    use CellTrait;
+
     /**
      * Index method
      *
@@ -46,7 +50,9 @@ class NotificationsController extends AppController
             $this->Notifications->markRead($notification);
         }
 
-        $this->set('notification', $notification);
+        $cell = $this->cell('Information', [$notification]);
+
+        $this->set(compact('notification', 'cell'));
         $this->whyPermitted($this->Notifications);
     }
 

@@ -13,7 +13,8 @@ use Cake\View\Helper;
 class JobHelper extends Helper
 {
     protected $resultKeys = [
-        'records' => 'Parsed Compass Records',
+        'compass_records' => 'Parsed Compass Records',
+        'user_records' => 'Parsed Users',
         'email_send_id' => 'Email Send ID',
         'domainsCount' => 'Synced Domains',
         'usersCount' => 'Synced Directory Users',
@@ -24,12 +25,14 @@ class JobHelper extends Helper
         'version' => 'Document Version',
         'directory' => 'Directory',
         'email_generation_code' => 'Email Generation Code',
+        'role_template_id' => 'Role Template ID',
     ];
 
     protected $linkKeys = [
         'version' => '/document-versions/view/{0}',
         'directory' => '/directories/view/{0}',
         'email_send_id' => '/email-sends/view/{0}',
+        'role_template_id' => '/role-templates/view/{0}',
     ];
 
     /**

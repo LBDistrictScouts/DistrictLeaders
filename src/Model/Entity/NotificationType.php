@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Notification[] $notifications
  * @property string $type
  * @property string $sub_type
+ * @property bool $repetitive
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -73,9 +74,22 @@ class NotificationType extends Entity
         return $this->typeSplitter()['subType'];
     }
 
+    /**
+     * Notification Type
+     *
+     * @return bool
+     */
+    protected function _getRepetitive(): bool
+    {
+        $repetitive = ['USR-PWD', 'USR-CCH'];
+
+        return (bool)in_array($this->type_code, $repetitive);
+    }
+
     protected $_virtual = [
-        'type',
-        'sub_type',
+        self::FIELD_TYPE,
+        self::FIELD_SUB_TYPE,
+        self::FIELD_REPETITIVE,
     ];
 
     public const FIELD_ID = 'id';
@@ -87,4 +101,5 @@ class NotificationType extends Entity
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_TYPE = 'type';
     public const FIELD_SUB_TYPE = 'sub_type';
+    public const FIELD_REPETITIVE = 'repetitive';
 }

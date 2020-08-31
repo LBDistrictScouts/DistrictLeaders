@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
+use App\Model\Entity\DocumentType;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 
 /**
  * App\Controller\DocumentTypesController Test Case
@@ -13,43 +13,17 @@ use Cake\TestSuite\TestCase;
  */
 class DocumentTypesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'DocumentTypes';
 
     /**
-     * Fixtures
-     *
-     * @var array
+     * @var array $validEntityData Valid creation Data.
      */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
+    private $validEntityData = [
+        DocumentType::FIELD_DOCUMENT_TYPE => 'New Document Type',
+        DocumentType::FIELD_SPECIAL_CAPABILITY => 'HISTORY',
     ];
 
     /**
@@ -59,7 +33,7 @@ class DocumentTypesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -69,7 +43,7 @@ class DocumentTypesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -79,7 +53,13 @@ class DocumentTypesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -89,7 +69,13 @@ class DocumentTypesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -99,6 +85,10 @@ class DocumentTypesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

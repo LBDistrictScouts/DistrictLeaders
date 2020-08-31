@@ -19,7 +19,8 @@ class GoogleAuthForm extends Form
      */
     protected function buildSchema(Schema $schema): Schema
     {
-        $schema->addField('auth_code', 'string');
+        $schema
+            ->addField(self::FIELD_AUTH_CODE, 'string');
 
         return $schema;
     }
@@ -34,4 +35,6 @@ class GoogleAuthForm extends Form
     {
         return true;
     }
+
+    public const FIELD_AUTH_CODE = 'auth_code';
 }

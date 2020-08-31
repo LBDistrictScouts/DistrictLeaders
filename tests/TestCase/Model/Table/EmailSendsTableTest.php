@@ -78,30 +78,42 @@ class EmailSendsTableTest extends TestCase
      * @return array
      * @throws
      */
-    private function getExpected()
+    private function getExpected(string $type, int $sendId, int $notificationId): array
     {
+        $typeArray = [
+            'NEW' => [
+                'subject' => 'Welcome to Site',
+                'type_id' => 2,
+                'action' => 'welcome',
+            ],
+            'PWD' => [
+                'subject' => 'Password Reset for',
+                'type_id' => 3,
+                'action' => 'password',
+            ],
+        ];
+
         return [
-            'id' => 2,
+            'id' => $sendId,
             'message_send_code' => null,
             'user_id' => 2,
-            'subject' => 'Welcome to Site Llama Fish',
+            'subject' => $typeArray[$type]['subject'] . ' Llama Fish',
             'routing_domain' => null,
             'from_address' => null,
             'friendly_from' => null,
-            'notification_id' => 2,
-            'email_generation_code' => 'USR-2-NEW',
-            'email_template' => 'new_user',
+            'notification_id' => $notificationId,
+            'email_generation_code' => 'USR-2-' . $type . '-' . (string)($sendId - 1),
+            'email_template' => $typeArray[$type]['action'],
             'include_token' => true,
             'tokens' => [
                 [
-                    'id' => 2,
-                    'email_send_id' => 2,
+                    'id' => $sendId,
+                    'email_send_id' => $sendId,
                     'utilised' => null,
                     'active' => true,
                     'token_header' => [
                         'redirect' => [
-                            'action' => 'token',
-                            'prefix' => false,
+                            'action' => $typeArray[$type]['action'],
                             'controller' => 'Users',
                         ],
                         'authenticate' => true,
@@ -109,16 +121,43 @@ class EmailSendsTableTest extends TestCase
                 ],
             ],
             'notification' => [
-                Notification::FIELD_NOTIFICATION_HEADER => 'Welcome to Site Llama Fish',
-                Notification::FIELD_ID => 2,
+                Notification::FIELD_NOTIFICATION_HEADER => $typeArray[$type]['subject'] . ' Llama Fish',
+                Notification::FIELD_ID => $notificationId,
                 Notification::FIELD_USER_ID => 2,
-                Notification::FIELD_NOTIFICATION_TYPE_ID => 2,
+                Notification::FIELD_NOTIFICATION_TYPE_ID => $typeArray[$type]['type_id'],
                 Notification::FIELD_READ_DATE => null,
-                Notification::FIELD_NOTIFICATION_SOURCE => 'User',
+                Notification::FIELD_NOTIFICATION_SOURCE => 'System',
                 Notification::FIELD_BODY_CONTENT => [],
-                Notification::FIELD_SUBJECT_LINK => null,
+                Notification::FIELD_SUBJECT_LINK => [],
             ],
         ];
+    }
+
+    private function validateExpected(string $type, int $sendId, int $notificationId): void
+    {
+        $expected = $this->getExpected($type, $sendId, $notificationId);
+        $actual = $this->EmailSends->get($sendId, [
+            'contain' => [
+                'Notifications',
+                'Tokens',
+            ]])->toArray();
+
+        $dates = [
+            'sent',
+            'created',
+            'modified',
+            'deleted',
+            'expires',
+        ];
+
+        foreach ($dates as $date) {
+            unset($actual[$date]);
+            unset($actual['tokens'][0][$date]);
+            unset($actual['notification'][$date]);
+        }
+        unset($actual['tokens'][0]['random_number']);
+
+        TestCase::assertEquals($expected, $actual);
     }
 
     /**
@@ -236,64 +275,53 @@ class EmailSendsTableTest extends TestCase
         TestCase::assertFalse($this->EmailSends->save($new));
     }
 
+    public function provideMake(): array
+    {
+        return [
+            'Welcome New User (non-repetitive)' => [
+                'USR-2-NEW',
+                'NEW',
+                false,
+            ],
+            'Password Reset (repetitive)' => [
+                'USR-2-PWD',
+                'PWD',
+                true,
+            ],
+        ];
+    }
+
     /**
      * Test Make method
      *
+     * @param string $emailGenerationCode Email Generation Code for Testing
+     * @param bool $expectedToIterate Expect Notification ID to iterate or stick
+     * @dataProvider provideMake
      * @return void
-     * @throws
      */
-    public function testMake()
+    public function testMake(string $emailGenerationCode, string $type, bool $expectedToIterate): void
     {
-        $makeArray = [
-            'USR-2-NEW' => 2,
-        ];
+        $result = $this->EmailSends->make($emailGenerationCode);
+        $sendId = 2;
+        $notificationId = 2;
 
-        foreach ($makeArray as $genCode => $expId) {
-            $result = $this->EmailSends->make($genCode);
-            TestCase::assertEquals($expId, $result);
+        TestCase::assertEquals($sendId, $result->notification_id);
+        $this->validateExpected($type, $sendId, $notificationId);
 
-            // Check second is blocked.
-            TestCase::assertFalse($this->EmailSends->make($genCode));
+        // Check second is not blocked.
+        $sendId++;
+        if ($expectedToIterate) {
+            $notificationId++;
         }
+        TestCase::assertEquals($notificationId, $this->EmailSends->make($emailGenerationCode)->notification_id);
+        $this->validateExpected($type, $sendId, $notificationId);
 
-        $expected = $this->getExpected();
-
-        $actual = $this->EmailSends->get(2, [
-            'contain' => [
-                'Notifications',
-                'Tokens',
-            ]])->toArray();
-
-        $dates = [
-            'sent',
-            'created',
-            'modified',
-            'deleted',
-            'expires',
-        ];
-
-        foreach ($dates as $date) {
-            unset($actual[$date]);
-            unset($actual['tokens'][0][$date]);
-            unset($actual['notification'][$date]);
+        $sendId++;
+        if ($expectedToIterate) {
+            $notificationId++;
         }
-        unset($actual['tokens'][0]['random_number']);
-
-        TestCase::assertEquals($expected, $actual);
-
-        $exemptMakeArray = [
-            'USR-2-PWD' => 3,
-        ];
-
-        foreach ($exemptMakeArray as $genCode => $expId) {
-            $result = $this->EmailSends->make($genCode);
-            TestCase::assertEquals($expId, $result);
-
-            // Check second is not blocked.
-            TestCase::assertEquals($expId + 1, $this->EmailSends->make($genCode));
-
-            // Check third is not blocked
-            TestCase::assertEquals($expId + 2, $this->EmailSends->make($genCode));
-        }
+        // Check third is not blocked
+        TestCase::assertEquals($notificationId, $this->EmailSends->make($emailGenerationCode)->notification_id);
+        $this->validateExpected($type, $sendId, $notificationId);
     }
 }

@@ -7,7 +7,6 @@ use App\Model\Entity\Document;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
-use Cake\Datasource\ModelAwareTrait;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -30,17 +29,10 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @method \App\Model\Entity\DocumentVersion findOrCreate($search, callable $callback = null, $options = [])
  * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class DocumentVersionsTable extends Table
 {
     use FilesystemAwareTrait;
-    use ModelAwareTrait;
-
-    /**
-     * @var \Queue\Model\Table\QueuedJobsTable
-     */
-    private $QueuedJobs;
 
     /**
      * Initialize method
@@ -158,17 +150,6 @@ class DocumentVersionsTable extends Table
         }
 
         return false;
-    }
-
-    /**
-     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
-     * @return \Queue\Model\Entity\QueuedJob
-     */
-    public function setImport(DocumentVersion $documentVersion)
-    {
-        $this->loadModel('Queue.QueuedJobs');
-
-        return $this->QueuedJobs->createJob('Compass', ['version' => $documentVersion->id]);
     }
 
     /**

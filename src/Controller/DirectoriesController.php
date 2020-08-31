@@ -5,13 +5,13 @@ namespace App\Controller;
 
 use App\Form\GoogleAuthForm;
 use App\Model\Entity\Directory;
-use Queue\Model\Entity\QueuedJob;
 
 /**
  * Directories Controller
  *
  * @property \App\Model\Table\DirectoriesTable $Directories
  * @property \App\Controller\Component\GoogleClientComponent GoogleClient
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
@@ -246,15 +246,9 @@ class DirectoriesController extends AppController
     {
         $this->request->allowMethod(['post']);
         $directory = $this->Directories->get($directoryId);
-        $job = $this->Directories->setImport($directory);
-        if ($job instanceof QueuedJob) {
-            $this->Flash->queue(
-                'The directory has been set for sync.',
-                ['params' => ['job_id' => $job->id]]
-            );
-        } else {
-            $this->Flash->error(__('The directory sync could not be queued. Please, try again.'));
-        }
+
+        $this->loadComponent('Queue');
+        $this->Queue->setDirectoryImport($directory);
 
         return $this->redirect(['controller' => 'Directories', 'action' => 'view', $directoryId]);
     }

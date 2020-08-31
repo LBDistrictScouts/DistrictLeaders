@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\DocumentType;
+
 /**
  * DocumentTypes Controller
  *
@@ -52,7 +54,7 @@ class DocumentTypesController extends AppController
             if ($this->DocumentTypes->save($documentType)) {
                 $this->Flash->success(__('The document type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
             }
             $this->Flash->error(__('The document type could not be saved. Please, try again.'));
         }
@@ -76,7 +78,7 @@ class DocumentTypesController extends AppController
             if ($this->DocumentTypes->save($documentType)) {
                 $this->Flash->success(__('The document type has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
             }
             $this->Flash->error(__('The document type could not be saved. Please, try again.'));
         }

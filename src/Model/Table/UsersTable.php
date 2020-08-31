@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Audit;
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchemaInterface;
@@ -494,5 +495,29 @@ class UsersTable extends Table
     public function isValidDomainEmail($value, $context)
     {
         return $this->Roles->Sections->ScoutGroups->domainVerify($value);
+    }
+
+    /**
+     * Function to determine which user created a passed user
+     *
+     * @param \App\Model\Entity\User $user User to be determined
+     * @return \App\Model\Entity\User|null
+     */
+    public function determineUserCreator(User $user): ?User
+    {
+        $userAudit = $this->Audits
+            ->find('users')
+            ->where([
+                Audit::FIELD_AUDIT_RECORD_ID => $user->id,
+            ])
+            ->contain('Users')
+            ->orderAsc(Audit::FIELD_CHANGE_DATE)
+            ->first();
+
+        if ($userAudit instanceof Audit && $userAudit->has(Audit::FIELD_USER) && $userAudit->user instanceof User) {
+            return $userAudit->user;
+        }
+
+        return null;
     }
 }

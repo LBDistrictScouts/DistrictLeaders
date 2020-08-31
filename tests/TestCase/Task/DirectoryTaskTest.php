@@ -8,7 +8,7 @@ use App\Test\TestCase\QueueTestCase as TestCase;
 /**
  * App\Mailer\BasicMailer Test Case
  */
-class EmailTaskTest extends TestCase
+class DirectoryTaskTest extends TestCase
 {
     /**
      * Test initial setup
@@ -17,6 +17,8 @@ class EmailTaskTest extends TestCase
      */
     public function testEmailQueueJob()
     {
+        $this->markTestIncomplete();
+
         $originalJobCount = $this->QueuedJobs->find('all')->count();
         TestCase::assertEquals(0, $originalJobCount);
 
@@ -50,11 +52,11 @@ class EmailTaskTest extends TestCase
                 'Record not found in table "users" with primary key [NULL]',
                 'Cake\Datasource\Exception\InvalidPrimaryKeyException',
             ],
-//            'Make Failure' => [
-//                ['email_generation_code' => 'BOW-2-'],
-//                'Make Failed.',
-//                'Queue\Model\QueueException',
-//            ],
+            'Make Failure' => [
+                ['email_generation_code' => 'BOW-2-'],
+                'Make Failed.',
+                'Queue\Model\QueueException',
+            ],
         ];
     }
 
@@ -69,6 +71,8 @@ class EmailTaskTest extends TestCase
      */
     public function testEmailQueueJobCodeException(array $dataArray, string $exceptionExpected, string $exceptionClass)
     {
+        $this->markTestIncomplete();
+
         $originalJobCount = $this->QueuedJobs->find('all')->count();
         TestCase::assertEquals(0, $originalJobCount);
 

@@ -19,6 +19,15 @@
                     'class' => 'btn btn-primary',
                 ]
             ) ?>
+            <?= $this->Form->postLink(
+                'Process User States',
+                ['controller' => 'UserStates', 'action' => 'process'],
+                [
+                    'confirm' => __d('queue', 'Are you sure you want to trigger system User State processing?'),
+                    'role' => 'button',
+                    'class' => 'btn btn-primary',
+                ]
+            ) ?>
         </div>
     </div>
 </div>

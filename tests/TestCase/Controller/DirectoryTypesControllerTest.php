@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
+use App\Model\Entity\DirectoryType;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 
 /**
  * App\Controller\DirectoryTypesController Test Case
@@ -13,16 +13,17 @@ use Cake\TestSuite\TestCase;
  */
 class DirectoryTypesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
+    /**
+     * @var string $controller The Name of the controller being interrogated.
+     */
+    private $controller = 'DirectoryTypes';
 
     /**
-     * Fixtures
-     *
-     * @var array
+     * @var array $validEntityData Valid creation Data.
      */
-    protected $fixtures = [
-        'app.DirectoryTypes',
-        'app.Directories',
+    private $validEntityData = [
+        DirectoryType::FIELD_DIRECTORY_TYPE => 'This random thing',
+        DirectoryType::FIELD_DIRECTORY_TYPE_CODE => 'NEW_TYPE_CODE',
     ];
 
     /**
@@ -30,9 +31,9 @@ class DirectoryTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex(): void
+    public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryIndexGet($this->controller);
     }
 
     /**
@@ -40,9 +41,9 @@ class DirectoryTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView(): void
+    public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryViewGet($this->controller);
     }
 
     /**
@@ -50,9 +51,15 @@ class DirectoryTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd(): void
+    public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryAddGet($this->controller);
+
+        $this->tryAddPost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 
     /**
@@ -60,9 +67,15 @@ class DirectoryTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit(): void
+    public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryEditGet($this->controller);
+
+        $this->tryEditPost(
+            $this->controller,
+            $this->validEntityData,
+            1
+        );
     }
 
     /**
@@ -70,8 +83,12 @@ class DirectoryTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete(): void
+    public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->tryDeletePost(
+            $this->controller,
+            $this->validEntityData,
+            2
+        );
     }
 }

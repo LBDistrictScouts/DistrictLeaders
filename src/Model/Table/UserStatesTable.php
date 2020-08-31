@@ -221,4 +221,20 @@ class UserStatesTable extends Table
 
         return $user;
     }
+
+    /**
+     * @param \App\Model\Entity\User $user User to be Evaluated
+     * @return void
+     */
+    public function handleUserState(User $user): void
+    {
+        $user = $this->determineUserState($user);
+        $this->Users->save($user, ['validate' => false]);
+
+//        $state = $this->get($user->user_state_id);
+
+        if (!$user->hasValue(User::FIELD_USERNAME)) {
+            $this->Users->Notifications->welcome($user);
+        }
+    }
 }

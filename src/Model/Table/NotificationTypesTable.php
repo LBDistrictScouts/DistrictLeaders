@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\NotificationType;
+use App\Model\Entity\User;
 use App\Model\Table\Traits\BaseInstallerTrait;
+use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -119,18 +121,129 @@ class NotificationTypesTable extends Table
     /**
      * install the application status config
      *
-     * @param string $type The Type of the Notification
-     * @param string $subtype The SubType
-     * @return mixed
+     * @param string $entityCode Notification Type Code
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
+     * @return \App\Model\Entity\NotificationType
      */
-    public function getTypeCode($type, $subtype)
+    public function getTypeCode(string $entityCode): NotificationType
     {
-        $code = $type . '-' . $subtype;
+        $typeArray = $this->entityCodeSplitter($entityCode);
+        $code = $typeArray['typeCode'];
 
         if ($this->exists(['type_code' => $code])) {
-            return $this->find()->where(['type_code' => $code])->first()->id;
+            $notificationType = $this->find()->where(['type_code' => $code])->first();
+        } else {
+            $notificationType = $this->find()->where(['type_code' => 'GEN-NOT'])->first();
         }
 
-        return $this->find()->where(['type_code' => 'GEN-NOT'])->first()->id;
+        if ($notificationType instanceof NotificationType) {
+            return $notificationType;
+        }
+
+        throw new RecordNotFoundException();
+    }
+
+    /**
+     * @param string $emailGenerationCode The Email Generation Code
+     * @return string[]
+     */
+    public function entityCodeSplitter(string $emailGenerationCode): array
+    {
+        $type = null;
+        $subType = null;
+        $entityId = null;
+        $instance = null;
+
+        $codeBlocks = substr_count($emailGenerationCode, '-') + 1;
+        $generationArray = explode('-', $emailGenerationCode, $codeBlocks);
+
+        $type = $generationArray[0];
+
+        // Sub Type
+        if ($codeBlocks == 2) {
+            $subType = $generationArray[1];
+        }
+
+        if ($codeBlocks >= 3) {
+            $subType = $generationArray[2];
+        }
+
+        // Entity ID
+        if ($codeBlocks >= 3 && is_numeric($generationArray[1])) {
+            $entityId = $generationArray[1];
+        }
+
+        // Instance Count
+        if ($codeBlocks >= 4 && is_numeric($generationArray[3])) {
+            $instance = $generationArray[3];
+        }
+
+        $typeCode = $type . '-' . $subType;
+
+        return compact('type', 'subType', 'entityId', 'typeCode', 'instance', 'codeBlocks');
+    }
+
+    /**
+     * Function to build Notification Standard Header
+     *
+     * @param \App\Model\Entity\NotificationType $notificationType Notification Type for Header Build
+     * @param \App\Model\Entity\User $user User for Header Context
+     * @return string
+     */
+    public function buildNotificationHeader(NotificationType $notificationType, User $user): string
+    {
+        if ($notificationType->type == 'USR') {
+            switch ($notificationType->sub_type) {
+                case 'PWD':
+                    $header = 'Password Reset for {0}';
+                    break;
+                case 'CCH':
+                    $header = 'Permissions Changed for {0}';
+                    break;
+                case 'NEW':
+                    $header = 'Welcome to Site {0}';
+                    break;
+                default:
+                    return '';
+            }
+
+            return __($header, $user->full_name);
+        }
+
+        return '';
+    }
+
+    /**
+     * Function to build Notification Standard Header
+     *
+     * @param \App\Model\Entity\NotificationType $notificationType Notification Type
+     * @return array
+     */
+    public function buildNotificationLink(NotificationType $notificationType): array
+    {
+        if ($notificationType->type == 'USR') {
+            switch ($notificationType->sub_type) {
+                case 'PWD':
+                    return [
+                        'controller' => 'Users',
+                        'action' => 'password',
+                    ];
+                case 'CCH':
+                    return [
+                        'controller' => 'Pages',
+                        'action' => 'display',
+                        'permissions',
+                    ];
+                case 'NEW':
+                    return [
+                        'controller' => 'Users',
+                        'action' => 'welcome',
+                    ];
+                default:
+                    return [];
+            }
+        }
+
+        return [];
     }
 }

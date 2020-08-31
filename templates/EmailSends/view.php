@@ -148,7 +148,6 @@
                 <th scope="col"><?= __('Deleted') ?></th>
                 <th scope="col"><?= __('Hash') ?></th>
                 <th scope="col"><?= __('Random Number') ?></th>
-                <th scope="col"><?= __('Token Header') ?></th>
                 <th scope="col"><?= __('Email Send Id') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
@@ -164,7 +163,6 @@
                 <td><?= h($tokens->deleted) ?></td>
                 <td><?= h($tokens->hash) ?></td>
                 <td><?= h($tokens->random_number) ?></td>
-                <td><?= h($tokens->token_header) ?></td>
                 <td><?= h($tokens->email_send_id) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Tokens', 'action' => 'view', $tokens->id]) ?>
