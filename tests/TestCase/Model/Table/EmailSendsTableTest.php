@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Notification;
 use App\Model\Table\EmailSendsTable;
+use App\Test\TestCase\EmailTestCase as TestCase;
 use Cake\I18n\FrozenTime;
-use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Table\EmailSendsTable Test Case
@@ -18,38 +19,6 @@ class EmailSendsTableTest extends TestCase
      * @var \App\Model\Table\EmailSendsTable
      */
     public $EmailSends;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
 
     /**
      * setUp method
@@ -140,18 +109,14 @@ class EmailSendsTableTest extends TestCase
                 ],
             ],
             'notification' => [
-                'notification_header' => 'Welcome to Site Llama Fish',
-                'id' => 2,
-                'user_id' => 2,
-                'notification_type_id' => 2,
-                'new' => true,
-                'text' => null,
-                'read_date' => null,
-                'notification_source' => 'User',
-                'link_id' => null,
-                'link_controller' => null,
-                'link_prefix' => false,
-                'link_action' => null,
+                Notification::FIELD_NOTIFICATION_HEADER => 'Welcome to Site Llama Fish',
+                Notification::FIELD_ID => 2,
+                Notification::FIELD_USER_ID => 2,
+                Notification::FIELD_NOTIFICATION_TYPE_ID => 2,
+                Notification::FIELD_READ_DATE => null,
+                Notification::FIELD_NOTIFICATION_SOURCE => 'User',
+                Notification::FIELD_BODY_CONTENT => [],
+                Notification::FIELD_SUBJECT_LINK => null,
             ],
         ];
     }

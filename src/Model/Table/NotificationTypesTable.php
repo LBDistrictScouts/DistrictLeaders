@@ -21,7 +21,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class NotificationTypesTable extends Table
 {
@@ -60,27 +59,34 @@ class NotificationTypesTable extends Table
 
         $validator
             ->scalar(NotificationType::FIELD_NOTIFICATION_TYPE)
-            ->requirePresence(NotificationType::FIELD_NOTIFICATION_TYPE)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_TYPE, 'create')
             ->maxLength(NotificationType::FIELD_NOTIFICATION_TYPE, 45)
             ->notEmptyString(NotificationType::FIELD_NOTIFICATION_TYPE);
 
         $validator
             ->scalar(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
-            ->requirePresence(NotificationType::FIELD_NOTIFICATION_DESCRIPTION)
+            ->requirePresence(NotificationType::FIELD_NOTIFICATION_DESCRIPTION, 'create')
             ->maxLength(NotificationType::FIELD_NOTIFICATION_DESCRIPTION, 255)
             ->notEmptyString(NotificationType::FIELD_NOTIFICATION_DESCRIPTION);
 
         $validator
             ->scalar(NotificationType::FIELD_ICON)
-            ->requirePresence(NotificationType::FIELD_ICON)
+            ->requirePresence(NotificationType::FIELD_ICON, 'create')
             ->maxLength(NotificationType::FIELD_ICON, 45)
             ->notEmptyString(NotificationType::FIELD_ICON);
 
         $validator
             ->scalar(NotificationType::FIELD_TYPE_CODE)
-            ->requirePresence(NotificationType::FIELD_TYPE_CODE)
+            ->requirePresence(NotificationType::FIELD_TYPE_CODE, 'create')
+            ->regex(NotificationType::FIELD_TYPE_CODE, '/^([A-Z]{3}(-)[A-Z]{3})$/')
             ->maxLength(NotificationType::FIELD_TYPE_CODE, 7)
             ->notEmptyString(NotificationType::FIELD_TYPE_CODE);
+
+        $validator
+            ->scalar(NotificationType::FIELD_CONTENT_TEMPLATE)
+            ->requirePresence(NotificationType::FIELD_CONTENT_TEMPLATE, 'create')
+            ->maxLength(NotificationType::FIELD_CONTENT_TEMPLATE, 32)
+            ->notEmptyString(NotificationType::FIELD_CONTENT_TEMPLATE);
 
         return $validator;
     }

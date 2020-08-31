@@ -21,7 +21,7 @@ $this->assign('entity', 'Users');
         $isSelf = ($this->Identity->getId() == $user->id);
 
         $args[4] = $user::FIELD_USERNAME;
-        echo $this->Identity->buildAndCheckCapability(...$args) || $isSelf ? $this->Form->control($user::FIELD_USERNAME) : '';
+        echo $isSelf ? $this->Form->control($user::FIELD_USERNAME) : '';
 
         $args[4] = $user::FIELD_MEMBERSHIP_NUMBER;
         echo $this->Identity->buildAndCheckCapability(...$args) || $isSelf ? $this->Form->control($user::FIELD_MEMBERSHIP_NUMBER) : '';

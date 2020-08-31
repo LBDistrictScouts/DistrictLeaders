@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property string|null $notification_description
  * @property string|null $icon
  * @property string $type_code
- *
+ * @property string $content_template
  * @property \App\Model\Entity\Notification[] $notifications
  * @property string $type
  * @property string $sub_type
@@ -36,6 +36,7 @@ class NotificationType extends Entity
         'notification_description' => true,
         'icon' => true,
         'type_code' => true,
+        'content_template' => true,
         'notifications' => true,
     ];
 
@@ -82,6 +83,7 @@ class NotificationType extends Entity
     public const FIELD_NOTIFICATION_DESCRIPTION = 'notification_description';
     public const FIELD_ICON = 'icon';
     public const FIELD_TYPE_CODE = 'type_code';
+    public const FIELD_CONTENT_TEMPLATE = 'content_template';
     public const FIELD_NOTIFICATIONS = 'notifications';
     public const FIELD_TYPE = 'type';
     public const FIELD_SUB_TYPE = 'sub_type';

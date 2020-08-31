@@ -20,14 +20,14 @@ class NotificationTypesTableTest extends TestCase
      *
      * @var \App\Model\Table\NotificationTypesTable
      */
-    public $NotificationTypes;
+    protected $NotificationTypes;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.NotificationTypes',
     ];
 
@@ -68,6 +68,7 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 'Balance Outstanding on Invoice',
             NotificationType::FIELD_ICON => 'fa-clock',
             NotificationType::FIELD_TYPE_CODE => TextSafe::shuffle(3) . '-' . TextSafe::shuffle(3),
+            NotificationType::FIELD_CONTENT_TEMPLATE => 'welcome',
         ];
     }
 
@@ -76,7 +77,7 @@ class NotificationTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             NotificationType::FIELD_ID => 1,
@@ -86,6 +87,7 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_TYPE_CODE => 'GEN-NOT',
             NotificationType::FIELD_TYPE => 'GEN',
             NotificationType::FIELD_SUB_TYPE => 'NOT',
+            NotificationType::FIELD_CONTENT_TEMPLATE => 'standard',
         ];
 
         $this->validateInitialise($expected, $this->NotificationTypes, 7);
@@ -96,7 +98,7 @@ class NotificationTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -108,6 +110,7 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_ICON,
             NotificationType::FIELD_NOTIFICATION_DESCRIPTION,
             NotificationType::FIELD_TYPE_CODE,
+            NotificationType::FIELD_CONTENT_TEMPLATE,
         ];
 
         $this->validateRequired($required, $this->NotificationTypes, [$this, 'getGood']);
@@ -117,18 +120,34 @@ class NotificationTypesTableTest extends TestCase
             NotificationType::FIELD_ICON,
             NotificationType::FIELD_NOTIFICATION_DESCRIPTION,
             NotificationType::FIELD_TYPE_CODE,
+            NotificationType::FIELD_CONTENT_TEMPLATE,
         ];
 
         $this->validateNotEmpties($notEmpties, $this->NotificationTypes, [$this, 'getGood']);
 
         $maxLengths = [
-            'notification_description' => 255,
-            'notification_type' => 45,
-            'icon' => 45,
-            'type_code' => 7,
+            NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 255,
+            NotificationType::FIELD_NOTIFICATION_TYPE => 45,
+            NotificationType::FIELD_ICON => 45,
+            NotificationType::FIELD_TYPE_CODE => 7,
+            NotificationType::FIELD_CONTENT_TEMPLATE => 32,
         ];
 
         $this->validateMaxLengths($maxLengths, $this->NotificationTypes, [$this, 'getGood']);
+
+        $regex = [
+            NotificationType::FIELD_TYPE_CODE => [
+                TextSafe::shuffle(3) . '-' . TextSafe::shuffle(3) => true,
+                TextSafe::shuffle(4) . '-' . TextSafe::shuffle(3) => false,
+                TextSafe::shuffle(3) . '-' . TextSafe::shuffle(4) => false,
+                TextSafe::shuffle(2) . '-' . TextSafe::shuffle(3) => false,
+                TextSafe::shuffle(3) . '-' . TextSafe::shuffle(2) => false,
+                TextSafe::shuffle(3) . '*' . TextSafe::shuffle(3) => false,
+                TextSafe::shuffle(3) . '-' . TextSafe::shuffle(4) => false,
+            ],
+        ];
+
+        $this->validateRegex($regex, $this->NotificationTypes, [$this, 'getGood']);
     }
 
     /**
@@ -136,7 +155,7 @@ class NotificationTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->validateUniqueRule(
             NotificationType::FIELD_NOTIFICATION_TYPE,
@@ -152,21 +171,21 @@ class NotificationTypesTableTest extends TestCase
     }
 
     /**
-     * Test installBaseStatuses method
+     * Test installBaseNotificationTypes method
      *
      * @return void
      */
-    public function testInstallBaseTypes()
+    public function testInstallBaseNotificationTypes(): void
     {
         $this->validateInstallBase($this->NotificationTypes);
     }
 
     /**
-     * Test installBaseStatuses method
+     * Test getTypeCode method
      *
      * @return void
      */
-    public function testGetTypeCode()
+    public function testGetTypeCode(): void
     {
         // Known
         /** @var \App\Model\Entity\NotificationType $type */

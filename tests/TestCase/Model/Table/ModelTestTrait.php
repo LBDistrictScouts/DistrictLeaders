@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 
@@ -25,17 +27,22 @@ trait ModelTestTrait
         'maxLength' => 'The provided value is invalid',
         'unique' => 'The provided value is invalid',
         'validDomainEmail' => 'You must use a Scouting Email Address',
+        'regex' => 'The provided value is invalid',
     ];
 
     /**
      * @param \Cake\Datasource\EntityInterface $entity
      * @param string $field The Field expected to error
-     * @param string $message The expected error message output
      * @param string $errorType the expected error type
+     * @param string|null $message The expected error message output
      * @return void
      */
-    private function checkError($entity, $field, $errorType, $message = null)
-    {
+    private function checkError(
+        EntityInterface $entity,
+        string $field,
+        string $errorType,
+        ?string $message = null
+    ) {
         if (!key_exists($errorType, $this->defaultErrorMessages)) {
             TestCase::assertTrue(false, 'No Error type exists for this field: ' . $field);
         }
@@ -55,7 +62,7 @@ trait ModelTestTrait
         TestCase::assertSame(
             $message,
             $entity->getError($field)[$errorType],
-            'Error Type Message doesn\'t match for field: ' . $field
+            'Error Type Message doesn\'t match for field: ' . $field . '. It is: ' . $entity->getError($field)[$errorType]
         );
     }
 
@@ -164,7 +171,9 @@ trait ModelTestTrait
 
         foreach ($maxLengthFields as $maxField => $maxLength) {
             $maxLengthArray = call_user_func($good);
-            $maxLengthArray[$maxField] = substr($string, 1, $maxLength);
+            if (strlen($maxLengthArray[$maxField]) != $maxLength) {
+                $maxLengthArray[$maxField] = substr($string, 1, $maxLength);
+            }
             $new = $table->newEntity($maxLengthArray, ['validate' => $validator]);
             TestCase::assertInstanceOf($instance, $table->save($new));
 
@@ -173,6 +182,33 @@ trait ModelTestTrait
             $new = $table->newEntity($newMaxLengthArray, ['validate' => $validator]);
             $this->checkError($new, $maxField, 'maxLength');
             TestCase::assertFalse($table->save($new));
+        }
+    }
+
+    /**
+     * @param array $regex The Regex Field with various passing and erring strings
+     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param callable $good The Good Generation Function
+     * @param string|null $validator The Validator to be tested
+     * @return void
+     */
+    protected function validateRegex(array $regex, Table $table, callable $good, ?string $validator = 'default')
+    {
+        $instance = $table->getEntityClass();
+
+        foreach ($regex as $regexField => $testArray) {
+            foreach ($testArray as $textValue => $expected) {
+                $newEntityData = call_user_func($good);
+                $newEntityData[$regexField] = $textValue;
+                $new = $table->newEntity($newEntityData, ['validate' => $validator]);
+
+                if ($expected) {
+                    TestCase::assertInstanceOf($instance, $table->save($new));
+                } else {
+                    $this->checkError($new, $regexField, 'regex');
+                    TestCase::assertFalse($table->save($new));
+                }
+            }
         }
     }
 
