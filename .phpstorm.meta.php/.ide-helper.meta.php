@@ -17,6 +17,7 @@ namespace PHPSTORM_META {
 			'FormProtection' => \Cake\Controller\Component\FormProtectionComponent::class,
 			'GoogleClient' => \App\Controller\Component\GoogleClientComponent::class,
 			'Paginator' => \Cake\Controller\Component\PaginatorComponent::class,
+			'Queue' => \App\Controller\Component\QueueComponent::class,
 			'RequestHandler' => \Cake\Controller\Component\RequestHandlerComponent::class,
 			'Search.Search' => \Search\Controller\Component\SearchComponent::class,
 			'Security' => \Cake\Controller\Component\SecurityComponent::class,
@@ -148,6 +149,7 @@ namespace PHPSTORM_META {
 			'search' => \Cake\ORM\Query::class,
 			'threaded' => \Cake\ORM\Query::class,
 			'unread' => \Cake\ORM\Query::class,
+			'unsent' => \Cake\ORM\Query::class,
 			'withTrashed' => \Cake\ORM\Query::class,
 		])
 	);
@@ -168,6 +170,7 @@ namespace PHPSTORM_META {
 			'search' => \Cake\ORM\Query::class,
 			'threaded' => \Cake\ORM\Query::class,
 			'unread' => \Cake\ORM\Query::class,
+			'unsent' => \Cake\ORM\Query::class,
 			'withTrashed' => \Cake\ORM\Query::class,
 		])
 	);
@@ -366,6 +369,7 @@ namespace PHPSTORM_META {
 			'search' => \Cake\ORM\Query::class,
 			'threaded' => \Cake\ORM\Query::class,
 			'unread' => \Cake\ORM\Query::class,
+			'unsent' => \Cake\ORM\Query::class,
 			'withTrashed' => \Cake\ORM\Query::class,
 		])
 	);
@@ -638,6 +642,7 @@ namespace PHPSTORM_META {
 			'script' => \Cake\View\View::class,
 			'search' => \Cake\View\View::class,
 			'style' => \Cake\View\View::class,
+			'system-description' => \Cake\View\View::class,
 		])
 	);
 
@@ -712,6 +717,7 @@ namespace PHPSTORM_META {
 		'MonitorExample',
 		'ProgressExample',
 		'RetryExample',
+		'State',
 		'SuperExample',
 		'UniqueExample'
 	);
@@ -731,6 +737,7 @@ namespace PHPSTORM_META {
 		'MonitorExample',
 		'ProgressExample',
 		'RetryExample',
+		'State',
 		'SuperExample',
 		'UniqueExample'
 	);

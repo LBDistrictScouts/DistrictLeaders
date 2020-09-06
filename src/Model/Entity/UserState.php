@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\Core\Configure;
 use Cake\ORM\Entity;
 
 /**
@@ -18,6 +19,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property bool $is_email_send_active
  */
 class UserState extends Entity
 {
@@ -39,6 +41,31 @@ class UserState extends Entity
         'users' => true,
     ];
 
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return bool
+     */
+    protected function _getIsEmailSendActive(): bool
+    {
+        $auto = Configure::read('App.autoActivating', false);
+
+        if ($auto && $this->signature != 0) {
+            return true;
+        }
+
+        $activated = (bool)(($this->signature & self::EVALUATE_ACTIVATED) > 0);
+        if ($activated) {
+            return true;
+        }
+
+        return $this->active;
+    }
+
+    protected $_virtual = [
+        'is_email_send_active',
+    ];
+
     public const FIELD_ID = 'id';
     public const FIELD_USER_STATE = 'user_state';
     public const FIELD_ACTIVE = 'active';
@@ -46,6 +73,7 @@ class UserState extends Entity
     public const FIELD_USERS = 'users';
     public const FIELD_PRECEDENCE_ORDER = 'precedence_order';
     public const FIELD_SIGNATURE = 'signature';
+    public const FIELD_IS_EMAIL_SEND_ACTIVE = 'is_email_send_active';
 
     public const EVALUATE_BLANK = 0;
     public const EVALUATE_USERNAME = 0b1;
@@ -54,4 +82,5 @@ class UserState extends Entity
     public const EVALUATE_LOGIN_CAPABILITY = 0b1000;
     public const EVALUATE_ACTIVE_ROLE = 0b10000;
     public const EVALUATE_VALIDATED_EMAIL = 0b100000;
+    public const EVALUATE_ACTIVATED = 0b1000000;
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\CompassRecord;
+use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
@@ -17,7 +18,6 @@ use Cake\Validation\Validator;
  * CompassRecords Model
  *
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
- * @property \App\Model\Table\UsersTable $Users
  * @method \App\Model\Entity\CompassRecord get($primaryKey, $options = [])
  * @method \App\Model\Entity\CompassRecord newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\CompassRecord[] newEntities(array $data, array $options = [])
@@ -28,6 +28,10 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CompassRecord findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\CsvBehavior
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
+ * @property \App\Model\Table\RoleTypesTable $RoleTypes
+ * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
  */
 class CompassRecordsTable extends Table
 {
@@ -37,6 +41,16 @@ class CompassRecordsTable extends Table
      * @var \App\Model\Table\UsersTable
      */
     private $Users;
+
+    /**
+     * @var \App\Model\Table\DirectoryUsersTable
+     */
+    private $DirectoryUsers;
+
+    /**
+     * @var \App\Model\Table\ScoutGroupsTable
+     */
+    private $ScoutGroups;
 
     /**
      * Initialize method
@@ -219,87 +233,23 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\CompassRecord $mergeContact The Contact Data to be merged - Must contain all keys.
-     * @return bool|\Cake\Datasource\EntityInterface
-     */
-    public function integrateContact(CompassRecord $mergeContact)
-    {
-        if (
-            !$mergeContact->hasValue(CompassRecord::FIELD_MEMBERSHIP_NUMBER)
-            || !$mergeContact->hasValue(CompassRecord::FIELD_FORENAMES)
-            || !$mergeContact->hasValue(CompassRecord::FIELD_EMAIL)
-//            || !key_exists('clean_role', $mergeContact)
-//            || !key_exists('clean_group', $mergeContact)
-//            || !key_exists('clean_section', $mergeContact)
-        ) {
-            return false;
-        }
-
-        $contacts = TableRegistry::get('Contacts');
-
-        $contact = $contacts->findOrMakeContact($mergeContact);
-
-        if (!($contact instanceof Entity)) {
-            return false;
-        }
-
-        $roleTypes = TableRegistry::get('RoleTypes');
-        $sections = TableRegistry::get('Sections');
-
-        $sectionCreate = [
-            'group' => $mergeContact['clean_group'],
-            'section' => $mergeContact['clean_section'],
-        ];
-        $section = $sections->findOrMakeSection($sectionCreate);
-
-        if ($section instanceof Entity) {
-            $sectionId = $section->id;
-
-            $roleTypeArr = [
-                'role' => $mergeContact['clean_role'],
-                'section_type_id' => $section->section_type_id,
-            ];
-
-            $roleType = $roleTypes->findOrMakeRoleType($roleTypeArr);
-
-            if ($roleType instanceof Entity) {
-                $roleTypeId = $roleType->id;
-            }
-        }
-
-        if (isset($sectionId) && isset($roleTypeId)) {
-            $roles = TableRegistry::get('Roles');
-
-            $roleArray = [
-                'section_id' => $sectionId,
-                'role_type_id' => $roleTypeId,
-                'contact_id' => $contact->id,
-                'provisional' => $mergeContact['provisional'],
-            ];
-
-            $role = $roles->newEntity($roleArray);
-
-            $roles->save($role);
-        }
-
-        return $contact;
-    }
-
-    /**
      * @param \App\Model\Entity\CompassRecord $compassRecord The Compass Record
      * @return bool
      */
-    public function autoMerge(CompassRecord $compassRecord)
+    public function doAutoMerge(CompassRecord $compassRecord): bool
     {
         $this->loadModel('Users');
+        $this->loadModel('ScoutGroups');
+        $this->loadModel('RoleTypes');
 
-        $membershipCount = $this->Users
-            ->find()
-            ->where(['membership_number' => $compassRecord->membership_number])
-            ->count();
+        $compassRecord = $this->prepareRecord($compassRecord);
 
-        if ($membershipCount == 1) {
+        if ($this->detectUser($compassRecord) instanceof User) {
             return true;
+        }
+
+        if (!$this->ScoutGroups->domainVerify($compassRecord->email)) {
+            return false;
         }
 
         $allowedRoles = [
@@ -347,6 +297,36 @@ class CompassRecordsTable extends Table
     }
 
     /**
+     * Matches the record with alternative sources of up to date emails
+     *
+     * @param \App\Model\Entity\CompassRecord $record The Compass Record to be Reconciled
+     * @return \App\Model\Entity\CompassRecord
+     */
+    public function prepareRecord(CompassRecord $record): CompassRecord
+    {
+        $this->loadModel('DirectoryUsers');
+        $this->loadModel('ScoutGroups');
+
+        // If existing record is a valid domain email, make no changes
+        if ($this->ScoutGroups->domainVerify($record->email)) {
+            return $record;
+        }
+
+        $userNameMatch = $this->DirectoryUsers->find()->where([
+            DirectoryUser::FIELD_GIVEN_NAME => $record->get(CompassRecord::FIELD_FIRST_NAME),
+            DirectoryUser::FIELD_FAMILY_NAME => $record->get(CompassRecord::FIELD_LAST_NAME),
+        ]);
+
+        if ($userNameMatch->count() === 1) {
+            $directoryUser = $userNameMatch->first();
+            $record->set(CompassRecord::FIELD_EMAIL, $directoryUser->get(DirectoryUser::FIELD_PRIMARY_EMAIL));
+            $this->save($directoryUser);
+        }
+
+        return $record;
+    }
+
+    /**
      * @param \App\Model\Entity\CompassRecord $record The Record for Detection
      * @return \App\Model\Entity\User|null
      */
@@ -375,29 +355,22 @@ class CompassRecordsTable extends Table
             ->distinct([User::FIELD_ID])
             ->where([User::FIELD_EMAIL => $record->email]);
 
-        $matches = $nameMatches->union($primaryEmailMatches);
-
-        if ($matches->count() == 1) {
-            $result = $matches->first();
-            $result = $this->Users->get($result->id);
-            if (isset($result) && $result instanceof User) {
-                return $result;
+        if ($nameMatches->count() >= 1 && $primaryEmailMatches->count() >= 1) {
+            $nameList = [];
+            foreach ($nameMatches as $nameMatch) {
+                array_push($nameList, $nameMatch->get(User::FIELD_ID));
             }
-        }
 
-//        $otherEmailMatches = $this->UserContacts->find()->where([])
-
-
-        if ($matches->count() > 1) {
-            $matchingNames = $nameMatches
-                ->select([User::FIELD_ID])
-                ->distinct();
+            if (empty($nameList) || count($nameList) == 0) {
+                return null;
+            }
 
             $intersection = $primaryEmailMatches
-                ->where([User::FIELD_ID . ' IS IN' => $matchingNames]);
+                ->whereInList(User::FIELD_ID, $nameList);
 
-            if ($intersection->count() == 1) {
+            if ($intersection->count() === 1) {
                 $result = $intersection->first();
+                $result = $this->Users->get($result->id);
                 if (isset($result) && $result instanceof User) {
                     return $result;
                 }

@@ -16,6 +16,7 @@ use Cake\ORM\Entity;
  * @property int|null $role_template_id
  * @property int|null $all_role_count
  * @property int|null $active_role_count
+ * @property bool $import_type
  *
  * @property \App\Model\Entity\SectionType|null $section_type
  * @property \App\Model\Entity\RoleTemplate|null $role_template
@@ -44,10 +45,12 @@ class RoleType extends Entity
         'role_template_id' => true,
         'all_role_count' => true,
         'active_role_count' => true,
+        'import_type' => true,
         'section_type' => true,
         'role_template' => true,
         'roles' => true,
         'capabilities' => true,
+        'directory_groups' => true,
     ];
 
     public const FIELD_ID = 'id';
@@ -63,4 +66,5 @@ class RoleType extends Entity
     public const FIELD_ALL_ROLE_COUNT = 'all_role_count';
     public const FIELD_ACTIVE_ROLE_COUNT = 'active_role_count';
     public const FIELD_DIRECTORY_GROUPS = 'directory_groups';
+    public const FIELD_IMPORT_TYPE = 'import_type';
 }

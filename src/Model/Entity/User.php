@@ -40,6 +40,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  *
  * @property bool $cognito_enabled
  * @property bool $receive_emails
+ * @property bool $activated
  *
  * @property int|null $all_role_count
  * @property int|null $active_role_count
@@ -440,6 +441,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_CONTACT_NUMBERS = 'contact_numbers';
     public const FIELD_VALIDATED_EMAIL_COUNT = 'validated_email_count';
     public const FIELD_VALIDATED_PHONE_COUNT = 'validated_phone_count';
+    public const FIELD_ACTIVATED = 'activated';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 

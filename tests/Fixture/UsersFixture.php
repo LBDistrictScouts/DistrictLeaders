@@ -44,6 +44,7 @@ class UsersFixture extends TestFixture
         'receive_emails' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         'validated_email_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'validated_phone_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'activated' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => null, 'precision' => null],
         '_indexes' => [
             'users_password_state_id' => ['type' => 'index', 'columns' => ['user_state_id'], 'length' => []],
         ],
@@ -91,6 +92,7 @@ class UsersFixture extends TestFixture
                 'receive_emails' => true,
                 'validated_email_count' => 1,
                 'validated_phone_count' => 1,
+                'activated' => true,
             ],
             [
                 'username' => 'FishyLlama',
@@ -119,6 +121,7 @@ class UsersFixture extends TestFixture
                 'receive_emails' => true,
                 'validated_email_count' => 1,
                 'validated_phone_count' => 1,
+                'activated' => true,
             ],
         ];
         parent::init();

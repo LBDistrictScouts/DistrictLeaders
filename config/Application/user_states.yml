@@ -10,6 +10,7 @@ UserStates:
       - EVALUATE_LOGIN_CAPABILITY
       - EVALUATE_ACTIVE_ROLE
       - EVALUATE_VALIDATED_EMAIL
+      - EVALUATE_ACTIVATED
 
   - user_state: Provisional User
     active: false
@@ -20,6 +21,7 @@ UserStates:
       - EVALUATE_LOGIN_EVER
       - EVALUATE_LOGIN_QUARTER
       - EVALUATE_LOGIN_CAPABILITY
+      - EVALUATE_ACTIVATED
 
   - user_state: Prevalidation
     active: false
@@ -29,6 +31,7 @@ UserStates:
       - EVALUATE_USERNAME
       - EVALUATE_LOGIN_CAPABILITY
       - EVALUATE_ACTIVE_ROLE
+      - EVALUATE_ACTIVATED
 
   - user_state: Invited User
     active: false
@@ -36,6 +39,7 @@ UserStates:
     precedence_order: 5
     required:
       - EVALUATE_ACTIVE_ROLE
+      - EVALUATE_ACTIVATED
 
   - user_state: Inactive User
     active: false
@@ -46,6 +50,7 @@ UserStates:
       - EVALUATE_LOGIN_EVER
       - EVALUATE_LOGIN_CAPABILITY
       - EVALUATE_VALIDATED_EMAIL
+      - EVALUATE_ACTIVATED
 
   - user_state: Draft User
     active: false

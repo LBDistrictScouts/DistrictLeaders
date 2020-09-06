@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\DirectoryUser;
 use App\Model\Table\DirectoryUsersTable;
 use Cake\TestSuite\TestCase;
 
@@ -24,8 +25,28 @@ class DirectoryUsersTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.DirectoryUsers',
+        'app.UserStates',
+        'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.Sections',
+
+        'app.RoleTemplates',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+
+        'app.DirectoryTypes',
         'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -59,7 +80,17 @@ class DirectoryUsersTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [
+            DirectoryUser::FIELD_ID => 1,
+            DirectoryUser::FIELD_DIRECTORY_ID => 1,
+            DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE => 'Lorem ipsum dolor sit amet',
+            DirectoryUser::FIELD_GIVEN_NAME => 'Joesph',
+            DirectoryUser::FIELD_FAMILY_NAME => 'Bloggs',
+            DirectoryUser::FIELD_PRIMARY_EMAIL => 'fish@4thgoat.org.uk',
+            DirectoryUser::FIELD_FULL_NAME => 'Joesph Bloggs',
+        ];
+
+        TestCase::assertEquals($expected, $this->DirectoryUsers->get(1)->toArray());
     }
 
     /**

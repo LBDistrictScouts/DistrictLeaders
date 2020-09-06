@@ -53,8 +53,8 @@ class CompassRecordsFixture extends TestFixture
                 'document_version_id' => 1,
                 'membership_number' => 1,
                 'title' => 'Lorem ipsum dolor sit amet',
-                'forenames' => 'Lorem ipsum dolor sit amet',
-                'surname' => 'Lorem ipsum dolor sit amet',
+                'forenames' => 'Joseph Gotlamb',
+                'surname' => 'Jingles',
                 'address' => 'Lorem ipsum dolor sit amet',
                 'address_line1' => 'Lorem ipsum dolor sit amet',
                 'address_line2' => 'Lorem ipsum dolor sit amet',
@@ -66,7 +66,7 @@ class CompassRecordsFixture extends TestFixture
                 'role' => 'Lorem ipsum dolor sit amet',
                 'location' => 'Lorem ipsum dolor sit amet',
                 'phone' => 'Lorem ipsum dolor sit amet',
-                'email' => 'Lorem ipsum dolor sit amet',
+                'email' => 'octopus@monkey.goat',
             ],
         ];
         parent::init();

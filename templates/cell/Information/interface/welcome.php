@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var string $system
+ * @var string $creator
  */
 ?>
 <div class="card thick-card">
