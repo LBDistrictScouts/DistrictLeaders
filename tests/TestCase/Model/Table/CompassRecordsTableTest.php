@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\CompassRecord;
 use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
 use App\Model\Table\CompassRecordsTable;
 use App\Model\Table\UsersTable;
 use Cake\TestSuite\TestCase;
@@ -60,6 +61,8 @@ class CompassRecordsTableTest extends TestCase
         'app.DirectoryUsers',
         'app.DirectoryGroups',
         'app.RoleTypesDirectoryGroups',
+
+        'app.Roles',
 
         'app.CompassRecords',
         'app.FileTypes',
@@ -120,10 +123,10 @@ class CompassRecordsTableTest extends TestCase
             CompassRecord::FIELD_ADDRESS_COUNTY => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_POSTCODE => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_ADDRESS_COUNTRY => 'Lorem ipsum dolor sit amet',
-            CompassRecord::FIELD_ROLE => 'Lorem ipsum dolor sit amet',
-            CompassRecord::FIELD_LOCATION => 'Lorem ipsum dolor sit amet',
-            CompassRecord::FIELD_PHONE => 'Lorem ipsum dolor sit amet',
-            CompassRecord::FIELD_EMAIL => 'jacob@fish.com',
+            CompassRecord::FIELD_ROLE => 'Assistant Section Leader - Beaver Scouts',
+            CompassRecord::FIELD_LOCATION => '8th Fish - Beaver Scout 1',
+            CompassRecord::FIELD_PHONE => '01293 983982',
+            CompassRecord::FIELD_EMAIL => 'jacob@8thfish.co.uk',
         ];
 
         try {
@@ -341,7 +344,7 @@ class CompassRecordsTableTest extends TestCase
             'New Available, Invalid Domain' => [
                 'jacob@baddomain.com',
                 true,
-                false,
+                true,
             ],
             'New Available, Valid Domain' => [
                 'jacob@4thgoat.org.uk',
@@ -421,13 +424,96 @@ class CompassRecordsTableTest extends TestCase
         $this->markTestIncomplete('Not implemented yet.');
     }
 
+    public function provideMergeUser(): array
+    {
+        return [
+            'Good Record Merge' => [
+                [],
+                [
+                    'phone' => true,
+                    'email' => true,
+                    'group' => true,
+                    'deleted' => true,
+                ],
+            ],
+            'Bad Email Merge' => [
+                [
+                    CompassRecord::FIELD_EMAIL => 'octopus@fish.com',
+                ],
+                [
+                    'phone' => true,
+                    'email' => false,
+                    'group' => true,
+                    'deleted' => false,
+                ],
+            ],
+            'Bad Phone Merge' => [
+                [
+                    CompassRecord::FIELD_PHONE => 'I like big phone numbers and i cannot lie',
+                ],
+                [
+                    'phone' => false,
+                    'email' => true,
+                    'group' => true,
+                    'deleted' => true,
+                ],
+            ],
+            'Bad Group Merge' => [
+                [
+                    CompassRecord::FIELD_LOCATION => 'Happy go fishy',
+                ],
+                [
+                    'phone' => false,
+                    'email' => true,
+                    'group' => false,
+                    'deleted' => true,
+                ],
+            ],
+        ];
+    }
+
     /**
      * Test mergeUser method
      *
+     * @param array $override Array of Record Values
+     * @param array $expected Array of Expectations
      * @return void
+     * @dataProvider provideMergeUser
      */
-    public function testMergeUser(): void
+    public function testMergeUser(array $override, array $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $record = $this->CompassRecords->newEntity($this->getGood());
+        foreach ($override as $field => $value) {
+            $record->set($field, $value);
+        }
+        $record = $this->CompassRecords->save($record);
+        TestCase::assertInstanceOf(CompassRecord::class, $record);
+
+        if (!$expected['group']) {
+            $this->expectException('Cake\Datasource\Exception\RecordNotFoundException');
+        }
+
+        $user = $this->Users->get(2);
+        $this->CompassRecords->mergeUser($record, $user);
+
+        $exists = $this->Users->UserContacts->exists([
+            UserContact::FIELD_USER_ID => $user->id,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => 2,
+            UserContact::FIELD_CONTACT_FIELD => $record->phone,
+        ]);
+        TestCase::assertEquals($expected['phone'], $exists);
+
+        $exists = $this->Users->UserContacts->exists([
+            UserContact::FIELD_USER_ID => $user->id,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
+            UserContact::FIELD_CONTACT_FIELD => $record->email,
+        ]);
+        TestCase::assertEquals($expected['email'], $exists);
+
+        $exists = $this->CompassRecords->exists([
+            CompassRecord::FIELD_MEMBERSHIP_NUMBER => $record->membership_number,
+            CompassRecord::FIELD_EMAIL => $record->email,
+        ]);
+        TestCase::assertEquals(!$expected['deleted'], $exists);
     }
 }

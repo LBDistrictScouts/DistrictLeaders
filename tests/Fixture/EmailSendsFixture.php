@@ -66,6 +66,22 @@ class EmailSendsFixture extends TestFixture
                 'notification_id' => 1,
                 'deleted' => null,
             ],
+            [
+                'email_generation_code' => 'RSV-1-5DR',
+                'email_template' => 'reservation',
+                'include_token' => 1,
+                'created' => 1558196079,
+                'modified' => 1558196079,
+                'sent' => 1558196079,
+                'message_send_code' => 'PSJs821sxa928as219SMZX9',
+                'user_id' => 1,
+                'subject' => 'Lorem ipsum dolor sit amet',
+                'routing_domain' => 'Lorem ipsum dolor sit amet',
+                'from_address' => 'Lorem ipsum dolor sit amet',
+                'friendly_from' => 'Lorem ipsum dolor sit amet',
+                'notification_id' => 1,
+                'deleted' => null,
+            ],
         ];
         parent::init();
     }

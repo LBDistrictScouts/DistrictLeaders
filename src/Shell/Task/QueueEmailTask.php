@@ -16,6 +16,8 @@ use Queue\Shell\Task\QueueTaskInterface;
  */
 class QueueEmailTask extends QueueTask implements QueueTaskInterface
 {
+    use JobDataTrait;
+
     /**
      * @var int
      */
@@ -26,6 +28,8 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
      */
     public $retries = 1;
 
+    protected $entityKey = 'email_generation_code';
+
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
@@ -33,9 +37,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId): void
     {
-        if (!key_exists('email_generation_code', $data)) {
-            throw new QueueException('Email generation code not specified.');
-        }
+        $this->checkEntityKey($data);
 
         $this->loadModel('EmailSends');
         $this->loadModel('Queue.QueuedJobs');
@@ -46,9 +48,6 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
             throw new QueueException('Make Failed.');
         }
 
-        $job = $this->QueuedJobs->get($jobId);
-        $data['email_send_id'] = $email;
-        $job->set('data', serialize($data));
-        $this->QueuedJobs->save($job);
+        $this->saveJobDataArray((int)$jobId, ['email_send_id' => $email->id]);
     }
 }

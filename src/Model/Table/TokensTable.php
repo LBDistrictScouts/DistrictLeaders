@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\Token;
 use App\Utility\TextSafe;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
@@ -18,6 +19,7 @@ use Cake\Validation\Validator;
  * Tokens Model
  *
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  * @method \App\Model\Entity\Token get($primaryKey, $options = [])
  * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
@@ -32,6 +34,8 @@ use Cake\Validation\Validator;
  */
 class TokensTable extends Table
 {
+    use ModelAwareTrait;
+
     /**
      * Initialize method
      *
@@ -270,7 +274,7 @@ class TokensTable extends Table
      * @param \App\Model\Entity\Token $token The token to be cleaned.
      * @return int
      */
-    public function cleanToken($token)
+    public function cleanToken(Token $token)
     {
         /** @var \Cake\I18n\FrozenTime $expiry */
         $expiry = $token->get(Token::FIELD_EXPIRES);
@@ -299,37 +303,47 @@ class TokensTable extends Table
     /**
      * Clean Tokens
      *
+     * @param int|null $jobId If running in an ASync Job, the ID of the job
      * @return array
      */
-    public function cleanAllTokens()
+    public function cleanAllTokens(?int $jobId = null): array
     {
-        $noChange = 0;
+        if (!is_null($jobId)) {
+            $this->loadModel('Queue.QueuedJobs');
+        }
+
+        $unchanged = 0;
         $deactivated = 0;
         $deleted = 0;
+        $idx = 0;
 
         $tokens = $this->find('all');
+        $records = $tokens->count();
 
         foreach ($tokens as $token) {
             $response = $this->cleanToken($token);
+            $idx++;
 
             switch ($response) {
                 case self::CLEAN_NO_CLEAN:
-                    $noChange += 1;
+                    $unchanged++;
                     break;
                 case self::CLEAN_DEACTIVATE:
-                    $deactivated += 1;
+                    $deactivated++;
                     break;
                 case self::CLEAN_DELETED:
-                    $deleted += 1;
+                    $deleted++;
                     break;
+                default:
+                    break;
+            }
+
+            if (!is_null($jobId)) {
+                $this->QueuedJobs->updateProgress($jobId, $idx / $records);
             }
         }
 
-        return [
-            'no_change' => $noChange,
-            'deactivated' => $deactivated,
-            'deleted' => $deleted,
-        ];
+        return compact('records', 'unchanged', 'deactivated', 'deleted');
     }
 
     /**

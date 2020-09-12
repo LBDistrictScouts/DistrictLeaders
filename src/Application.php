@@ -66,19 +66,15 @@ class Application extends BaseApplication implements
 
         $this->addPlugin('Muffin/Webservice');
 
-        $this->addPlugin('CakeDto', ['bootstrap' => true]);
-
-        $this->addPlugin('Tools', ['bootstrap' => true]);
+        $this->addPlugin('Tools');
 
         $this->addPlugin('Search');
 
-        $this->addPlugin('Queue', ['routes' => true, 'bootstrap' => true]);
+        $this->addPlugin('Queue');
 
-        $this->addPlugin('Ajax', ['bootstrap' => true]);
+        $this->addPlugin('Ajax');
 
         $this->addPlugin('Muffin/Footprint');
-
-        $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
 
         $this->addPlugin('Authorization');
 
@@ -109,7 +105,8 @@ class Application extends BaseApplication implements
          * Debug Kit should not be installed on a production system
          */
         if (Configure::read('debug')) {
-            $this->addPlugin('DebugKit', ['bootstrap' => true, 'routes' => true]);
+            $this->addPlugin('DebugKit');
+            $this->addPlugin('TestHelper');
         }
     }
 
@@ -166,7 +163,9 @@ class Application extends BaseApplication implements
             ))
 
             // Add the authentication middleware to the middleware queue
-            ->add(new CognitoAuthenticationMiddleware($this))
+            ->add(new CognitoAuthenticationMiddleware($this, [
+                'logoutRedirect' => '/',
+            ]))
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [

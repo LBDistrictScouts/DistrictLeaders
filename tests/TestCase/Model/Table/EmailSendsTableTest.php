@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\EmailSend;
 use App\Model\Entity\Notification;
 use App\Model\Table\EmailSendsTable;
 use App\Test\TestCase\EmailTestCase as TestCase;
@@ -13,6 +14,8 @@ use Cake\I18n\FrozenTime;
  */
 class EmailSendsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -75,8 +78,10 @@ class EmailSendsTableTest extends TestCase
     /**
      * Get Expected Function
      *
+     * @param string $type Notification Type, Type Code
+     * @param int $sendId Expected Send Code ID
+     * @param int $notificationId Expected Notification ID
      * @return array
-     * @throws
      */
     private function getExpected(string $type, int $sendId, int $notificationId): array
     {
@@ -102,12 +107,12 @@ class EmailSendsTableTest extends TestCase
             'from_address' => null,
             'friendly_from' => null,
             'notification_id' => $notificationId,
-            'email_generation_code' => 'USR-2-' . $type . '-' . (string)($sendId - 1),
+            'email_generation_code' => 'USR-2-' . $type . '-' . (string)($sendId - 2),
             'email_template' => $typeArray[$type]['action'],
             'include_token' => true,
             'tokens' => [
                 [
-                    'id' => $sendId,
+                    'id' => $sendId - 1,
                     'email_send_id' => $sendId,
                     'utilised' => null,
                     'active' => true,
@@ -129,6 +134,7 @@ class EmailSendsTableTest extends TestCase
                 Notification::FIELD_NOTIFICATION_SOURCE => 'System',
                 Notification::FIELD_BODY_CONTENT => [],
                 Notification::FIELD_SUBJECT_LINK => [],
+                Notification::FIELD_EMAIL_CODE => null,
             ],
         ];
     }
@@ -168,22 +174,12 @@ class EmailSendsTableTest extends TestCase
      */
     public function testInitialize()
     {
-        $actual = $this->EmailSends->get(1)->toArray();
-
         $dates = [
             'sent',
             'created',
             'modified',
             'deleted',
         ];
-
-        foreach ($dates as $date) {
-            $dateValue = $actual[$date];
-            if (!is_null($dateValue)) {
-                TestCase::assertInstanceOf('Cake\I18n\FrozenTime', $dateValue);
-            }
-            unset($actual[$date]);
-        }
 
         $expected = [
             'id' => 1,
@@ -198,10 +194,8 @@ class EmailSendsTableTest extends TestCase
             'email_template' => 'reservation',
             'include_token' => true,
         ];
-        TestCase::assertEquals($expected, $actual);
 
-        $count = $this->EmailSends->find('all')->count();
-        TestCase::assertEquals(1, $count);
+        $this->validateInitialise($expected, $this->EmailSends, 2, $dates);
     }
 
     /**
@@ -228,13 +222,7 @@ class EmailSendsTableTest extends TestCase
             'notification_type_id',
             'notification_id',
         ];
-
-        foreach ($empties as $empty) {
-            $reqArray = $this->getGood();
-            $reqArray[$empty] = '';
-            $new = $this->EmailSends->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\EmailSend', $this->EmailSends->save($new));
-        }
+        $this->validateEmpties($empties, $this->EmailSends, [$this, 'getGood']);
     }
 
     /**
@@ -244,35 +232,11 @@ class EmailSendsTableTest extends TestCase
      */
     public function testBuildRules()
     {
-        // Notification Exists
-        $values = $this->getGood();
-
-        $notifications = $this->EmailSends->Notifications->find('list')->toArray();
-
-        $notification = max(array_keys($notifications));
-
-        $values['notification_id'] = $notification;
-        $new = $this->EmailSends->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\EmailSend', $this->EmailSends->save($new));
-
-        $values['notification_id'] = $notification + 1;
-        $new = $this->EmailSends->newEntity($values);
-        TestCase::assertFalse($this->EmailSends->save($new));
-
-        // Users Exist
-        $values = $this->getGood();
-
-        $users = $this->EmailSends->Users->find('list')->toArray();
-
-        $user = max(array_keys($users));
-
-        $values['user_id'] = $user;
-        $new = $this->EmailSends->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\EmailSend', $this->EmailSends->save($new));
-
-        $values['user_id'] = $user + 1;
-        $new = $this->EmailSends->newEntity($values);
-        TestCase::assertFalse($this->EmailSends->save($new));
+        $exists = [
+            EmailSend::FIELD_NOTIFICATION_ID => $this->EmailSends->Notifications,
+            EmailSend::FIELD_USER_ID => $this->EmailSends->Users,
+        ];
+        $this->validateExistsRules($exists, $this->EmailSends, [$this, 'getGood']);
     }
 
     public function provideMake(): array
@@ -295,17 +259,18 @@ class EmailSendsTableTest extends TestCase
      * Test Make method
      *
      * @param string $emailGenerationCode Email Generation Code for Testing
+     * @param string $type The Email Generation Code Type
      * @param bool $expectedToIterate Expect Notification ID to iterate or stick
-     * @dataProvider provideMake
      * @return void
+     * @dataProvider provideMake
      */
     public function testMake(string $emailGenerationCode, string $type, bool $expectedToIterate): void
     {
         $result = $this->EmailSends->make($emailGenerationCode);
-        $sendId = 2;
+        $sendId = 3;
         $notificationId = 2;
 
-        TestCase::assertEquals($sendId, $result->notification_id);
+        TestCase::assertEquals($notificationId, $result->notification_id);
         $this->validateExpected($type, $sendId, $notificationId);
 
         // Check second is not blocked.

@@ -1,4 +1,4 @@
-functionalAreas:
+FunctionalAreas:
   directory:
     enabled: true
     capability:
@@ -21,7 +21,7 @@ functionalAreas:
     capability:
       index: LOGIN
 
-searchConfigured:
+SearchConfigured:
   Users: true
   Documents: true
   Sections: true

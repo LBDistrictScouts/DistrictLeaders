@@ -17,20 +17,6 @@ BaseCapabilities:
   - capability_code: NON_PUBLIC_GROUP
     capability: View Hidden Scout Group Details
     min_level: 3
-EntityCapabilities:
-  CREATE: 1
-  UPDATE: 1
-  VIEW: -5
-  DELETE: 5
-FieldCapabilities:
-  CHANGE: 1
-  VIEW: 0
-ActionOverrides:
-  INDEX: VIEW
-  ADD: CREATE
-  EDIT: UPDATE
-  SEARCH: VIEW
-  PERMISSIONS: VIEW
 AllModels:
   Users:
     baseLevel: 1

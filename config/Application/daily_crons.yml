@@ -1,15 +1,21 @@
-dailyCrons:
+DailyCrons:
   # Unsent Cron - Send all pending Emails
   UnsentCron:
-    daily_schedule:
-      - '+1 hour'
-    task_name: unsent
-
-  # Update user Capability Permissions
-  UserPatchCron:
     daily_schedule:
       - '+1 hour'
       - '+7 hour'
       - '+13 hour'
       - '+19 hour'
+    task_name: Unsent
+
+  # Update user Capability Permissions
+  UserPatchCron:
+    daily_schedule:
+      - '+1 hour'
     task_name: Capability
+
+  TokenCron:
+    daily_schedule:
+      - '+1 hour'
+      - '+13 hour'
+    task_name: Token

@@ -22,7 +22,7 @@ class DirectoryUsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['Directories'],
+            'contain' => ['Directories', 'UserContacts'],
         ];
         $directoryUsers = $this->paginate($this->DirectoryUsers);
 

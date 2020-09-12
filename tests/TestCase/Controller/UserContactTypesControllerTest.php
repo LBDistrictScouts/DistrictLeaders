@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
+use App\Model\Entity\UserContactType;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -45,7 +46,7 @@ class UserContactTypesControllerTest extends TestCase
      * @var array $validEntityData Valid creation Data.
      */
     private $validEntityData = [
-        'user_contact_type' => 'Telephone',
+        UserContactType::FIELD_USER_CONTACT_TYPE => 'Telephone',
     ];
 
     /**
@@ -80,7 +81,7 @@ class UserContactTypesControllerTest extends TestCase
         $this->tryAddPost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 
@@ -110,7 +111,7 @@ class UserContactTypesControllerTest extends TestCase
         $this->tryDeletePost(
             $this->controller,
             $this->validEntityData,
-            2
+            3
         );
     }
 }

@@ -51,8 +51,8 @@ class RoleTypesFixture extends TestFixture
                 'import_type' => true,
             ],
             [
-                'role_type' => 'Lorem ipsum dolor sit amet',
-                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'role_type' => 'Beaver Scout Leader',
+                'role_abbreviation' => 'BSL',
                 'section_type_id' => 1,
                 'level' => 2,
                 'role_template_id' => 1,

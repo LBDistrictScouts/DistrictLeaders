@@ -102,4 +102,20 @@ class QueueComponent extends Component
             $this->Flash->error(__('The user state evaluation process could not be triggered.'));
         }
     }
+
+    /**
+     * @return void
+     */
+    public function setUnsent()
+    {
+        $job = $this->QueuedJobs->createJob('Unsent');
+        if ($job instanceof QueuedJob) {
+            $this->Flash->queue(
+                'Unsent Emails have been dispatched.',
+                ['params' => ['job_id' => $job->id]]
+            );
+        } else {
+            $this->Flash->error(__('The Unsent Email process could not be triggered.'));
+        }
+    }
 }

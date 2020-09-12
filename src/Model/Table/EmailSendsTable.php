@@ -274,7 +274,7 @@ class EmailSendsTable extends Table
         if (!$this->exists(['id' => $emailSendId])) {
             return false;
         }
-        $email = $this->get($emailSendId, ['contain' => ['Tokens', 'Users']]);
+        $email = $this->get($emailSendId, ['contain' => ['Tokens', 'Users', 'Notifications.NotificationTypes']]);
 
         $token = null;
 
@@ -297,7 +297,7 @@ class EmailSendsTable extends Table
 
         /** @var \App\Mailer\BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
-        $mailer->send('doSend', [$email, $token, $entity]);
+        $mailer->send('doSend', [$email, $token, $entity, $email->notification]);
 
         $email->set('sent', FrozenTime::now());
         $this->save($email, ['validate' => false]);

@@ -30,6 +30,7 @@ $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
                                 <?= $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn ? $this->Html->link('Add Phone Number', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'phone', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                                 <?= $this->Identity->buildAndCheckCapability('CREATE', 'Roles') ? $this->Html->link('Add User Role', ['controller' => 'Roles', 'action' => 'add', '?' => ['user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                                 <?= $this->Permissions->dropDownButton('View User Capabilities', $user, 'permissions', 'Capabilities') ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') ? $this->Form->postLink('Send Welcome Email', ['controller' => 'Notifications', 'action' => 'welcome', $user->id], ['confirm' => __('Are you sure you want to send a welcome email to {0} at {1}?', $user->full_name, $user->email), 'title' => __('Send Welcome Email to User'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                             </div>
                         </div>
                     </div>

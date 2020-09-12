@@ -20,7 +20,7 @@
     <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'CompassRecords', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Compass Records</a>
 <?php endif; ?>
 <?php if ($this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords')) : ?>
-    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Documents', 'action' => 'add', 'prefix' => false, 'plugin' => false])  ?>">Upload Compass Spreadsheet</a>
+    <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Documents', 'action' => 'add', 'prefix' => false, 'plugin' => false,  '?' => ['document_type' => 'compass_upload']])  ?>">Upload Compass Spreadsheet</a>
 <?php endif; ?>
 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Directories')) : ?>
     <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Directories', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Directories</a>

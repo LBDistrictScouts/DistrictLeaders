@@ -385,6 +385,11 @@ class CapAuthorizationComponentTest extends TestCase
         string $expectedReason
     ): void {
         $this->setUp($admin);
+
+        if (is_null($capArray[0]) || is_null($capArray[1])) {
+            $this->expectException(\TypeError::class);
+        }
+
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
 
         TestCase::assertInstanceOf(ResultInterface::class, $result);
@@ -410,6 +415,11 @@ class CapAuthorizationComponentTest extends TestCase
         string $expectedReason
     ): void {
         $this->setUp($admin);
+
+        if (is_null($capArray[0]) || is_null($capArray[1])) {
+            $this->expectException(\TypeError::class);
+        }
+
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
 
         TestCase::assertInstanceOf(ResultInterface::class, $result);

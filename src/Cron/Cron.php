@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace App\Cron;
 
 use Cake\Core\Configure;
+use Cake\Datasource\ModelAwareTrait;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Locator\LocatorAwareTrait;
+use Queue\Model\Entity\QueuedJob;
 
 /**
  * Class Cron
@@ -14,10 +15,10 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  */
 class Cron
 {
-    use LocatorAwareTrait;
+    use ModelAwareTrait;
 
     /**
-     * @var \App\Model\Table\QueuedJobsTable
+     * @var \Queue\Model\Table\QueuedJobsTable
      */
     protected $QueuedJobs;
 
@@ -48,7 +49,7 @@ class Cron
      */
     public function __construct()
     {
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $this->loadModel('Queue.QueuedJobs');
 
         $className = static::class;
         $className = array_reverse(explode('\\', $className))[0];
@@ -88,7 +89,7 @@ class Cron
      * @param array|null $data Data for Task
      * @return bool
      */
-    protected function scheduleJob($offset, $data = null)
+    protected function scheduleJob(string $offset, ?array $data = null)
     {
         // If empty task will be created
         if (is_null($this->taskName) || empty($this->taskName)) {
@@ -104,7 +105,7 @@ class Cron
             ]
         );
 
-        return (bool)($job instanceof \Queue\Model\Entity\QueuedJob);
+        return (bool)($job instanceof QueuedJob);
     }
 
     /**
@@ -129,7 +130,7 @@ class Cron
         $tasks = Configure::read(Cron::CONF_KEY);
         $cronClasses = [];
 
-        foreach ($tasks as $class => $task) {
+        foreach (array_keys($tasks) as $class) {
             $class = '\App\Cron\\' . $class;
             array_push($cronClasses, $class);
         }
@@ -137,7 +138,7 @@ class Cron
         return $cronClasses;
     }
 
-    public const CONF_KEY = 'dailyCrons';
+    public const CONF_KEY = 'DailyCrons';
 
     public const CONF_DAILY_SCHEDULE = 'daily_schedule';
     public const CONF_TASK_NAME = 'task_name';

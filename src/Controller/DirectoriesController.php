@@ -53,7 +53,7 @@ class DirectoriesController extends AppController
     public function view($directoryID = null)
     {
         $directory = $this->Directories->get($directoryID, [
-            'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers'],
+            'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers.UserContacts'],
         ]);
 
         $this->set('directory', $directory);

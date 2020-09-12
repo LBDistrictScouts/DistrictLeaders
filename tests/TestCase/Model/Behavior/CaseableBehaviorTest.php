@@ -64,8 +64,8 @@ class CaseableBehaviorTest extends TestCase
         return [
             'Lower Case' => [
                 User::FIELD_EMAIL,
-                'JACOB.AgT.yler@lLamA.COM',
-                'jacob.agt.yler@llama.com',
+                'JACOBAgT+yler@8thfish.co.uk',
+                'jacobagt+yler@8thfish.co.uk',
             ],
             'Upper Case' => [
                 User::FIELD_POSTCODE,

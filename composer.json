@@ -44,6 +44,7 @@
         "cakephp/cakephp-codesniffer": "^4.0",
         "cakephp/debug_kit": "^4.0",
         "dereuromark/cakephp-ide-helper": "^1.0",
+        "dereuromark/cakephp-test-helper": "^1.0",
         "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
         "phpmd/phpmd": "@stable",

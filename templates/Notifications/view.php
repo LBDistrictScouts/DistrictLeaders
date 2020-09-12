@@ -5,6 +5,21 @@
  * @var \App\View\Cell\InformationCell $cell
  */
 ?>
+<?php if ($this->Identity->checkCapability('ALL')) : ?>
+    <div class="col">
+        <div class="btn-group" role="group" aria-label="Queue Toolbar">
+            <?= $this->Form->postLink(
+                'Send Email for Notification',
+                ['controller' => 'EmailSends', 'action' => 'make', $notification->id],
+                [
+                    'confirm' => __d('queue', 'Are you sure you want send an email for this #{0}?', $notification->id),
+                    'role' => 'button',
+                    'class' => 'btn btn-outline-danger',
+                ]
+            ) ?>
+        </div>
+    </div>
+<?php endif; ?>
 <?= $cell ?>
 <div class="notifications view large-9 medium-8 columns content">
     <h3><?= h($notification->id) ?></h3>

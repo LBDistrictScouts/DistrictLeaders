@@ -6,8 +6,10 @@ namespace App\Model\Table;
 use App\Model\Entity\CompassRecord;
 use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\DocumentVersion;
+use App\Model\Entity\RoleType;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Model\Table\Exceptions\InvalidEmailDomainException;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
@@ -252,20 +254,15 @@ class CompassRecordsTable extends Table
             return false;
         }
 
-        $allowedRoles = [
-            'Group Treasurer',
-            'District Commissioner',
-            'Section Leader',
-            'Scout Active Support Member',
-            'Assistant Section Leader',
-            'District Explorer Scout Commissioner',
-            'County Scout Active Support Member',
-            'Group Executive Committee Member',
-            'District Badge Secretary',
-            'Group Chairman',
-        ];
+        if ($compassRecord->provisional) {
+            return false;
+        }
 
-        if (in_array($compassRecord->clean_role, $allowedRoles) && !$compassRecord->provisional) {
+        $roleExist = [
+            RoleType::FIELD_ROLE_TYPE => $compassRecord->clean_role,
+            RoleType::FIELD_IMPORT_TYPE => true,
+        ];
+        if ($this->RoleTypes->exists($roleExist)) {
             return true;
         }
 
@@ -273,9 +270,41 @@ class CompassRecordsTable extends Table
     }
 
     /**
+     * @param int|null $documentVersionId Document Version ID
+     * @return array
+     */
+    public function autoMerge(?int $documentVersionId = null)
+    {
+        $query = $this->find();
+        if (!is_null($documentVersionId)) {
+            $query->where([
+                CompassRecord::FIELD_DOCUMENT_VERSION_ID => $documentVersionId,
+            ]);
+        }
+        $success = 0;
+        $total = $query->count();
+
+        foreach ($query as $record) {
+            if ($record instanceof CompassRecord && $this->doAutoMerge($record)) {
+                $record = $this->prepareRecord($record);
+
+                $user = $this->detectUser($record);
+                if (!$user instanceof User) {
+                    $user = null;
+                }
+                if ($this->importUser($record, $user)) {
+                    $success++;
+                }
+            }
+        }
+
+        return compact('success', 'total');
+    }
+
+    /**
      * @param array $data The Data to be converted into Records
      * @param \App\Model\Entity\DocumentVersion $version The Document Version for Associating
-     * @return array
+     * @return int
      */
     public function parseImportedData(array $data, DocumentVersion $version): int
     {
@@ -317,7 +346,7 @@ class CompassRecordsTable extends Table
             DirectoryUser::FIELD_FAMILY_NAME => $record->get(CompassRecord::FIELD_LAST_NAME),
         ]);
 
-        if ($userNameMatch->count() === 1) {
+        if ($userNameMatch->count() > 1) {
             $directoryUser = $userNameMatch->first();
             $record->set(CompassRecord::FIELD_EMAIL, $directoryUser->get(DirectoryUser::FIELD_PRIMARY_EMAIL));
             $this->save($directoryUser);
@@ -394,44 +423,26 @@ class CompassRecordsTable extends Table
 
     /**
      * @param \App\Model\Entity\CompassRecord $record Record to be Consumed
+     * @param \App\Model\Entity\User|null $user User to be linked if detected
      * @return bool
      */
-    public function importUser(CompassRecord $record): bool
+    public function importUser(CompassRecord $record, ?User $user = null): bool
     {
         $this->loadModel('Users');
+        $new = false;
 
-        /** @var \App\Model\Entity\User $user */
-        $user = $this->Users->newEmptyEntity();
-        $user = $this->mapUser($record, $user, true);
+        if (is_null($user)) {
+            $user = $this->detectUser($record);
+        }
+        $record = $this->prepareRecord($record);
 
-        return $this->mergeUser($record, $user);
-    }
-
-    /**
-     * @param \App\Model\Entity\CompassRecord $record Record to Consumed
-     * @param \App\Model\Entity\User $user User to be Updated
-     * @return bool
-     */
-    public function linkUser(CompassRecord $record, User $user): bool
-    {
-        $user = $this->mapUser($record, $user);
-
+        if (is_null($user)) {
+            $user = $this->Users->newEmptyEntity();
+            $new = true;
+        }
         if (!$user instanceof User) {
             return false;
         }
-
-        return $this->mergeUser($record, $user);
-    }
-
-    /**
-     * @param \App\Model\Entity\CompassRecord $record Record to Consumed
-     * @param \App\Model\Entity\User $user User to be Updated
-     * @param bool $new Is the User New
-     * @return \App\Model\Entity\User
-     */
-    public function mapUser(CompassRecord $record, User $user, bool $new = false): User
-    {
-        $this->loadModel('Users');
 
         foreach ($this->userMap as $userField => $recordField) {
             if (!$user->hasValue($userField)) {
@@ -440,10 +451,12 @@ class CompassRecordsTable extends Table
         }
 
         if ($new) {
-            return $this->Users->save($user, ['validate' => 'new']);
+            $user = $this->Users->save($user, ['validate' => 'new']);
+        } else {
+            $user = $this->Users->save($user);
         }
 
-        return $this->Users->save($user);
+        return $this->mergeUser($record, $user);
     }
 
     /**
@@ -457,7 +470,12 @@ class CompassRecordsTable extends Table
 
         $this->Users->UserContacts->makePhone($user, $record->phone);
 
-        $emailContact = $this->Users->UserContacts->makeEmail($user, $record->email);
+        try {
+            $emailContact = $this->Users->UserContacts->makeEmail($user, $record->email);
+        } catch (InvalidEmailDomainException $exception) {
+            return false;
+        }
+
         if (!$emailContact instanceof UserContact) {
             return false;
         }

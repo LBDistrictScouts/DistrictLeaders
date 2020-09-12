@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
+use App\Model\Table\Exceptions\InvalidEmailDomainException;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
@@ -266,6 +267,10 @@ class UserContactsTable extends Table
      */
     public function makeEmail(User $user, string $email): UserContact
     {
+        if (!$this->isValidDomainEmail($email)) {
+            throw new InvalidEmailDomainException($email . ' is not a valid Scouting Email.');
+        }
+
         $emailType = $this->UserContactTypes->find()
             ->where([UserContactType::FIELD_USER_CONTACT_TYPE => 'Email'])
             ->first();

@@ -101,8 +101,8 @@
                                                 <tr>
                                                     <td><?= h($directoryUsers->full_name) ?></td>
                                                     <td class="actions">
+                                                        <?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') && $directoryUsers->has('user_contact') ? $this->Html->link('<i class="fal fa-user"></i>', ['controller' => 'Users', 'action' => 'view', $directoryUsers->user_contact->user_id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'DirectoryUsers', 'action' => 'view', $directoryUsers->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                        <?= $this->Identity->buildAndCheckCapability('UPDATE', 'DirectoryUsers') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'DirectoryUsers', 'action' => 'edit', $directoryUsers->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->buildAndCheckCapability('DELETE', 'DirectoryUsers') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'DirectoryUsers', 'action' => 'delete', $directoryUsers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $directoryUsers->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                     </td>
                                                     <td><?= $this->Text->autoLinkEmails($directoryUsers->primary_email) ?></td>

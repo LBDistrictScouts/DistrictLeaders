@@ -16,9 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Test\TestCase;
 
-use App\Shell\Task\QueueEmailTask;
 use App\Test\TestCase\Controller\AppTestTrait;
-use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOutput;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\TestCase;
@@ -121,8 +119,5 @@ class QueueTestCase extends TestCase
 
         $this->out = new ConsoleOutput();
         $this->err = new ConsoleOutput();
-        $testIo = new ConsoleIo($this->out, $this->err);
-
-        $this->Task = new QueueEmailTask($testIo);
     }
 }

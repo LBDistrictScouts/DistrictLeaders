@@ -18,7 +18,12 @@ class JobHelper extends Helper
         'email_send_id' => 'Email Send ID',
         'domainsCount' => 'Synced Domains',
         'usersCount' => 'Synced Directory Users',
+        'output' => '',
         'groupsCount' => 'Synced Directory Groups',
+        'unchanged' => 'Unchanged Tokens',
+        'deactivated' => 'Deactivated Tokens',
+        'deleted' => 'Deleted Tokens',
+        'records' => 'Total Tokens',
     ];
 
     protected $inputKeys = [

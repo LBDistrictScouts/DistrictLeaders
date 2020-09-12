@@ -30,19 +30,19 @@ ExcludedAppConfigKeys:
   - Filesystem
 
 ApplicationConfigKeys:
-  - baseCapabilities
-  - entityCapabilities
-  - fieldCapabilities
-  - actionOverrides
-  - allModels
-  - allCapabilities
+  - BaseCapabilities
+  - EntityCapabilities
+  - FieldCapabilities
+  - ActionOverrides
+  - AllModels
+  - AllCapabilities
   - UnauthorizedExceptions
-  - baseRoleTemplates
-  - dailyCrons
-  - fileTypes
-  - functionalAreas
-  - iconStandards
-  - searchConfigured
-  - notificationTypes
+  - DailyCrons
+  - RoleTemplates
+  - FileTypes
+  - FunctionalAreas
+  - IconStandards
+  - SearchConfigured
+  - NotificationTypes
   - Passwordable
   - Webservices

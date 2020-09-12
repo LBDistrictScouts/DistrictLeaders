@@ -60,7 +60,7 @@ class DirectoryUsersTable extends Table
             'joinType' => 'INNER',
         ]);
 
-        $this->hasMany('UserContacts', [
+        $this->hasOne('UserContacts', [
             'foreignKey' => 'directory_user_id',
         ]);
 
@@ -303,6 +303,7 @@ class DirectoryUsersTable extends Table
             $contact->set(UserContact::FIELD_CONTACT_FIELD, $directoryUser->primary_email);
         }
 
+        $contact->set(UserContact::FIELD_VERIFIED, true);
         $contact->set(UserContact::FIELD_DIRECTORY_USER_ID, $directoryUser->id);
 
         return (bool)$this->UserContacts->save($contact);

@@ -16,6 +16,8 @@ use Queue\Shell\Task\QueueTaskInterface;
  */
 class QueueStateTask extends QueueTask implements QueueTaskInterface
 {
+    use JobDataTrait;
+
     /**
      * @var int
      */
@@ -38,9 +40,10 @@ class QueueStateTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId): void
     {
+        $this->jobId = $jobId;
+
         $this->loadModel('UserStates');
         $this->loadModel('Users');
-        $this->loadModel('Queue.QueuedJobs');
 
         $users = $this->Users->find('all');
         $total = $users->count();
@@ -53,9 +56,6 @@ class QueueStateTask extends QueueTask implements QueueTaskInterface
             $this->QueuedJobs->updateProgress($jobId, $current / $total);
         }
 
-        $job = $this->QueuedJobs->get($jobId);
-        $data[$this->outputKey] = $current;
-        $job->set('data', serialize($data));
-        $this->QueuedJobs->save($job);
+        $this->saveJobResult((int)$jobId, $current, $this->outputKey);
     }
 }

@@ -18,6 +18,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property array $body_content
  * @property array|null $subject_link
+ * @property string $email_code
  *
  * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\NotificationType|null $notification_type
@@ -51,6 +52,24 @@ class Notification extends Entity
         'email_sends' => true,
     ];
 
+    /**
+     * Specifies the method for building up a user's full name.
+     *
+     * @return string|null
+     */
+    protected function _getEmailCode(): ?string
+    {
+        if (!$this->has('notification_type')) {
+            return null;
+        }
+
+        return $this->notification_type->type . '-' . $this->user_id . '-' . $this->notification_type->sub_type;
+    }
+
+    protected $_virtual = [
+        'email_code',
+    ];
+
     public const FIELD_ID = 'id';
     public const FIELD_USER_ID = 'user_id';
     public const FIELD_NOTIFICATION_TYPE_ID = 'notification_type_id';
@@ -64,4 +83,5 @@ class Notification extends Entity
     public const FIELD_USER = 'user';
     public const FIELD_NOTIFICATION_TYPE = 'notification_type';
     public const FIELD_EMAIL_SENDS = 'email_sends';
+    public const FIELD_EMAIL_CODE = 'email_code';
 }

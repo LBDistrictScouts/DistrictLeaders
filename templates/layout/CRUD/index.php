@@ -10,6 +10,8 @@
  * @var array $appliedFilters
  */
 
+use Cake\Utility\Inflector;
+
 $entity = $this->fetch('entity');
 ?>
 <div class="row">
@@ -18,7 +20,7 @@ $entity = $this->fetch('entity');
         <div class="card">
             <div class="card-header">
                 <div class="row">
-                    <div class="col-12 col-md-6">
+                    <div class="col-12 col-md-9">
                         <?php
                         $subset = $this->fetch('subset', 'All');
                         if (!empty($appliedFilters)) {
@@ -27,20 +29,25 @@ $entity = $this->fetch('entity');
                         <h3><?= h($subset) ?> <?= $this->Inflection->space($entity) ?></h3>
                     </div>
                     <?php if ($this->fetch('add')) : ?>
-                        <div class="col-12 col-md-6 text-md-right">
+                        <div class="col-12 col-md-3 text-md-right">
                             <?= $this->Html->link('Add New ' . $this->Inflection->singleSpace($entity), ['controller' => $this->fetch('entity'), 'action' => 'add'], ['class' => 'btn btn-outline-primary'])  ?>
                         </div>
                     <?php endif; ?>
                 </div>
                 <?php if (isset($filterArray)) : ?>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-12">
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="First group">
                                 <?php
+                                $urlQuery = $this->getRequest()->getQueryParams();
+                                foreach ($urlQuery as $urlParam => $value) {
+                                    unset($urlQuery[$urlParam]);
+                                    $urlQuery[Inflector::humanize(urldecode($urlParam))] = $value;
+                                }
+
                                 /** @var string $filterItem */
                                 foreach ($filterArray as $id => $filterItem) :
-                                    $urlQuery = $this->getRequest()->getQueryParams();
                                     if (key_exists($filterItem, $urlQuery)) {
                                         $active = $urlQuery[$filterItem];
                                     } else {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Model\Entity\User;
-use App\Utility\AwsBuilder;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Form\Form;
 use Cake\Form\Schema;
@@ -27,7 +26,8 @@ class PasswordForm extends Form
      */
     protected function buildSchema(Schema $schema): Schema
     {
-        $schema->addField(self::FIELD_NEW_PASSWORD, 'string')
+        $schema
+            ->addField(self::FIELD_NEW_PASSWORD, 'string')
             ->addField(self::FIELD_CONFIRM_PASSWORD, 'string')
             ->addField(self::FIELD_POSTCODE, 'string');
 
@@ -42,9 +42,15 @@ class PasswordForm extends Form
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator->minLength(self::FIELD_POSTCODE, 6, 'Postcode is too Short.')
-            ->minLength(self::FIELD_NEW_PASSWORD, User::MINIMUM_PASSWORD_LENGTH, 'Password is too short.')
+        $validator
+            ->minLength(self::FIELD_NEW_PASSWORD, User::MINIMUM_PASSWORD_LENGTH, 'Password is too short.');
+
+        $validator
+            ->requirePresence(self::FIELD_CONFIRM_PASSWORD)
             ->equalToField(self::FIELD_CONFIRM_PASSWORD, self::FIELD_NEW_PASSWORD, 'Passwords don\'t match');
+
+        $validator
+            ->minLength(self::FIELD_POSTCODE, 6, 'Postcode is too Short.');
 
         return $validator;
     }
@@ -63,7 +69,7 @@ class PasswordForm extends Form
         if (key_exists('request', $data)) {
             $requestData = $data['request'];
         } else {
-            return false;
+            $requestData = $data;
         }
 
         // Check passwords Match
@@ -96,24 +102,6 @@ class PasswordForm extends Form
                 return false;
             }
         } else {
-            return false;
-        }
-
-        if ($user->get('cognito_enabled')) {
-            $client = AwsBuilder::buildCognitoClient();
-            $challegeData = $data['auth'];
-
-            $result = $client->adminRespondToAuthChallenge([
-                'ChallengeName' => $challegeData['challenge'], // REQUIRED
-                'ChallengeResponses' => [
-                    'USERNAME' => $challegeData['challengeParameters']['USER_ID_FOR_SRP'],
-                    'NEW_PASSWORD' => $newPassword,
-                ],
-                'ClientId' => AwsBuilder::getCognitoAppClientId(), // REQUIRED
-                'Session' => $challegeData['challengeSession'],
-                'UserPoolId' => AwsBuilder::getCognitoUserPoolId(), // REQUIRED
-            ]);
-
             return false;
         }
 

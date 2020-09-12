@@ -37,6 +37,11 @@ class UserContactTypesFixture extends TestFixture
                 'created' => 1564337519,
                 'modified' => 1564337519,
             ],
+            [
+                'user_contact_type' => 'Phone',
+                'created' => 1564337519,
+                'modified' => 1564337519,
+            ],
         ];
         parent::init();
     }

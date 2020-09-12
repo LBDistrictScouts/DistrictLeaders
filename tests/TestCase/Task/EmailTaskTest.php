@@ -3,13 +3,29 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
 
+use App\Shell\Task\QueueEmailTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
+use Cake\Console\ConsoleIo;
 
 /**
  * App\Mailer\BasicMailer Test Case
  */
 class EmailTaskTest extends TestCase
 {
+    use TaskTestTrait;
+
+    /**
+     * Setup Defaults
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        $testIo = new ConsoleIo($this->out, $this->err);
+        $this->Task = new QueueEmailTask($testIo);
+    }
+
     /**
      * Test initial setup
      *
@@ -17,24 +33,14 @@ class EmailTaskTest extends TestCase
      */
     public function testEmailQueueJob()
     {
-        $originalJobCount = $this->QueuedJobs->find('all')->count();
-        TestCase::assertEquals(0, $originalJobCount);
-
-        $this->QueuedJobs->createJob(
-            'Email',
-            ['email_generation_code' => 'USR-2-NEW']
-        );
-
-        $resultingJobCount = $this->QueuedJobs->find('all')->count();
-
-        TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
-        TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
-
-        /** @var \Queue\Model\Entity\QueuedJob $job */
-        $job = $this->QueuedJobs->find()->first();
+        $job = $this->checkCreateJob('Email', ['email_generation_code' => 'USR-2-NEW']);
         $data = unserialize($job->get('data'));
 
         $this->Task->run($data, $job->id);
+        $this->validateExpectedData([
+            'email_generation_code' => 'USR-2-NEW',
+            'email_send_id' => 3,
+        ], $job->id);
     }
 
     public function provideQueueException(): array
@@ -42,7 +48,7 @@ class EmailTaskTest extends TestCase
         return [
             'Email Code Missing' => [
                 [],
-                'Email generation code not specified.',
+                'Email Generation Code not specified.',
                 'Queue\Model\QueueException',
             ],
             'Primary Key Missing' => [

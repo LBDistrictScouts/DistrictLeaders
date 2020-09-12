@@ -137,7 +137,7 @@ class RoleTypesTable extends Table
      * @param \App\Model\Entity\RoleType $roleType The Entity to be Patched.
      * @return \App\Model\Entity\RoleType
      */
-    public function patchTemplateCapabilities($roleType)
+    public function patchTemplateCapabilities(RoleType $roleType): RoleType
     {
         $this->Capabilities->installBaseCapabilities();
 
@@ -169,7 +169,7 @@ class RoleTypesTable extends Table
      * @param \App\Model\Entity\RoleType $roleType The RoleType Entity
      * @return int
      */
-    public function patchRoleUsers($roleType)
+    public function patchRoleUsers(RoleType $roleType): int
     {
         $count = 0;
 

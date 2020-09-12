@@ -33,7 +33,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token']);
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'welcome']);
 
         $this->Authorization->mapActions([
             'search' => 'index',
@@ -497,5 +497,72 @@ class UsersController extends AppController
         }
 
         $this->set(compact('passwordForm'));
+    }
+
+    /**
+     * Token - Completes Password Reset Function
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function welcome()
+    {
+        $this->loadModel('Tokens');
+        $this->viewBuilder()->setLayout('login');
+
+        $resetToken = $this->Tokens->validateTokenRequest($this->request->getQueryParams());
+
+        if (!$resetToken instanceof Token) {
+            $this->Flash->error('Token is Invalid.');
+
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+        }
+
+        $user = $resetToken->email_send->user;
+        if (!$user instanceof User) {
+            $this->Flash->error('User is Invalid.');
+
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+        }
+
+        $identity = $this->Authentication->getIdentity();
+        if ($identity instanceof User) {
+            $user = $identity;
+        }
+
+        $passwordForm = new PasswordForm();
+
+        if ($user instanceof User && $this->request->is('post')) {
+            $newPassword = $this->request->getData($passwordForm::FIELD_NEW_PASSWORD);
+            $confirmPassword = $this->request->getData($passwordForm::FIELD_CONFIRM_PASSWORD);
+
+            $passwordData = [
+                $passwordForm::FIELD_NEW_PASSWORD => $newPassword,
+                $passwordForm::FIELD_CONFIRM_PASSWORD => $confirmPassword,
+            ];
+
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            if (!$passwordForm->validate($passwordData)) {
+                $this->Flash->error(__('The data provided has errors.'));
+            } elseif ($newPassword != $confirmPassword) {
+                $this->Flash->error('Passwords do not match.');
+            } else {
+                $user = $this->Users->patchEntity(
+                    $user,
+                    [User::FIELD_PASSWORD => $newPassword],
+                    [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]
+                );
+
+                if ($this->Users->save($user)) {
+                    $this->Flash->success('Your username & password were saved successfully.');
+
+                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                }
+
+                $this->Flash->error(__('Something went wrong.'));
+            }
+        }
+
+        $this->set(compact('passwordForm', 'user'));
     }
 }

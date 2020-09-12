@@ -111,7 +111,7 @@ class CompassRecordsController extends AppController
             }
         }
 
-        return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index']);
+        return $this->redirect(['controll er' => 'CompassRecords', 'action' => 'index']);
     }
 
     /**

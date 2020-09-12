@@ -66,7 +66,7 @@ class MakeAndSendCommand extends Command
             return;
         }
 
-        $result = $this->EmailSends->send($result);
+        $result = $this->EmailSends->send($result->id);
 
         if (!$result) {
             $consoleIo->error('Email did not "Send" successfully.');

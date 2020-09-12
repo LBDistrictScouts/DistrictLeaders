@@ -5,9 +5,9 @@ namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
 use App\Shell\Task\QueueCapabilityTask;
+use App\Test\TestCase\QueueTestCase as TestCase;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOutput;
-use Cake\TestSuite\TestCase;
 
 /**
  * App\Mailer\BasicMailer Test Case
@@ -17,54 +17,12 @@ use Cake\TestSuite\TestCase;
  */
 class CapabilityTaskTest extends TestCase
 {
+    use TaskTestTrait;
+
     /**
-     * @var QueueCapabilityTask|\PHPUnit\Framework\MockObject\MockObject
+     * @var QueueTokenTask|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Task;
-
-    /**
-     * @var \Tools\TestSuite\ConsoleOutput
-     */
-    protected $out;
-
-    /**
-     * @var \Tools\TestSuite\ConsoleOutput
-     */
-    protected $err;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-        'plugin.Queue.QueuedJobs',
-        'plugin.Queue.QueueProcesses',
-    ];
 
     /**
      * Setup Defaults
@@ -90,30 +48,18 @@ class CapabilityTaskTest extends TestCase
      */
     public function testCapabilityQueueJob()
     {
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $originalJobCount = $this->QueuedJobs->find('all')->count();
-        TestCase::assertEquals(0, $originalJobCount);
-
-        $this->QueuedJobs->createJob(
-            'Capability',
-            ['role_template_id' => 1]
-        );
-
-        $resultingJobCount = $this->QueuedJobs->find('all')->count();
-
-        TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
-        TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
-
-        /** @var \Queue\Model\Entity\QueuedJob $job */
-        $job = $this->QueuedJobs->find()->first();
+        $job = $this->checkCreateJob('Capability', ['role_template_id' => 1]);
         $data = unserialize($job->get('data'));
 
         $this->Task->run($data, $job->id);
-
-        /** @var \Queue\Model\Entity\QueuedJob $job */
-        $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
+        $job = $this->QueuedJobs->get($job->id);
 
         TestCase::assertEquals(1, $job->progress);
+        $this->validateExpectedData([
+            'role_template_id' => 1,
+            'passed' => 7,
+            'records' => 7,
+        ], $job->id);
     }
 
     /**

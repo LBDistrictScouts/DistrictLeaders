@@ -28,6 +28,15 @@
                     'class' => 'btn btn-primary',
                 ]
             ) ?>
+            <?= $this->Form->postLink(
+                'Send Unsent Emails',
+                ['controller' => 'EmailSends', 'action' => 'unsent'],
+                [
+                    'confirm' => __d('queue', 'Are you sure you want to trigger unsent emails to be sent?'),
+                    'role' => 'button',
+                    'class' => 'btn btn-primary',
+                ]
+            ) ?>
         </div>
     </div>
 </div>

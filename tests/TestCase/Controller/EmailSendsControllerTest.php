@@ -89,19 +89,23 @@ class EmailSendsControllerTest extends TestCase
     }
 
     /**
-     * Test add method
+     * Test send method
      *
      * @return void
      */
-    public function testAdd()
+    public function testSend()
     {
-        $this->tryAddGet($this->controller);
+        $this->markTestIncomplete('need a send');
+    }
 
-        $this->tryAddPost(
-            $this->controller,
-            $this->validEntityData,
-            2
-        );
+    /**
+     * Test send method
+     *
+     * @return void
+     */
+    public function testMake()
+    {
+        $this->markTestIncomplete('need a make');
     }
 
     /**
@@ -129,7 +133,7 @@ class EmailSendsControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            $this->validEntityData,
+            null,
             2
         );
     }

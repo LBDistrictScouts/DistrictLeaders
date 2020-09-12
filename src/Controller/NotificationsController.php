@@ -57,6 +57,26 @@ class NotificationsController extends AppController
     }
 
     /**
+     * Welcome User method
+     *
+     * @param string|null $userId Notification id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function welcome(?string $userId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $user = $this->Notifications->Users->get($userId);
+        if ($this->Notifications->welcome($user)) {
+            $this->Flash->success(__('The user has been sent a welcome email.'));
+        } else {
+            $this->Flash->error(__('The user could not be sent a welcome email. Please, try again.'));
+        }
+
+        return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'view', $userId]);
+    }
+
+    /**
      * Delete method
      *
      * @param string|null $notificationId Notification id.

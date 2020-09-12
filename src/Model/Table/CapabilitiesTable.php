@@ -176,7 +176,7 @@ class CapabilitiesTable extends Table
      */
     public function entityCapability($entity, $baseLevel, $viewRestricted = false)
     {
-        $entityActions = Configure::read('EntityCapabilities');
+        $entityActions = CapBuilder::getEntityCapabilities();
         $count = 0;
 
         foreach ($entityActions as $action => $multiplier) {
@@ -199,9 +199,9 @@ class CapabilitiesTable extends Table
      * @param int $baseLevel The Base level of the entity
      * @return int
      */
-    public function fieldCapability($entity, $baseLevel)
+    public function fieldCapability(string $entity, int $baseLevel)
     {
-        $fieldActions = Configure::read('FieldCapabilities');
+        $fieldActions = CapBuilder::getFieldCapabilities();
 
         $table = $this->getTableLocator()->get($entity);
         if (!($table instanceof Table) || $table->getEntityClass() == 'Cake\ORM\Entity') {
@@ -242,7 +242,7 @@ class CapabilitiesTable extends Table
      * @param array $objectArray The array to be saved
      * @return \App\Model\Entity\Capability|false
      */
-    protected function makeOrPatch($objectArray)
+    protected function makeOrPatch(array $objectArray)
     {
         if ($this->exists([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])) {
             $capability = $this->find()

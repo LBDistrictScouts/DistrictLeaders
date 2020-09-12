@@ -12,10 +12,11 @@ use Queue\Shell\Task\QueueTaskInterface;
  *
  * @package App\Shell\Task
  * @property \App\Model\Table\DirectoriesTable $Directories
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
 {
+    use JobDataTrait;
+
     /**
      * @var int
      */
@@ -38,12 +39,9 @@ class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
      */
     public function run(array $data, $jobId): void
     {
-        if (!key_exists($this->entityKey, $data)) {
-            throw new QueueException('Document Version Number not specified.');
-        }
+        $this->checkEntityKey($data);
 
         $this->loadModel('Directories');
-        $this->loadModel('Queue.QueuedJobs');
 
         $directory = $this->Directories->get($data[$this->entityKey]);
 
@@ -53,9 +51,6 @@ class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
             throw new QueueException('Directory Process Failed.');
         }
 
-        $job = $this->QueuedJobs->get($jobId);
-        $data = array_merge($data, $result);
-        $job->set('data', serialize($data));
-        $this->QueuedJobs->save($job);
+        $this->saveJobDataArray((int)$jobId, $result);
     }
 }

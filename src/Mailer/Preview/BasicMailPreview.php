@@ -27,10 +27,13 @@ class BasicMailPreview extends MailPreview
 
         /** @var \App\Model\Entity\Token $token */
         $token = $this->Tokens->find()->contain(['EmailSends' => ['Users', 'Tokens', 'Notifications']])->first();
+        $emailSend = $token->email_send;
+        $notification = $token->email_send->notification;
+        $user = $token->email_send->user;
 
         /** @var \App\Mailer\BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
 
-        $mailer->doSend($token->email_send, $token);
+        $mailer->doSend($emailSend, $token->token, $user, $notification);
     }
 }

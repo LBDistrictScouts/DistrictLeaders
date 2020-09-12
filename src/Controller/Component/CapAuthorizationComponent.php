@@ -187,11 +187,11 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @return \Authorization\Policy\ResultInterface
      */
     public function buildAndCheckCapabilityResult(
-        $action,
-        $model,
+        string $action,
+        string $model,
         $group = null,
         $section = null,
-        $field = null
+        ?string $field = null
     ): ResultInterface {
         if (is_null($this->capUser)) {
             return new Result(false, 'Component User Null.');

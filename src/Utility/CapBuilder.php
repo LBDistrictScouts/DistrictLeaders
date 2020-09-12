@@ -44,22 +44,48 @@ class CapBuilder
      */
     protected static $absoluteMinLevel = 0;
 
+    protected static $actionOverrides = [
+      'INDEX' => 'VIEW',
+      'ADD' => 'CREATE',
+      'EDIT' => 'UPDATE',
+      'SEARCH' => 'VIEW',
+      'PERMISSIONS' => 'VIEW',
+    ];
+
+    protected static $fieldActionOverrides = [
+        'CHANGE' => 'UPDATE',
+    ];
+
+    protected static $fieldCapabilities = [
+        'CHANGE' => 1,
+        'VIEW' => 0,
+    ];
+
+    protected static $entityCapabilities = [
+        'CREATE' => 1,
+        'UPDATE' => 1,
+        'VIEW' => -5,
+        'DELETE' => 5,
+    ];
+
     /**
      * @param string $action The name of the Action performed
      * @param string $model The Model to be formatted
      * @param string|null $field The Field being limited
      * @return string|false
      */
-    public static function capabilityCodeFormat($action, $model, $field = null)
+    public static function capabilityCodeFormat(string $action, string $model, ?string $field = null)
     {
         $action = CapBuilder::applyActionOverrides($action);
 
-        if (!is_null($field)) {
+        if (!is_null($field) && self::isFieldRestricted($model)) {
             if (!CapBuilder::isFieldActionType($action)) {
                 return false;
             }
             $code = ucwords(strtolower(static::$fieldPrefix)) . ucfirst(strtolower($action)) . $model;
         } else {
+            $action = CapBuilder::applyFieldActionOverrides($action);
+
             if (!CapBuilder::isEntityActionType($action)) {
                 return false;
             }
@@ -68,7 +94,7 @@ class CapBuilder
 
         $code = Inflector::underscore(Inflector::singularize($code));
 
-        if (!is_null($field)) {
+        if (!is_null($field) && self::isFieldRestricted($model)) {
             $code .= '@' . $field;
         }
 
@@ -81,7 +107,7 @@ class CapBuilder
      * @param string|null $field The Field Restriction
      * @return string|false
      */
-    public static function capabilityNameFormat($action, $model, $field = null)
+    public static function capabilityNameFormat(string $action, string $model, ?string $field = null)
     {
         if (
             (!is_null($field) && !CapBuilder::isFieldActionType($action))
@@ -109,7 +135,7 @@ class CapBuilder
      * @param bool|null $viewRestricted Is the view action restricted
      * @return int
      */
-    public static function calculateLevel($baseLevel, $multiplier, $viewRestricted = false)
+    public static function calculateLevel(int $baseLevel, int $multiplier, ?bool $viewRestricted = false): int
     {
         if ($multiplier == -static::$maxLevel && $viewRestricted) {
             $multiplier = 0;
@@ -128,7 +154,7 @@ class CapBuilder
     /**
      * @return array
      */
-    protected static function actionTypes()
+    protected static function actionTypes(): array
     {
         return array_merge(
             CapBuilder::fieldActionTypes(),
@@ -138,19 +164,29 @@ class CapBuilder
 
     /**
      * @param string $action Action which might need overriding
-     * @return string|false
+     * @return string
      */
-    protected static function applyActionOverrides($action)
+    protected static function applyActionOverrides(string $action): string
     {
-        if (is_null($action) || empty($action)) {
-            return false;
+        $action = strtoupper($action);
+
+        if (key_exists($action, self::$actionOverrides)) {
+            return self::$actionOverrides[$action];
         }
 
-        $action = strtoupper($action);
-        $overrides = Configure::read('ActionOverrides');
+        return $action;
+    }
 
-        if (key_exists($action, $overrides)) {
-            return $overrides[$action];
+    /**
+     * @param string $action Action which might need overriding
+     * @return string
+     */
+    protected static function applyFieldActionOverrides(string $action): string
+    {
+        $action = strtoupper($action);
+
+        if (key_exists($action, self::$fieldActionOverrides)) {
+            return self::$fieldActionOverrides[$action];
         }
 
         return $action;
@@ -159,23 +195,39 @@ class CapBuilder
     /**
      * @return array
      */
-    protected static function entityActionTypes()
+    protected static function entityActionTypes(): array
     {
-        return array_keys(Configure::read('EntityCapabilities'));
+        return array_keys(self::getEntityCapabilities());
     }
 
     /**
      * @return array
      */
-    protected static function fieldActionTypes()
+    public static function getEntityCapabilities(): array
     {
-        return array_keys(Configure::read('FieldCapabilities'));
+        return self::$entityCapabilities;
     }
 
     /**
      * @return array
      */
-    protected static function fieldModels()
+    protected static function fieldActionTypes(): array
+    {
+        return array_keys(self::getFieldCapabilities());
+    }
+
+    /**
+     * @return array
+     */
+    public static function getFieldCapabilities(): array
+    {
+        return self::$fieldCapabilities;
+    }
+
+    /**
+     * @return array
+     */
+    protected static function fieldModels(): array
     {
         $array = [];
 
@@ -192,7 +244,7 @@ class CapBuilder
      * @param string $action Action to be Checked
      * @return bool
      */
-    public static function isFieldActionType($action)
+    public static function isFieldActionType(string $action): bool
     {
         $action = self::applyActionOverrides($action);
 
@@ -203,7 +255,7 @@ class CapBuilder
      * @param string $action Action to be Checked
      * @return bool
      */
-    public static function isEntityActionType($action)
+    public static function isEntityActionType(string $action): bool
     {
         $action = self::applyActionOverrides($action);
 
@@ -214,7 +266,7 @@ class CapBuilder
      * @param string $capability Capability to be Checked
      * @return bool
      */
-    public static function isFieldType($capability)
+    public static function isFieldType(string $capability): bool
     {
         if (is_null($capability)) {
             return false;
@@ -227,7 +279,7 @@ class CapBuilder
      * @param string $action The Action to be validated
      * @return bool
      */
-    public static function isActionType($action)
+    public static function isActionType(string $action): bool
     {
         $action = CapBuilder::applyActionOverrides($action);
 
@@ -238,7 +290,7 @@ class CapBuilder
      * @param string $model The Model to be validated
      * @return bool
      */
-    public static function isFieldRestricted($model)
+    public static function isFieldRestricted(string $model): bool
     {
         return (bool)in_array($model, CapBuilder::fieldModels());
     }
@@ -247,7 +299,7 @@ class CapBuilder
      * @param string $capabilityCode Capability code to be broken
      * @return array|false
      */
-    protected static function breakFieldCode($capabilityCode)
+    protected static function breakFieldCode(string $capabilityCode)
     {
         if (CapBuilder::isFieldType($capabilityCode)) {
             $code = substr($capabilityCode, 6);
@@ -262,7 +314,7 @@ class CapBuilder
      * @param string $capabilityCode The Capability Code to be broken
      * @return array
      */
-    public static function breakSpecialCode($capabilityCode)
+    public static function breakSpecialCode(string $capabilityCode): array
     {
         $outArray = [
             'is_special' => false,
@@ -297,7 +349,7 @@ class CapBuilder
      * @param string $capabilityCode The Capability Code to be broken
      * @return array|false
      */
-    public static function breakCode($capabilityCode)
+    public static function breakCode(string $capabilityCode)
     {
         $code = $capabilityCode;
         if (CapBuilder::isFieldType($capabilityCode)) {
@@ -321,7 +373,7 @@ class CapBuilder
      * @param string $capabilityCode Capability Code for testing
      * @return bool
      */
-    public static function isSpecialCode($capabilityCode)
+    public static function isSpecialCode(string $capabilityCode): bool
     {
         if (is_null($capabilityCode)) {
             return false;

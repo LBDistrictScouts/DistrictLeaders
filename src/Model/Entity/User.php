@@ -215,7 +215,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param \Authorization\AuthorizationService $service The Auth Service
      * @return self
      */
-    public function setAuthorization($service): User
+    public function setAuthorization(\Authorization\AuthorizationService $service): User
     {
         $this->authorization = $service;
 
@@ -268,8 +268,13 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null): bool
-    {
+    public function buildAndCheckCapability(
+        string $action,
+        string $model,
+        $group = null,
+        $section = null,
+        $field = null
+    ): bool {
         return $this->buildAndCheckCapabilityResult($action, $model, $group, $section, $field)->getStatus();
     }
 
@@ -282,11 +287,11 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @return \Authorization\Policy\ResultInterface
      */
     public function buildAndCheckCapabilityResult(
-        $action,
-        $model,
+        string $action,
+        string $model,
         $group = null,
         $section = null,
-        $field = null
+        ?string $field = null
     ): ResultInterface {
         if (!CapBuilder::isActionType($action)) {
             return new Result(false, 'Action Supplied is Invalid.');
@@ -305,7 +310,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param int|array|null $section A Section ID if applicable
      * @return bool
      */
-    public function checkCapability($capability, $group = null, $section = null): bool
+    public function checkCapability(string $capability, $group = null, $section = null): bool
     {
         return $this->checkCapabilityResult($capability, $group, $section)->getStatus();
     }
@@ -318,7 +323,7 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
      * @param int|array|null $section A Section ID if applicable
      * @return \Authorization\Policy\ResultInterface
      */
-    public function checkCapabilityResult($capability, $group = null, $section = null): ResultInterface
+    public function checkCapabilityResult(string $capability, $group = null, $section = null): ResultInterface
     {
         if (!is_array($this->capabilities)) {
             return new Result(false, 'Array Not String Passed.');
