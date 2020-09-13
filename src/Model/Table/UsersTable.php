@@ -520,4 +520,15 @@ class UsersTable extends Table
 
         return null;
     }
+
+    /**
+     * @param \App\Model\Entity\User $user User to be activated
+     * @return \App\Model\Entity\User
+     */
+    public function activateUser(User $user): User
+    {
+        $user->set(User::FIELD_ACTIVATED, true);
+
+        return $this->save($user, ['validate' => false]);
+    }
 }

@@ -86,6 +86,8 @@ class Application extends BaseApplication implements
 
         $this->addPlugin('WyriHaximus/TwigView');
 
+        $this->addPlugin('Tags');
+
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 

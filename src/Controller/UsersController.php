@@ -10,7 +10,6 @@ use App\Model\Entity\Audit;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use App\Model\Filter\UsersCollection;
-use Authorization\Policy\ResultInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 
@@ -90,7 +89,7 @@ class UsersController extends AppController
             ],
             'UserContacts',
         ]);
-        $users = $this->paginate($this->Authorization->applyScope($query));
+        $users = $this->paginate($this->Authorization->applyScope($query), ['queryStringWhitelist' => ['q']]);
         $this->set(compact('users'));
 
         $this->whyPermitted($this->Users);
@@ -107,12 +106,6 @@ class UsersController extends AppController
     {
         $blockedFields = $this->Authorization->see($this->Users->get($userId));
 
-        $result = $this->Authorization->checkCapability('HISTORY');
-
-        if ($result instanceof ResultInterface) {
-            $result = $result->getStatus();
-        }
-
         $containArray = [
             'UserStates',
             'Roles' => [
@@ -124,15 +117,14 @@ class UsersController extends AppController
                 'RoleStatuses',
                 'UserContacts',
             ],
+            'ContactNumbers',
         ];
 
-        if ($result) {
+        if ($this->Authorization->checkCapability('HISTORY')) {
             $containArray = array_merge($containArray, [
-                'ContactEmails.DirectoryUsers',
-                'ContactNumbers',
                 'Audits.Users',
-                'Changes' => function (Query $q) {
-                    return $q
+                'Changes' => function (Query $query) {
+                    return $query
                         ->limit(50)
                         ->orderDesc(Audit::FIELD_CHANGE_DATE)
                         ->contain([
@@ -149,11 +141,17 @@ class UsersController extends AppController
                         ]);
                 },
             ]);
+        }
+        if ($this->Authorization->buildAndCheckCapability('VIEW', 'DirectoryUsers')) {
+            $containArray = array_merge($containArray, ['ContactEmails.DirectoryUsers']);
         } else {
-            $containArray = array_merge($containArray, [
-                'ContactEmails',
-                'ContactNumbers',
-            ]);
+            $containArray = array_merge($containArray, ['ContactEmails']);
+        }
+        if (
+            $this->Authorization->checkCapability('ALL')
+            || $this->Authentication->getIdentity()->getIdentifier() == $userId
+        ) {
+            $containArray = array_merge($containArray, ['Notifications' => ['NotificationTypes', 'EmailSends.Tokens']]);
         }
 
         $user = $this->Users
@@ -564,5 +562,25 @@ class UsersController extends AppController
         }
 
         $this->set(compact('passwordForm', 'user'));
+    }
+
+    /**
+     * Activate method
+     *
+     * @param string|null $userId User id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function activate($userId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $user = $this->Users->get($userId);
+        if ($this->Users->activateUser($user)) {
+            $this->Flash->success(__('The user has been activated.'));
+        } else {
+            $this->Flash->error(__('The user contact could not be activated. Please, try again.'));
+        }
+
+        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userId]));
     }
 }

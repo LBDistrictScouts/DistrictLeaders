@@ -6,6 +6,11 @@ namespace App\Model\Filter;
 use App\Model\Entity\User;
 use Search\Model\Filter\FilterCollection;
 
+/**
+ * Class UsersCollection
+ *
+ * @package App\Model\Filter
+ */
 class UsersCollection extends FilterCollection
 {
     /**
@@ -32,6 +37,7 @@ class UsersCollection extends FilterCollection
                     User::FIELD_USERNAME,
                     User::FIELD_POSTCODE,
                     User::FIELD_ADDRESS_LINE_1,
+                    User::FIELD_SEARCH_STRING,
 //                    'RoleTypes.' . RoleType::FIELD_ROLE_TYPE,
 //                    'SectionTypes.' . SectionType::FIELD_SECTION_TYPE,
 //                    'UserContacts.' . UserContact::FIELD_CONTACT_FIELD,

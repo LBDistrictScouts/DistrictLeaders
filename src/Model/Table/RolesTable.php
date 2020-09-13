@@ -59,6 +59,16 @@ class RolesTable extends Table
         $this->addBehavior('Timestamp');
         $this->addBehavior('Muffin/Trash.Trash');
 
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                Role::FIELD_ROLE_TYPE_ID,
+                Role::FIELD_SECTION_ID,
+                Role::FIELD_USER_ID,
+                Role::FIELD_ROLE_STATUS_ID,
+                Role::FIELD_USER_CONTACT_ID,
+            ],
+        ]);
+
         $this->hasMany('Audits', [
             'foreignKey' => 'audit_record_id',
             'finder' => 'roles',
@@ -168,57 +178,15 @@ class RolesTable extends Table
         if ($entity->isNew()) {
             // Do Task
             $this->getEventManager()->dispatch(new Event(
-                'Model.Role.roleAdded',
+                'Model.Roles.roleAdded',
                 $this,
-                ['role' => $entity]
+                ['entity' => $entity]
             ));
-        }
-
-        $dirtyValues = $entity->getDirty();
-
-        $trackedFields = [
-            'role_type_id',
-            'section_id',
-            'user_id',
-            'role_status_id',
-            'user_contact_id',
-        ];
-
-        $auditCount = 0;
-
-        foreach ($dirtyValues as $dirty_value) {
-            if (in_array($dirty_value, $trackedFields)) {
-                $current = $entity->get($dirty_value);
-                $original = $entity->getOriginal($dirty_value);
-
-                if ($entity->isNew()) {
-                    $original = null;
-                }
-
-                if ($current <> $original) {
-                    $auditData = [
-                        'audit_record_id' => $entity->get('id'),
-                        'audit_field' => $dirty_value,
-                        'audit_table' => 'Roles',
-                        'original_value' => $original,
-                        'modified_value' => $current,
-                    ];
-
-                    $audit = $this->Users->Audits->newEntity($auditData);
-                    $this->Users->Audits->save($audit);
-                    $auditCount += 1;
-                }
-            }
-        }
-
-        if ($auditCount > 0 && !$entity->isNew()) {
+        } else {
             $this->getEventManager()->dispatch(new Event(
-                'Model.Role.newAudits',
+                'Model.Roles.roleUpdated',
                 $this,
-                [
-                    'role' => $entity,
-                    'count' => $auditCount,
-                ]
+                ['entity' => $entity]
             ));
         }
 

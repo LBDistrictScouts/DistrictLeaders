@@ -33,14 +33,14 @@ class RolesController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Role id.
+     * @param string|null $roleId Role id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($roleId = null)
     {
-        $role = $this->Roles->get($id, [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts'],
+        $role = $this->Roles->get($roleId, [
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts', 'Audits'],
         ]);
 
         $this->set('role', $role);
@@ -100,16 +100,16 @@ class RolesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Role id.
+     * @param string|null $roleId Role id.
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($roleId = null)
     {
         $contact = $this->getRequest()->getQueryParams()['contact'] ?? false;
         $this->set('contact', $contact);
 
-        $role = $this->Roles->get($id, [
+        $role = $this->Roles->get($roleId, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -135,14 +135,14 @@ class RolesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Role id.
+     * @param string|null $roleId Role id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($roleId = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $role = $this->Roles->get($id);
+        $role = $this->Roles->get($roleId);
         if ($this->Roles->delete($role)) {
             $this->Flash->success(__('The role has been deleted.'));
         } else {

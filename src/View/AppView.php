@@ -41,6 +41,7 @@ use Cake\View\View;
  * @property \Queue\View\Helper\QueueProgressHelper $QueueProgress
  * @property \App\View\Helper\CapIdentityHelper $CapIdentity
  * @property \App\View\Helper\PermissionsHelper $Permissions
+ * @property \Tags\View\Helper\TagHelper $Tag
  */
 class AppView extends View
 {
@@ -77,5 +78,6 @@ class AppView extends View
         $this->loadHelper('Functional');
         $this->loadHelper('Queue.QueueProgress');
         $this->loadHelper('Search.Search');
+        $this->loadHelper('Tags.Tag');
     }
 }

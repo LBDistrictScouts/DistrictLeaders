@@ -180,7 +180,7 @@ class UserContactsController extends AppController
     }
 
     /**
-     * Delete method
+     * Make Primary method
      *
      * @param string|null $contactId User Contact id.
      * @return \Cake\Http\Response|null Redirects to index.
@@ -200,7 +200,7 @@ class UserContactsController extends AppController
     }
 
     /**
-     * Delete method
+     * Verify method
      *
      * @param string|null $contactId User Contact id.
      * @return \Cake\Http\Response|null Redirects to index.

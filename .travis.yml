@@ -25,13 +25,24 @@ env:
   global:
     - DB=postgres
     - DEFAULT=1
+    - TEST=0
     - ASYNC=0
+    - FIXTURE=0
 
 jobs:
   include:
     - name: "PHPCS"
       dist: focal
-      env: PHPCS=1 DEFAULT=0
+      env: PHPCS=1 DEFAULT=0 TEST=0
+
+    - name: "Fixture Check"
+      dist: focal
+      env: FIXTURE=1 TEST=0
+      addons:
+        postgresql: "12"
+        apt:
+          packages:
+            - postgresql-12
 
     - name: "PHP 7.2"
       php: 7.2
@@ -91,7 +102,8 @@ before_script:
 script:
   - if [[ $PHPCS = 1 ]]; then bin/cake code_completion generate -d; fi
   - if [[ $PHPCS = 1 ]]; then composer cs-check; fi
-  - if [[ $DEFAULT = 1 ]]; then composer test; fi
+  - if [[ $FIXTURE = 1 ]]; then composer fixture-check; fi
+  - if [[ $TEST = 1 ]]; then composer test; fi
 
 after_success:
   - if [[ $DEFAULT = 1 ]]; then bash <(curl -s https://codecov.io/bash); fi

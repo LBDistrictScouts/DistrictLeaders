@@ -10,6 +10,9 @@ use Cake\View\Cell;
  * Notify cell
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\TimeHelper $Time
+ * @property \App\View\Helper\CapIdentityHelper $Identity
  */
 class NotifyModalCell extends Cell
 {
@@ -27,6 +30,7 @@ class NotifyModalCell extends Cell
     public $helpers = [
         'Html',
         'Time',
+        'Identity',
     ];
 
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "622adfc06b4f8ea3237512db0b40e795",
+    "content-hash": "c2666057870cce3e0fe8ecdfe6171060",
     "packages": [
         {
             "name": "aura/intl",
@@ -1050,6 +1050,71 @@
                 "shim"
             ],
             "time": "2020-04-19T19:13:34+00:00"
+        },
+        {
+            "name": "dereuromark/cakephp-tags",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dereuromark/cakephp-tags.git",
+                "reference": "1a95a7b48413cf2ab624a6519d21b0b4755835c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dereuromark/cakephp-tags/zipball/1a95a7b48413cf2ab624a6519d21b0b4755835c5",
+                "reference": "1a95a7b48413cf2ab624a6519d21b0b4755835c5",
+                "shasum": ""
+            },
+            "require": {
+                "cakephp/cakephp": "^4.0.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "cakephp/migrations": "^3.0.0@beta",
+                "dereuromark/cakephp-tools": "^2.0.0",
+                "fig-r/psr2r-sniffer": "dev-master",
+                "robmorgan/phinx": "^0.12"
+            },
+            "type": "cakephp-plugin",
+            "autoload": {
+                "psr-4": {
+                    "Tags\\": "src/",
+                    "Tags\\Test\\Fixture\\": "tests/Fixture/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Scherer",
+                    "homepage": "https://www.dereuromark.de",
+                    "role": "Maintainer"
+                },
+                {
+                    "name": "Jad Bitar",
+                    "homepage": "http://jadb.io",
+                    "role": "Author"
+                },
+                {
+                    "name": "ADmad",
+                    "homepage": "https://github.com/ADmad",
+                    "role": "Author"
+                },
+                {
+                    "name": "Others",
+                    "homepage": "https://github.com/dereuromark/cakephp-tags/graphs/contributors"
+                }
+            ],
+            "description": "Tags plugin for CakePHP",
+            "homepage": "https://github.com/dereuromark/cakephp-tags",
+            "keywords": [
+                "cakephp",
+                "tagging",
+                "tags"
+            ],
+            "time": "2020-08-04T17:13:37+00:00"
         },
         {
             "name": "dereuromark/cakephp-tools",

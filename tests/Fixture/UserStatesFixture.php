@@ -25,7 +25,7 @@ class UserStatesFixture extends TestFixture
         'signature' => ['type' => 'integer', 'length' => 10, 'default' => '0', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'user_states_order' => ['type' => 'unique', 'columns' => ['precedence_order'], 'length' => []],
+            'user_states_precedence_order' => ['type' => 'unique', 'columns' => ['precedence_order'], 'length' => []],
         ],
     ];
     // @codingStandardsIgnoreEnd

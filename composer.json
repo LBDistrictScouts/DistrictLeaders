@@ -19,6 +19,7 @@
         "dereuromark/cakephp-expose": "^1.4",
         "dereuromark/cakephp-flash": "^2.0",
         "dereuromark/cakephp-queue": "^5.0",
+        "dereuromark/cakephp-tags": "^1.1",
         "dereuromark/cakephp-tools": "^2.0",
         "friendsofcake/bootstrap-ui": "^3.0",
         "friendsofcake/search": "^6.0",
@@ -79,9 +80,11 @@
         "post-create-project-cmd": "@console-install",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "console-install": "App\\Console\\Installer::postInstall",
+        "fixture-check": "bin/cake fixture_check",
         "check": [
             "@cs-check",
             "composer validate",
+            "@fixture-check",
             "@phpstan-check"
         ],
         "fix": [
@@ -103,11 +106,11 @@
         "migrate": [
             "@migrate-app",
             "@migrate-queue",
-            "@migrate-database-log"
+            "@migrate-tags"
         ],
         "migrate-app": "bin/cake migrations migrate",
         "migrate-queue": "bin/cake migrations migrate -p Queue",
-        "migrate-database-log": "bin/cake migrations migrate -p DatabaseLog -c database_log --no-lock",
+        "migrate-tags": "bin/cake migrations migrate -p Tags",
         "symlink": "bin/cake plugin assets symlink",
         "install-base": "bin/cake install_base -a"
     },

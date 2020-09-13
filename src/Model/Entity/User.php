@@ -69,6 +69,8 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property \Authorization\AuthorizationService $authorization
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property string|null $search_string
+ * @property int $tag_count
  */
 class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
 {
@@ -447,6 +449,8 @@ class User extends Entity implements AuthorizationIdentity, AuthenticationIdenti
     public const FIELD_VALIDATED_EMAIL_COUNT = 'validated_email_count';
     public const FIELD_VALIDATED_PHONE_COUNT = 'validated_phone_count';
     public const FIELD_ACTIVATED = 'activated';
+    public const FIELD_SEARCH_STRING = 'search_string';
+    public const FIELD_TAG_COUNT = 'tag_count';
 
     public const MINIMUM_PASSWORD_LENGTH = 8;
 

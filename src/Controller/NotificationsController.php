@@ -25,7 +25,7 @@ class NotificationsController extends AppController
         $this->Authorization->authorize($this->Notifications);
 
         $query = $this->Notifications->find()
-            ->contain(['Users', 'NotificationTypes']);
+            ->contain(['Users', 'NotificationTypes', 'EmailSends.Tokens']);
         $notifications = $this->paginate($this->Authorization->applyScope($query));
 
         $this->set(compact('notifications'));
@@ -42,7 +42,7 @@ class NotificationsController extends AppController
     public function view($notificationId = null)
     {
         $notification = $this->Notifications->get($notificationId, [
-            'contain' => ['Users', 'NotificationTypes', 'EmailSends'],
+            'contain' => ['Users', 'NotificationTypes', 'EmailSends.Tokens'],
         ]);
         $this->Authorization->authorize($notification, 'VIEW');
 

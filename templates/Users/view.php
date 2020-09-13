@@ -46,6 +46,7 @@ if (! $user->has($user::FIELD_USER_STATE)) {
                                 <?= $this->Identity->buildAndCheckCapability('CREATE', 'Roles') ? $this->Html->link('Add User Role', ['controller' => 'Roles', 'action' => 'add', '?' => ['user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                                 <?= $this->Permissions->dropDownButton('View User Capabilities', $user, 'permissions', 'Capabilities') ?>
                                 <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') ? $this->Form->postLink('Send Welcome Email', ['controller' => 'Notifications', 'action' => 'welcome', $user->id], ['confirm' => __('Are you sure you want to send a welcome email to {0} at {1}?', $user->full_name, $user->email), 'title' => __('Send Welcome Email to User'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && !$user->activated ? $this->Form->postLink('Activate User', ['controller' => 'Users', 'action' => 'activate', $user->id], ['confirm' => __('Are you sure you want to activate {0}?', $user->full_name), 'title' => __('Activate User'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                             </div>
                         </div>
                     </div>
@@ -164,16 +165,29 @@ if (! $user->has($user::FIELD_USER_STATE)) {
         </div>
     </div>
 </div>
-<?php if ($this->Identity->checkCapability('HISTORY')) : ?>
+<?php
+$history = $this->Identity->checkCapability('HISTORY');
+$stateEval = $this->Identity->buildAndCheckCapability('VIEW', 'UserStates');
+$notifications = $this->Identity->checkCapability('ALL') || $ownUser;
+if ($history || $stateEval) : ?>
 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
     <div class="card-header">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <?php if ($history) : ?>
             <li class="nav-item"><a class="nav-link active" id="changes-tab" data-toggle="tab" href="#changes" role="tab" aria-controls="changes" aria-selected="true" style="font-family: 'Nunito Sans', sans-serif;">Changes Made by User</a></li>
             <li class="nav-item"><a class="nav-link" id="audit-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="audit" aria-selected="false" style="font-family: 'Nunito Sans', sans-serif;">Changes to User</a></li>
+            <?php endif; ?>
+            <?php if ($stateEval) : ?>
+                <li class="nav-item"><a class="nav-link<?= $history ? '' : ' active' ?>" id="state-tab" data-toggle="tab" href="#state" role="tab" aria-controls="state" aria-selected="<?= $history ? 'false' : 'true' ?>" style="font-family: 'Nunito Sans', sans-serif;">User State</a></li>
+            <?php endif; ?>
+            <?php if ($notifications) : ?>
+                <li class="nav-item"><a class="nav-link<?= $history || $stateEval ? '' : ' active' ?>" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="<?= $history || $stateEval ? 'false' : 'true' ?>" style="font-family: 'Nunito Sans', sans-serif;">User Notifications</a></li>
+            <?php endif; ?>
         </ul>
     </div>
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
+            <?php if ($history) : ?>
             <div class="tab-pane fade show active" id="changes" role="tabpanel" aria-labelledby="changes-tab">
                 <?php if (!empty($user->changes)) : ?>
                     <div class="table-responsive">
@@ -258,6 +272,21 @@ if (! $user->has($user::FIELD_USER_STATE)) {
                     <p>No Changes</p>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
+            <?php if ($stateEval) : ?>
+                <div class="tab-pane fade<?= $history ? '' : ' show active' ?>" id="state" role="tabpanel" aria-labelledby="state-tab">
+                    <?= $this->cell('StateDetermination', [$user]) ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($notifications) : ?>
+                <div class="tab-pane fade<?= $history || $stateEval ? '' : ' show active' ?>" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <?= $this->element('notification-list', ['notifications' => $user->notifications]) ?>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

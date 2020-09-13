@@ -264,8 +264,6 @@ class PasswordFormTest extends TestCase
             $user = $this->Users->get(2);
             $requestArray['request']['user'] = $user;
         }
-        debug($this->Password->validate($requestArray['request']));
-        debug($this->Password->getErrors());
 
         $result = $this->Password->execute($requestArray['request']);
 

@@ -45,6 +45,8 @@ class UsersFixture extends TestFixture
         'validated_email_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'validated_phone_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'activated' => ['type' => 'boolean', 'length' => null, 'default' => 0, 'null' => false, 'comment' => null, 'precision' => null],
+        'search_string' => ['type' => 'text', 'length' => null, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'tag_count' => ['type' => 'integer', 'length' => 10, 'default' => '0', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_indexes' => [
             'users_password_state_id' => ['type' => 'index', 'columns' => ['user_state_id'], 'length' => []],
         ],
@@ -93,6 +95,8 @@ class UsersFixture extends TestFixture
                 'validated_email_count' => 1,
                 'validated_phone_count' => 1,
                 'activated' => true,
+                'search_string' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+                'tag_count' => 1,
             ],
             [
                 'username' => 'FishyLlama',
@@ -122,6 +126,8 @@ class UsersFixture extends TestFixture
                 'validated_email_count' => 1,
                 'validated_phone_count' => 1,
                 'activated' => true,
+                'search_string' => 'funky@4thgoat.org.uk Bad Llama Road',
+                'tag_count' => 0,
             ],
         ];
         parent::init();

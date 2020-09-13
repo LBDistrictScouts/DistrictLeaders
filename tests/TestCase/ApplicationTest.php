@@ -66,6 +66,7 @@ class ApplicationTest extends IntegrationTestCase
             'WyriHaximus/TwigView',
             'Expose',
             'TestHelper',
+            'Tags',
         ];
 
         foreach ($expectedPlugins as $plugin) {
