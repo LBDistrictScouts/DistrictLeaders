@@ -24,6 +24,8 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
+ * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
+ * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\BelongsToMany $DirectoryGroups
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
@@ -33,8 +35,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
  * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
- * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
- * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\BelongsToMany $DirectoryGroups
  */
 class RoleTypesTable extends Table
 {
@@ -49,7 +49,7 @@ class RoleTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('role_types');
-        $this->setDisplayField(RoleType::FIELD_ROLE_ABBREVIATION);
+        $this->setDisplayField(RoleType::FIELD_ROLE_TYPE);
         $this->setPrimaryKey(RoleType::FIELD_ID);
 
         $this->belongsTo('SectionTypes', [
@@ -109,6 +109,10 @@ class RoleTypesTable extends Table
             ->integer(RoleType::FIELD_ACTIVE_ROLE_COUNT)
             ->allowEmptyString(RoleType::FIELD_ACTIVE_ROLE_COUNT);
 
+        $validator
+            ->boolean(RoleType::FIELD_IMPORT_TYPE)
+            ->notEmptyString(RoleType::FIELD_IMPORT_TYPE);
+
         return $validator;
     }
 
@@ -133,14 +137,14 @@ class RoleTypesTable extends Table
      * @param \App\Model\Entity\RoleType $roleType The Entity to be Patched.
      * @return \App\Model\Entity\RoleType
      */
-    public function patchTemplateCapabilities($roleType)
+    public function patchTemplateCapabilities(RoleType $roleType): RoleType
     {
         $this->Capabilities->installBaseCapabilities();
 
         $templateId = $roleType->get(RoleType::FIELD_ROLE_TEMPLATE_ID);
         $template = $this->RoleTemplates->get($templateId);
 
-        $baseCapabilities = Configure::readOrFail('allCapabilities');
+        $baseCapabilities = Configure::readOrFail('AllCapabilities');
         $capabilities = $baseCapabilities;
         if (!empty($template->template_capabilities)) {
             $capabilities = array_merge($capabilities, $template->template_capabilities);
@@ -165,7 +169,7 @@ class RoleTypesTable extends Table
      * @param \App\Model\Entity\RoleType $roleType The RoleType Entity
      * @return int
      */
-    public function patchRoleUsers($roleType)
+    public function patchRoleUsers(RoleType $roleType): int
     {
         $count = 0;
 

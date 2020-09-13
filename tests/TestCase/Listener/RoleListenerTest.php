@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
-use App\Test\TestCase\Controller\AppTestTrait;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
-use Cake\TestSuite\TestCase;
 
 /**
  * Class UserListenerTest
@@ -17,25 +16,6 @@ use Cake\TestSuite\TestCase;
  */
 class RoleListenerTest extends TestCase
 {
-    use AppTestTrait;
-
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
-
     public function setUp(): void
     {
         parent::setUp();

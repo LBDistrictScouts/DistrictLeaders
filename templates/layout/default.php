@@ -42,7 +42,7 @@ $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
             <?php $identity = $this->getRequest()->getAttribute('identity'); ?>
 
             <?php if (!is_null($identity)) : ?>
-                <?= $this->cell('Notify', [$identity->get('id')])->render() ?>
+                <?= $this->cell('NotifyModal', [$identity->get('id')])->render() ?>
                 <?php if (isset($PolicyResult)) {
                     echo $this->cell('AuthModal', [$PolicyResult])->render();
                 } ?>

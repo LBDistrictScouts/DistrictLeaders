@@ -54,7 +54,7 @@ class FunctionalHelperTest extends TestCase
         $data = [];
         Configure::load('Application' . DS . 'functional_areas', 'yaml', false);
 
-        foreach (Configure::read('functionalAreas') as $item => $value) {
+        foreach (Configure::read('FunctionalAreas') as $item => $value) {
             array_push($data, [$value['enabled'], $item]);
         }
 
@@ -66,12 +66,12 @@ class FunctionalHelperTest extends TestCase
     /**
      * Test initial setup
      *
-     * @param string $expected The Value Expected
+     * @param bool $expected The Value Expected
      * @param string $provided The Value Provided
-     * @dataProvider provideFunctionalAreaData
      * @return void
+     * @dataProvider provideFunctionalAreaData
      */
-    public function testFunctionalArea($expected, $provided)
+    public function testFunctionalArea(bool $expected, string $provided)
     {
         TestCase::assertEquals($expected, $this->Functional->checkFunctionEnabled($provided));
     }
@@ -85,7 +85,7 @@ class FunctionalHelperTest extends TestCase
     {
         $data = [];
 
-        foreach (Configure::read('searchConfigured') as $item => $value) {
+        foreach (Configure::read('SearchConfigured') as $item => $value) {
             array_push($data, [$value, $item]);
         }
 
@@ -97,12 +97,12 @@ class FunctionalHelperTest extends TestCase
     /**
      * Test initial setup
      *
-     * @param string $expected The Value Expected
+     * @param bool $expected The Value Expected
      * @param string $provided The Value Provided
-     * @dataProvider provideSearchConfigData
      * @return void
+     * @dataProvider provideSearchConfigData
      */
-    public function testSearchConfigured($expected, $provided)
+    public function testSearchConfigured(bool $expected, string $provided)
     {
         TestCase::assertEquals($expected, $this->Functional->checkSearchConfigured($provided));
     }

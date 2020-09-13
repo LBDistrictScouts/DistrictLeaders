@@ -52,21 +52,21 @@ class DirectoryCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         $directoryId = (int)$args->getOption('directory_id');
         if (!is_integer($directoryId)) {
-            return $io->error('Directory ID not Specified');
+            return $consoleIo->error('Directory ID not Specified');
         }
 
         $directory = $this->Directories->get($directoryId);
-        $io->info('Directory: ' . $directory->directory);
+        $consoleIo->info('Directory: ' . $directory->directory);
 
         if ($args->getOption('all')) {
             $happenings = $this->Directories->populate($directory);
@@ -78,7 +78,7 @@ class DirectoryCommand extends Command
                 $association = ucwords(str_replace('Count', '', $association));
                 array_push($tableOut, [$association, (string)$count]);
             }
-            $io->helper('Table')->output($tableOut);
+            $consoleIo->helper('Table')->output($tableOut);
         }
     }
 }

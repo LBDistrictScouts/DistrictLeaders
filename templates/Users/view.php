@@ -5,13 +5,29 @@
  * @var \App\Model\Entity\Audit $audit
  */
 
-$authUser = $this->getRequest()->getAttribute('identity');
+$ownUser = $user->id === $this->Identity->getId();
+$editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
+$canCreateUCs = $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
+$canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
+
+$text = '';
+
+if (! $user->has($user::FIELD_USER_STATE)) {
+    $userStateColour = 'light';
+} elseif ($user->user_state->expired) {
+    $userStateColour = 'warning';
+} elseif ($user->user_state->active) {
+    $userStateColour = 'success';
+} else {
+    $userStateColour = 'dark';
+    $text = 'text-white';
+}
 
 ?>
 <div class="row">
     <div class="col">
         <?= $this->element('image-header') ?>
-        <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+        <div class="card thick-card"">
             <div class="card-body">
                 <div class="row">
                     <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
@@ -24,10 +40,13 @@ $authUser = $this->getRequest()->getAttribute('identity');
                         </div>
                         <div class="dropleft d-none d-sm-none d-lg-inline"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
-                                <?= $this->Html->link('Add Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation'])  ?>
-                                <a class="dropdown-item" role="presentation" href="#">First Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Second Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                <?= $this->Permissions->dropDownButton('Edit User', $user, 'edit') ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn ? $this->Html->link('Add Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn ? $this->Html->link('Add Phone Number', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'phone', 'user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Roles') ? $this->Html->link('Add User Role', ['controller' => 'Roles', 'action' => 'add', '?' => ['user_id' => $user->get($user::FIELD_ID)]], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Permissions->dropDownButton('View User Capabilities', $user, 'permissions', 'Capabilities') ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') ? $this->Form->postLink('Send Welcome Email', ['controller' => 'Notifications', 'action' => 'welcome', $user->id], ['confirm' => __('Are you sure you want to send a welcome email to {0} at {1}?', $user->full_name, $user->email), 'title' => __('Send Welcome Email to User'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && !$user->activated ? $this->Form->postLink('Activate User', ['controller' => 'Users', 'action' => 'activate', $user->id], ['confirm' => __('Are you sure you want to activate {0}?', $user->full_name), 'title' => __('Activate User'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                             </div>
                         </div>
                     </div>
@@ -63,74 +82,70 @@ $authUser = $this->getRequest()->getAttribute('identity');
                 <?php endif; ?>
             </div>
         </div>
+    <?php if ($user->has($user::FIELD_USER_STATE) && $this->Identity->buildAndCheckCapability('VIEW', 'UserStates')) : ?>
+        <div class="alert alert-<?= $userStateColour ?>" style="margin-top: 15px;margin-bottom: 15px;">
+            <?= $user->user_state->user_state ?>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($user->contact_emails)) : ?>
         <div class="row">
-            <?php
-            if (!$user->has($user::FIELD_USER_STATE)) {
-                $userStateColour = 'light';
-            } elseif ($user->user_state->expired) {
-                $userStateColour = 'warning';
-            } elseif ($user->user_state->active) {
-                $userStateColour = 'success';
-            } else {
-                $userStateColour = 'dark';
-            }
-            ?>
-
-            <div class="col-sm-12 col-lg-6">
-                <?php if ($user->has($user::FIELD_USER_STATE)) : ?>
-                    <div class="card bg-<?= $userStateColour ?>" style="margin-top: 15px;margin-bottom: 15px;">
-                        <div class="card-header"><?= $user->user_state->user_state ?></div>
+            <div class="col">
+                <div class="card thick-card">
+                    <div class="card-body">
+                        <h5>Email Addresses</h5>
+                        <div class="table-responsive table-borderless">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><?= __('Primary') ?></th>
+                                    <th scope="col"><?= __('Email') ?></th>
+                                    <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers')) : ?>
+                                    <th scope="col"><?= __('Directory User') ?></th>
+                                    <?php endif; ?>
+                                    <th scope="col"><?= __('Validated') ?></th>
+                                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($user->contact_emails as $contactEmail) : ?>
+                                    <?php $isPrimary = (bool)($contactEmail->contact_field == $user->email); ?>
+                                    <tr>
+                                        <td><?= $isPrimary ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle') ?></td>
+                                        <td><?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?></td>
+                                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers')) : ?>
+                                            <td><?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) ? $this->Html->link($this->Icon->iconHtml('book-open') . ' ' . $contactEmail->directory_user->full_name, ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['title' => 'Directory Record', 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?></td>
+                                        <?php endif; ?>
+                                        <td><?= $this->Icon->iconEnhancedBoolean($contactEmail->validation_state) ?></td>
+                                        <td>
+                                            <?= $canMakePrimary && !$isPrimary && $contactEmail->validated ? $this->Form->postLink($this->Icon->iconHtml('check-circle'), ['controller' => 'UserContacts', 'action' => 'primary', $contactEmail->id], ['confirm' => __('Are you sure you want to make {0} the primary email for {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Make Primary'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->checkCapability('VALIDATE') && !$contactEmail->verified ? $this->Form->postLink($this->Icon->iconHtml('clipboard'), ['controller' => 'UserContacts', 'action' => 'verify', $contactEmail->id], ['confirm' => __('Are you sure you want to validate {0}?', $contactEmail->contact_field), 'title' => __('Manually Validate Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= ( $this->Identity->buildAndCheckCapability('DELETE', 'UserContacts') || $editOwn ) && $user->all_email_count > 1 ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $contactEmail->id], ['confirm' => __('Are you sure you want to delete email {0} for user {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Delete User Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php if ($canCreateUCs) : ?>
+                            <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
-                <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+        <div class="row">
+            <?php if ($user->has($user::FIELD_ADDRESS_LINE_1)) : ?>
+            <div class="col-sm-12 col-lg-6">
+                <div class="card thick-card">
                     <div class="card-body">
                         <h5>Address</h5>
                         <p class="card-text"><?= h($user->address_line_1) ?>,<br><?= h($user->city) ?>,<br><?= h($user->county) ?>.<br><strong><?= h($user->postcode) ?></strong></p>
                     </div>
                 </div>
             </div>
-            <?php
-                $ownUser = $user->id === $this->Identity->getId();
-                $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
-                $canCreateUCs =  $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
-                $canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
-            ?>
+            <?php endif; ?>
             <div class="col-sm-12 col-lg-6">
-                <?php if (!empty($user->contact_emails)) : ?>
-                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
-                        <div class="card-body">
-                            <h5>Email Addresses</h5>
-                            <div class="table-responsive table-borderless">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col"><?= __('Primary') ?></th>
-                                        <th scope="col"><?= __('Email') ?></th>
-                                        <th scope="col" class="actions"><?= __('Actions') ?></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php foreach ($user->contact_emails as $contactEmail) : ?>
-                                        <?php $isPrimary = (bool)($contactEmail->contact_field == $user->email); ?>
-                                        <tr>
-                                            <td><?= $isPrimary ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle') ?></td>
-                                            <td><?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?></td>
-                                            <td>
-                                                <?= $canMakePrimary && !$isPrimary && $contactEmail->validated ? $this->Form->postLink($this->Icon->iconHtml('check-circle'), ['controller' => 'UserContacts', 'action' => 'primary', $contactEmail->id], ['confirm' => __('Are you sure you want to make {0} the primary email for {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Make Primary'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                <?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) && $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $this->Html->link($this->Icon->iconHtml('book-open'), ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['title' => 'Directory Record', 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                <?= ( $this->Identity->buildAndCheckCapability('DELETE', 'UserContacts') || $editOwn ) && $user->all_email_count > 1 ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $contactEmail->id], ['confirm' => __('Are you sure you want to delete email {0} for user {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Delete User Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <?php if ($canCreateUCs) : ?>
-                                <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
                 <?php if (!empty($user->contact_numbers)) : ?>
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                         <div class="card-body">
@@ -150,16 +165,29 @@ $authUser = $this->getRequest()->getAttribute('identity');
         </div>
     </div>
 </div>
-<?php if ($this->Identity->checkCapability('HISTORY')) : ?>
+<?php
+$history = $this->Identity->checkCapability('HISTORY');
+$stateEval = $this->Identity->buildAndCheckCapability('VIEW', 'UserStates');
+$notifications = $this->Identity->checkCapability('ALL') || $ownUser;
+if ($history || $stateEval) : ?>
 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
     <div class="card-header">
         <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <?php if ($history) : ?>
             <li class="nav-item"><a class="nav-link active" id="changes-tab" data-toggle="tab" href="#changes" role="tab" aria-controls="changes" aria-selected="true" style="font-family: 'Nunito Sans', sans-serif;">Changes Made by User</a></li>
             <li class="nav-item"><a class="nav-link" id="audit-tab" data-toggle="tab" href="#audit" role="tab" aria-controls="audit" aria-selected="false" style="font-family: 'Nunito Sans', sans-serif;">Changes to User</a></li>
+            <?php endif; ?>
+            <?php if ($stateEval) : ?>
+                <li class="nav-item"><a class="nav-link<?= $history ? '' : ' active' ?>" id="state-tab" data-toggle="tab" href="#state" role="tab" aria-controls="state" aria-selected="<?= $history ? 'false' : 'true' ?>" style="font-family: 'Nunito Sans', sans-serif;">User State</a></li>
+            <?php endif; ?>
+            <?php if ($notifications) : ?>
+                <li class="nav-item"><a class="nav-link<?= $history || $stateEval ? '' : ' active' ?>" id="notifications-tab" data-toggle="tab" href="#notifications" role="tab" aria-controls="notifications" aria-selected="<?= $history || $stateEval ? 'false' : 'true' ?>" style="font-family: 'Nunito Sans', sans-serif;">User Notifications</a></li>
+            <?php endif; ?>
         </ul>
     </div>
     <div class="card-body">
         <div class="tab-content" id="myTabContent">
+            <?php if ($history) : ?>
             <div class="tab-pane fade show active" id="changes" role="tabpanel" aria-labelledby="changes-tab">
                 <?php if (!empty($user->changes)) : ?>
                     <div class="table-responsive">
@@ -191,7 +219,7 @@ $authUser = $this->getRequest()->getAttribute('identity');
                                         </td>
                                     <?php endif; ?>
                                     <?php if ($audit->has('changed_role')) : ?>
-                                        <td><?= is_null($audit->changed_role->user->full_name) ? 'User' : $this->Text->truncate($audit->changed_role->user->full_name, 20) ?> @ <?= is_null($audit->changed_role->role_type->role_type) ? 'Role' : $this->Text->truncate($audit->changed_role->role_type->role_abbreviation, 15) ?></td>
+                                        <td><?= is_null($audit->changed_role->user->full_name) ? 'User' : $this->Text->truncate($audit->changed_role->user->full_name, 20) ?> @ <?= is_null($audit->changed_role->role_type->role_abbreviation) ? 'Role' : $this->Text->truncate($audit->changed_role->role_type->role_abbreviation, 15) ?></td>
                                         <td class="actions">
                                             <?= $this->Identity->buildAndCheckCapability('VIEW', 'Roles') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Roles', 'action' => 'view', $audit->changed_role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                             <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Roles') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Roles', 'action' => 'edit', $audit->changed_role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
@@ -244,6 +272,21 @@ $authUser = $this->getRequest()->getAttribute('identity');
                     <p>No Changes</p>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
+            <?php if ($stateEval) : ?>
+                <div class="tab-pane fade<?= $history ? '' : ' show active' ?>" id="state" role="tabpanel" aria-labelledby="state-tab">
+                    <?= $this->cell('StateDetermination', [$user]) ?>
+                </div>
+            <?php endif; ?>
+            <?php if ($notifications) : ?>
+                <div class="tab-pane fade<?= $history || $stateEval ? '' : ' show active' ?>" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <?= $this->element('notification-list', ['notifications' => $user->notifications]) ?>
+                        </table>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

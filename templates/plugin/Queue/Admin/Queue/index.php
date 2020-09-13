@@ -12,6 +12,7 @@
 use Cake\Core\Configure;
 
 ?>
+<?= $this->element('header', ['data' => ['current' => 'dashboard']]) ?>
 <div class="row">
     <div class="col-lg-6">
         <div class="card">
@@ -43,7 +44,7 @@ use Cake\Core\Configure;
                 <?php } ?>
             </div>
         </div>
-        <br/>
+        <?= $this->element('control') ?>
         <div class="card">
             <div class="card-header">
                 <div class="row">

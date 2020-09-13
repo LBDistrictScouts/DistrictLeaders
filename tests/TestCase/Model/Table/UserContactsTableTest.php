@@ -87,9 +87,9 @@ class UserContactsTableTest extends TestCase
     private function getGood()
     {
         $good = [
-            'user_id' => 1,
-            'user_contact_type_id' => 1,
-            'contact_field' => random_int(111, 999) . 'jacob.llama' . random_int(111, 999) . '@4thgoat.org.uk',
+            UserContact::FIELD_USER_ID => 1,
+            UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
+            UserContact::FIELD_CONTACT_FIELD => random_int(111, 999) . 'jacob.llama' . random_int(111, 999) . '@4thgoat.org.uk',
         ];
 
         return $good;
@@ -116,6 +116,7 @@ class UserContactsTableTest extends TestCase
             UserContact::FIELD_VERIFIED => true,
             UserContact::FIELD_DIRECTORY_USER_ID => 1,
             UserContact::FIELD_VALIDATED => true,
+            UserContact::FIELD_VALIDATION_STATE => 2,
         ];
 
         $this->validateInitialise($expected, $this->UserContacts, 2, $dates);

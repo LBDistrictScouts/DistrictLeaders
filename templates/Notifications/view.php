@@ -2,23 +2,25 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Notification $notification
+ * @var \App\View\Cell\InformationCell $cell
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Notification'), ['action' => 'edit', $notification->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Notification'), ['action' => 'delete', $notification->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notification->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Notifications'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Notification'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Notification Types'), ['controller' => 'NotificationTypes', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Notification Type'), ['controller' => 'NotificationTypes', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Email Sends'), ['controller' => 'EmailSends', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Email Send'), ['controller' => 'EmailSends', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
+<?php if ($this->Identity->checkCapability('ALL')) : ?>
+    <div class="col">
+        <div class="btn-group" role="group" aria-label="Queue Toolbar">
+            <?= $this->Form->postLink(
+                'Send Email for Notification',
+                ['controller' => 'EmailSends', 'action' => 'make', $notification->id],
+                [
+                    'confirm' => __d('queue', 'Are you sure you want send an email for this #{0}?', $notification->id),
+                    'role' => 'button',
+                    'class' => 'btn btn-outline-danger',
+                ]
+            ) ?>
+        </div>
+    </div>
+<?php endif; ?>
+<?= $cell ?>
 <div class="notifications view large-9 medium-8 columns content">
     <h3><?= h($notification->id) ?></h3>
     <table class="vertical-table">

@@ -14,6 +14,8 @@ use Cake\ORM\Entity;
  * @property string $camp_role_type
  *
  * @property \App\Model\Entity\CampRole[] $camp_roles
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class CampRoleType extends Entity
 {

@@ -24,6 +24,7 @@ class RoleListener implements EventListenerInterface
     {
         return [
             'Model.Roles.roleAdded' => 'newRole',
+            'Model.Roles.roleUpdated' => 'roleChange',
             'Model.Roles.newAudits' => 'roleChange',
         ];
     }
@@ -35,7 +36,7 @@ class RoleListener implements EventListenerInterface
     public function newRole($event)
     {
         /** @var \App\Model\Entity\Role $role */
-        $role = $event->getData('role');
+        $role = $event->getData('entity');
 
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
@@ -51,7 +52,7 @@ class RoleListener implements EventListenerInterface
     public function roleChange($event)
     {
         /** @var \App\Model\Entity\Role $role */
-        $role = $event->getData('role');
+        $role = $event->getData('entity');
 
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(

@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Audit;
 use App\Model\Entity\User;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -91,6 +92,7 @@ class UsersTable extends Table
 
         $this->belongsTo('UserStates', [
             'foreignKey' => 'user_state_id',
+            'strategy' => 'select',
         ]);
 
         $this->hasMany('Changes', [
@@ -361,9 +363,9 @@ class UsersTable extends Table
         asort($groupPermissions);
         asort($sectionPermissions);
 
-        $userPermissions['user'] = $permissions;
-        $userPermissions['group'] = $groupPermissions;
-        $userPermissions['section'] = $sectionPermissions;
+        $userPermissions[User::CAP_KEY_USER] = $permissions;
+        $userPermissions[User::CAP_KEY_GROUP] = $groupPermissions;
+        $userPermissions[User::CAP_KEY_SECTION] = $sectionPermissions;
 
         return $userPermissions;
     }
@@ -407,13 +409,13 @@ class UsersTable extends Table
     {
         $capabilities = $this->retrieveCapabilities($user);
 
-        $userCapabilities = $capabilities['user'];
+        $userCapabilities = $capabilities[User::CAP_KEY_USER];
         if (in_array($capability, $userCapabilities)) {
             return true;
         }
 
         $sections = [];
-        foreach ($capabilities['section'] as $section => $sectionCapabilities) {
+        foreach ($capabilities[User::CAP_KEY_SECTION] as $section => $sectionCapabilities) {
             if (in_array($capability, $sectionCapabilities)) {
                 array_push($sections, $section);
             }
@@ -421,7 +423,7 @@ class UsersTable extends Table
         $sections = array_unique($sections);
 
         $groups = [];
-        foreach ($capabilities['group'] as $group => $groupCapabilities) {
+        foreach ($capabilities[User::CAP_KEY_GROUP] as $group => $groupCapabilities) {
             if (in_array($capability, $groupCapabilities)) {
                 array_push($groups, $group);
             }
@@ -463,17 +465,23 @@ class UsersTable extends Table
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(\Cake\Event\EventInterface $event, $user, $options): User
+    public function beforeSave(EventInterface $event, $user, $options): User
     {
-        $user = $this->UserStates->determineUserState($user);
+        return $this->UserStates->determineUserState($user);
+    }
 
-        if ($user->getOriginal('capabilities') != $user->capabilities) {
-            $this->getEventManager()->dispatch(new Event(
-                'Model.Users.capabilityChange',
-                $this,
-                ['user' => $user]
-            ));
-        }
+    /**
+     * after Save LifeCycle Callback
+     *
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
+     * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
+     * @param array $options Options Values
+     * @return \App\Model\Entity\User
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function afterSave(EventInterface $event, $user, $options): User
+    {
+        $this->UserContacts->associatePrimary($user);
 
         return $user;
     }
@@ -487,5 +495,40 @@ class UsersTable extends Table
     public function isValidDomainEmail($value, $context)
     {
         return $this->Roles->Sections->ScoutGroups->domainVerify($value);
+    }
+
+    /**
+     * Function to determine which user created a passed user
+     *
+     * @param \App\Model\Entity\User $user User to be determined
+     * @return \App\Model\Entity\User|null
+     */
+    public function determineUserCreator(User $user): ?User
+    {
+        $userAudit = $this->Audits
+            ->find('users')
+            ->where([
+                Audit::FIELD_AUDIT_RECORD_ID => $user->id,
+            ])
+            ->contain('Users')
+            ->orderAsc(Audit::FIELD_CHANGE_DATE)
+            ->first();
+
+        if ($userAudit instanceof Audit && $userAudit->has(Audit::FIELD_USER) && $userAudit->user instanceof User) {
+            return $userAudit->user;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user User to be activated
+     * @return \App\Model\Entity\User
+     */
+    public function activateUser(User $user): User
+    {
+        $user->set(User::FIELD_ACTIVATED, true);
+
+        return $this->save($user, ['validate' => false]);
     }
 }

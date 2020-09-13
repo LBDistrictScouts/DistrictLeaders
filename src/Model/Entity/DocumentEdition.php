@@ -25,6 +25,7 @@ use League\Flysystem\FileNotFoundException;
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property \App\Model\Entity\FileType $file_type
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class DocumentEdition extends Entity implements FileEntityInterface
 {

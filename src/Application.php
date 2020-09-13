@@ -66,19 +66,15 @@ class Application extends BaseApplication implements
 
         $this->addPlugin('Muffin/Webservice');
 
-        $this->addPlugin('CakeDto', ['bootstrap' => true]);
-
-        $this->addPlugin('Tools', ['bootstrap' => true]);
+        $this->addPlugin('Tools');
 
         $this->addPlugin('Search');
 
-        $this->addPlugin('Queue', ['routes' => true, 'bootstrap' => true]);
+        $this->addPlugin('Queue');
 
-        $this->addPlugin('Ajax', ['bootstrap' => true]);
+        $this->addPlugin('Ajax');
 
         $this->addPlugin('Muffin/Footprint');
-
-        $this->addPlugin('DatabaseLog', ['bootstrap' => true]);
 
         $this->addPlugin('Authorization');
 
@@ -89,6 +85,8 @@ class Application extends BaseApplication implements
         $this->addPlugin('BootstrapUI');
 
         $this->addPlugin('WyriHaximus/TwigView');
+
+        $this->addPlugin('Tags');
 
         // Call parent to load bootstrap from files.
         parent::bootstrap();
@@ -109,7 +107,8 @@ class Application extends BaseApplication implements
          * Debug Kit should not be installed on a production system
          */
         if (Configure::read('debug')) {
-            $this->addPlugin('DebugKit', ['bootstrap' => true, 'routes' => true]);
+            $this->addPlugin('DebugKit');
+            $this->addPlugin('TestHelper');
         }
     }
 
@@ -129,6 +128,19 @@ class Application extends BaseApplication implements
             ->setXssProtection()
             ->noOpen()
             ->noSniff();
+
+        if (Configure::read('debug')) {
+            $unAuthArray = [
+                'className' => 'Authorization.Exception',
+            ];
+        } else {
+            $unAuthArray = [
+                'className' => 'Authorization.Redirect',
+                'url' => '/',
+                'queryParam' => 'redirectUrl',
+                'exceptions' => Configure::read('UnauthorizedExceptions'),
+            ];
+        }
 
         // Catch any exceptions in the lower layers,
         // and make an error page/response
@@ -154,7 +166,7 @@ class Application extends BaseApplication implements
 
             // Add the authentication middleware to the middleware queue
             ->add(new CognitoAuthenticationMiddleware($this, [
-                'passwordUrl' => '/users/password',
+                'logoutRedirect' => '/',
             ]))
 
             // Add the Authorisation Middleware to the middleware queue
@@ -163,12 +175,7 @@ class Application extends BaseApplication implements
                     /** @var \App\Model\Entity\User $user */
                     return $user->setAuthorization($auth);
                 },
-                'unauthorizedHandler' => [
-                    'className' => 'Authorization.Redirect',
-                    'url' => '/',
-                    'queryParam' => 'redirectUrl',
-                    'exceptions' => Configure::read('UnauthorizedExceptions'),
-                ],
+                'unauthorizedHandler' => $unAuthArray,
                 'requireAuthorizationCheck' => true,
             ]))
 
@@ -228,15 +235,6 @@ class Application extends BaseApplication implements
             'password' => 'password',
         ];
 
-        $cookie = [
-            'name' => 'CookieAuth',
-            'expire' => null,
-            'path' => '/',
-            'domain' => '',
-            'secure' => true,
-            'httpOnly' => true,
-        ];
-
         $service->setConfig([
             'unauthenticatedRedirect' => self::LOGIN_URL,
             'queryParam' => 'redirect',
@@ -256,7 +254,8 @@ class Application extends BaseApplication implements
         ]);
         $service->loadAuthenticator('CognitoCookie', [
             'rememberMeField' => 'remember_me',
-            compact('fields', 'cookie'),
+            compact('fields'),
+            'loginUrl' => [ self::LOGIN_URL, 'login' ],
         ]);
 
         return $service;

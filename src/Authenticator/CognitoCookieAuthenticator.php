@@ -24,6 +24,7 @@ use Authentication\PasswordHasher\PasswordHasherTrait;
 use Authentication\UrlChecker\UrlCheckerTrait;
 use Cake\Http\Cookie\Cookie;
 use Cake\Http\Cookie\CookieInterface;
+use DateTime;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use RuntimeException;
@@ -54,8 +55,8 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
             'expire' => null,
             'path' => '/',
             'domain' => '',
-            'secure' => true,
-            'httpOnly' => true,
+            'secure' => false,
+            'httpOnly' => false,
         ],
         'passwordHasher' => 'Authentication.Default',
     ];
@@ -219,14 +220,14 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
     {
         $data = $this->getConfig('cookie');
 
-        return new Cookie(
+        return (new Cookie(
             $data['name'],
             $value,
-            $data['expire'],
+            null,
             $data['path'],
             $data['domain'],
             $data['secure'],
             $data['httpOnly']
-        );
+        ))->withExpiry(new DateTime('+3 months'));
     }
 }

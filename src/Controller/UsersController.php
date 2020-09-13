@@ -10,7 +10,6 @@ use App\Model\Entity\Audit;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use App\Model\Filter\UsersCollection;
-use Authorization\Policy\ResultInterface;
 use Cake\Event\Event;
 use Cake\ORM\Query;
 
@@ -33,8 +32,7 @@ class UsersController extends AppController
     {
         parent::initialize();
 
-        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'password']);
-        $this->Authentication->addUnauthenticatedActions(['password']);
+        $this->Authentication->allowUnauthenticated(['login', 'username', 'forgot', 'token', 'welcome']);
 
         $this->Authorization->mapActions([
             'search' => 'index',
@@ -91,7 +89,7 @@ class UsersController extends AppController
             ],
             'UserContacts',
         ]);
-        $users = $this->paginate($this->Authorization->applyScope($query));
+        $users = $this->paginate($this->Authorization->applyScope($query), ['queryStringWhitelist' => ['q']]);
         $this->set(compact('users'));
 
         $this->whyPermitted($this->Users);
@@ -106,72 +104,66 @@ class UsersController extends AppController
      */
     public function view($userId = null)
     {
-        $user = $this->Users->get($userId);
-        $visibleFields = $this->Authorization->see($user);
+        $blockedFields = $this->Authorization->see($this->Users->get($userId));
 
-        $result = $this->Authorization->checkCapability('HISTORY');
-
-        if ($result instanceof ResultInterface) {
-            $result = $result->getStatus();
-        }
-
-        if ($result) {
-            $user = $this->Users->get($userId, [
-                'contain' => [
-                    'UserStates',
-                    'Audits.Users',
-                    'Changes' => function (Query $q) {
-                        return $q
-                            ->limit(50)
-                            ->orderDesc(Audit::FIELD_CHANGE_DATE)
-                            ->contain([
-                                'ChangedUsers',
-                                'ChangedRoles' => [
-                                    'Users',
-                                    'RoleTypes',
-                                ],
-                                'ChangedScoutGroups',
-                                'ChangedUserContacts' => [
-                                    'Users',
-                                    'UserContactTypes',
-                                ],
-                            ]);
-                    },
-                    'Roles' => [
-                        'RoleTypes',
-                        'Sections' => [
-                            'ScoutGroups',
-                            'SectionTypes',
-                        ],
-                        'RoleStatuses',
-                        'UserContacts',
-                    ],
-                    'ContactEmails.DirectoryUsers',
-                    'ContactNumbers',
+        $containArray = [
+            'UserStates',
+            'Roles' => [
+                'RoleTypes',
+                'Sections' => [
+                    'ScoutGroups',
+                    'SectionTypes',
                 ],
-                'fields' => $visibleFields,
+                'RoleStatuses',
+                'UserContacts',
+            ],
+            'ContactNumbers',
+        ];
+
+        if ($this->Authorization->checkCapability('HISTORY')) {
+            $containArray = array_merge($containArray, [
+                'Audits.Users',
+                'Changes' => function (Query $query) {
+                    return $query
+                        ->limit(50)
+                        ->orderDesc(Audit::FIELD_CHANGE_DATE)
+                        ->contain([
+                            'ChangedUsers',
+                            'ChangedRoles' => [
+                                'Users',
+                                'RoleTypes',
+                            ],
+                            'ChangedScoutGroups',
+                            'ChangedUserContacts' => [
+                                'Users',
+                                'UserContactTypes',
+                            ],
+                        ]);
+                },
             ]);
+        }
+        if ($this->Authorization->buildAndCheckCapability('VIEW', 'DirectoryUsers')) {
+            $containArray = array_merge($containArray, ['ContactEmails.DirectoryUsers']);
         } else {
-            $user = $this->Users->get($userId, [
-                'contain' => [
-                    'UserStates',
-                    'Roles' => [
-                        'RoleTypes',
-                        'Sections' => [
-                            'ScoutGroups',
-                            'SectionTypes',
-                        ],
-                        'RoleStatuses',
-                        'UserContacts',
-                    ],
-                ],
-                'fields' => $visibleFields,
-            ]);
+            $containArray = array_merge($containArray, ['ContactEmails']);
+        }
+        if (
+            $this->Authorization->checkCapability('ALL')
+            || $this->Authentication->getIdentity()->getIdentifier() == $userId
+        ) {
+            $containArray = array_merge($containArray, ['Notifications' => ['NotificationTypes', 'EmailSends.Tokens']]);
         }
 
-        $this->Authorization->authorize($user);
+        $user = $this->Users
+            ->find()
+            ->contain($containArray)
+            ->where(['Users.' . User::FIELD_ID => $userId])
+//            ->selectAllExcept($this->Users, $blockedFields)
+            ->first();
 
-        $this->set('user', $user);
+        $this->Authorization->authorize($user, 'VIEW');
+
+        $this->set(compact('user'));
 
         $this->whyPermitted($this->Users);
     }
@@ -471,7 +463,7 @@ class UsersController extends AppController
         }
 
         if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
-//            $this->Flash->error('Password Reset Token could not be validated.');
+            $this->Flash->error('Password Reset Token could not be validated.');
 
             return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
@@ -503,5 +495,92 @@ class UsersController extends AppController
         }
 
         $this->set(compact('passwordForm'));
+    }
+
+    /**
+     * Token - Completes Password Reset Function
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function welcome()
+    {
+        $this->loadModel('Tokens');
+        $this->viewBuilder()->setLayout('login');
+
+        $resetToken = $this->Tokens->validateTokenRequest($this->request->getQueryParams());
+
+        if (!$resetToken instanceof Token) {
+            $this->Flash->error('Token is Invalid.');
+
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+        }
+
+        $user = $resetToken->email_send->user;
+        if (!$user instanceof User) {
+            $this->Flash->error('User is Invalid.');
+
+            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+        }
+
+        $identity = $this->Authentication->getIdentity();
+        if ($identity instanceof User) {
+            $user = $identity;
+        }
+
+        $passwordForm = new PasswordForm();
+
+        if ($user instanceof User && $this->request->is('post')) {
+            $newPassword = $this->request->getData($passwordForm::FIELD_NEW_PASSWORD);
+            $confirmPassword = $this->request->getData($passwordForm::FIELD_CONFIRM_PASSWORD);
+
+            $passwordData = [
+                $passwordForm::FIELD_NEW_PASSWORD => $newPassword,
+                $passwordForm::FIELD_CONFIRM_PASSWORD => $confirmPassword,
+            ];
+
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+
+            if (!$passwordForm->validate($passwordData)) {
+                $this->Flash->error(__('The data provided has errors.'));
+            } elseif ($newPassword != $confirmPassword) {
+                $this->Flash->error('Passwords do not match.');
+            } else {
+                $user = $this->Users->patchEntity(
+                    $user,
+                    [User::FIELD_PASSWORD => $newPassword],
+                    [ 'fields' => [$user::FIELD_PASSWORD], 'validate' => false ]
+                );
+
+                if ($this->Users->save($user)) {
+                    $this->Flash->success('Your username & password were saved successfully.');
+
+                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                }
+
+                $this->Flash->error(__('Something went wrong.'));
+            }
+        }
+
+        $this->set(compact('passwordForm', 'user'));
+    }
+
+    /**
+     * Activate method
+     *
+     * @param string|null $userId User id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function activate($userId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $user = $this->Users->get($userId);
+        if ($this->Users->activateUser($user)) {
+            $this->Flash->success(__('The user has been activated.'));
+        } else {
+            $this->Flash->error(__('The user contact could not be activated. Please, try again.'));
+        }
+
+        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userId]));
     }
 }

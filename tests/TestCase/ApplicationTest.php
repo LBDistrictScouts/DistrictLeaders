@@ -49,7 +49,6 @@ class ApplicationTest extends IntegrationTestCase
 
         $expectedPlugins = [
             'Muffin/Webservice',
-            'CakeDto',
             'Tools',
             'Search',
             'Queue',
@@ -62,11 +61,12 @@ class ApplicationTest extends IntegrationTestCase
             'DebugKit',
             'BootstrapUI',
             'Muffin/Trash',
-            'DatabaseLog',
             'Muffin/Footprint',
             'Flash',
             'WyriHaximus/TwigView',
             'Expose',
+            'TestHelper',
+            'Tags',
         ];
 
         foreach ($expectedPlugins as $plugin) {

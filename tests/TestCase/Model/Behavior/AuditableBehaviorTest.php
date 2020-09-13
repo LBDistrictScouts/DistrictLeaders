@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Model\Behavior;
 
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\TestSuite\TestCase;
@@ -38,24 +39,27 @@ class AuditableBehaviorTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.Sections',
+
         'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
-        'app.Sections',
+
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
+
         'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
+        'app.Notifications',
     ];
 
     /**
@@ -82,15 +86,22 @@ class AuditableBehaviorTest extends TestCase
 
         $afterAuditCount = $this->Audits->find('all')->count();
         TestCase::assertNotEquals($auditCount, $afterAuditCount);
-        $auditCount += 1;
+        $auditCount += 2;
         TestCase::assertEquals($auditCount, $afterAuditCount);
 
-        $latest = $this->Audits->find('all')->orderDesc('id')->first();
+        $latest = $this->Audits->find('all')->orderDesc(Audit::FIELD_ID)->toArray();
 
-        TestCase::assertEquals(User::FIELD_FIRST_NAME, $latest->get(Audit::FIELD_AUDIT_FIELD));
-        TestCase::assertEquals('Users', $latest->get(Audit::FIELD_AUDIT_TABLE));
-        TestCase::assertEquals('Lorem ipsum dolor sit amet', $latest->get(Audit::FIELD_ORIGINAL_VALUE));
-        TestCase::assertEquals($name, $latest->get(Audit::FIELD_MODIFIED_VALUE));
+        // The After Save Event for the User Contact Primary Association
+        TestCase::assertEquals(UserContact::FIELD_CONTACT_FIELD, $latest[0]->get(Audit::FIELD_AUDIT_FIELD));
+        TestCase::assertEquals('UserContacts', $latest[0]->get(Audit::FIELD_AUDIT_TABLE));
+        TestCase::assertEquals(null, $latest[0]->get(Audit::FIELD_ORIGINAL_VALUE));
+        TestCase::assertEquals('fish@4thgoat.org.uk', $latest[0]->get(Audit::FIELD_MODIFIED_VALUE));
+
+        // The Changed Audit
+        TestCase::assertEquals(User::FIELD_FIRST_NAME, $latest[1]->get(Audit::FIELD_AUDIT_FIELD));
+        TestCase::assertEquals('Users', $latest[1]->get(Audit::FIELD_AUDIT_TABLE));
+        TestCase::assertEquals('Lorem ipsum dolor sit amet', $latest[1]->get(Audit::FIELD_ORIGINAL_VALUE));
+        TestCase::assertEquals($name, $latest[1]->get(Audit::FIELD_MODIFIED_VALUE));
 
         $this->assertEventFired('Model.User.newAudits', $this->EventManager);
     }

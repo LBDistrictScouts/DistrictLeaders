@@ -239,16 +239,6 @@ class RoleTemplatesTableTest extends TestCase
                     RoleTemplate::FIELD_TEMPLATE_CAPABILITIES => ['ALL', 'EDIT_GROUP', 'EDIT_SECT', 'EDIT_USER', 'OWN_USER', 'LOGIN'],
                 ],
             ],
-            'No Level' => [
-                'No Level',
-                null,
-                false,
-            ],
-            'Bad Level' => [
-                'Bad Level',
-                'Goat',
-                false,
-            ],
         ];
     }
 

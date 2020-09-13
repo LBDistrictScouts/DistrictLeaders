@@ -18,6 +18,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Document $document
  * @property \App\Model\Entity\DocumentEdition[] $document_editions
  * @property \App\Model\Entity\CompassRecord[] $compass_records
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class DocumentVersion extends Entity
 {

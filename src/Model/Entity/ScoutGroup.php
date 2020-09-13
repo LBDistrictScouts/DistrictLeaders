@@ -24,6 +24,8 @@ use Cake\ORM\Entity;
  * @property string|null $uuid
  * @property bool $public
  * @property \App\Model\Entity\Audit[] $audits
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class ScoutGroup extends Entity
 {

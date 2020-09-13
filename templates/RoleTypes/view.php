@@ -19,8 +19,12 @@
                         <h4><?= h($roleType->role_type) ?></h4>
 
                         <h6 class="text-muted mb-2"><strong>Role Abbreviation:</strong> <?= h($roleType->role_abbreviation) ?></h6>
-                        <h6 class="text-muted mb-2"><strong>Section Type:</strong> <?= $roleType->has('section_type') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : '' ?></h6>
-                        <h6 class="text-muted mb-2"><strong>Role Template:</strong> <?= $roleType->has('role_template') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : '' ?></h6>
+                        <?php if ($roleType->has('section_type')) :
+                            ?><h6 class="text-muted mb-2"><strong>Section Type:</strong> <?= $this->Identity->buildAndCheckCapability('VIEW', 'SectionTypes') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : $roleType->section_type->section_type ?></h6><?php
+                        endif; ?>
+                        <?php if ($roleType->has('role_template')) :
+                            ?><h6 class="text-muted mb-2"><strong>Role Template:</strong> <?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTemplates') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : $roleType->role_template->role_template ?></h6><?php
+                        endif; ?>
                         <h6 class="text-muted mb-2"><strong>Level:</strong> <?= $this->Number->format($roleType->level) ?></h6>
                     </div>
                 </div>

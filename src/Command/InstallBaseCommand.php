@@ -89,55 +89,55 @@ class InstallBaseCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         if ($args->getOption('all') || $args->getOption('capabilities')) {
             $happenings = $this->Capabilities->installBaseCapabilities();
 
-            $io->info('Capabilities Installed: ' . $happenings);
+            $consoleIo->info('Capabilities Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('notification_types')) {
             $happenings = $this->NotificationTypes->installBaseNotificationTypes();
 
-            $io->info('Notification Types Installed: ' . $happenings);
+            $consoleIo->info('Notification Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('directory_types')) {
             $happenings = $this->DirectoryTypes->installBaseDirectoryTypes();
 
-            $io->info('Directory Types Installed: ' . $happenings);
+            $consoleIo->info('Directory Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('file_types')) {
             $happenings = $this->FileTypes->installBaseFileTypes();
 
-            $io->info('File Types Installed: ' . $happenings);
+            $consoleIo->info('File Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('role_templates')) {
             $happenings = $this->RoleTemplates->installBaseRoleTemplates();
 
-            $io->info('Role Templates Installed: ' . $happenings);
+            $consoleIo->info('Role Templates Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('user_states')) {
             $happenings = $this->UserStates->installBaseUserStates();
 
-            $io->info('User States Installed: ' . $happenings);
+            $consoleIo->info('User States Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('document_types')) {
             $happenings = $this->DocumentTypes->installBaseDocumentTypes();
 
-            $io->info('Document Types Installed: ' . $happenings);
+            $consoleIo->info('Document Types Installed: ' . $happenings);
         }
     }
 }

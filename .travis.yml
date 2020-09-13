@@ -4,10 +4,15 @@ dist: bionic
 
 os: linux
 
+php: 7.4
+
 version: ~> 1.0
 
+services:
+  - redis
+  - elasticsearch
+
 addons:
-  postgresql: "11"
   code_climate:
     repo_token: CodeClimateTokenForReplacement
 
@@ -16,46 +21,63 @@ cache:
     - $HOME/.composer/cache
     - vendor
 
-services:
-  - postgresql
-  - redis
-  - elasticsearch
-
 env:
   global:
     - DB=postgres
     - DEFAULT=1
+    - TEST=0
     - ASYNC=0
+    - FIXTURE=0
 
 jobs:
   include:
+    - name: "PHPCS"
+      dist: focal
+      env: PHPCS=1 DEFAULT=0 TEST=0
+
+    - name: "Fixture Check"
+      dist: focal
+      env: FIXTURE=1 TEST=0
+      addons:
+        postgresql: "12"
+        apt:
+          packages:
+            - postgresql-12
+
     - name: "PHP 7.2"
       php: 7.2
+      addons:
+        postgresql: "11"
 
     - name: "PHP 7.3"
       php: 7.3
+      addons:
+        postgresql: "11"
 
-    - name: "PHP 7.4 Bionic"
-      php: 7.4
+    - name: "PHP 7.4 Bionic Postgres 11"
+      addons:
+        postgresql: "11"
 
-#    - name: "PHP 7.4 Focal"
-#      php: 7.4
-#      dist: focal
-#      addons:
-#        postgresql: "12.2"
-#      apt:
-#        packages:
-#          - postgresql-12.2
-#          - postgresql-client-12.2
+    - name: "PHP 7.4 Focal Postgres 12"
+      dist: focal
+      addons:
+        postgresql: "12"
+        apt:
+          packages:
+            - postgresql-12
+
+    - name: "PHP 7.4 Bionic Postgres 10"
+      addons:
+        postgresql: "10"
+
+    - name: "PHP 7.4 Bionic Postgres 9.6"
+      addons:
+        postgresql: "9.6"
 
 # Removed as Queue is currently unable to work on Travis Env
 #    - name: "PHP 7.4 ASync"
 #      php: 7.4
 #      env: ASYNC=1
-
-    - name: "PHPCS"
-      php: 7.4
-      env: PHPCS=1 DEFAULT=0
 
 before_install:
   - if [[ $DEFAULT = 1 ]]; then export COMPOSER_PROCESS_TIMEOUT=900; fi
@@ -66,7 +88,8 @@ before_install:
   - if [[ $ASYNC = 0 ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
 
 install:
-  - if [[ $DEFAULT = 1 ]]; then psql --command='create database leaders;' --username=postgres; fi
+  - if [[ $DEFAULT = 1 ]]; then psql --command='CREATE DATABASE leaders;' --username=postgres; fi
+  - if [[ $DEFAULT = 1 ]]; then psql --command="CREATE USER app WITH PASSWORD 'cake';" --username=postgres; fi
   - composer install --no-scripts
   - composer validate
 
@@ -79,7 +102,8 @@ before_script:
 script:
   - if [[ $PHPCS = 1 ]]; then bin/cake code_completion generate -d; fi
   - if [[ $PHPCS = 1 ]]; then composer cs-check; fi
-  - if [[ $DEFAULT = 1 ]]; then composer test; fi
+  - if [[ $FIXTURE = 1 ]]; then composer fixture-check; fi
+  - if [[ $TEST = 1 ]]; then composer test; fi
 
 after_success:
   - if [[ $DEFAULT = 1 ]]; then bash <(curl -s https://codecov.io/bash); fi

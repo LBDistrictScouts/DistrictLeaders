@@ -9,7 +9,6 @@ use Cake\View\Cell;
 /**
  * Notify cell
  *
- * @property \App\Model\Table\UsersTable $Users
  * @property \App\Model\Table\NotificationsTable $Notifications
  */
 class NotifyCell extends Cell
@@ -37,7 +36,6 @@ class NotifyCell extends Cell
      */
     public function initialize(): void
     {
-        $this->loadModel('Users');
         $this->loadModel('Notifications');
     }
 
@@ -50,12 +48,13 @@ class NotifyCell extends Cell
     public function display($loggedInUserId)
     {
         if (is_integer($loggedInUserId)) {
-            $notifications = $this->Notifications->find('unread', ['contain' => 'NotificationTypes'])
+            $notificationCount = $this->Notifications
+                ->find('unread')
+                ->contain('NotificationTypes')
                 ->where([Notification::FIELD_USER_ID => $loggedInUserId])
-                ->limit(5)
-                ->orderDesc(Notification::FIELD_CREATED);
+                ->count();
 
-            $this->set(compact('notifications', 'loggedInUserId'));
+            $this->set(compact('notificationCount', 'loggedInUserId'));
         }
     }
 }

@@ -38,7 +38,7 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         // Prevent DebugKit from infinitely looping
-        if ($request->getParam('plugin') === 'DebugKit') {
+        if (in_array($request->getParam('plugin'), ['DebugKit', 'TestHelper'])) {
             return new Result(true);
         }
 
@@ -73,15 +73,13 @@ class RequestPolicy implements RequestPolicyInterface
         }
 
         // User controller allow
-        $userActions = ['login', 'logout', 'username', 'token', 'password', 'forgot'];
+        $userActions = ['login', 'logout', 'username', 'token', 'password', 'forgot', 'welcome'];
         if ($controller === 'Users' && in_array($action, $userActions)) {
             return new Result(true);
         }
 
-        if (!is_null($identity) && isset($identity)) {
-            if ($identity->buildAndCheckCapability($action, $request->getParam('controller'))) {
-                return new Result(true);
-            }
+        if (isset($identity) && !is_null($identity) && $identity->buildAndCheckCapability($action, $controller)) {
+            return new Result(true, 'Entity Specific Capability Present.');
         }
 
         return new Result(false, 'No Authorisation Rules');

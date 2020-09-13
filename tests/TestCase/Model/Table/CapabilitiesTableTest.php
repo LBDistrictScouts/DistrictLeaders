@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\Capability;
 use App\Model\Table\CapabilitiesTable;
+use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
@@ -173,11 +174,11 @@ class CapabilitiesTableTest extends TestCase
     {
         return [
             'Level 0' => [ 0, 1 ],
-            'Level 1' => [ 1, 9 ],
-            'Level 2' => [ 2, 39 ],
-            'Level 3' => [ 3, 70 ],
-            'Level 4' => [ 4, 73 ],
-            'Level 5' => [ 5, 83 ],
+            'Level 1' => [ 1, 10 ],
+            'Level 2' => [ 2, 43 ],
+            'Level 3' => [ 3, 79 ],
+            'Level 4' => [ 4, 82 ],
+            'Level 5' => [ 5, 93 ],
             'No Level' => [ null, 0 ],
             'Bad Level' => [ 'fish', 0 ],
         ];
@@ -231,8 +232,8 @@ class CapabilitiesTableTest extends TestCase
     {
         $result = $this->Capabilities->generateEntityCapabilities(false);
 
-        $models = Configure::read('allModels');
-        $methods = Configure::read('entityCapabilities');
+        $models = Configure::read('AllModels');
+        $methods = CapBuilder::getEntityCapabilities();
         $expected = count($models) * count($methods);
 
         TestCase::assertEquals($expected, $result);
@@ -376,48 +377,96 @@ class CapabilitiesTableTest extends TestCase
                 [
                     [
                         Capability::FIELD_ID => 7,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@ID',
+                        Capability::FIELD_CAPABILITY => 'Change field "Id" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@CAPABILITY_CODE',
+                        Capability::FIELD_CAPABILITY => 'Change field "Capability Code" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@CAPABILITY',
+                        Capability::FIELD_CAPABILITY => 'Change field "Capability" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@MIN_LEVEL',
+                        Capability::FIELD_CAPABILITY => 'Change field "Min Level" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 4,
+                    ],
+                    [
+                        Capability::FIELD_ID => 11,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@CRUD_FUNCTION',
                         Capability::FIELD_CAPABILITY => 'Change field "Crud Function" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        Capability::FIELD_ID => 8,
+                        Capability::FIELD_ID => 12,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@APPLICABLE_MODEL',
                         Capability::FIELD_CAPABILITY => 'Change field "Applicable Model" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        Capability::FIELD_ID => 9,
+                        Capability::FIELD_ID => 13,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@APPLICABLE_FIELD',
                         Capability::FIELD_CAPABILITY => 'Change field "Applicable Field" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        Capability::FIELD_ID => 10,
+                        Capability::FIELD_ID => 14,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_CAPABILITY@IS_FIELD_CAPABILITY',
                         Capability::FIELD_CAPABILITY => 'Change field "Is Field Capability" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 4,
                     ],
                     [
-                        Capability::FIELD_ID => 11,
+                        Capability::FIELD_ID => 15,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@ID',
+                        Capability::FIELD_CAPABILITY => 'View field "Id" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 16,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@CAPABILITY_CODE',
+                        Capability::FIELD_CAPABILITY => 'View field "Capability Code" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 17,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@CAPABILITY',
+                        Capability::FIELD_CAPABILITY => 'View field "Capability" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 18,
+                        Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@MIN_LEVEL',
+                        Capability::FIELD_CAPABILITY => 'View field "Min Level" on a Capability',
+                        Capability::FIELD_MIN_LEVEL => 3,
+                    ],
+                    [
+                        Capability::FIELD_ID => 19,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@CRUD_FUNCTION',
                         Capability::FIELD_CAPABILITY => 'View field "Crud Function" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        Capability::FIELD_ID => 12,
+                        Capability::FIELD_ID => 20,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@APPLICABLE_MODEL',
                         Capability::FIELD_CAPABILITY => 'View field "Applicable Model" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        Capability::FIELD_ID => 13,
+                        Capability::FIELD_ID => 21,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@APPLICABLE_FIELD',
                         Capability::FIELD_CAPABILITY => 'View field "Applicable Field" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 3,
                     ],
                     [
-                        Capability::FIELD_ID => 14,
+                        Capability::FIELD_ID => 22,
                         Capability::FIELD_CAPABILITY_CODE => 'FIELD_VIEW_CAPABILITY@IS_FIELD_CAPABILITY',
                         Capability::FIELD_CAPABILITY => 'View field "Is Field Capability" on a Capability',
                         Capability::FIELD_MIN_LEVEL => 3,
@@ -449,8 +498,15 @@ class CapabilitiesTableTest extends TestCase
      * @return void
      * @throws \Exception
      */
-    public function testFieldCapability($entity, $baseLevel, $fieldCount, $expected, $hydrated)
-    {
+    public function testFieldCapability(
+        string $entity,
+        int $baseLevel,
+        int $fieldCount,
+        array $expected,
+        array $hydrated
+    ) {
+        Configure::write('AllModels.Capabilities', ['fieldLock' => true]);
+
         $result = $this->Capabilities->fieldCapability($entity, $baseLevel);
         TestCase::assertEquals($fieldCount, $result);
 
@@ -470,7 +526,7 @@ class CapabilitiesTableTest extends TestCase
             $searchField => $fieldSearchValue,
         ]);
 
-//        TestCase::assertEquals($expected, $query->disableHydration()->toArray());
+        TestCase::assertEquals($expected, $query->disableHydration()->toArray());
 
         $result = $this->Capabilities->fieldCapability('Cheeses', 99);
         TestCase::assertFalse($result);
@@ -528,6 +584,8 @@ class CapabilitiesTableTest extends TestCase
      */
     public function testBuildCapability($action, $model, $expected, $field = null)
     {
+        Configure::write('AllModels.Capabilities', ['fieldLock' => true]);
+
         $result = $this->Capabilities->buildCapability($action, $model, $field);
         TestCase::assertEquals($expected, $result);
     }
@@ -999,7 +1057,7 @@ class CapabilitiesTableTest extends TestCase
      * @param array $bare Array to be enriched
      * @param array $enriched Expected Result
      */
-    public function testEnrichRoleType($bare, $enriched)
+    public function testEnrichRoleType(array $bare, array $enriched): void
     {
         $result = $this->Capabilities->enrichUserCapability($bare);
 
@@ -1009,7 +1067,7 @@ class CapabilitiesTableTest extends TestCase
     /**
      * @return array
      */
-    public function providerGetSplitLists()
+    public function providerGetSplitLists(): array
     {
         return [
             'Standard' => [
@@ -1062,6 +1120,10 @@ class CapabilitiesTableTest extends TestCase
                         'UPDATE_DOCUMENT' => 'Update a Document',
                         'VIEW_DOCUMENT' => 'View a Document',
                         'DELETE_DOCUMENT' => 'Delete a Document',
+                        'CREATE_NOTIFICATION' => 'Create a Notification',
+                        'UPDATE_NOTIFICATION' => 'Update a Notification',
+                        'VIEW_NOTIFICATION' => 'View a Notification',
+                        'DELETE_NOTIFICATION' => 'Delete a Notification',
                     ],
                     'Field' => [
                         'FIELD_CHANGE_USER@ID' => 'Change field "Id" on a User',
@@ -1118,6 +1180,12 @@ class CapabilitiesTableTest extends TestCase
                         'FIELD_CHANGE_USER@VALIDATED_PHONE_COUNT' => 'Change field "Validated Phone Count" on a User',
                         'FIELD_VIEW_USER@VALIDATED_EMAIL_COUNT' => 'View field "Validated Email Count" on a User',
                         'FIELD_VIEW_USER@VALIDATED_PHONE_COUNT' => 'View field "Validated Phone Count" on a User',
+                        'FIELD_CHANGE_USER@SECTIONS' => 'Change field "Sections" on a User',
+                        'FIELD_CHANGE_USER@GROUPS' => 'Change field "Groups" on a User',
+                        'FIELD_VIEW_USER@SECTIONS' => 'View field "Sections" on a User',
+                        'FIELD_VIEW_USER@GROUPS' => 'View field "Groups" on a User',
+                        'FIELD_CHANGE_USER@ACTIVATED' => 'Change field "Activated" on a User',
+                        'FIELD_VIEW_USER@ACTIVATED' => 'View field "Activated" on a User',
                     ],
                 ],
                 true,
@@ -1132,7 +1200,7 @@ class CapabilitiesTableTest extends TestCase
      * @param array $expected Expected Result
      * @param bool $installBase Whether to Install Base Capabilities
      */
-    public function testGetSplitLists($expected, $installBase)
+    public function testGetSplitLists(array $expected, bool $installBase)
     {
         if ($installBase) {
             $this->Capabilities->installBaseCapabilities();

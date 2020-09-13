@@ -42,12 +42,24 @@ class GoogleAuthFormTest extends TestCase
     }
 
     /**
-     * Test initial setup
+     * Test the Execution
+     */
+    public function testValidate()
+    {
+        $validationResult = $this->GoogleAuth->validate([
+            GoogleAuthForm::FIELD_AUTH_CODE => 'Sai9akvuaus929sda',
+        ]);
+
+        TestCase::assertTrue($validationResult);
+    }
+
+    /**
+     * Test the Execute Function
      *
      * @return void
      */
-    public function testInitialization()
+    public function testExecute()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        TestCase::assertTrue($this->GoogleAuth->execute([]));
     }
 }

@@ -12,10 +12,11 @@ use Queue\Shell\Task\QueueTaskInterface;
  *
  * @package App\Shell\Task
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
 {
+    use JobDataTrait;
+
     /**
      * @var int
      */
@@ -34,7 +35,6 @@ class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
     public function run(array $data, $jobId): void
     {
         $this->loadModel('RoleTypes');
-        $this->loadModel('Queue.QueuedJobs');
 
         $passed = 0;
         $idx = 0;
@@ -45,7 +45,7 @@ class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
             $query = $query->where([RoleType::FIELD_ROLE_TEMPLATE_ID => $data['role_template_id']]);
         }
 
-        $totalRecords = $query->count();
+        $records = $query->count();
         foreach ($query as $roleType) {
             $idx += 1;
             $roleType = $this->RoleTypes->patchTemplateCapabilities($roleType);
@@ -53,7 +53,9 @@ class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
                 $passed += 1;
                 $this->RoleTypes->patchRoleUsers($roleType);
             }
-            $this->QueuedJobs->updateProgress($jobId, $idx / $totalRecords);
+            $this->QueuedJobs->updateProgress($jobId, $idx / $records);
         }
+
+        $this->saveJobDataArray((int)$jobId, compact('passed', 'records'));
     }
 }

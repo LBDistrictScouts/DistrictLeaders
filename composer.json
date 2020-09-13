@@ -19,6 +19,7 @@
         "dereuromark/cakephp-expose": "^1.4",
         "dereuromark/cakephp-flash": "^2.0",
         "dereuromark/cakephp-queue": "^5.0",
+        "dereuromark/cakephp-tags": "^1.1",
         "dereuromark/cakephp-tools": "^2.0",
         "friendsofcake/bootstrap-ui": "^3.0",
         "friendsofcake/search": "^6.0",
@@ -35,6 +36,7 @@
         "php-http/guzzle6-adapter": "^2.0",
         "sparkpost/sparkpost": "^2.2",
         "symfony/yaml": "^5.0",
+        "tijsverkoyen/css-to-inline-styles": "^2.2",
         "twilio/sdk": "^5.34",
         "webonyx/graphql-php": "^0.13.8"
     },
@@ -43,6 +45,7 @@
         "cakephp/cakephp-codesniffer": "^4.0",
         "cakephp/debug_kit": "^4.0",
         "dereuromark/cakephp-ide-helper": "^1.0",
+        "dereuromark/cakephp-test-helper": "^1.0",
         "josegonzalez/dotenv": "3.*",
         "phan/phan": "^2.2",
         "phpmd/phpmd": "@stable",
@@ -77,9 +80,11 @@
         "post-create-project-cmd": "@console-install",
         "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
         "console-install": "App\\Console\\Installer::postInstall",
+        "fixture-check": "bin/cake fixture_check",
         "check": [
             "@cs-check",
             "composer validate",
+            "@fixture-check",
             "@phpstan-check"
         ],
         "fix": [
@@ -91,6 +96,7 @@
         ],
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
+        "md-check": "phpmd --strict src/ ansi cleancode",
         "phpstan-check": "vendor/bin/phpstan analyse src tests",
         "annotate": "bin/cake annotate all",
         "illuminate": "bin/cake illuminator illuminate",
@@ -100,11 +106,11 @@
         "migrate": [
             "@migrate-app",
             "@migrate-queue",
-            "@migrate-database-log"
+            "@migrate-tags"
         ],
         "migrate-app": "bin/cake migrations migrate",
         "migrate-queue": "bin/cake migrations migrate -p Queue",
-        "migrate-database-log": "bin/cake migrations migrate -p DatabaseLog -c database_log --no-lock",
+        "migrate-tags": "bin/cake migrations migrate -p Tags",
         "symlink": "bin/cake plugin assets symlink",
         "install-base": "bin/cake install_base -a"
     },

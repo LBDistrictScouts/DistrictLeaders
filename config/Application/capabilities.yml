@@ -1,4 +1,4 @@
-baseCapabilities:
+BaseCapabilities:
   - capability_code: ALL
     capability: SuperUser Permissions
     min_level: 5
@@ -17,20 +17,7 @@ baseCapabilities:
   - capability_code: NON_PUBLIC_GROUP
     capability: View Hidden Scout Group Details
     min_level: 3
-entityCapabilities:
-  CREATE: 1
-  UPDATE: 1
-  VIEW: -5
-  DELETE: 5
-fieldCapabilities:
-  CHANGE: 1
-  VIEW: 0
-actionOverrides:
-  INDEX: VIEW
-  ADD: CREATE
-  EDIT: UPDATE
-  SEARCH: VIEW
-allModels:
+AllModels:
   Users:
     baseLevel: 1
     viewRestricted: false
@@ -51,7 +38,11 @@ allModels:
     baseLevel: 4
     viewRestricted: false
     fieldLock: false
-allCapabilities:
+  Notifications:
+    baseLevel: 2
+    viewRestricted: false
+    fieldLock: false
+AllCapabilities:
   - LOGIN
   - OWN_USER
 UnauthorizedExceptions:

@@ -5,7 +5,7 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
-use App\Model\Table\BaseInstallerTrait;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use App\Model\Table\UsersTable;
 use App\Model\Table\UserStatesTable;
 use Cake\I18n\FrozenTime;
@@ -58,6 +58,7 @@ class UserStatesTableTest extends TestCase
         'EVALUATE_LOGIN_CAPABILITY',
         'EVALUATE_ACTIVE_ROLE',
         'EVALUATE_VALIDATED_EMAIL',
+        'EVALUATE_ACTIVATED',
     ];
 
     /**
@@ -164,6 +165,7 @@ class UserStatesTableTest extends TestCase
             UserState::FIELD_EXPIRED => false,
             UserState::FIELD_PRECEDENCE_ORDER => 1,
             UserState::FIELD_SIGNATURE => 63,
+            UserState::FIELD_IS_EMAIL_SEND_ACTIVE => true,
         ];
         $this->validateInitialise($expected, $this->UserStates, 6);
     }
@@ -376,6 +378,9 @@ class UserStatesTableTest extends TestCase
                     $lastLogin = $lastLogin->subDays(10);
                     $user = $user->set(User::FIELD_LAST_LOGIN, $lastLogin);
                     break;
+                case 'EVALUATE_ACTIVATED':
+                    $user->set(User::FIELD_ACTIVATED, true);
+                    break;
                 default:
                     break;
             }
@@ -426,23 +431,23 @@ class UserStatesTableTest extends TestCase
     {
         return [
             'Active Directory User' => [
-                63,
+                127,
                 1,
             ],
             'Provisional User' => [
-                15,
+                79,
                 2,
             ],
             'Prevalidation' => [
-                25,
+                89,
                 3,
             ],
             'Invited User' => [
-                16,
+                80,
                 4,
             ],
             'Inactive User' => [
-                43,
+                107,
                 5,
             ],
             'Draft User' => [
@@ -463,7 +468,7 @@ class UserStatesTableTest extends TestCase
             $newIndex = 'Modified ' . $index;
 
             $signature = $datum[0];
-            if ($signature == 43) {
+            if ($signature == 107) {
                 continue;
             }
 

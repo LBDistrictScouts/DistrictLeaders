@@ -22,6 +22,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Role $changed_role
  * @property \App\Model\Entity\ScoutGroup $changed_scout_group
  * @property \App\Model\Entity\UserContact $changed_user_contact
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Audit extends Entity
 {

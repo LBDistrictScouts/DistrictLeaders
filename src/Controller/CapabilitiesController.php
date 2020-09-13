@@ -9,6 +9,7 @@ use Cake\Core\Configure;
  * Capabilities Controller
  *
  * @property \App\Model\Table\CapabilitiesTable $Capabilities
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
@@ -86,7 +87,7 @@ class CapabilitiesController extends AppController
         }
         $this->set('capabilities', $capabilities);
 
-        $models = Configure::read('allModels');
+        $models = Configure::read('AllModels');
         ksort($models);
         $this->set('models', $models);
     }
@@ -161,5 +162,21 @@ class CapabilitiesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Process method
+     *
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function process()
+    {
+        $this->request->allowMethod(['post']);
+
+        $this->loadComponent('Queue');
+        $this->Queue->setCapabilityParse();
+
+        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }

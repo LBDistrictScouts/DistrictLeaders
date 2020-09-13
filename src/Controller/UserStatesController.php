@@ -9,6 +9,7 @@ use App\Model\Entity\UserState;
  * UserStates Controller
  *
  * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
@@ -104,5 +105,21 @@ class UserStatesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Process method
+     *
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
+     */
+    public function process()
+    {
+        $this->request->allowMethod(['post']);
+
+        $this->loadComponent('Queue');
+        $this->Queue->setUserStateParse();
+
+        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }

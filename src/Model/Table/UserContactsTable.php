@@ -6,6 +6,8 @@ namespace App\Model\Table;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
+use App\Model\Table\Exceptions\InvalidEmailDomainException;
+use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -36,6 +38,8 @@ use Cake\Validation\Validator;
  */
 class UserContactsTable extends Table
 {
+    use UpdateCounterCacheTrait;
+
     /**
      * Initialize method
      *
@@ -246,11 +250,26 @@ class UserContactsTable extends Table
         /** @var \App\Model\Entity\User $user */
         $user = $this->Users->get($contact->user_id);
 
-        if ($this->isValidDomainEmail($contact->contact_field)) {
+        if ($this->isValidDomainEmail($contact->contact_field) && $contact->validated) {
             $user->set(User::FIELD_EMAIL, $contact->contact_field);
             $this->Users->save($user, ['validate' => false]);
 
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \App\Model\Entity\UserContact $contact The User Contact Email to be made Primary
+     * @return bool
+     */
+    public function verify(UserContact $contact): bool
+    {
+        if ($this->isValidDomainEmail($contact->contact_field)) {
+            $contact->set(UserContact::FIELD_VERIFIED, true);
+
+            return (bool)($this->save($contact) instanceof UserContact);
         }
 
         return false;
@@ -263,6 +282,10 @@ class UserContactsTable extends Table
      */
     public function makeEmail(User $user, string $email): UserContact
     {
+        if (!$this->isValidDomainEmail($email)) {
+            throw new InvalidEmailDomainException($email . ' is not a valid Scouting Email.');
+        }
+
         $emailType = $this->UserContactTypes->find()
             ->where([UserContactType::FIELD_USER_CONTACT_TYPE => 'Email'])
             ->first();
@@ -276,6 +299,15 @@ class UserContactsTable extends Table
             UserContact::FIELD_USER_ID => $user->id,
             UserContact::FIELD_CONTACT_FIELD => $email,
         ]);
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user User to have User Contact Made
+     * @return bool
+     */
+    public function associatePrimary(User $user): bool
+    {
+        return (bool)($this->makeEmail($user, $user->email) instanceof UserContact);
     }
 
     /**

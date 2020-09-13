@@ -28,8 +28,9 @@ use Google_Service_Directory_User;
  * @method \App\Model\Entity\DirectoryUser[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryUser findOrCreate($search, callable $callback = null, $options = [])
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasOne $UserContacts
  * @mixin \App\Model\Behavior\CaseableBehavior
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  */
 class DirectoryUsersTable extends Table
 {
@@ -60,7 +61,7 @@ class DirectoryUsersTable extends Table
             'joinType' => 'INNER',
         ]);
 
-        $this->hasMany('UserContacts', [
+        $this->hasOne('UserContacts', [
             'foreignKey' => 'directory_user_id',
         ]);
 
@@ -134,7 +135,6 @@ class DirectoryUsersTable extends Table
      * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
      * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to Domain
      * @return int
-     * @throws \Google_Exception
      */
     public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
     {
@@ -148,7 +148,11 @@ class DirectoryUsersTable extends Table
         $pageToken = null;
 
         while ($continue) {
-            $result = $this->populateFromList($directory, $domain, $count, $pageToken);
+            try {
+                $result = $this->populateFromList($directory, $domain, $count, $pageToken);
+            } catch (\Google_Exception $e) {
+                return $count;
+            }
             $count += $result['count'];
             $pageToken = $result['pageToken'];
 
@@ -300,6 +304,7 @@ class DirectoryUsersTable extends Table
             $contact->set(UserContact::FIELD_CONTACT_FIELD, $directoryUser->primary_email);
         }
 
+        $contact->set(UserContact::FIELD_VERIFIED, true);
         $contact->set(UserContact::FIELD_DIRECTORY_USER_ID, $directoryUser->id);
 
         return (bool)$this->UserContacts->save($contact);

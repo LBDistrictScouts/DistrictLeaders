@@ -138,51 +138,71 @@ class CapAuthorizationComponentTest extends TestCase
         parent::tearDown();
     }
 
+    public function provideSee()
+    {
+        return [
+            'Non Admin User' => [
+                false,
+                [
+                    User::FIELD_USERNAME,
+                    User::FIELD_MEMBERSHIP_NUMBER,
+                    User::FIELD_FIRST_NAME,
+                    User::FIELD_LAST_NAME,
+                    User::FIELD_EMAIL,
+                    User::FIELD_ADDRESS_LINE_1,
+                    User::FIELD_ADDRESS_LINE_2,
+                    User::FIELD_CITY,
+                    User::FIELD_COUNTY,
+                    User::FIELD_POSTCODE,
+                    User::FIELD_CREATED,
+                    User::FIELD_MODIFIED,
+                    User::FIELD_LAST_LOGIN,
+                    User::FIELD_DELETED,
+                    User::FIELD_LAST_LOGIN_IP,
+                    User::FIELD_COGNITO_ENABLED,
+                    User::FIELD_ALL_ROLE_COUNT,
+                    User::FIELD_ACTIVE_ROLE_COUNT,
+                    User::FIELD_ALL_EMAIL_COUNT,
+                    User::FIELD_ALL_PHONE_COUNT,
+                    User::FIELD_RECEIVE_EMAILS,
+                    User::FIELD_VALIDATED_EMAIL_COUNT,
+                    User::FIELD_VALIDATED_PHONE_COUNT,
+                    User::FIELD_ACTIVATED,
+                    User::FIELD_PASSWORD,
+                    User::FIELD_USER_STATE,
+                    User::FIELD_CHANGES,
+                    User::FIELD_AUDITS,
+                    User::FIELD_CAMP_ROLES,
+                    User::FIELD_EMAIL_SENDS,
+                    User::FIELD_NOTIFICATIONS,
+                    User::FIELD_ROLES,
+                    User::FIELD_USER_CONTACTS,
+                    User::FIELD_CONTACT_EMAILS,
+                    User::FIELD_CONTACT_NUMBERS,
+                    User::FIELD_DIRECTORY_USERS,
+                ],
+            ],
+            'Admin User' => [
+                true,
+                [],
+            ],
+        ];
+    }
+
     /**
      * Test see method
      *
+     * @dataProvider provideSee
+     * @param bool $admin ALL/Administrative user setup
+     * @param array $expectedData Expected SEE field array
      * @return void
      */
-    public function testSee()
+    public function testSee(bool $admin, array $expectedData)
     {
         $user = $this->Users->get(2);
-
-        // Not Admin User
-        $this->setUp(false);
+        $this->setUp($admin);
         $result = $this->Authorization->see($user);
-        TestCase::assertEquals([], $result);
-
-        // Admin User
-        $this->setUp(true);
-        $result = $this->Authorization->see($user);
-        TestCase::assertEquals([
-            User::FIELD_ID,
-            User::FIELD_USERNAME,
-            User::FIELD_MEMBERSHIP_NUMBER,
-            User::FIELD_FIRST_NAME,
-            User::FIELD_LAST_NAME,
-            User::FIELD_EMAIL,
-            User::FIELD_ADDRESS_LINE_1,
-            User::FIELD_ADDRESS_LINE_2,
-            User::FIELD_CITY,
-            User::FIELD_COUNTY,
-            User::FIELD_POSTCODE,
-            User::FIELD_CREATED,
-            User::FIELD_MODIFIED,
-            User::FIELD_LAST_LOGIN,
-            User::FIELD_DELETED,
-            User::FIELD_LAST_LOGIN_IP,
-            User::FIELD_CAPABILITIES,
-            User::FIELD_USER_STATE_ID,
-            User::FIELD_COGNITO_ENABLED,
-            User::FIELD_ALL_ROLE_COUNT,
-            User::FIELD_ACTIVE_ROLE_COUNT,
-            User::FIELD_ALL_EMAIL_COUNT,
-            User::FIELD_ALL_PHONE_COUNT,
-            User::FIELD_RECEIVE_EMAILS,
-            User::FIELD_VALIDATED_EMAIL_COUNT,
-            User::FIELD_VALIDATED_PHONE_COUNT,
-        ], $result);
+        TestCase::assertEquals($expectedData, $result);
     }
 
     /**
@@ -365,6 +385,11 @@ class CapAuthorizationComponentTest extends TestCase
         string $expectedReason
     ): void {
         $this->setUp($admin);
+
+        if (is_null($capArray[0]) || is_null($capArray[1])) {
+            $this->expectException(\TypeError::class);
+        }
+
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
 
         TestCase::assertInstanceOf(ResultInterface::class, $result);
@@ -390,6 +415,11 @@ class CapAuthorizationComponentTest extends TestCase
         string $expectedReason
     ): void {
         $this->setUp($admin);
+
+        if (is_null($capArray[0]) || is_null($capArray[1])) {
+            $this->expectException(\TypeError::class);
+        }
+
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
 
         TestCase::assertInstanceOf(ResultInterface::class, $result);

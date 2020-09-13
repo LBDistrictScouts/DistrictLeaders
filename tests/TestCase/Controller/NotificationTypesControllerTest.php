@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
+use App\Model\Entity\NotificationType;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -55,10 +56,11 @@ class NotificationTypesControllerTest extends TestCase
      * @var array $validEntityData Valid creation Data.
      */
     private $validEntityData = [
-        'notification_type' => 'Testing',
-        'notification_description' => 'Testing Notification.',
-        'icon' => 'fa-envelope',
-        'type_code' => 'GEN-TON',
+        NotificationType::FIELD_NOTIFICATION_TYPE => 'Testing',
+        NotificationType::FIELD_NOTIFICATION_DESCRIPTION => 'Testing Notification.',
+        NotificationType::FIELD_ICON => 'fa-envelope',
+        NotificationType::FIELD_TYPE_CODE => 'GEN-TON',
+        NotificationType::FIELD_CONTENT_TEMPLATE => 'standard',
     ];
 
     /**

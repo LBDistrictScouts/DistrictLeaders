@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 
 /**
@@ -31,25 +32,34 @@ class RoleTypesController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Role Type id.
+     * @param string|null $roleTypeId Role Type id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($roleTypeId = null)
     {
-        $roleType = $this->RoleTypes->get($id, [
-            'contain' => ['SectionTypes', 'Capabilities', 'Roles', 'RoleTemplates'],
+        $roleType = $this->RoleTypes->get($roleTypeId, [
+            'contain' => [
+                'SectionTypes',
+                'Capabilities',
+                'Roles' => [
+                    'Users',
+                    'UserContacts',
+                    'Sections.ScoutGroups',
+                ],
+                'RoleTemplates',
+            ],
         ]);
         $this->set('roleType', $roleType);
 
         $capabilities = $this->RoleTypes->Capabilities->enrichRoleType($roleType->capabilities);
         $this->set('capabilities', $capabilities);
 
-        $models = Configure::read('allModels');
+        $models = Configure::read('AllModels');
         ksort($models);
         $this->set('models', $models);
 
-        $crud = Configure::read('entityCapabilities');
+        $crud = CapBuilder::getEntityCapabilities();
         ksort($crud);
         $crudList = array_keys($crud);
         $this->set('crudList', $crudList);
@@ -89,13 +99,13 @@ class RoleTypesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Role Type id.
+     * @param string|null $roleTypeId Role Type id.
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($roleTypeId = null)
     {
-        $roleType = $this->RoleTypes->get($id, [
+        $roleType = $this->RoleTypes->get($roleTypeId, [
             'contain' => ['Capabilities'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -121,14 +131,14 @@ class RoleTypesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Role Type id.
+     * @param string|null $roleTypeId Role Type id.
      * @return \Cake\Http\Response|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete($roleTypeId = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $roleType = $this->RoleTypes->get($id);
+        $roleType = $this->RoleTypes->get($roleTypeId);
         if ($this->RoleTypes->delete($roleType)) {
             $this->Flash->success(__('The role type has been deleted.'));
         } else {

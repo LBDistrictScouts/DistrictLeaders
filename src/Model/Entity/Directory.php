@@ -20,6 +20,8 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\DirectoryDomain[] $directory_domains
  * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
  * @property \App\Model\Entity\DirectoryUser[] $directory_users
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Directory extends Entity
 {

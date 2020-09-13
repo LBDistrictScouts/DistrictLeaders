@@ -106,15 +106,21 @@ class CapBuilderTest extends TestCase
                 'Users',
                 User::FIELD_EMAIL,
             ],
-            'Valid View 2Part Field' => [
-                'FIELD_VIEW_ROLE_TEMPLATE@TEMPLATE_CAPABILITIES',
+            'Valid View 2Part Entity' => [
+                'VIEW_ROLE_TEMPLATE',
                 'VIEW',
                 'RoleTemplates',
                 RoleTemplate::FIELD_TEMPLATE_CAPABILITIES,
             ],
-            'Valid Change 2Part Field' => [
-                'FIELD_CHANGE_SCOUT_GROUP@CLEAN_DOMAIN',
+            'Field Lock Valid Field' => [
+                'FIELD_CHANGE_USER@MEMBERSHIP_NUMBER',
                 'CHANGE',
+                'Users',
+                User::FIELD_MEMBERSHIP_NUMBER,
+            ],
+            'Field Unlock Valid Field' => [
+                'UPDATE_SCOUT_GROUP',
+                'UPDATE',
                 'ScoutGroups',
                 ScoutGroup::FIELD_CLEAN_DOMAIN,
             ],
@@ -143,11 +149,6 @@ class CapBuilderTest extends TestCase
             'Invalid Action Entity' => [
                 false,
                 'GOAT', // Invalid
-                'Users',
-            ],
-            'Wrong Action Entity' => [
-                false,
-                'CHANGE', // Field Action
                 'Users',
             ],
         ];

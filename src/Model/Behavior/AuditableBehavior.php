@@ -7,7 +7,6 @@ use Cake\Event\Event;
 use Cake\ORM\Behavior;
 use Cake\ORM\Exception\MissingBehaviorException;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Cake\Utility\Inflector;
 
 /**
  * Auditable behavior
@@ -75,7 +74,7 @@ class AuditableBehavior extends Behavior
 
         if ($auditCount > 0) {
             $this->getTable()->getEventManager()->dispatch(new Event(
-                'Model.' . Inflector::singularize($this->getTable()->getRegistryAlias()) . '.newAudits',
+                'Model.' . $this->getTable()->getRegistryAlias() . '.newAudits',
                 $this,
                 [
                     'entity' => $entity,

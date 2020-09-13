@@ -13,6 +13,8 @@ use Cake\ORM\Entity;
  * @property string $directory_type_code
  *
  * @property \App\Model\Entity\Directory[] $directories
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class DirectoryType extends Entity
 {

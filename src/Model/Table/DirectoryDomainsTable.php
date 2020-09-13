@@ -95,12 +95,15 @@ class DirectoryDomainsTable extends Table
 
     /**
      * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
-     * @return int|null
-     * @throws \Google_Exception
+     * @return int
      */
-    public function populate(Directory $directory): ?int
+    public function populate(Directory $directory): int
     {
-        $domainList = GoogleBuilder::getDomainList($directory);
+        try {
+            $domainList = GoogleBuilder::getDomainList($directory);
+        } catch (\Google_Exception $e) {
+            return 0;
+        }
         $count = 0;
 
         /** @var \Google_Service_Directory_Domains $domain */

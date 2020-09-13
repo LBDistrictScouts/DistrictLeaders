@@ -33,20 +33,28 @@ class TokensTableTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.Sections',
+
         'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
-        'app.Sections',
+
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
-        'app.Notifications',
+
         'app.NotificationTypes',
+        'app.Notifications',
+
         'app.EmailSends',
         'app.Tokens',
         'app.EmailResponseTypes',
@@ -435,33 +443,36 @@ class TokensTableTest extends TestCase
         $now = new FrozenTime('2019-01-01 00:01:00');
         FrozenTime::setTestNow($now);
 
-        $requiredReturn = [
-            'no_change' => 1,
+        $expected = [
+            'records' => 1,
+            'unchanged' => 1,
             'deactivated' => 0,
             'deleted' => 0,
         ];
-        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+        TestCase::assertEquals($expected, $this->Tokens->cleanAllTokens());
 
         $expected = new FrozenTime('2019-04-30 11:26:44');
         $now = $expected->addMonth()->addDay();
         FrozenTime::setTestNow($now);
 
-        $requiredReturn = [
-            'no_change' => 0,
+        $expected = [
+            'records' => 1,
+            'unchanged' => 0,
             'deactivated' => 1,
             'deleted' => 0,
         ];
-        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+        TestCase::assertEquals($expected, $this->Tokens->cleanAllTokens());
 
         $now = $now->addMonth();
         FrozenTime::setTestNow($now);
 
-        $requiredReturn = [
-            'no_change' => 0,
+        $expected = [
+            'records' => 1,
+            'unchanged' => 0,
             'deactivated' => 0,
             'deleted' => 1,
         ];
-        TestCase::assertEquals($requiredReturn, $this->Tokens->cleanAllTokens());
+        TestCase::assertEquals($expected, $this->Tokens->cleanAllTokens());
 
         TestCase::assertEquals(0, $this->Tokens->find()->count());
     }

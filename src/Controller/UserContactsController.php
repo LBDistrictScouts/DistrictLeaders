@@ -180,7 +180,7 @@ class UserContactsController extends AppController
     }
 
     /**
-     * Delete method
+     * Make Primary method
      *
      * @param string|null $contactId User Contact id.
      * @return \Cake\Http\Response|null Redirects to index.
@@ -191,9 +191,29 @@ class UserContactsController extends AppController
         $this->request->allowMethod(['post']);
         $userContact = $this->UserContacts->get($contactId);
         if ($this->UserContacts->makePrimaryEmail($userContact)) {
-            $this->Flash->success(__('The user contact has been made primary.'));
+            $this->Flash->success(__('The user email has been made primary.'));
         } else {
-            $this->Flash->error(__('The user contact could not be made primary. Please, try again.'));
+            $this->Flash->error(__('The user email could not be made primary. Please, try again.'));
+        }
+
+        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
+    }
+
+    /**
+     * Verify method
+     *
+     * @param string|null $contactId User Contact id.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function verify($contactId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $userContact = $this->UserContacts->get($contactId);
+        if ($this->UserContacts->verify($userContact)) {
+            $this->Flash->success(__('The user contact has been verified.'));
+        } else {
+            $this->Flash->error(__('The user contact could not be verified. Please, try again.'));
         }
 
         return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));

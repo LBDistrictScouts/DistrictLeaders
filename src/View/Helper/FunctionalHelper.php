@@ -53,8 +53,8 @@ class FunctionalHelper extends Helper
     {
         Configure::load('Application' . DS . 'functional_areas', 'yaml', false);
 
-        $this->FunctionalAreas = Configure::read('functionalAreas');
-        $this->SearchConfigured = Configure::read('searchConfigured');
+        $this->FunctionalAreas = Configure::read('FunctionalAreas');
+        $this->SearchConfigured = Configure::read('SearchConfigured');
     }
 
     /**

@@ -2,10 +2,11 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Role $role
- * @var mixed $roleStatuses
- * @var mixed $roleTypes
- * @var mixed $sections
- * @var mixed $users
+ * @var array $roleStatuses
+ * @var array $roleTypes
+ * @var array $sections
+ * @var array $users
+ * @var \App\Model\Entity\User $user
  */
 
 $this->extend('../layout/CRUD/add');
@@ -22,9 +23,6 @@ $this->assign('entity', 'Roles');
             null,
         ];
 
-        $args[4] = $role::FIELD_ID;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_ID) : '';
-
         $args[4] = $role::FIELD_ROLE_TYPE_ID;
         /** @var array $roleTypes The Role Type Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_ROLE_TYPE_ID, ['options' => $roleTypes]) : '';
@@ -34,8 +32,11 @@ $this->assign('entity', 'Roles');
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_SECTION_ID, ['options' => $sections]) : '';
 
         $args[4] = $role::FIELD_USER_ID;
-        /** @var array $users The User Id List */
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($role::FIELD_USER_ID, ['options' => $users]) : '';
+        if (isset($users)) {
+            echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('user_id', ['options' => $users]) : '';
+        } else {
+            echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('User', ['disabled' => true, 'options' => [[$user->get($user::FIELD_ID) => $user->get($user::FIELD_FULL_NAME)]]]) : '';
+        }
 
         $args[4] = $role::FIELD_ROLE_STATUS_ID;
         /** @var array $roleStatuses The Role Status Id List */

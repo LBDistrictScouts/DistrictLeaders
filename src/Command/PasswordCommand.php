@@ -51,16 +51,16 @@ class PasswordCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $io The IO
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
      * @return int|void|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $consoleIo)
     {
         if (!$args->hasArgument('password')) {
-            $io->error('Password not listed.');
+            $consoleIo->error('Password not listed.');
             $this->abort();
         }
 
@@ -77,21 +77,21 @@ class PasswordCommand extends Command
             if (!$this->Users->save($user)) {
                 foreach (array_values($user->getErrors()) as $error) {
                     foreach ($error as $message) {
-                        $io->warning($message);
+                        $consoleIo->warning($message);
                     }
                 }
-                $io->error('User could not be saved.');
+                $consoleIo->error('User could not be saved.');
                 $this->abort();
             }
-            $io->info('User created.');
+            $consoleIo->info('User created.');
         }
         $user->set('password', $args->getArgument('password'));
 
         if (!$this->Users->save($user)) {
-            $io->error('User could not be saved with Password.');
+            $consoleIo->error('User could not be saved with Password.');
             $this->abort();
         }
 
-        $io->info('User updated with Password.');
+        $consoleIo->info('User updated with Password.');
     }
 }

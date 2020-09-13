@@ -122,7 +122,6 @@ class DirectoriesTable extends Table
     /**
      * @param \App\Model\Entity\Directory $directory The directory to be Populated
      * @return array
-     * @throws \Google_Exception
      */
     public function populate(Directory $directory)
     {

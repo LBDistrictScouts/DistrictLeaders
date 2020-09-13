@@ -14,6 +14,8 @@ use Cake\ORM\Entity;
  * @property string|null $mime
  *
  * @property \App\Model\Entity\DocumentEdition[] $document_editions
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class FileType extends Entity
 {

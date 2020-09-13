@@ -12,10 +12,11 @@ use Queue\Shell\Task\QueueTaskInterface;
  *
  * @package App\Shell\Task
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class QueueCompassTask extends QueueTask implements QueueTaskInterface
 {
+    use JobDataTrait;
+
     /**
      * @var int
      */
@@ -27,20 +28,27 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
     public $retries = 1;
 
     /**
+     * @var string The Data Key
+     */
+    protected $entityKey = 'version';
+
+    /**
+     * @var string The Data Key
+     */
+    protected $outputKey = 'compass_records';
+
+    /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
     public function run(array $data, $jobId): void
     {
-        if (!key_exists('version', $data)) {
-            throw new QueueException('Document Version Number not specified.');
-        }
-
         $this->loadModel('DocumentVersions');
-        $this->loadModel('Queue.QueuedJobs');
 
-        $version = $this->DocumentVersions->get($data['version']);
+        $this->checkEntityKey($data);
+
+        $version = $this->DocumentVersions->get($data[$this->entityKey]);
 
         $result = $this->DocumentVersions->importCompassRecords($version);
 
@@ -48,9 +56,6 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
             throw new QueueException('Compass Import Failed.');
         }
 
-        $job = $this->QueuedJobs->get($jobId);
-        $data['records'] = $result;
-        $job->set('data', serialize($data));
-        $this->QueuedJobs->save($job);
+        $this->saveJobResult((int)$jobId, $result, $this->outputKey);
     }
 }

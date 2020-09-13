@@ -14,6 +14,8 @@ use Cake\ORM\Entity;
  * @property bool $expired
  *
  * @property \App\Model\Entity\User[] $users
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class PasswordState extends Entity
 {

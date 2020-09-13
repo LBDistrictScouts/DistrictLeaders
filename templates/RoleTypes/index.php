@@ -33,7 +33,7 @@ $this->assign('add', $this->Identity->buildAndCheckCapability('CREATE', 'RoleTyp
         <td><?= h($roleType->role_type) ?></td>
         <td><?= $this->Number->format($roleType->level) ?></td>
         <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'SectionTypes') ? $this->Html->link($roleType->section_type->section_type, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->section_type->id]) : h($roleType->section_type->section_type) ?></td>
-        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTemplates') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'SectionTypes', 'action' => 'view', $roleType->role_template->id]) : h($roleType->role_template->role_template) ?></td>
+        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTemplates') ? $this->Html->link($roleType->role_template->role_template, ['controller' => 'RoleTemplates', 'action' => 'view', $roleType->role_template->id]) : h($roleType->role_template->role_template) ?></td>
     </tr>
     <?php endforeach; ?>
 </tbody>

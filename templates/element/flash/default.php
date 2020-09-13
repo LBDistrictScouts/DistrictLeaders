@@ -2,6 +2,7 @@
 /**
  * @var \App\View\AppView $this
  * @var array $params
+ * @var string $message
  */
 $class = [
     'alert',
@@ -10,7 +11,7 @@ $class = [
 ];
 
 if (isset($params) && key_exists('class', $params) && is_array($params['class'])) {
-    array_merge($class, $params['class']);
+    $class = array_merge($class, $params['class']);
 }
 
 if (key_exists('error', $class)) {

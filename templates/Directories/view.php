@@ -18,6 +18,15 @@
                         <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
                             <?= $this->Html->link('Authorise Directory', ['action' => 'auth', $directory->id], ['class' => 'btn btn-primary btn-lg btn-block']) ?>
                         </div>
+                    <?php else : ?>
+                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
+                            <div class="d-inline">
+                                <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                                <div class="dropdown-menu" role="menu">
+                                    <?= $this->Identity->buildAndCheckCapability('CREATE', 'DirectoryUsers') ? $this->Form->postLink('Sync Directory', ['controller' => 'Directories', 'action' => 'populate', $directory->id], ['confirm' => __('Are you sure you want to Sync Directory: "{0}" customer key #{1}?', $directory->directory, $directory->customer_reference), 'title' => __('Sync Directory'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                </div>
+                            </div>
+                        </div>
                     <?php endif; ?>
                 </div>
                 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'DirectoryDomains') && !empty($directory->directory_domains)) : ?>
@@ -92,8 +101,8 @@
                                                 <tr>
                                                     <td><?= h($directoryUsers->full_name) ?></td>
                                                     <td class="actions">
+                                                        <?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') && $directoryUsers->has('user_contact') ? $this->Html->link('<i class="fal fa-user"></i>', ['controller' => 'Users', 'action' => 'view', $directoryUsers->user_contact->user_id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'DirectoryUsers', 'action' => 'view', $directoryUsers->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                        <?= $this->Identity->buildAndCheckCapability('UPDATE', 'DirectoryUsers') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'DirectoryUsers', 'action' => 'edit', $directoryUsers->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                         <?= $this->Identity->buildAndCheckCapability('DELETE', 'DirectoryUsers') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'DirectoryUsers', 'action' => 'delete', $directoryUsers->id], ['confirm' => __('Are you sure you want to delete # {0}?', $directoryUsers->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                     </td>
                                                     <td><?= $this->Text->autoLinkEmails($directoryUsers->primary_email) ?></td>

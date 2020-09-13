@@ -25,6 +25,7 @@ class RoleTypesFixture extends TestFixture
         'role_template_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'all_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'active_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'import_type' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'role_types_role_template_id_fkey' => ['type' => 'foreign', 'columns' => ['role_template_id'], 'references' => ['role_templates', 'id'], 'update' => 'setNull', 'delete' => 'setNull', 'length' => []],
@@ -47,15 +48,17 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
-                'role_type' => 'Lorem ipsum dolor sit amet',
-                'role_abbreviation' => 'Lorem ipsum dolor sit amet',
+                'role_type' => 'Beaver Scout Leader',
+                'role_abbreviation' => 'BSL',
                 'section_type_id' => 1,
                 'level' => 2,
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
                 'role_type' => 'Lorem ipsum dolor sit amet',
@@ -65,6 +68,7 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
                 'role_type' => 'Lorem ipsum dolor sit amet',
@@ -74,6 +78,7 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
                 'role_type' => 'Lorem ipsum dolor sit amet',
@@ -83,6 +88,7 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
                 'role_type' => 'Lorem ipsum dolor sit amet',
@@ -92,6 +98,7 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
             [
                 'role_type' => 'Lorem ipsum  sit amet',
@@ -101,6 +108,7 @@ class RoleTypesFixture extends TestFixture
                 'role_template_id' => 1,
                 'all_role_count' => 0,
                 'active_role_count' => 0,
+                'import_type' => true,
             ],
         ];
         parent::init();

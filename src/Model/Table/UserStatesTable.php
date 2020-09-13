@@ -5,6 +5,8 @@ namespace App\Model\Table;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
+use App\Model\Table\Traits\BaseInstallerTrait;
+use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -183,6 +185,11 @@ class UserStatesTable extends Table
             $userEvaluation |= UserState::EVALUATE_VALIDATED_EMAIL;
         }
 
+        // Activated User
+        if (Configure::read('App.autoActivating', false) || $user->activated) {
+            $userEvaluation |= UserState::EVALUATE_ACTIVATED;
+        }
+
         return $userEvaluation;
     }
 
@@ -219,5 +226,21 @@ class UserStatesTable extends Table
         }
 
         return $user;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user User to be Evaluated
+     * @return void
+     */
+    public function handleUserState(User $user): void
+    {
+        $user = $this->determineUserState($user);
+        $this->Users->save($user, ['validate' => false]);
+
+        $state = $this->get($user->user_state_id);
+
+        if (!$user->hasValue(User::FIELD_USERNAME) && $state->is_email_send_active) {
+            $this->Users->Notifications->welcome($user);
+        }
     }
 }

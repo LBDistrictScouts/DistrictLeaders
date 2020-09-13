@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
@@ -28,10 +29,10 @@ class CapabilityListener implements EventListenerInterface
     }
 
     /**
-     * @param \Cake\Event\Event $event The event being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
      * @return void
      */
-    public function templateChange($event)
+    public function templateChange(EventInterface $event)
     {
         /** @var \App\Model\Entity\RoleTemplate $roleTemplate */
         $roleTemplate = $event->getData('role_template');

@@ -15,11 +15,14 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string $document
  *
- * @property \App\Model\Entity\DocumentType $document_type
- * @property \App\Model\Entity\DocumentVersion[] $document_versions
  * @property int|null $document_preview_id
  * @property int|null $latest_version
+ *
+ * @property \App\Model\Entity\DocumentType $document_type
+ * @property \App\Model\Entity\DocumentVersion[] $document_versions
  * @property \App\Model\Entity\DocumentEdition|null $document_preview
+ * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+ * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
 class Document extends Entity
 {

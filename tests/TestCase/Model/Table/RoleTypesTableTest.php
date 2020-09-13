@@ -82,6 +82,7 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_ROLE_ABBREVIATION => 'Go Go' . random_int(1, 999) . random_int(1, 99),
             RoleType::FIELD_SECTION_TYPE_ID => 1,
             RoleType::FIELD_LEVEL => 1,
+            RoleType::FIELD_IMPORT_TYPE => true,
         ];
     }
 
@@ -101,6 +102,7 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_ROLE_TEMPLATE_ID => 1,
             RoleType::FIELD_ALL_ROLE_COUNT => 0,
             RoleType::FIELD_ACTIVE_ROLE_COUNT => 0,
+            RoleType::FIELD_IMPORT_TYPE => true,
         ];
 
         $this->validateInitialise($expected, $this->RoleTypes, 7);
@@ -140,6 +142,7 @@ class RoleTypesTableTest extends TestCase
         $notEmpties = [
             RoleType::FIELD_ROLE_TYPE,
             RoleType::FIELD_LEVEL,
+            RoleType::FIELD_IMPORT_TYPE,
         ];
 
         $this->validateNotEmpties($notEmpties, $this->RoleTypes, [$this, 'getGood']);
@@ -243,5 +246,15 @@ class RoleTypesTableTest extends TestCase
 
         TestCase::assertEquals($users, $result);
         TestCase::assertNotEquals(0, $result);
+    }
+
+    /**
+     * Test findOrMake method
+     *
+     * @return void
+     */
+    public function testFindOrMake(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
     }
 }

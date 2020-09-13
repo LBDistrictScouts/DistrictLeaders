@@ -11,6 +11,7 @@ use App\Model\Entity\Directory;
  *
  * @property \App\Model\Table\DirectoriesTable $Directories
  * @property \App\Controller\Component\GoogleClientComponent GoogleClient
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
@@ -52,7 +53,7 @@ class DirectoriesController extends AppController
     public function view($directoryID = null)
     {
         $directory = $this->Directories->get($directoryID, [
-            'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers'],
+            'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers.UserContacts'],
         ]);
 
         $this->set('directory', $directory);
@@ -232,5 +233,23 @@ class DirectoriesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Delete method
+     *
+     * @param string|null $directoryId Directory id.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     */
+    public function populate($directoryId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $directory = $this->Directories->get($directoryId);
+
+        $this->loadComponent('Queue');
+        $this->Queue->setDirectoryImport($directory);
+
+        return $this->redirect(['controller' => 'Directories', 'action' => 'view', $directoryId]);
     }
 }

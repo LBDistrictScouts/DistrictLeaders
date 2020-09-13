@@ -171,6 +171,9 @@ class UsersTableTest extends TestCase
             User::FIELD_RECEIVE_EMAILS => true,
             User::FIELD_VALIDATED_EMAIL_COUNT => 1,
             User::FIELD_VALIDATED_PHONE_COUNT => 1,
+            User::FIELD_GROUPS => null,
+            User::FIELD_SECTIONS => null,
+            User::FIELD_ACTIVATED => true,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);

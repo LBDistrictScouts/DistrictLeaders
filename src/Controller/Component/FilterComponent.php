@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\ORM\Association;
+use Cake\Utility\Inflector;
 
 /**
  * Filter component
@@ -22,7 +24,7 @@ class FilterComponent extends Component
      * @param array $queryParams The Query Params of the Request
      * @return \Cake\ORM\Query
      */
-    public function indexFilters($association, $queryParams)
+    public function indexFilters(Association $association, array $queryParams)
     {
         $baseTable = $association->getSource();
         $associatedTable = $association->getTarget();
@@ -32,7 +34,7 @@ class FilterComponent extends Component
         $filterArray = $associatedTable->find('list')->toArray();
         $urlFilters = [];
         foreach ($queryParams as $param => $value) {
-            $param = urldecode($param);
+            $param = Inflector::humanize(urldecode($param));
             if (in_array($param, $filterArray)) {
                 $urlFilters[$param] = $value;
             }

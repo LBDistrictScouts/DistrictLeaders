@@ -5,6 +5,8 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
+use App\Model\Table\Traits\BaseInstallerTrait;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -78,9 +80,21 @@ class RoleTemplatesTable extends Table
     }
 
     /**
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
+    {
+        $schema->setColumnType(RoleTemplate::FIELD_TEMPLATE_CAPABILITIES, 'json');
+
+        return $schema;
+    }
+
+    /**
      * before Save LifeCycle Callback
      *
-     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      * @return bool
@@ -163,7 +177,7 @@ class RoleTemplatesTable extends Table
      * @param int $level The Permission Level
      * @return \App\Model\Entity\RoleTemplate|false
      */
-    public function makeCoreTemplate($name, $level)
+    public function makeCoreTemplate(string $name, int $level)
     {
         $query = $this->RoleTypes->Capabilities->find('level', ['level' => $level]);
         $capabilities = [];
@@ -185,7 +199,7 @@ class RoleTemplatesTable extends Table
      * @param array $objectArray The array to be saved
      * @return \App\Model\Entity\RoleTemplate
      */
-    protected function makeOrPatch($objectArray)
+    protected function makeOrPatch(array $objectArray): RoleTemplate
     {
         if ($this->exists([RoleTemplate::FIELD_ROLE_TEMPLATE => $objectArray[RoleTemplate::FIELD_ROLE_TEMPLATE]])) {
             $roleTemplate = $this->find()
