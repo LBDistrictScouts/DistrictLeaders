@@ -4,6 +4,9 @@
  * @var \App\Model\Entity\DirectoryUser $directoryUser
  * @var \App\Model\Entity\User $user
  */
+
+use App\Model\Entity\User;
+
 ?>
 <div class="row">
     <div class="col">
@@ -37,7 +40,7 @@
             </div>
         <?php else : ?>
             <div class="row">
-                <?php if (isset($user) && !empty($user) && $user instanceof \App\Model\Entity\User) : ?>
+                <?php if (isset($user) && !empty($user) && $user instanceof User) : ?>
                     <div class="col-sm-12 col-lg-6">
                         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="card-body">
@@ -62,11 +65,13 @@
                     </div>
                 </div>
             </div>
+            <?php if (isset($user) && !empty($user) && $user instanceof User) : ?>
             <div class="row">
                 <div class="col">
                     <?= $this->Html->link('Link User', ['action' => 'link', $directoryUser->id, $user->id], ['class' => 'btn btn-primary btn-lg btn-block']) ?>
                 </div>
             </div>
+            <?php endif; ?>
         <?php endif; ?>
     </div>
 </div>

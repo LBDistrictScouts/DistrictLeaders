@@ -349,7 +349,7 @@ class CompassRecordsTable extends Table
         if ($userNameMatch->count() > 1) {
             $directoryUser = $userNameMatch->first();
             $record->set(CompassRecord::FIELD_EMAIL, $directoryUser->get(DirectoryUser::FIELD_PRIMARY_EMAIL));
-            $this->save($directoryUser);
+            $record = $this->save($record);
         }
 
         return $record;

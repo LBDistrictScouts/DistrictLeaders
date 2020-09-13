@@ -40,6 +40,6 @@ class RoleListenerTest extends TestCase
 
         TestCase::assertNotFalse($this->Roles->save($role));
 
-        $this->assertEventFired('Model.Role.roleAdded', $this->EventManager);
+        $this->assertEventFired('Model.Roles.roleAdded', $this->EventManager);
     }
 }

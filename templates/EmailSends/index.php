@@ -8,7 +8,7 @@ $this->extend('../layout/CRUD/index');
 
 $this->assign('entity', 'EmailSends');
 $this->assign('subset', 'All');
-$this->assign('add', $this->Identity->checkCapability('CREATE_EMAIL_SEND'));
+$this->assign('add', false);
 
 ?>
 <thead>

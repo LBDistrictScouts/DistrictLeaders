@@ -20,9 +20,9 @@ class InformationCell extends Cell
      */
     protected $_validCellOptions = [];
 
-    protected $interfacePath = 'cell/information/interface';
+    protected $interfacePath = 'cell/Information/interface';
 
-    protected $emailPath = 'cell/information/email';
+    protected $emailPath = 'cell/Information/email';
 
     /**
      * Initialization logic run at the end of object construction.

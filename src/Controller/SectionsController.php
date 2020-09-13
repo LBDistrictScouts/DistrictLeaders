@@ -74,7 +74,15 @@ class SectionsController extends AppController
     public function view($id = null)
     {
         $section = $this->Sections->get($id, [
-            'contain' => ['SectionTypes', 'ScoutGroups', 'Roles'],
+            'contain' => [
+                'SectionTypes',
+                'ScoutGroups',
+                'Roles' => [
+                    'RoleTypes',
+                    'Users',
+                ],
+                'Audits.Users',
+            ],
         ]);
 
         $this->set('section', $section);
