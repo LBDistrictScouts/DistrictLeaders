@@ -250,11 +250,26 @@ class UserContactsTable extends Table
         /** @var \App\Model\Entity\User $user */
         $user = $this->Users->get($contact->user_id);
 
-        if ($this->isValidDomainEmail($contact->contact_field)) {
+        if ($this->isValidDomainEmail($contact->contact_field) && $contact->validated) {
             $user->set(User::FIELD_EMAIL, $contact->contact_field);
             $this->Users->save($user, ['validate' => false]);
 
             return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \App\Model\Entity\UserContact $contact The User Contact Email to be made Primary
+     * @return bool
+     */
+    public function verify(UserContact $contact): bool
+    {
+        if ($this->isValidDomainEmail($contact->contact_field)) {
+            $contact->set(UserContact::FIELD_VERIFIED, true);
+
+            return (bool)($this->save($contact) instanceof UserContact);
         }
 
         return false;

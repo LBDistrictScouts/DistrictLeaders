@@ -21,6 +21,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\UserContact[] $user_contacts
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property \App\Model\Entity\UserContact|null $user_contact
  */
 class DirectoryUser extends Entity
 {
@@ -69,4 +70,5 @@ class DirectoryUser extends Entity
     public const FIELD_USERS = 'users';
     public const FIELD_FULL_NAME = 'full_name';
     public const FIELD_USER_CONTACTS = 'user_contacts';
+    public const FIELD_USER_CONTACT = 'user_contact';
 }

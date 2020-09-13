@@ -59,6 +59,8 @@ class NotificationsTable extends Table
         ]);
         $this->hasMany('EmailSends', [
             'foreignKey' => 'notification_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 

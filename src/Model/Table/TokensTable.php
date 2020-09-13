@@ -29,7 +29,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  */
 class TokensTable extends Table
@@ -57,10 +56,6 @@ class TokensTable extends Table
                     'modified' => 'always',
                 ],
             ],
-        ]);
-
-        $this->addBehavior('Muffin/Trash.Trash', [
-            'field' => 'deleted',
         ]);
 
         $this->belongsTo('EmailSends', [

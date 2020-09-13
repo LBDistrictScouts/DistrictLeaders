@@ -7,6 +7,21 @@
 
 $ownUser = $user->id === $this->Identity->getId();
 $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
+$canCreateUCs = $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
+$canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
+
+$text = '';
+
+if (! $user->has($user::FIELD_USER_STATE)) {
+    $userStateColour = 'light';
+} elseif ($user->user_state->expired) {
+    $userStateColour = 'warning';
+} elseif ($user->user_state->active) {
+    $userStateColour = 'success';
+} else {
+    $userStateColour = 'dark';
+    $text = 'text-white';
+}
 
 ?>
 <div class="row">
@@ -66,79 +81,70 @@ $editOwn = $this->Identity->checkCapability('OWN_USER') && $ownUser;
                 <?php endif; ?>
             </div>
         </div>
+    <?php if ($user->has($user::FIELD_USER_STATE) && $this->Identity->buildAndCheckCapability('VIEW', 'UserStates')) : ?>
+        <div class="alert alert-<?= $userStateColour ?>" style="margin-top: 15px;margin-bottom: 15px;">
+            <?= $user->user_state->user_state ?>
+        </div>
+    <?php endif; ?>
+    <?php if (!empty($user->contact_emails)) : ?>
         <div class="row">
-            <?php
-            $text = '';
-
-            if (!$user->has($user::FIELD_USER_STATE)) {
-                $userStateColour = 'light';
-            } elseif ($user->user_state->expired) {
-                $userStateColour = 'warning';
-            } elseif ($user->user_state->active) {
-                $userStateColour = 'success';
-            } else {
-                $userStateColour = 'dark';
-                $text = 'text-white';
-            }
-            ?>
-
-            <?php if ($user->has($user::FIELD_USER_STATE) || $user->has($user::FIELD_ADDRESS_LINE_1)) : ?>
-            <div class="col-sm-12 col-lg-6">
-                <?php if ($user->has($user::FIELD_USER_STATE)) : ?>
-                    <div class="card bg-<?= $userStateColour ?>" style="margin-top: 15px;margin-bottom: 15px;">
-                        <div class="card-header <?= $text ?>"><?= $user->user_state->user_state ?></div>
+            <div class="col">
+                <div class="card thick-card">
+                    <div class="card-body">
+                        <h5>Email Addresses</h5>
+                        <div class="table-responsive table-borderless">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col"><?= __('Primary') ?></th>
+                                    <th scope="col"><?= __('Email') ?></th>
+                                    <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers')) : ?>
+                                    <th scope="col"><?= __('Directory User') ?></th>
+                                    <?php endif; ?>
+                                    <th scope="col"><?= __('Validated') ?></th>
+                                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($user->contact_emails as $contactEmail) : ?>
+                                    <?php $isPrimary = (bool)($contactEmail->contact_field == $user->email); ?>
+                                    <tr>
+                                        <td><?= $isPrimary ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle') ?></td>
+                                        <td><?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?></td>
+                                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers')) : ?>
+                                            <td><?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) ? $this->Html->link($this->Icon->iconHtml('book-open') . ' ' . $contactEmail->directory_user->full_name, ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['title' => 'Directory Record', 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?></td>
+                                        <?php endif; ?>
+                                        <td><?= $this->Icon->iconEnhancedBoolean($contactEmail->validation_state) ?></td>
+                                        <td>
+                                            <?= $canMakePrimary && !$isPrimary && $contactEmail->validated ? $this->Form->postLink($this->Icon->iconHtml('check-circle'), ['controller' => 'UserContacts', 'action' => 'primary', $contactEmail->id], ['confirm' => __('Are you sure you want to make {0} the primary email for {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Make Primary'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= $this->Identity->checkCapability('VALIDATE') && !$contactEmail->verified ? $this->Form->postLink($this->Icon->iconHtml('clipboard'), ['controller' => 'UserContacts', 'action' => 'verify', $contactEmail->id], ['confirm' => __('Are you sure you want to validate {0}?', $contactEmail->contact_field), 'title' => __('Manually Validate Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                            <?= ( $this->Identity->buildAndCheckCapability('DELETE', 'UserContacts') || $editOwn ) && $user->all_email_count > 1 ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $contactEmail->id], ['confirm' => __('Are you sure you want to delete email {0} for user {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Delete User Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php if ($canCreateUCs) : ?>
+                            <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
+                        <?php endif; ?>
                     </div>
-                <?php endif; ?>
-                <?php if ($user->has($user::FIELD_ADDRESS_LINE_1)) : ?>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
+        <div class="row">
+            <?php if ($user->has($user::FIELD_ADDRESS_LINE_1)) : ?>
+            <div class="col-sm-12 col-lg-6">
                 <div class="card thick-card">
                     <div class="card-body">
                         <h5>Address</h5>
                         <p class="card-text"><?= h($user->address_line_1) ?>,<br><?= h($user->city) ?>,<br><?= h($user->county) ?>.<br><strong><?= h($user->postcode) ?></strong></p>
                     </div>
                 </div>
-                <?php endif; ?>
             </div>
             <?php endif; ?>
-            <?php
-                $canCreateUCs =  $this->Identity->buildAndCheckCapability('CREATE', 'UserContacts') || $editOwn;
-                $canMakePrimary = $canCreateUCs || $this->Identity->buildAndCheckCapability('UPDATE', 'Users');
-            ?>
             <div class="col-sm-12 col-lg-6">
-                <?php if (!empty($user->contact_emails)) : ?>
-                    <div class="card thick-card">
-                        <div class="card-body">
-                            <h5>Email Addresses</h5>
-                            <div class="table-responsive table-borderless">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col"><?= __('Primary') ?></th>
-                                        <th scope="col"><?= __('Email') ?></th>
-                                        <th scope="col" class="actions"><?= __('Actions') ?></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php foreach ($user->contact_emails as $contactEmail) : ?>
-                                        <?php $isPrimary = (bool)($contactEmail->contact_field == $user->email); ?>
-                                        <tr>
-                                            <td><?= $isPrimary ? $this->Icon->iconHtml('check-circle') : $this->Icon->iconHtml('circle') ?></td>
-                                            <td><?= $this->Text->autoLinkEmails($contactEmail->contact_field) ?></td>
-                                            <td>
-                                                <?= $canMakePrimary && !$isPrimary && $contactEmail->validated ? $this->Form->postLink($this->Icon->iconHtml('check-circle'), ['controller' => 'UserContacts', 'action' => 'primary', $contactEmail->id], ['confirm' => __('Are you sure you want to make {0} the primary email for {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Make Primary'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                <?= $contactEmail->has($contactEmail::FIELD_DIRECTORY_USER) && $this->Identity->buildAndCheckCapability('VIEW', 'DirectoryUsers') ? $this->Html->link($this->Icon->iconHtml('book-open'), ['controller' => 'DirectoryUsers', 'action' => 'view', $contactEmail->directory_user_id ], ['title' => 'Directory Record', 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                <?= ( $this->Identity->buildAndCheckCapability('DELETE', 'UserContacts') || $editOwn ) && $user->all_email_count > 1 ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'UserContacts', 'action' => 'delete', $contactEmail->id], ['confirm' => __('Are you sure you want to delete email {0} for user {1}?', $contactEmail->contact_field, $user->full_name), 'title' => __('Delete User Email'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <?php if ($canCreateUCs) : ?>
-                                <p class="card-text"><?= $this->Html->link($this->Icon->iconHtml('at') . ' Add a Contact Email', ['controller' => 'UserContacts', 'action' => 'add', '?' => ['user_contact_type' => 'email', 'user_id' => $user->id]], ['escape' => false])?></p>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
                 <?php if (!empty($user->contact_numbers)) : ?>
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                         <div class="card-body">

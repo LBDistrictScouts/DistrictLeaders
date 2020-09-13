@@ -44,6 +44,8 @@ class NotificationTypesTable extends Table
 
         $this->hasMany('Notifications', [
             'foreignKey' => 'notification_type_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 

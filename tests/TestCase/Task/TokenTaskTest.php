@@ -44,7 +44,7 @@ class TokenTaskTest extends TestCase
      */
     public function testTokenQueueJob()
     {
-        $this->markAsRisky();
+        static::markTestSkipped();
         $this->Tokens = $this->getTableLocator()->get('Tokens');
         $token = $this->Tokens->get(1);
 

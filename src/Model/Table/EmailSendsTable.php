@@ -61,9 +61,13 @@ class EmailSendsTable extends Table
         ]);
         $this->hasMany('EmailResponses', [
             'foreignKey' => 'email_send_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
         $this->hasMany('Tokens', [
             'foreignKey' => 'email_send_id',
+            'dependent' => true,
+            'cascadeCallbacks' => true,
         ]);
     }
 

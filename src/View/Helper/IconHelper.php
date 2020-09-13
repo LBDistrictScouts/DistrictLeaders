@@ -92,6 +92,23 @@ class IconHelper extends Helper
     }
 
     /**
+     * @param int $enhancedAttribute The Integer Boolean Representation
+     * @return string
+     */
+    public function iconEnhancedBoolean(int $enhancedAttribute): string
+    {
+        if ($enhancedAttribute >= 2) {
+            return $this->iconHtml('check-circle');
+        }
+
+        if ($enhancedAttribute == 1) {
+            return $this->iconCheck(true);
+        }
+
+        return $this->iconHtml('times');
+    }
+
+    /**
      * Provides an HTML Icon Check String
      *
      * @param bool|null $booleanAttribute The Boolean Attribute

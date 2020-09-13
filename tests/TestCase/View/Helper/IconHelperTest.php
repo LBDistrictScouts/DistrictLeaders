@@ -108,6 +108,49 @@ class IconHelperTest extends TestCase
     /**
      * @return array[]
      */
+    public function provideEnhancedBoolean(): array
+    {
+        return [
+            'Very True : Check-Circle' => [
+                2,
+                '<i class="fal fa-check-circle"></i>',
+            ],
+            'True : Check' => [
+                1,
+                '<i class="fal fa-check"></i>',
+            ],
+            'False : ""' => [
+                0,
+                '<i class="fal fa-times"></i>',
+            ],
+            'Null : ""' => [
+                null,
+                '',
+            ],
+        ];
+    }
+
+    /**
+     * Test iconCheck method
+     *
+     * @dataProvider provideEnhancedBoolean
+     * @param int|null $value The Test Input Value
+     * @param string $expected The Expected HTML String
+     * @return void
+     */
+    public function testIconEnhancedBoolean(?int $value, string $expected): void
+    {
+        if (is_null($value)) {
+            $this->expectException(\TypeError::class);
+        }
+
+        $result = $this->Icon->iconEnhancedBoolean($value);
+        TestCase::assertEquals($expected, $result);
+    }
+
+    /**
+     * @return array[]
+     */
     public function provideIconCheck(): array
     {
         return [

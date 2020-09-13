@@ -18,7 +18,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property array $body_content
  * @property array|null $subject_link
- * @property string $email_code
+ * @property string|null $email_code
  *
  * @property \App\Model\Entity\User|null $user
  * @property \App\Model\Entity\NotificationType|null $notification_type

@@ -32,6 +32,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property int $validation_state
  */
 class UserContact extends Entity
 {
@@ -94,7 +95,7 @@ class UserContact extends Entity
     }
 
     /**
-     * Prov / PreProv Virtual Field
+     * Validated Virtual Field
      *
      * @return bool|null
      */
@@ -106,7 +107,25 @@ class UserContact extends Entity
         return (bool)( $verified || $directoryUser );
     }
 
-    protected $_virtual = ['validated'];
+    /**
+     * Validation State Virtual Field
+     *
+     * @return int
+     */
+    protected function _getValidationState(): int
+    {
+        if ($this->verified) {
+            return 2;
+        }
+
+        if ($this->validated) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    protected $_virtual = ['validated', 'validation_state'];
 
     public const FIELD_ID = 'id';
     public const FIELD_CONTACT_FIELD = 'contact_field';
@@ -123,4 +142,5 @@ class UserContact extends Entity
     public const FIELD_AUDITS = 'audits';
     public const FIELD_DIRECTORY_USER = 'directory_user';
     public const FIELD_VALIDATED = 'validated';
+    public const FIELD_VALIDATION_STATE = 'validation_state';
 }

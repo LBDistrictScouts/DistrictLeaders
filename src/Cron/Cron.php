@@ -12,6 +12,7 @@ use Queue\Model\Entity\QueuedJob;
  * Class Cron
  *
  * @package App\Cron
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class Cron
 {
