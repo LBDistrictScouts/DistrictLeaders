@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\SiteSession;
 use App\Model\Table\SiteSessionsTable;
 use Cake\I18n\Time;
 use Cake\TestSuite\TestCase;
@@ -12,6 +13,8 @@ use Cake\TestSuite\TestCase;
  */
 class SiteSessionsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -60,14 +63,13 @@ class SiteSessionsTableTest extends TestCase
      *
      * @return array
      */
-    private function getGood()
+    public function getGood()
     {
-        $good = [
+        return [
+            'id' => 'saSOMSA' . random_int(1111111, 9999999) . 'asika' . random_int(111, 999),
             'data' => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
             'expires' => 1,
         ];
-
-        return $good;
     }
 
     /**
@@ -112,31 +114,13 @@ class SiteSessionsTableTest extends TestCase
     {
         $good = $this->getGood();
 
-        $new = $this->SiteSessions->newEntity($good);
-        TestCase::assertInstanceOf('App\Model\Entity\SiteSession', $this->SiteSessions->save($new));
-
-        $required = [
+        $new = $this->SiteSessions->newEmptyEntity();
+        $new->setAccess([
+            'id',
             'data',
             'expires',
-        ];
-
-        foreach ($required as $require) {
-            $reqArray = $good;
-            unset($reqArray[$require]);
-            $new = $this->SiteSessions->newEntity($reqArray);
-            TestCase::assertFalse($this->SiteSessions->save($new));
-        }
-
-        $notEmpties = [
-            'data',
-            'expires',
-        ];
-
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $good;
-            $reqArray[$not_empty] = '';
-            $new = $this->SiteSessions->newEntity($reqArray);
-            TestCase::assertFalse($this->SiteSessions->save($new));
-        }
+        ], true);
+        $new = $this->SiteSessions->patchEntity($new, $good);
+        TestCase::assertInstanceOf(SiteSession::class, $this->SiteSessions->save($new));
     }
 }

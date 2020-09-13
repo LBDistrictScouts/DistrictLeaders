@@ -30,6 +30,9 @@ $this->assign('entity', 'RoleTypes');
         $args[4] = $roleType::FIELD_ROLE_ABBREVIATION;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleType::FIELD_ROLE_ABBREVIATION) : '';
 
+        $args[4] = $roleType::FIELD_IMPORT_TYPE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleType::FIELD_IMPORT_TYPE) : '';
+
         $args[4] = $roleType::FIELD_SECTION_TYPE_ID;
         /** @var array $sectionTypes The Section Type Id List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleType::FIELD_SECTION_TYPE_ID, ['options' => $sectionTypes, 'empty' => true]) : '';

@@ -168,6 +168,8 @@ class CapAuthorizationComponentTest extends TestCase
                     User::FIELD_VALIDATED_EMAIL_COUNT,
                     User::FIELD_VALIDATED_PHONE_COUNT,
                     User::FIELD_ACTIVATED,
+                    User::FIELD_SEARCH_STRING,
+                    User::FIELD_TAG_COUNT,
                     User::FIELD_PASSWORD,
                     User::FIELD_USER_STATE,
                     User::FIELD_CHANGES,

@@ -25,7 +25,7 @@ env:
   global:
     - DB=postgres
     - DEFAULT=1
-    - TEST=0
+    - TEST=1
     - ASYNC=0
     - FIXTURE=0
 

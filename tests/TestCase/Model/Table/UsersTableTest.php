@@ -174,6 +174,11 @@ class UsersTableTest extends TestCase
             User::FIELD_GROUPS => null,
             User::FIELD_SECTIONS => null,
             User::FIELD_ACTIVATED => true,
+            User::FIELD_SEARCH_STRING => 'Lorem ipsum dolor sit amet, aliquet feugiat. Convallis morbi fringilla '
+                . 'gravida, phasellus feugiat dapibus velit nunc, pulvinar eget sollicitudin venenatis cum nullam, '
+                . 'vivamus ut a sed, mollitia lectus. Nulla vestibulum massa neque ut et, id hendrerit sit, feugiat '
+                . 'in taciti enim proin nibh, tempor dignissim, rhoncus duis vestibulum nunc mattis convallis.',
+            User::FIELD_TAG_COUNT => 1,
         ];
 
         $this->validateInitialise($expected, $this->Users, 2, $dates);

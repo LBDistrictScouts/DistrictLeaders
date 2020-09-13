@@ -56,12 +56,15 @@ class CompassRecordsController extends AppController
     /**
      * Add method
      *
+     * @param int $recordId Compass Record ID for editing
      * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function edit($recordId)
     {
-        $compassRecord = $this->CompassRecords->newEmptyEntity();
-        if ($this->request->is('post')) {
+        $compassRecord = $this->CompassRecords->get($recordId, [
+            'contain' => ['DocumentVersions.Documents'],
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $compassRecord = $this->CompassRecords->patchEntity($compassRecord, $this->request->getData());
             if ($this->CompassRecords->save($compassRecord)) {
                 $this->Flash->success(__('The compass record has been saved.'));
@@ -70,8 +73,7 @@ class CompassRecordsController extends AppController
             }
             $this->Flash->error(__('The compass record could not be saved. Please, try again.'));
         }
-        $documentVersions = $this->CompassRecords->DocumentVersions->find('list', ['limit' => 200]);
-        $this->set(compact('compassRecord', 'documentVersions'));
+        $this->set(compact('compassRecord'));
     }
 
     /**

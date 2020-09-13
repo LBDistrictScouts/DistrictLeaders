@@ -52,6 +52,24 @@ class SectionsTable extends Table
         $this->addBehavior('Search.Search');
         $this->addBehavior('Expose.Expose', ['on' => 'beforeSave']);
 
+        $this->addBehavior('Auditable', [
+            'tracked_fields' => [
+                Section::FIELD_SECTION,
+                Section::FIELD_MEETING_WEEKDAY,
+                Section::FIELD_MEETING_DAY,
+                Section::FIELD_SECTION_TYPE_ID,
+                Section::FIELD_SCOUT_GROUP_ID,
+                Section::FIELD_MEETING_START_TIME,
+                Section::FIELD_MEETING_END_TIME,
+                Section::FIELD_PUBLIC,
+            ],
+        ]);
+
+        $this->hasMany('Audits', [
+            'foreignKey' => 'audit_record_id',
+            'finder' => 'sections',
+        ]);
+
         $this->belongsTo('SectionTypes', [
             'foreignKey' => 'section_type_id',
             'joinType' => 'INNER',

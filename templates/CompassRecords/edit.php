@@ -5,7 +5,7 @@
  * @var mixed $documentVersions
  */
 
-$this->extend('../layout/CRUD/add');
+$this->extend('../layout/CRUD/edit');
 
 $this->assign('entity', 'CompassRecords');
 ?>
@@ -18,13 +18,6 @@ $this->assign('entity', 'CompassRecords');
             null,
             null,
         ];
-
-        $args[4] = $compassRecord::FIELD_ID;
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($compassRecord::FIELD_ID) : '';
-
-        $args[4] = $compassRecord::FIELD_DOCUMENT_VERSION_ID;
-        /** @var array $documentVersions The Document Version Id List */
-        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($compassRecord::FIELD_DOCUMENT_VERSION_ID, ['options' => $documentVersions]) : '';
 
         $args[4] = $compassRecord::FIELD_MEMBERSHIP_NUMBER;
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($compassRecord::FIELD_MEMBERSHIP_NUMBER) : '';

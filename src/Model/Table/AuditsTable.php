@@ -105,6 +105,16 @@ class AuditsTable extends Table
             'finder' => 'withTrashed',
         ]);
 
+        $this->belongsTo('ChangedSections', [
+            'className' => 'Sections',
+            'foreignKey' => 'audit_record_id',
+            'strategy' => 'join',
+            'conditions' => [
+                'audit_table' => 'Sections',
+            ],
+            'finder' => 'withTrashed',
+        ]);
+
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id',
         ]);
@@ -196,6 +206,17 @@ class AuditsTable extends Table
     public function findScoutGroups($query)
     {
         $query->where(['audit_table' => 'ScoutGroups']);
+
+        return $query;
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findSections($query)
+    {
+        $query->where(['audit_table' => 'Sections']);
 
         return $query;
     }

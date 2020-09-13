@@ -103,6 +103,6 @@ class AuditableBehaviorTest extends TestCase
         TestCase::assertEquals('Lorem ipsum dolor sit amet', $latest[1]->get(Audit::FIELD_ORIGINAL_VALUE));
         TestCase::assertEquals($name, $latest[1]->get(Audit::FIELD_MODIFIED_VALUE));
 
-        $this->assertEventFired('Model.User.newAudits', $this->EventManager);
+        $this->assertEventFired('Model.Users.newAudits', $this->EventManager);
     }
 }
