@@ -26,6 +26,9 @@ use Cake\Validation\Validator;
  * @mixin \Expose\Model\Behavior\ExposeBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $LeaderSections
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $CommitteeSections
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $TeamSections
  */
 class ScoutGroupsTable extends Table
 {
@@ -58,6 +61,24 @@ class ScoutGroupsTable extends Table
 
         $this->hasMany('Sections', [
             'foreignKey' => 'scout_group_id',
+        ]);
+
+        $this->hasMany('LeaderSections', [
+            'foreignKey' => 'scout_group_id',
+            'className' => 'Sections',
+            'finder' => 'leaderSections',
+        ]);
+
+        $this->hasMany('CommitteeSections', [
+            'foreignKey' => 'scout_group_id',
+            'className' => 'Sections',
+            'finder' => 'committeeSections',
+        ]);
+
+        $this->hasMany('TeamSections', [
+            'foreignKey' => 'scout_group_id',
+            'className' => 'Sections',
+            'finder' => 'teamSections',
         ]);
 
         $this->hasMany('Audits', [

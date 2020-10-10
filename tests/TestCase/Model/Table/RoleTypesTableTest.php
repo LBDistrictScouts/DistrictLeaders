@@ -35,13 +35,23 @@ class RoleTypesTableTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.Sections',
+
         'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
-        'app.Sections',
+
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
         'app.Roles',
     ];
 
@@ -103,6 +113,8 @@ class RoleTypesTableTest extends TestCase
             RoleType::FIELD_ALL_ROLE_COUNT => 0,
             RoleType::FIELD_ACTIVE_ROLE_COUNT => 0,
             RoleType::FIELD_IMPORT_TYPE => true,
+            RoleType::FIELD_PLACEHOLDER_CODE => 'LDR',
+            RoleType::FIELD_ROLE_TYPE_SORT_ORDER => 0,
         ];
 
         $this->validateInitialise($expected, $this->RoleTypes, 7);

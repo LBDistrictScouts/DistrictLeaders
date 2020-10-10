@@ -37,6 +37,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class RolesTable extends Table
 {

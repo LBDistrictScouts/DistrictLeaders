@@ -25,3 +25,4 @@ SearchConfigured:
   Users: true
   Documents: true
   Sections: true
+  CompassRecords: true

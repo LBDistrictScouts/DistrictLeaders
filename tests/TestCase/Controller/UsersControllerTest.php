@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\User;
-use Cake\TestSuite\TestCase;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 
 /**
  * App\Controller\UsersController Test Case
@@ -14,40 +14,6 @@ use Cake\TestSuite\TestCase;
  */
 class UsersControllerTest extends TestCase
 {
-    use AppTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
@@ -61,6 +27,16 @@ class UsersControllerTest extends TestCase
     public function testIndex()
     {
         $this->tryIndexGet($this->controller);
+    }
+
+    /**
+     * Test index method
+     *
+     * @return void
+     */
+    public function testSearch()
+    {
+        $this->trySearchGet($this->controller, 'Lorem');
     }
 
     /**

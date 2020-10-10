@@ -24,6 +24,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\UserContact $changed_user_contact
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property \App\Model\Entity\Section $changed_section
  */
 class Audit extends Entity
 {
@@ -61,4 +62,5 @@ class Audit extends Entity
     public const FIELD_CHANGED_ROLE = 'changed_role';
     public const FIELD_CHANGED_SCOUT_GROUP = 'changed_scout_group';
     public const FIELD_CHANGED_USER_CONTACT = 'changed_user_contact';
+    public const FIELD_CHANGED_SECTION = 'changed_section';
 }

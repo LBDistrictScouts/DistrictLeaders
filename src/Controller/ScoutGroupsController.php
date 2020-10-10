@@ -33,7 +33,9 @@ class ScoutGroupsController extends AppController
     {
         $this->Authorization->authorize($this->ScoutGroups);
 
-        $query = $this->ScoutGroups->find()->contain(['Sections.SectionTypes']);
+        $query = $this->ScoutGroups->find()->contain([
+            'Sections.SectionTypes',
+        ]);
         $scoutGroups = $this->paginate($this->Authorization->applyScope($query));
 
         $this->set(compact('scoutGroups'));
@@ -108,6 +110,30 @@ class ScoutGroupsController extends AppController
         $scoutGroup = $this->ScoutGroups->get($id, [
             'contain' => [
                 'Sections' => [
+                    'SectionTypes',
+                    'Roles' => [
+                        'Users',
+                        'UserContacts',
+                        'RoleTypes',
+                    ],
+                ],
+                'LeaderSections' => [
+                    'SectionTypes',
+                    'Roles' => [
+                        'Users',
+                        'UserContacts',
+                        'RoleTypes',
+                    ],
+                ],
+                'CommitteeSections' => [
+                    'SectionTypes',
+                    'Roles' => [
+                        'Users',
+                        'UserContacts',
+                        'RoleTypes',
+                    ],
+                ],
+                'TeamSections' => [
                     'SectionTypes',
                     'Roles' => [
                         'Users',

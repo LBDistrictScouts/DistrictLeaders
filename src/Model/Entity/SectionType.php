@@ -10,7 +10,7 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $section_type
- *
+ * @property string $section_type_code
  * @property \App\Model\Entity\RoleType[] $role_types
  * @property \App\Model\Entity\Section[] $sections
  * @property bool $is_young_person_section
@@ -30,6 +30,7 @@ class SectionType extends Entity
      */
     protected $_accessible = [
         'section_type' => true,
+        'section_type_code' => true,
         'role_types' => true,
         'sections' => true,
     ];
@@ -41,11 +42,12 @@ class SectionType extends Entity
      */
     protected function _getIsYoungPersonSection(): bool
     {
-        return (bool)($this->get(self::FIELD_SECTION_TYPE) !== 'Team');
+        return (bool)($this->section_type_code == 'l');
     }
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION_TYPE = 'section_type';
+    public const FIELD_SECTION_TYPE_CODE = 'section_type_code';
     public const FIELD_ROLE_TYPES = 'role_types';
     public const FIELD_SECTIONS = 'sections';
     public const FIELD_IS_YOUNG_PERSON_SECTION = 'is_young_person_section';

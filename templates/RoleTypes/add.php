@@ -43,5 +43,8 @@ $this->assign('entity', 'RoleTypes');
 
         /** @var array $capabilities The Capabilities List */
         echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control('capabilities._ids', ['options' => $capabilities]) : '';
+
+        $args[4] = $roleType::FIELD_IMPORT_TYPE;
+        echo $this->Identity->buildAndCheckCapability(...$args) ? $this->Form->control($roleType::FIELD_IMPORT_TYPE) : '';
         ?>
 </fieldset>

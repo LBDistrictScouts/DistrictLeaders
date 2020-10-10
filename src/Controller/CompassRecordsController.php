@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\CompassRecord;
+use App\Model\Filter\CompassRecordsCollection;
 
 /**
  * CompassRecords Controller
@@ -31,6 +32,25 @@ class CompassRecordsController extends AppController
             $query = $query->where([CompassRecord::FIELD_DOCUMENT_VERSION_ID => $documentVersionId]);
         }
         $compassRecords = $this->paginate($query);
+
+        $this->set(compact('compassRecords'));
+    }
+
+    /**
+     * Index method
+     *
+     * @return \Cake\Http\Response|void
+     */
+    public function search()
+    {
+        $this->paginate = [
+            'contain' => ['DocumentVersions.Documents'],
+        ];
+        $query = $this->CompassRecords->find('search', [
+            'search' => $this->getRequest()->getQueryParams(),
+            'collection' => CompassRecordsCollection::class,
+        ]);
+        $compassRecords = $this->paginate($query, ['queryStringWhitelist' => ['q']]);
 
         $this->set(compact('compassRecords'));
     }

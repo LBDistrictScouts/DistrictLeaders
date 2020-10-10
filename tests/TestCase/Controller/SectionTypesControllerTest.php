@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\TestCase;
+use App\Model\Entity\SectionType;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 
 /**
  * App\Controller\SectionTypesController Test Case
@@ -12,34 +13,18 @@ use Cake\TestSuite\TestCase;
  */
 class SectionTypesControllerTest extends TestCase
 {
-    use AppTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
-
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
     private $controller = 'SectionTypes';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        SectionType::FIELD_SECTION_TYPE => 'Llamas',
+        SectionType::FIELD_SECTION_TYPE_CODE => 'l',
+    ];
 
     /**
      * Test index method
@@ -72,9 +57,7 @@ class SectionTypesControllerTest extends TestCase
 
         $this->tryAddPost(
             $this->controller,
-            [
-                'section_type' => 'Llamas',
-            ],
+            $this->validEntityData,
             9
         );
     }
@@ -90,9 +73,7 @@ class SectionTypesControllerTest extends TestCase
 
         $this->tryEditPost(
             $this->controller,
-            [
-                'section_type' => 'Llamas Kids',
-            ],
+            $this->validEntityData,
             1
         );
     }
@@ -106,9 +87,7 @@ class SectionTypesControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            [
-                'section_type' => 'Llamas',
-            ],
+            $this->validEntityData,
             9
         );
     }

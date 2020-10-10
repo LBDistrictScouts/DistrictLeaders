@@ -11,9 +11,14 @@ $documents = false;
 $groups = false;
 $queue = false;
 $admin = false;
+$records = false;
 
 if (preg_match('(documents)', $path)) {
     $documents = true;
+}
+
+if (preg_match('(records)', $path)) {
+    $records = true;
 }
 
 if (preg_match('(users)', $path)) {
@@ -41,6 +46,7 @@ $this->set('searchBar', $active);
     <?= $documents ? $this->element('Search/documents') : '' ?>
     <?= $directory && !$admin ? $this->element('Search/directory') : '' ?>
     <?= $groups && !$admin ? $this->element('Search/groups') : '' ?>
+    <?= $records && !$admin ? $this->element('Search/records') : '' ?>
     <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: #7413db;font-family: 'Nunito Sans', sans-serif;"><i class="fw fal fa-user"></i><?= isset($active) && $active ? '' : ' ' . h($this->Identity->getName()) ?></a>
         <div class="dropdown-menu" role="menu">
             <?= $this->cell('ProfileModal', [$this->Identity->getId()], [

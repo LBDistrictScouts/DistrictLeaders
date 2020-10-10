@@ -113,6 +113,15 @@ class RoleTypesTable extends Table
             ->boolean(RoleType::FIELD_IMPORT_TYPE)
             ->notEmptyString(RoleType::FIELD_IMPORT_TYPE);
 
+        $validator
+            ->scalar(RoleType::FIELD_PLACEHOLDER_CODE)
+            ->maxLength(RoleType::FIELD_PLACEHOLDER_CODE, 3)
+            ->notEmptyString(RoleType::FIELD_PLACEHOLDER_CODE);
+
+        $validator
+            ->integer(RoleType::FIELD_ROLE_TYPE_SORT_ORDER)
+            ->notEmptyString(RoleType::FIELD_ROLE_TYPE_SORT_ORDER);
+
         return $validator;
     }
 

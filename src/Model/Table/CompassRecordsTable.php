@@ -7,6 +7,7 @@ use App\Model\Entity\CompassRecord;
 use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\RoleType;
+use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Table\Exceptions\InvalidEmailDomainException;
@@ -30,6 +31,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\CompassRecord findOrCreate($search, callable $callback = null, $options = [])
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\CsvBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
  * @property \App\Model\Table\UsersTable $Users
  * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
@@ -67,6 +69,8 @@ class CompassRecordsTable extends Table
         $this->setTable('compass_records');
         $this->setDisplayField('title');
         $this->setPrimaryKey(CompassRecord::FIELD_ID);
+
+        $this->addBehavior('Search.Search');
 
         $this->addBehavior('Caseable', [
             'case_columns' => [
@@ -254,6 +258,13 @@ class CompassRecordsTable extends Table
             return false;
         }
 
+        $groupExists = [
+            ScoutGroup::FIELD_SCOUT_GROUP => $compassRecord->clean_group,
+        ];
+        if (!$this->ScoutGroups->exists($groupExists)) {
+            return false;
+        }
+
         if ($compassRecord->provisional) {
             return false;
         }
@@ -282,6 +293,7 @@ class CompassRecordsTable extends Table
             ]);
         }
         $success = 0;
+        $new = 0;
         $total = $query->count();
 
         foreach ($query as $record) {
@@ -294,11 +306,14 @@ class CompassRecordsTable extends Table
                 }
                 if ($this->importUser($record, $user)) {
                     $success++;
+                    if (is_null($user)) {
+                        $new++;
+                    }
                 }
             }
         }
 
-        return compact('success', 'total');
+        return compact('success', 'total', 'new');
     }
 
     /**

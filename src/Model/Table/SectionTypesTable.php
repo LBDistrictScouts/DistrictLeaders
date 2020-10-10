@@ -68,6 +68,12 @@ class SectionTypesTable extends Table
             ->notEmptyString(SectionType::FIELD_SECTION_TYPE)
             ->add(SectionType::FIELD_SECTION_TYPE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->scalar(SectionType::FIELD_SECTION_TYPE_CODE)
+            ->requirePresence(SectionType::FIELD_SECTION_TYPE_CODE, 'create')
+            ->maxLength(SectionType::FIELD_SECTION_TYPE_CODE, 1)
+            ->notEmptyString(SectionType::FIELD_SECTION_TYPE_CODE);
+
         return $validator;
     }
 

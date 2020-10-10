@@ -55,7 +55,7 @@ class UsersController extends AppController
             $this->Flash->error('Results limited due to user permissions.');
         }
 
-        $query = $this->Users->find();
+        $query = $this->Users->find()->contain(['Roles.Sections']);
         $users = $this->paginate($this->Authorization->applyScope($query));
         $this->set(compact('users'));
 

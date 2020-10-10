@@ -26,6 +26,8 @@ class RoleTypesFixture extends TestFixture
         'all_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'active_role_count' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         'import_type' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
+        'placeholder_code' => ['type' => 'string', 'length' => 3, 'default' => 'LDR', 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null],
+        'role_type_sort_order' => ['type' => 'integer', 'length' => 10, 'default' => '0', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'role_types_role_template_id_fkey' => ['type' => 'foreign', 'columns' => ['role_template_id'], 'references' => ['role_templates', 'id'], 'update' => 'setNull', 'delete' => 'setNull', 'length' => []],
