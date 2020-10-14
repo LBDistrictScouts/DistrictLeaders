@@ -90,4 +90,30 @@ class SectionTypesTable extends Table
 
         return $rules;
     }
+
+    /**
+     * @param string $sectionType The Section Type for Lookup
+     * @param string|null $typeCode The Optional Type Code for Setting
+     * @return \App\Model\Entity\SectionType
+     */
+    public function findOrMake(string $sectionType, ?string $typeCode = null): SectionType
+    {
+        $baseCondition = [SectionType::FIELD_SECTION_TYPE => $sectionType];
+
+        if ($this->exists($baseCondition)) {
+            $sectionTypeEntity = $this->find()->where($baseCondition)->first();
+
+            if ($sectionTypeEntity instanceof SectionType) {
+                return $sectionTypeEntity;
+            }
+        }
+
+        if (is_null($typeCode)) {
+            $typeCode = substr($sectionType, 0, 1);
+        }
+
+        $baseCondition[SectionType::FIELD_SECTION_TYPE_CODE] = $typeCode;
+
+        return $this->findOrCreate($baseCondition);
+    }
 }

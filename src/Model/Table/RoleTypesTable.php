@@ -207,13 +207,8 @@ class RoleTypesTable extends Table
      */
     public function findOrMake(string $roleType, string $sectionType): RoleType
     {
-        $sectionTypeEntity = $this->SectionTypes->find()
-            ->where([SectionType::FIELD_SECTION_TYPE => $sectionType])
-            ->firstOrFail();
-
         $conditions = [
             RoleType::FIELD_ROLE_TYPE => $roleType,
-            RoleType::FIELD_SECTION_TYPE_ID => $sectionTypeEntity->id,
         ];
 
         $query = $this->find()->where($conditions);
@@ -232,6 +227,11 @@ class RoleTypesTable extends Table
 
         $conditions[RoleType::FIELD_ROLE_TEMPLATE_ID] = $lowestTemplate->id;
         $conditions[RoleType::FIELD_LEVEL] = $lowestTemplate->indicative_level;
+
+        $sectionTypeEntity = $this->SectionTypes->find()
+            ->where([SectionType::FIELD_SECTION_TYPE => $sectionType])
+            ->firstOrFail();
+        $conditions[RoleType::FIELD_SECTION_TYPE_ID] = $sectionTypeEntity->id;
 
         $roleTypeEntity = $this->newEntity($conditions);
 

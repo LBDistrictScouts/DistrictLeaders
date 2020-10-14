@@ -6,12 +6,13 @@
  * @var array $capabilities
  * @var \App\Model\Entity\RoleType $roleType
  */
+
 ?>
 
 
 <div class="row">
     <div class="col">
-        <div class="jumbotron d-none d-sm-none d-md-flex d-lg-flex d-xl-flex" style="background-image: url(/img/activity-bg-2.jpg);background-size: cover;height: 300px;"></div>
+        <?= $this->element('image-header')  ?>
         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
             <div class="card-body">
                 <div class="row">
@@ -30,14 +31,47 @@
                 </div>
             </div>
         </div>
-        <?php if (!empty($roleType->capabilities)) : ?>
+        <?php if (!empty($roleType->roles) && $this->Identity->buildAndCheckCapability('VIEW', 'Roles')) : ?>
+        <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="card-header">
+                <h3>Roles</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Leader</th>
+                                    <th scope="col">Leader Contact</th>
+                                    <th scope="col">Section</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php foreach ($roleType->roles as $role) : ?>
+                                    <tr>
+                                        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') || $this->Identity->checkCapability('DIRECTORY') ? $this->Html->link($role->user->full_name, ['controller' => 'Users', 'action' => 'view', $role->user->id]) : $role->user->full_name ?></td>
+                                        <td><?= $this->Text->autoLinkEmails($role->has('user_contact') ? $role->user_contact->contact_field : $role->user->email) ?></td>
+                                        <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'Sections', $role->section->scout_group_id, $role->section_id) ? $this->Html->link($role->section->section, ['controller' => 'Sections', 'action' => 'view', $role->section_id]) : $role->section->section ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
+        <?php if (!empty($roleType->capabilities) && $this->Identity->buildAndCheckCapability('VIEW', 'Capabilities')) : ?>
             <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                 <div class="card-header">
                     <h3>Capabilities on Role</h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                        <div class="col">
                             <div class="row">
                                 <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
                                     <div class="table-responsive">

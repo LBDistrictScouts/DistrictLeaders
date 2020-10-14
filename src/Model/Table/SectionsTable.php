@@ -203,10 +203,7 @@ class SectionsTable extends Table
             ->where([ScoutGroup::FIELD_GROUP_ALIAS => $group])
             ->firstOrFail();
 
-        $sectionTypeEntity = $this->SectionTypes->findOrCreate([
-            SectionType::FIELD_SECTION_TYPE => $sectionType,
-            SectionType::FIELD_SECTION_TYPE_CODE => substr($sectionType, 0, 1),
-        ]);
+        $sectionTypeEntity = $this->SectionTypes->findOrMake($sectionType);
 
         return $this->findOrCreate([
             Section::FIELD_SECTION => $section,

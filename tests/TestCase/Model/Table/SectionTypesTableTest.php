@@ -123,4 +123,55 @@ class SectionTypesTableTest extends TestCase
     {
         $this->validateUniqueRule(SectionType::FIELD_SECTION_TYPE, $this->SectionTypes, [$this, 'getGood']);
     }
+
+    /**
+     * @return array[]
+     */
+    public function provideFindOrMake()
+    {
+        return [
+            'Existing Section String' => [
+                'Beavers',
+                null,
+                true,
+            ],
+            'Null Section Type Error' => [
+                null,
+                null,
+                false,
+            ],
+            'New Section, No Type Code' => [
+                'Llama',
+                null,
+                true,
+            ],
+            'New Section, Included Type Code' => [
+                'Llama',
+                'l',
+                true,
+            ],
+        ];
+    }
+
+    /**
+     * Test findOrMake method
+     *
+     * @dataProvider provideFindOrMake
+     * @param string|null $sectionType The Nullable Section Type Value
+     * @param string|null $typeCode The Nullable Type Code Value
+     * @param bool $expected The Expected Outcome
+     * @return void
+     */
+    public function testFindOrMake(?string $sectionType, ?string $typeCode, bool $expected): void
+    {
+        if (!$expected) {
+            $this->expectException('TypeError');
+        }
+
+        $result = $this->SectionTypes->findOrMake($sectionType, $typeCode);
+
+        if ($expected) {
+            TestCase::assertInstanceOf(SectionType::class, $result);
+        }
+    }
 }

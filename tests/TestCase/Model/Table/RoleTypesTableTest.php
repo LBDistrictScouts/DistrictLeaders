@@ -261,12 +261,53 @@ class RoleTypesTableTest extends TestCase
     }
 
     /**
+     * @return array[]
+     */
+    public function provideFindOrMake()
+    {
+        return [
+            'Existing Section String' => [
+                'Beaver Scout Leader',
+                'Beavers',
+                true,
+            ],
+            'Null Section Type Error' => [
+                'Beaver Scout Leader',
+                null,
+                false,
+            ],
+            'Null Role Type Error' => [
+                null,
+                'Beavers',
+                false,
+            ],
+            'New Role Type' => [
+                'Assistant Beaver Monkey',
+                'Beavers',
+                true,
+            ],
+        ];
+    }
+
+    /**
      * Test findOrMake method
      *
+     * @dataProvider provideFindOrMake
+     * @param string|null $roleType The Nullable Role Type Value
+     * @param string|null $sectionType The Nullable Section Type Value
+     * @param bool $expected The Expected Outcome
      * @return void
      */
-    public function testFindOrMake(): void
+    public function testFindOrMake(?string $roleType, ?string $sectionType, bool $expected): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        if (!$expected) {
+            $this->expectException('TypeError');
+        }
+
+        $result = $this->RoleTypes->findOrMake($roleType, $sectionType);
+
+        if ($expected) {
+            TestCase::assertInstanceOf(RoleType::class, $result);
+        }
     }
 }
