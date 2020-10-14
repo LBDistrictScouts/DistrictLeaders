@@ -33,7 +33,6 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  *
  * @property \Flash\Controller\Component\FlashComponent $Flash
  * @property \App\Controller\Component\CapAuthorizationComponent $Authorization
- * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
 {

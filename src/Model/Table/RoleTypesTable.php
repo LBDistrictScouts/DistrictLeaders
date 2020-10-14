@@ -113,6 +113,15 @@ class RoleTypesTable extends Table
             ->boolean(RoleType::FIELD_IMPORT_TYPE)
             ->notEmptyString(RoleType::FIELD_IMPORT_TYPE);
 
+        $validator
+            ->scalar(RoleType::FIELD_PLACEHOLDER_CODE)
+            ->maxLength(RoleType::FIELD_PLACEHOLDER_CODE, 3)
+            ->notEmptyString(RoleType::FIELD_PLACEHOLDER_CODE);
+
+        $validator
+            ->integer(RoleType::FIELD_ROLE_TYPE_SORT_ORDER)
+            ->notEmptyString(RoleType::FIELD_ROLE_TYPE_SORT_ORDER);
+
         return $validator;
     }
 
@@ -198,13 +207,8 @@ class RoleTypesTable extends Table
      */
     public function findOrMake(string $roleType, string $sectionType): RoleType
     {
-        $sectionTypeEntity = $this->SectionTypes->find()
-            ->where([SectionType::FIELD_SECTION_TYPE => $sectionType])
-            ->firstOrFail();
-
         $conditions = [
             RoleType::FIELD_ROLE_TYPE => $roleType,
-            RoleType::FIELD_SECTION_TYPE_ID => $sectionTypeEntity->id,
         ];
 
         $query = $this->find()->where($conditions);
@@ -223,6 +227,11 @@ class RoleTypesTable extends Table
 
         $conditions[RoleType::FIELD_ROLE_TEMPLATE_ID] = $lowestTemplate->id;
         $conditions[RoleType::FIELD_LEVEL] = $lowestTemplate->indicative_level;
+
+        $sectionTypeEntity = $this->SectionTypes->find()
+            ->where([SectionType::FIELD_SECTION_TYPE => $sectionType])
+            ->firstOrFail();
+        $conditions[RoleType::FIELD_SECTION_TYPE_ID] = $sectionTypeEntity->id;
 
         $roleTypeEntity = $this->newEntity($conditions);
 

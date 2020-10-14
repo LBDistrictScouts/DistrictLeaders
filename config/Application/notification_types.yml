@@ -21,6 +21,10 @@ NotificationTypes:
     notification_description: A new role has been added in the system.
     icon: fa-sitemap
     type_code: ROL-NEW
+  - notification_type: Role Changed
+    notification_description: Role in the system was changed.
+    icon: fa-sitemap
+    type_code: ROL-CNG
   - notification_type: New Payment Received
     notification_description: Notification that a payment has been recorded by an administrator.
     icon: fa-receipt

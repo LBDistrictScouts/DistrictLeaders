@@ -30,6 +30,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class Section extends Entity
 {
@@ -164,4 +165,5 @@ class Section extends Entity
     public const FIELD_MEETING_END_TIME = 'meeting_end_time';
     public const FIELD_MEETING_WEEKDAY = 'meeting_weekday';
     public const FIELD_USERS = 'users';
+    public const FIELD_AUDITS = 'audits';
 }

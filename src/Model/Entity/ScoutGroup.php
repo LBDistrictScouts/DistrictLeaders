@@ -26,6 +26,9 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Audit[] $audits
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property \App\Model\Entity\Section[] $leader_sections
+ * @property \App\Model\Entity\Section[] $committee_sections
+ * @property \App\Model\Entity\Section[] $team_sections
  */
 class ScoutGroup extends Entity
 {
@@ -99,4 +102,7 @@ class ScoutGroup extends Entity
     public const FIELD_UUID = 'uuid';
     public const FIELD_PUBLIC = 'public';
     public const FIELD_AUDITS = 'audits';
+    public const FIELD_LEADER_SECTIONS = 'leader_sections';
+    public const FIELD_COMMITTEE_SECTIONS = 'committee_sections';
+    public const FIELD_TEAM_SECTIONS = 'team_sections';
 }

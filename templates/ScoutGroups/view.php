@@ -32,12 +32,11 @@
                                 <th scope="col">Section Type</th>
                                 <th scope="col">Meeting Day</th>
                                 <th scope="col">Meeting Time</th>
-                                <th scope="col">Section Contact</th>
                                 <th scope="col">Actions</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($scoutGroup->sections as $section) : ?>
+                                <?php foreach ($scoutGroup->leader_sections as $section) : ?>
                                     <tr>
                                         <td><?= $section->has($section::FIELD_SECTION) ? h($section->section) : '' ?></td>
                                         <?php if ($section->has($section::FIELD_SECTION_TYPE)) : ?>
@@ -47,7 +46,6 @@
                                         <?php endif; ?>
                                         <td><?= h($section->meeting_weekday) ?></td>
                                         <td><?= !empty($section->meeting_start_time) ? h($section->meeting_start_time) . ' - ' . h($section->meeting_end_time) : '' ?></td>
-                                        <td>info@email.com</td>
                                         <td class="actions">
                                             <?= $this->Identity->buildAndCheckCapability('VIEW', 'Sections') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Sections', 'action' => 'view', $section->id], ['title' => __('View Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                             <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Sections') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Sections', 'action' => 'edit', $section->id], ['title' => __('Edit Section'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
@@ -62,22 +60,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-lg-6">
-                <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
-                    <div class="card-body">
-                        <h5 style="font-family: 'Nunito Sans', sans-serif;">Executive</h5>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Chair:&nbsp;</strong><a href="#">Edyta Sidzmir<br></a></p>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Treasurer:&nbsp;</strong><a href="#">Sarah Berry<br></a></p>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Secretary:&nbsp;</strong><a href="#">Andreea Weisl<br></a></p>
-                        <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong>Committee:</strong></p>
-                        <ul>
-                            <li><a href="https://bootstrapstudio.io/app/?shell=4#"><span style="text-decoration: underline;">Jenny George</span></a></li>
-                            <li><a href="https://bootstrapstudio.io/app/?shell=4#"><span style="text-decoration: underline;">Charles Stoten</span></a></li>
-                            <li><a href="https://bootstrapstudio.io/app/?shell=4#"><span style="text-decoration: underline;">Greg Rose</span></a><br></li>
-                        </ul>
+            <?php foreach ($scoutGroup->committee_sections as $section) : ?>
+                <div class="col-sm-12 col-lg-6">
+                    <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                        <div class="card-body">
+                            <h5 style="font-family: 'Nunito Sans', sans-serif;"><?= $section->section ?></h5>
+                            <?php foreach ($section->roles as $role) : ?>
+                                <p class="card-text" style="font-family: 'Nunito Sans', sans-serif;"><strong><?= $role->role_type->role_type ?>:</strong> <?= $this->Html->link($role->user->full_name, ['controller' => 'Users', 'action' => 'view', $role->user->id]) ?></p>
+                            <?php endforeach; ?>
+                        </div>
                     </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
             <div class="col-sm-12 col-lg-6">
                 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                     <div class="card-body">
@@ -109,13 +103,13 @@
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
-                                    <tr>
-                                        <th scope="col">Leader</th>
-                                        <th scope="col">Actions</th>
-                                        <th scope="col">Leader Contact</th>
-                                        <th scope="col">Section</th>
-                                        <th scope="col">Role Type</th>
-                                    </tr>
+                                        <tr>
+                                            <th scope="col">Leader</th>
+                                            <th scope="col">Actions</th>
+                                            <th scope="col">Leader Contact</th>
+                                            <th scope="col">Section</th>
+                                            <th scope="col">Role Type</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <?php foreach ($scoutGroup->sections as $section) : ?>

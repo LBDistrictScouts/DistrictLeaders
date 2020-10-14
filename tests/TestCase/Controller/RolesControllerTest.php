@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\TestCase;
+use App\Model\Entity\Role;
+use App\Test\TestCase\ControllerTestCase as TestCase;
 
 /**
  * App\Controller\RolesController Test Case
@@ -12,34 +13,20 @@ use Cake\TestSuite\TestCase;
  */
 class RolesControllerTest extends TestCase
 {
-    use AppTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
-
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
     private $controller = 'Roles';
+
+    /**
+     * @var array $validEntityData Valid creation Data.
+     */
+    private $validEntityData = [
+        Role::FIELD_ROLE_TYPE_ID => 6,
+        Role::FIELD_SECTION_ID => 1,
+        Role::FIELD_USER_ID => 2,
+        Role::FIELD_ROLE_STATUS_ID => 1,
+    ];
 
     /**
      * @param int|null $number The Redirect Array ID
@@ -88,12 +75,7 @@ class RolesControllerTest extends TestCase
 
         $this->tryAddPost(
             $this->controller,
-            [
-                'role_type_id' => 6,
-                'section_id' => 1,
-                'user_id' => 2,
-                'role_status_id' => 1,
-            ],
+            $this->validEntityData,
             10,
             $this->retrieveAddRedirect()
         );
@@ -110,12 +92,7 @@ class RolesControllerTest extends TestCase
 
         $this->tryEditPost(
             $this->controller,
-            [
-                'role_type_id' => 6,
-                'section_id' => 1,
-                'user_id' => 2,
-                'role_status_id' => 1,
-            ],
+            $this->validEntityData,
             1
         );
     }
@@ -129,12 +106,7 @@ class RolesControllerTest extends TestCase
     {
         $this->tryDeletePost(
             $this->controller,
-            [
-                'role_type_id' => 6,
-                'section_id' => 1,
-                'user_id' => 2,
-                'role_status_id' => 1,
-            ],
+            $this->validEntityData,
             10,
             [
                 'add' => $this->retrieveAddRedirect(),

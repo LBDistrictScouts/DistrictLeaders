@@ -68,6 +68,12 @@ class SectionTypesTable extends Table
             ->notEmptyString(SectionType::FIELD_SECTION_TYPE)
             ->add(SectionType::FIELD_SECTION_TYPE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
+        $validator
+            ->scalar(SectionType::FIELD_SECTION_TYPE_CODE)
+            ->requirePresence(SectionType::FIELD_SECTION_TYPE_CODE, 'create')
+            ->maxLength(SectionType::FIELD_SECTION_TYPE_CODE, 1)
+            ->notEmptyString(SectionType::FIELD_SECTION_TYPE_CODE);
+
         return $validator;
     }
 
@@ -83,5 +89,31 @@ class SectionTypesTable extends Table
         $rules->add($rules->isUnique([SectionType::FIELD_SECTION_TYPE]));
 
         return $rules;
+    }
+
+    /**
+     * @param string $sectionType The Section Type for Lookup
+     * @param string|null $typeCode The Optional Type Code for Setting
+     * @return \App\Model\Entity\SectionType
+     */
+    public function findOrMake(string $sectionType, ?string $typeCode = null): SectionType
+    {
+        $baseCondition = [SectionType::FIELD_SECTION_TYPE => $sectionType];
+
+        if ($this->exists($baseCondition)) {
+            $sectionTypeEntity = $this->find()->where($baseCondition)->first();
+
+            if ($sectionTypeEntity instanceof SectionType) {
+                return $sectionTypeEntity;
+            }
+        }
+
+        if (is_null($typeCode)) {
+            $typeCode = substr($sectionType, 0, 1);
+        }
+
+        $baseCondition[SectionType::FIELD_SECTION_TYPE_CODE] = $typeCode;
+
+        return $this->findOrCreate($baseCondition);
     }
 }

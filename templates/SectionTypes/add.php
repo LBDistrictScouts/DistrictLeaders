@@ -12,5 +12,6 @@ $this->assign('entity', 'SectionTypes');
 <fieldset>
     <?php
         echo $this->Form->control($sectionType::FIELD_SECTION_TYPE);
+        echo $this->Form->control($sectionType::FIELD_SECTION_TYPE_CODE);
     ?>
 </fieldset>

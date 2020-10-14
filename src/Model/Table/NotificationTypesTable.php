@@ -212,6 +212,21 @@ class NotificationTypesTable extends Table
             return __($header, $user->full_name);
         }
 
+        if ($notificationType->type == 'ROL') {
+            switch ($notificationType->sub_type) {
+                case 'NEW':
+                    $header = 'New Role "{0}" added to {1}';
+                    break;
+                case 'CNG':
+                    $header = 'Changes to Role "{0}" for {1}';
+                    break;
+                default:
+                    return '';
+            }
+
+            return __($header, $user->full_name);
+        }
+
         return '';
     }
 
@@ -240,6 +255,19 @@ class NotificationTypesTable extends Table
                     return [
                         'controller' => 'Users',
                         'action' => 'welcome',
+                    ];
+                default:
+                    return [];
+            }
+        }
+
+        if ($notificationType->type == 'ROL') {
+            switch ($notificationType->sub_type) {
+                case 'CNG':
+                case 'NEW':
+                    return [
+                        'controller' => 'Roles',
+                        'action' => 'index',
                     ];
                 default:
                     return [];

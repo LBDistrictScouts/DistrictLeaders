@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -26,6 +27,7 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\BelongsTo $ChangedRoles
  * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ChangedScoutGroups
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $ChangedUserContacts
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $ChangedSections
  */
 class AuditsTable extends Table
 {
@@ -181,7 +183,7 @@ class AuditsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findUsers($query)
+    public function findUsers(Query $query): Query
     {
         $query->where(['audit_table' => 'Users']);
 
@@ -192,7 +194,7 @@ class AuditsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findRoles($query)
+    public function findRoles(Query $query): Query
     {
         $query->where(['audit_table' => 'Roles']);
 
@@ -203,7 +205,7 @@ class AuditsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findScoutGroups($query)
+    public function findScoutGroups(Query $query): Query
     {
         $query->where(['audit_table' => 'ScoutGroups']);
 
@@ -214,7 +216,7 @@ class AuditsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findSections($query)
+    public function findSections(Query $query): Query
     {
         $query->where(['audit_table' => 'Sections']);
 
@@ -225,7 +227,7 @@ class AuditsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findContacts($query)
+    public function findContacts(Query $query): Query
     {
         $query->where(['audit_table' => 'UserContacts']);
 

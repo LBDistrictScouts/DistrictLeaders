@@ -11,7 +11,7 @@ use App\Model\Entity\CompassRecord;
  * @var \App\Model\Entity\CompassRecord[]|\Cake\Collection\CollectionInterface $compassRecords
  */
 
-$this->extend('../layout/CRUD/index');
+$this->extend('../layout/CRUD/search');
 
 $this->assign('entity', 'CompassRecords');
 $this->assign('subset', 'All');

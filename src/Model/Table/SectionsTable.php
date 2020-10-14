@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -30,6 +31,8 @@ use Cake\Validation\Validator;
  * @mixin \Expose\Model\Behavior\ExposeBehavior
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  * @mixin \Search\Model\Behavior\SearchBehavior
+ * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class SectionsTable extends Table
 {
@@ -126,6 +129,39 @@ class SectionsTable extends Table
     }
 
     /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findLeaderSections(Query $query): Query
+    {
+        return $query
+            ->contain(['SectionTypes'])
+            ->where(['SectionTypes.' . SectionType::FIELD_SECTION_TYPE_CODE => 'l']);
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findTeamSections(Query $query): Query
+    {
+        return $query
+            ->contain(['SectionTypes'])
+            ->where(['SectionTypes.' . SectionType::FIELD_SECTION_TYPE_CODE => 't']);
+    }
+
+    /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findCommitteeSections(Query $query): Query
+    {
+        return $query
+            ->contain(['SectionTypes'])
+            ->where(['SectionTypes.' . SectionType::FIELD_SECTION_TYPE_CODE => 'c']);
+    }
+
+    /**
      * @param int $scoutGroupId ID of the Scout Group to be created
      * @param int $sectionTypeId ID of the Section Type to be created
      * @return bool
@@ -167,7 +203,7 @@ class SectionsTable extends Table
             ->where([ScoutGroup::FIELD_GROUP_ALIAS => $group])
             ->firstOrFail();
 
-        $sectionTypeEntity = $this->SectionTypes->findOrCreate([SectionType::FIELD_SECTION_TYPE => $sectionType]);
+        $sectionTypeEntity = $this->SectionTypes->findOrMake($sectionType);
 
         return $this->findOrCreate([
             Section::FIELD_SECTION => $section,

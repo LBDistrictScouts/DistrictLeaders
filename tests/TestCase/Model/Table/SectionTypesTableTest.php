@@ -3,28 +3,30 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\SectionType;
 use App\Model\Table\SectionTypesTable;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
 
 /**
  * App\Model\Table\SectionTypesTable Test Case
  */
 class SectionTypesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
      * @var \App\Model\Table\SectionTypesTable
      */
-    public $SectionTypes;
+    protected $SectionTypes;
 
     /**
      * Fixtures
      *
      * @var array
      */
-    public $fixtures = [
+    protected $fixtures = [
         'app.SectionTypes',
     ];
 
@@ -59,11 +61,10 @@ class SectionTypesTableTest extends TestCase
      */
     private function getGood()
     {
-        $good = [
-            'section_type' => 'Llamas',
+        return [
+            SectionType::FIELD_SECTION_TYPE => 'Llamas',
+            SectionType::FIELD_SECTION_TYPE_CODE => 'l',
         ];
-
-        return $good;
     }
 
     /**
@@ -71,19 +72,15 @@ class SectionTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
-        $actual = $this->SectionTypes->get(1)->toArray();
-
         $expected = [
-            'id' => 1,
-            'section_type' => 'Beavers',
-            'is_young_person_section' => true,
+            SectionType::FIELD_ID => 1,
+            SectionType::FIELD_SECTION_TYPE => 'Beavers',
+            SectionType::FIELD_IS_YOUNG_PERSON_SECTION => true,
+            SectionType::FIELD_SECTION_TYPE_CODE => 'l',
         ];
-        TestCase::assertEquals($expected, $actual);
-
-        $count = $this->SectionTypes->find('all')->count();
-        TestCase::assertEquals(8, $count);
+        $this->validateInitialise($expected, $this->SectionTypes, 8);
     }
 
     /**
@@ -91,64 +88,30 @@ class SectionTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
         $new = $this->SectionTypes->newEntity($good);
-        TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+        TestCase::assertInstanceOf(SectionType::class, $this->SectionTypes->save($new));
 
         $required = [
-            'section_type',
+            SectionType::FIELD_SECTION_TYPE,
+            SectionType::FIELD_SECTION_TYPE_CODE,
         ];
-
-        foreach ($required as $require) {
-            $reqArray = $good;
-            unset($reqArray[$require]);
-            $new = $this->SectionTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->SectionTypes->save($new));
-        }
-
-        $empties = [
-        ];
-
-        foreach ($empties as $empty) {
-            $reqArray = $good;
-            $reqArray[$empty] = '';
-            $new = $this->SectionTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
-        }
+        $this->validateRequired($required, $this->SectionTypes, [$this, 'getGood']);
 
         $notEmpties = [
-            'section_type',
+            SectionType::FIELD_SECTION_TYPE,
+            SectionType::FIELD_SECTION_TYPE_CODE,
         ];
-
-        foreach ($notEmpties as $not_empty) {
-            $reqArray = $good;
-            $reqArray[$not_empty] = '';
-            $new = $this->SectionTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->SectionTypes->save($new));
-        }
+        $this->validateNotEmpties($notEmpties, $this->SectionTypes, [$this, 'getGood']);
 
         $maxLengths = [
-            'section_type' => 255,
+            SectionType::FIELD_SECTION_TYPE => 255,
+//            SectionType::FIELD_SECTION_TYPE_CODE => 1,
         ];
-
-        $string = hash('sha512', Security::randomBytes(64));
-        $string .= $string;
-        $string .= $string;
-
-        foreach ($maxLengths as $maxField => $max_length) {
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length);
-            $new = $this->SectionTypes->newEntity($reqArray);
-            TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
-
-            $reqArray = $this->getGood();
-            $reqArray[$maxField] = substr($string, 1, $max_length + 1);
-            $new = $this->SectionTypes->newEntity($reqArray);
-            TestCase::assertFalse($this->SectionTypes->save($new));
-        }
+        $this->validateMaxLengths($maxLengths, $this->SectionTypes, [$this, 'getGood']);
     }
 
     /**
@@ -156,18 +119,59 @@ class SectionTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
-        $values = $this->getGood();
+        $this->validateUniqueRule(SectionType::FIELD_SECTION_TYPE, $this->SectionTypes, [$this, 'getGood']);
+    }
 
-        $existing = $this->SectionTypes->get(1)->toArray();
+    /**
+     * @return array[]
+     */
+    public function provideFindOrMake()
+    {
+        return [
+            'Existing Section String' => [
+                'Beavers',
+                null,
+                true,
+            ],
+            'Null Section Type Error' => [
+                null,
+                null,
+                false,
+            ],
+            'New Section, No Type Code' => [
+                'Llama',
+                null,
+                true,
+            ],
+            'New Section, Included Type Code' => [
+                'Llama',
+                'l',
+                true,
+            ],
+        ];
+    }
 
-        $values['section_type'] = 'Llamas';
-        $new = $this->SectionTypes->newEntity($values);
-        TestCase::assertInstanceOf('App\Model\Entity\SectionType', $this->SectionTypes->save($new));
+    /**
+     * Test findOrMake method
+     *
+     * @dataProvider provideFindOrMake
+     * @param string|null $sectionType The Nullable Section Type Value
+     * @param string|null $typeCode The Nullable Type Code Value
+     * @param bool $expected The Expected Outcome
+     * @return void
+     */
+    public function testFindOrMake(?string $sectionType, ?string $typeCode, bool $expected): void
+    {
+        if (!$expected) {
+            $this->expectException('TypeError');
+        }
 
-        $values['section_type'] = $existing['section_type'];
-        $new = $this->SectionTypes->newEntity($values);
-        TestCase::assertFalse($this->SectionTypes->save($new));
+        $result = $this->SectionTypes->findOrMake($sectionType, $typeCode);
+
+        if ($expected) {
+            TestCase::assertInstanceOf(SectionType::class, $result);
+        }
     }
 }

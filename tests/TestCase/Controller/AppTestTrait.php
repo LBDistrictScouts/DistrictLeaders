@@ -49,7 +49,7 @@ trait AppTestTrait
      * @param array|string $url The Url Array to be tested.
      * @return void
      */
-    protected function tryGet($url)
+    protected function tryGet($url): void
     {
         $this->login();
 
@@ -65,9 +65,9 @@ trait AppTestTrait
     /**
      * Function to encapsulate Basic Index Get Tests.
      *
-     * @param $controller
+     * @param string $controller The Controller for Indexing
      */
-    protected function tryIndexGet($controller)
+    protected function tryIndexGet(string $controller): void
     {
         $this->tryGet(['controller' => $controller, 'action' => 'index']);
     }
@@ -75,9 +75,22 @@ trait AppTestTrait
     /**
      * Function to encapsulate Basic Index Get Tests.
      *
-     * @param $controller
+     * @param string $controller The Controller being searched
+     * @param string|null $searchString The String being searched for
      */
-    protected function tryViewGet($controller)
+    protected function trySearchGet(string $controller, ?string $searchString): void
+    {
+        $this->tryGet(['controller' => $controller, 'action' => 'search']);
+
+        $this->tryGet(['controller' => $controller, 'action' => 'search', '?' => ['q' => $searchString]]);
+    }
+
+    /**
+     * Function to encapsulate Basic Index Get Tests.
+     *
+     * @param string $controller The Controller for the View Object
+     */
+    protected function tryViewGet(string $controller): void
     {
         $this->tryGet(['controller' => $controller, 'action' => 'view', 1]);
     }
@@ -87,7 +100,7 @@ trait AppTestTrait
      *
      * @param $controller
      */
-    protected function tryAddGet($controller)
+    protected function tryAddGet(string $controller): void
     {
         $this->tryGet(['controller' => $controller, 'action' => 'add']);
     }
