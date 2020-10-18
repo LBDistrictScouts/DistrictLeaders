@@ -13,6 +13,8 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  * @var \App\View\AppView $this
  */
+use Cake\Core\Configure;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,27 +23,26 @@
     <title>
         <?= $this->fetch('title') ?>
     </title>
-    <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('style.css') ?>
+    <?= ($this->getTemplate() == 'error500' && Configure::read('debug')) ? '' : $this->element('style') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div id="container">
-        <div id="header">
-            <h1><?= __('Error') ?></h1>
-        </div>
-        <div id="content">
-            <?= $this->Flash->render() ?>
+    <div class="container" style="padding-bottom: 120px; padding-top: 20px;">
+        <div class="card">
+            <div class="card-header">
+                <h1><?= __('Error') ?></h1>
+            </div>
+            <div class="card-body">
+                <?= $this->Flash->render() ?>
 
-            <?= $this->fetch('content') ?>
-        </div>
-        <div id="footer">
-            <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
+                <?= $this->fetch('content') ?>
+            </div>
+            <div class="card-footer">
+                <?= $this->Html->link(__('Back'), 'javascript:history.back()', ['class' => 'btn btn-block btn-primary']) ?>
+            </div>
         </div>
     </div>
 </body>
