@@ -18,7 +18,7 @@
 $cakeDescription = 'Home - Letchworth, Baldock &amp; Ashwell';
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en-gb">
     <head>
         <?= $this->Html->charset() ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
