@@ -1,8 +1,10 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Error;
 
-use Cake\Core\Configure;
 use App\Model\Table\Exceptions\InvalidEmailDomainException;
+use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Error\ExceptionRenderer;
 
@@ -15,7 +17,6 @@ class AppExceptionRenderer extends ExceptionRenderer
 {
     /**
      * @param \App\Model\Table\Exceptions\InvalidEmailDomainException $error The Error being handled
-     *
      * @return \Cake\Http\Response
      */
     public function invalidEmailDomain(InvalidEmailDomainException $error)

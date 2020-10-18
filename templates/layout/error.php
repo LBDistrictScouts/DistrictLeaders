@@ -23,7 +23,7 @@ use Cake\Core\Configure;
     <title>
         <?= $this->fetch('title') ?>
     </title>
-    <?= ($this->getTemplate() == 'error500' && Configure::read('debug')) ? '' : $this->element('style') ?>
+    <?= $this->getTemplate() == 'error500' && Configure::read('debug') ? '' : $this->element('style') ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
