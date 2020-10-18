@@ -25,6 +25,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\EmailSend[] $email_sends
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
+ * @property bool $new
  */
 class Notification extends Entity
 {
@@ -70,6 +71,10 @@ class Notification extends Entity
         'email_code',
     ];
 
+    protected $_hidden = [
+        'new',
+    ];
+
     public const FIELD_ID = 'id';
     public const FIELD_USER_ID = 'user_id';
     public const FIELD_NOTIFICATION_TYPE_ID = 'notification_type_id';
@@ -84,4 +89,5 @@ class Notification extends Entity
     public const FIELD_NOTIFICATION_TYPE = 'notification_type';
     public const FIELD_EMAIL_SENDS = 'email_sends';
     public const FIELD_EMAIL_CODE = 'email_code';
+    public const FIELD_NEW = 'new';
 }

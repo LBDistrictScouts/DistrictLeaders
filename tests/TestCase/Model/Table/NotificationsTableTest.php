@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Entity\Notification;
 use App\Model\Table\NotificationsTable;
-use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,6 +12,8 @@ use Cake\TestSuite\TestCase;
  */
 class NotificationsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
@@ -25,10 +27,33 @@ class NotificationsTableTest extends TestCase
      * @var array
      */
     protected $fixtures = [
-        'app.Notifications',
+        'app.UserStates',
         'app.Users',
+        'app.CapabilitiesRoleTypes',
+        'app.Capabilities',
+        'app.ScoutGroups',
+        'app.SectionTypes',
+        'app.Sections',
+
+        'app.RoleTemplates',
+        'app.RoleTypes',
+        'app.RoleStatuses',
+
+        'app.Audits',
+        'app.UserContactTypes',
+        'app.UserContacts',
+
+        'app.DirectoryTypes',
+        'app.Directories',
+        'app.DirectoryDomains',
+        'app.DirectoryUsers',
+        'app.DirectoryGroups',
+        'app.RoleTypesDirectoryGroups',
+
+        'app.Roles',
+
         'app.NotificationTypes',
-        'app.EmailSends',
+        'app.Notifications',
     ];
 
     /**
@@ -39,8 +64,8 @@ class NotificationsTableTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $config = TableRegistry::getTableLocator()->exists('Notifications') ? [] : ['className' => NotificationsTable::class];
-        $this->Notifications = TableRegistry::getTableLocator()->get('Notifications', $config);
+        $config = $this->getTableLocator()->exists('Notifications') ? [] : ['className' => NotificationsTable::class];
+        $this->Notifications = $this->getTableLocator()->get('Notifications', $config);
     }
 
     /**
@@ -56,13 +81,44 @@ class NotificationsTableTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function getGood(): array
+    {
+        return [
+            Notification::FIELD_USER_ID => 1,
+            Notification::FIELD_NOTIFICATION_TYPE_ID => 1,
+            Notification::FIELD_NOTIFICATION_HEADER => 'A payment has been recorded.',
+            Notification::FIELD_NOTIFICATION_SOURCE => 'System Generated',
+            Notification::FIELD_BODY_CONTENT => ['Chocolate'],
+            Notification::FIELD_SUBJECT_LINK => null,
+        ];
+    }
+
+    /**
      * Test initialize method
      *
      * @return void
      */
     public function testInitialize(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $expected = [
+            Notification::FIELD_ID => 1,
+            Notification::FIELD_USER_ID => 1,
+            Notification::FIELD_NOTIFICATION_TYPE_ID => 1,
+            Notification::FIELD_NOTIFICATION_HEADER => 'A payment has been recorded.',
+            Notification::FIELD_NOTIFICATION_SOURCE => 'System Generated',
+            Notification::FIELD_BODY_CONTENT => ['Chocolate'],
+            Notification::FIELD_SUBJECT_LINK => null,
+            Notification::FIELD_EMAIL_CODE => null,
+        ];
+        $dates = [
+            Notification::FIELD_CREATED,
+            Notification::FIELD_READ_DATE,
+            Notification::FIELD_DELETED,
+        ];
+
+        $this->validateInitialise($expected, $this->Notifications, 1, $dates);
     }
 
     /**
@@ -72,7 +128,53 @@ class NotificationsTableTest extends TestCase
      */
     public function testValidationDefault(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $good = $this->getGood();
+
+        $new = $this->Notifications->newEntity($good);
+        TestCase::assertInstanceOf(Notification::class, $this->Notifications->save($new));
+
+        $required = [
+            Notification::FIELD_NOTIFICATION_TYPE_ID,
+            Notification::FIELD_NOTIFICATION_HEADER,
+            Notification::FIELD_NOTIFICATION_SOURCE,
+        ];
+
+        $this->validateRequired($required, $this->Notifications, [$this, 'getGood']);
+
+        $notRequired = [
+            Notification::FIELD_ID,
+            Notification::FIELD_USER_ID,
+            Notification::FIELD_BODY_CONTENT,
+            Notification::FIELD_SUBJECT_LINK,
+            Notification::FIELD_EMAIL_CODE,
+        ];
+
+        $this->validateNotRequired($notRequired, $this->Notifications, [$this, 'getGood']);
+
+        $notEmpties = [
+            Notification::FIELD_NOTIFICATION_TYPE_ID,
+            Notification::FIELD_NOTIFICATION_HEADER,
+            Notification::FIELD_NOTIFICATION_SOURCE,
+        ];
+
+        $this->validateNotEmpties($notEmpties, $this->Notifications, [$this, 'getGood']);
+
+        $empties = [
+            Notification::FIELD_ID,
+            Notification::FIELD_USER_ID,
+            Notification::FIELD_BODY_CONTENT,
+            Notification::FIELD_SUBJECT_LINK,
+            Notification::FIELD_EMAIL_CODE,
+        ];
+
+        $this->validateEmpties($empties, $this->Notifications, [$this, 'getGood']);
+
+        $maxLengths = [
+            Notification::FIELD_NOTIFICATION_HEADER => 45,
+            Notification::FIELD_NOTIFICATION_SOURCE => 63,
+        ];
+
+        $this->validateMaxLengths($maxLengths, $this->Notifications, [$this, 'getGood']);
     }
 
     /**
@@ -82,7 +184,11 @@ class NotificationsTableTest extends TestCase
      */
     public function testBuildRules(): void
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $foreignKeys = [
+            Notification::FIELD_USER_ID => $this->Notifications->Users,
+            Notification::FIELD_NOTIFICATION_TYPE_ID => $this->Notifications->NotificationTypes,
+        ];
+        $this->validateExistsRules($foreignKeys, $this->Notifications, [$this, 'getGood']);
     }
 
     /**

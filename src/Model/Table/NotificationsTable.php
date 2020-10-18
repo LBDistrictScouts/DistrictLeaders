@@ -78,9 +78,14 @@ class NotificationsTable extends Table
 
         $validator
             ->scalar(Notification::FIELD_NOTIFICATION_HEADER)
-            ->requirePresence(Notification::FIELD_NOTIFICATION_HEADER)
+            ->requirePresence(Notification::FIELD_NOTIFICATION_HEADER, 'create')
             ->maxLength(Notification::FIELD_NOTIFICATION_HEADER, 45)
-            ->allowEmptyString(Notification::FIELD_NOTIFICATION_HEADER);
+            ->notEmptyString(Notification::FIELD_NOTIFICATION_HEADER);
+
+        $validator
+            ->integer(Notification::FIELD_NOTIFICATION_TYPE_ID)
+            ->requirePresence(Notification::FIELD_NOTIFICATION_TYPE_ID, 'create')
+            ->notEmptyString(Notification::FIELD_NOTIFICATION_TYPE_ID);
 
         $validator
             ->dateTime(Notification::FIELD_READ_DATE)
@@ -88,18 +93,19 @@ class NotificationsTable extends Table
 
         $validator
             ->scalar(Notification::FIELD_NOTIFICATION_SOURCE)
+            ->requirePresence(Notification::FIELD_NOTIFICATION_SOURCE, 'create')
             ->maxLength(Notification::FIELD_NOTIFICATION_SOURCE, 63)
-            ->allowEmptyString(Notification::FIELD_NOTIFICATION_SOURCE);
+            ->notEmptyString(Notification::FIELD_NOTIFICATION_SOURCE);
 
         $validator
             ->dateTime(Notification::FIELD_DELETED)
             ->allowEmptyDateTime(Notification::FIELD_DELETED);
 
         $validator
-            ->notEmptyString(Notification::FIELD_BODY_CONTENT);
+            ->allowEmptyArray(Notification::FIELD_BODY_CONTENT);
 
         $validator
-            ->allowEmptyString(Notification::FIELD_SUBJECT_LINK);
+            ->allowEmptyArray(Notification::FIELD_SUBJECT_LINK);
 
         return $validator;
     }
