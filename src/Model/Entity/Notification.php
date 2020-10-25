@@ -73,6 +73,11 @@ class Notification extends Entity
 
     protected $_hidden = [
         'new',
+        'text',
+        'link_id',
+        'link_controller',
+        'link_prefix',
+        'link_action',
     ];
 
     public const FIELD_ID = 'id';

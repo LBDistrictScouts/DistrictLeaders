@@ -28,6 +28,11 @@ class NotificationsFixture extends TestFixture
         'body_content' => ['type' => 'json', 'length' => null, 'default' => '{}', 'null' => false, 'comment' => null, 'precision' => null],
         'subject_link' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         'new' => ['type' => 'boolean', 'length' => null, 'default' => 1, 'null' => false, 'comment' => null, 'precision' => null],
+        'text' => ['type' => 'string', 'length' => 1, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'link_id' => ['type' => 'string', 'length' => 1, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'link_controller'  => ['type' => 'string', 'length' => 1, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'link_prefix'  => ['type' => 'string', 'length' => 1, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'link_action'  => ['type' => 'string', 'length' => 1, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
         '_indexes' => [
             'notifications_user_id' => ['type' => 'index', 'columns' => ['user_id'], 'length' => []],
             'notifications_notification_type_id' => ['type' => 'index', 'columns' => ['notification_type_id'], 'length' => []],
