@@ -10,7 +10,7 @@ use App\Model\Entity\RoleType;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
-use App\Model\Table\Exceptions\InvalidEmailDomainException;
+use App\Model\Table\Exceptions\BadUserDataException;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\ORM\RulesChecker;
@@ -240,9 +240,9 @@ class CompassRecordsTable extends Table
 
     /**
      * @param \App\Model\Entity\CompassRecord $compassRecord The Compass Record
-     * @return bool
+     * @return string
      */
-    public function doAutoMerge(CompassRecord $compassRecord): bool
+    public function shouldMerge(CompassRecord $compassRecord): string
     {
         $this->loadModel('Users');
         $this->loadModel('ScoutGroups');
@@ -251,22 +251,25 @@ class CompassRecordsTable extends Table
         $compassRecord = $this->prepareRecord($compassRecord);
 
         if ($this->detectUser($compassRecord) instanceof User) {
-            return true;
+            return 'Merge';
         }
 
         if (!$this->ScoutGroups->domainVerify($compassRecord->email)) {
-            return false;
+            return 'Invalid Email Address.';
         }
 
         $groupExists = [
             ScoutGroup::FIELD_SCOUT_GROUP => $compassRecord->clean_group,
         ];
-        if (!$this->ScoutGroups->exists($groupExists)) {
-            return false;
+        $groupAliasExists = [
+            ScoutGroup::FIELD_GROUP_ALIAS => $compassRecord->clean_group,
+        ];
+        if (!($this->ScoutGroups->exists($groupExists) || $this->ScoutGroups->exists($groupAliasExists))) {
+            return 'Invalid Scout Group.';
         }
 
         if ($compassRecord->provisional) {
-            return false;
+            return 'Provisional Role.';
         }
 
         $roleExist = [
@@ -274,6 +277,19 @@ class CompassRecordsTable extends Table
             RoleType::FIELD_IMPORT_TYPE => true,
         ];
         if ($this->RoleTypes->exists($roleExist)) {
+            return 'Merge';
+        }
+
+        return 'No Role Type.';
+    }
+
+    /**
+     * @param \App\Model\Entity\CompassRecord $compassRecord The Compass Record
+     * @return bool
+     */
+    public function doAutoMerge(CompassRecord $compassRecord): bool
+    {
+        if ($this->shouldMerge($compassRecord) == 'Merge') {
             return true;
         }
 
@@ -281,20 +297,22 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param int|null $documentVersionId Document Version ID
+     * @param \App\Model\Entity\DocumentVersion $documentVersion Document Version ID
      * @return array
      */
-    public function autoMerge(?int $documentVersionId = null)
+    public function autoMerge(DocumentVersion $documentVersion): array
     {
         $query = $this->find();
-        if (!is_null($documentVersionId)) {
+        if (!is_null($documentVersion)) {
             $query->where([
-                CompassRecord::FIELD_DOCUMENT_VERSION_ID => $documentVersionId,
+                CompassRecord::FIELD_DOCUMENT_VERSION_ID => $documentVersion->id,
             ]);
         }
-        $success = 0;
-        $new = 0;
-        $total = $query->count();
+        $successfullyMerged = 0;
+        $newConsumedRecords = 0;
+        $unmergedRecords = 0;
+        $skippedRecords = 0;
+        $totalParsedRecords = $query->count();
 
         foreach ($query as $record) {
             if ($record instanceof CompassRecord && $this->doAutoMerge($record)) {
@@ -305,15 +323,25 @@ class CompassRecordsTable extends Table
                     $user = null;
                 }
                 if ($this->importUser($record, $user)) {
-                    $success++;
+                    $successfullyMerged++;
                     if (is_null($user)) {
-                        $new++;
+                        $newConsumedRecords++;
                     }
+                } else {
+                    $unmergedRecords++;
                 }
+            } else {
+                $skippedRecords++;
             }
         }
 
-        return compact('success', 'total', 'new');
+        return compact(
+            'successfullyMerged',
+            'totalParsedRecords',
+            'newConsumedRecords',
+            'unmergedRecords',
+            'skippedRecords'
+        );
     }
 
     /**
@@ -361,7 +389,7 @@ class CompassRecordsTable extends Table
             DirectoryUser::FIELD_FAMILY_NAME => $record->get(CompassRecord::FIELD_LAST_NAME),
         ]);
 
-        if ($userNameMatch->count() > 1) {
+        if ($userNameMatch->count() >= 1) {
             $directoryUser = $userNameMatch->first();
             $record->set(CompassRecord::FIELD_EMAIL, $directoryUser->get(DirectoryUser::FIELD_PRIMARY_EMAIL));
             $record = $this->save($record);
@@ -380,6 +408,14 @@ class CompassRecordsTable extends Table
 
         $existing = $this->Users->find()->where([
             User::FIELD_MEMBERSHIP_NUMBER => $record->membership_number,
+        ]);
+
+        if ($existing->count() == 1) {
+            return $this->Users->get($existing->first()->get(User::FIELD_ID));
+        }
+
+        $existing = $this->Users->find()->where([
+            User::FIELD_EMAIL => $record->email,
         ]);
 
         if ($existing->count() == 1) {
@@ -471,6 +507,10 @@ class CompassRecordsTable extends Table
             $user = $this->Users->save($user);
         }
 
+        if (!$user instanceof User) {
+            throw new BadUserDataException();
+        }
+
         return $this->mergeUser($record, $user);
     }
 
@@ -487,7 +527,7 @@ class CompassRecordsTable extends Table
 
         try {
             $emailContact = $this->Users->UserContacts->makeEmail($user, $record->email);
-        } catch (InvalidEmailDomainException $exception) {
+        } catch (BadUserDataException $exception) {
             return false;
         }
 

@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\CompassRecord $compassRecord
  * @var \App\Model\Entity\User $user
+ * @var string $mergeStatus
  */
 ?>
 <div class="row">
@@ -15,6 +16,11 @@
                         <h4><?= $compassRecord->full_name ?></h4>
                         <h6 class="text-muted mb-2"><?= $this->Html->link($compassRecord->document_version->document->document . ' (v' . $compassRecord->document_version->version_number . ')', ['controller' => 'Documents', 'action' => 'view', $compassRecord->document_version->document->id]) ?></h6>
                         <br />
+                        <?php if ($mergeStatus == 'Merge') : ?>
+                        <div class="alert alert-success">Record is ready for Merging.</div>
+                        <?php else : ?>
+                        <div class="alert alert-danger"><?= $mergeStatus ?></div>
+                        <?php endif; ?>
                         <div class="table-responsive table-hover">
                             <table class="table">
                                 <tbody>

@@ -83,6 +83,8 @@ class ControllerTestCase extends TestCase
         'app.CampRoles',
 
         'plugin.Queue.QueuedJobs',
+        'plugin.Queue.QueueProcesses',
+
     ];
 
     /**

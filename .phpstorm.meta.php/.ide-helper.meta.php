@@ -739,6 +739,7 @@ namespace PHPSTORM_META {
 	expectedArguments(
 		\Queue\Model\Table\QueuedJobsTable::createJob(),
 		0,
+		'AutoMerge',
 		'Capability',
 		'Compass',
 		'CostsExample',
@@ -761,6 +762,7 @@ namespace PHPSTORM_META {
 	expectedArguments(
 		\Queue\Model\Table\QueuedJobsTable::isQueued(),
 		1,
+		'AutoMerge',
 		'Capability',
 		'Compass',
 		'CostsExample',

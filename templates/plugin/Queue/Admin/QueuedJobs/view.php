@@ -8,6 +8,9 @@
  * @var \App\View\AppView $this
  * @var \Queue\Model\Entity\QueuedJob $queuedJob
  */
+
+use Tools\Utility\Time;
+
 $current = 'view_job';
 
 ?>
@@ -90,7 +93,7 @@ $current = 'view_job';
                                 <?php echo $this->QueueProgress->timeoutProgressBar($queuedJob, 18); ?>
                                 <?php if ($queuedJob->notbefore && $queuedJob->notbefore->isFuture()) {
                                     echo '<div><small>';
-                                    echo $this->Time::relLengthOfTime($queuedJob->notbefore);
+                                    echo Time::relLengthOfTime($queuedJob->notbefore);
                                     echo '</small></div>';
                                 } ?>
                             </td>

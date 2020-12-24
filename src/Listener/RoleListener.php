@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use Cake\Event\EventListenerInterface;
+use Cake\I18n\Time;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
@@ -54,10 +55,15 @@ class RoleListener implements EventListenerInterface
         /** @var \App\Model\Entity\Role $role */
         $role = $event->getData('entity');
 
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $this->QueuedJobs->createJob(
-            'Email',
-            ['email_generation_code' => 'ROL-' . $role->id . '-CNG']
-        );
+        $now = Time::now();
+        $daysOld = $now->diffInDays($role->created);
+
+        if ($daysOld > 10) {
+            $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+            $this->QueuedJobs->createJob(
+                'Email',
+                ['email_generation_code' => 'ROL-' . $role->id . '-CNG']
+            );
+        }
     }
 }

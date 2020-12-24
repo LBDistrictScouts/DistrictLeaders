@@ -123,13 +123,13 @@ class NotificationTypesTable extends Table
     /**
      * install the application status config
      *
-     * @param string $entityCode Notification Type Code
+     * @param string $emailGenerationCode Notification Type Code
      * @throws \Cake\Datasource\Exception\RecordNotFoundException
      * @return \App\Model\Entity\NotificationType
      */
-    public function getTypeCode(string $entityCode): NotificationType
+    public function getTypeCode(string $emailGenerationCode): NotificationType
     {
-        $typeArray = $this->entityCodeSplitter($entityCode);
+        $typeArray = $this->entityCodeSplitter($emailGenerationCode);
         $code = $typeArray['typeCode'];
 
         if ($this->exists(['type_code' => $code])) {
@@ -143,6 +143,19 @@ class NotificationTypesTable extends Table
         }
 
         throw new RecordNotFoundException();
+    }
+
+    /**
+     * @param string $typeCode Code Type to Get Entity For
+     * @return string
+     */
+    public function getTypeEntity(string $typeCode): string
+    {
+        if ($typeCode == 'ROL') {
+            return 'Roles';
+        }
+
+        return 'Users';
     }
 
     /**
@@ -190,9 +203,10 @@ class NotificationTypesTable extends Table
      *
      * @param \App\Model\Entity\NotificationType $notificationType Notification Type for Header Build
      * @param \App\Model\Entity\User $user User for Header Context
+     * @param array|null $data Additional Notification Context Data
      * @return string
      */
-    public function buildNotificationHeader(NotificationType $notificationType, User $user): string
+    public function buildNotificationHeader(NotificationType $notificationType, User $user, ?array $data): string
     {
         if ($notificationType->type == 'USR') {
             switch ($notificationType->sub_type) {
@@ -215,10 +229,22 @@ class NotificationTypesTable extends Table
         if ($notificationType->type == 'ROL') {
             switch ($notificationType->sub_type) {
                 case 'NEW':
-                    $header = 'New Role "{0}" added to {1}';
+                    if (is_array($data) && key_exists('role_type', $data)) {
+                        $header = 'New Role {0} added to {1}';
+
+                        return __($header, $data['role_type'], $user->full_name);
+                    } else {
+                        $header = 'New Role added to {0}';
+                    }
                     break;
                 case 'CNG':
-                    $header = 'Changes to Role "{0}" for {1}';
+                    if (is_array($data) && key_exists('role_type', $data)) {
+                        $header = 'Changes to Role {0} for {1}';
+
+                        return __($header, $data['role_type'], $user->full_name);
+                    } else {
+                        $header = 'Changes to Role for {0}';
+                    }
                     break;
                 default:
                     return '';
@@ -234,9 +260,10 @@ class NotificationTypesTable extends Table
      * Function to build Notification Standard Header
      *
      * @param \App\Model\Entity\NotificationType $notificationType Notification Type
+     * @param array|null $data Additional Notification Context Data
      * @return array
      */
-    public function buildNotificationLink(NotificationType $notificationType): array
+    public function buildNotificationLink(NotificationType $notificationType, ?array $data = null): array
     {
         if ($notificationType->type == 'USR') {
             switch ($notificationType->sub_type) {
@@ -265,9 +292,17 @@ class NotificationTypesTable extends Table
             switch ($notificationType->sub_type) {
                 case 'CNG':
                 case 'NEW':
+                    if (is_array($data) && key_exists('role_id', $data)) {
+                        return [
+                            'controller' => 'Roles',
+                            'action' => 'view',
+                            $data['role_id'],
+                        ];
+                    }
+
                     return [
-                        'controller' => 'Roles',
-                        'action' => 'index',
+                        'controller' => 'Users',
+                        'action' => 'self',
                     ];
                 default:
                     return [];

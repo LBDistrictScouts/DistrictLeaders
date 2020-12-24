@@ -128,4 +128,22 @@ class DocumentVersionsController extends AppController
 
         return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
     }
+
+    /**
+     * Auto Merge method
+     *
+     * @param string|null $documentVersionId Document Version id.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Exception
+     */
+    public function autoMerge($documentVersionId = null)
+    {
+        $this->request->allowMethod(['post']);
+        $documentVersion = $this->DocumentVersions->get($documentVersionId);
+
+        $this->loadComponent('Queue');
+        $this->Queue->setCompassAutoMerge($documentVersion);
+
+        return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
+    }
 }

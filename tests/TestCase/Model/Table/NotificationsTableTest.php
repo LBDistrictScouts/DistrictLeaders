@@ -170,7 +170,7 @@ class NotificationsTableTest extends TestCase
         $this->validateEmpties($empties, $this->Notifications, [$this, 'getGood']);
 
         $maxLengths = [
-            Notification::FIELD_NOTIFICATION_HEADER => 45,
+            Notification::FIELD_NOTIFICATION_HEADER => 255,
             Notification::FIELD_NOTIFICATION_SOURCE => 63,
         ];
 

@@ -69,8 +69,9 @@ class CompassRecordsController extends AppController
         ]);
 
         $user = $this->CompassRecords->detectUser($compassRecord);
+        $mergeStatus = $this->CompassRecords->shouldMerge($compassRecord);
 
-        $this->set(compact('compassRecord', 'user'));
+        $this->set(compact('compassRecord', 'user', 'mergeStatus'));
     }
 
     /**
