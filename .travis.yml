@@ -10,6 +10,7 @@ version: ~> 1.0
 
 services:
   - redis
+  - postgresql
   - elasticsearch
 
 addons:
