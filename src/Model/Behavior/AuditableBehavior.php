@@ -36,7 +36,7 @@ class AuditableBehavior extends Behavior
      */
     public function afterSave(\Cake\Event\EventInterface $event, $entity, $options)
     {
-        if ($this->getTable()->hasAssociation('Audits')) {
+        if ($this->table()->hasAssociation('Audits')) {
             $this->Audits = $this->getTableLocator()->get('Audits');
         } else {
             throw new MissingBehaviorException('Audits Association is not present.');
@@ -60,7 +60,7 @@ class AuditableBehavior extends Behavior
                     $auditData = [
                         'audit_record_id' => $entity->get('id'),
                         'audit_field' => $dirty_value,
-                        'audit_table' => $this->getTable()->getRegistryAlias(),
+                        'audit_table' => $this->table()->getRegistryAlias(),
                         'original_value' => $original,
                         'modified_value' => $current,
                     ];
@@ -73,8 +73,8 @@ class AuditableBehavior extends Behavior
         }
 
         if ($auditCount > 0) {
-            $this->getTable()->getEventManager()->dispatch(new Event(
-                'Model.' . $this->getTable()->getRegistryAlias() . '.newAudits',
+            $this->table()->getEventManager()->dispatch(new Event(
+                'Model.' . $this->table()->getRegistryAlias() . '.newAudits',
                 $this,
                 [
                     'entity' => $entity,
