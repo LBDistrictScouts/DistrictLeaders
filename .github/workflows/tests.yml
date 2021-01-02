@@ -43,6 +43,18 @@ jobs:
           extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}
           ini-values: apc.enable_cli = 1
 
+      - name: Set Extended Test Timeout
+        run: export COMPOSER_PROCESS_TIMEOUT=900
+
+      - name: Set App File Config
+        run: mv config/app_file.travis.php config/app_file.php
+
+      - name: Set App Config
+        run: mv config/app.travis.php config/app.php
+
+      - name: Set General YML Config
+        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+
       - name: Update composer
         run: composer self-update
 
