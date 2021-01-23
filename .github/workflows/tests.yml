@@ -25,13 +25,15 @@ jobs:
 
     services:
       postgres:
-        image: postgres:10.8
+        image: postgres:latest
         env:
           POSTGRES_DB: leaders
           POSTGRES_PASSWORD: cake
           POSTGRES_USER: app
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
         ports:
-          - 5432/tcp
+          - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
       redis:
         image: redis
@@ -56,7 +58,7 @@ jobs:
         run: mv config/app_file.travis.php config/app_file.php
 
       - name: Set App Config
-        run: mv config/app.travis.php config/app.php
+        run: mv config/app.github-ci.php config/app.php
 
       - name: Set General YML Config
         run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
@@ -83,7 +85,7 @@ jobs:
       - name: Install dependencies
         run: |
           if [[ ${{ matrix.composer-type }} == 'lowest' ]]; then
-            composer update --prefer-dist --no-progress --no-suggest --prefer-stable --prefer-lowest
+            composer update --prefer-dist --no-progress --no-suggest --prefer-lowest
           elif [[ ${{ matrix.composer-type }} == 'stable' ]]; then
             composer update --prefer-dist --no-progress --no-suggest --prefer-stable
           elif [[ ${{ matrix.composer-type }} == 'dev' ]]; then
