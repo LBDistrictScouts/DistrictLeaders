@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\Camp;
+use App\Model\Entity\CampType;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -34,11 +36,11 @@ class CampTypesTable extends Table
         parent::initialize($config);
 
         $this->setTable('camp_types');
-        $this->setDisplayField('camp_type');
-        $this->setPrimaryKey('id');
+        $this->setDisplayField(CampType::FIELD_CAMP_TYPE);
+        $this->setPrimaryKey(CampType::FIELD_ID);
 
         $this->hasMany('Camps', [
-            'foreignKey' => 'camp_type_id',
+            'foreignKey' => Camp::FIELD_CAMP_TYPE_ID,
         ]);
     }
 
@@ -51,15 +53,15 @@ class CampTypesTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
         $validator
-            ->integer('id')
-            ->allowEmptyString('id', null, 'create');
+            ->integer(CampType::FIELD_ID)
+            ->allowEmptyString(CampType::FIELD_ID, null, 'create');
 
         $validator
-            ->scalar('camp_type')
-            ->maxLength('camp_type', 30)
-            ->requirePresence('camp_type', 'create')
-            ->notEmptyString('camp_type')
-            ->add('camp_type', 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
+            ->scalar(CampType::FIELD_CAMP_TYPE)
+            ->maxLength(CampType::FIELD_CAMP_TYPE, 30)
+            ->requirePresence(CampType::FIELD_CAMP_TYPE, 'create')
+            ->notEmptyString(CampType::FIELD_CAMP_TYPE)
+            ->add(CampType::FIELD_CAMP_TYPE, 'unique', ['rule' => 'validateUnique', 'provider' => 'table']);
 
         return $validator;
     }
@@ -73,7 +75,7 @@ class CampTypesTable extends Table
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
-        $rules->add($rules->isUnique(['camp_type']));
+        $rules->add($rules->isUnique([CampType::FIELD_CAMP_TYPE]));
 
         return $rules;
     }

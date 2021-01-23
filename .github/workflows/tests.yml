@@ -11,27 +11,34 @@ on:
     - cron:  '0 0 * * 0'
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['7.4']
+        php-version: ['7.2', '7.3', '7.4']
         db-type: [pgsql]
-        composer-type: [lowest, stable, dev, install]
 
-    name: PHP ${{ matrix.php-version }} & ${{ matrix.db-type }} & ${{ matrix.composer-type }}
+    name: PHP ${{ matrix.php-version }} & ${{ matrix.db-type }}
 
     services:
       postgres:
-        image: postgres
-        ports:
-          - 5432:5432
+        image: postgres:latest
         env:
           POSTGRES_DB: leaders
           POSTGRES_PASSWORD: cake
           POSTGRES_USER: app
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+      redis:
+        image: redis
+        ports:
+          - 6379/tcp
+        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - uses: actions/checkout@v2
@@ -40,7 +47,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}
+          extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}, redis
           ini-values: apc.enable_cli = 1
 
       - name: Set Extended Test Timeout
@@ -50,7 +57,7 @@ jobs:
         run: mv config/app_file.travis.php config/app_file.php
 
       - name: Set App Config
-        run: mv config/app.travis.php config/app.php
+        run: mv config/app.github-ci.php config/app.php
 
       - name: Set General YML Config
         run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
@@ -58,20 +65,68 @@ jobs:
       - name: Update composer
         run: composer self-update
 
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
       - name: Validate composer.json
         run: composer validate
 
       - name: Install dependencies
-        run: |
-          if [[ ${{ matrix.composer-type }} == 'lowest' ]]; then
-            composer update --prefer-dist --no-progress --no-suggest --prefer-stable --prefer-lowest
-          elif [[ ${{ matrix.composer-type }} == 'stable' ]]; then
-            composer update --prefer-dist --no-progress --no-suggest --prefer-stable
-          elif [[ ${{ matrix.composer-type }} == 'dev' ]]; then
-            composer update --prefer-dist --no-progress --no-suggest
-          else
-            composer install --no-scripts
-          fi
+        run: composer install --no-scripts --no-suggest
 
       - name: Run tests
         run: composer test
+
+  coding-standard:
+    name: Coding Standard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          extensions: mbstring, intl, apcu
+
+      - name: Set App File Config
+        run: mv config/app_file.travis.php config/app_file.php
+
+      - name: Set App Config
+        run: mv config/app.github-ci.php config/app.php
+
+      - name: Set General YML Config
+        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+
+      - name: Update composer
+        run: composer self-update
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer install --no-scripts --no-progress --prefer-dist --optimize-autoloader
+
+      - name: PHP CodeSniffer
+        run: composer cs-check
