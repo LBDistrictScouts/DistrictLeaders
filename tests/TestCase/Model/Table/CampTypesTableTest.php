@@ -6,10 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\CampType;
 use App\Model\Table\CampTypesTable;
 use App\Test\Factory\CampTypeFactory;
-use App\Utility\TextSafe;
 use Cake\TestSuite\TestCase;
-use Cake\Utility\Security;
-use Faker\Generator;
 
 /**
  * App\Model\Table\CampTypesTable Test Case
@@ -86,7 +83,6 @@ class CampTypesTableTest extends TestCase
         ];
 
         $this->validateRequired($required, $this->CampTypes, [$this, 'getGood']);
-
 
         $notEmpties = [
             CampType::FIELD_CAMP_TYPE,

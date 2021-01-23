@@ -51,7 +51,9 @@ use Psr\Http\Message\ServerRequestInterface;
  * want to use in your application.
  */
 
-class Application extends BaseApplication implements AuthorizationServiceProviderInterface, AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements
+    AuthorizationServiceProviderInterface,
+    AuthenticationServiceProviderInterface
 {
     protected const LOGIN_URL = '/users/login';
 

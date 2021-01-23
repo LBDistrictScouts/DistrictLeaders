@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\Exceptions\InvalidNotificationCodeException;
 use App\Test\Factory\UserStateFactory;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
@@ -37,12 +36,12 @@ trait ModelTestTrait
      * Function that will return the Entity Name string
      *
      * @param \Cake\ORM\Table $table
-     *
      * @return string
      */
     private function getEntityName(Table $table): string
     {
         $entity = $table->getEntityClass();
+
         return strrev(explode('\\', strrev($entity))[0]);
     }
 
@@ -50,7 +49,6 @@ trait ModelTestTrait
      * Function that will return the class string for the Entity Factory
      *
      * @param \Cake\ORM\Table $table
-     *
      * @return string
      */
     private function getFactoryName(Table $table): string
@@ -64,7 +62,6 @@ trait ModelTestTrait
      * Function that will return the 'make' callable string for the Entity Factory
      *
      * @param \Cake\ORM\Table $table
-     *
      * @return string
      */
     private function getFactoryMake(Table $table): string
@@ -76,7 +73,6 @@ trait ModelTestTrait
      * @param \Cake\ORM\Table $table
      * @param array $parameter
      * @param int $quantity
-     *
      * @return \CakephpFixtureFactories\Factory\BaseFactory
      */
     private function factoryMake(Table $table, array $parameter = [], int $quantity = 1): BaseFactory
@@ -425,8 +421,7 @@ trait ModelTestTrait
         int $count,
         ?array $dates = null,
         $get = 1
-    ): void
-    {
+    ): void {
         if (is_array($get)) {
             $actual = $table->find('all')->where($get)->first()->toArray();
         } else {
