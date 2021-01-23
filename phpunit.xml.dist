@@ -29,9 +29,10 @@
     <!-- Setup a listener for fixtures -->
     <listeners>
         <listener
-        class="\Cake\TestSuite\Fixture\FixtureInjector">
+        class="\CakephpTestSuiteLight\FixtureInjector">
             <arguments>
-                <object class="\Cake\TestSuite\Fixture\FixtureManager" />
+                <object class="\CakephpTestSuiteLight\FixtureManager" />
+                <boolean>true</boolean>
             </arguments>
         </listener>
     </listeners>

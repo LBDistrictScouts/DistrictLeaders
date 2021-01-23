@@ -91,6 +91,7 @@ class Application extends BaseApplication implements AuthorizationServiceProvide
 
         if (PHP_SAPI === 'cli') {
             try {
+                $this->addPlugin('CakephpFixtureFactories');
                 $this->addPlugin('Bake');
                 $this->addPlugin('IdeHelper');
             } catch (MissingPluginException $e) {
