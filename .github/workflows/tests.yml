@@ -100,6 +100,18 @@ jobs:
           php-version: '7.4'
           extensions: mbstring, intl, apcu
 
+      - name: Set App File Config
+        run: mv config/app_file.travis.php config/app_file.php
+
+      - name: Set App Config
+        run: mv config/app.github-ci.php config/app.php
+
+      - name: Set General YML Config
+        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+
+      - name: Update composer
+        run: composer self-update
+
       - name: Get composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
