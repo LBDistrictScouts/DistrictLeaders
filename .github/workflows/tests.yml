@@ -48,7 +48,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}, redis, xdebug
-          ini-values: apc.enable_cli = 1
+          ini-values: apc.enable_cli = 1, xdebug.mode = develop
 
       - name: Set Extended Test Timeout
         run: export COMPOSER_PROCESS_TIMEOUT=900
