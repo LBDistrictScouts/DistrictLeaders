@@ -8,6 +8,7 @@ use App\Model\Entity\UserState;
 use App\Model\Table\Traits\BaseInstallerTrait;
 use App\Model\Table\UsersTable;
 use App\Model\Table\UserStatesTable;
+use App\Test\Factory\UserStateFactory;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
@@ -62,45 +63,6 @@ class UserStatesTableTest extends TestCase
     ];
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
-
-    /**
      * setUp method
      *
      * @return void
@@ -144,11 +106,7 @@ class UserStatesTableTest extends TestCase
      */
     private function getGood(): array
     {
-        return [
-            'user_state' => 'Status ' . random_int(111, 999) . ' ' . random_int(111, 999),
-            'active' => true,
-            'expired' => false,
-        ];
+        return UserStateFactory::getGood();
     }
 
     /**
@@ -158,16 +116,7 @@ class UserStatesTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $expected = [
-            UserState::FIELD_ID => 1,
-            UserState::FIELD_USER_STATE => 'Active Directory User',
-            UserState::FIELD_ACTIVE => true,
-            UserState::FIELD_EXPIRED => false,
-            UserState::FIELD_PRECEDENCE_ORDER => 1,
-            UserState::FIELD_SIGNATURE => 63,
-            UserState::FIELD_IS_EMAIL_SEND_ACTIVE => true,
-        ];
-        $this->validateInitialise($expected, $this->UserStates, 6);
+        $this->validateAutoInitialise($this->UserStates);
     }
 
     /**

@@ -68,6 +68,15 @@ jobs:
           packages:
             - postgresql-12
 
+    - name: "PHP 7.4 Focal Postgres 13"
+        dist: focal
+        addons:
+          postgresql: "13"
+          apt:
+            packages:
+              - postgresql-13
+              - postgresql-client-13
+
     - name: "PHP 7.4 Bionic Postgres 10"
       addons:
         postgresql: "10"
@@ -96,7 +105,6 @@ install:
   - composer validate
 
 before_script:
-  - if [[ $DEFAULT = 1 ]]; then composer run-script post-install-cmd --no-interaction; fi
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

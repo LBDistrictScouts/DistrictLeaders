@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
+use App\Model\Table\Exceptions\InvalidNotificationCodeException;
+use App\Test\Factory\UserStateFactory;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
+use CakephpFixtureFactories\Factory\BaseFactory;
 
 /**
  * Trait ModelTestTrait
@@ -29,6 +32,63 @@ trait ModelTestTrait
         'validDomainEmail' => 'You must use a Scouting Email Address',
         'regex' => 'The provided value is invalid',
     ];
+
+    /**
+     * Function that will return the Entity Name string
+     *
+     * @param \Cake\ORM\Table $table
+     *
+     * @return string
+     */
+    private function getEntityName(Table $table): string
+    {
+        $entity = $table->getEntityClass();
+        return strrev(explode('\\', strrev($entity))[0]);
+    }
+
+    /**
+     * Function that will return the class string for the Entity Factory
+     *
+     * @param \Cake\ORM\Table $table
+     *
+     * @return string
+     */
+    private function getFactoryName(Table $table): string
+    {
+        $entity = $this->getEntityName($table);
+
+        return 'App\Test\Factory\\' . $entity . 'Factory';
+    }
+
+    /**
+     * Function that will return the 'make' callable string for the Entity Factory
+     *
+     * @param \Cake\ORM\Table $table
+     *
+     * @return string
+     */
+    private function getFactoryMake(Table $table): string
+    {
+        return $this->getFactoryName($table) . '::make';
+    }
+
+    /**
+     * @param \Cake\ORM\Table $table
+     * @param array $parameter
+     * @param int $quantity
+     *
+     * @return \CakephpFixtureFactories\Factory\BaseFactory
+     */
+    private function factoryMake(Table $table, array $parameter = [], int $quantity = 1): BaseFactory
+    {
+        $class = $this->getFactoryName($table);
+        $config = ['generatePrimaryKey' => false];
+
+        /** @var BaseFactory $factory */
+        $factory = new UserStateFactory($config);
+
+        return $factory::make($parameter, $quantity);
+    }
 
     /**
      * @param \Cake\Datasource\EntityInterface $entity
@@ -252,12 +312,10 @@ trait ModelTestTrait
      */
     protected function validateUniqueRule($field, $table, $good)
     {
-        $existing = $table->get(1)->toArray();
         $instance = $table->getEntityClass();
 
-        $values = call_user_func($good);
-        $new = $table->newEntity($values);
-        TestCase::assertInstanceOf($instance, $table->save($new));
+        $existing = $table->newEntity(call_user_func($good));
+        TestCase::assertInstanceOf($instance, $table->save($existing));
 
         $values = call_user_func($good);
         if (is_array($field)) {
@@ -348,8 +406,10 @@ trait ModelTestTrait
         TestCase::assertGreaterThanOrEqual($before->count(), $after->count());
         TestCase::assertGreaterThanOrEqual($installed, $after->count());
 
-        $new = $after->whereNotInList($table->getPrimaryKey(), $beforeKeys);
-        TestCase::assertGreaterThan(0, $new->count());
+        if (!empty($beforeKeys)) {
+            $after = $after->whereNotInList($table->getPrimaryKey(), $beforeKeys);
+        }
+        TestCase::assertGreaterThan(0, $after->count());
     }
 
     /**
@@ -359,7 +419,13 @@ trait ModelTestTrait
      * @param array|null $dates Date Fields to be omitted
      * @param int|array|null $get The Get Value
      */
-    protected function validateInitialise($expected, $table, $count, $dates = null, $get = 1)
+    protected function validateInitialise(
+        array $expected,
+        Table $table,
+        int $count,
+        ?array $dates = null,
+        $get = 1
+    ): void
     {
         if (is_array($get)) {
             $actual = $table->find('all')->where($get)->first()->toArray();
@@ -381,5 +447,25 @@ trait ModelTestTrait
 
         $tableCount = $table->find('all')->count();
         TestCase::assertEquals($count, $tableCount);
+    }
+
+    /**
+     * @param \Cake\ORM\Table $table
+     */
+    protected function validateAutoInitialise(Table $table): void
+    {
+        try {
+            $savedEntity = $this->factoryMake($table)->persist();
+            TestCase::assertInstanceOf($table->getEntityClass(), $savedEntity, 'Save Exception');
+        } catch (\Exception $exception) {
+            throw $exception;
+        }
+
+        $actual = $table->get($savedEntity->id)->toArray();
+        $expected = $savedEntity->toArray();
+        TestCase::assertEquals($expected, $actual);
+
+        $count = $table->find('all')->count();
+        TestCase::assertEquals(1, $count);
     }
 }
