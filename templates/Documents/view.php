@@ -32,10 +32,8 @@
                         <div class="d-inline">
                             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
                             <div class="dropdown-menu" role="menu">
-                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') ? $this->Form->postLink('Parse Compass Upload', ['controller' => 'DocumentVersions', 'action' => 'compass', $documentVersions->id], ['confirm' => __('Are you sure you want to parse upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Parse Compass'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
-                                <a class="dropdown-item" role="presentation" href="#">First Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Second Item</a>
-                                <a class="dropdown-item" role="presentation" href="#">Third Item</a>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Parse Compass Upload', ['controller' => 'DocumentVersions', 'action' => 'compass', $documentVersions->id], ['confirm' => __('Are you sure you want to parse upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Parse Compass'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Auto Merge All Uploaded Records', ['controller' => 'DocumentVersions', 'action' => 'auto-merge', $documentVersions->id], ['confirm' => __('Are you sure you want to auto merge the upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Auto Merge Uploaded Compass Records'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
                             </div>
                         </div>
                     </div>

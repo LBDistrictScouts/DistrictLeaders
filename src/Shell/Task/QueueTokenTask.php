@@ -34,9 +34,7 @@ class QueueTokenTask extends QueueTask implements QueueTaskInterface
     public function run(array $data, $jobId): void
     {
         $this->loadModel('Tokens');
-
         $result = $this->Tokens->cleanAllTokens((int)$jobId);
-
         $this->saveJobDataArray((int)$jobId, $result);
     }
 }

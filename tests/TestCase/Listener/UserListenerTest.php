@@ -3,13 +3,11 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
-use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 
 /**
  * Class UserListenerTest
@@ -38,7 +36,7 @@ class UserListenerTest extends TestCase
 
     public function testUpdateLogin()
     {
-        $now = new Time('2018-12-25 23:22:30');
+        $now = new FrozenTime('2018-12-25 23:22:30');
         FrozenTime::setTestNow($now);
 
         $testPassword = 'ThisTestPassword';
@@ -47,7 +45,10 @@ class UserListenerTest extends TestCase
         $user->set(User::FIELD_PASSWORD, $testPassword);
         TestCase::assertNotFalse($this->Users->save($user));
 
-        $now = new Time('2018-12-28 23:22:30');
+        $user = $this->Users->get(1);
+        TestCase::assertEquals($now, $user->modified);
+
+        $now = new FrozenTime('2018-12-28 23:22:30');
         FrozenTime::setTestNow($now);
 
         $redirect = [
@@ -73,16 +74,5 @@ class UserListenerTest extends TestCase
 
         TestCase::assertEquals($now, $afterUser->last_login);
         TestCase::assertNotEquals($now, $afterUser->modified);
-    }
-
-    public function testCapabilityChange()
-    {
-        static::markTestSkipped('Event Deactivated');
-
-        $role = $this->Roles->get(1);
-        $role->set(Role::FIELD_USER_CONTACT_ID, 2);
-        TestCase::assertNotFalse($this->Roles->save($role));
-
-        $this->assertEventFired('Model.Users.capabilityChange', $this->EventManager);
     }
 }

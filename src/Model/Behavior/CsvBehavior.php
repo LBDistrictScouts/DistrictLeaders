@@ -5,6 +5,7 @@ namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 
 /**
  * Csv behavior
@@ -62,11 +63,11 @@ class CsvBehavior extends Behavior
                 // read the 1st row as headings
                 $fields = fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure']);
                 foreach ($fields as $key => $field) {
-                    $field = trim($field);
+                    $field = strtolower(trim(Inflector::underscore($field)));
                     if (empty($field)) {
                         continue;
                     }
-                    $fields[$key] = strtolower($field);
+                    $fields[$key] = $field;
                 }
             } elseif ($options['headers']) {
                 fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure']);

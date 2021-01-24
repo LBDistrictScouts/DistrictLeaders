@@ -419,6 +419,22 @@ class TokensTableTest extends TestCase
         $result = $this->Tokens->cleanToken($token);
         TestCase::assertEquals(TokensTable::CLEAN_NO_CLEAN, $result);
 
+        // Utilised filled in
+        $token->set(Token::FIELD_UTILISED, $now);
+        $this->Tokens->save($token);
+
+        $result = $this->Tokens->cleanToken($token);
+        TestCase::assertEquals(TokensTable::CLEAN_DEACTIVATE, $result);
+
+        // Utilised null again
+        $token->set(Token::FIELD_UTILISED, null);
+        $token->set(Token::FIELD_ACTIVE, true);
+        $this->Tokens->save($token);
+
+        $result = $this->Tokens->cleanToken($token);
+        TestCase::assertEquals(TokensTable::CLEAN_NO_CLEAN, $result);
+
+        // Add Time to move past expiry
         $now = $expected->addMonth()->addDay();
         FrozenTime::setTestNow($now);
 
@@ -428,6 +444,7 @@ class TokensTableTest extends TestCase
         $token = $this->Tokens->get(1);
         TestCase::assertFalse($token->get(Token::FIELD_ACTIVE));
 
+        // Add time to move past deletion point
         $now = $now->addMonth();
         FrozenTime::setTestNow($now);
 

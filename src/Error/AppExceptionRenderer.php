@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Error;
 
-use App\Model\Table\Exceptions\InvalidEmailDomainException;
+use App\Model\Table\Exceptions\BadUserDataException;
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Error\ExceptionRenderer;
@@ -16,10 +16,10 @@ use Cake\Error\ExceptionRenderer;
 class AppExceptionRenderer extends ExceptionRenderer
 {
     /**
-     * @param \App\Model\Table\Exceptions\InvalidEmailDomainException $error The Error being handled
+     * @param \App\Model\Table\Exceptions\BadUserDataException $error The Error being handled
      * @return \Cake\Http\Response
      */
-    public function invalidEmailDomain(InvalidEmailDomainException $error)
+    public function invalidEmailDomain(BadUserDataException $error)
     {
         $exception = $error;
         $code = $this->_code($exception);

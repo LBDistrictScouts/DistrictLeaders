@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace App\Model\Entity;
 
 use App\Utility\CapBuilder;
-use Authentication\IdentityInterface as AuthenticationIdentity;
-use Authorization\IdentityInterface as AuthorizationIdentity;
+use Authentication\IdentityInterface as AuthenticationIdentityInterface;
+use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
@@ -72,7 +72,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property string|null $search_string
  * @property int $tag_count
  */
-class User extends Entity implements AuthorizationIdentity, AuthenticationIdentity
+class User extends Entity implements IdentityInterface, AuthenticationIdentityInterface
 {
     use LocatorAwareTrait;
 

@@ -10,7 +10,6 @@
 'app.RoleTypes',
 'app.RoleStatuses',
 
-'app.Audits',
 'app.UserContactTypes',
 'app.UserContacts',
 
@@ -22,6 +21,7 @@
 'app.RoleTypesDirectoryGroups',
 
 'app.Roles',
+'app.Audits',
 
 'app.NotificationTypes',
 'app.Notifications',

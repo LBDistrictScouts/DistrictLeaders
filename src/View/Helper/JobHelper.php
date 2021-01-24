@@ -24,6 +24,11 @@ class JobHelper extends Helper
         'deactivated' => 'Deactivated Tokens',
         'deleted' => 'Deleted Tokens',
         'records' => 'Total Tokens',
+        'successfullyMerged' => 'Compass Records Merged Successfully',
+        'totalParsedRecords' => 'Quantity of Compass Records Parsed',
+        'newConsumedRecords' => 'Newly Created Users',
+        'unmergedRecords' => 'Unmatched & Unmerged Compass Records',
+        'skippedRecords' => 'Skipped Compass Records',
     ];
 
     protected $inputKeys = [

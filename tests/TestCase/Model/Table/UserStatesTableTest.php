@@ -11,6 +11,7 @@ use App\Model\Table\UserStatesTable;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
+use Faker\Factory;
 
 /**
  * App\Model\Table\UserStatesTable Test Case
@@ -49,6 +50,15 @@ class UserStatesTableTest extends TestCase
     protected $UserState;
 
     /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.UserStates',
+    ];
+
+    /**
      * @var string[]
      */
     protected $cases = [
@@ -59,45 +69,6 @@ class UserStatesTableTest extends TestCase
         'EVALUATE_ACTIVE_ROLE',
         'EVALUATE_VALIDATED_EMAIL',
         'EVALUATE_ACTIVATED',
-    ];
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
     ];
 
     /**
@@ -144,8 +115,10 @@ class UserStatesTableTest extends TestCase
      */
     private function getGood(): array
     {
+        $faker = Factory::create('en_GB');
+
         return [
-            'user_state' => 'Status ' . random_int(111, 999) . ' ' . random_int(111, 999),
+            'user_state' => ucwords($faker->words(2, true)),
             'active' => true,
             'expired' => false,
         ];
@@ -167,6 +140,7 @@ class UserStatesTableTest extends TestCase
             UserState::FIELD_SIGNATURE => 63,
             UserState::FIELD_IS_EMAIL_SEND_ACTIVE => true,
         ];
+
         $this->validateInitialise($expected, $this->UserStates, 6);
     }
 

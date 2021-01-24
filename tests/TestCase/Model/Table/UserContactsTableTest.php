@@ -84,7 +84,7 @@ class UserContactsTableTest extends TestCase
      * @return array
      * @throws
      */
-    private function getGood()
+    private function getGood(): array
     {
         $good = [
             UserContact::FIELD_USER_ID => 1,
@@ -194,6 +194,8 @@ class UserContactsTableTest extends TestCase
             $this->UserContacts,
             [$this, 'getGood']
         );
+
+        $this->validateUniqueRule(UserContact::FIELD_CONTACT_FIELD, $this->UserContacts, [$this, 'getGood']);
 
         // User Contact Type Exists
         $this->validateExistsRule(UserContact::FIELD_USER_CONTACT_TYPE_ID, $this->UserContacts, $this->UserContacts->UserContactTypes, [$this, 'getGood']);

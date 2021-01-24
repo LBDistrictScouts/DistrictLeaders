@@ -82,6 +82,15 @@ class RequestPolicy implements RequestPolicyInterface
             return new Result(true, 'Entity Specific Capability Present.');
         }
 
+        // Webroot
+        $path = $request->getPath();
+        $webrootPaths = [
+            '/apple-touch-icon-precomposed.png',
+        ];
+        if (in_array($path, $webrootPaths)) {
+            return new Result(true, 'Webroot Access for Icons etc');
+        }
+
         return new Result(false, 'No Authorisation Rules');
     }
 }

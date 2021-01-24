@@ -80,8 +80,6 @@ class CompassRecordsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->loadFixtures();
-
         $config = $this->getTableLocator()->exists('CompassRecords') ? [] : [
             'className' => CompassRecordsTable::class,
             'connectionName' => 'test',
@@ -291,7 +289,7 @@ class CompassRecordsTableTest extends TestCase
                 [
                     CompassRecord::FIELD_EMAIL => User::FIELD_EMAIL,
                 ],
-                null,
+                2,
             ],
             'Matching Email & Name' => [
                 [
@@ -344,7 +342,7 @@ class CompassRecordsTableTest extends TestCase
             'New Available, Invalid Domain' => [
                 'jacob@baddomain.com',
                 true,
-                true,
+                false,
             ],
             'New Available, Valid Domain' => [
                 'jacob@4thgoat.org.uk',

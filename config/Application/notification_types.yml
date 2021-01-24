@@ -17,14 +17,17 @@ NotificationTypes:
     notification_description: Permissions / capabilities in the system have changed.
     icon: fa-key
     type_code: USR-CCH
+    content_template: standard
   - notification_type: New Role Added
     notification_description: A new role has been added in the system.
     icon: fa-sitemap
     type_code: ROL-NEW
+    content_template: role
   - notification_type: Role Changed
     notification_description: Role in the system was changed.
     icon: fa-sitemap
     type_code: ROL-CNG
+    content_template: role
   - notification_type: New Payment Received
     notification_description: Notification that a payment has been recorded by an administrator.
     icon: fa-receipt

@@ -72,6 +72,23 @@ class QueueComponent extends Component
     }
 
     /**
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
+     * @return void
+     */
+    public function setCompassAutoMerge(DocumentVersion $documentVersion): void
+    {
+        $job = $this->QueuedJobs->createJob('AutoMerge', ['version' => $documentVersion->id]);
+        if ($job instanceof QueuedJob) {
+            $this->Flash->queue(
+                'The document version has been sent for auto merging.',
+                ['params' => ['job_id' => $job->id]]
+            );
+        } else {
+            $this->Flash->error(__('The document version could not be queued. Please, try again.'));
+        }
+    }
+
+    /**
      * @return void
      */
     public function setCapabilityParse()

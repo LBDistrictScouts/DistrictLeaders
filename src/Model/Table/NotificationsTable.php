@@ -79,7 +79,7 @@ class NotificationsTable extends Table
         $validator
             ->scalar(Notification::FIELD_NOTIFICATION_HEADER)
             ->requirePresence(Notification::FIELD_NOTIFICATION_HEADER, 'create')
-            ->maxLength(Notification::FIELD_NOTIFICATION_HEADER, 45)
+            ->maxLength(Notification::FIELD_NOTIFICATION_HEADER, 255)
             ->notEmptyString(Notification::FIELD_NOTIFICATION_HEADER);
 
         $validator
@@ -172,35 +172,41 @@ class NotificationsTable extends Table
     }
 
     /**
-     * @param string $entityTypeCode Email Send Style Notification Entity Code
+     * @param string $emailGenerationCode Email Send Style Notification Entity Code
      * @param \App\Model\Entity\User $user Notification User Entity
-     * @param string $source Notification Source
      * @param array|null $body Starting Body for Notification
-     * @param array|null $link Starting Link for Notification
+     * @param array|null $data Additional Notification Context Data
      * @return \App\Model\Entity\Notification
      */
     public function make(
-        string $entityTypeCode,
+        string $emailGenerationCode,
         User $user,
-        string $source,
         ?array $body = [],
-        ?array $link = []
+        ?array $data = []
     ): Notification {
-        $notificationType = $this->NotificationTypes->getTypeCode($entityTypeCode);
+        $notificationType = $this->NotificationTypes->getTypeCode($emailGenerationCode);
 
         // Prevent none repetitive notifications from repeating
-        $exists = $this->checkShouldMake($notificationType, $user);
+        $exists = $this->checkShouldMake($notificationType, $emailGenerationCode, $user);
         if ($exists instanceof Notification) {
             return $exists;
         }
 
-        $header = $this->NotificationTypes->buildNotificationHeader($notificationType, $user);
+        $codeParts = $this->NotificationTypes->entityCodeSplitter($emailGenerationCode);
+        $notificationCode = $codeParts['type'] . '-' . $codeParts['entityId'] . '-' . $codeParts['subType'];
+
+        $header = $this->NotificationTypes->buildNotificationHeader($notificationType, $user, $data);
+        $link = $this->NotificationTypes->buildNotificationLink($notificationType, $data);
+
+        if (empty($body)) {
+            $body = $data;
+        }
 
         $notification = $this->newEntity([
             Notification::FIELD_USER_ID => $user->id,
             Notification::FIELD_NOTIFICATION_TYPE_ID => $notificationType->id,
             Notification::FIELD_NOTIFICATION_HEADER => $header,
-            Notification::FIELD_NOTIFICATION_SOURCE => $source,
+            Notification::FIELD_NOTIFICATION_SOURCE => $notificationCode,
             Notification::FIELD_BODY_CONTENT => $body,
             Notification::FIELD_SUBJECT_LINK => $link,
         ]);
@@ -215,19 +221,23 @@ class NotificationsTable extends Table
     /**
      * Function to determine if a Notification should be made or if it already exists
      *
-     * @param \App\Model\Entity\NotificationType $notificationType Notification Type for Evaluation
+     * @param \App\Model\Entity\NotificationType $notificationType The Notification Type
+     * @param string $emailGenerationCode Generation Code
      * @param \App\Model\Entity\User $user User for Existing Check
      * @return true|\App\Model\Entity\Notification
      */
-    protected function checkShouldMake(NotificationType $notificationType, User $user)
+    protected function checkShouldMake(NotificationType $notificationType, string $emailGenerationCode, User $user)
     {
         if ($notificationType->repetitive) {
             return true;
         }
 
+        $codeParts = $this->NotificationTypes->entityCodeSplitter($emailGenerationCode);
+        $notificationCode = $codeParts['type'] . '-' . $codeParts['entityId'] . '-' . $codeParts['subType'];
+
         $findData = [
             Notification::FIELD_USER_ID => $user->id,
-            Notification::FIELD_NOTIFICATION_TYPE_ID => $notificationType->id,
+            Notification::FIELD_NOTIFICATION_SOURCE => $notificationCode,
         ];
 
         if ($this->exists($findData)) {
@@ -242,12 +252,11 @@ class NotificationsTable extends Table
 
     /**
      * @param \App\Model\Entity\User $user The User for initiating welcome notification
-     * @param string|null $source The Notification Source
      * @return \App\Model\Entity\Notification
      */
-    public function welcome(User $user, ?string $source = 'System'): Notification
+    public function welcome(User $user): Notification
     {
-        $typeCode = 'USR-' . $user->id . '-NEW';
+        $emailGenerationCode = 'USR-' . $user->id . '-NEW';
 
         $body = [];
 
@@ -256,6 +265,6 @@ class NotificationsTable extends Table
             $body['creator'] = $creator->full_name;
         }
 
-        return $this->make($typeCode, $user, $source, $body);
+        return $this->make($emailGenerationCode, $user, $body);
     }
 }

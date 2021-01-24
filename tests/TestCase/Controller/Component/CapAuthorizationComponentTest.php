@@ -57,24 +57,15 @@ class CapAuthorizationComponentTest extends TestCase
         'app.Capabilities',
         'app.ScoutGroups',
         'app.SectionTypes',
+        'app.Sections',
+
         'app.RoleTemplates',
         'app.RoleTypes',
         'app.RoleStatuses',
-        'app.Sections',
+
         'app.Audits',
         'app.UserContactTypes',
         'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
 
         'app.DirectoryTypes',
         'app.Directories',
@@ -83,11 +74,22 @@ class CapAuthorizationComponentTest extends TestCase
         'app.DirectoryGroups',
         'app.RoleTypesDirectoryGroups',
 
+        'app.Roles',
+
+        'app.NotificationTypes',
+        'app.Notifications',
+
+        'app.EmailSends',
+        'app.Tokens',
+        'app.EmailResponseTypes',
+        'app.EmailResponses',
+
         'app.FileTypes',
         'app.DocumentTypes',
         'app.Documents',
         'app.DocumentVersions',
         'app.DocumentEditions',
+        'app.CompassRecords',
     ];
 
     /**

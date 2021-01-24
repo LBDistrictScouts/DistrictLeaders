@@ -32,6 +32,7 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 use App\Configure\Engine\YamlConfig;
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
+use App\Listener\TokenListener;
 use App\Listener\UserListener;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
@@ -181,6 +182,7 @@ Type::build('date')->useImmutable();
 Type::build('datetime')->useImmutable();
 Type::build('timestamp')->useImmutable();
 
+EventManager::instance()->on(new TokenListener());
 EventManager::instance()->on(new UserListener());
 EventManager::instance()->on(new RoleListener());
 EventManager::instance()->on(new CapabilityListener());

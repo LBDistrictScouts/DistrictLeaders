@@ -7,6 +7,7 @@ use App\Model\Entity\EmailSend;
 use App\Model\Entity\Notification;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
+use App\Model\Table\Exceptions\InvalidNotificationCodeException;
 use App\Model\Table\Exceptions\MalformedDataException;
 use Cake\I18n\FrozenTime;
 use Cake\Mailer\MailerAwareTrait;
@@ -185,9 +186,13 @@ class EmailSendsTable extends Table
         $newCode = $emailGenerationCode;
 
         while ($exists) {
-            $iterationNum += 1;
-            $newCode = $emailGenerationCode . '-' . $iterationNum;
+            if ($iterationNum == 0) {
+                $newCode = $emailGenerationCode;
+            } else {
+                $newCode = $emailGenerationCode . '-' . $iterationNum;
+            }
             $exists = $this->exists(['email_generation_code' => $newCode]);
+            $iterationNum += 1;
         }
 
         return $newCode;
@@ -197,14 +202,31 @@ class EmailSendsTable extends Table
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
+     * @throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
      * @return \App\Model\Entity\EmailSend|null
      */
-    public function make(string $emailGenerationCode)
+    public function make(string $emailGenerationCode): ?EmailSend
     {
         $typeArray = $this->codeSplitter($emailGenerationCode);
-        $user = $this->Users->get($typeArray['entityId']);
+        $entity = $this->Notifications->NotificationTypes->getTypeEntity($typeArray['type']);
+        if ($entity == 'Users') {
+            $user = $this->Users->get($typeArray['entityId']);
+            $data = [];
+        } elseif ($entity == 'Roles') {
+            $role = $this->Users->Roles->get($typeArray['entityId'], ['contain' => 'RoleTypes']);
+            $user = $this->Users->get($role->user_id);
 
-        $notification = $this->Notifications->make($emailGenerationCode, $user, 'System');
+            $data = [
+                'role_type' => $role->role_type->role_type,
+                'role_id' => $role->id,
+            ];
+        }
+
+        if (!isset($user) || !$user instanceof User || !isset($data)) {
+            throw new InvalidNotificationCodeException();
+        }
+
+        $notification = $this->Notifications->make($emailGenerationCode, $user, [], $data);
 
         return $this->generate($notification, $user, $emailGenerationCode);
     }
@@ -241,6 +263,8 @@ class EmailSendsTable extends Table
             EmailSend::FIELD_INCLUDE_TOKEN => $options['includeToken'],
         ];
 
+        $associations = [];
+
         if ($options['includeToken']) {
             $redirect = $this->Notifications->NotificationTypes->buildNotificationLink($notificationType);
 
@@ -256,11 +280,12 @@ class EmailSendsTable extends Table
                 ],
             ];
             $data = array_merge($data, $tokenData);
+            $associations = ['associated' => ['Tokens']];
         }
 
         $sendEntity = $this->newEntity($data);
 
-        if ($this->save($sendEntity, ['associated' => ['Tokens']])) {
+        if ($this->save($sendEntity, $associations)) {
             return $sendEntity;
         }
 
@@ -282,7 +307,7 @@ class EmailSendsTable extends Table
 
         $token = null;
 
-        if ($email->include_token) {
+        if ($email->include_token && $email->has('tokens')) {
             $token = $email->tokens[0];
             $token = $this->Tokens->buildToken($token->id);
         }

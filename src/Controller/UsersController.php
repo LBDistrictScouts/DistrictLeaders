@@ -169,6 +169,20 @@ class UsersController extends AppController
     }
 
     /**
+     * @return \Cake\Http\Response
+     */
+    public function self(): \Cake\Http\Response
+    {
+        $userId = $this->Authentication->getIdentity()->getIdentifier();
+
+        if (is_numeric($userId)) {
+            return $this->redirect(['action' => 'view', $userId]);
+        }
+
+        return $this->redirect(['action' => 'index']);
+    }
+
+    /**
      * Add method
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
@@ -319,10 +333,10 @@ class UsersController extends AppController
 
         $logout = $this->Authentication->logout();
 
-        if ($logout != false) {
+        if (!$logout) {
             $this->Flash->success('You are now logged out.');
 
-            return $this->redirect($logout);
+            return $this->redirect('/');
         }
 
         return $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));
