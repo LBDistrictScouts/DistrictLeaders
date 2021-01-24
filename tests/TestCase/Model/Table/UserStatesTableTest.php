@@ -8,10 +8,10 @@ use App\Model\Entity\UserState;
 use App\Model\Table\Traits\BaseInstallerTrait;
 use App\Model\Table\UsersTable;
 use App\Model\Table\UserStatesTable;
-use App\Test\Factory\UserStateFactory;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
+use Faker\Factory;
 
 /**
  * App\Model\Table\UserStatesTable Test Case
@@ -48,6 +48,15 @@ class UserStatesTableTest extends TestCase
      * @var \App\Model\Entity\UserState
      */
     protected $UserState;
+
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.UserStates',
+    ];
 
     /**
      * @var string[]
@@ -106,7 +115,13 @@ class UserStatesTableTest extends TestCase
      */
     private function getGood(): array
     {
-        return UserStateFactory::getGood();
+        $faker = Factory::create('en_GB');
+
+        return [
+            'user_state' => ucwords($faker->words(2, true)),
+            'active' => true,
+            'expired' => false,
+        ];
     }
 
     /**
@@ -116,7 +131,17 @@ class UserStatesTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $this->validateAutoInitialise($this->UserStates);
+        $expected = [
+            UserState::FIELD_ID => 1,
+            UserState::FIELD_USER_STATE => 'Active Directory User',
+            UserState::FIELD_ACTIVE => true,
+            UserState::FIELD_EXPIRED => false,
+            UserState::FIELD_PRECEDENCE_ORDER => 1,
+            UserState::FIELD_SIGNATURE => 63,
+            UserState::FIELD_IS_EMAIL_SEND_ACTIVE => true,
+        ];
+
+        $this->validateInitialise($expected, $this->UserStates, 6);
     }
 
     /**

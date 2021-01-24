@@ -333,10 +333,10 @@ class UsersController extends AppController
 
         $logout = $this->Authentication->logout();
 
-        if ($logout != false) {
+        if (!$logout) {
             $this->Flash->success('You are now logged out.');
 
-            return $this->redirect($logout);
+            return $this->redirect('/');
         }
 
         return $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));

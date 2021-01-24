@@ -80,8 +80,6 @@ class CompassRecordsTableTest extends TestCase
     {
         parent::setUp();
 
-        $this->loadFixtures();
-
         $config = $this->getTableLocator()->exists('CompassRecords') ? [] : [
             'className' => CompassRecordsTable::class,
             'connectionName' => 'test',

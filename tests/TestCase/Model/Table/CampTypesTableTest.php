@@ -5,8 +5,8 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\CampType;
 use App\Model\Table\CampTypesTable;
-use App\Test\Factory\CampTypeFactory;
 use Cake\TestSuite\TestCase;
+use Faker\Factory;
 
 /**
  * App\Model\Table\CampTypesTable Test Case
@@ -21,6 +21,15 @@ class CampTypesTableTest extends TestCase
      * @var \App\Model\Table\CampTypesTable
      */
     public $CampTypes;
+
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
+    public $fixtures = [
+        'app.CampTypes',
+    ];
 
     /**
      * setUp method
@@ -53,7 +62,11 @@ class CampTypesTableTest extends TestCase
      */
     private function getGood(): array
     {
-        return CampTypeFactory::getGood();
+        $faker = Factory::create('en_GB');
+
+        return [
+            CampType::FIELD_CAMP_TYPE => ucwords($faker->words(3, true)),
+        ];
     }
 
     /**
@@ -63,7 +76,12 @@ class CampTypesTableTest extends TestCase
      */
     public function testInitialize(): void
     {
-        $this->validateAutoInitialise($this->CampTypes);
+        $expected = [
+            CampType::FIELD_ID => 1,
+            CampType::FIELD_CAMP_TYPE => 'Lorem ipsum sit amet',
+        ];
+
+        $this->validateInitialise($expected, $this->CampTypes, 1);
     }
 
     /**

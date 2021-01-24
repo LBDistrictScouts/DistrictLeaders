@@ -8,6 +8,7 @@ use App\Utility\TextSafe;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
 use Cake\I18n\Time;
 use Cake\ORM\RulesChecker;
@@ -137,12 +138,12 @@ class TokensTable extends Table
     }
 
     /**
-     * @param \Cake\Event\Event $event The Event to be processed
-     * @param \App\Model\Table\ArrayObject $data The data to be modified
-     * @param \App\Model\Table\ArrayObject $options The Options Contained
+     * @param \Cake\Event\EventInterface $event The Event to be processed
+     * @param object $data The data to be modified
+     * @param object $options The Options Contained
      * @return void
      */
-    public function beforeMarshal(Event $event, $data, $options)
+    public function beforeMarshal(EventInterface $event, object $data, object $options): void
     {
         if (!isset($data['active'])) {
             // Sets Active
@@ -153,11 +154,11 @@ class TokensTable extends Table
     /**
      * Hashes the password before save
      *
-     * @param \Cake\Event\Event $event The event trigger.
+     * @param \Cake\Event\EventInterface $event The event trigger.
      * @return true
      * @throws \Exception
      */
-    public function beforeSave(\Cake\Event\EventInterface $event)
+    public function beforeSave(EventInterface $event): bool
     {
         /** @var \App\Model\Entity\Token $entity */
         $entity = $event->getData('entity');
@@ -177,7 +178,7 @@ class TokensTable extends Table
      * @param int $tokenId The Id of the Token
      * @return string
      */
-    public function prepareToken($tokenId)
+    public function prepareToken(int $tokenId): string
     {
         $tokenRow = $this->get($tokenId, ['contain' => 'EmailSends']);
 
@@ -219,24 +220,24 @@ class TokensTable extends Table
     }
 
     /**
-     * @param string $token The Token to be Validated & Decrypted
-     * @return int|bool $validation Containing the validation state & id
+     * @param string $tokenString The Token to be Validated & Decrypted
+     * @return int|false $validation Containing the validation state & id
      */
-    public function validateToken($token)
+    public function validateToken(string $tokenString)
     {
-        $token = urldecode($token);
-        $token = TextSafe::decode($token);
-        $decrypter = substr($token, 0, 8);
+        $tokenString = urldecode($tokenString);
+        $tokenString = TextSafe::decode($tokenString);
+        $decrypter = substr($tokenString, 0, 8);
 
-        $token = substr($token, 8);
-        $token = base64_decode($token);
-        $token = json_decode($token);
+        $tokenString = substr($tokenString, 8);
+        $tokenString = base64_decode($tokenString);
+        $tokenString = json_decode($tokenString);
 
-        if (!is_object($token)) {
+        if (!is_object($tokenString)) {
             return false;
         }
 
-        $tokenRow = $this->get($token->id, ['contain' => 'EmailSends']);
+        $tokenRow = $this->get($tokenString->id, ['contain' => 'EmailSends']);
 
         if (!$tokenRow->active) {
             return false;
@@ -245,7 +246,7 @@ class TokensTable extends Table
         $tokenRow->set('utilised', Time::now());
         $this->save($tokenRow);
 
-        if ($tokenRow->random_number <> $token->random_number) {
+        if ($tokenRow->random_number <> $tokenString->random_number) {
             return false;
         }
 
@@ -255,7 +256,13 @@ class TokensTable extends Table
         $tokenRowHash = $tokenRow['hash'];
 
         if ($testHash == $tokenRowHash) {
-            return $token->id;
+            $this->getEventManager()->dispatch(new Event(
+                'Model.Tokens.tokenValidated',
+                $this,
+                ['token' => $tokenRow->id]
+            ));
+
+            return $tokenRow->id;
         }
 
         return false;
@@ -269,14 +276,16 @@ class TokensTable extends Table
      * @param \App\Model\Entity\Token $token The token to be cleaned.
      * @return int
      */
-    public function cleanToken(Token $token)
+    public function cleanToken(Token $token): int
     {
         /** @var \Cake\I18n\FrozenTime $expiry */
         $expiry = $token->get(Token::FIELD_EXPIRES);
+        /** @var \Cake\I18n\FrozenTime|null $expiry */
+        $utilised = $token->get(Token::FIELD_UTILISED);
         /** @var bool $active */
         $active = $token->get(Token::FIELD_ACTIVE);
 
-        if (!$expiry->isFuture() && $active) {
+        if ((!$expiry->isFuture() || $utilised instanceof FrozenTime) && $active) {
             $token->set(Token::FIELD_ACTIVE, false);
             $this->save($token);
 
@@ -345,12 +354,12 @@ class TokensTable extends Table
      * @param array $requestQueryParams Request Query Params
      * @return false|\App\Model\Entity\Token
      */
-    public function validateTokenRequest($requestQueryParams)
+    public function validateTokenRequest(array $requestQueryParams)
     {
         if (key_exists('token', $requestQueryParams)) {
             $token = $requestQueryParams['token'];
         }
-        if (key_exists('token', $requestQueryParams)) {
+        if (key_exists('token_id', $requestQueryParams)) {
             $tokenId = $requestQueryParams['token_id'];
         }
 

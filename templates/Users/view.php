@@ -275,6 +275,7 @@ if ($history || $stateEval) : ?>
             <?php endif; ?>
             <?php if ($stateEval) : ?>
                 <div class="tab-pane fade<?= $history ? '' : ' show active' ?>" id="state" role="tabpanel" aria-labelledby="state-tab">
+                    <p class="alert alert-info"><strong>Last Login:</strong> <?= $this->Time->format($user->last_login, 'dd-MMM-yy HH:mm') ?></p>
                     <?= $this->cell('StateDetermination', [$user]) ?>
                 </div>
             <?php endif; ?>

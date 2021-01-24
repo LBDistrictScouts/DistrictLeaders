@@ -18,6 +18,7 @@ namespace App\Controller;
 
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
+use App\Listener\TokenListener;
 use App\Listener\UserListener;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
@@ -105,8 +106,9 @@ class AppController extends Controller
      */
     private function eventListeners()
     {
-        $this->getEventManager()->on(new UserListener());
+        $this->getEventManager()->on(new TokenListener());
         $this->getEventManager()->on(new RoleListener());
         $this->getEventManager()->on(new CapabilityListener());
+        $this->getEventManager()->on(new UserListener());
     }
 }

@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
+use App\Model\Entity\User;
 use Cake\Cache\Cache;
+use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
+use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
@@ -26,22 +29,24 @@ class UserListener implements EventListenerInterface
     {
         return [
             'Model.Users.login' => 'updateLogin',
-            'Model.Users.capabilityChange' => 'capChange',
         ];
     }
 
     /**
-     * @param \Cake\Event\Event $event The event being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
      * @return void
      */
-    public function updateLogin($event)
+    public function updateLogin(EventInterface $event): void
     {
         /** @var \App\Model\Entity\User $user */
         $user = $event->getData('user');
         $this->Users = $this->getTableLocator()->get('Users');
 
-        $user->set('last_login', FrozenTime::now());
-        $user->setDirty('modified', true);
+        $user->set(User::FIELD_LAST_LOGIN, FrozenTime::now());
+        $user->setDirty(User::FIELD_MODIFIED, true);
+        if (!$this->Users->save($user)) {
+            Log::warning(_('User login time was not saved. For User ID {0}, {1}', (string)$user->id, $user->full_name));
+        }
 
         $cacheKeys = [
             'nav_' . $user->get('id'),
@@ -49,25 +54,6 @@ class UserListener implements EventListenerInterface
         ];
         Cache::deleteMany($cacheKeys, 'cell_cache');
 
-        $this->Users->save($user);
-
         $this->Users->patchCapabilities($user);
-    }
-
-    /**
-     * @param \Cake\Event\Event $event The event being processed.
-     * @return void
-     */
-    public function capChange($event)
-    {
-        /** @var \App\Model\Entity\User $user */
-        $user = $event->getData('user');
-
-        // Dispatch ASync Notification Task
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $this->QueuedJobs->createJob(
-            'Email',
-            ['email_generation_code' => 'USR-' . $user->id . '-CCH']
-        );
     }
 }
