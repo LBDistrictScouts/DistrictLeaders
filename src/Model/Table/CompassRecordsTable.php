@@ -13,6 +13,7 @@ use App\Model\Entity\UserContact;
 use App\Model\Table\Exceptions\BadUserDataException;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
+use Cake\Log\Log;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -215,6 +216,7 @@ class CompassRecordsTable extends Table
         $rules->add($rules->isUnique([
             CompassRecord::FIELD_MEMBERSHIP_NUMBER,
             CompassRecord::FIELD_DOCUMENT_VERSION_ID,
+            CompassRecord::FIELD_ROLE,
         ]));
         $rules->add($rules->existsIn([CompassRecord::FIELD_DOCUMENT_VERSION_ID], 'DocumentVersions'));
 
@@ -361,6 +363,18 @@ class CompassRecordsTable extends Table
 
             // Save entity
             if (!$this->save($entity)) {
+                $errorString = 'Record not created. ';
+                $errorString = $entity->get('forenames') . ' ' . $entity->get('surname') . ' ';
+                foreach ($entity->getErrors() as $field => $error) {
+                    $errorString .= $field . ' ';
+                    $errorString .= $entity->get($field) . ' ';
+                    foreach ($error as $errorType => $message) {
+                        $errorString .= $errorType . ' ';
+                        $errorString .= $message;
+                    }
+                }
+                Log::info($errorString, $entity->toArray());
+
                 $fail++;
             }
         }

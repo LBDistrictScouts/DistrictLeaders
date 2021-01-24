@@ -123,11 +123,12 @@
                                         <tbody>
                                         <?php foreach ($section->roles as $role) : ?>
                                             <tr>
-                                                <td><?= $role->user->full_name ?></td>
+                                                <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') ? $this->Html->link($role->user->full_name, ['controller' => 'Users', 'action' => 'view', $role->user->id]) : $role->user->full_name ?></td>
                                                 <td class="actions">
-                                                    <?= $this->Identity->checkCapability('VIEW_ROLE') ? $this->Html->link('<i class="fal fa-eye"></i>', ['action' => 'view', $role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                    <?= $this->Identity->checkCapability('UPDATE_ROLE') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['action' => 'edit', $role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
-                                                    <?= $this->Identity->checkCapability('DELETE_ROLE') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('VIEW', 'Roles') ? $this->Html->link('<i class="fal fa-eye"></i>', ['controller' => 'Roles', 'action' => 'view', $role->id], ['title' => __('View Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') ? $this->Html->link('<i class="fal fa-user"></i>', ['controller' => 'Users', 'action' => 'view', $role->user->id], ['title' => __('View User'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Roles') ? $this->Html->link('<i class="fal fa-pencil"></i>', ['controller' => 'Roles', 'action' => 'edit', $role->id], ['title' => __('Edit Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('DELETE', 'Roles') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i>', ['controller' => 'Roles', 'action' => 'delete', $role->id], ['confirm' => __('Are you sure you want to delete # {0}?', $role->id), 'title' => __('Delete Role'), 'class' => 'btn btn-default btn-sm', 'escape' => false]) : '' ?>
                                                 </td>
                                                 <td><?= $role->has($role::FIELD_ROLE_TYPE) ? $role->role_type->role_type : '' ?></td>
                                                 <td><?= $role->has('user_contact') ? $this->Text->autoLinkEmails($role->user_contact->contact_field) : $this->Text->autoLinkEmails($role->user->email) ?></td>

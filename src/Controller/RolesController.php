@@ -40,7 +40,22 @@ class RolesController extends AppController
     public function view($roleId = null)
     {
         $role = $this->Roles->get($roleId, [
-            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts', 'Audits'],
+            'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts',
+                'Audits' => [
+                    'sort' => [ 'Audits.change_date' => 'DESC' ],
+                    'Users',
+                    'NewSections',
+                    'NewRoleTypes',
+                    'NewUsers',
+                    'NewUserContacts',
+                    'NewRoleStatuses',
+                    'OriginalSections',
+                    'OriginalRoleTypes',
+                    'OriginalUsers',
+                    'OriginalUserContacts',
+                    'OriginalRoleStatuses',
+                ],
+            ],
         ]);
 
         $this->set('role', $role);
@@ -127,6 +142,7 @@ class RolesController extends AppController
             ->find('list', ['limit' => 200]);
         $userContacts = $this->Roles->UserContacts
             ->find('list', ['limit' => 200])
+            ->find('contactEmails')
             ->where(['user_id' => $role->user_id]);
 
         $this->set(compact('role', 'roleTypes', 'sections', 'userContacts', 'roleStatuses'));

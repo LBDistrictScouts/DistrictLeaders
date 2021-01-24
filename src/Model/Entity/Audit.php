@@ -25,6 +25,18 @@ use Cake\ORM\Entity;
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property \App\Model\Entity\Section $changed_section
+ *
+ * @property \App\Model\Entity\User|null $new_user
+ * @property \App\Model\Entity\UserContact|null $new_user_contact
+ * @property \App\Model\Entity\Section|null $new_section
+ * @property \App\Model\Entity\RoleStatus|null $new_role_status
+ * @property \App\Model\Entity\RoleType|null $new_role_type
+ *
+ * @property \App\Model\Entity\User|null $original_user
+ * @property \App\Model\Entity\UserContact|null $original_user_contact
+ * @property \App\Model\Entity\Section|null $original_section
+ * @property \App\Model\Entity\RoleStatus|null $original_role_status
+ * @property \App\Model\Entity\RoleType|null $original_role_type
  */
 class Audit extends Entity
 {
