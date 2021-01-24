@@ -63,7 +63,10 @@ class CsvBehavior extends Behavior
                 // read the 1st row as headings
                 $fields = fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure']);
                 foreach ($fields as $key => $field) {
-                    $field = strtolower(trim(preg_replace('/[^_a-zA-Z0-9]/', '', Inflector::underscore($field))));
+                    $field = strtolower(trim(preg_replace('/[^_.a-zA-Z0-9]/', '', Inflector::underscore($field))));
+                    if (empty($field)) {
+                        continue;
+                    }
                     $fields[$key] = $field;
                 }
             } elseif ($options['headers']) {
