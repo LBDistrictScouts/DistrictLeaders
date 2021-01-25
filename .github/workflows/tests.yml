@@ -20,7 +20,7 @@ jobs:
         php-version: ['7.3', '7.4']
         async: ['Y', 'N']
 
-    name: PHP ( ${{ matrix.php-version }} ) Aync ( ${{ matrix.async }} ) DB ( Postgres )
+    name: PHP ( ${{ matrix.php-version }} ) Async ( ${{ matrix.async }} ) DB ( Postgres )
 
     services:
       postgres:
@@ -88,12 +88,19 @@ jobs:
         run: composer install --no-scripts --no-suggest
 
       - name: Run tests
-        run: composer test
+        run: |
+          if [[ ${{ matrix.async }} == 'Y' ]]; then
+            composer test-with-coverage
+          else
+            composer test
+          fi
 
       - name: CodeCov Upload Coverage
+        if: ${{ matrix.async == 'Y' }}
         run: bash <(curl -s https://codecov.io/bash)
 
       - name: Code Climate Coverage Action
+        if: ${{ matrix.async == 'Y' }}
         continue-on-error: true
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -109,7 +116,7 @@ jobs:
       matrix:
         check-type: [ 'coding-standards', 'fixture-check' ]
 
-    name: Static Check ${{ matrix.check-type }}
+    name: Static Check ( ${{ matrix.check-type }} )
 
     services:
       postgres:

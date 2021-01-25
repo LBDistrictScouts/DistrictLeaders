@@ -108,6 +108,10 @@
             "Composer\\Config::disableProcessTimeout",
             "phpunit --colors=always"
         ],
+        "test-with-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit --colors=always --coverage-clover clover.xml"
+        ],
         "migrate": [
             "@migrate-app",
             "@migrate-queue",
