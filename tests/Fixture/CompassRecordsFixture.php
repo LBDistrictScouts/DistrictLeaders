@@ -35,6 +35,13 @@ class CompassRecordsFixture extends TestFixture
         'location' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
         'phone' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
         'email' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'preferred_forename' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'start_date' => ['type' => 'string', 'length' => 20, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'role_status' => ['type' => 'string', 'length' => 20, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'line_manager_number' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'district' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'scout_group' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
+        'scout_group_section' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => true, 'collate' => null, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'compass_records_document_version_id_fkey' => ['type' => 'foreign', 'columns' => ['document_version_id'], 'references' => ['document_versions', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
@@ -67,6 +74,13 @@ class CompassRecordsFixture extends TestFixture
                 'location' => 'Lorem ipsum dolor sit amet',
                 'phone' => 'Lorem ipsum dolor sit amet',
                 'email' => 'octopus@monkey.goat',
+                'preferred_forename' => 'Lorem ipsum dolor sit amet',
+                'start_date' => 'Lorem ipsum dolor ',
+                'role_status' => 'Lorem ipsum dolor ',
+                'line_manager_number' => 1,
+                'district' => 'Lorem ipsum dolor sit amet',
+                'scout_group' => 'Lorem ipsum dolor sit amet',
+                'scout_group_section' => 'Lorem ipsum dolor sit amet',
             ],
         ];
         parent::init();

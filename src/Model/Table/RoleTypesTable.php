@@ -143,6 +143,26 @@ class RoleTypesTable extends Table
     }
 
     /**
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
+     */
+    public function findGroupedList($query)
+    {
+        return $query
+            ->find('list', [
+                'limit' => 200,
+                'contain' => ['SectionTypes'],
+                'keyField' => 'id',
+                'valueField' => 'role_type',
+                'groupField' => 'section_type.section_type',
+                'order' => [
+                    'SectionTypes.section_type' => 'ASC',
+                    'role_type' => 'ASC',
+                ],
+            ]);
+    }
+
+    /**
      * @param \App\Model\Entity\RoleType $roleType The Entity to be Patched.
      * @return \App\Model\Entity\RoleType
      */

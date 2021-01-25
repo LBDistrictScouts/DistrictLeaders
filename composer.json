@@ -95,6 +95,7 @@
             "@phpstorm",
             "@cs-fix"
         ],
+        "coding-standards": "@cs-check",
         "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
         "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
         "md-check": "phpmd --strict src/ ansi cleancode",
@@ -103,7 +104,14 @@
         "illuminate": "bin/cake illuminator illuminate",
         "phpstorm": "bin/cake phpstorm generate",
         "code-complete": "bin/cake code_completion generate",
-        "test": "phpunit --colors=always",
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit --colors=always"
+        ],
+        "test-with-coverage": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit --colors=always --coverage-clover clover.xml"
+        ],
         "migrate": [
             "@migrate-app",
             "@migrate-queue",

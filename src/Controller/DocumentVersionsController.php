@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\DocumentVersion;
+use Cake\Utility\Inflector;
+
 /**
  * DocumentVersions Controller
  *
@@ -145,5 +148,59 @@ class DocumentVersionsController extends AppController
         $this->Queue->setCompassAutoMerge($documentVersion);
 
         return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
+    }
+
+    /**
+     * Add method
+     *
+     * @param string|null $documentVersionId Document Edition id.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     */
+    public function map($documentVersionId = null)
+    {
+        $documentVersion = $this->DocumentVersions->get($documentVersionId);
+        $result = $this->DocumentVersions->mapCompassRecords($documentVersion);
+
+        if ($this->request->is('post')) {
+            $mapping = $this->request->getData();
+            $versionMap = [];
+
+            foreach ($mapping as $fieldKey => $mappedAttribute) {
+                $key = (int)str_replace('field', '', $fieldKey);
+                if (empty($mappedAttribute)) {
+                    $mappedAttribute = $result['fields'][$key];
+                }
+                $versionMap[$key] = $mappedAttribute;
+            }
+            $result['mapped'] = $versionMap;
+            unset($result['data']);
+
+            $documentVersion->set(DocumentVersion::FIELD_FIELD_MAPPING, $result);
+            if ($this->DocumentVersions->save($documentVersion)) {
+                $this->Flash->success('Field mappings saved successfully.');
+                $this->redirect(['controller' => 'Documents', 'action' => 'view', $documentVersion->document_id]);
+            } else {
+                $this->Flash->error('Field mappings not saved.');
+            }
+        }
+
+        $recentEntity = $this->DocumentVersions->CompassRecords->find()->first();
+        $fieldList = [];
+
+        foreach ($recentEntity->getAccessible() as $field => $isAccessible) {
+            $fieldList[$field] = ucwords(Inflector::humanize($field));
+        }
+        foreach ($recentEntity->getVisible() as $field) {
+            $fieldList[$field] = ucwords(Inflector::humanize($field));
+        }
+        foreach ($recentEntity->getVirtual() as $virtualField) {
+            unset($fieldList[$virtualField]);
+        }
+        unset($fieldList['document_version_id']);
+        unset($fieldList['document_version']);
+        unset($fieldList['id']);
+
+        $this->set('fieldMap', $result);
+        $this->set(compact('documentVersion', 'recentEntity', 'fieldList'));
     }
 }

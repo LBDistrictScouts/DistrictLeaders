@@ -7,6 +7,7 @@ use App\Model\Entity\Document;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
+use Cake\Database\Schema\TableSchemaInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -84,7 +85,23 @@ class DocumentVersionsTable extends Table
             ->requirePresence('document_id', 'create')
             ->notEmptyString('document_id');
 
+        $validator
+            ->isArray(DocumentVersion::FIELD_FIELD_MAPPING)
+            ->allowEmptyArray(DocumentVersion::FIELD_FIELD_MAPPING);
+
         return $validator;
+    }
+
+    /**
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @SuppressWarnings(PHPMD.CamelCaseMethodName)
+     */
+    protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
+    {
+        $schema->setColumnType(DocumentVersion::FIELD_FIELD_MAPPING, 'json');
+
+        return $schema;
     }
 
     /**
@@ -160,12 +177,35 @@ class DocumentVersionsTable extends Table
     {
         $edition = $this->getFileTypeEdition('text/csv', $documentVersion);
 
+        $fields = [];
+        if (
+            $documentVersion->has($documentVersion::FIELD_FIELD_MAPPING)
+            && key_exists('mapped', $documentVersion->field_mapping)
+        ) {
+            $fields = $documentVersion->field_mapping['mapped'];
+        }
+
         if ($edition instanceof DocumentEdition) {
-            $data = $this->CompassRecords->importCsv($edition->read(), [], ['text' => true]);
+            $data = $this->CompassRecords->importCsv($edition->read(), $fields, ['text' => true]);
 
             return $this->CompassRecords->parseImportedData($data, $documentVersion);
         }
 
         return 0;
+    }
+
+    /**
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Parsing
+     * @return array
+     */
+    public function mapCompassRecords(DocumentVersion $documentVersion): array
+    {
+        $edition = $this->getFileTypeEdition('text/csv', $documentVersion);
+
+        if ($edition instanceof DocumentEdition) {
+            return $this->CompassRecords->importCsv($edition->read(), [], ['text' => true], true);
+        }
+
+        return ['fields' => [], 'original' => []];
     }
 }

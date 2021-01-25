@@ -14,6 +14,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $modified
  * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int $version_number
+ * @property array|null $field_mapping
  *
  * @property \App\Model\Entity\Document $document
  * @property \App\Model\Entity\DocumentEdition[] $document_editions
@@ -40,6 +41,7 @@ class DocumentVersion extends Entity
         'version_number' => true,
         'document' => true,
         'document_editions' => true,
+        'field_mapping' => true,
     ];
 
     public const FIELD_ID = 'id';
@@ -51,4 +53,5 @@ class DocumentVersion extends Entity
     public const FIELD_DOCUMENT = 'document';
     public const FIELD_DOCUMENT_EDITIONS = 'document_editions';
     public const FIELD_COMPASS_RECORDS = 'compass_records';
+    public const FIELD_FIELD_MAPPING = 'field_mapping';
 }

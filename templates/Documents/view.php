@@ -29,11 +29,20 @@
                         <h5 style="font-family: 'Nunito Sans', sans-serif;">Version <?= $this->Number->format($documentVersions->version_number) ?></h5>
                     </div>
                     <div class="col align-right">
-                        <div class="d-inline">
-                            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
-                            <div class="dropdown-menu" role="menu">
-                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Parse Compass Upload', ['controller' => 'DocumentVersions', 'action' => 'compass', $documentVersions->id], ['confirm' => __('Are you sure you want to parse upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Parse Compass'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
-                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Auto Merge All Uploaded Records', ['controller' => 'DocumentVersions', 'action' => 'auto-merge', $documentVersions->id], ['confirm' => __('Are you sure you want to auto merge the upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Auto Merge Uploaded Compass Records'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-inline">
+                                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                                    <div class="dropdown-menu" role="menu">
+                                        <?= $this->Identity->buildAndCheckCapability('VIEW', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Html->link('View Records Imported', ['controller' => 'CompassRecords', 'action' => 'index', $documentVersions->id], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                        <?= $this->Identity->buildAndCheckCapability('UPDATE', 'DocumentVersions') && $document->document_type->document_type == 'Compass Upload' ? $this->Html->link('Map Fields', ['controller' => 'DocumentVersions', 'action' => 'map', $documentVersions->id], ['class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                        <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Parse Compass Upload', ['controller' => 'DocumentVersions', 'action' => 'compass', $documentVersions->id], ['confirm' => __('Are you sure you want to parse upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Parse Compass'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                        <?= $this->Identity->buildAndCheckCapability('CREATE', 'CompassRecords') && $document->document_type->document_type == 'Compass Upload' ? $this->Form->postLink('Auto Merge All Uploaded Records', ['controller' => 'DocumentVersions', 'action' => 'auto-merge', $documentVersions->id], ['confirm' => __('Are you sure you want to auto merge the upload: "{0}" version #{1}?', $document->document, $documentVersions->version_number), 'title' => __('Auto Merge Uploaded Compass Records'), 'class' => 'dropdown-item', 'role' => 'presentation']) : '' ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <?= $documentVersions->has($documentVersions::FIELD_FIELD_MAPPING) ? $this->Icon->iconHtml('map-marked-alt', ['fa-3x', 'float-right']) : '' ?>
                             </div>
                         </div>
                     </div>

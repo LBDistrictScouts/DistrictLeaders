@@ -222,8 +222,8 @@ trait AppTestTrait
     ): void {
         if (is_array($validData) && !empty($validData)) {
             $message = null;
-            if (is_array($expectedMessages)) {
-                $message = $expectedMessages[0];
+            if (is_array($expectedMessages) && key_exists('add', $expectedMessages)) {
+                $message = $expectedMessages['add'];
             }
             $this->tryAddPost($controller, $validData, $newEntityId, $expectedRedirects, $message);
         }

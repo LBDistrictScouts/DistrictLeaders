@@ -34,10 +34,11 @@ class CsvBehavior extends Behavior
      * @param string $content filename or path to the file under webroot
      * @param array $fields to import
      * @param array $options to set
+     * @param bool $mapping Return field Headers
      * @return array|false of all data from the csv file in [Model][field] format
      * @author Dean Sofer
      */
-    public function importCsv(string $content, array $fields = [], array $options = [])
+    public function importCsv(string $content, array $fields = [], array $options = [], bool $mapping = false)
     {
         $config = $this->getConfig();
         $options = array_merge($config, $options);
@@ -62,8 +63,10 @@ class CsvBehavior extends Behavior
             if (empty($fields)) {
                 // read the 1st row as headings
                 $fields = fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure']);
+                $original = $fields;
                 foreach ($fields as $key => $field) {
-                    $field = strtolower(trim(Inflector::underscore($field)));
+                    $field = strtolower(trim(preg_replace('/[^_.a-zA-Z0-9]/', '', Inflector::underscore($field))));
+                    $field = str_replace('__', '_', $field);
                     if (empty($field)) {
                         continue;
                     }
@@ -72,11 +75,16 @@ class CsvBehavior extends Behavior
             } elseif ($options['headers']) {
                 fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure']);
             }
+
             // Row counter
             $rowCount = 0;
             // read each data row in the file
             $alias = $this->_table->getAlias();
             while ($row = fgetcsv($file, $options['length'], $options['delimiter'], $options['enclosure'])) {
+                if ($mapping && $rowCount >= 1) {
+                    return compact('fields', 'original', 'data');
+                }
+
                 // for each header field
                 foreach ($fields as $f => $field) {
                     if (!isset($row[$f])) {

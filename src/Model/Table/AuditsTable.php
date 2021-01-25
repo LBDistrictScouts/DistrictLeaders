@@ -28,6 +28,16 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ChangedScoutGroups
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $ChangedUserContacts
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $ChangedSections
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $NewSections
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $NewRoleTypes
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $NewUsers
+ * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $NewRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $NewUserContacts
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $OriginalSections
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleTypes
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $OriginalUsers
+ * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $OriginalUserContacts
  */
 class AuditsTable extends Table
 {
@@ -114,6 +124,86 @@ class AuditsTable extends Table
             'conditions' => [
                 'audit_table' => 'Sections',
             ],
+            'finder' => 'withTrashed',
+        ]);
+
+        // Modified / New Values
+
+        $this->belongsTo('NewSections', [
+            'className' => 'Sections',
+            'propertyName' => 'new_section',
+            'foreignKey' => 'modified_value',
+            'strategy' => 'select',
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('NewRoleTypes', [
+            'className' => 'RoleTypes',
+            'propertyName' => 'new_role_type',
+            'foreignKey' => 'modified_value',
+            'strategy' => 'select',
+        ]);
+
+        $this->belongsTo('NewUsers', [
+            'className' => 'Users',
+            'propertyName' => 'new_user',
+            'foreignKey' => 'modified_value',
+            'strategy' => 'select',
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('NewRoleStatuses', [
+            'className' => 'RoleStatuses',
+            'propertyName' => 'new_role_status',
+            'foreignKey' => 'modified_value',
+            'strategy' => 'select',
+        ]);
+
+        $this->belongsTo('NewUserContacts', [
+            'className' => 'UserContacts',
+            'propertyName' => 'new_user_contact',
+            'foreignKey' => 'modified_value',
+            'strategy' => 'select',
+            'finder' => 'withTrashed',
+        ]);
+
+        // Original Values
+
+        $this->belongsTo('OriginalSections', [
+            'className' => 'Sections',
+            'propertyName' => 'original_section',
+            'foreignKey' => 'original_value',
+            'strategy' => 'select',
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('OriginalRoleTypes', [
+            'className' => 'RoleTypes',
+            'propertyName' => 'original_role_type',
+            'foreignKey' => 'original_value',
+            'strategy' => 'select',
+        ]);
+
+        $this->belongsTo('OriginalUsers', [
+            'className' => 'Users',
+            'propertyName' => 'original_user',
+            'foreignKey' => 'original_value',
+            'strategy' => 'select',
+            'finder' => 'withTrashed',
+        ]);
+
+        $this->belongsTo('OriginalRoleStatuses', [
+            'className' => 'RoleStatuses',
+            'propertyName' => 'original_role_status',
+            'foreignKey' => 'original_value',
+            'strategy' => 'select',
+        ]);
+
+        $this->belongsTo('OriginalUserContacts', [
+            'className' => 'UserContacts',
+            'propertyName' => 'original_user_contact',
+            'foreignKey' => 'original_value',
+            'strategy' => 'select',
             'finder' => 'withTrashed',
         ]);
 

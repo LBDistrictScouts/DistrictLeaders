@@ -23,6 +23,7 @@ class DocumentVersionsFixture extends TestFixture
         'modified' => ['type' => 'timestamptimezone', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => 6],
         'deleted' => ['type' => 'timestampfractional', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => 6],
         'version_number' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
+        'field_mapping' => ['type' => 'json', 'length' => null, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
             'document_versions_version_number_document_id' => ['type' => 'unique', 'columns' => ['document_id', 'version_number'], 'length' => []],
@@ -44,6 +45,7 @@ class DocumentVersionsFixture extends TestFixture
                 'modified' => 1572792442,
                 'deleted' => null,
                 'version_number' => 1,
+                'field_mapping' => [],
             ],
         ];
         parent::init();

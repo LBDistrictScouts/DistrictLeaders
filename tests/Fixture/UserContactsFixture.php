@@ -28,6 +28,7 @@ class UserContactsFixture extends TestFixture
         'directory_user_id' => ['type' => 'integer', 'length' => 10, 'default' => null, 'null' => true, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
+            'user_contacts_contact_field' => ['type' => 'unique', 'columns' => ['contact_field'], 'length' => []],
             'user_contacts_directory_user_id_fkey' => ['type' => 'foreign', 'columns' => ['directory_user_id'], 'references' => ['directory_users', 'id'], 'update' => 'noAction', 'delete' => 'setNull', 'length' => []],
             'user_contacts_user_contact_type_id_fkey' => ['type' => 'foreign', 'columns' => ['user_contact_type_id'], 'references' => ['user_contact_types', 'id'], 'update' => 'noAction', 'delete' => 'noAction', 'length' => []],
             'user_contacts_user_id_fkey' => ['type' => 'foreign', 'columns' => ['user_id'], 'references' => ['users', 'id'], 'update' => 'cascade', 'delete' => 'cascade', 'length' => []],
