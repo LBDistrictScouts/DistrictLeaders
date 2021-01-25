@@ -20,7 +20,7 @@ jobs:
         php-version: ['7.3', '7.4']
         async: ['Y', 'N']
 
-    name: PHP:: ${{ matrix.php-version }} Aync:: ${{ matrix.async }} DB:: Postgres
+    name: PHP ( ${{ matrix.php-version }} ) Aync ( ${{ matrix.async }} ) DB ( Postgres )
 
     services:
       postgres:
