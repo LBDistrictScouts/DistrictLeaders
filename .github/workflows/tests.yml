@@ -8,7 +8,7 @@ on:
     branches:
       - '*'
   schedule:
-    - cron:  '0 0 * * 0'
+    - cron:  '0 0 1 * *'
 
 jobs:
   phpUnit:
@@ -18,6 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: ['7.3', '7.4']
+        async: ['Y', 'N']
         db-type: [pgsql]
 
     name: PHP ${{ matrix.php-version }} & ${{ matrix.db-type }}
@@ -56,6 +57,12 @@ jobs:
       - name: Set App Config
         run: mv config/app.github-ci.php config/app.php
 
+      - name: Set Async Setup
+        run: if [[ ${{ matrix.async }} == 'N' ]]; then rm phpunit.xml.dist; fi
+
+      - name: Set Async Setup
+        run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
+
       - name: Set General YML Config
         run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
 
@@ -91,6 +98,7 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: 414f50dc9563e45b17137a9e716cb56eeda2c179633b3d3db567f1849a584f2f
+          coverageLocations: ${{github.workspace}}/clover.xml:clover
 
   staticCheck:
     runs-on: ubuntu-latest
@@ -98,7 +106,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        check-type: [ 'coding-standards', 'fixture-check', 'phpstan-check' ]
+        check-type: [ 'coding-standards', 'fixture-check' ]
 
     name: Static Check ${{ matrix.check-type }}
 

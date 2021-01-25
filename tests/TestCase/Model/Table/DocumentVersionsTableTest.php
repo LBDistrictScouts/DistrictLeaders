@@ -86,6 +86,7 @@ class DocumentVersionsTableTest extends TestCase
             DocumentVersion::FIELD_ID => 1,
             DocumentVersion::FIELD_DOCUMENT_ID => 1,
             DocumentVersion::FIELD_VERSION_NUMBER => 1,
+            DocumentVersion::FIELD_FIELD_MAPPING => [],
         ];
         $dates = [
             DocumentVersion::FIELD_CREATED,

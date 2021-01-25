@@ -162,7 +162,7 @@ class CompassRecordsTableTest extends TestCase
             CompassRecord::FIELD_LOCATION => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_PHONE => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_EMAIL => 'octopus@monkey.goat',
-            CompassRecord::FIELD_PROVISIONAL => false,
+            CompassRecord::FIELD_PROVISIONAL => true,
             CompassRecord::FIELD_CLEAN_ROLE => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_CLEAN_GROUP => 'Lorem ipsum dolor sit amet',
             CompassRecord::FIELD_CLEAN_SECTION => 'Lorem ipsum dolor sit amet Group',
@@ -170,6 +170,13 @@ class CompassRecordsTableTest extends TestCase
             CompassRecord::FIELD_LAST_NAME => 'Jingles',
             CompassRecord::FIELD_CLEAN_SECTION_TYPE => 'Group',
             CompassRecord::FIELD_FULL_NAME => 'Joseph Jingles',
+            CompassRecord::FIELD_PREFERRED_FORENAME => 'Lorem ipsum dolor sit amet',
+            CompassRecord::FIELD_START_DATE => 'Lorem ipsum dolor ',
+            CompassRecord::FIELD_ROLE_STATUS => 'Lorem ipsum dolor ',
+            CompassRecord::FIELD_LINE_MANAGER_NUMBER => 1,
+            CompassRecord::FIELD_DISTRICT => 'Lorem ipsum dolor sit amet',
+            CompassRecord::FIELD_SCOUT_GROUP => 'Lorem ipsum dolor sit amet',
+            CompassRecord::FIELD_SCOUT_GROUP_SECTION => 'Lorem ipsum dolor sit amet',
         ];
 
         $this->validateInitialise($expected, $this->CompassRecords, 1);
