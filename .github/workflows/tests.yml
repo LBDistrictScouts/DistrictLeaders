@@ -94,6 +94,7 @@ jobs:
         run: bash <(curl -s https://codecov.io/bash)
 
       - name: Code Climate Coverage Action
+        continue-on-error: true
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: 414f50dc9563e45b17137a9e716cb56eeda2c179633b3d3db567f1849a584f2f
