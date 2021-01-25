@@ -4,6 +4,16 @@
  * @var \App\Model\Entity\Role $role
  */
 
+/**
+ * @param \App\Model\Entity\Audit $audit
+ * @param bool $original
+ * @param \Cake\View\Helper\HtmlHelper $html
+ * @return string|null
+ * @var \App\View\AppView $this
+ * @var object $html
+ * @var mixed $original
+ * @var \App\Model\Entity\Role $role
+ */
 function auditValue(\App\Model\Entity\Audit $audit, bool $original, \Cake\View\Helper\HtmlHelper $html): ?string
 {
     if ($original) {

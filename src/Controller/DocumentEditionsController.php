@@ -34,13 +34,13 @@ class DocumentEditionsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Document Edition id.
+     * @param string|null $documentEditionId Document Edition id.
      * @return \Cake\Http\Response|void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view($documentEditionId = null)
     {
-        $documentEdition = $this->DocumentEditions->get($id, [
+        $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => ['DocumentVersions', 'FileTypes'],
         ]);
 
@@ -77,13 +77,13 @@ class DocumentEditionsController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Document Edition id.
+     * @param string|null $documentEditionId Document Edition id.
      * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($documentEditionId = null)
     {
-        $documentEdition = $this->DocumentEditions->get($id, [
+        $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {

@@ -103,7 +103,10 @@
         "illuminate": "bin/cake illuminator illuminate",
         "phpstorm": "bin/cake phpstorm generate",
         "code-complete": "bin/cake code_completion generate",
-        "test": "phpunit --colors=always",
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "phpunit --colors=always"
+        ],
         "migrate": [
             "@migrate-app",
             "@migrate-queue",

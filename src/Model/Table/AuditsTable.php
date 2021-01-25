@@ -28,6 +28,16 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ChangedScoutGroups
  * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $ChangedUserContacts
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $ChangedSections
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $NewSections
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $NewRoleTypes
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $NewUsers
+ * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $NewRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $NewUserContacts
+ * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $OriginalSections
+ * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleTypes
+ * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $OriginalUsers
+ * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $OriginalUserContacts
  */
 class AuditsTable extends Table
 {

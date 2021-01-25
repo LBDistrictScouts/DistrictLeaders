@@ -2,10 +2,10 @@
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Role $role
- * @var array $roleStatuses
- * @var array $roleTypes
- * @var array $sections
- * @var array $users
+ * @var \Cake\ORM\Query $roleStatuses
+ * @var \Cake\ORM\Query $roleTypes
+ * @var \Cake\ORM\Query $sections
+ * @var \Cake\ORM\Query $users
  * @var \App\Model\Entity\User $user
  */
 

@@ -11,7 +11,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property int|null $user_id
  * @property int|null $notification_type_id
- * @property string|null $notification_header
+ * @property string $notification_header
  * @property \Cake\I18n\FrozenTime|null $created
  * @property \Cake\I18n\FrozenTime|null $read_date
  * @property string|null $notification_source
@@ -26,6 +26,11 @@ use Cake\ORM\Entity;
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property bool $new
+ * @property string|null $text
+ * @property string|null $link_id
+ * @property string|null $link_controller
+ * @property string|null $link_prefix
+ * @property string|null $link_action
  */
 class Notification extends Entity
 {
@@ -95,4 +100,9 @@ class Notification extends Entity
     public const FIELD_EMAIL_SENDS = 'email_sends';
     public const FIELD_EMAIL_CODE = 'email_code';
     public const FIELD_NEW = 'new';
+    public const FIELD_TEXT = 'text';
+    public const FIELD_LINK_ID = 'link_id';
+    public const FIELD_LINK_CONTROLLER = 'link_controller';
+    public const FIELD_LINK_PREFIX = 'link_prefix';
+    public const FIELD_LINK_ACTION = 'link_action';
 }

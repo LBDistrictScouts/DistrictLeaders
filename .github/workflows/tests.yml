@@ -11,7 +11,7 @@ on:
     - cron:  '0 0 * * 0'
 
 jobs:
-  test:
+  phpUnit:
     runs-on: ubuntu-latest
 
     strategy:
@@ -50,9 +50,6 @@ jobs:
           extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}, redis, xdebug
           ini-values: apc.enable_cli = 1, xdebug.mode = develop,coverage,debug,gcstats,profile,trace
 
-      - name: Set Extended Test Timeout
-        run: export COMPOSER_PROCESS_TIMEOUT=900
-
       - name: Set App File Config
         run: mv config/app_file.travis.php config/app_file.php
 
@@ -85,11 +82,20 @@ jobs:
         run: composer install --no-scripts --no-suggest
 
       - name: Run tests
-        run: composer test
+        run: composer coverage-test
 
-  coding-standard:
-    name: Coding Standard
+      - name: Upload Coverage
+        run: bash <(curl -s https://codecov.io/bash)
+
+  staticCheck:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        check-type: [ 'coding-standards', 'fixture-check', 'phpstan-check' ]
+
+    name: Static Check ${{ matrix.check-type }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -126,7 +132,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-scripts --no-progress --prefer-dist --optimize-autoloader
+        run: composer install --prefer-dist --optimize-autoloader
 
-      - name: PHP CodeSniffer
-        run: composer cs-check
+      - name: Run Static Check
+        run: composer ${{ matrix.check-type }}

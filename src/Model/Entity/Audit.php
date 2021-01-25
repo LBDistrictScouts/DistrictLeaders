@@ -26,11 +26,11 @@ use Cake\ORM\Entity;
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property \App\Model\Entity\Section $changed_section
  *
- * @property \App\Model\Entity\User|null $new_user
- * @property \App\Model\Entity\UserContact|null $new_user_contact
- * @property \App\Model\Entity\Section|null $new_section
- * @property \App\Model\Entity\RoleStatus|null $new_role_status
- * @property \App\Model\Entity\RoleType|null $new_role_type
+ * @property \App\Model\Entity\User $new_user
+ * @property \App\Model\Entity\UserContact $new_user_contact
+ * @property \App\Model\Entity\Section $new_section
+ * @property \App\Model\Entity\RoleStatus $new_role_status
+ * @property \App\Model\Entity\RoleType $new_role_type
  *
  * @property \App\Model\Entity\User|null $original_user
  * @property \App\Model\Entity\UserContact|null $original_user_contact
@@ -75,4 +75,14 @@ class Audit extends Entity
     public const FIELD_CHANGED_SCOUT_GROUP = 'changed_scout_group';
     public const FIELD_CHANGED_USER_CONTACT = 'changed_user_contact';
     public const FIELD_CHANGED_SECTION = 'changed_section';
+    public const FIELD_NEW_USER = 'new_user';
+    public const FIELD_NEW_USER_CONTACT = 'new_user_contact';
+    public const FIELD_NEW_SECTION = 'new_section';
+    public const FIELD_NEW_ROLE_STATUS = 'new_role_status';
+    public const FIELD_NEW_ROLE_TYPE = 'new_role_type';
+    public const FIELD_ORIGINAL_USER = 'original_user';
+    public const FIELD_ORIGINAL_USER_CONTACT = 'original_user_contact';
+    public const FIELD_ORIGINAL_SECTION = 'original_section';
+    public const FIELD_ORIGINAL_ROLE_STATUS = 'original_role_status';
+    public const FIELD_ORIGINAL_ROLE_TYPE = 'original_role_type';
 }

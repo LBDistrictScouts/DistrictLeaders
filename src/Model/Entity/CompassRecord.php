@@ -28,6 +28,13 @@ use Cake\ORM\Entity;
  * @property string|null $location
  * @property string|null $phone
  * @property string|null $email
+ * @property string|null $preferred_forename
+ * @property string|null $start_date
+ * @property string|null $role_status
+ * @property int|null $line_manager_number
+ * @property string|null $district
+ * @property string|null $scout_group
+ * @property string|null $scout_group_section
  *
  * @property \App\Model\Entity\DocumentVersion $document_version
  * @property bool|null $provisional
@@ -71,6 +78,13 @@ class CompassRecord extends Entity
         'phone' => true,
         'email' => true,
         'document_version' => true,
+        'preferred_forename' => true,
+        'start_date' => true,
+        'role_status' => true,
+        'line_manager_number' => true,
+        'district' => true,
+        'scout_group' => true,
+        'scout_group_section' => true,
     ];
 
     /**
@@ -84,7 +98,19 @@ class CompassRecord extends Entity
             return null;
         }
 
+        if (!empty($this->role_status)) {
+            return (bool)($this->role_status != 'Full');
+        }
+
         return !empty(preg_match('/[(](Pre-)*(Prov)[)]/', $this->role));
+    }
+
+    /**
+     * @return bool
+     */
+    private function otherFieldsNotEmpty(): bool
+    {
+        return !empty($this->scout_group_section) || !empty($this->scout_group) || !empty($this->district);
     }
 
     /**
@@ -107,6 +133,20 @@ class CompassRecord extends Entity
      */
     private function locationComponent(bool $last): string
     {
+        if (empty($this->location)) {
+            if ($this->otherFieldsNotEmpty()) {
+                if (!empty($this->scout_group_section) && $last) {
+                    return $this->scout_group_section;
+                } elseif (!empty($this->scout_group)) {
+                    return $this->scout_group;
+                } else {
+                    return $this->district;
+                }
+            }
+
+            return '';
+        }
+
         $locationComponents = explode('-', $this->location);
 
         if ($last) {
@@ -131,11 +171,17 @@ class CompassRecord extends Entity
      */
     protected function _getCleanGroup(): ?string
     {
-        if (empty($this->location)) {
+        if (empty($this->location) && !$this->otherFieldsNotEmpty()) {
             return null;
         }
 
-        $group = $this->locationComponent(false);
+        if (!empty($this->scout_group)) {
+            $group = $this->scout_group;
+        } elseif (!empty($this->district)) {
+            $group = $this->district;
+        } else {
+            $group = $this->locationComponent(false);
+        }
 
         return GroupParser::aliasGroup($group);
     }
@@ -145,7 +191,11 @@ class CompassRecord extends Entity
      */
     private function parseSection(): string
     {
-        $section = $this->locationComponent(true);
+        if (!empty($this->scout_group_section)) {
+            $section = $this->scout_group_section;
+        } else {
+            $section = $this->locationComponent(true);
+        }
 
         return GroupParser::parseSection($section, $this->clean_group);
     }
@@ -157,7 +207,7 @@ class CompassRecord extends Entity
      */
     protected function _getCleanSectionType()
     {
-        if (empty($this->location)) {
+        if (empty($this->location) && !$this->otherFieldsNotEmpty()) {
             return null;
         }
 
@@ -187,7 +237,7 @@ class CompassRecord extends Entity
      */
     protected function _getCleanSection()
     {
-        if (empty($this->clean_section_type) || empty($this->location)) {
+        if (empty($this->clean_section_type) || (empty($this->location) && !$this->otherFieldsNotEmpty())) {
             return null;
         }
 
@@ -288,4 +338,11 @@ class CompassRecord extends Entity
     public const FIELD_FIRST_NAME = 'first_name';
     public const FIELD_LAST_NAME = 'last_name';
     public const FIELD_FULL_NAME = 'full_name';
+    public const FIELD_PREFERRED_FORENAME = 'preferred_forename';
+    public const FIELD_START_DATE = 'start_date';
+    public const FIELD_ROLE_STATUS = 'role_status';
+    public const FIELD_LINE_MANAGER_NUMBER = 'line_manager_number';
+    public const FIELD_DISTRICT = 'district';
+    public const FIELD_SCOUT_GROUP = 'scout_group';
+    public const FIELD_SCOUT_GROUP_SECTION = 'scout_group_section';
 }
