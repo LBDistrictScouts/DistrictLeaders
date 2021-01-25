@@ -19,9 +19,8 @@ jobs:
       matrix:
         php-version: ['7.3', '7.4']
         async: ['Y', 'N']
-        db-type: [pgsql]
 
-    name: PHP ${{ matrix.php-version }} & ${{ matrix.db-type }}
+    name: PHP:: ${{ matrix.php-version }} Aync:: ${{ matrix.async }} DB:: Postgres
 
     services:
       postgres:
@@ -48,7 +47,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: mbstring, intl, apcu, pdo_${{ matrix.db-type }}, redis, xdebug
+          extensions: mbstring, intl, apcu, pdo_pgsql, redis, xdebug
           ini-values: apc.enable_cli = 1, xdebug.mode = develop,coverage,debug,gcstats,profile,trace
 
       - name: Set App File Config
@@ -98,7 +97,8 @@ jobs:
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: 414f50dc9563e45b17137a9e716cb56eeda2c179633b3d3db567f1849a584f2f
-          coverageLocations: ${{github.workspace}}/clover.xml:clover
+          coverageLocations: |
+            ${{github.workspace}}/clover.xml:clover
 
   staticCheck:
     runs-on: ubuntu-latest
