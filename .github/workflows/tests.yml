@@ -82,10 +82,15 @@ jobs:
         run: composer install --no-scripts --no-suggest
 
       - name: Run tests
-        run: composer coverage-test
+        run: composer test
 
-      - name: Upload Coverage
+      - name: CodeCov Upload Coverage
         run: bash <(curl -s https://codecov.io/bash)
+
+      - name: Code Climate Coverage Action
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: 414f50dc9563e45b17137a9e716cb56eeda2c179633b3d3db567f1849a584f2f
 
   staticCheck:
     runs-on: ubuntu-latest
@@ -96,6 +101,20 @@ jobs:
         check-type: [ 'coding-standards', 'fixture-check', 'phpstan-check' ]
 
     name: Static Check ${{ matrix.check-type }}
+
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: leaders
+          POSTGRES_PASSWORD: cake
+          POSTGRES_USER: app
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
