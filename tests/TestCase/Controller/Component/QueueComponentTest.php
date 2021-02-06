@@ -12,6 +12,7 @@ use Cake\Controller\ComponentRegistry;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * App\Controller\Component\QueueComponent Test Case
@@ -87,6 +88,12 @@ class QueueComponentTest extends TestCase
         }
     }
 
+    public function failedJobcheck()
+    {
+        $jobs = $this->QueuedJobs->find();
+        TestCase::assertEquals(0, $jobs->count());
+    }
+
     /**
      * Test initial setup
      *
@@ -124,6 +131,53 @@ class QueueComponentTest extends TestCase
         $this->Queue->setDirectoryImport($directory);
 
         $this->jobCheck('Directory', ['directory' => 1]);
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSetDirectoryImportFail(): void
+    {
+        $directory = $this
+            ->getMockBuilder(Directory::class)
+            ->getMock();
+
+        $directory
+            ->expects(TestCase::once())
+            ->method('get')
+            ->with('id')
+            ->willReturn(1);
+
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The directory sync could not be queued. Please, try again.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('Directory')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setDirectoryImport($directory);
+
+        $this->failedJobcheck();
     }
 
     /**
@@ -170,6 +224,53 @@ class QueueComponentTest extends TestCase
      *
      * @return void
      */
+    public function testSetCompassVersionImportFail(): void
+    {
+        $documentVersion = $this
+            ->getMockBuilder(DocumentVersion::class)
+            ->getMock();
+
+        $documentVersion
+            ->expects(TestCase::once())
+            ->method('get')
+            ->with('id')
+            ->willReturn(1);
+
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The document version could not be queued. Please, try again.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('Compass')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setCompassVersionImport($documentVersion);
+
+        $this->failedJobcheck();
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
     public function testSetCompassAutoMerge(): void
     {
         $documentVersion = $this
@@ -209,6 +310,53 @@ class QueueComponentTest extends TestCase
      *
      * @return void
      */
+    public function testSetCompassAutoMergeFail(): void
+    {
+        $documentVersion = $this
+            ->getMockBuilder(DocumentVersion::class)
+            ->getMock();
+
+        $documentVersion
+            ->expects(TestCase::once())
+            ->method('get')
+            ->with('id')
+            ->willReturn(1);
+
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The document version could not be queued. Please, try again.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('AutoMerge')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setCompassAutoMerge($documentVersion);
+
+        $this->failedJobcheck();
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
     public function testSetCapabilityParse(): void
     {
         $flash = $this->getMockBuilder(FlashComponent::class)
@@ -231,6 +379,43 @@ class QueueComponentTest extends TestCase
         $this->Queue->setCapabilityParse();
 
         $this->jobCheck('Capability');
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSetCapabilityParseFail(): void
+    {
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The Capabilities Process could not be triggered.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('Capability')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setCapabilityParse();
+
+        $this->failedJobcheck();
     }
 
     /**
@@ -267,6 +452,43 @@ class QueueComponentTest extends TestCase
      *
      * @return void
      */
+    public function testSetUserStateParseFail(): void
+    {
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The user state evaluation process could not be triggered.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('State')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setUserStateParse();
+
+        $this->failedJobcheck();
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
     public function testSetUnsentParse(): void
     {
         $flash = $this->getMockBuilder(FlashComponent::class)
@@ -289,5 +511,42 @@ class QueueComponentTest extends TestCase
         $this->Queue->setUnsent();
 
         $this->jobCheck('Unsent');
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSetUnsentParseFail(): void
+    {
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['The Unsent Email process could not be triggered.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('Unsent')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setUnsent();
+
+        $this->failedJobcheck();
     }
 }
