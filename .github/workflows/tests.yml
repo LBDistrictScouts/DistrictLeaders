@@ -48,7 +48,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, apcu, pdo_pgsql, redis, xdebug
-          ini-values: apc.enable_cli = 1, xdebug.mode = "develop,coverage"
+          ini-values: xdebug.mode="develop,coverage", apc.enable_cli=1
           coverage: xdebug
 
       - name: Set App File Config
