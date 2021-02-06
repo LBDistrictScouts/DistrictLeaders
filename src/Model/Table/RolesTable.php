@@ -9,6 +9,7 @@ use App\Model\Entity\RoleType;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Query;
@@ -167,27 +168,27 @@ class RolesTable extends Table
      * after Save LifeCycle Callback
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
-     * @param \App\Model\Entity\Role $entity The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param \Cake\Datasource\EntityInterface $role The Entity on which the Save is being Called.
+     * @param object|null $options Options Values
      * @return bool
      */
-    public function afterSave(EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, EntityInterface $role, ?object $options): bool
     {
-        $user = $this->Users->get($entity->get(Role::FIELD_USER_ID));
+        $user = $this->Users->get($role->get(Role::FIELD_USER_ID));
         $this->Users->patchCapabilities($user);
 
-        if ($entity->isNew()) {
+        if ($role->isNew()) {
             // Do Task
             $this->getEventManager()->dispatch(new Event(
                 'Model.Roles.roleAdded',
                 $this,
-                ['entity' => $entity]
+                ['roleId' => $role->id]
             ));
         } else {
             $this->getEventManager()->dispatch(new Event(
                 'Model.Roles.roleUpdated',
                 $this,
-                ['entity' => $entity]
+                ['roleId' => $role->id]
             ));
         }
 
