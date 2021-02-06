@@ -11,7 +11,7 @@ This is a web application for use with District Leaders.
 ### Development Branch
 ![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=Development)
 [![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/Development/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
-## Installation
+## Development Installation
 
 If Composer is installed globally, run
 
@@ -26,3 +26,15 @@ bin/cake server -p 8765
 ```
 
 Then visit `http://localhost:8765` to see the welcome page.
+
+## Testing etc
+
+- Test
+```bash
+composer test
+```
+
+- Code Standards Check
+```bash
+composer cs-check
+```
