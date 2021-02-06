@@ -48,7 +48,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, apcu, pdo_pgsql, redis, xdebug
-          ini-values: apc.enable_cli = 1, xdebug.mode = 'develop,coverage,debug,gcstats,profile,trace'
+          ini-values: apc.enable_cli = 1, "xdebug.mode = 'develop,coverage,debug,gcstats,profile,trace'"
 
       - name: Set App File Config
         run: mv config/app_file.travis.php config/app_file.php
