@@ -95,6 +95,9 @@ jobs:
             composer test
           fi
 
+      - name: List Files
+        run: ls -al
+
       - name: CodeCov Upload Coverage
         if: ${{ matrix.async == 'Y' }}
         run: bash <(curl -s https://codecov.io/bash)
