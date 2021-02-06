@@ -211,12 +211,11 @@ class TokensTable extends Table
      * @param int $tokenId The Id of the Token
      * @return string
      */
-    public function buildToken($tokenId)
+    public function buildToken(int $tokenId): string
     {
         $token = $this->prepareToken($tokenId);
-        $token = urlencode($token);
 
-        return $token;
+        return urlencode($token);
     }
 
     /**
