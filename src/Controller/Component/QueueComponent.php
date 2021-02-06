@@ -43,7 +43,9 @@ class QueueComponent extends Component
      */
     public function setDirectoryImport(Directory $directory): void
     {
-        $job = $this->QueuedJobs->createJob('Directory', ['directory' => $directory->id]);
+        $job = $this->QueuedJobs->createJob('Directory', [
+            'directory' => $directory->get($directory::FIELD_ID),
+        ]);
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'The directory has been set for sync.',
@@ -60,7 +62,9 @@ class QueueComponent extends Component
      */
     public function setCompassVersionImport(DocumentVersion $documentVersion): void
     {
-        $job = $this->QueuedJobs->createJob('Compass', ['version' => $documentVersion->id]);
+        $job = $this->QueuedJobs->createJob('Compass', [
+            'version' => $documentVersion->get($documentVersion::FIELD_ID),
+        ]);
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'The document version has been sent for processing.',
@@ -77,7 +81,9 @@ class QueueComponent extends Component
      */
     public function setCompassAutoMerge(DocumentVersion $documentVersion): void
     {
-        $job = $this->QueuedJobs->createJob('AutoMerge', ['version' => $documentVersion->id]);
+        $job = $this->QueuedJobs->createJob('AutoMerge', [
+            'version' => $documentVersion->get($documentVersion::FIELD_ID),
+        ]);
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'The document version has been sent for auto merging.',
