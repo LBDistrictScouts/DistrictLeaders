@@ -310,7 +310,7 @@ class EmailSendsTable extends Table
         if ($email->include_token && $email->has('tokens')) {
             $token = $email->tokens[0];
             if ($token instanceof Token) {
-                $token = $this->Tokens->buildToken($token->get($token::FIELD_ID));
+                $token = $this->Tokens->buildToken((int)$token->get($token::FIELD_ID));
             } else {
                 $token = null;
             }
