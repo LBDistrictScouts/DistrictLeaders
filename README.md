@@ -3,13 +3,13 @@
 This is a web application for use with District Leaders.
 
 ### Master Branch
-[![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=master)
+![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=master)
 [![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/master/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
 [![Maintainability](https://api.codeclimate.com/v1/badges/7785e44f399b4d7c04c4/maintainability)](https://codeclimate.com/github/LBDistrictScouts/DistrictLeaders/maintainability)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ### Development Branch
-[![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=Development)
+![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=Development)
 [![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/Development/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
 ## Installation
 
