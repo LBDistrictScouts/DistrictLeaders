@@ -37,10 +37,10 @@ class TokenListener implements EventListenerInterface
     public function tokenValidate(EventInterface $event): void
     {
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $this->Tokens = $event->getSubject();
 
-        /** @var \App\Model\Entity\Token $token */
-        $token = $event->getData('token');
-        $this->Tokens = $this->getTableLocator()->get('Tokens');
+        $tokenKey = $event->getData('tokenId');
+        $token = $this->Tokens->get($tokenKey);
 
         $token->set(Token::FIELD_UTILISED, FrozenTime::now());
         $this->Tokens->save($token);

@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
+use App\Listener\UserListener;
 use App\Model\Entity\User;
 use App\Test\TestCase\ControllerTestCase as TestCase;
+use Cake\Event\Event;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\I18n\FrozenTime;
@@ -17,6 +19,7 @@ use Cake\I18n\FrozenTime;
  * @property \App\Model\Table\RolesTable $Roles
  * @property EventManager $EventManager
  * @property EventManager $RoleEvents
+ * @property UserListener $Listener
  */
 class UserListenerTest extends TestCase
 {
@@ -26,6 +29,8 @@ class UserListenerTest extends TestCase
         $this->Users = $this->getTableLocator()->get('Users');
         $this->Roles = $this->getTableLocator()->get('Roles');
 
+        $this->Listener = new UserListener();
+
         // enable event tracking
         $this->EventManager = EventManager::instance();
         $this->EventManager->setEventList(new EventList());
@@ -34,7 +39,10 @@ class UserListenerTest extends TestCase
         $this->RoleEvents->setEventList(new EventList());
     }
 
-    public function testUpdateLogin()
+    /**
+     * @return array
+     */
+    public function prepare()
     {
         $now = new FrozenTime('2018-12-25 23:22:30');
         FrozenTime::setTestNow($now);
@@ -47,6 +55,15 @@ class UserListenerTest extends TestCase
 
         $user = $this->Users->get(1);
         TestCase::assertEquals($now, $user->modified);
+
+        return compact('testPassword', 'user');
+    }
+
+    public function testEventFired()
+    {
+        $userSetup = $this->prepare();
+        /** @var User $user */
+        $user = $userSetup['user'];
 
         $now = new FrozenTime('2018-12-28 23:22:30');
         FrozenTime::setTestNow($now);
@@ -62,7 +79,7 @@ class UserListenerTest extends TestCase
             'action' => 'login',
         ], [
             'username' => $user->username,
-            'password' => $testPassword,
+            'password' => $userSetup['testPassword'],
         ], $redirect);
 
         $this->assertRedirect($redirect);
@@ -74,5 +91,39 @@ class UserListenerTest extends TestCase
 
         TestCase::assertEquals($now, $afterUser->last_login);
         TestCase::assertNotEquals($now, $afterUser->modified);
+    }
+
+    public function testListenerFunctionValid()
+    {
+        $setupArray = $this->prepare();
+        /** @var User $beforeUser */
+        $beforeUser = $setupArray['user'];
+
+        $fakeEvent = $this
+            ->getMockBuilder(Event::class)
+            ->setConstructorArgs([
+                'Model.Users.login',
+                $this->Users,
+                ['user' => []],
+            ])
+            ->getMock();
+
+        $fakeEvent
+            ->expects(TestCase::any())
+            ->method('getData')
+            ->willReturn([]);
+
+        $fakeEvent
+            ->expects(TestCase::any())
+            ->method('getSubject')
+            ->willReturn($this->Users);
+
+        $this->Listener->updateLogin($fakeEvent);
+
+        $afterUser = $this->Users->get(1);
+        TestCase::assertNotSame(
+            $beforeUser->get($beforeUser::FIELD_LAST_LOGIN),
+            $afterUser->get($afterUser::FIELD_LAST_LOGIN)
+        );
     }
 }

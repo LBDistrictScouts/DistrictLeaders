@@ -4,78 +4,22 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller\Component;
 
 use App\Controller\Component\FilterComponent;
+use App\Test\TestCase\ComponentTestCase as TestCase;
 use Cake\Controller\ComponentRegistry;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
-use Cake\TestSuite\IntegrationTestTrait;
-use Cake\TestSuite\TestCase;
 
 /**
  * App\Controller\Component\FilterComponent Test Case
  */
 class FilterComponentTest extends TestCase
 {
-    use IntegrationTestTrait;
-
     /**
      * Test subject
      *
      * @var \App\Controller\Component\FilterComponent
      */
     public $Filter;
-
-    /**
-     * Test subject
-     *
-     * @var \Cake\Controller\Controller
-     */
-    public $Controller;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
-        'app.CompassRecords',
-    ];
 
     /**
      * setUp method

@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use Cake\Cache\Cache;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
-use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class LoginEvent
@@ -20,8 +20,6 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  */
 class UserListener implements EventListenerInterface
 {
-    use LocatorAwareTrait;
-
     /**
      * @return array
      */
@@ -40,7 +38,19 @@ class UserListener implements EventListenerInterface
     {
         /** @var \App\Model\Entity\User $user */
         $user = $event->getData('user');
-        $this->Users = $this->getTableLocator()->get('Users');
+        $this->Users = $event->getSubject();
+
+        if (!$this->Users instanceof UsersTable) {
+            Log::warning('Event called with incorrect subject');
+
+            return;
+        }
+
+        if (!$user instanceof User) {
+            Log::warning('Event called without data');
+
+            return;
+        }
 
         $user->set(User::FIELD_LAST_LOGIN, FrozenTime::now());
         $user->setDirty(User::FIELD_MODIFIED, true);

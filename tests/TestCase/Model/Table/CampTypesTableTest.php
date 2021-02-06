@@ -5,8 +5,8 @@ namespace App\Test\TestCase\Model\Table;
 
 use App\Model\Entity\CampType;
 use App\Model\Table\CampTypesTable;
+use App\Utility\TextSafe;
 use Cake\TestSuite\TestCase;
-use Faker\Factory;
 
 /**
  * App\Model\Table\CampTypesTable Test Case
@@ -62,10 +62,8 @@ class CampTypesTableTest extends TestCase
      */
     private function getGood(): array
     {
-        $faker = Factory::create('en_GB');
-
         return [
-            CampType::FIELD_CAMP_TYPE => ucwords($faker->words(3, true)),
+            CampType::FIELD_CAMP_TYPE => ucwords(TextSafe::shuffle(5) . ' ' . TextSafe::shuffle(5)),
         ];
     }
 

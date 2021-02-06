@@ -306,7 +306,7 @@ class UsersController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            $event = new Event('Model.Users.login', $this, [
+            $event = new Event('Model.Users.login', $this->Users, [
                 'user' => $result->getData(),
             ]);
             $this->getEventManager()->dispatch($event);

@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
+use App\Model\Table\RolesTable;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\Time;
+use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\RolesTable $Roles
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class RoleListener implements EventListenerInterface
@@ -37,13 +39,12 @@ class RoleListener implements EventListenerInterface
      */
     public function newRole(EventInterface $event): void
     {
-        /** @var \App\Model\Entity\Role $role */
-        $role = $event->getData('entity');
+        $roleId = $event->getData('roleId');
 
         $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
         $this->QueuedJobs->createJob(
             'Email',
-            ['email_generation_code' => 'ROL-' . $role->id . '-NEW']
+            ['email_generation_code' => 'ROL-' . $roleId . '-NEW']
         );
     }
 
@@ -53,8 +54,21 @@ class RoleListener implements EventListenerInterface
      */
     public function roleChange(EventInterface $event): void
     {
-        /** @var \App\Model\Entity\Role $role */
-        $role = $event->getData('entity');
+        $roleId = $event->getData('roleId');
+        $this->Roles = $event->getSubject();
+        if (!$this->Roles instanceof RolesTable) {
+            Log::warning('Event called with incorrect subject');
+
+            return;
+        }
+
+        if (!$this->Roles->exists(['id' => $roleId])) {
+            Log::warning('Event called with incorrect data, role ID does not exist');
+
+            return;
+        }
+
+        $role = $this->Roles->get($roleId);
 
         $now = Time::now();
         $daysSinceChange = $now->diffInDays($role->modified);

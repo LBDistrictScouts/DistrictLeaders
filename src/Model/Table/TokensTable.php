@@ -259,7 +259,7 @@ class TokensTable extends Table
             $this->getEventManager()->dispatch(new Event(
                 'Model.Tokens.tokenValidated',
                 $this,
-                ['token' => $tokenRow->id]
+                ['tokenId' => $tokenRow->id]
             ));
 
             return $tokenRow->id;

@@ -48,7 +48,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           extensions: mbstring, intl, apcu, pdo_pgsql, redis, xdebug
-          ini-values: apc.enable_cli = 1, xdebug.mode = develop,coverage,debug,gcstats,profile,trace
+          ini-values: xdebug.mode="develop,coverage", apc.enable_cli=1
+          coverage: xdebug
 
       - name: Set App File Config
         run: mv config/app_file.travis.php config/app_file.php
@@ -94,6 +95,9 @@ jobs:
           else
             composer test
           fi
+
+      - name: List Files
+        run: ls -al
 
       - name: CodeCov Upload Coverage
         if: ${{ matrix.async == 'Y' }}
