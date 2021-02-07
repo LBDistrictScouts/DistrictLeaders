@@ -133,7 +133,7 @@
                             <li class="nav-item"><a class="nav-link active" id="tokens-tab" data-toggle="tab" href="#tokens" role="tab" aria-controls="tokens" aria-selected="true" style="font-family: 'Nunito Sans', sans-serif;">Tokens</a></li>
                         <?php endif; ?>
                         <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'EmailResponses')) : ?>
-                            <li class="nav-item"><a class="nav-link" id="response-tab" data-toggle="tab" href="#responses" role="tab" aria-controls="audit" aria-selected="false" style="font-family: 'Nunito Sans', sans-serif;">Email Responses</a></li>
+                            <li class="nav-item"><a class="nav-link" id="response-tab" data-toggle="tab" href="#responses" role="tab" aria-controls="responses" aria-selected="false" style="font-family: 'Nunito Sans', sans-serif;">Email Responses</a></li>
                         <?php endif; ?>
                     </ul>
                 </div>
