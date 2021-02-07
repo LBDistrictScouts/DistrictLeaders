@@ -3,10 +3,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Http\Response;
+
 /**
  * Tokens Controller
  *
  * @property \App\Model\Table\TokensTable $Tokens
+ * @property \App\Controller\Component\QueueComponent $Queue
  * @method \App\Model\Entity\Token[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
@@ -69,5 +72,59 @@ class TokensController extends AppController
         }
 
         return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+    }
+
+    /**
+     * @param int|null $tokenId Token ID to be deactivated
+     * @return \Cake\Http\Response
+     */
+    public function inactivate($tokenId = null): Response
+    {
+        $token = $this->Tokens->get($tokenId);
+
+        if ($this->request->is('post')) {
+            $token->set($token::FIELD_ACTIVE, false);
+            if ($this->Tokens->save($token)) {
+                $this->Flash->success('Token Inactivated');
+            }
+        }
+
+        return $this->redirect($this->referer([
+            'controller' => 'EmailSends',
+            'action' => 'view',
+            $token->email_send_id,
+        ]));
+    }
+
+    /**
+     * Process method
+     *
+     * @param int|string|null $tokenId The Optional ID of the Token
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
+     */
+    public function parse($tokenId = null)
+    {
+        $this->request->allowMethod(['post']);
+
+        if (isset($tokenId) && !empty($tokenId)) {
+            $token = $this->Tokens->get($tokenId);
+            $response = $this->Tokens->cleanToken($token);
+
+            if ($response == $this->Tokens::CLEAN_DELETED) {
+                $this->Flash->error('Token Deleted');
+            } elseif ($response == $this->Tokens::CLEAN_DEACTIVATE) {
+                $this->Flash->warning('Token Deactivated');
+            } else {
+                $this->Flash->success('No Action Taken');
+            }
+
+            return $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
+        }
+
+        $this->loadComponent('Queue');
+        $this->Queue->setTokenParse();
+
+        return $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
     }
 }

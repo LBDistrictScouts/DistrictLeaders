@@ -23,6 +23,9 @@ class EmailSendsController extends AppController
     {
         $this->paginate = [
             'contain' => ['Users', 'Notifications'],
+            'order' => [
+                'created' => 'DESC',
+            ],
         ];
         $emailSends = $this->paginate($this->EmailSends);
 

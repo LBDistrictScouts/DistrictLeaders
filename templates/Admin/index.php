@@ -37,6 +37,15 @@
                     'class' => 'btn btn-primary',
                 ]
             ) ?>
+            <?= $this->Form->postLink(
+                'Parse Tokens for Activity',
+                ['controller' => 'Tokens', 'action' => 'parse'],
+                [
+                    'confirm' => __d('queue', 'Are you sure you want to trigger tokens to be evaluated for expiry?'),
+                    'role' => 'button',
+                    'class' => 'btn btn-primary',
+                ]
+            ) ?>
         </div>
     </div>
 </div>

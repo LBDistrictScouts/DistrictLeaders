@@ -83,12 +83,12 @@ $current = 'view_job';
                     <table class="table vertical-table">
                         <tr>
                             <th scope="col"><?= __d('queue', 'Created') ?></th>
-                            <td><?= $this->Time->nice($queuedJob->created) ?></td>
+                            <td><?= $this->Time->format($queuedJob->created, 'dd-MMM-yy HH:mm') ?></td>
                         </tr>
                         <tr>
                             <th scope="col"><?= __d('queue', 'Notbefore') ?></th>
                             <td>
-                                <?= $this->Time->nice($queuedJob->notbefore) ?>
+                                <?= $this->Time->format($queuedJob->notbefore, 'dd-MMM-yy HH:mm') ?>
                                 <br>
                                 <?php echo $this->QueueProgress->timeoutProgressBar($queuedJob, 18); ?>
                                 <?php if ($queuedJob->notbefore && $queuedJob->notbefore->isFuture()) {
@@ -101,7 +101,7 @@ $current = 'view_job';
                         <tr>
                             <th scope="col"><?= __d('queue', 'Fetched') ?></th>
                             <td>
-                                <?= $this->Time->nice($queuedJob->fetched) ?>
+                                <?= $this->Time->format($queuedJob->fetched, 'dd-MMM-yy HH:mm') ?>
                                 <?php if ($queuedJob->fetched) {
                                     echo '<div><small>';
                                     echo __d('queue', 'Delay') . ': ' . $this->Time->duration($queuedJob->fetched->diff($queuedJob->created));
@@ -112,7 +112,7 @@ $current = 'view_job';
                         <tr>
                             <th scope="col"><?= __d('queue', 'Completed') ?></th>
                             <td>
-                                <?= $this->Time->nice($queuedJob->completed) ?>
+                                <?= $this->Time->format($queuedJob->completed, 'dd-MMM-yy HH:mm') ?>
                                 <?php if ($queuedJob->completed) {
                                     echo '<div><small>';
                                     echo __d('queue', 'Duration') . ': ' . $this->Time->duration($queuedJob->completed->diff($queuedJob->fetched));
