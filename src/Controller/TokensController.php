@@ -99,6 +99,7 @@ class TokensController extends AppController
     /**
      * Process method
      *
+     * @param int|string|null $tokenId The Optional ID of the Token
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
      */
