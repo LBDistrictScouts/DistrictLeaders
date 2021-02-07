@@ -3,12 +3,7 @@
  * @var \App\View\AppView $this
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __d('queue', 'Actions') ?></li>
-        <li><?= $this->Html->link('Back', ['action' => 'index']); ?></li>
-    </ul>
-</nav>
+<?= $this->element('header', ['current' => 'import']) ?>
 <div class="releases form large-9 medium-8 columns content">
     <h1>Import</h1>
 

@@ -141,4 +141,20 @@ class QueueComponent extends Component
             $this->Flash->error(__('The Unsent Email process could not be triggered.'));
         }
     }
+
+    /**
+     * @return void
+     */
+    public function setTokenParse()
+    {
+        $job = $this->QueuedJobs->createJob('Token');
+        if ($job instanceof QueuedJob) {
+            $this->Flash->queue(
+                'Token Parse Initiated.',
+                ['params' => ['job_id' => $job->id]]
+            );
+        } else {
+            $this->Flash->error(__('Token Parse process could not be initiated.'));
+        }
+    }
 }

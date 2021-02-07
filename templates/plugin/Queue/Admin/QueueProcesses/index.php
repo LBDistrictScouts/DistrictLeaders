@@ -5,15 +5,8 @@
  */
 use Queue\Queue\Config;
 ?>
-<nav class="actions large-3 medium-4 columns col-sm-4 col-xs-12" id="actions-sidebar">
-    <ul class="side-nav nav nav-pills nav-stacked">
-        <li class="heading"><?= __d('queue', 'Actions') ?></li>
-        <li><?= $this->Html->link(__d('queue', 'Dashboard'), ['controller' => 'Queue', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__d('queue', 'Back'), ['controller' => 'Queue', 'action' => 'processes'], ['class' => 'btn btn-default']) ?></li>
-        <li><?= $this->Form->postLink(__d('queue', 'Cleanup'), ['action' => 'cleanup'], ['confirm' => 'Sure to remove all outdated ones (>' . (Config::defaultworkertimeout() * 2) . 's)?', 'class' => 'btn margin btn-warning']) ?></li>
-    </ul>
-</nav>
-<div class="content action-index index large-9 medium-8 columns col-sm-8 col-xs-12">
+<?= $this->element('header', ['current' => 'process-list']) ?>
+<div>
     <h1><?= __d('queue', 'Queue Processes') ?></h1>
     <table class="table table-striped">
         <thead>
@@ -53,9 +46,9 @@ use Queue\Queue\Config;
                 <td><?= $this->Format->yesNo(!$queueProcess->terminate) ?></td>
                 <td><?= h($queueProcess->server) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link($this->Format->icon('view'), ['action' => 'view', $queueProcess->id], ['escapeTitle' => false]); ?>
+                    <?= $this->Html->link($this->Icon->iconHtml('fa-eye'), ['action' => 'view', $queueProcess->id], ['escapeTitle' => false]); ?>
                 <?php if (!$queueProcess->terminate) { ?>
-                    <?= $this->Form->postLink($this->Format->icon('close', ['title' => __d('queue', 'Terminate')]), ['action' => 'terminate', $queueProcess->id], ['escapeTitle' => false, 'confirm' => __d('queue', 'Are you sure you want to terminate # {0}?', $queueProcess->id)]); ?>
+                    <?= $this->Form->postLink($this->Icon->iconHtml('fa-skull-crossbones'), ['action' => 'terminate', $queueProcess->id], ['escapeTitle' => false, 'confirm' => __d('queue', 'Are you sure you want to terminate Process ID #{0}?', $queueProcess->pid)]); ?>
                 <?php } ?>
 
                 </td>

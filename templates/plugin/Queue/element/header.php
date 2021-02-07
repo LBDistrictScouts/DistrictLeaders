@@ -1,7 +1,7 @@
 <?php
 /**
  * @var \App\View\AppView $this
- * @var array $data
+ * @var array|null $data
  */
 
 if (!isset($data)) {

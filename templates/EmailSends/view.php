@@ -4,174 +4,301 @@
  * @var \App\Model\Entity\EmailSend $emailSend
  */
 ?>
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('Edit Email Send'), ['action' => 'edit', $emailSend->id]) ?> </li>
-        <li><?= $this->Form->postLink(__('Delete Email Send'), ['action' => 'delete', $emailSend->id], ['confirm' => __('Are you sure you want to delete # {0}?', $emailSend->id)]) ?> </li>
-        <li><?= $this->Html->link(__('List Email Sends'), ['action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Email Send'), ['action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Notifications'), ['controller' => 'Notifications', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Notification'), ['controller' => 'Notifications', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Email Responses'), ['controller' => 'EmailResponses', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Email Response'), ['controller' => 'EmailResponses', 'action' => 'add']) ?> </li>
-        <li><?= $this->Html->link(__('List Tokens'), ['controller' => 'Tokens', 'action' => 'index']) ?> </li>
-        <li><?= $this->Html->link(__('New Token'), ['controller' => 'Tokens', 'action' => 'add']) ?> </li>
-    </ul>
-</nav>
-<?= $this->Form->postLink(
-    'Send Email',
-    ['controller' => 'EmailSends', 'action' => 'send', $emailSend->id],
-    [
-        'confirm' => __d('queue', 'Are you sure you want to send email # {0}?', $emailSend->id),
-        'role' => 'button',
-        'class' => 'btn btn-outline-danger',
-    ]
-) ?>
-<div class="emailSends view large-9 medium-8 columns content">
-    <h3><?= h($emailSend->id) ?></h3>
-    <table class="vertical-table">
-        <tr>
-            <th scope="row"><?= __('Email Generation Code') ?></th>
-            <td><?= h($emailSend->email_generation_code) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Email Template') ?></th>
-            <td><?= h($emailSend->email_template) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Message Send Code') ?></th>
-            <td><?= h($emailSend->message_send_code) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('User') ?></th>
-            <td><?= $emailSend->has('user') ? $this->Html->link($emailSend->user->full_name, ['controller' => 'Users', 'action' => 'view', $emailSend->user->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Subject') ?></th>
-            <td><?= h($emailSend->subject) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Routing Domain') ?></th>
-            <td><?= h($emailSend->routing_domain) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('From Address') ?></th>
-            <td><?= h($emailSend->from_address) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Friendly From') ?></th>
-            <td><?= h($emailSend->friendly_from) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Notification') ?></th>
-            <td><?= $emailSend->has('notification') ? $this->Html->link($emailSend->notification->id, ['controller' => 'Notifications', 'action' => 'view', $emailSend->notification->id]) : '' ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Id') ?></th>
-            <td><?= $this->Number->format($emailSend->id) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Created') ?></th>
-            <td><?= h($emailSend->created) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Modified') ?></th>
-            <td><?= h($emailSend->modified) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Deleted') ?></th>
-            <td><?= h($emailSend->deleted) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Sent') ?></th>
-            <td><?= h($emailSend->sent) ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><?= __('Include Token') ?></th>
-            <td><?= $emailSend->include_token ? __('Yes') : __('No'); ?></td>
-        </tr>
-    </table>
-    <div class="related">
-        <h4><?= __('Related Email Responses') ?></h4>
-        <?php if (!empty($emailSend->email_responses)) : ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Email Send Id') ?></th>
-                <th scope="col"><?= __('Deleted') ?></th>
-                <th scope="col"><?= __('Email Response Type Id') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Received') ?></th>
-                <th scope="col"><?= __('Link Clicked') ?></th>
-                <th scope="col"><?= __('Ip Address') ?></th>
-                <th scope="col"><?= __('Bounce Reason') ?></th>
-                <th scope="col"><?= __('Message Size') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($emailSend->email_responses as $emailResponses) : ?>
-            <tr>
-                <td><?= h($emailResponses->id) ?></td>
-                <td><?= h($emailResponses->email_send_id) ?></td>
-                <td><?= h($emailResponses->deleted) ?></td>
-                <td><?= h($emailResponses->email_response_type_id) ?></td>
-                <td><?= h($emailResponses->created) ?></td>
-                <td><?= h($emailResponses->received) ?></td>
-                <td><?= h($emailResponses->link_clicked) ?></td>
-                <td><?= h($emailResponses->ip_address) ?></td>
-                <td><?= h($emailResponses->bounce_reason) ?></td>
-                <td><?= h($emailResponses->message_size) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'EmailResponses', 'action' => 'view', $emailResponses->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'EmailResponses', 'action' => 'edit', $emailResponses->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'EmailResponses', 'action' => 'delete', $emailResponses->id], ['confirm' => __('Are you sure you want to delete # {0}?', $emailResponses->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
-        <?php endif; ?>
-    </div>
-    <div class="related">
-        <h4><?= __('Related Tokens') ?></h4>
-        <?php if (!empty($emailSend->tokens)) : ?>
-        <table cellpadding="0" cellspacing="0">
-            <tr>
-                <th scope="col"><?= __('Id') ?></th>
-                <th scope="col"><?= __('Token') ?></th>
-                <th scope="col"><?= __('Created') ?></th>
-                <th scope="col"><?= __('Modified') ?></th>
-                <th scope="col"><?= __('Expires') ?></th>
-                <th scope="col"><?= __('Utilised') ?></th>
-                <th scope="col"><?= __('Active') ?></th>
-                <th scope="col"><?= __('Deleted') ?></th>
-                <th scope="col"><?= __('Hash') ?></th>
-                <th scope="col"><?= __('Random Number') ?></th>
-                <th scope="col"><?= __('Email Send Id') ?></th>
-                <th scope="col" class="actions"><?= __('Actions') ?></th>
-            </tr>
-            <?php foreach ($emailSend->tokens as $tokens) : ?>
-            <tr>
-                <td><?= h($tokens->id) ?></td>
-                <td><?= h($tokens->token) ?></td>
-                <td><?= h($tokens->created) ?></td>
-                <td><?= h($tokens->modified) ?></td>
-                <td><?= h($tokens->expires) ?></td>
-                <td><?= h($tokens->utilised) ?></td>
-                <td><?= h($tokens->active) ?></td>
-                <td><?= h($tokens->deleted) ?></td>
-                <td><?= h($tokens->hash) ?></td>
-                <td><?= h($tokens->random_number) ?></td>
-                <td><?= h($tokens->email_send_id) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'Tokens', 'action' => 'view', $tokens->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'Tokens', 'action' => 'edit', $tokens->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'Tokens', 'action' => 'delete', $tokens->id], ['confirm' => __('Are you sure you want to delete # {0}?', $tokens->id)]) ?>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </table>
+<div class="row">
+    <div class="col">
+        <?= $this->element('image-header') ?>
+        <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                        <h4 style="font-family: 'Nunito Sans', sans-serif;"><?= h($emailSend->subject) ?></h4>
+                        <h6 class="text-muted mb-2" style="font-family: 'Nunito Sans', sans-serif;"></h6>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle d-sm-block d-md-block" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                            <div class="dropdown-menu float-left" role="menu">
+                                <?= $emailSend->has($emailSend::FIELD_MESSAGE_SEND_CODE) ? '' : $this->Form->postLink('Send Email', ['controller' => 'EmailSends', 'action' => 'send', $emailSend->id], ['confirm' => __d('queue', 'Are you sure you want to send email # {0}?', $emailSend->id), 'role' => 'button', 'class' => 'btn btn-outline-danger']) ?>
+                                <?= $this->Identity->buildAndCheckCapability('VIEW', 'Notifications') ? $this->Html->link('<i class="fal fa-bell"></i> View Notification', ['controller' => 'Notifications', 'action' => 'view', $emailSend->notification->id], ['title' => __('View Notification'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('DELETE', 'EmailSends') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i> Delete Email Send', ['controller' => 'EmailSends', 'action' => 'delete', $emailSend->id], ['confirm' => __('Are you sure you want to delete email send ID # {0}?', $emailSend->id), 'title' => __('Delete Section'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card thick-card">
+                            <div class="card-body">
+                                <div class="table-borderless">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Email Template</span></td>
+                                                <td><?= $this->Inflection->space($emailSend->email_template) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Email Generation Code</span></td>
+                                                <td><?= h($emailSend->email_generation_code) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Token Included</span></td>
+                                                <td><?= $this->Icon->iconBoolean($emailSend->include_token) ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card thick-card">
+                            <div class="card-body">
+                                <div class="table-borderless">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Message Sent</span></td>
+                                                <td><?= $this->Icon->iconBoolean($emailSend->has($emailSend::FIELD_MESSAGE_SEND_CODE)) ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Message Send Code</span></td>
+                                                <td><?= h($emailSend->message_send_code) ?></td>
+                                            </tr>
+                                            <?php if (!empty($emailSend->sent)) : ?>
+                                                <tr>
+                                                    <td><span class="text-muted mb-2">Date Sent</span></td>
+                                                    <td><?= $this->Time->format($emailSend->sent, 'dd-MMM-yy HH:mm') ?></td>
+                                                </tr>
+                                            <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card thick-card">
+                            <div class="card-body">
+                                <div class="table-borderless">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td><span class="text-muted mb-2">Date Created</span></td>
+                                            <td><?= $this->Time->format($emailSend->created, 'dd-MMM-yy HH:mm') ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span class="text-muted mb-2">Date Modified</span></td>
+                                            <td><?= $this->Time->format($emailSend->modified, 'dd-MMM-yy HH:mm') ?></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card thick-card">
+                            <div class="card-body">
+                                <div class="table-borderless">
+                                    <table class="table">
+                                        <tbody>
+                                        <?php if ($emailSend->has($emailSend::FIELD_NOTIFICATION)) : ?>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">Notification</span></td>
+                                                <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'Notifications') ? $this->Html->link($emailSend->notification->notification_header, ['controller' => 'Notifications', 'action' => 'view', $emailSend->notification->id]) : h($emailSend->notification->notification_header) ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        <?php if ($emailSend->has($emailSend::FIELD_USER)) : ?>
+                                            <tr>
+                                                <td><span class="text-muted mb-2">User</span></td>
+                                                <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'Users') ? $this->Html->link($emailSend->user->full_name, ['controller' => 'Users', 'action' => 'view', $emailSend->user->id]) :  $emailSend->user->full_name ?></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Tokens') || $this->Identity->buildAndCheckCapability('VIEW', 'EmailResponses')) : ?>
+            <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
+                <div class="card-header">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Tokens')) : ?>
+                            <li class="nav-item"><a class="nav-link active" id="tokens-tab" data-toggle="tab" href="#tokens" role="tab" aria-controls="tokens" aria-selected="true" style="font-family: 'Nunito Sans', sans-serif;">Tokens</a></li>
+                        <?php endif; ?>
+                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'EmailResponses')) : ?>
+                            <li class="nav-item"><a class="nav-link" id="response-tab" data-toggle="tab" href="#responses" role="tab" aria-controls="audit" aria-selected="false" style="font-family: 'Nunito Sans', sans-serif;">Email Responses</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <div class="tab-content" id="myTabContent">
+                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Tokens')) : ?>
+                            <div class="tab-pane fade show active" id="tokens" role="tabpanel" aria-labelledby="tokens-tab">
+                                <?php foreach ($emailSend->tokens as $token) : ?>
+                                    <?php $header = $token->token_header; ?>
+                                    <div class="row">
+                                        <div class="col" style="margin-top: 10px;margin-bottom: 10px;">
+                                            <h4 style="font-family: 'Nunito Sans', sans-serif;">Token #<?= $this->Number->format($token->id) ?></h4>
+                                            <h6 class="text-muted mb-2" style="font-family: 'Nunito Sans', sans-serif;"></h6>
+                                        </div>
+                                        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-3 d-lg-flex d-xl-flex justify-content-lg-end justify-content-xl-end" style="margin-top: 10px;margin-bottom: 15px;">
+                                            <div class="dropdown">
+                                                <button class="btn btn-primary dropdown-toggle d-sm-block d-md-block" data-toggle="dropdown" aria-expanded="false" type="button">Actions</button>
+                                                <div class="dropdown-menu float-left" role="menu">
+                                                    <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Tokens') ? $this->Form->postLink('<i class="fal fa-lock"></i> Inactivate Token', ['controller' => 'Tokens', 'action' => 'inactivate', $token->id], ['confirm' => __('Are you sure you want to inactivate this token # {0}?', $token->id), 'title' => __('Inactivate Section'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Tokens') ? $this->Form->postLink('<i class="fal fa-sync"></i> Parse Token Expiry', ['controller' => 'Tokens', 'action' => 'parse', $token->id], ['confirm' => __('Are you sure you want to parse this token #{0} for expiry / deletion?', $token->id), 'title' => __('Inactivate Section'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                                    <?= $this->Identity->buildAndCheckCapability('DELETE', 'Tokens') ? $this->Form->postLink('<i class="fal fa-trash-alt"></i> Delete Token', ['controller' => 'Tokens', 'action' => 'delete', $token->id], ['confirm' => __('Are you sure you want to delete this token # {0}?', $token->id), 'title' => __('Delete Section'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="card thick-card">
+                                                <div class="card-body">
+                                                    <div class="table-borderless">
+                                                        <table class="table">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><span class="text-muted mb-2">Active</span></td>
+                                                                    <td><?= $this->Icon->iconBoolean($token->active) ?></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><span class="text-muted mb-2">Authenticates</span></td>
+                                                                    <?php $authenticate = ( key_exists('authenticate', $header) && $header['authenticate'] ) ?>
+                                                                    <td><?= $this->Icon->iconBoolean($authenticate) ?></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php if (key_exists('redirect', $header)) : ?>
+                                            <?php $redirect = $header['redirect']; ?>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="card thick-card">
+                                                <div class="card-body">
+                                                    <div class="table-borderless">
+                                                        <table class="table">
+                                                            <tbody>
+                                                            <?php if (key_exists('controller', $redirect)) : ?>
+                                                                <tr>
+                                                                    <td><span class="text-muted mb-2">Link Controller</span></td>
+                                                                    <td><?= $this->Inflection->space($redirect['controller']) ?></td>
+                                                                </tr>
+                                                            <?php endif; ?>
+                                                            <?php if (key_exists('action', $redirect)) : ?>
+                                                                <tr>
+                                                                    <td><span class="text-muted mb-2">Link Action</span></td>
+                                                                    <td><?= $this->Inflection->space($redirect['action']) ?></td>
+                                                                </tr>
+                                                            <?php endif; ?>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="card thick-card">
+                                                <div class="card-body">
+                                                    <div class="table-borderless">
+                                                        <table class="table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td><span class="text-muted mb-2">Date Utilised</span></td>
+                                                                <td><?= $this->Time->format($token->utilised, 'dd-MMM-yy HH:mm') ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="text-muted mb-2"><?= $token->expires->isFuture() ? 'Date Expires' : 'Date Expired' ?></span></td>
+                                                                <td><?= $this->Time->format($token->expires, 'dd-MMM-yy HH:mm') ?></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-6">
+                                            <div class="card thick-card">
+                                                <div class="card-body">
+                                                    <div class="table-borderless">
+                                                        <table class="table">
+                                                            <tbody>
+                                                            <tr>
+                                                                <td><span class="text-muted mb-2">Date Created</span></td>
+                                                                <td><?= $this->Time->format($token->created, 'dd-MMM-yy HH:mm') ?></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><span class="text-muted mb-2">Date Modified</span></td>
+                                                                <td><?= $this->Time->format($token->modified, 'dd-MMM-yy HH:mm') ?></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'EmailResponses')) : ?>
+                            <div class="tab-pane fade" id="responses" role="tabpanel" aria-labelledby="response-tab">
+                                <?php if (!empty($emailSend->email_responses)) : ?>
+                                    <table cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <th scope="col"><?= __('Id') ?></th>
+                                            <th scope="col"><?= __('Email Send Id') ?></th>
+                                            <th scope="col"><?= __('Deleted') ?></th>
+                                            <th scope="col"><?= __('Email Response Type Id') ?></th>
+                                            <th scope="col"><?= __('Created') ?></th>
+                                            <th scope="col"><?= __('Received') ?></th>
+                                            <th scope="col"><?= __('Link Clicked') ?></th>
+                                            <th scope="col"><?= __('Ip Address') ?></th>
+                                            <th scope="col"><?= __('Bounce Reason') ?></th>
+                                            <th scope="col"><?= __('Message Size') ?></th>
+                                            <th scope="col" class="actions"><?= __('Actions') ?></th>
+                                        </tr>
+                                        <?php foreach ($emailSend->email_responses as $emailResponses) : ?>
+                                            <tr>
+                                                <td><?= h($emailResponses->id) ?></td>
+                                                <td><?= h($emailResponses->email_send_id) ?></td>
+                                                <td><?= h($emailResponses->deleted) ?></td>
+                                                <td><?= h($emailResponses->email_response_type_id) ?></td>
+                                                <td><?= h($emailResponses->created) ?></td>
+                                                <td><?= h($emailResponses->received) ?></td>
+                                                <td><?= h($emailResponses->link_clicked) ?></td>
+                                                <td><?= h($emailResponses->ip_address) ?></td>
+                                                <td><?= h($emailResponses->bounce_reason) ?></td>
+                                                <td><?= h($emailResponses->message_size) ?></td>
+                                                <td class="actions">
+                                                    <?= $this->Html->link(__('View'), ['controller' => 'EmailResponses', 'action' => 'view', $emailResponses->id]) ?>
+                                                    <?= $this->Html->link(__('Edit'), ['controller' => 'EmailResponses', 'action' => 'edit', $emailResponses->id]) ?>
+                                                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'EmailResponses', 'action' => 'delete', $emailResponses->id], ['confirm' => __('Are you sure you want to delete # {0}?', $emailResponses->id)]) ?>
+                                                </td>
+                                            </tr>
+                                        <?php endforeach; ?>
+                                    </table>
+                                <?php else : ?>
+                                    <div class="alert alert-dark">No Responses Recorded</div>
+                                <?php endif; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
         <?php endif; ?>
     </div>
 </div>

@@ -549,4 +549,70 @@ class QueueComponentTest extends TestCase
 
         $this->failedJobcheck();
     }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSetTokenParse(): void
+    {
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'queue',
+                [
+                    'Token Parse Initiated.',
+                    ['params' => ['job_id' => 1]],
+                ]
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $this->Queue->setTokenParse();
+
+        $this->jobCheck('Token');
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSetTokenParseFail(): void
+    {
+        $flash = $this->getMockBuilder(FlashComponent::class)
+            ->enableOriginalConstructor()
+            ->setConstructorArgs([$this->Registry])
+            ->getMock();
+
+        $flash->expects(TestCase::once())
+            ->method('__call')
+            ->with(
+                'error',
+                ['Token Parse process could not be initiated.']
+            );
+
+        $this->Queue->Flash = $flash;
+
+        $jobsTable = $this->getMockBuilder(QueuedJobsTable::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $jobsTable->expects(TestCase::once())
+            ->method('createJob')
+            ->with('Token')
+            ->willReturn(null);
+
+        $this->Queue->QueuedJobs = $jobsTable;
+
+        $this->Queue->setTokenParse();
+
+        $this->failedJobcheck();
+    }
 }
