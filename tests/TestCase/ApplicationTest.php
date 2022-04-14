@@ -56,6 +56,7 @@ class ApplicationTest extends IntegrationTestCase
             'Authentication',
             'Authorization',
             'Bake',
+            'Cake/Repl',
             'IdeHelper',
             'Migrations',
             'DebugKit',
@@ -72,6 +73,7 @@ class ApplicationTest extends IntegrationTestCase
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
         }
 
+        /* Validate Length matches (no unexpected new plugins have been added). */
         TestCase::assertCount(count($expectedPlugins), $plugins);
     }
 
