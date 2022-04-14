@@ -8,12 +8,8 @@ use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityDecorator;
-use Authorization\IdentityInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * App\Model\Entity\User Test Case
@@ -166,28 +162,6 @@ class UserTest extends TestCase
     public function testSetAuthorization()
     {
         TestCase::markTestSkipped('4x Breaking Change');
-
-//        /** @var \App\Model\Entity\User $identity */
-//        $identity = new User([
-//            'id' => 1,
-//        ]);
-//        $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
-//        $request = (new ServerRequest())->withAttribute('identity', $identity);
-//        $response = new ServerRequest();
-//        $middleware = new AuthorizationMiddleware($this->Auth, [
-//            'identityDecorator' => function ($service, $identity) {
-//                $identity->setAuthorization($service);
-//
-//                return $identity;
-//            },
-//            'requireAuthorizationCheck' => false,
-//        ]);
-//        $result = $middleware->process($request, $response);
-//
-//        TestCase::assertInstanceOf(RequestInterface::class, $result);
-//        TestCase::assertSame($this->Auth, $result->getAttribute('authorization'));
-//        TestCase::assertInstanceOf(IdentityInterface::class, $result->getAttribute('identity'));
-//        TestCase::assertSame($identity, $result->getAttribute('identity'));
     }
 
     /**
