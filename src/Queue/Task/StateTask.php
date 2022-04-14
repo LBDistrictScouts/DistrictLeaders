@@ -1,20 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use App\Model\Table\UsersTable;
+use App\Model\Table\UserStatesTable;
+use Queue\Model\Table\QueuedJobsTable;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\UsersTable $Users
- * @property \App\Model\Table\UserStatesTable $UserStates
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property UsersTable $Users
+ * @property UserStatesTable $UserStates
+ * @property QueuedJobsTable $QueuedJobs
  */
-class QueueStateTask extends QueueTask implements QueueTaskInterface
+class StateTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 

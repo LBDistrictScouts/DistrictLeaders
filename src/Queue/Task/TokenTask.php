@@ -1,18 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use App\Model\Table\TokensTable;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\TokensTable $Tokens
+ * @property TokensTable $Tokens
  */
-class QueueTokenTask extends QueueTask implements QueueTaskInterface
+class TokenTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 

@@ -4,23 +4,27 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
-use App\Shell\Task\QueueCapabilityTask;
+use App\Model\Table\RoleTemplatesTable;
+use App\Queue\Task\CapabilityTask;
+use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use Cake\Console\ConsoleIo;
-use Cake\Console\ConsoleOutput;
+use PHPUnit\Framework\MockObject\MockObject;
+use Queue\Model\Entity\QueuedJob;
+use Queue\Model\Table\QueuedJobsTable;
+use Throwable;
 
 /**
  * App\Mailer\BasicMailer Test Case
  *
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
- * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
+ * @property QueuedJobsTable $QueuedJobs
+ * @property RoleTemplatesTable $RoleTemplates
  */
 class CapabilityTaskTest extends TestCase
 {
     use TaskTestTrait;
 
     /**
-     * @var QueueTokenTask|\PHPUnit\Framework\MockObject\MockObject
+     * @var TokenTask|MockObject
      */
     protected $Task;
 
@@ -33,18 +37,14 @@ class CapabilityTaskTest extends TestCase
     {
         parent::setUp();
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
-        $testIo = new ConsoleIo($this->out, $this->err);
-
-        $this->Task = new QueueCapabilityTask($testIo);
+        $this->Task = new CapabilityTask();
     }
 
     /**
      * Test initial setup
      *
      * @return void
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function testCapabilityQueueJob()
     {
@@ -94,7 +94,7 @@ class CapabilityTaskTest extends TestCase
 
         $this->Task->run($data, $job->id);
 
-        /** @var \Queue\Model\Entity\QueuedJob $job */
+        /** @var QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
         TestCase::assertEquals(1, $job->progress);
 
@@ -127,7 +127,7 @@ class CapabilityTaskTest extends TestCase
 
         $this->Task->run($data, $job->id);
 
-        /** @var \Queue\Model\Entity\QueuedJob $job */
+        /** @var QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
         TestCase::assertEquals(1, $job->progress);
     }

@@ -55,7 +55,7 @@ class CognitoAuthenticator extends AbstractAuthenticator
     /**
      * Checks the fields to ensure they are supplied.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.
+     * @param ServerRequestInterface $request The request that contains login information.
      * @return array|null Username and password retrieved from a request body.
      */
     protected function _getData(ServerRequestInterface $request): ?array
@@ -89,8 +89,8 @@ class CognitoAuthenticator extends AbstractAuthenticator
     /**
      * Prepares the error object for a login URL error
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.
-     * @return \Authentication\Authenticator\ResultInterface
+     * @param ServerRequestInterface $request The request that contains login information.
+     * @return ResultInterface
      */
     protected function _buildLoginUrlErrorResult(ServerRequestInterface $request): ResultInterface
     {
@@ -108,7 +108,7 @@ class CognitoAuthenticator extends AbstractAuthenticator
             ),
         ];
 
-        return new CognitoResult(null, CognitoResult::FAILURE_OTHER, $errors);
+        return new CognitoResult(null, ResultInterface::FAILURE_OTHER, $errors);
     }
 
     /**
@@ -116,8 +116,8 @@ class CognitoAuthenticator extends AbstractAuthenticator
      * to find POST data that is used to find a matching record in the `config.userModel`. Will return false if
      * there is no post data, either username or password is missing, or if the scope conditions have not been met.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.*
-     * @return \App\Authenticator\CognitoResult
+     * @param ServerRequestInterface $request The request that contains login information.*
+     * @return CognitoResult
      */
     public function authenticate(ServerRequestInterface $request): ResultInterface
     {
@@ -125,12 +125,12 @@ class CognitoAuthenticator extends AbstractAuthenticator
             return $this->_buildLoginUrlErrorResult($request);
         }
 
-        if (empty($data) || $data === null) {
+        if (empty($data)) {
             $data = $this->_getData($request);
         }
 
         if ($data === null) {
-            return new CognitoResult(null, CognitoResult::FAILURE_CREDENTIALS_MISSING, [
+            return new CognitoResult(null, ResultInterface::FAILURE_CREDENTIALS_MISSING, [
                 'Login credentials not found',
             ]);
         }
@@ -140,20 +140,20 @@ class CognitoAuthenticator extends AbstractAuthenticator
 
     /**
      * @param array $data Data to pass to Identifier
-     * @return \Authentication\Authenticator\ResultInterface
+     * @return ResultInterface
      */
     public function doAuthentication(array $data): ResultInterface
     {
         $user = $this->_identifier->identify($data);
 
         if (empty($user)) {
-            return new CognitoResult(null, CognitoResult::FAILURE_IDENTITY_NOT_FOUND, $this->_identifier->getErrors());
+            return new CognitoResult(null, ResultInterface::FAILURE_IDENTITY_NOT_FOUND, $this->_identifier->getErrors());
         }
 
         if (isset($user['challenge'])) {
             return new CognitoResult($user, $user['challenge']);
         }
 
-        return new CognitoResult($user, CognitoResult::SUCCESS);
+        return new CognitoResult($user, ResultInterface::SUCCESS);
     }
 }

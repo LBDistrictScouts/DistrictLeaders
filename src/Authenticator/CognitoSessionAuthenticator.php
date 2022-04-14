@@ -20,6 +20,8 @@ use ArrayObject;
 use Authentication\Authenticator\PersistenceInterface;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierInterface;
+use Cake\Http\Session;
+use JetBrains\PhpStorm\ArrayShape;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -48,6 +50,7 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
     /**
      * @inheritDoc
      */
+    #[ArrayShape(['request' => "\Psr\Http\Message\ServerRequestInterface", 'response' => "\Psr\Http\Message\ResponseInterface"])]
     public function persistIdentity(ServerRequestInterface $request, ResponseInterface $response, $identity): array
     {
         $sessionKey = $this->getConfig('sessionKey', 'Auth');
@@ -68,10 +71,11 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
     /**
      * @inheritDoc
      */
+    #[ArrayShape(['request' => "\Psr\Http\Message\ServerRequestInterface", 'response' => "\Psr\Http\Message\ResponseInterface"])]
     public function clearIdentity(ServerRequestInterface $request, ResponseInterface $response): array
     {
         $sessionKey = $this->getConfig('sessionKey', 'Auth');
-        /** @var \Cake\Http\Session $session */
+        /** @var Session $session */
         $session = $request->getAttribute('session');
         $session->delete($sessionKey);
         $session->renew();
@@ -85,18 +89,18 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
     /**
      * Authenticate a user using session data.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request to authenticate with.
-     * @return \Authentication\Authenticator\ResultInterface
+     * @param ServerRequestInterface $request The request to authenticate with.
+     * @return ResultInterface
      */
     public function authenticate(ServerRequestInterface $request): ResultInterface
     {
         $sessionKey = $this->getConfig('sessionKey', 'Auth');
-        /** @var \Cake\Http\Session $session */
+        /** @var Session $session */
         $session = $request->getAttribute('session');
         $user = $session->read($sessionKey);
 
         if (empty($user)) {
-            return new CognitoResult(null, CognitoResult::FAILURE_IDENTITY_NOT_FOUND);
+            return new CognitoResult(null, ResultInterface::FAILURE_IDENTITY_NOT_FOUND);
         }
 
         if ($this->getConfig('identify') === true) {
@@ -112,6 +116,6 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
             $user = new ArrayObject($user);
         }
 
-        return new CognitoResult($user, CognitoResult::SUCCESS);
+        return new CognitoResult($user, ResultInterface::SUCCESS);
     }
 }

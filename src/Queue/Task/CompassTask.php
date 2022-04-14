@@ -1,21 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
-use App\Model\Entity\DocumentVersion;
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\CompassRecordsTable $CompassRecords
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  */
-class QueueAutoMergeTask extends QueueTask implements QueueTaskInterface
+class CompassTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 
@@ -35,6 +33,11 @@ class QueueAutoMergeTask extends QueueTask implements QueueTaskInterface
     protected $entityKey = 'version';
 
     /**
+     * @var string The Data Key
+     */
+    protected $outputKey = 'compass_records';
+
+    /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
@@ -42,22 +45,17 @@ class QueueAutoMergeTask extends QueueTask implements QueueTaskInterface
     public function run(array $data, $jobId): void
     {
         $this->loadModel('DocumentVersions');
-        $this->loadModel('CompassRecords');
 
         $this->checkEntityKey($data);
 
         $version = $this->DocumentVersions->get($data[$this->entityKey]);
 
-        if (!($version instanceof DocumentVersion)) {
-            throw new QueueException('Invalid Document Version ID.');
-        }
-
-        $result = $this->CompassRecords->autoMerge($version);
+        $result = $this->DocumentVersions->importCompassRecords($version);
 
         if (!$result) {
             throw new QueueException('Compass Import Failed.');
         }
 
-        $this->saveJobDataArray((int)$jobId, $result);
+        $this->saveJobResult((int)$jobId, $result, $this->outputKey);
     }
 }

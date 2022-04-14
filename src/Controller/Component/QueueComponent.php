@@ -5,15 +5,24 @@ namespace App\Controller\Component;
 
 use App\Model\Entity\Directory;
 use App\Model\Entity\DocumentVersion;
+use App\Queue\Task\AutoMergeTask;
+use App\Queue\Task\CapabilityTask;
+use App\Queue\Task\CompassTask;
+use App\Queue\Task\DirectoryTask;
+use App\Queue\Task\StateTask;
+use App\Queue\Task\TokenTask;
+use App\Queue\Task\UnsentTask;
 use Cake\Controller\Component;
+use Cake\Controller\Component\FlashComponent;
 use Cake\Datasource\ModelAwareTrait;
 use Queue\Model\Entity\QueuedJob;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Queue component
  *
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
- * @property \Cake\Controller\Component\FlashComponent $Flash
+ * @property QueuedJobsTable $QueuedJobs
+ * @property FlashComponent $Flash
  */
 class QueueComponent extends Component
 {
@@ -38,12 +47,12 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param \App\Model\Entity\Directory $directory The Document Version for Queuing
+     * @param Directory $directory The Document Version for Queuing
      * @return void
      */
     public function setDirectoryImport(Directory $directory): void
     {
-        $job = $this->QueuedJobs->createJob('Directory', [
+        $job = $this->QueuedJobs->createJob(DirectoryTask::taskName(), [
             'directory' => $directory->get($directory::FIELD_ID),
         ]);
         if ($job instanceof QueuedJob) {
@@ -57,12 +66,12 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
+     * @param DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassVersionImport(DocumentVersion $documentVersion): void
     {
-        $job = $this->QueuedJobs->createJob('Compass', [
+        $job = $this->QueuedJobs->createJob(CompassTask::taskName(), [
             'version' => $documentVersion->get($documentVersion::FIELD_ID),
         ]);
         if ($job instanceof QueuedJob) {
@@ -76,12 +85,12 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
+     * @param DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassAutoMerge(DocumentVersion $documentVersion): void
     {
-        $job = $this->QueuedJobs->createJob('AutoMerge', [
+        $job = $this->QueuedJobs->createJob(AutoMergeTask::taskName(), [
             'version' => $documentVersion->get($documentVersion::FIELD_ID),
         ]);
         if ($job instanceof QueuedJob) {
@@ -99,7 +108,7 @@ class QueueComponent extends Component
      */
     public function setCapabilityParse()
     {
-        $job = $this->QueuedJobs->createJob('Capability');
+        $job = $this->QueuedJobs->createJob(CapabilityTask::taskName());
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'System Capabilities have been set for Processing.',
@@ -115,7 +124,7 @@ class QueueComponent extends Component
      */
     public function setUserStateParse()
     {
-        $job = $this->QueuedJobs->createJob('State');
+        $job = $this->QueuedJobs->createJob(StateTask::taskName());
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'Users have been set for state evaluation.',
@@ -131,7 +140,7 @@ class QueueComponent extends Component
      */
     public function setUnsent()
     {
-        $job = $this->QueuedJobs->createJob('Unsent');
+        $job = $this->QueuedJobs->createJob(UnsentTask::taskName());
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'Unsent Emails have been dispatched.',
@@ -147,7 +156,7 @@ class QueueComponent extends Component
      */
     public function setTokenParse()
     {
-        $job = $this->QueuedJobs->createJob('Token');
+        $job = $this->QueuedJobs->createJob(TokenTask::taskName());
         if ($job instanceof QueuedJob) {
             $this->Flash->queue(
                 'Token Parse Initiated.',

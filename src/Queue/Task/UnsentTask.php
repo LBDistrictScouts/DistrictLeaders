@@ -1,18 +1,19 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use App\Model\Table\EmailSendsTable;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\EmailSendsTable EmailSends
+ * @property EmailSendsTable EmailSends
  */
-class QueueUnsentTask extends QueueTask implements QueueTaskInterface
+class UnsentTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 

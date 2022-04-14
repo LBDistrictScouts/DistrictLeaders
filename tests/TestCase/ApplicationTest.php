@@ -63,7 +63,6 @@ class ApplicationTest extends IntegrationTestCase
             'Muffin/Trash',
             'Muffin/Footprint',
             'Flash',
-            'WyriHaximus/TwigView',
             'Expose',
             'TestHelper',
             'Tags',

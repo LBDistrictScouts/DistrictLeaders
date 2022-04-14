@@ -1,20 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
+use App\Model\Table\EmailSendsTable;
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Model\Table\QueuedJobsTable;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\EmailSendsTable EmailSends
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property EmailSendsTable EmailSends
+ * @property QueuedJobsTable $QueuedJobs
  */
-class QueueEmailTask extends QueueTask implements QueueTaskInterface
+class EmailTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 
@@ -28,7 +30,7 @@ class QueueEmailTask extends QueueTask implements QueueTaskInterface
      */
     public $retries = 1;
 
-    protected $entityKey = 'email_generation_code';
+    protected string $entityKey = 'email_generation_code';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()

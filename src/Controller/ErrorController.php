@@ -16,12 +16,13 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+use Cake\Http\Response;
+
 /**
  * Error Handling Controller
  *
  * Controller used by ExceptionRenderer to render error responses.
- *
- * @property \Cake\ORM\Table $Error
  */
 class ErrorController extends AppController
 {
@@ -41,20 +42,20 @@ class ErrorController extends AppController
     /**
      * beforeFilter callback.
      *
-     * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Http\Response|null|void
+     * @param EventInterface $event Event.
+     * @return Response|null|void
      */
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event)
     {
     }
 
     /**
      * beforeRender callback.
      *
-     * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Http\Response|null|void
+     * @param EventInterface $event Event.
+     * @return Response|null|void
      */
-    public function beforeRender(\Cake\Event\EventInterface $event)
+    public function beforeRender(EventInterface $event)
     {
         parent::beforeRender($event);
 
@@ -64,10 +65,10 @@ class ErrorController extends AppController
     /**
      * afterFilter callback.
      *
-     * @param \Cake\Event\Event $event Event.
-     * @return \Cake\Http\Response|null|void
+     * @param \Cake\Event\EventInterface $event Event.
+     * @return Response|null|void
      */
-    public function afterFilter(\Cake\Event\EventInterface $event)
+    public function afterFilter(EventInterface $event)
     {
     }
 }

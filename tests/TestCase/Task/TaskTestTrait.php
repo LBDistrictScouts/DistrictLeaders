@@ -17,7 +17,7 @@ trait TaskTestTrait
      * @param array $expected Data to be verified exists
      * @param int $jobId Job for record retrieval
      */
-    protected function validateExpectedData(array $expected, $jobId)
+    protected function validateExpectedData(array $expected, int $jobId)
     {
         $job = $this->QueuedJobs->get($jobId);
         $data = unserialize($job->get('data'));
@@ -29,7 +29,7 @@ trait TaskTestTrait
     /**
      * @param string $taskName Name of the Task Type
      * @param array $inputData Passed input Data
-     * @return \Queue\Model\Entity\QueuedJob
+     * @return QueuedJob
      */
     protected function checkCreateJob(string $taskName, array $inputData = []): QueuedJob
     {

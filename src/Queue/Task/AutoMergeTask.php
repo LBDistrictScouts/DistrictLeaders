@@ -1,19 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
+use App\Model\Entity\DocumentVersion;
+use App\Model\Table\CompassRecordsTable;
+use App\Model\Table\DocumentVersionsTable;
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property CompassRecordsTable $CompassRecords
+ * @property DocumentVersionsTable $DocumentVersions
  */
-class QueueCompassTask extends QueueTask implements QueueTaskInterface
+class AutoMergeTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 
@@ -30,32 +34,32 @@ class QueueCompassTask extends QueueTask implements QueueTaskInterface
     /**
      * @var string The Data Key
      */
-    protected $entityKey = 'version';
-
-    /**
-     * @var string The Data Key
-     */
-    protected $outputKey = 'compass_records';
+    protected string $entityKey = 'version';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->loadModel('DocumentVersions');
+        $this->loadModel('CompassRecords');
 
         $this->checkEntityKey($data);
 
         $version = $this->DocumentVersions->get($data[$this->entityKey]);
 
-        $result = $this->DocumentVersions->importCompassRecords($version);
+        if (!($version instanceof DocumentVersion)) {
+            throw new QueueException('Invalid Document Version ID.');
+        }
+
+        $result = $this->CompassRecords->autoMerge($version);
 
         if (!$result) {
             throw new QueueException('Compass Import Failed.');
         }
 
-        $this->saveJobResult((int)$jobId, $result, $this->outputKey);
+        $this->saveJobDataArray((int)$jobId, $result);
     }
 }
