@@ -7,6 +7,8 @@ use App\View\Helper\MarkdownHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use Josbeir\Filesystem\FilesystemAwareTrait;
+use League\Flysystem\Filesystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**
  * App\View\Helper\MarkdownHelper Test Case
@@ -20,12 +22,7 @@ class MarkdownHelperTest extends TestCase
      *
      * @var \App\View\Helper\MarkdownHelper
      */
-    public $Markdown;
-
-    /**
-     * @var string Path Variable
-     */
-    private $testFile;
+    public MarkdownHelper $Markdown;
 
     /**
      * setUp method
@@ -35,8 +32,6 @@ class MarkdownHelperTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->testFile = TESTS . '/dummy_readme.md';
 
         $view = new View();
         $this->Markdown = new MarkdownHelper($view);
@@ -59,7 +54,7 @@ class MarkdownHelperTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         TestCase::assertClassHasAttribute('converter', '\App\View\Helper\MarkdownHelper');
     }
@@ -68,16 +63,14 @@ class MarkdownHelperTest extends TestCase
      * Test markdownToHtml method
      *
      * @return void
-     * @throws \League\Flysystem\FileNotFoundException
-     * @throws \Josbeir\Filesystem\Exception\FilesystemException
+     * @throws \League\Flysystem\FilesystemException
      */
-    public function testMarkdownToHtml()
+    public function testMarkdownToHtml(): void
     {
-        $fileSystem = $this->getFilesystem('local');
-        $fileDisk = $fileSystem->getDisk();
+        $adapter = new LocalFilesystemAdapter(TESTS);
+        $fileSystem = new Filesystem($adapter);
 
-        $file = $fileSystem->upload($this->testFile);
-        $markdownText = $fileDisk->read($file->getPath());
+        $markdownText = $fileSystem->read('dummy_readme.md');
         TestCase::assertStringContainsString('# CakePHP Application Skeleton', $markdownText);
         TestCase::assertStringContainsString('[![Build Status](https://travis-ci.org/LBDistrictScouts/DistrictLeaders.svg?branch=Development)](https://travis-ci.org/LBDistrictScouts/DistrictLeaders)', $markdownText);
         TestCase::assertStringContainsString('Then visit `http://localhost:8765` to see the welcome page.', $markdownText);
