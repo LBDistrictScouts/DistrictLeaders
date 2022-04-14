@@ -21,16 +21,20 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\NotificationTypesTable&\Cake\ORM\Association\BelongsTo $NotificationTypes
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
  * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
- * @method \App\Model\Entity\Notification newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Notification newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Notification[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Notification|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Notification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Notification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Notification[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Notification findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\Notification[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Notification findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Notification newEmptyEntity()
+ * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class NotificationsTable extends Table
 {

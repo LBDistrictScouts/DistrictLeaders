@@ -6,7 +6,7 @@ namespace App\Listener;
 use App\Model\Table\RolesTable;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
-use Cake\I18n\Time;
+use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
@@ -70,7 +70,7 @@ class RoleListener implements EventListenerInterface
 
         $role = $this->Roles->get($roleId);
 
-        $now = Time::now();
+        $now = FrozenTime::now();
         $daysSinceChange = $now->diffInDays($role->modified);
 
         if ($daysSinceChange > 10) {

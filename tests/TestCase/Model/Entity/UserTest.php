@@ -25,14 +25,14 @@ class UserTest extends TestCase
      *
      * @var \App\Model\Entity\User
      */
-    public $User;
+    public User $User;
 
     /**
      * Test Table subject
      *
-     * @var AuthorizationServiceInterface
+     * @var AuthorizationServiceInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public $Auth;
+    public \PHPUnit\Framework\MockObject\MockObject|AuthorizationServiceInterface $Auth;
 
     /**
      * Fixtures
@@ -99,7 +99,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorInvalidData()
+    public function testConstructorInvalidData(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -112,7 +112,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testCan()
+    public function testCan(): void
     {
         $identity = new IdentityDecorator($this->Auth, ['id' => 1]);
 
@@ -129,7 +129,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testApplyScope()
+    public function testApplyScope(): void
     {
         $identity = new IdentityDecorator($this->Auth, ['id' => 1]);
 
@@ -146,7 +146,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testGetOriginalData()
+    public function testGetOriginalData(): void
     {
         $data = ['id' => 2];
 
@@ -160,7 +160,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testSetAuthorization()
+    public function testSetAuthorization(): void
     {
         TestCase::markTestSkipped('4x Breaking Change');
     }
@@ -170,7 +170,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testGetIdentifier()
+    public function testGetIdentifier(): void
     {
         $users = $this->getTableLocator()->get('Users');
         $testUser = $users->get(1);
@@ -204,7 +204,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testCheckCapability()
+    public function testCheckCapability(): void
     {
         $testUser = $this->Users->get(1);
 
@@ -226,7 +226,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testSubSetCapabilityCheck()
+    public function testSubSetCapabilityCheck(): void
     {
         $testUser = $this->Users->get(1);
 

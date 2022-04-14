@@ -80,7 +80,6 @@ class EmailView extends View
      * @param string|null $template Name of template file to use
      * @param string|false|null $layout Layout to use. False to disable.
      * @return string Rendered content.
-     * @throws \Cake\Core\Exception\Exception If there is an error in the view.
      * @triggers View.beforeRender $this, [$templateFileName]
      * @triggers View.afterRender $this, [$templateFileName]
      */

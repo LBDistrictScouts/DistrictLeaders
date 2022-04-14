@@ -23,13 +23,13 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
  * @method \App\Model\Entity\CompassRecord get($primaryKey, $options = [])
- * @method \App\Model\Entity\CompassRecord newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CompassRecord newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CompassRecord[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CompassRecord|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CompassRecord saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CompassRecord patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CompassRecord[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CompassRecord findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CompassRecord[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\CsvBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
@@ -37,6 +37,11 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
+ * @method \App\Model\Entity\CompassRecord newEmptyEntity()
+ * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CompassRecordsTable extends Table
 {

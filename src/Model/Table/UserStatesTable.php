@@ -17,13 +17,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
  * @method \App\Model\Entity\UserState get($primaryKey, $options = [])
- * @method \App\Model\Entity\UserState newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\UserState newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\UserState[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\UserState|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\UserState saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\UserState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\UserState[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\UserState findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\UserState[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserState findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\UserState newEmptyEntity()
+ * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class UserStatesTable extends Table
 {

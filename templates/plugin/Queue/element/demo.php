@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var mixed $tasks
+ */
+
+use Cake\Core\Configure;
+
+?>
 <?php if (\Cake\Core\Configure::read('debug')) : ?>
     <div class="row">
         <div class="col">

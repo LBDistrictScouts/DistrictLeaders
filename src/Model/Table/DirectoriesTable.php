@@ -17,13 +17,18 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\HasMany $DirectoryGroups
  * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\HasMany $DirectoryUsers
  * @method \App\Model\Entity\Directory get($primaryKey, $options = [])
- * @method \App\Model\Entity\Directory newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Directory newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Directory[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Directory|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Directory saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Directory patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Directory[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Directory findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Directory[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Directory findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Directory newEmptyEntity()
+ * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoriesTable extends Table
 {

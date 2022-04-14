@@ -14,13 +14,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\HasMany $Directories
  * @method \App\Model\Entity\DirectoryType get($primaryKey, $options = [])
- * @method \App\Model\Entity\DirectoryType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DirectoryType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryType newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryTypesTable extends Table
 {

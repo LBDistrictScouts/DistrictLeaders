@@ -13,14 +13,18 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsTo $Capabilities
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
  * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType newEmptyEntity()
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesRoleTypesTable extends Table
 {

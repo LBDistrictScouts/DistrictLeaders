@@ -15,13 +15,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\HasMany $Documents
  * @method \App\Model\Entity\DocumentType get($primaryKey, $options = [])
- * @method \App\Model\Entity\DocumentType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DocumentType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\DocumentType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DocumentType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DocumentType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentType newEmptyEntity()
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DocumentTypesTable extends Table
 {

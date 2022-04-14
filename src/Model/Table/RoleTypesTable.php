@@ -27,14 +27,18 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
  * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\BelongsToMany $DirectoryGroups
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RoleType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\RoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\RoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType newEmptyEntity()
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTypesTable extends Table
 {

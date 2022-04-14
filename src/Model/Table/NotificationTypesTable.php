@@ -16,13 +16,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
  * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
- * @method \App\Model\Entity\NotificationType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\NotificationType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\NotificationType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\NotificationType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\NotificationType newEmptyEntity()
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class NotificationTypesTable extends Table
 {
