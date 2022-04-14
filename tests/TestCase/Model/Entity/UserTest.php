@@ -103,7 +103,8 @@ class UserTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new IdentityDecorator($this->Auth, ['bad']);
+        /** @noinspection PhpParamsInspection */
+        new IdentityDecorator($this->Auth, 'bad');
     }
 
     /**
@@ -181,7 +182,7 @@ class UserTest extends TestCase
      * @param User $user The user to be altered.
      * @return User
      */
-    private function notAll($user)
+    private function notAll(User $user): User
     {
         $roleTypes = $this->getTableLocator()->get('RoleTypes');
         $superUser = $roleTypes->get(5, ['contain' => ['Capabilities']]);
