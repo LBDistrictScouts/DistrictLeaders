@@ -107,7 +107,7 @@ class UserTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
 
-        new IdentityDecorator($this->Auth, 'bad');
+        new IdentityDecorator($this->Auth, ['bad']);
     }
 
     /**
@@ -167,27 +167,27 @@ class UserTest extends TestCase
     {
         TestCase::markTestSkipped('4x Breaking Change');
 
-        /** @var \App\Model\Entity\User $identity */
-        $identity = new User([
-            'id' => 1,
-        ]);
-        $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
-        $request = (new ServerRequest())->withAttribute('identity', $identity);
-        $response = new ServerRequest();
-        $middleware = new AuthorizationMiddleware($this->Auth, [
-            'identityDecorator' => function ($service, $identity) {
-                $identity->setAuthorization($service);
-
-                return $identity;
-            },
-            'requireAuthorizationCheck' => false,
-        ]);
-        $result = $middleware->process($request, $response);
-
-        TestCase::assertInstanceOf(RequestInterface::class, $result);
-        TestCase::assertSame($this->Auth, $result->getAttribute('authorization'));
-        TestCase::assertInstanceOf(IdentityInterface::class, $result->getAttribute('identity'));
-        TestCase::assertSame($identity, $result->getAttribute('identity'));
+//        /** @var \App\Model\Entity\User $identity */
+//        $identity = new User([
+//            'id' => 1,
+//        ]);
+//        $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
+//        $request = (new ServerRequest())->withAttribute('identity', $identity);
+//        $response = new ServerRequest();
+//        $middleware = new AuthorizationMiddleware($this->Auth, [
+//            'identityDecorator' => function ($service, $identity) {
+//                $identity->setAuthorization($service);
+//
+//                return $identity;
+//            },
+//            'requireAuthorizationCheck' => false,
+//        ]);
+//        $result = $middleware->process($request, $response);
+//
+//        TestCase::assertInstanceOf(RequestInterface::class, $result);
+//        TestCase::assertSame($this->Auth, $result->getAttribute('authorization'));
+//        TestCase::assertInstanceOf(IdentityInterface::class, $result->getAttribute('identity'));
+//        TestCase::assertSame($identity, $result->getAttribute('identity'));
     }
 
     /**
@@ -212,7 +212,11 @@ class UserTest extends TestCase
         $roleTypes = $this->getTableLocator()->get('RoleTypes');
         $superUser = $roleTypes->get(5, ['contain' => ['Capabilities']]);
 
-        $allPermission = $roleTypes->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])->toList();
+        $allPermission = $roleTypes->Capabilities
+            ->find()
+            ->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])
+            ->all()
+            ->toList();
         $roleTypes->Capabilities->unlink($superUser, $allPermission);
 
         $this->Users->patchCapabilities($user);
