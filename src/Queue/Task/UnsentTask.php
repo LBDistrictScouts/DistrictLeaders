@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\EmailSendsTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -11,7 +10,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property EmailSendsTable EmailSends
+ * @property \App\Model\Table\EmailSendsTable EmailSends
  */
 class UnsentTask extends Task implements TaskInterface
 {

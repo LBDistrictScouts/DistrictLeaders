@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\EmailSendsTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -12,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueMailingListTask
  *
  * @package App\Shell\Task
- * @property EmailSendsTable $EmailSends
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
 class MailingListTask extends Task implements TaskInterface
 {

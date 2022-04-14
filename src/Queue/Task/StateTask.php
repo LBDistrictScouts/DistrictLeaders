@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\UsersTable;
-use App\Model\Table\UserStatesTable;
-use Queue\Model\Table\QueuedJobsTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -13,9 +10,9 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property UsersTable $Users
- * @property UserStatesTable $UserStates
- * @property QueuedJobsTable $QueuedJobs
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class StateTask extends Task implements TaskInterface
 {

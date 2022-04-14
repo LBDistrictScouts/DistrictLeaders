@@ -12,7 +12,7 @@
             ['action' => 'delete', $passwordState->id],
             ['confirm' => __('Are you sure you want to delete # {0}?', $passwordState->id)]
         )
-?></li>
+                            ?></li>
         <li><?= $this->Html->link(__('List Password States'), ['action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('List Users'), ['controller' => 'Users', 'action' => 'index']) ?></li>
         <li><?= $this->Html->link(__('New User'), ['controller' => 'Users', 'action' => 'add']) ?></li>

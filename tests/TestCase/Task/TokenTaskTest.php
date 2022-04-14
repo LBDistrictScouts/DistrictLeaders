@@ -4,23 +4,20 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\Token;
-use App\Model\Table\TokensTable;
 use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
-use Queue\Model\Entity\QueuedJob;
 
 /**
  * App\Mailer\BasicMailer Test Case
  *
- * @property TokensTable $Tokens
+ * @property \App\Model\Table\TokensTable $Tokens
  */
 class TokenTaskTest extends TestCase
 {
     use TaskTestTrait;
 
     /**
-     * @var TokenTask|MockObject
+     * @var TokenTask|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Task;
 
@@ -55,7 +52,7 @@ class TokenTaskTest extends TestCase
 
         $this->Task->run($data, $job->id);
 
-        /** @var QueuedJob $job */
+        /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
 
         TestCase::assertEquals(1, $job->progress);

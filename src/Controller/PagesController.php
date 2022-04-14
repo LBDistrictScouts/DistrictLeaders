@@ -36,12 +36,12 @@ class PagesController extends AppController
      * Displays a view
      *
      * @param string ...$path Path segments.
-     * @return Response|null
-     * @throws ForbiddenException When a directory traversal attempt.
-     * @throws MissingTemplateException When the view file could not
-     *   be found and in debug mode.
-     * @throws NotFoundException When the view file could not
-     *   be found and not in debug mode.
+     * @return \Cake\Http\Response|null
+     * @throws \Cake\Http\Exception\ForbiddenException When a directory traversal attempt.
+     * @throws \Cake\View\Exception\MissingTemplateException When the view file could not
+     * be found and in debug mode.
+     * @throws \Cake\Http\Exception\NotFoundException When the view file could not
+     * be found and not in debug mode.
      */
     public function display(string ...$path): ?Response
     {
@@ -75,7 +75,7 @@ class PagesController extends AppController
     }
 
     /**
-     * @param EventInterface $event The CakePHP Event
+     * @param \Cake\Event\EventInterface $event The CakePHP Event
      * @return void
      */
     public function beforeFilter(EventInterface $event)

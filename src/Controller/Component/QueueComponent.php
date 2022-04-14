@@ -13,16 +13,14 @@ use App\Queue\Task\StateTask;
 use App\Queue\Task\TokenTask;
 use App\Queue\Task\UnsentTask;
 use Cake\Controller\Component;
-use Cake\Controller\Component\FlashComponent;
 use Cake\Datasource\ModelAwareTrait;
 use Queue\Model\Entity\QueuedJob;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Queue component
  *
- * @property QueuedJobsTable $QueuedJobs
- * @property FlashComponent $Flash
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property \Cake\Controller\Component\FlashComponent $Flash
  */
 class QueueComponent extends Component
 {
@@ -47,7 +45,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param Directory $directory The Document Version for Queuing
+     * @param \App\Model\Entity\Directory $directory The Document Version for Queuing
      * @return void
      */
     public function setDirectoryImport(Directory $directory): void
@@ -66,7 +64,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param DocumentVersion $documentVersion The Document Version for Queuing
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassVersionImport(DocumentVersion $documentVersion): void
@@ -85,7 +83,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param DocumentVersion $documentVersion The Document Version for Queuing
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassAutoMerge(DocumentVersion $documentVersion): void

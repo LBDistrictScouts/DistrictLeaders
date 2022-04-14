@@ -55,7 +55,7 @@ class CognitoAuthenticator extends AbstractAuthenticator
     /**
      * Checks the fields to ensure they are supplied.
      *
-     * @param ServerRequestInterface $request The request that contains login information.
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.
      * @return array|null Username and password retrieved from a request body.
      */
     protected function _getData(ServerRequestInterface $request): ?array
@@ -89,8 +89,8 @@ class CognitoAuthenticator extends AbstractAuthenticator
     /**
      * Prepares the error object for a login URL error
      *
-     * @param ServerRequestInterface $request The request that contains login information.
-     * @return ResultInterface
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.
+     * @return \Authentication\Authenticator\ResultInterface
      */
     protected function _buildLoginUrlErrorResult(ServerRequestInterface $request): ResultInterface
     {
@@ -116,8 +116,8 @@ class CognitoAuthenticator extends AbstractAuthenticator
      * to find POST data that is used to find a matching record in the `config.userModel`. Will return false if
      * there is no post data, either username or password is missing, or if the scope conditions have not been met.
      *
-     * @param ServerRequestInterface $request The request that contains login information.*
-     * @return CognitoResult
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request that contains login information.*
+     * @return \App\Authenticator\CognitoResult
      */
     public function authenticate(ServerRequestInterface $request): ResultInterface
     {
@@ -140,14 +140,18 @@ class CognitoAuthenticator extends AbstractAuthenticator
 
     /**
      * @param array $data Data to pass to Identifier
-     * @return ResultInterface
+     * @return \Authentication\Authenticator\ResultInterface
      */
     public function doAuthentication(array $data): ResultInterface
     {
         $user = $this->_identifier->identify($data);
 
         if (empty($user)) {
-            return new CognitoResult(null, ResultInterface::FAILURE_IDENTITY_NOT_FOUND, $this->_identifier->getErrors());
+            return new CognitoResult(
+                null,
+                ResultInterface::FAILURE_IDENTITY_NOT_FOUND,
+                $this->_identifier->getErrors()
+            );
         }
 
         if (isset($user['challenge'])) {

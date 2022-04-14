@@ -4,27 +4,21 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
-use App\Model\Table\RoleTemplatesTable;
 use App\Queue\Task\CapabilityTask;
-use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
-use Queue\Model\Entity\QueuedJob;
-use Queue\Model\Table\QueuedJobsTable;
-use Throwable;
 
 /**
  * App\Mailer\BasicMailer Test Case
  *
- * @property QueuedJobsTable $QueuedJobs
- * @property RoleTemplatesTable $RoleTemplates
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
  */
 class CapabilityTaskTest extends TestCase
 {
     use TaskTestTrait;
 
     /**
-     * @var TokenTask|MockObject
+     * @var \App\Queue\Task\TokenTask|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Task;
 
@@ -44,7 +38,7 @@ class CapabilityTaskTest extends TestCase
      * Test initial setup
      *
      * @return void
-     * @throws Throwable
+     * @throws \Throwable
      */
     public function testCapabilityQueueJob()
     {
@@ -94,7 +88,7 @@ class CapabilityTaskTest extends TestCase
 
         $this->Task->run($data, $job->id);
 
-        /** @var QueuedJob $job */
+        /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
         TestCase::assertEquals(1, $job->progress);
 
@@ -127,7 +121,7 @@ class CapabilityTaskTest extends TestCase
 
         $this->Task->run($data, $job->id);
 
-        /** @var QueuedJob $job */
+        /** @var \Queue\Model\Entity\QueuedJob $job */
         $job = $this->QueuedJobs->find('all')->orderDesc('created')->first();
         TestCase::assertEquals(1, $job->progress);
     }

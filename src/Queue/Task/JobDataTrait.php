@@ -5,7 +5,6 @@ namespace App\Queue\Task;
 
 use Cake\Utility\Inflector;
 use Queue\Model\QueueException;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class QueueTask
@@ -15,7 +14,7 @@ use Queue\Model\Table\QueuedJobsTable;
 trait JobDataTrait
 {
     /**
-     * @var QueuedJobsTable
+     * @var \Queue\Model\Table\QueuedJobsTable
      */
     public $QueuedJobs;
 

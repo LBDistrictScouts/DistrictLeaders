@@ -23,7 +23,6 @@ use App\Listener\UserListener;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
-use Exception;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -33,7 +32,6 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * will inherit them.
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
- *
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  *
  * @property \Flash\Controller\Component\FlashComponent $Flash
@@ -74,7 +72,7 @@ class AppController extends Controller
      * e.g. `$this->loadComponent('FormProtection');`
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -94,7 +92,7 @@ class AppController extends Controller
     }
 
     /**
-     * @param Table $model Table to be authenticated with credentials.
+     * @param \Cake\ORM\Table $model Table to be authenticated with credentials.
      * @return void
      */
     public function whyPermitted(Table $model)

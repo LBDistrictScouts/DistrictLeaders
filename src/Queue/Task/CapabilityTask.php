@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Queue\Task;
 
 use App\Model\Entity\RoleType;
-use App\Model\Table\RoleTypesTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -12,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property RoleTypesTable $RoleTypes
+ * @property \App\Model\Table\RoleTypesTable $RoleTypes
  */
 class CapabilityTask extends Task implements TaskInterface
 {
