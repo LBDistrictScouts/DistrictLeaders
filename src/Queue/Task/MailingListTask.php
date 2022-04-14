@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueMailingListTask
@@ -12,7 +13,7 @@ use Queue\Shell\Task\QueueTask;
  * @package App\Shell\Task
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
-class QueueMailingListTask extends QueueTask
+class MailingListTask extends Task implements TaskInterface
 {
     /**
      * @var int

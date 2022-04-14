@@ -19,15 +19,19 @@ use League\Flysystem\FileNotFoundException;
  * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
  * @property \App\Model\Table\FileTypesTable&\Cake\ORM\Association\BelongsTo $FileTypes
  * @method \App\Model\Entity\DocumentEdition get($primaryKey, $options = [])
- * @method \App\Model\Entity\DocumentEdition newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\DocumentEdition|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DocumentEdition saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DocumentEdition patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentEdition[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentEdition findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\DocumentEdition newEmptyEntity()
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DocumentEditionsTable extends Table
 {

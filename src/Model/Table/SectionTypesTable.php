@@ -16,14 +16,18 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
- * @method \App\Model\Entity\SectionType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\SectionType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SectionType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\SectionType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\SectionType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType newEmptyEntity()
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SectionTypesTable extends Table
 {

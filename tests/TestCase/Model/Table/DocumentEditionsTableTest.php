@@ -8,7 +8,8 @@ use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentEditionsTable;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
-use League\Flysystem\Adapter\Local;
+use FilesystemIterator;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**
  * App\Model\Table\DocumentEditionsTable Test Case
@@ -22,17 +23,17 @@ class DocumentEditionsTableTest extends TestCase
      *
      * @var \App\Model\Table\DocumentEditionsTable
      */
-    public $DocumentEditions;
+    public \Cake\ORM\Table|DocumentEditionsTable $DocumentEditions;
 
     /**
-     * @var Local
+     * @var LocalFilesystemAdapter
      */
-    protected $Adapter;
+    protected LocalFilesystemAdapter $Adapter;
 
     /**
      * @var string
      */
-    protected $Root;
+    protected string $Root;
 
     /**
      * Fixtures
@@ -47,7 +48,7 @@ class DocumentEditionsTableTest extends TestCase
         'app.DocumentEditions',
     ];
 
-    private $fileSystemTestConfig = [
+    private array $fileSystemTestConfig = [
         'default' => [
             'adapter' => 'Local',
             'adapterArguments' => [ TMP . 'files' ],
@@ -78,7 +79,7 @@ class DocumentEditionsTableTest extends TestCase
         Configure::write('Filesystem', $this->fileSystemTestConfig);
 
         $this->Root = __DIR__ . '/files/';
-        $this->Adapter = new Local($this->Root);
+        $this->Adapter = new LocalFilesystemAdapter($this->Root);
     }
 
     /**
@@ -90,7 +91,7 @@ class DocumentEditionsTableTest extends TestCase
     {
         unset($this->DocumentEditions);
 
-        $it = new \RecursiveDirectoryIterator($this->Root, \RecursiveDirectoryIterator::SKIP_DOTS);
+        $it = new \RecursiveDirectoryIterator($this->Root, FilesystemIterator::SKIP_DOTS);
         $files = new \RecursiveIteratorIterator(
             $it,
             \RecursiveIteratorIterator::CHILD_FIRST
@@ -136,7 +137,7 @@ class DocumentEditionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             DocumentEdition::FIELD_ID => 1,
@@ -160,7 +161,7 @@ class DocumentEditionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $goodData = $this->getGood();
         $good = $this->DocumentEditions->newEntity($goodData);
@@ -207,7 +208,7 @@ class DocumentEditionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -217,7 +218,7 @@ class DocumentEditionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testGetFilesystem()
+    public function testGetFilesystem(): void
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
@@ -225,22 +226,22 @@ class DocumentEditionsTableTest extends TestCase
     public function testUpload()
     {
         TestCase::markTestIncomplete();
-        $entityData = [
-            'uploadedFile' => [
-                'path' => TESTS . 'dummy.png',
-                'filename' => 'dummy.png',
-                'size' => 59992,
-                'mime' => 'image/png',
-                'hash' => '2164a354104c1c01c26a17dce1de7b2ee01d30ac',
-            ],
-        ];
-
-//        TestCase::
-
-
-        $return = $this->DocumentEditions->uploadDocument($entityData);
-        debug($return);
-
-        TestCase::assertInstanceOf(DocumentEdition::class, $return);
+        //$entityData = [
+        //    'uploadedFile' => [
+        //        'path' => TESTS . 'dummy.png',
+        //        'filename' => 'dummy.png',
+        //        'size' => 59992,
+        //        'mime' => 'image/png',
+        //        'hash' => '2164a354104c1c01c26a17dce1de7b2ee01d30ac',
+        //    ],
+        //];
+        //
+        ////        TestCase::
+        //
+        //
+        //$return = $this->DocumentEditions->uploadDocument($entityData);
+        //debug($return);
+        //
+        //TestCase::assertInstanceOf(DocumentEdition::class, $return);
     }
 }

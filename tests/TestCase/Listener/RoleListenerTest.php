@@ -79,7 +79,7 @@ class RoleListenerTest extends TestCase
         TestCase::assertSame(1, $jobs->count());
 
         $job = $jobs->first();
-        TestCase::assertSame('Email', $job->get('job_type'));
+        TestCase::assertSame('Email', $job->get('job_task'));
         $expected = ['email_generation_code' => 'ROL-1-NEW'];
         TestCase::assertEquals($expected, unserialize($job->get('data')));
     }
@@ -122,7 +122,7 @@ class RoleListenerTest extends TestCase
         TestCase::assertSame(1, $jobs->count());
 
         $job = $jobs->first();
-        TestCase::assertSame('Email', $job->get('job_type'));
+        TestCase::assertSame('Email', $job->get('job_task'));
         $expected = ['email_generation_code' => 'ROL-1-CNG'];
         TestCase::assertEquals($expected, unserialize($job->get('data')));
     }

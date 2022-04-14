@@ -12,14 +12,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailResponseType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\EmailResponseType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType newEmptyEntity()
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {

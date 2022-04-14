@@ -12,15 +12,19 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
  * @method \App\Model\Entity\CampRoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\CampRoleType newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\CampRoleType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\CampRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CampRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\CampRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CampRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CampRoleType findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRoleType newEmptyEntity()
+ * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CampRoleTypesTable extends Table
 {

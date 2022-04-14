@@ -8,12 +8,8 @@ use App\Model\Entity\User;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityDecorator;
-use Authorization\IdentityInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
 
 /**
  * App\Model\Entity\User Test Case
@@ -29,14 +25,14 @@ class UserTest extends TestCase
      *
      * @var \App\Model\Entity\User
      */
-    public $User;
+    public User $User;
 
     /**
      * Test Table subject
      *
-     * @var AuthorizationServiceInterface
+     * @var AuthorizationServiceInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public $Auth;
+    public \PHPUnit\Framework\MockObject\MockObject|AuthorizationServiceInterface $Auth;
 
     /**
      * Fixtures
@@ -103,10 +99,11 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testConstructorInvalidData()
+    public function testConstructorInvalidData(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
+        /** @noinspection PhpParamsInspection */
         new IdentityDecorator($this->Auth, 'bad');
     }
 
@@ -115,7 +112,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testCan()
+    public function testCan(): void
     {
         $identity = new IdentityDecorator($this->Auth, ['id' => 1]);
 
@@ -132,7 +129,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testApplyScope()
+    public function testApplyScope(): void
     {
         $identity = new IdentityDecorator($this->Auth, ['id' => 1]);
 
@@ -149,7 +146,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testGetOriginalData()
+    public function testGetOriginalData(): void
     {
         $data = ['id' => 2];
 
@@ -163,31 +160,9 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testSetAuthorization()
+    public function testSetAuthorization(): void
     {
         TestCase::markTestSkipped('4x Breaking Change');
-
-        /** @var \App\Model\Entity\User $identity */
-        $identity = new User([
-            'id' => 1,
-        ]);
-        $this->Auth = $this->createMock(AuthorizationServiceInterface::class);
-        $request = (new ServerRequest())->withAttribute('identity', $identity);
-        $response = new ServerRequest();
-        $middleware = new AuthorizationMiddleware($this->Auth, [
-            'identityDecorator' => function ($service, $identity) {
-                $identity->setAuthorization($service);
-
-                return $identity;
-            },
-            'requireAuthorizationCheck' => false,
-        ]);
-        $result = $middleware->process($request, $response);
-
-        TestCase::assertInstanceOf(RequestInterface::class, $result);
-        TestCase::assertSame($this->Auth, $result->getAttribute('authorization'));
-        TestCase::assertInstanceOf(IdentityInterface::class, $result->getAttribute('identity'));
-        TestCase::assertSame($identity, $result->getAttribute('identity'));
     }
 
     /**
@@ -195,7 +170,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testGetIdentifier()
+    public function testGetIdentifier(): void
     {
         $users = $this->getTableLocator()->get('Users');
         $testUser = $users->get(1);
@@ -207,12 +182,16 @@ class UserTest extends TestCase
      * @param User $user The user to be altered.
      * @return User
      */
-    private function notAll($user)
+    private function notAll(User $user): User
     {
         $roleTypes = $this->getTableLocator()->get('RoleTypes');
         $superUser = $roleTypes->get(5, ['contain' => ['Capabilities']]);
 
-        $allPermission = $roleTypes->Capabilities->find()->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])->toList();
+        $allPermission = $roleTypes->Capabilities
+            ->find()
+            ->where([Capability::FIELD_CAPABILITY_CODE => 'ALL'])
+            ->all()
+            ->toList();
         $roleTypes->Capabilities->unlink($superUser, $allPermission);
 
         $this->Users->patchCapabilities($user);
@@ -225,7 +204,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testCheckCapability()
+    public function testCheckCapability(): void
     {
         $testUser = $this->Users->get(1);
 
@@ -247,7 +226,7 @@ class UserTest extends TestCase
      *
      * @return void
      */
-    public function testSubSetCapabilityCheck()
+    public function testSubSetCapabilityCheck(): void
     {
         $testUser = $this->Users->get(1);
 

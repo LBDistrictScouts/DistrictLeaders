@@ -30,7 +30,8 @@ use Authorization\Policy\MapResolver;
 use Authorization\Policy\OrmResolver;
 use Authorization\Policy\ResolverCollection;
 use Cake\Core\Configure;
-use Cake\Core\Exception\MissingPluginException;
+use Cake\Core\ContainerInterface;
+use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
@@ -40,6 +41,7 @@ use Cake\Http\Middleware\HttpsEnforcerMiddleware;
 use Cake\Http\Middleware\SecurityHeadersMiddleware;
 use Cake\Http\MiddlewareQueue;
 use Cake\Http\ServerRequest;
+use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
@@ -84,22 +86,18 @@ class Application extends BaseApplication implements
 
         $this->addPlugin('BootstrapUI');
 
-        $this->addPlugin('WyriHaximus/TwigView');
-
         $this->addPlugin('Tags');
 
-        // Call parent to load bootstrap from files.
+        // Call parent class to load bootstrap from files.
         parent::bootstrap();
 
         if (PHP_SAPI === 'cli') {
-            try {
-                $this->addPlugin('Bake');
-                $this->addPlugin('IdeHelper');
-            } catch (MissingPluginException $e) {
-                // Do not halt if the plugin is missing
-            }
-
-            $this->addPlugin('Migrations');
+            $this->bootstrapCli();
+        } else {
+            FactoryLocator::add(
+                'Table',
+                (new TableLocator())->allowFallbackClass(false)
+            );
         }
 
         /*
@@ -113,12 +111,28 @@ class Application extends BaseApplication implements
     }
 
     /**
+     * Bootstrapping for CLI application.
+     *
+     * That is when running commands.
+     *
+     * @return void
+     */
+    protected function bootstrapCli(): void
+    {
+        $this->addOptionalPlugin('Bake');
+        $this->addOptionalPlugin('Cake/Repl');
+        $this->addOptionalPlugin('IdeHelper');
+
+        $this->addPlugin('Migrations');
+    }
+
+    /**
      * Setup the middleware queue your application will use.
      *
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
-    public function middleware($middlewareQueue): MiddlewareQueue
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $securityHeaders = new SecurityHeadersMiddleware();
         $securityHeaders
@@ -203,8 +217,19 @@ class Application extends BaseApplication implements
     }
 
     /**
+     * Register application container services.
+     *
+     * @param \Cake\Core\ContainerInterface $container The Container to update.
+     * @return void
+     * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
+     */
+    public function services(ContainerInterface $container): void
+    {
+    }
+
+    /**
      * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
-     * @return \Authorization\AuthorizationService|\Authorization\AuthorizationServiceInterface
+     * @return \Authorization\AuthorizationServiceInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface

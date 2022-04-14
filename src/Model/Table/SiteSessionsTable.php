@@ -10,15 +10,19 @@ use Cake\Validation\Validator;
  * SiteSessions Model
  *
  * @method \App\Model\Entity\SiteSession get($primaryKey, $options = [])
- * @method \App\Model\Entity\SiteSession newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\SiteSession newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SiteSession saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\SiteSession patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SiteSession[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\SiteSession findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\SiteSession[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession newEmptyEntity()
+ * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SiteSessionsTable extends Table
 {

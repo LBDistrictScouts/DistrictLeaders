@@ -17,6 +17,7 @@ use Cake\Datasource\ModelAwareTrait;
  * CapAuthorization component
  *
  * @property \App\Model\Table\UsersTable $Users
+ * @method \App\Controller\AppController getController()
  */
 class CapAuthorizationComponent extends AuthorizationComponent
 {

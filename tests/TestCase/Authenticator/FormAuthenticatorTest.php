@@ -136,7 +136,7 @@ class FormAuthenticatorTest extends TestCase
 
         static::assertInstanceOf(Result::class, $result);
         static::assertEquals(Result::FAILURE_OTHER, $result->getStatus());
-        static::assertEquals([0 => 'Login URL `http://localhost/users/does-not-match` did not match `/users/login`.'], $result->getErrors());
+        static::assertEquals([0 => 'Login URL `/users/does-not-match` did not match `/users/login`.'], $result->getErrors());
     }
 
     /**
@@ -168,7 +168,7 @@ class FormAuthenticatorTest extends TestCase
 
         static::assertInstanceOf(Result::class, $result);
         static::assertEquals(Result::FAILURE_OTHER, $result->getStatus());
-        static::assertEquals([0 => 'Login URL `http://localhost/users/does-not-match` did not match `/en/users/login` or `/de/users/login`.'], $result->getErrors());
+        static::assertEquals([0 => 'Login URL `/users/does-not-match` did not match `/en/users/login` or `/de/users/login`.'], $result->getErrors());
     }
 
     /**
@@ -201,7 +201,7 @@ class FormAuthenticatorTest extends TestCase
 
         $this->assertInstanceOf(Result::class, $result);
         $this->assertEquals(Result::FAILURE_OTHER, $result->getStatus());
-        $this->assertEquals([0 => 'Login URL `http://localhost/base/users/login` did not match `/users/login`.'], $result->getErrors());
+        $this->assertEquals([0 => 'Login URL `/base/users/login` did not match `/users/login`.'], $result->getErrors());
     }
 
     /**

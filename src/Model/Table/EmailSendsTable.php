@@ -24,15 +24,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
  * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
  * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailSend newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\EmailSend newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\EmailSend[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailSend findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend newEmptyEntity()
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailSendsTable extends Table
 {

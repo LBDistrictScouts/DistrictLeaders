@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use Cake\Utility\Inflector;
 use Queue\Model\QueueException;
@@ -21,7 +21,7 @@ trait JobDataTrait
     /**
      * @var string The access key for job data
      */
-    protected $dataKey = 'data';
+    protected string $dataKey = 'data';
 
     /**
      * @param int $jobId The ID of the Job
@@ -48,11 +48,11 @@ trait JobDataTrait
 
     /**
      * @param int $jobId The ID of the Job
-     * @param string|int $result The result Output
+     * @param int|string $result The result Output
      * @param string $key The data key
      * @return void
      */
-    protected function saveJobResult(int $jobId, $result, string $key): void
+    protected function saveJobResult(int $jobId, int|string $result, string $key): void
     {
         if (empty($key)) {
             throw new QueueException('Output Key is not set.');

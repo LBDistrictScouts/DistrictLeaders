@@ -91,7 +91,7 @@ trait AppTestTrait
     /**
      * Function to encapsulate Basic Index Get Tests.
      *
-     * @param $controller
+     * @param string $controller
      */
     protected function tryAddGet(string $controller): void
     {
@@ -101,9 +101,9 @@ trait AppTestTrait
     /**
      * Function to encapsulate Basic Index Get Tests.
      *
-     * @param $controller
+     * @param string $controller
      */
-    protected function tryEditGet(string $controller)
+    protected function tryEditGet(string $controller): void
     {
         $this->tryGet(['controller' => $controller, 'action' => 'edit', 1]);
     }
@@ -131,7 +131,7 @@ trait AppTestTrait
      * @param array $url The Url Array to be tested.
      * @param array $validData Valid data for the Entity.
      * @param array $expectedRedirect Expected Redirect URL.
-     * @param null|string $expectedMessage
+     * @param string $expectedMessage
      */
     protected function tryFlashPost(
         array $url,
@@ -160,7 +160,7 @@ trait AppTestTrait
         int $newEntityId,
         ?array $expectedRedirect = null,
         ?string $expectedMessage = null
-    ) {
+    ): void {
         $url = [
             'controller' => $controller,
             'action' => 'add',
@@ -208,7 +208,7 @@ trait AppTestTrait
      * Function to encapsulate Basic Add Post Tests.
      *
      * @param string $controller Name of the Controller being Interrogated.
-     * @param array $validData Array of Valid Data.
+     * @param array|null $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
      * @param array|null $expectedRedirects Redirect Array or Array of Redirects with Action Keys.
      * @param array|null $expectedMessages Array of Expected Flash Messages
@@ -255,10 +255,6 @@ trait AppTestTrait
      */
     private function getRedirect(?array $redirectArray, string $action, array $default): array
     {
-        if (is_string($default)) {
-            $default = [$default];
-        }
-
         if (is_null($redirectArray)) {
             return $default;
         }

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Model\Entity\DocumentVersion;
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
@@ -15,7 +15,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @property \App\Model\Table\CompassRecordsTable $CompassRecords
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  */
-class QueueAutoMergeTask extends QueueTask implements QueueTaskInterface
+class AutoMergeTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 
@@ -32,14 +32,14 @@ class QueueAutoMergeTask extends QueueTask implements QueueTaskInterface
     /**
      * @var string The Data Key
      */
-    protected $entityKey = 'version';
+    protected string $entityKey = 'version';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->loadModel('DocumentVersions');
         $this->loadModel('CompassRecords');

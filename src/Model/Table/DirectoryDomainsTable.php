@@ -16,15 +16,20 @@ use Google_Service_Directory_Domains;
  *
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
  * @method \App\Model\Entity\DirectoryDomain get($primaryKey, $options = [])
- * @method \App\Model\Entity\DirectoryDomain newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryDomain saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryDomain
  * patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryDomain[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryDomain findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\DirectoryDomain patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryDomainsTable extends Table
 {

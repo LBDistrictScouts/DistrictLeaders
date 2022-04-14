@@ -38,7 +38,6 @@ use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\JsonConfig;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Database\Type;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ConsoleErrorHandler;
 use Cake\Error\ErrorHandler;
@@ -168,19 +167,6 @@ ServerRequest::addDetector('tablet', function ($request) {
 
     return $detector->isTablet();
 });
-
-/*
- * Enable immutable time objects in the ORM.
- *
- * You can enable default locale format parsing by adding calls
- * to `useLocaleParser()`. This enables the automatic conversion of
- * locale specific date formats. For details see
- * @link https://book.cakephp.org/3.0/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
- */
-Type::build('time')->useImmutable();
-Type::build('date')->useImmutable();
-Type::build('datetime')->useImmutable();
-Type::build('timestamp')->useImmutable();
 
 EventManager::instance()->on(new TokenListener());
 EventManager::instance()->on(new UserListener());

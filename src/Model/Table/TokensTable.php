@@ -10,7 +10,6 @@ use Cake\Datasource\ModelAwareTrait;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
-use Cake\I18n\Time;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Security;
@@ -22,15 +21,19 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  * @method \App\Model\Entity\Token get($primaryKey, $options = [])
- * @method \App\Model\Entity\Token newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Token newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Token[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Token findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Token[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Token findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token newEmptyEntity()
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class TokensTable extends Table
 {
@@ -167,7 +170,7 @@ class TokensTable extends Table
             $entity->random_number = unpack('n', Security::randomBytes(64))[1];
 
             // Set Expiry Date
-            $now = Time::now();
+            $now = FrozenTime::now();
             $entity->expires = $now->addMonth(1);
         }
 
@@ -222,7 +225,7 @@ class TokensTable extends Table
      * @param string $tokenString The Token to be Validated & Decrypted
      * @return int|false $validation Containing the validation state & id
      */
-    public function validateToken(string $tokenString)
+    public function validateToken(string $tokenString): bool|int
     {
         $tokenString = urldecode($tokenString);
         $tokenString = TextSafe::decode($tokenString);
@@ -242,7 +245,7 @@ class TokensTable extends Table
             return false;
         }
 
-        $tokenRow->set('utilised', Time::now());
+        $tokenRow->set('utilised', FrozenTime::now());
         $this->save($tokenRow);
 
         if ($tokenRow->random_number <> $tokenString->random_number) {

@@ -18,14 +18,19 @@ use Google_Service_Directory_Group;
  * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
  * @method \App\Model\Entity\DirectoryGroup get($primaryKey, $options = [])
- * @method \App\Model\Entity\DirectoryGroup newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\DirectoryGroup newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryGroup findOrCreate($search, ?callable $callback = null, $options = [])
  * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
+ * @method \App\Model\Entity\DirectoryGroup newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryGroupsTable extends Table
 {

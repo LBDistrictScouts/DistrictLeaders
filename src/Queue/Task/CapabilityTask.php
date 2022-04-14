@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use App\Model\Entity\RoleType;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
@@ -13,7 +13,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @package App\Shell\Task
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  */
-class QueueCapabilityTask extends QueueTask implements QueueTaskInterface
+class CapabilityTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 

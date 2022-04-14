@@ -12,14 +12,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @method \App\Model\Entity\RoleStatus get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleStatus newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RoleStatus newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleStatus findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus newEmptyEntity()
+ * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleStatusesTable extends Table
 {

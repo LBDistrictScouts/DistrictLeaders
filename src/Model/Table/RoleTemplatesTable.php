@@ -16,14 +16,18 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
  * @method \App\Model\Entity\RoleTemplate get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleTemplate newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\RoleTemplate[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\RoleTemplate|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleTemplate saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\RoleTemplate patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate findOrCreate($search, callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate newEmptyEntity()
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTemplatesTable extends Table
 {

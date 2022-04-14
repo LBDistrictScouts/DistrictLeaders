@@ -19,15 +19,19 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
  * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
- * @method \App\Model\Entity\Capability newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Capability newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Capability|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Capability[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Capability findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Capability[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Capability findOrCreate($search, ?callable $callback = null, $options = [])
  * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability newEmptyEntity()
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesTable extends Table
 {

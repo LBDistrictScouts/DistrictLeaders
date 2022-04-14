@@ -79,7 +79,7 @@ class QueueComponentTest extends TestCase
         TestCase::assertEquals(1, $jobs->count());
 
         $job = $jobs->first();
-        TestCase::assertEquals($jobType, $job->get('job_type'));
+        TestCase::assertEquals($jobType, $job->get('job_task'));
 
         if (empty($data)) {
             TestCase::assertNull($job->get('data'));

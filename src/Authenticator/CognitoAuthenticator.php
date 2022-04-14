@@ -108,7 +108,7 @@ class CognitoAuthenticator extends AbstractAuthenticator
             ),
         ];
 
-        return new CognitoResult(null, CognitoResult::FAILURE_OTHER, $errors);
+        return new CognitoResult(null, ResultInterface::FAILURE_OTHER, $errors);
     }
 
     /**
@@ -125,12 +125,12 @@ class CognitoAuthenticator extends AbstractAuthenticator
             return $this->_buildLoginUrlErrorResult($request);
         }
 
-        if (empty($data) || $data === null) {
+        if (empty($data)) {
             $data = $this->_getData($request);
         }
 
         if ($data === null) {
-            return new CognitoResult(null, CognitoResult::FAILURE_CREDENTIALS_MISSING, [
+            return new CognitoResult(null, ResultInterface::FAILURE_CREDENTIALS_MISSING, [
                 'Login credentials not found',
             ]);
         }
@@ -147,13 +147,17 @@ class CognitoAuthenticator extends AbstractAuthenticator
         $user = $this->_identifier->identify($data);
 
         if (empty($user)) {
-            return new CognitoResult(null, CognitoResult::FAILURE_IDENTITY_NOT_FOUND, $this->_identifier->getErrors());
+            return new CognitoResult(
+                null,
+                ResultInterface::FAILURE_IDENTITY_NOT_FOUND,
+                $this->_identifier->getErrors()
+            );
         }
 
         if (isset($user['challenge'])) {
             return new CognitoResult($user, $user['challenge']);
         }
 
-        return new CognitoResult($user, CognitoResult::SUCCESS);
+        return new CognitoResult($user, ResultInterface::SUCCESS);
     }
 }

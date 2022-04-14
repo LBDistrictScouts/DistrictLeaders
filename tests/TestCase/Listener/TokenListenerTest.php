@@ -96,7 +96,7 @@ class TokenListenerTest extends TestCase
         TestCase::assertSame(1, $jobs->count());
 
         $job = $jobs->first();
-        TestCase::assertSame('Token', $job->get('job_type'));
+        TestCase::assertSame('Token', $job->get('job_task'));
         TestCase::assertNull($job->get('data'));
     }
 }

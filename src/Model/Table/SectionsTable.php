@@ -18,21 +18,25 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ScoutGroups
  * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
  * @method \App\Model\Entity\Section get($primaryKey, $options = [])
- * @method \App\Model\Entity\Section newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\Section newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\Section|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Section saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\Section patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Section[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\Section findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Section[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Section findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
  * @mixin \Search\Model\Behavior\SearchBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\Section newEmptyEntity()
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SectionsTable extends Table
 {

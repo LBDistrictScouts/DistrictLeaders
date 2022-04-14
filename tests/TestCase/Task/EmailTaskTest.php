@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
 
-use App\Shell\Task\QueueEmailTask;
+use App\Queue\Task\EmailTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use Cake\Console\ConsoleIo;
 
 /**
  * App\Mailer\BasicMailer Test Case
@@ -22,8 +21,7 @@ class EmailTaskTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $testIo = new ConsoleIo($this->out, $this->err);
-        $this->Task = new QueueEmailTask($testIo);
+        $this->Task = new EmailTask();
     }
 
     /**

@@ -13,22 +13,26 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
  * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
- * @method \App\Model\Entity\ScoutGroup newEntity($data = null, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup[] patchEntities($entities, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup findOrCreate($search, callable $callback = null, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany($entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
  * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $LeaderSections
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $CommitteeSections
  * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $TeamSections
+ * @method \App\Model\Entity\ScoutGroup newEmptyEntity()
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class ScoutGroupsTable extends Table
 {

@@ -96,7 +96,7 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
         $user = $session->read($sessionKey);
 
         if (empty($user)) {
-            return new CognitoResult(null, CognitoResult::FAILURE_IDENTITY_NOT_FOUND);
+            return new CognitoResult(null, ResultInterface::FAILURE_IDENTITY_NOT_FOUND);
         }
 
         if ($this->getConfig('identify') === true) {
@@ -112,6 +112,6 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
             $user = new ArrayObject($user);
         }
 
-        return new CognitoResult($user, CognitoResult::SUCCESS);
+        return new CognitoResult($user, ResultInterface::SUCCESS);
     }
 }

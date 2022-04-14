@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
-use App\Shell\Task\QueueCapabilityTask;
+use App\Queue\Task\CapabilityTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use Cake\Console\ConsoleIo;
-use Cake\Console\ConsoleOutput;
 
 /**
  * App\Mailer\BasicMailer Test Case
@@ -20,7 +18,7 @@ class CapabilityTaskTest extends TestCase
     use TaskTestTrait;
 
     /**
-     * @var QueueTokenTask|\PHPUnit\Framework\MockObject\MockObject
+     * @var \App\Queue\Task\TokenTask|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Task;
 
@@ -33,11 +31,7 @@ class CapabilityTaskTest extends TestCase
     {
         parent::setUp();
 
-        $this->out = new ConsoleOutput();
-        $this->err = new ConsoleOutput();
-        $testIo = new ConsoleIo($this->out, $this->err);
-
-        $this->Task = new QueueCapabilityTask($testIo);
+        $this->Task = new CapabilityTask();
     }
 
     /**

@@ -4,9 +4,8 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\Token;
-use App\Shell\Task\QueueTokenTask;
+use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use Cake\Console\ConsoleIo;
 
 /**
  * App\Mailer\BasicMailer Test Case
@@ -18,7 +17,7 @@ class TokenTaskTest extends TestCase
     use TaskTestTrait;
 
     /**
-     * @var QueueTokenTask|\PHPUnit\Framework\MockObject\MockObject
+     * @var TokenTask|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $Task;
 
@@ -31,9 +30,7 @@ class TokenTaskTest extends TestCase
     {
         parent::setUp();
 
-        $testIo = new ConsoleIo($this->out, $this->err);
-
-        $this->Task = new QueueTokenTask($testIo);
+        $this->Task = new TokenTask();
     }
 
     /**
@@ -44,7 +41,6 @@ class TokenTaskTest extends TestCase
      */
     public function testTokenQueueJob()
     {
-        static::markTestSkipped();
         $this->Tokens = $this->getTableLocator()->get('Tokens');
         $token = $this->Tokens->get(1);
 
@@ -62,8 +58,8 @@ class TokenTaskTest extends TestCase
         TestCase::assertEquals(1, $job->progress);
         $this->validateExpectedData([
             'records' => 1,
-            'unchanged' => 0,
-            'deactivated' => 1,
+            'unchanged' => 1,
+            'deactivated' => 0,
             'deleted' => 0,
         ], $job->id);
     }

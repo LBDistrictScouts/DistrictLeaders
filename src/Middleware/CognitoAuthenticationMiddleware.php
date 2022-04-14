@@ -20,6 +20,7 @@ use Authentication\Authenticator\AuthenticationRequiredException;
 use Authentication\Authenticator\StatelessInterface;
 use Authentication\Authenticator\UnauthenticatedException;
 use Authentication\Middleware\AuthenticationMiddleware;
+use Exception;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Stream;
@@ -39,7 +40,7 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
      * @param \Exception $error Exception to be handled
      * @return mixed
      */
-    protected function responseReturn($error)
+    protected function responseReturn(Exception $error): Response
     {
         $body = new Stream('php://memory', 'rw');
         $body->write($error->getBody());

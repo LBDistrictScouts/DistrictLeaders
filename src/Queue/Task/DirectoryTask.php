@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Shell\Task;
+namespace App\Queue\Task;
 
 use Queue\Model\QueueException;
-use Queue\Shell\Task\QueueTask;
-use Queue\Shell\Task\QueueTaskInterface;
+use Queue\Queue\Task;
+use Queue\Queue\TaskInterface;
 
 /**
  * Class QueueWelcomeTask
@@ -13,7 +13,7 @@ use Queue\Shell\Task\QueueTaskInterface;
  * @package App\Shell\Task
  * @property \App\Model\Table\DirectoriesTable $Directories
  */
-class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
+class DirectoryTask extends Task implements TaskInterface
 {
     use JobDataTrait;
 
@@ -30,14 +30,14 @@ class QueueDirectoryTask extends QueueTask implements QueueTaskInterface
     /**
      * @var string The Data Key
      */
-    private $entityKey = 'directory';
+    private string $entityKey = 'directory';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->checkEntityKey($data);
 

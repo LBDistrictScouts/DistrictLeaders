@@ -59,7 +59,7 @@ class UserState extends Entity
             return true;
         }
 
-        return $this->active;
+        return $this->active ?? false;
     }
 
     protected $_virtual = [
