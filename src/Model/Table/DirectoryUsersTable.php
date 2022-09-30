@@ -28,13 +28,14 @@ use Google_Service_Directory_User;
  * @method \App\Model\Entity\DirectoryUser[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryUser findOrCreate($search, ?callable $callback = null, $options = [])
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasOne $UserContacts
+ * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @method \App\Model\Entity\DirectoryUser newEmptyEntity()
  * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DirectoryUsersTable extends Table
 {
@@ -65,7 +66,7 @@ class DirectoryUsersTable extends Table
             'joinType' => 'INNER',
         ]);
 
-        $this->hasOne('UserContacts', [
+        $this->hasMany('UserContacts', [
             'foreignKey' => 'directory_user_id',
         ]);
 

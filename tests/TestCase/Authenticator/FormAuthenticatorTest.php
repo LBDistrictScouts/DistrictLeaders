@@ -19,6 +19,7 @@ namespace App\Test\TestCase\Authenticator;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
 use Authentication\Authenticator\FormAuthenticator;
 use Authentication\Authenticator\Result;
+use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
@@ -187,10 +188,15 @@ class FormAuthenticatorTest extends TestCase
             [],
             ['username' => 'mariano', 'password' => 'password']
         );
-        $uri = $request->getUri();
-        $uri->base = '/base';
+        $mockerUri = $this->getMockBuilder('Cake\Http\Uri');
+        $uri = $mockerUri
+            ->onlyMethods(['_getUrlFromRequest'])
+            ->getMock();
+
+        $uri->method('_getUrlFromRequest')->willReturn('/base');
+
         $request = $request->withUri($uri);
-        $request = $request->withAttribute('base', $uri->base);
+        $request = $request->withAttribute('base', '/base');
         $response = new Response();
 
         $form = new FormAuthenticator($identifiers, [
@@ -200,7 +206,7 @@ class FormAuthenticatorTest extends TestCase
         $result = $form->authenticate($request, $response);
 
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertEquals(Result::FAILURE_OTHER, $result->getStatus());
+        $this->assertEquals(ResultInterface::FAILURE_OTHER, $result->getStatus());
         $this->assertEquals([0 => 'Login URL `/base/users/login` did not match `/users/login`.'], $result->getErrors());
     }
 
@@ -229,7 +235,7 @@ class FormAuthenticatorTest extends TestCase
         $result = $form->authenticate($request, $response);
 
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertEquals(Result::SUCCESS, $result->getStatus());
+        $this->assertEquals(ResultInterface::SUCCESS, $result->getStatus());
         $this->assertEquals([], $result->getErrors());
     }
 
@@ -281,10 +287,16 @@ class FormAuthenticatorTest extends TestCase
             [],
             ['username' => 'mariano', 'password' => 'password']
         );
-        $uri = $request->getUri();
-        $uri->base = '/base';
+
+        $mockerUri = $this->getMockBuilder($request->getUri()::class);
+        $uri = $mockerUri
+            ->onlyMethods(['_getUrlFromRequest'])
+            ->getMock();
+
+        $uri->method('_getUrlFromRequest')->willReturn('/base');
+
         $request = $request->withUri($uri);
-        $request = $request->withAttribute('base', $uri->base);
+        $request = $request->withAttribute('base', '/base');
         $response = new Response();
 
         $form = new FormAuthenticator($identifiers, [
@@ -294,7 +306,7 @@ class FormAuthenticatorTest extends TestCase
         $result = $form->authenticate($request, $response);
 
         $this->assertInstanceOf(Result::class, $result);
-        $this->assertEquals(Result::SUCCESS, $result->getStatus());
+        $this->assertEquals(ResultInterface::SUCCESS, $result->getStatus());
         $this->assertEquals([], $result->getErrors());
     }
 

@@ -2238,6 +2238,7 @@ namespace PHPSTORM_META {
 		'Authentication',
 		'Authorization',
 		'CapAuthorization',
+		'CheckHttpCache',
 		'CloudConvertClient',
 		'Common',
 		'Filter',
@@ -2267,6 +2268,7 @@ namespace PHPSTORM_META {
 			'Authentication.Authentication' => \Authentication\Controller\Component\AuthenticationComponent::class,
 			'Authorization.Authorization' => \Authorization\Controller\Component\AuthorizationComponent::class,
 			'CapAuthorization' => \App\Controller\Component\CapAuthorizationComponent::class,
+			'CheckHttpCache' => \Cake\Controller\Component\CheckHttpCacheComponent::class,
 			'CloudConvertClient' => \App\Controller\Component\CloudConvertClientComponent::class,
 			'Expose.Superimpose' => \Expose\Controller\Component\SuperimposeComponent::class,
 			'Filter' => \App\Controller\Component\FilterComponent::class,
@@ -2994,6 +2996,7 @@ namespace PHPSTORM_META {
 		'core.Articles',
 		'core.ArticlesMoreTranslations',
 		'core.ArticlesTags',
+		'core.ArticlesTagsBindingKeys',
 		'core.ArticlesTranslations',
 		'core.Attachments',
 		'core.AuthUsers',
@@ -3009,6 +3012,8 @@ namespace PHPSTORM_META {
 		'core.Comments',
 		'core.CommentsTranslations',
 		'core.CompositeIncrements',
+		'core.CompositeKeyArticles',
+		'core.CompositeKeyArticlesTags',
 		'core.CounterCacheCategories',
 		'core.CounterCacheComments',
 		'core.CounterCachePosts',
@@ -3021,6 +3026,7 @@ namespace PHPSTORM_META {
 		'core.MenuLinkTrees',
 		'core.NullableAuthors',
 		'core.NumberTrees',
+		'core.NumberTreesArticles',
 		'core.OrderedUuidItems',
 		'core.Orders',
 		'core.OtherArticles',
@@ -4682,7 +4688,8 @@ namespace PHPSTORM_META {
 		'plugins.Shim',
 		'plugins.Tags',
 		'plugins.TestHelper',
-		'plugins.Tools'
+		'plugins.Tools',
+		'x'
 	);
 
 	registerArgumentsSet(

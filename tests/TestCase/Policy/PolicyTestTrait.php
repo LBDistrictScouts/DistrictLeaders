@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Policy;
 
 use App\Model\Entity\User;
 use App\Utility\CapBuilder;
+use Authorization\Exception\AuthorizationRequiredException;
 use Cake\Core\Configure;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\IntegrationTestTrait;
@@ -21,7 +22,7 @@ trait PolicyTestTrait
     use IntegrationTestTrait;
     use LocatorAwareTrait;
 
-    protected function setupForbiddenError()
+    protected function setupForbiddenError(): void
     {
         Configure::write('UnauthorizedExceptions', [
             'Authorization\Exception\MissingIdentityException',
@@ -30,9 +31,9 @@ trait PolicyTestTrait
     }
 
     /**
-     * @return \App\Model\Entity\User
+     * @return User
      */
-    private function getFakeUser()
+    private function getFakeUser(): User
     {
         $userTestData = [
             'username' => 'Test123',
@@ -73,7 +74,7 @@ trait PolicyTestTrait
     /**
      * @param string $capability Capability the User will have
      */
-    protected function userWithUserCapability($capability)
+    protected function userWithUserCapability(string $capability): void
     {
         $this->userWithCapability($capability, 'user');
     }
@@ -82,7 +83,7 @@ trait PolicyTestTrait
      * @param string $capability Capability the User will have
      * @param string $level Capability Level
      */
-    protected function userWithCapability($capability, $level = 'user')
+    protected function userWithCapability(string $capability, string $level = 'user'): void
     {
         $users = $this->getTableLocator()->get('Users');
         $user = $users->find()->first();
@@ -226,8 +227,7 @@ trait PolicyTestTrait
             assertTrue(false, 'Exception Emitted for GET Request.');
         }
 
-        $this->assertResponseCode(403);
-        $this->assertResponseError();
+        $this->assertResponseFailure();
     }
 
     /**
@@ -274,32 +274,32 @@ trait PolicyTestTrait
         $this->tryGetWithout(['controller' => $controller, 'action' => 'view', 1], $capability);
     }
 
-    /**
-     * Function to encapsulate Basic Index Get Tests.
-     *
-     * @param $controller
-     */
-    protected function tryAddGet($controller)
-    {
-        $this->tryGet(['controller' => $controller, 'action' => 'add']);
-    }
-
-    /**
-     * Function to encapsulate Basic Index Get Tests.
-     *
-     * @param $controller
-     */
-    protected function tryEditGet($controller)
-    {
-        $this->tryGet(['controller' => $controller, 'action' => 'edit', 1]);
-    }
+//    /**
+//     * Function to encapsulate Basic Index Get Tests.
+//     *
+//     * @param $controller
+//     */
+//    protected function tryAddGet($controller)
+//    {
+//        $this->tryGet(['controller' => $controller, 'action' => 'add']);
+//    }
+//
+//    /**
+//     * Function to encapsulate Basic Index Get Tests.
+//     *
+//     * @param $controller
+//     */
+//    protected function tryEditGet($controller)
+//    {
+//        $this->tryGet(['controller' => $controller, 'action' => 'edit', 1]);
+//    }
 
     /**
      * @param array $url The Url Array to be tested.
      * @param array $validData Data valid for the Method.
      * @param array $expectedRedirect The Url Array expected to be redirected.
      */
-    protected function tryPost($url, $validData, $expectedRedirect)
+    protected function tryPost(array $url, array $validData, array $expectedRedirect): void
     {
         $this->login();
 
@@ -309,7 +309,7 @@ trait PolicyTestTrait
 
         try {
             $this->post($url, $validData);
-        } catch (Exp $exception) {
+        } catch (AuthorizationRequiredException $exception) {
             assertTrue(false, 'Exception Emitted for POST Request.');
         }
 
@@ -322,7 +322,7 @@ trait PolicyTestTrait
      * @param array $validData Valid data for the Entity.
      * @param array $expectedRedirect Expected Redirect URL.
      */
-    protected function tryFlashPost($url, $validData, $expectedRedirect)
+    protected function tryFlashPost(array $url, array $validData, array $expectedRedirect): void
     {
         $this->tryPost($url, $validData, $expectedRedirect);
 
@@ -367,7 +367,7 @@ trait PolicyTestTrait
      * @param array $validData Array of Valid Data.
      * @param int $entityId Id for next Entity.
      */
-    protected function tryEditPost($controller, $validData, $entityId)
+    protected function tryEditPost(string $controller, array $validData, int $entityId): void
     {
         $url = [
             'controller' => $controller,
@@ -390,7 +390,7 @@ trait PolicyTestTrait
      * @param array $validData Array of Valid Data.
      * @param int $newEntityId Id for next Entity.
      */
-    protected function tryDeletePost($controller, $validData, $newEntityId)
+    protected function tryDeletePost(string $controller, array $validData, int $newEntityId): void
     {
         $this->tryAddPost($controller, $validData, $newEntityId);
 
