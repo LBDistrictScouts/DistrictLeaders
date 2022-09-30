@@ -56,7 +56,7 @@ class ScoutGroup extends Entity
      * @param string $value The Domain
      * @return string
      */
-    protected function _setGroupDomain($value)
+    protected function _setGroupDomain(string $value): string
     {
         if (strlen($value)) {
             $value = strtolower($value);
@@ -76,9 +76,9 @@ class ScoutGroup extends Entity
      *
      * @return string
      */
-    protected function _getCleanDomain()
+    protected function _getCleanDomain(): string
     {
-        return str_replace('https://', '', $this->group_domain);
+        return str_replace('https://', '', $this->group_domain ?? '');
     }
 
     /**
