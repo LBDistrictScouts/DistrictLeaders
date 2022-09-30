@@ -23,7 +23,6 @@ use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
-use Psr\Http\Message\UriInterface;
 use RuntimeException;
 
 /**
@@ -296,7 +295,6 @@ class FormAuthenticatorTest extends TestCase
 
         $uri->method('_getUrlFromRequest')->willReturn('/base');
 
-        /** @var UriInterface $uri */
         $request = $request->withUri($uri);
         $request = $request->withAttribute('base', '/base');
         $response = new Response();
