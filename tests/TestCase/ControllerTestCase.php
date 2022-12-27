@@ -31,6 +31,8 @@ class ControllerTestCase extends TestCase
     use LocatorAwareTrait;
     use AppTestTrait;
 
+    public \Queue\Model\Table\QueuedJobsTable|\Cake\ORM\Table $QueuedJobs;
+
     /**
      * Fixtures
      *

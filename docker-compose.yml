@@ -1,0 +1,58 @@
+version: "3.8"
+
+services:
+  application:
+    build:
+      context: .
+      dockerfile: .dockerfile
+      target: webserver
+    depends_on:
+      - redis
+      - database
+    ports:
+      - published: 5100
+        target: 8765
+      - published: 5101
+        target: 80
+      - published: 5102
+        target: 8000
+    volumes:
+      - application-data:/app
+  database:
+    image: postgres:14-alpine3.16
+    env_file:
+      - config/Credentials/docker.env
+    ports:
+      - published: 5452
+        target: 5432
+    volumes:
+      - database-data:/var/lib/postgresql/data
+  test-database:
+    image: postgres:14-alpine3.16
+    env_file:
+      - config/Credentials/docker.env
+    ports:
+      - published: 5454
+        target: 5432
+  redis:
+    image: redis:alpine
+    ports:
+      - published: 6379
+        target: 6379
+    volumes:
+      - redis-data:/data
+  test:
+    build:
+      context: .
+      dockerfile: .dockerfile
+      target: test
+    depends_on:
+      - redis
+      - application
+      - database
+
+volumes:
+  redis-data:
+  application-data:
+  database-data:
+

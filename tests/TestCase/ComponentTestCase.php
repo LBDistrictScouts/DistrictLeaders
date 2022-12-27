@@ -17,19 +17,23 @@ declare(strict_types=1);
 namespace App\Test\TestCase;
 
 use App\Test\TestCase\Controller\AppTestTrait;
+use Cake\Controller\Controller;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\TestCase;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class AuthenticationTestCase
  *
  * @package App\Test\TestCase
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property QueuedJobsTable $QueuedJobs
  */
 class ComponentTestCase extends TestCase
 {
     use LocatorAwareTrait;
     use AppTestTrait;
+
+    public QueuedJobsTable $QueuedJobs;
 
     /**
      * Fixtures
@@ -90,9 +94,9 @@ class ComponentTestCase extends TestCase
     /**
      * Test subject
      *
-     * @var \Cake\Controller\Controller
+     * @var Controller
      */
-    public $Controller;
+    public Controller $Controller;
 
     /**
      * @inheritDoc

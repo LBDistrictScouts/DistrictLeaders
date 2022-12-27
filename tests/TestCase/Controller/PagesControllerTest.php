@@ -127,6 +127,6 @@ class PagesControllerTest extends TestCase
         $this->login();
 
         $this->get('/pages/../Layout/ajax');
-        $this->assertResponseFailure('Forbidden');
+        $this->assertResponseError('Forbidden');
     }
 }

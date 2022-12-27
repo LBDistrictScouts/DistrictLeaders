@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ../docker-compose.yml
+    kompose.version: 1.26.1 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: database
+  name: database
+spec:
+  ports:
+    - name: "5452"
+      port: 5452
+      targetPort: 5432
+  selector:
+    io.kompose.service: database
+status:
+  loadBalancer: {}

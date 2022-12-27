@@ -26,6 +26,8 @@ class AuditableBehavior extends Behavior
         'tracked_fields' => [],
     ];
 
+    public \App\Model\Table\AuditsTable $Audits;
+
     /**
      * after Save LifeCycle Callback
      *

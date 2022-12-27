@@ -227,7 +227,7 @@ trait PolicyTestTrait
             assertTrue(false, 'Exception Emitted for GET Request.');
         }
 
-        $this->assertResponseFailure();
+        $this->assertResponseError();
     }
 
     /**
