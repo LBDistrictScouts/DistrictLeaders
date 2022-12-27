@@ -1,4 +1,4 @@
-FROM php:8.1-alpine3.16 as base
+FROM php:8.2-alpine3.16 as base
 
 ARG user=app-user
 ARG uid=969
@@ -35,7 +35,7 @@ USER $user
 
 RUN mv ./config/Environment/app_parameters.docker.yml ./config/Environment/app_parameters.yml
 RUN composer console-install
-RUN composer symlink
+#RUN composer symlink
 
 FROM base as webserver
 
