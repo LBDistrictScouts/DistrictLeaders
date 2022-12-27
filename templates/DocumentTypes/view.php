@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DocumentType $documentType
+ * @var AppView $this
+ * @var DocumentType $documentType
  */
+
+use App\Model\Entity\DocumentType;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

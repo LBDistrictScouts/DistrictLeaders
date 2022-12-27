@@ -59,9 +59,9 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for an ORM Table, Entity or Query.
      *
-     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\EntityInterface|\Cake\Datasource\QueryInterface $resource The resource.
+     * @param RepositoryInterface|EntityInterface|QueryInterface $resource The resource.
      * @return object
-     * @throws \Authorization\Policy\Exception\MissingPolicyException When a policy for the
+     * @throws MissingPolicyException When a policy for the
      *   resource has not been defined or cannot be resolved.
      */
     public function getPolicy($resource)
@@ -73,7 +73,7 @@ class CoreResolverOLD implements ResolverInterface
             return $this->getRepositoryPolicy($resource);
         }
         if ($resource instanceof QueryInterface) {
-            /** @var \Cake\Datasource\RepositoryInterface $table */
+            /** @var RepositoryInterface $table */
             $table = $resource instanceof Query ? $resource->getRepository() : $resource->repository();
 
             return $this->getRepositoryPolicy($table);
@@ -86,7 +86,7 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for an entity
      *
-     * @param \Cake\Datasource\EntityInterface $entity The entity to get a policy for
+     * @param EntityInterface $entity The entity to get a policy for
      * @return object
      */
     protected function getEntityPolicy(EntityInterface $entity)
@@ -102,7 +102,7 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for a table
      *
-     * @param \Cake\Datasource\RepositoryInterface $table The table/repository to get a policy for.
+     * @param RepositoryInterface $table The table/repository to get a policy for.
      * @return object
      */
     protected function getRepositoryPolicy(RepositoryInterface $table)
@@ -121,9 +121,9 @@ class CoreResolverOLD implements ResolverInterface
      * @param string $class The full class name.
      * @param string $name The name suffix of the resource.
      * @param string $namespace The namespace to find the policy in.
-     * @throws \Authorization\Policy\Exception\MissingPolicyException When a policy for the
-     *   resource has not been defined.
      * @return object
+     * @throws MissingPolicyException When a policy for the
+     *   resource has not been defined.
      */
     protected function findPolicy($class, $name, $namespace)
     {

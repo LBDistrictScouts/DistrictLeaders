@@ -14,8 +14,8 @@ use Cake\ORM\Entity;
  * @property string $directory_group_email
  * @property string|null $directory_group_reference
  *
- * @property \App\Model\Entity\Directory $directory
- * @property \App\Model\Entity\RoleType[] $role_types
+ * @property Directory $directory
+ * @property RoleType[] $role_types
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

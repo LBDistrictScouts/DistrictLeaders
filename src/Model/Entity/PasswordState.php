@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property bool $active
  * @property bool $expired
  *
- * @property \App\Model\Entity\User[] $users
+ * @property User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Test\TestCase;
 
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\TestSuite\TestCase;
 
@@ -27,41 +28,7 @@ use Cake\TestSuite\TestCase;
 class StandardTestCase extends TestCase
 {
     use LocatorAwareTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-    ];
+    use FixtureTestTrait;
 
     /**
      * @inheritDoc

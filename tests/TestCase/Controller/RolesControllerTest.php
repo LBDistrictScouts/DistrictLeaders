@@ -16,12 +16,12 @@ class RolesControllerTest extends TestCase
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Roles';
+    private string $controller = 'Roles';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         Role::FIELD_ROLE_TYPE_ID => 6,
         Role::FIELD_SECTION_ID => 1,
         Role::FIELD_USER_ID => 2,
@@ -29,15 +29,14 @@ class RolesControllerTest extends TestCase
     ];
 
     /**
-     * @param int|null $number The Redirect Array ID
      * @return array
      */
-    private function retrieveAddRedirect(int $number = 10)
+    private function retrieveAddRedirect(): array
     {
         return [
             'controller' => $this->controller,
             'action' => 'edit',
-            $number,
+            10,
             '?' => [
                 'contact' => true,
             ],
@@ -49,7 +48,7 @@ class RolesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -59,7 +58,7 @@ class RolesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -69,7 +68,7 @@ class RolesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->tryAddGet($this->controller);
 
@@ -86,7 +85,7 @@ class RolesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -102,7 +101,7 @@ class RolesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

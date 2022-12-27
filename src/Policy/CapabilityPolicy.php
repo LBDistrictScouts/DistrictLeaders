@@ -19,9 +19,9 @@ class CapabilityPolicy implements BeforePolicyInterface
     /**
      * Check if $user can create a Capability
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Entity\Capability $capability Entity to be Checked
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param Capability $capability Entity to be Checked
+     * @return ResultInterface|null
      */
     public function canAdd(User $user, Capability $capability): ResultInterface
     {
@@ -35,9 +35,9 @@ class CapabilityPolicy implements BeforePolicyInterface
     /**
      * Check if $user can update Capability
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Entity\Capability $capability Entity to be Checked
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param Capability $capability Entity to be Checked
+     * @return ResultInterface|null
      */
     public function canEdit(User $user, Capability $capability): ResultInterface
     {
@@ -51,9 +51,9 @@ class CapabilityPolicy implements BeforePolicyInterface
     /**
      * Check if $user can delete Capability
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Entity\Capability $capability Entity to be Checked
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param Capability $capability Entity to be Checked
+     * @return ResultInterface|null
      */
     public function canDelete(User $user, Capability $capability)
     {
@@ -67,9 +67,9 @@ class CapabilityPolicy implements BeforePolicyInterface
     /**
      * Check if $user can view Capability
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Entity\Capability $capability Entity to be Checked
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param Capability $capability Entity to be Checked
+     * @return ResultInterface|null
      */
     public function canView(User $user, Capability $capability)
     {

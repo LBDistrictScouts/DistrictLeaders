@@ -8,6 +8,7 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Exception;
 
 /**
  * Class PasswordCommand
@@ -27,8 +28,8 @@ class DailyCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser Parser Input
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -38,10 +39,10 @@ class DailyCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @param Arguments $args Arguments for the Console
+     * @param ConsoleIo $consoleIo The IO
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
@@ -52,7 +53,7 @@ class DailyCommand extends Command
         $success = 0;
 
         foreach ($tasks as $class) {
-            /** @var \App\Cron\Cron $taskClass */
+            /** @var Cron $taskClass */
             $taskClass = new $class();
 
             if (get_parent_class($taskClass) == 'App\Cron\Cron') {

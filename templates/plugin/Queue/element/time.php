@@ -1,7 +1,9 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
 use Cake\I18n\FrozenTime;
 ?>
 <div class="col col-md-3 d-flex justify-content-end">

@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  * @var int $notificationCount
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($notificationCount > 0) : ?>
 <li class="nav-item right-align mr-auto">

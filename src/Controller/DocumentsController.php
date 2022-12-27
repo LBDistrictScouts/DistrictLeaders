@@ -3,27 +3,32 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Component\FilterComponent;
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
 use App\Model\Filter\DocumentsCollection;
+use App\Model\Table\DocumentsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Http\Response;
 use Cake\Utility\Inflector;
 use Exception;
+use Search\Controller\Component\SearchComponent;
 
 /**
  * Documents Controller
  *
- * @property \App\Model\Table\DocumentsTable $Documents
+ * @property DocumentsTable $Documents
  *
- * @property \App\Controller\Component\FilterComponent $Filter
- * @method \App\Model\Entity\Document[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
- * @property \Search\Controller\Component\SearchComponent $Search
+ * @property FilterComponent $Filter
+ * @method Document[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property SearchComponent $Search
  */
 class DocumentsController extends AppController
 {
     /**
      * {@inheritDoc}
      *
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function initialize(): void
@@ -40,7 +45,7 @@ class DocumentsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -62,7 +67,7 @@ class DocumentsController extends AppController
     /**
      * Search method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function search()
     {
@@ -84,8 +89,8 @@ class DocumentsController extends AppController
      * View method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($documentId = null)
     {
@@ -99,11 +104,11 @@ class DocumentsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
-        /** @var \App\Model\Entity\Document $document */
+        /** @var Document $document */
         $document = $this->Documents->newEmptyEntity();
         $this->Documents->DocumentVersions->DocumentEditions->FileTypes->installBaseFileTypes();
 
@@ -111,7 +116,7 @@ class DocumentsController extends AppController
             $documentType = $this->request->getQueryParams()['document_type'];
             $documentType = ucwords(Inflector::humanize($documentType));
 
-            /** @var \App\Model\Entity\DocumentType $documentType */
+            /** @var DocumentType $documentType */
             $documentType = $this->Documents->DocumentTypes->find()
                 ->where([DocumentType::FIELD_DOCUMENT_TYPE => $documentType])->firstOrFail();
             $term = $documentType->get(DocumentType::FIELD_DOCUMENT_TYPE);
@@ -149,8 +154,8 @@ class DocumentsController extends AppController
      * Edit method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($documentId = null)
     {
@@ -174,8 +179,8 @@ class DocumentsController extends AppController
      * Delete method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($documentId = null)
     {

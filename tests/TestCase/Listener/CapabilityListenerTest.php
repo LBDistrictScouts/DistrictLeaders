@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Listener;
 
 use App\Model\Entity\RoleTemplate;
+use App\Model\Table\RoleTemplatesTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
@@ -13,7 +14,7 @@ use Queue\Model\Entity\QueuedJob;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
+ * @property RoleTemplatesTable $RoleTemplates
  * @property EventManager $EventManager
  */
 class CapabilityListenerTest extends TestCase

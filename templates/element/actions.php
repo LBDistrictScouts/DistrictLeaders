@@ -1,7 +1,9 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
 
 $identity = $this->getRequest()->getAttribute('identity');
 ?>

@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Section;
 use App\Model\Filter\SectionsCollection;
+use App\Model\Table\SectionsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+use Exception;
 
 /**
  * Sections Controller
  *
- * @property \App\Model\Table\SectionsTable $Sections
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property SectionsTable $Sections
+ * @method Section[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function initialize(): void
@@ -29,7 +35,7 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -46,7 +52,7 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function search()
     {
@@ -68,8 +74,8 @@ class SectionsController extends AppController
      * View method
      *
      * @param string|null $id Section id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -91,7 +97,7 @@ class SectionsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -114,8 +120,8 @@ class SectionsController extends AppController
      * Edit method
      *
      * @param string|null $id Section id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -140,8 +146,8 @@ class SectionsController extends AppController
      * Delete method
      *
      * @param string|null $id Section id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

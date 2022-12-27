@@ -1,9 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Camp[]|\Cake\Collection\CollectionInterface $camps
+ * @var AppView $this
+ * @var Camp[]|CollectionInterface $camps
  */
 use App\Model\Entity\Camp;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

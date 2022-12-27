@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\ScoutGroup $scoutGroup
+ * @var AppView $this
+ * @var ScoutGroup $scoutGroup
  */
+
+use App\Model\Entity\ScoutGroup;
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col">

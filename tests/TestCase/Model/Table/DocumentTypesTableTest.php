@@ -18,18 +18,9 @@ class DocumentTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DocumentTypesTable
+     * @var DocumentTypesTable
      */
-    protected $DocumentTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.DocumentTypes',
-    ];
+    protected DocumentTypesTable $DocumentTypes;
 
     /**
      * setUp method
@@ -60,7 +51,7 @@ class DocumentTypesTableTest extends TestCase
      *
      * @return array
      */
-    public function getGood()
+    public function getGood(): array
     {
         return [
             DocumentType::FIELD_DOCUMENT_TYPE => TextSafe::shuffle(15),

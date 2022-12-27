@@ -17,12 +17,12 @@ class RoleTypesControllerTest extends TestCase
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'RoleTypes';
+    private string $controller = 'RoleTypes';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         'role_type' => 'Assistant Goat Commissioner',
         'role_abbreviation' => 'AGC',
         'section_type_id' => 1,
@@ -34,7 +34,7 @@ class RoleTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -44,7 +44,7 @@ class RoleTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -54,7 +54,7 @@ class RoleTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->tryAddGet($this->controller);
 
@@ -70,7 +70,7 @@ class RoleTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -86,7 +86,7 @@ class RoleTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

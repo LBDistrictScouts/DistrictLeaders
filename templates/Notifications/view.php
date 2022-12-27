@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Notification $notification
- * @var \App\View\Cell\InformationCell $cell
+ * @var AppView $this
+ * @var Notification $notification
+ * @var InformationCell $cell
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
+use App\View\Cell\InformationCell;
+
 ?>
 <?php if ($this->Identity->checkCapability('ALL')) : ?>
     <div class="col">

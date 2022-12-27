@@ -1,12 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserContact $userContact
+ * @var AppView $this
+ * @var UserContact $userContact
  * @var mixed $userContactTypes
  * @var mixed $users
  * @var string $term
- * @var \App\Model\Entity\User $user
+ * @var User $user
  */
+
+use App\Model\Entity\User;
+use App\Model\Entity\UserContact;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

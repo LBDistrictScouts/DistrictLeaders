@@ -4,17 +4,19 @@ declare(strict_types=1);
 namespace App\Listener;
 
 use App\Model\Entity\Token;
+use App\Model\Table\TokensTable;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- * @property \App\Model\Table\TokensTable $Tokens
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property TokensTable $Tokens
+ * @property QueuedJobsTable $QueuedJobs
  */
 class TokenListener implements EventListenerInterface
 {
@@ -31,7 +33,7 @@ class TokenListener implements EventListenerInterface
     }
 
     /**
-     * @param \Cake\Event\EventInterface $event The event being processed.
+     * @param EventInterface $event The event being processed.
      * @return void
      */
     public function tokenValidate(EventInterface $event): void

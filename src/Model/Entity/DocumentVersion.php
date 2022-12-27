@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -10,15 +11,15 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $document_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $deleted
  * @property int $version_number
  * @property array|null $field_mapping
  *
- * @property \App\Model\Entity\Document $document
- * @property \App\Model\Entity\DocumentEdition[] $document_editions
- * @property \App\Model\Entity\CompassRecord[] $compass_records
+ * @property Document $document
+ * @property DocumentEdition[] $document_editions
+ * @property CompassRecord[] $compass_records
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

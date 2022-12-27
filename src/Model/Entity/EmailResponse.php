@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -10,17 +11,17 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $email_send_id
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime|null $deleted
  * @property int $email_response_type_id
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $received
+ * @property FrozenTime|null $created
+ * @property FrozenTime|null $received
  * @property string|null $link_clicked
  * @property string|null $ip_address
  * @property string|null $bounce_reason
  * @property int|null $message_size
  *
- * @property \App\Model\Entity\EmailSend $email_send
- * @property \App\Model\Entity\EmailResponseType $email_response_type
+ * @property EmailSend $email_send
+ * @property EmailResponseType $email_response_type
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

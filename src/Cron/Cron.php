@@ -7,19 +7,20 @@ use Cake\Core\Configure;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\I18n\FrozenTime;
 use Queue\Model\Entity\QueuedJob;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class Cron
  *
  * @package App\Cron
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property QueuedJobsTable $QueuedJobs
  */
 class Cron
 {
     use ModelAwareTrait;
 
     /**
-     * @var \Queue\Model\Table\QueuedJobsTable
+     * @var QueuedJobsTable
      */
     protected $QueuedJobs;
 
@@ -111,7 +112,7 @@ class Cron
 
     /**
      * @param string $offset Time Offset Compatible with FrozenTime Modify
-     * @return \Cake\I18n\FrozenTime
+     * @return FrozenTime
      */
     protected function getTimeOffset($offset)
     {

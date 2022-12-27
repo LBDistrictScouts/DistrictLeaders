@@ -12,38 +12,14 @@ use Cake\Utility\Security;
  */
 class CampRoleTypesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CampRoleTypesTable
+     * @var CampRoleTypesTable
      */
-    public $CampRoleTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-    ];
+    public CampRoleTypesTable $CampRoleTypes;
 
     /**
      * setUp method
@@ -74,7 +50,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return array
      */
-    private function getGood()
+    private function getGood(): array
     {
         $good = [
             'camp_role_type' => 'Lorem ipsum sit amet',
@@ -88,7 +64,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $actual = $this->CampRoleTypes->get(1)->toArray();
 
@@ -118,7 +94,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -181,7 +157,7 @@ class CampRoleTypesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBuildRules()
+    public function testBuildRules(): void
     {
         $values = $this->getGood();
 

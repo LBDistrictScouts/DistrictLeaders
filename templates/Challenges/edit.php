@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var User $user
  * @var mixed $passwordStates
  */
+
+use App\Model\Entity\User;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

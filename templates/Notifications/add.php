@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Notification $notification
+ * @var AppView $this
+ * @var Notification $notification
  * @var mixed $notificationTypes
  * @var mixed $users
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

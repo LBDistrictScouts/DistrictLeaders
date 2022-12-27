@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Entity;
 
+use App\Model\Entity\DocumentEdition;
+use App\Model\Table\DocumentEditionsTable;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Entity\DocumentEdition Test Case
  *
- * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
+ * @property DocumentEditionsTable $DocumentEditions
  */
 class DocumentEditionTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\DocumentEdition
+     * @var DocumentEdition
      */
     public $DocumentEdition;
 

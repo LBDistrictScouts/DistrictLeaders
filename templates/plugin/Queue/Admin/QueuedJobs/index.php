@@ -1,11 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueuedJob[]|\Cake\Collection\CollectionInterface $queuedJobs
+ * @var AppView $this
+ * @var QueuedJob[]|CollectionInterface $queuedJobs
  */
 
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Queue\Model\Entity\QueuedJob;
 
 ?>
 <?= $this->element('header', ['data' => ['current' => 'index']]) ?>

@@ -16,12 +16,12 @@ use Cake\ORM\Entity;
  * @property string $primary_email
  * @property string $full_name
  *
- * @property \App\Model\Entity\Directory $directory
- * @property \App\Model\Entity\User[] $users
- * @property \App\Model\Entity\UserContact[] $user_contacts
+ * @property Directory $directory
+ * @property User[] $users
+ * @property UserContact[] $user_contacts
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property \App\Model\Entity\UserContact|null $user_contact
+ * @property UserContact|null $user_contact
  */
 class DirectoryUser extends Entity
 {

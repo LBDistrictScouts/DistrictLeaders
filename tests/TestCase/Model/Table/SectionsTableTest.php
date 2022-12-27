@@ -12,23 +12,14 @@ use Cake\Utility\Security;
  */
 class SectionsTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SectionsTable
+     * @var SectionsTable
      */
-    public $Sections;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
-    ];
+    public SectionsTable $Sections;
 
     /**
      * setUp method
@@ -60,7 +51,7 @@ class SectionsTableTest extends TestCase
      * @return array
      * @throws
      */
-    private function getGood()
+    private function getGood(): array
     {
         $good = [
             'section' => 'Happy Group' . random_int(2, 99) . random_int(0, 930),
@@ -76,7 +67,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $actual = $this->Sections->get(1)->toArray();
 
@@ -117,7 +108,7 @@ class SectionsTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 

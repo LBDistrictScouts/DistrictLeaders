@@ -6,12 +6,14 @@ namespace App\Test\TestCase\Controller\Component;
 use App\Controller\Component\QueueComponent;
 use App\Model\Entity\Directory;
 use App\Model\Entity\DocumentVersion;
+use App\Model\Table\DirectoriesTable;
 use App\Test\TestCase\ComponentTestCase as TestCase;
 use Cake\Controller\Component\FlashComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Exception;
 use Queue\Model\Table\QueuedJobsTable;
 
 /**
@@ -20,7 +22,7 @@ use Queue\Model\Table\QueuedJobsTable;
  * @property QueueComponent $Queue
  * @property ComponentRegistry $Registry
  *
- * @property \App\Model\Table\DirectoriesTable $Directories
+ * @property DirectoriesTable $Directories
  */
 class QueueComponentTest extends TestCase
 {
@@ -29,7 +31,7 @@ class QueueComponentTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Controller\Component\QueueComponent
+     * @var QueueComponent
      */
     protected QueueComponent $Queue;
 
@@ -39,7 +41,7 @@ class QueueComponentTest extends TestCase
      * setUp method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setUp(): void
     {

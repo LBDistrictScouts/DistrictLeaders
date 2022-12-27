@@ -4,19 +4,23 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DocumentType;
+use App\Model\Table\DocumentTypesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * DocumentTypes Controller
  *
- * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
- * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property DocumentTypesTable $DocumentTypes
+ * @method DocumentType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -29,8 +33,8 @@ class DocumentTypesController extends AppController
      * View method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -44,7 +48,7 @@ class DocumentTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -65,8 +69,8 @@ class DocumentTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -89,8 +93,8 @@ class DocumentTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

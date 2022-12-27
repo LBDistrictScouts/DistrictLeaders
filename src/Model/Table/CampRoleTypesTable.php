@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\CampRoleType;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -10,21 +15,21 @@ use Cake\Validation\Validator;
 /**
  * CampRoleTypes Model
  *
- * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
- * @method \App\Model\Entity\CampRoleType get($primaryKey, $options = [])
- * @method \App\Model\Entity\CampRoleType newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\CampRoleType findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRoleType newEmptyEntity()
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property CampRolesTable&HasMany $CampRoles
+ * @method CampRoleType get($primaryKey, $options = [])
+ * @method CampRoleType newEntity(array $data, array $options = [])
+ * @method CampRoleType[] newEntities(array $data, array $options = [])
+ * @method CampRoleType|false save(EntityInterface $entity, $options = [])
+ * @method CampRoleType saveOrFail(EntityInterface $entity, $options = [])
+ * @method CampRoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method CampRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method CampRoleType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @method CampRoleType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method CampRoleType newEmptyEntity()
+ * @method CampRoleType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method CampRoleType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method CampRoleType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CampRoleTypesTable extends Table
 {
@@ -52,8 +57,8 @@ class CampRoleTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -75,8 +80,8 @@ class CampRoleTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

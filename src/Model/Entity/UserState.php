@@ -16,7 +16,7 @@ use Cake\ORM\Entity;
  * @property int|null $precedence_order
  * @property int $signature
  *
- * @property \App\Model\Entity\User[] $users
+ * @property User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property bool $is_email_send_active

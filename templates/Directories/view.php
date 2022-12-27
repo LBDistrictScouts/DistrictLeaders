@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var \App\Model\Entity\Directory $directory
  */
+
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col">

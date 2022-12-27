@@ -3,36 +3,43 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\ScoutGroup;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Expose\Model\Behavior\ExposeBehavior;
+use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * ScoutGroups Model
  *
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
- * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
- * @method \App\Model\Entity\ScoutGroup newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin \Expose\Model\Behavior\ExposeBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
- * @mixin \App\Model\Behavior\AuditableBehavior
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $LeaderSections
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $CommitteeSections
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $TeamSections
- * @method \App\Model\Entity\ScoutGroup newEmptyEntity()
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property SectionsTable&HasMany $Sections
+ * @method ScoutGroup get($primaryKey, $options = [])
+ * @method ScoutGroup newEntity(array $data, array $options = [])
+ * @method ScoutGroup[] newEntities(array $data, array $options = [])
+ * @method ScoutGroup|false save(EntityInterface $entity, $options = [])
+ * @method ScoutGroup saveOrFail(EntityInterface $entity, $options = [])
+ * @method ScoutGroup patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @method ScoutGroup[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin ExposeBehavior
+ * @property AuditsTable&HasMany $Audits
+ * @mixin AuditableBehavior
+ * @property SectionsTable&HasMany $LeaderSections
+ * @property SectionsTable&HasMany $CommitteeSections
+ * @property SectionsTable&HasMany $TeamSections
+ * @method ScoutGroup newEmptyEntity()
+ * @method ScoutGroup[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method ScoutGroup[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method ScoutGroup[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class ScoutGroupsTable extends Table
 {
@@ -94,8 +101,8 @@ class ScoutGroupsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -135,8 +142,8 @@ class ScoutGroupsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -156,7 +163,7 @@ class ScoutGroupsTable extends Table
         $cleanDomains = [];
 
         foreach ($groups as $group) {
-            /** @var \App\Model\Entity\ScoutGroup $group */
+            /** @var ScoutGroup $group */
             array_push($cleanDomains, $group->get('clean_domain'));
         }
 

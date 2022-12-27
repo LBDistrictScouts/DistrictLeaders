@@ -7,9 +7,12 @@ use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentEditionsTable;
 use Cake\Core\Configure;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use FilesystemIterator;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * App\Model\Table\DocumentEditionsTable Test Case
@@ -21,9 +24,9 @@ class DocumentEditionsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DocumentEditionsTable
+     * @var DocumentEditionsTable
      */
-    public \Cake\ORM\Table|DocumentEditionsTable $DocumentEditions;
+    public Table|DocumentEditionsTable $DocumentEditions;
 
     /**
      * @var LocalFilesystemAdapter
@@ -91,10 +94,10 @@ class DocumentEditionsTableTest extends TestCase
     {
         unset($this->DocumentEditions);
 
-        $it = new \RecursiveDirectoryIterator($this->Root, FilesystemIterator::SKIP_DOTS);
-        $files = new \RecursiveIteratorIterator(
+        $it = new RecursiveDirectoryIterator($this->Root, FilesystemIterator::SKIP_DOTS);
+        $files = new RecursiveIteratorIterator(
             $it,
-            \RecursiveIteratorIterator::CHILD_FIRST
+            RecursiveIteratorIterator::CHILD_FIRST
         );
         foreach ($files as $file) {
             if ($file->getFilename() === '.' || $file->getFilename() === '..') {

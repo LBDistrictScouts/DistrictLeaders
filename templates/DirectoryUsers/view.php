@@ -1,11 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DirectoryUser $directoryUser
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var DirectoryUser $directoryUser
+ * @var User $user
  */
 
+use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\User;
+use App\View\AppView;
 
 ?>
 <div class="row">

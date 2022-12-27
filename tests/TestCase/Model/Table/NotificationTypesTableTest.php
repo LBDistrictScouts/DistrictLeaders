@@ -18,18 +18,9 @@ class NotificationTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\NotificationTypesTable
+     * @var NotificationTypesTable
      */
-    protected $NotificationTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.NotificationTypes',
-    ];
+    protected NotificationTypesTable $NotificationTypes;
 
     /**
      * setUp method
@@ -189,7 +180,7 @@ class NotificationTypesTableTest extends TestCase
     public function testGetTypeCode(): void
     {
         // Known
-        /** @var \App\Model\Entity\NotificationType $type */
+        /** @var NotificationType $type */
         foreach ($this->NotificationTypes->find() as $type) {
             /** @var array $codes */
             $codes = explode('-', $type->type_code);
@@ -207,7 +198,7 @@ class NotificationTypesTableTest extends TestCase
     }
 
     /**
-     * @return \string[][]
+     * @return string[][]
      */
     public function provideCodeSplitter(): array
     {

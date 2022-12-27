@@ -20,7 +20,7 @@ class MarkdownHelper extends Helper
     protected $_defaultConfig = [];
 
     /**
-     * @var \League\CommonMark\CommonMarkConverter
+     * @var CommonMarkConverter
      */
     protected $converter;
 

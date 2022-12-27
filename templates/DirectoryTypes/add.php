@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DirectoryType $directoryType
+ * @var AppView $this
+ * @var DirectoryType $directoryType
  */
+
+use App\Model\Entity\DirectoryType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

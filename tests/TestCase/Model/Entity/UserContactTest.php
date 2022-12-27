@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Entity;
 
+use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Model\Table\UserContactsTable;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Entity\User Test Case
  *
- * @property \App\Model\Table\UserContactsTable $UserContacts
+ * @property UserContactsTable $UserContacts
  */
 class UserContactTest extends TestCase
 {
@@ -19,7 +21,7 @@ class UserContactTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\User
+     * @var User
      */
     public $UserContact;
 

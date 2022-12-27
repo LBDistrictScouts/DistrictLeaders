@@ -15,7 +15,7 @@ class CloudConvertClientComponentTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Controller\Component\CloudConvertClientComponent
+     * @var CloudConvertClientComponent
      */
     public $CloudConvertClient;
 

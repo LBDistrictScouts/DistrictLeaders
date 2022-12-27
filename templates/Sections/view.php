@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Section $section
+ * @var AppView $this
+ * @var Section $section
  */
+
+use App\Model\Entity\Section;
+use App\View\AppView;
 
 ?>
 <div class="row">

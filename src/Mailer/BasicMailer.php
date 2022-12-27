@@ -17,10 +17,10 @@ use Cake\Mailer\Mailer;
 class BasicMailer extends Mailer
 {
     /**
-     * @param \App\Model\Entity\EmailSend $emailSend The Email Send Entity
+     * @param EmailSend $emailSend The Email Send Entity
      * @param string|null $token The Encoded Token to be sent.
-     * @param \Cake\Datasource\EntityInterface|null $entity The Subject Entity
-     * @param \App\Model\Entity\Notification|null $notification The Notification Entity
+     * @param EntityInterface|null $entity The Subject Entity
+     * @param Notification|null $notification The Notification Entity
      * @return void
      */
     public function doSend(

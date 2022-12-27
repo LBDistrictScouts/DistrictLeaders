@@ -12,38 +12,14 @@ use Cake\TestSuite\TestCase;
  */
 class CampRolesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CampRolesTable
+     * @var CampRolesTable
      */
-    public $CampRoles;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-    ];
+    public CampRolesTable $CampRoles;
 
     /**
      * setUp method

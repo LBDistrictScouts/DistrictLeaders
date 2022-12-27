@@ -12,21 +12,14 @@ use Cake\Utility\Security;
  */
 class RoleStatusesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Table\RoleStatusesTable
+     * @var RoleStatusesTable
      */
-    public $RoleStatuses;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.RoleStatuses',
-    ];
+    public RoleStatusesTable $RoleStatuses;
 
     /**
      * setUp method

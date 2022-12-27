@@ -19,9 +19,9 @@ class UsersPolicy implements BeforePolicyInterface
     use AppPolicyTrait;
 
     /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @param \App\Model\Entity\User $subject The User being Edited
-     * @return \Authorization\Policy\ResultInterface
+     * @param User $user The User Editing
+     * @param User $subject The User being Edited
+     * @return ResultInterface
      */
     public function canUpdate(User $user, User $subject): ResultInterface
     {
@@ -38,9 +38,9 @@ class UsersPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @param \App\Model\Entity\User $subject The User being Edited
-     * @return \Authorization\Policy\ResultInterface
+     * @param User $user The User Editing
+     * @param User $subject The User being Edited
+     * @return ResultInterface
      */
     public function canView(User $user, User $subject): ResultInterface
     {
@@ -61,8 +61,8 @@ class UsersPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\ResultInterface
+     * @param User $user The User Editing
+     * @return ResultInterface
      */
     public function canIndex(User $user): ResultInterface
     {

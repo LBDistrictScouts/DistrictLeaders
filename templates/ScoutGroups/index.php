@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\ScoutGroup[]|\Cake\Collection\CollectionInterface $scoutGroups
+ * @var AppView $this
+ * @var ScoutGroup[]|CollectionInterface $scoutGroups
  */
+
+use App\Model\Entity\ScoutGroup;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

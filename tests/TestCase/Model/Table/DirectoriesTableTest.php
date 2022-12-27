@@ -18,22 +18,9 @@ class DirectoriesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DirectoriesTable
+     * @var DirectoriesTable
      */
-    protected $Directories;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.Directories',
-        'app.DirectoryTypes',
-        'app.DirectoryDomains',
-        'app.DirectoryGroups',
-        'app.DirectoryUsers',
-    ];
+    protected DirectoriesTable $Directories;
 
     /**
      * setUp method

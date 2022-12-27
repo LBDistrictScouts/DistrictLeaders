@@ -8,6 +8,7 @@ use App\Model\Entity\Notification;
 use App\Model\Table\EmailSendsTable;
 use App\Test\TestCase\EmailTestCase as TestCase;
 use Cake\I18n\FrozenTime;
+use Exception;
 
 /**
  * App\Model\Table\EmailSendsTable Test Case
@@ -19,7 +20,7 @@ class EmailSendsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\EmailSendsTable
+     * @var EmailSendsTable
      */
     public $EmailSends;
 
@@ -173,7 +174,7 @@ class EmailSendsTableTest extends TestCase
      * Test initialize method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testInitialize()
     {

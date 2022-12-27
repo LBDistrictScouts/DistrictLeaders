@@ -19,41 +19,9 @@ class RoleTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\RoleTypesTable
+     * @var RoleTypesTable
      */
-    protected $RoleTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-    ];
+    protected RoleTypesTable $RoleTypes;
 
     /**
      * setUp method

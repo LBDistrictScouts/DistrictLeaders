@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
+use PHPUnit\Exception;
 
 /**
  * App\Controller\UsersController Test Case
  *
  * @uses \App\Controller\UsersController
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class UsersControllerTest extends TestCase
 {
@@ -129,7 +131,7 @@ class UsersControllerTest extends TestCase
      * Test login method
      *
      * @return void
-     * @throws \PHPUnit\Exception
+     * @throws Exception
      */
     public function testLogin()
     {

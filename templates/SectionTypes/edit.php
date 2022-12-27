@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\SectionType $sectionType
+ * @var AppView $this
+ * @var SectionType $sectionType
  */
+
+use App\Model\Entity\SectionType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

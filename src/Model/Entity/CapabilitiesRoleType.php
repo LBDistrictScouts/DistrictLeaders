@@ -12,8 +12,8 @@ use Cake\ORM\Entity;
  * @property int $role_type_id
  * @property bool $template
  *
- * @property \App\Model\Entity\Capability $capability
- * @property \App\Model\Entity\RoleType $role_type
+ * @property Capability $capability
+ * @property RoleType $role_type
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

@@ -5,30 +5,35 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Directory;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Service_Directory_User;
 
 /**
  * Directories Model
  *
- * @property \App\Model\Table\DirectoryTypesTable&\Cake\ORM\Association\BelongsTo $DirectoryTypes
- * @property \App\Model\Table\DirectoryDomainsTable&\Cake\ORM\Association\HasMany $DirectoryDomains
- * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\HasMany $DirectoryGroups
- * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\HasMany $DirectoryUsers
- * @method \App\Model\Entity\Directory get($primaryKey, $options = [])
- * @method \App\Model\Entity\Directory newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Directory[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Directory|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Directory saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Directory patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Directory[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Directory findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Directory newEmptyEntity()
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property DirectoryTypesTable&BelongsTo $DirectoryTypes
+ * @property DirectoryDomainsTable&HasMany $DirectoryDomains
+ * @property DirectoryGroupsTable&HasMany $DirectoryGroups
+ * @property DirectoryUsersTable&HasMany $DirectoryUsers
+ * @method Directory get($primaryKey, $options = [])
+ * @method Directory newEntity(array $data, array $options = [])
+ * @method Directory[] newEntities(array $data, array $options = [])
+ * @method Directory|false save(EntityInterface $entity, $options = [])
+ * @method Directory saveOrFail(EntityInterface $entity, $options = [])
+ * @method Directory patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Directory[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method Directory findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method Directory newEmptyEntity()
+ * @method Directory[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method Directory[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method Directory[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method Directory[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoriesTable extends Table
 {
@@ -64,8 +69,8 @@ class DirectoriesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -97,8 +102,8 @@ class DirectoriesTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @param TableSchemaInterface $schema The Schema to be modified
+     * @return TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -112,8 +117,8 @@ class DirectoriesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -125,7 +130,7 @@ class DirectoriesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\Directory $directory The directory to be Populated
+     * @param Directory $directory The directory to be Populated
      * @return array
      */
     public function populate(Directory $directory)
@@ -138,11 +143,11 @@ class DirectoriesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\Directory $directory The Parent Directory
-     * @param \Google_Service_Directory_User $directoryUser The Google API Response for User
-     * @return \App\Model\Entity\Directory|false
+     * @param Directory $directory The Parent Directory
+     * @param Google_Service_Directory_User $directoryUser The Google API Response for User
+     * @return Directory|false
      */
-    public function setCustomerReference(Directory $directory, \Google_Service_Directory_User $directoryUser): Directory
+    public function setCustomerReference(Directory $directory, Google_Service_Directory_User $directoryUser): Directory
     {
         $directory->set(Directory::FIELD_CUSTOMER_REFERENCE, $directoryUser->getCustomerId());
 

@@ -15,48 +15,16 @@ class AuditsControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
-    /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Audits';
+    private string $controller = 'Audits';
 
     /**
      * Test index method
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -67,7 +35,7 @@ class AuditsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testView()
+    public function testView(): void
     {
         $this->login();
 

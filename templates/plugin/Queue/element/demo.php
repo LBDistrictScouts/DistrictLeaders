@@ -1,13 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var mixed $tasks
  */
 
+use App\View\AppView;
 use Cake\Core\Configure;
 
 ?>
-<?php if (\Cake\Core\Configure::read('debug')) : ?>
+<?php if (Configure::read('debug')) : ?>
     <div class="row">
         <div class="col">
             <div class="card">

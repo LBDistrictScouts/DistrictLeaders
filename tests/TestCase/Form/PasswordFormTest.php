@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Form;
 
 use App\Form\PasswordForm;
-use Cake\TestSuite\IntegrationTestTrait;
+use App\Model\Table\UsersTable;
+use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -12,56 +13,21 @@ use Cake\TestSuite\TestCase;
  */
 class PasswordFormTest extends TestCase
 {
-    use IntegrationTestTrait;
+    use AppTestTrait;
 
     /**
      * Test subject
      *
-     * @var \App\Form\PasswordForm
+     * @var PasswordForm
      */
-    public $Password;
+    public PasswordForm $Password;
 
     /**
      * Users Table
      *
-     * @var \App\Model\Table\UsersTable
+     * @var UsersTable
      */
-    public $Users;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-    ];
+    public UsersTable $Users;
 
     /**
      * setUp method

@@ -15,7 +15,7 @@ class CapIdentityHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\CapIdentityHelper
+     * @var CapIdentityHelper
      */
     protected $CapIdentityHelper;
 

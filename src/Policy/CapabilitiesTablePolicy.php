@@ -19,9 +19,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can create CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canIndex(User $user, CapabilitiesTable $capabilitiesTable): ResultInterface
     {
@@ -35,9 +35,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can create CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canAdd(User $user, CapabilitiesTable $capabilitiesTable): ResultInterface
     {
@@ -51,9 +51,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can update CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canEdit(User $user, CapabilitiesTable $capabilitiesTable): ResultInterface
     {
@@ -67,9 +67,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can delete CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canDelete(User $user, CapabilitiesTable $capabilitiesTable): ResultInterface
     {
@@ -83,9 +83,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can view CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canView(User $user, CapabilitiesTable $capabilitiesTable): ResultInterface
     {
@@ -99,9 +99,9 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can view CapabilitiesTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\CapabilitiesTable $capabilitiesTable Table to be Checked
-     * @return \Authorization\Policy\Result|null
+     * @param User $user The user.
+     * @param CapabilitiesTable $capabilitiesTable Table to be Checked
+     * @return Result|null
      */
     public function canViewPermissions(User $user, CapabilitiesTable $capabilitiesTable): ?ResultInterface
     {

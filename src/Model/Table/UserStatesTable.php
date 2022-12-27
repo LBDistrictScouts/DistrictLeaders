@@ -7,7 +7,10 @@ use App\Model\Entity\User;
 use App\Model\Entity\UserState;
 use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -15,20 +18,20 @@ use Cake\Validation\Validator;
 /**
  * UserStates Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
- * @method \App\Model\Entity\UserState get($primaryKey, $options = [])
- * @method \App\Model\Entity\UserState newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\UserState[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UserState|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserState saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\UserState[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\UserState findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\UserState newEmptyEntity()
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property UsersTable&HasMany $Users
+ * @method UserState get($primaryKey, $options = [])
+ * @method UserState newEntity(array $data, array $options = [])
+ * @method UserState[] newEntities(array $data, array $options = [])
+ * @method UserState|false save(EntityInterface $entity, $options = [])
+ * @method UserState saveOrFail(EntityInterface $entity, $options = [])
+ * @method UserState patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method UserState[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method UserState findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method UserState newEmptyEntity()
+ * @method UserState[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method UserState[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method UserState[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method UserState[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class UserStatesTable extends Table
 {
@@ -56,8 +59,8 @@ class UserStatesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -97,8 +100,8 @@ class UserStatesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -119,9 +122,9 @@ class UserStatesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\UserState $state The State Object to be enriched
+     * @param UserState $state The State Object to be enriched
      * @param array|null $stateData The Data Array to be processed
-     * @return \App\Model\Entity\UserState
+     * @return UserState
      */
     public function evaluationSignatures(UserState $state, ?array $stateData = []): UserState
     {
@@ -154,7 +157,7 @@ class UserStatesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\User $user The User to be Evaluated
+     * @param User $user The User to be Evaluated
      * @return int
      */
     public function evaluateUser(User $user): int
@@ -200,11 +203,11 @@ class UserStatesTable extends Table
 
     /**
      * @param int $signature Signature to be Evaluated
-     * @return \App\Model\Entity\UserState
+     * @return UserState
      */
     public function determineSignatureState(int $signature): UserState
     {
-        /** @var \App\Model\Entity\UserState[] $states */
+        /** @var UserState[] $states */
         $states = $this->find()->orderAsc(UserState::FIELD_PRECEDENCE_ORDER);
 
         foreach ($states as $state) {
@@ -219,8 +222,8 @@ class UserStatesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\User $user The user to be processed
-     * @return \App\Model\Entity\User
+     * @param User $user The user to be processed
+     * @return User
      */
     public function determineUserState(User $user): User
     {
@@ -234,7 +237,7 @@ class UserStatesTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\User $user User to be Evaluated
+     * @param User $user User to be Evaluated
      * @return void
      */
     public function handleUserState(User $user): void

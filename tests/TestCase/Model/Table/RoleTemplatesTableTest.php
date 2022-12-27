@@ -20,25 +20,9 @@ class RoleTemplatesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\RoleTemplatesTable
+     * @var RoleTemplatesTable
      */
-    public $RoleTemplates;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-    ];
+    public RoleTemplatesTable $RoleTemplates;
 
     /**
      * setUp method
@@ -70,7 +54,7 @@ class RoleTemplatesTableTest extends TestCase
      * @return array
      * @throws
      */
-    private function getGood()
+    private function getGood(): array
     {
         return [
             RoleTemplate::FIELD_ROLE_TEMPLATE => 'Template ' . random_int(1, 999) . random_int(1, 99),
@@ -84,7 +68,7 @@ class RoleTemplatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testInitialize()
+    public function testInitialize(): void
     {
         $expected = [
             RoleTemplate::FIELD_ID => 1,
@@ -100,7 +84,7 @@ class RoleTemplatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testValidationDefault()
+    public function testValidationDefault(): void
     {
         $good = $this->getGood();
 
@@ -136,7 +120,7 @@ class RoleTemplatesTableTest extends TestCase
      *
      * @return void
      */
-    public function testBeforeSave()
+    public function testBeforeSave(): void
     {
         // New Entity
         $this->EventManager = $this->RoleTemplates->getEventManager();

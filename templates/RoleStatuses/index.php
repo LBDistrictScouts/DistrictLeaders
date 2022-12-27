@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\RoleStatus[]|\Cake\Collection\CollectionInterface $roleStatuses
+ * @var AppView $this
+ * @var RoleStatus[]|CollectionInterface $roleStatuses
  */
+
+use App\Model\Entity\RoleStatus;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

@@ -18,38 +18,9 @@ class UserContactsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UserContactsTable
+     * @var UserContactsTable
      */
-    protected $UserContacts;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
+    protected UserContactsTable $UserContacts;
 
     /**
      * setUp method
@@ -86,13 +57,11 @@ class UserContactsTableTest extends TestCase
      */
     private function getGood(): array
     {
-        $good = [
+        return [
             UserContact::FIELD_USER_ID => 1,
             UserContact::FIELD_USER_CONTACT_TYPE_ID => 1,
             UserContact::FIELD_CONTACT_FIELD => random_int(111, 999) . 'jacob.llama' . random_int(111, 999) . '@4thgoat.org.uk',
         ];
-
-        return $good;
     }
 
     /**
@@ -214,7 +183,7 @@ class UserContactsTableTest extends TestCase
      */
     public function testIsValidDomainEmail(): void
     {
-        TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com', []));
-        TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk', []));
+        TestCase::assertFalse($this->UserContacts->isValidDomainEmail('cheese@buttons.com'));
+        TestCase::assertTrue($this->UserContacts->isValidDomainEmail('jacob@4thgoat.org.uk'));
     }
 }

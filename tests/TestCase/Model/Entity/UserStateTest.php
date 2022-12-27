@@ -5,14 +5,16 @@ namespace App\Test\TestCase\Model\Entity;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
+use App\Model\Table\UsersTable;
+use App\Model\Table\UserStatesTable;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Entity\User Test Case
  *
- * @property \App\Model\Table\UsersTable $Users
- * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property UsersTable $Users
+ * @property UserStatesTable $UserStates
  */
 class UserStateTest extends TestCase
 {
@@ -21,14 +23,14 @@ class UserStateTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\User
+     * @var User
      */
     public $User;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\UserState
+     * @var UserState
      */
     public $UserState;
 

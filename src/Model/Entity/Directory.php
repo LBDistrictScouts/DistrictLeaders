@@ -16,10 +16,10 @@ use Cake\ORM\Entity;
  * @property string|null $customer_reference
  * @property array|null $authorisation_token
  *
- * @property \App\Model\Entity\DirectoryType $directory_type
- * @property \App\Model\Entity\DirectoryDomain[] $directory_domains
- * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
- * @property \App\Model\Entity\DirectoryUser[] $directory_users
+ * @property DirectoryType $directory_type
+ * @property DirectoryDomain[] $directory_domains
+ * @property DirectoryGroup[] $directory_groups
+ * @property DirectoryUser[] $directory_users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

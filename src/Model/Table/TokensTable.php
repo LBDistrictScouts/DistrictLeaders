@@ -6,34 +6,40 @@ namespace App\Model\Table;
 use App\Model\Entity\Token;
 use App\Utility\TextSafe;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ModelAwareTrait;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\I18n\FrozenTime;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Security;
 use Cake\Validation\Validator;
+use Exception;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Tokens Model
  *
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
- * @method \App\Model\Entity\Token get($primaryKey, $options = [])
- * @method \App\Model\Entity\Token newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Token[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Token findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Token newEmptyEntity()
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property EmailSendsTable&BelongsTo $EmailSends
+ * @property QueuedJobsTable $QueuedJobs
+ * @method Token get($primaryKey, $options = [])
+ * @method Token newEntity(array $data, array $options = [])
+ * @method Token[] newEntities(array $data, array $options = [])
+ * @method Token|false save(EntityInterface $entity, $options = [])
+ * @method Token patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Token[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method Token findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @method Token saveOrFail(EntityInterface $entity, $options = [])
+ * @method Token[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method Token newEmptyEntity()
+ * @method Token[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method Token[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method Token[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class TokensTable extends Table
 {
@@ -71,8 +77,8 @@ class TokensTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -115,8 +121,8 @@ class TokensTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @param TableSchemaInterface $schema The Schema to be modified
+     * @return TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -130,8 +136,8 @@ class TokensTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -141,7 +147,7 @@ class TokensTable extends Table
     }
 
     /**
-     * @param \Cake\Event\EventInterface $event The Event to be processed
+     * @param EventInterface $event The Event to be processed
      * @param object $data The data to be modified
      * @param object $options The Options Contained
      * @return void
@@ -157,13 +163,13 @@ class TokensTable extends Table
     /**
      * Hashes the password before save
      *
-     * @param \Cake\Event\EventInterface $event The event trigger.
+     * @param EventInterface $event The event trigger.
      * @return true
-     * @throws \Exception
+     * @throws Exception
      */
     public function beforeSave(EventInterface $event): bool
     {
-        /** @var \App\Model\Entity\Token $entity */
+        /** @var Token $entity */
         $entity = $event->getData('entity');
 
         if ($entity->isNew()) {
@@ -275,14 +281,14 @@ class TokensTable extends Table
     public const CLEAN_DELETED = 2;
 
     /**
-     * @param \App\Model\Entity\Token $token The token to be cleaned.
+     * @param Token $token The token to be cleaned.
      * @return int
      */
     public function cleanToken(Token $token): int
     {
-        /** @var \Cake\I18n\FrozenTime $expiry */
+        /** @var FrozenTime $expiry */
         $expiry = $token->get(Token::FIELD_EXPIRES);
-        /** @var \Cake\I18n\FrozenTime|null $expiry */
+        /** @var FrozenTime|null $expiry */
         $utilised = $token->get(Token::FIELD_UTILISED);
         /** @var bool $active */
         $active = $token->get(Token::FIELD_ACTIVE);
@@ -354,7 +360,7 @@ class TokensTable extends Table
 
     /**
      * @param array $requestQueryParams Request Query Params
-     * @return false|\App\Model\Entity\Token
+     * @return false|Token
      */
     public function validateTokenRequest(array $requestQueryParams)
     {

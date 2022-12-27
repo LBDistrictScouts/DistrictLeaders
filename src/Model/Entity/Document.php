@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -10,17 +11,17 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $document_type_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $deleted
  * @property string $document
  *
  * @property int|null $document_preview_id
  * @property int|null $latest_version
  *
- * @property \App\Model\Entity\DocumentType $document_type
- * @property \App\Model\Entity\DocumentVersion[] $document_versions
- * @property \App\Model\Entity\DocumentEdition|null $document_preview
+ * @property DocumentType $document_type
+ * @property DocumentVersion[] $document_versions
+ * @property DocumentEdition|null $document_preview
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

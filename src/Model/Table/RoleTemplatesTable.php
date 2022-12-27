@@ -7,27 +7,31 @@ use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
+use Cake\Event\EventInterface;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * RoleTemplates Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
- * @method \App\Model\Entity\RoleTemplate get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleTemplate newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleTemplate saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleTemplate patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleTemplate findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleTemplate newEmptyEntity()
- * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleTemplate[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property RoleTypesTable&HasMany $RoleTypes
+ * @method RoleTemplate get($primaryKey, $options = [])
+ * @method RoleTemplate newEntity(array $data, array $options = [])
+ * @method RoleTemplate[] newEntities(array $data, array $options = [])
+ * @method RoleTemplate|false save(EntityInterface $entity, $options = [])
+ * @method RoleTemplate saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleTemplate patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleTemplate[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method RoleTemplate findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method RoleTemplate[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method RoleTemplate newEmptyEntity()
+ * @method RoleTemplate[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method RoleTemplate[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method RoleTemplate[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTemplatesTable extends Table
 {
@@ -55,8 +59,8 @@ class RoleTemplatesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -84,8 +88,8 @@ class RoleTemplatesTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @param TableSchemaInterface $schema The Schema to be modified
+     * @return TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -98,13 +102,13 @@ class RoleTemplatesTable extends Table
     /**
      * before Save LifeCycle Callback
      *
-     * @param \Cake\Event\EventInterface $event The Event to be Processed
-     * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
+     * @param EventInterface $event The Event to be Processed
+     * @param RoleTemplate $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(\Cake\Event\EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, $entity, $options)
     {
         if (
             $entity->isNew()
@@ -179,7 +183,7 @@ class RoleTemplatesTable extends Table
     /**
      * @param string $name The Role Template Name
      * @param int $level The Permission Level
-     * @return \App\Model\Entity\RoleTemplate|false
+     * @return RoleTemplate|false
      */
     public function makeCoreTemplate(string $name, int $level)
     {
@@ -201,7 +205,7 @@ class RoleTemplatesTable extends Table
 
     /**
      * @param array $objectArray The array to be saved
-     * @return \App\Model\Entity\RoleTemplate
+     * @return RoleTemplate
      */
     protected function makeOrPatch(array $objectArray): RoleTemplate
     {

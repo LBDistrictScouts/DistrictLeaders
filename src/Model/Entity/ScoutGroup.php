@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -14,21 +15,21 @@ use Cake\ORM\Entity;
  * @property int|null $number_stripped
  * @property int|null $charity_number
  * @property string|null $group_domain
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
  *
  * @property string $clean_domain
  *
- * @property \App\Model\Entity\Section[] $sections
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property Section[] $sections
+ * @property FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
- * @property \App\Model\Entity\Audit[] $audits
+ * @property Audit[] $audits
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property \App\Model\Entity\Section[] $leader_sections
- * @property \App\Model\Entity\Section[] $committee_sections
- * @property \App\Model\Entity\Section[] $team_sections
+ * @property Section[] $leader_sections
+ * @property Section[] $committee_sections
+ * @property Section[] $team_sections
  */
 class ScoutGroup extends Entity
 {

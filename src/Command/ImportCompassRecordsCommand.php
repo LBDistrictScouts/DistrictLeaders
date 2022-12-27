@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Model\Table\DocumentVersionsTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property DocumentVersionsTable $DocumentVersions
  */
 class ImportCompassRecordsCommand extends Command
 {
@@ -28,8 +30,8 @@ class ImportCompassRecordsCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser Parser Input
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -46,10 +48,10 @@ class ImportCompassRecordsCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @param Arguments $args Arguments for the Console
+     * @param ConsoleIo $consoleIo The IO
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)

@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserState $userState
+ * @var AppView $this
+ * @var UserState $userState
  */
+
+use App\Model\Entity\UserState;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

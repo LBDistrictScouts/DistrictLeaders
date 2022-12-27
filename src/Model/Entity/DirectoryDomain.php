@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property int $directory_id
  * @property bool $ingest
  *
- * @property \App\Model\Entity\Directory $directory
+ * @property Directory $directory
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

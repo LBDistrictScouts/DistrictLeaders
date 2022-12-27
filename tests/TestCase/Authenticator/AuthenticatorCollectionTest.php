@@ -21,6 +21,7 @@ use Authentication\Authenticator\AuthenticatorInterface;
 use Authentication\Authenticator\FormAuthenticator;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\TestSuite\TestCase;
+use Exception;
 
 /**
  * Class AuthenticatorCollectionTest
@@ -48,7 +49,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testLoad
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testLoad()
     {
@@ -77,7 +78,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testLoadException
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testLoadException()
     {
@@ -92,7 +93,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testIsEmpty
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testIsEmpty()
     {

@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\RoleStatus;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -10,20 +14,20 @@ use Cake\Validation\Validator;
 /**
  * RoleStatuses Model
  *
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- * @method \App\Model\Entity\RoleStatus get($primaryKey, $options = [])
- * @method \App\Model\Entity\RoleStatus newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleStatus newEmptyEntity()
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property RolesTable&HasMany $Roles
+ * @method RoleStatus get($primaryKey, $options = [])
+ * @method RoleStatus newEntity(array $data, array $options = [])
+ * @method RoleStatus[] newEntities(array $data, array $options = [])
+ * @method RoleStatus|false save(EntityInterface $entity, $options = [])
+ * @method RoleStatus saveOrFail(EntityInterface $entity, $options = [])
+ * @method RoleStatus patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method RoleStatus[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method RoleStatus findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method RoleStatus[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method RoleStatus newEmptyEntity()
+ * @method RoleStatus[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method RoleStatus[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method RoleStatus[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleStatusesTable extends Table
 {
@@ -49,8 +53,8 @@ class RoleStatusesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -72,8 +76,8 @@ class RoleStatusesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

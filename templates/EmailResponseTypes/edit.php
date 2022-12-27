@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailResponseType $emailResponseType
+ * @var AppView $this
+ * @var EmailResponseType $emailResponseType
  */
+
+use App\Model\Entity\EmailResponseType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $params
  */
+
+use App\View\AppView;
+
 $class = [
     'alert',
     'alert-dismissible',

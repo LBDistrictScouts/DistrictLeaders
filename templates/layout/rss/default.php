@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 if (!isset($channel)) :
     $channel = [];
 endif;

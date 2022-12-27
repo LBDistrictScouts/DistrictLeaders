@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\NotificationType $notificationType
+ * @var AppView $this
+ * @var NotificationType $notificationType
  */
+
+use App\Model\Entity\NotificationType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

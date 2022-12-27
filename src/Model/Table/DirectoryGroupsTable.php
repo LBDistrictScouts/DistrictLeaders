@@ -7,30 +7,36 @@ use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Model\Entity\DirectoryGroup;
 use App\Utility\GoogleBuilder;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\BelongsToMany;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Exception;
 use Google_Service_Directory_Group;
 
 /**
  * DirectoryGroups Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
- * @method \App\Model\Entity\DirectoryGroup get($primaryKey, $options = [])
- * @method \App\Model\Entity\DirectoryGroup newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup findOrCreate($search, ?callable $callback = null, $options = [])
- * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
- * @method \App\Model\Entity\DirectoryGroup newEmptyEntity()
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property DirectoriesTable&BelongsTo $Directories
+ * @property RoleTypesTable&BelongsToMany $RoleTypes
+ * @method DirectoryGroup get($primaryKey, $options = [])
+ * @method DirectoryGroup newEntity(array $data, array $options = [])
+ * @method DirectoryGroup[] newEntities(array $data, array $options = [])
+ * @method DirectoryGroup|false save(EntityInterface $entity, $options = [])
+ * @method DirectoryGroup saveOrFail(EntityInterface $entity, $options = [])
+ * @method DirectoryGroup patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method DirectoryGroup[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method DirectoryGroup findOrCreate($search, ?callable $callback = null, $options = [])
+ * @property Table&HasMany $DirectoryGroupsRoleTypes
+ * @method DirectoryGroup newEmptyEntity()
+ * @method DirectoryGroup[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method DirectoryGroup[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method DirectoryGroup[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method DirectoryGroup[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryGroupsTable extends Table
 {
@@ -62,8 +68,8 @@ class DirectoryGroupsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -97,8 +103,8 @@ class DirectoryGroupsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -110,8 +116,8 @@ class DirectoryGroupsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\Directory $directory The directory to be Populated with Groups
-     * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to a Domain
+     * @param Directory $directory The directory to be Populated with Groups
+     * @param DirectoryDomain|null $directoryDomain Limit to a Domain
      * @return int
      */
     public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
@@ -128,7 +134,7 @@ class DirectoryGroupsTable extends Table
         while ($continue) {
             try {
                 $result = $this->populateFromList($directory, $domain, $groupCount, $pageToken);
-            } catch (\Google_Exception $e) {
+            } catch (Google_Exception $e) {
                 return $groupCount;
             }
             $groupCount += $result['count'];
@@ -143,12 +149,12 @@ class DirectoryGroupsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\Directory $directory The Directory
+     * @param Directory $directory The Directory
      * @param string|null $directoryDomain The Directory Domain
      * @param int $count The Count start point
      * @param null $pageToken The Next Page Token
      * @return array
-     * @throws \Google_Exception
+     * @throws Google_Exception
      */
     public function populateFromList(
         Directory $directory,
@@ -159,7 +165,7 @@ class DirectoryGroupsTable extends Table
         $userList = GoogleBuilder::getGroupList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();
 
-        /** @var \Google_Service_Directory_Group $group */
+        /** @var Google_Service_Directory_Group $group */
         foreach ($userList->getGroups() as $group) {
             $result = $this->findOrMake($group, $directory->id);
             if ($result) {
@@ -171,9 +177,9 @@ class DirectoryGroupsTable extends Table
     }
 
     /**
-     * @param \Google_Service_Directory_Group $directoryGroup Google Response Object
+     * @param Google_Service_Directory_Group $directoryGroup Google Response Object
      * @param int $directoryId ID of the Parent Directory
-     * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
+     * @return DirectoryDomain|array|EntityInterface|false|null
      */
     public function findOrMake(Google_Service_Directory_Group $directoryGroup, int $directoryId)
     {

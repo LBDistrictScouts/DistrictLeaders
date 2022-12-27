@@ -7,6 +7,7 @@ use App\Model\Table\Exceptions\BadUserDataException;
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 use Cake\Error\ExceptionRenderer;
+use Cake\Http\Response;
 
 /**
  * Class AppExceptionRenderer
@@ -16,8 +17,8 @@ use Cake\Error\ExceptionRenderer;
 class AppExceptionRenderer extends ExceptionRenderer
 {
     /**
-     * @param \App\Model\Table\Exceptions\BadUserDataException $error The Error being handled
-     * @return \Cake\Http\Response
+     * @param BadUserDataException $error The Error being handled
+     * @return Response
      */
     public function invalidEmailDomain(BadUserDataException $error)
     {

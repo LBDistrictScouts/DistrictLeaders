@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CampRoleType $campRoleType
+ * @var AppView $this
+ * @var CampRoleType $campRoleType
  */
+
+use App\Model\Entity\CampRoleType;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

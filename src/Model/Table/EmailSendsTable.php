@@ -3,14 +3,21 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Mailer\BasicMailer;
 use App\Model\Entity\EmailSend;
 use App\Model\Entity\Notification;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use App\Model\Table\Exceptions\InvalidNotificationCodeException;
 use App\Model\Table\Exceptions\MalformedDataException;
+use Cake\Database\Expression\QueryExpression;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Mailer\MailerAwareTrait;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -19,24 +26,24 @@ use Cake\Validation\Validator;
 /**
  * EmailSends Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\BelongsTo $Notifications
- * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
- * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
- * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailSend newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailSend newEmptyEntity()
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property UsersTable&BelongsTo $Users
+ * @property NotificationsTable&BelongsTo $Notifications
+ * @property EmailResponsesTable&HasMany $EmailResponses
+ * @property TokensTable&HasMany $Tokens
+ * @method EmailSend get($primaryKey, $options = [])
+ * @method EmailSend newEntity(array $data, array $options = [])
+ * @method EmailSend[] newEntities(array $data, array $options = [])
+ * @method EmailSend|false save(EntityInterface $entity, $options = [])
+ * @method EmailSend saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailSend patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailSend[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method EmailSend findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @method EmailSend[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method EmailSend newEmptyEntity()
+ * @method EmailSend[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method EmailSend[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method EmailSend[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailSendsTable extends Table
 {
@@ -79,8 +86,8 @@ class EmailSendsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -142,8 +149,8 @@ class EmailSendsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -159,13 +166,13 @@ class EmailSendsTable extends Table
     /**
      * Is a finder which will return a query with non-live (pre-release & archive) events only.
      *
-     * @param \Cake\ORM\Query $query The original query to be modified.
-     * @return \Cake\ORM\Query The modified query.
+     * @param Query $query The original query to be modified.
+     * @return Query The modified query.
      */
     public function findUnsent(Query $query)
     {
         return $query->where(function ($exp) {
-            /** @var \Cake\Database\Expression\QueryExpression $exp */
+            /** @var QueryExpression $exp */
             return $exp->isNull('sent');
         });
     }
@@ -206,8 +213,8 @@ class EmailSendsTable extends Table
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
-     * @throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
-     * @return \App\Model\Entity\EmailSend|null
+     * @return EmailSend|null
+     *@throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
      */
     public function make(string $emailGenerationCode): ?EmailSend
     {
@@ -236,11 +243,11 @@ class EmailSendsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\Notification $notification Notification with Generated Data
-     * @param \App\Model\Entity\User $user Notification owning User
+     * @param Notification $notification Notification with Generated Data
+     * @param User $user Notification owning User
      * @param string $emailGenerationCode The Type & SubType of Token to Make
      * @param array $options Options Array for setting Authentication & Token inclusion
-     * @return \App\Model\Entity\EmailSend|null
+     * @return EmailSend|null
      */
     public function generate(
         Notification $notification,
@@ -332,7 +339,7 @@ class EmailSendsTable extends Table
                 $entity = null;
         }
 
-        /** @var \App\Mailer\BasicMailer $mailer */
+        /** @var BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
         $mailer->send('doSend', [$email, $token, $entity, $email->notification]);
 

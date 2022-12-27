@@ -4,12 +4,16 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryGroup;
+use App\Model\Table\DirectoryGroupsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * DirectoryGroups Controller
  *
- * @property \App\Model\Table\DirectoryGroupsTable $DirectoryGroups
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property DirectoryGroupsTable $DirectoryGroups
+ * @method DirectoryGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryGroupsController extends AppController
@@ -17,7 +21,7 @@ class DirectoryGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -33,8 +37,8 @@ class DirectoryGroupsController extends AppController
      * View method
      *
      * @param null $id Directory Group id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -48,7 +52,7 @@ class DirectoryGroupsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -71,8 +75,8 @@ class DirectoryGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Group id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -97,8 +101,8 @@ class DirectoryGroupsController extends AppController
      * Delete method
      *
      * @param string|null $id Directory Group id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

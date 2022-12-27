@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <?= $this->element('header', ['current' => 'import']) ?>
 <div class="releases form large-9 medium-8 columns content">

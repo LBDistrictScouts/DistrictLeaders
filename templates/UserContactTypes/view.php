@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserContactType $userContactType
+ * @var AppView $this
+ * @var UserContactType $userContactType
  */
+
+use App\Model\Entity\UserContactType;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

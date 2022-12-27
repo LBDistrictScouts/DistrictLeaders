@@ -1,13 +1,18 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Role $role
- * @var \Cake\ORM\Query $roleStatuses
- * @var \Cake\ORM\Query $roleTypes
- * @var \Cake\ORM\Query $sections
- * @var \Cake\ORM\Query $users
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var Role $role
+ * @var Query $roleStatuses
+ * @var Query $roleTypes
+ * @var Query $sections
+ * @var Query $users
+ * @var User $user
  */
+
+use App\Model\Entity\Role;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\ORM\Query;
 
 $this->extend('../layout/CRUD/add');
 

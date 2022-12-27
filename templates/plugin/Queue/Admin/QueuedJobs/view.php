@@ -1,14 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var object $queuedJob
  */
 
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueuedJob $queuedJob
+ * @var AppView $this
+ * @var QueuedJob $queuedJob
  */
 
+use App\View\AppView;
+use Queue\Model\Entity\QueuedJob;
 use Tools\Utility\Time;
 
 $current = 'view_job';

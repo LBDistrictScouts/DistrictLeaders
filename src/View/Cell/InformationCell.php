@@ -36,7 +36,7 @@ class InformationCell extends Cell
     /**
      * Default display method.
      *
-     * @param \App\Model\Entity\Notification $notification Notification for Display
+     * @param Notification $notification Notification for Display
      * @return void
      */
     public function sharedDisplay(Notification $notification)
@@ -50,7 +50,7 @@ class InformationCell extends Cell
     /**
      * Interface display method.
      *
-     * @param \App\Model\Entity\Notification $notification Notification for Interface Display
+     * @param Notification $notification Notification for Interface Display
      * @return void
      */
     public function display(Notification $notification)
@@ -62,7 +62,7 @@ class InformationCell extends Cell
     /**
      * Email display method.
      *
-     * @param \App\Model\Entity\Notification $notification Notification for Email Display
+     * @param Notification $notification Notification for Email Display
      * @return void
      */
     public function email(Notification $notification)

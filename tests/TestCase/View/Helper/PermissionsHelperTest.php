@@ -15,7 +15,7 @@ class PermissionsHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\PermissionsHelper
+     * @var PermissionsHelper
      */
     protected $PermissionsHelper;
 

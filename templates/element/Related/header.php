@@ -1,14 +1,18 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var User $user
  */
 declare(strict_types=1);
 
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var User $user
  */
+
+use App\Model\Entity\User;
+use App\View\AppView;
+
 ?>
 <div class="card text-center">
     <div class="card-header">

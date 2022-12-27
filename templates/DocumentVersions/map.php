@@ -1,10 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DocumentVersion $documentVersion
+ * @var AppView $this
+ * @var DocumentVersion $documentVersion
  * @var array $fieldMap
  * @var string[] $fieldList
  */
+
+use App\Model\Entity\DocumentVersion;
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col">

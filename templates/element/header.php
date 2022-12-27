@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <div class="jumbotron" style="background-color: rgba(233,236,239,0);">
     <h2 class="text-center" style="color: #00a794;">District Leader System</h2>

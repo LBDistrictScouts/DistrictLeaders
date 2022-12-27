@@ -17,12 +17,14 @@ declare(strict_types=1);
 namespace App\Identifier;
 
 use App\Utility\AwsBuilder;
+use ArrayAccess;
 use Authentication\Identifier\AbstractIdentifier;
 use Authentication\Identifier\Resolver\ResolverAwareTrait;
 use Authentication\Identifier\Resolver\ResolverInterface;
 use Authentication\PasswordHasher\PasswordHasherFactory;
 use Authentication\PasswordHasher\PasswordHasherInterface;
 use Authentication\PasswordHasher\PasswordHasherTrait;
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 
 /**
  * Password Identifier
@@ -68,7 +70,7 @@ class CognitoIdentifier extends AbstractIdentifier
     ];
 
     /**
-     * @var \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
+     * @var CognitoIdentityProviderClient
      */
     protected $client;
 
@@ -110,7 +112,7 @@ class CognitoIdentifier extends AbstractIdentifier
     /**
      * Return password hasher object.
      *
-     * @return \Authentication\PasswordHasher\PasswordHasherInterface Password hasher instance.
+     * @return PasswordHasherInterface Password hasher instance.
      */
     public function buildPasswordHasher(): PasswordHasherInterface
     {
@@ -185,7 +187,7 @@ class CognitoIdentifier extends AbstractIdentifier
      * Input passwords will be hashed even when a user doesn't exist. This
      * helps mitigate timing attacks that are attempting to find valid usernames.
      *
-     * @param array|\ArrayAccess|null $identity The identity or null.
+     * @param array|ArrayAccess|null $identity The identity or null.
      * @param string|null $password The password.
      * @return bool
      */
@@ -213,7 +215,7 @@ class CognitoIdentifier extends AbstractIdentifier
     /**
      * Check if a user is Cognito Enabled
      *
-     * @param array|\ArrayAccess|null $identity The identity or null.
+     * @param array|ArrayAccess|null $identity The identity or null.
      * @return bool
      */
     protected function checkCognito($identity): bool
@@ -233,7 +235,7 @@ class CognitoIdentifier extends AbstractIdentifier
      * Find a user record using the username/identifier provided.
      *
      * @param string $identifier The username/identifier.
-     * @return \ArrayAccess|array|null
+     * @return ArrayAccess|array|null
      */
     protected function findIdentity(string $identifier)
     {

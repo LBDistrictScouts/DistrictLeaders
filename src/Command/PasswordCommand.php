@@ -4,18 +4,20 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
+use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class PasswordCommand extends Command
 {
@@ -33,8 +35,8 @@ class PasswordCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser Parser Input
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -50,10 +52,10 @@ class PasswordCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @param Arguments $args Arguments for the Console
+     * @param ConsoleIo $consoleIo The IO
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */

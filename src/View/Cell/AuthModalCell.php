@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use Authorization\Policy\Result;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\View\Cell;
@@ -59,7 +60,7 @@ class AuthModalCell extends Cell
     /**
      * Default display method.
      *
-     * @param \Authorization\Policy\Result $policyResult The result of the Policy Authorisation
+     * @param Result $policyResult The result of the Policy Authorisation
      * @return void
      */
     public function display($policyResult)

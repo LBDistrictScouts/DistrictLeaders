@@ -10,13 +10,14 @@ use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- * @property \App\Model\Table\UsersTable $Users
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property UsersTable $Users
+ * @property QueuedJobsTable $QueuedJobs
  */
 class UserListener implements EventListenerInterface
 {
@@ -31,12 +32,12 @@ class UserListener implements EventListenerInterface
     }
 
     /**
-     * @param \Cake\Event\EventInterface $event The event being processed.
+     * @param EventInterface $event The event being processed.
      * @return void
      */
     public function updateLogin(EventInterface $event): void
     {
-        /** @var \App\Model\Entity\User $user */
+        /** @var User $user */
         $user = $event->getData('user');
         $this->Users = $event->getSubject();
 

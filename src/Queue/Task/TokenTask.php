@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
+use App\Model\Table\TokensTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -10,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\TokensTable $Tokens
+ * @property TokensTable $Tokens
  */
 class TokenTask extends Task implements TaskInterface
 {

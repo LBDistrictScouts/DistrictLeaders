@@ -37,7 +37,7 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
     protected const PASSWORD_URL_KEY = 'passwordUrl';
 
     /**
-     * @param \Exception $error Exception to be handled
+     * @param Exception $error Exception to be handled
      * @return mixed
      */
     protected function responseReturn(Exception $error): Response
@@ -57,9 +57,9 @@ class CognitoAuthenticationMiddleware extends AuthenticationMiddleware implement
     /**
      * Callable implementation for the middleware stack.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
-     * @param \Psr\Http\Server\RequestHandlerInterface $handler The request handler.
-     * @return \Psr\Http\Message\ResponseInterface A response.
+     * @param ServerRequestInterface $request The request.
+     * @param RequestHandlerInterface $handler The request handler.
+     * @return ResponseInterface A response.
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Users') || $this->Identity->checkCapability('DIRECTORY')) : ?>
     <?= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'search'], 'class' => 'form-inline ml-auto', 'valueSources' => 'query']) ?>

@@ -5,8 +5,11 @@
  * Date: 2018-12-31
  * Time: 17:36
  *
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 $this->prepend('action_menu', $this->element('action_menu/begin'));
 ?>
 <div class="row">

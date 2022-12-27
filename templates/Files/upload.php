@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Form\FileForm $fileForm
+ * @var AppView $this
+ * @var FileForm $fileForm
  */
+
+use App\Form\FileForm;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

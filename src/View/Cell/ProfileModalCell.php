@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use App\Model\Table\UsersTable;
 use Cake\View\Cell;
 
 /**
  * Profile cell
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class ProfileModalCell extends Cell
 {

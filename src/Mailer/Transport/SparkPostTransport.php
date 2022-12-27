@@ -18,6 +18,7 @@ declare(strict_types=1);
  */
 namespace App\Mailer\Transport;
 
+use App\Model\Table\EmailSendsTable;
 use Cake\Core\Configure;
 use Cake\Log\Log;
 use Cake\Mailer\AbstractTransport;
@@ -27,6 +28,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
 use SparkPost\SparkPost;
 use SparkPost\SparkPostException;
+use SparkPost\SparkPostResponse;
 
 /**
  * Spark Post Transport Class
@@ -34,7 +36,7 @@ use SparkPost\SparkPostException;
  * Provides an interface between the CakePHP Email functionality and the SparkPost API.
  *
  * @package SparkPost\Mailer\Transport
- * @property \App\Model\Table\EmailSendsTable $EmailSends
+ * @property EmailSendsTable $EmailSends
  */
 class SparkPostTransport extends AbstractTransport
 {
@@ -43,7 +45,7 @@ class SparkPostTransport extends AbstractTransport
     /**
      * Send mail via SparkPost REST API
      *
-     * @param \Cake\Mailer\Message $emailMessage Email message
+     * @param Message $emailMessage Email message
      * @return array
      */
     public function send(Message $emailMessage): array
@@ -77,7 +79,7 @@ class SparkPostTransport extends AbstractTransport
 
         try {
             $response = $promise->wait();
-            /** @var \SparkPost\SparkPostResponse $response */
+            /** @var SparkPostResponse $response */
 
             $results = $response->getBody();
             $sendHeaders = $emailMessage->getHeaders(['X-Email-Gen-Code', 'X-Gen-ID']);

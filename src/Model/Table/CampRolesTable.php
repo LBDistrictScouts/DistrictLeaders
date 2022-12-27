@@ -3,6 +3,11 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\CampRole;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -10,23 +15,23 @@ use Cake\Validation\Validator;
 /**
  * CampRoles Model
  *
- * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\BelongsTo $Camps
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\CampRoleTypesTable&\Cake\ORM\Association\BelongsTo $CampRoleTypes
- * @method \App\Model\Entity\CampRole get($primaryKey, $options = [])
- * @method \App\Model\Entity\CampRole newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\CampRole[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CampRole|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRole saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampRole patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\CampRole[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\CampRole findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRole newEmptyEntity()
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property CampsTable&BelongsTo $Camps
+ * @property UsersTable&BelongsTo $Users
+ * @property CampRoleTypesTable&BelongsTo $CampRoleTypes
+ * @method CampRole get($primaryKey, $options = [])
+ * @method CampRole newEntity(array $data, array $options = [])
+ * @method CampRole[] newEntities(array $data, array $options = [])
+ * @method CampRole|false save(EntityInterface $entity, $options = [])
+ * @method CampRole saveOrFail(EntityInterface $entity, $options = [])
+ * @method CampRole patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method CampRole[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method CampRole findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @method CampRole[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method CampRole newEmptyEntity()
+ * @method CampRole[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method CampRole[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method CampRole[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CampRolesTable extends Table
 {
@@ -63,8 +68,8 @@ class CampRolesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -79,8 +84,8 @@ class CampRolesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

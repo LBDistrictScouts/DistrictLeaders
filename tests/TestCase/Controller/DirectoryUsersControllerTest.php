@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
@@ -14,16 +15,7 @@ use Cake\TestSuite\TestCase;
 class DirectoryUsersControllerTest extends TestCase
 {
     use IntegrationTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.DirectoryUsers',
-        'app.Directories',
-    ];
+    use FixtureTestTrait;
 
     /**
      * Test index method

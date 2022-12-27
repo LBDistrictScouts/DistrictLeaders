@@ -3,8 +3,12 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use App\Model\Table\CompassRecordsTable;
+use App\Model\Table\DirectoryUsersTable;
+use App\Model\Table\UserContactTypesTable;
 use Cake\Datasource\FactoryLocator;
 use Cake\Datasource\ModelAwareTrait;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -14,22 +18,22 @@ use Cake\ORM\Entity;
  * @property string $contact_field
  * @property int $user_id
  * @property int $user_contact_type_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
  * @property bool $verified
  * @property bool|null $validated
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime|null $deleted
  * @property int|null $directory_user_id
  *
- * @property \App\Model\Entity\Audit[] $audits
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\UserContactType $user_contact_type
- * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\DirectoryUser|null $directory_user
+ * @property Audit[] $audits
+ * @property User $user
+ * @property UserContactType $user_contact_type
+ * @property Role[] $roles
+ * @property DirectoryUser|null $directory_user
  *
- * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
- * @property \App\Model\Table\CompassRecordsTable $CompassRecords
- * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
+ * @property DirectoryUsersTable $DirectoryUsers
+ * @property CompassRecordsTable $CompassRecords
+ * @property UserContactTypesTable $UserContactTypes
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property int $validation_state

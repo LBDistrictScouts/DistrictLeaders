@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -12,10 +13,10 @@ use Cake\ORM\Entity;
  * @property string|null $email_generation_code
  * @property string|null $email_template
  * @property bool $include_token
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $deleted
- * @property \Cake\I18n\FrozenTime|null $sent
+ * @property FrozenTime|null $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $deleted
+ * @property FrozenTime|null $sent
  * @property string|null $message_send_code
  * @property int|null $user_id
  * @property string|null $subject
@@ -24,10 +25,10 @@ use Cake\ORM\Entity;
  * @property string|null $friendly_from
  * @property int|null $notification_id
  *
- * @property \App\Model\Entity\User|null $user
- * @property \App\Model\Entity\Notification|null $notification
- * @property \App\Model\Entity\EmailResponse[] $email_responses
- * @property \App\Model\Entity\Token[] $tokens
+ * @property User|null $user
+ * @property Notification|null $notification
+ * @property EmailResponse[] $email_responses
+ * @property Token[] $tokens
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

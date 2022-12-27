@@ -20,11 +20,11 @@ use Cake\ORM\Entity;
  * @property string $placeholder_code
  * @property int $role_type_sort_order
  *
- * @property \App\Model\Entity\SectionType|null $section_type
- * @property \App\Model\Entity\RoleTemplate|null $role_template
- * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\Capability[] $capabilities
- * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
+ * @property SectionType|null $section_type
+ * @property RoleTemplate|null $role_template
+ * @property Role[] $roles
+ * @property Capability[] $capabilities
+ * @property DirectoryGroup[] $directory_groups
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

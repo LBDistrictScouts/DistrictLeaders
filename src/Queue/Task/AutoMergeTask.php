@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Queue\Task;
 
 use App\Model\Entity\DocumentVersion;
+use App\Model\Table\CompassRecordsTable;
+use App\Model\Table\DocumentVersionsTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -12,8 +14,8 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\CompassRecordsTable $CompassRecords
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
+ * @property CompassRecordsTable $CompassRecords
+ * @property DocumentVersionsTable $DocumentVersions
  */
 class AutoMergeTask extends Task implements TaskInterface
 {

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -11,17 +12,17 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $token
  * @property int $email_send_id
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $expires
- * @property \Cake\I18n\FrozenTime|null $utilised
+ * @property FrozenTime|null $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $expires
+ * @property FrozenTime|null $utilised
  * @property bool $active
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime|null $deleted
  * @property string|null $hash
  * @property int|null $random_number
  * @property array|null $token_header
  *
- * @property \App\Model\Entity\EmailSend $email_send
+ * @property EmailSend $email_send
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

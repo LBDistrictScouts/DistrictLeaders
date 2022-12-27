@@ -5,6 +5,9 @@ namespace App\Model\Table;
 
 use App\Model\Entity\DirectoryType;
 use App\Model\Table\Traits\BaseInstallerTrait;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -12,20 +15,20 @@ use Cake\Validation\Validator;
 /**
  * DirectoryTypes Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\HasMany $Directories
- * @method \App\Model\Entity\DirectoryType get($primaryKey, $options = [])
- * @method \App\Model\Entity\DirectoryType newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\DirectoryType newEmptyEntity()
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property DirectoriesTable&HasMany $Directories
+ * @method DirectoryType get($primaryKey, $options = [])
+ * @method DirectoryType newEntity(array $data, array $options = [])
+ * @method DirectoryType[] newEntities(array $data, array $options = [])
+ * @method DirectoryType|false save(EntityInterface $entity, $options = [])
+ * @method DirectoryType saveOrFail(EntityInterface $entity, $options = [])
+ * @method DirectoryType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method DirectoryType newEmptyEntity()
+ * @method DirectoryType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method DirectoryType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method DirectoryType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method DirectoryType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryTypesTable extends Table
 {
@@ -53,8 +56,8 @@ class DirectoryTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -83,8 +86,8 @@ class DirectoryTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

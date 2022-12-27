@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserState[]|\Cake\Collection\CollectionInterface $userStates
+ * @var AppView $this
+ * @var UserState[]|CollectionInterface $userStates
  */
+
+use App\Model\Entity\UserState;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

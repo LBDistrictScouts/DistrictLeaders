@@ -47,9 +47,8 @@ class ApplicationTest extends TestCase
     {
         $app = new Application(dirname(__DIR__, 2) . '/config');
         $app->bootstrap();
-        $plugins = $app->getPlugins();
-        $remainingPlugins = $plugins;
 
+        $plugins = $app->getPlugins();
         $expectedPlugins = [
             'Muffin/Webservice',
             'Tools',
@@ -72,7 +71,9 @@ class ApplicationTest extends TestCase
             'Tags',
         ];
 
-        foreach ($expectedPlugins as $plugin) {
+        $remainingPlugins = $app->getPlugins();
+
+        foreach ($expectedPlugins as $idx => $plugin) {
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
             $remainingPlugins->remove($plugin);
         }
@@ -80,9 +81,6 @@ class ApplicationTest extends TestCase
         foreach ($remainingPlugins as $remain) {
             debug($remain->getName());
         }
-
-        /* Validate Length matches (no unexpected new plugins have been added). */
-        // TestCase::assertCount(count($expectedPlugins), $plugins);
     }
 
     /**

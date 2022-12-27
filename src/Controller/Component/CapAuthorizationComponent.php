@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller\Component;
 
+use App\Controller\AppController;
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use Authorization\Controller\Component\AuthorizationComponent;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
@@ -16,15 +18,15 @@ use Cake\Datasource\ModelAwareTrait;
  *
  * CapAuthorization component
  *
- * @property \App\Model\Table\UsersTable $Users
- * @method \App\Controller\AppController getController()
+ * @property UsersTable $Users
+ * @method AppController getController()
  */
 class CapAuthorizationComponent extends AuthorizationComponent
 {
     use ModelAwareTrait;
 
     /**
-     * @var \App\Model\Entity\User
+     * @var User
      */
     protected $capUser;
 
@@ -49,7 +51,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     ];
 
     /**
-     * @param \Cake\Datasource\EntityInterface $resource The resource to check authorization on.
+     * @param EntityInterface $resource The resource to check authorization on.
      * @param string|null $action The action to check authorization for.
      * @return array
      */
@@ -87,7 +89,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @param EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getResourceFields(EntityInterface $resource): array
@@ -109,7 +111,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @param EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getGroups(EntityInterface $resource): ?array
@@ -124,7 +126,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
+     * @param EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getSections(EntityInterface $resource): ?array
@@ -149,7 +151,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param int|null $section A Section ID if applicable
      * @return bool
      */
-    public function checkCapability($capability, $group = null, $section = null)
+    public function checkCapability(string $capability, ?int $group = null, ?int $section = null): bool
     {
         return $this->checkCapabilityResult($capability, $group, $section)->getStatus();
     }
@@ -163,9 +165,9 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string $capability The Capability being checked.
      * @param int|null $group A Group ID if applicable
      * @param int|null $section A Section ID if applicable
-     * @return \Authorization\Policy\ResultInterface
+     * @return ResultInterface
      */
-    public function checkCapabilityResult($capability, $group = null, $section = null)
+    public function checkCapabilityResult(string $capability, ?int $group = null, ?int $section = null): ResultInterface
     {
         if (is_null($this->capUser)) {
             return new Result(false, 'Component User Null.');
@@ -185,13 +187,13 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param array|int|null $group The Group ID for checking against
      * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     * @return \Authorization\Policy\ResultInterface
+     * @return ResultInterface
      */
     public function buildAndCheckCapabilityResult(
         string $action,
         string $model,
-        $group = null,
-        $section = null,
+        ?int $group = null,
+        ?int $section = null,
         ?string $field = null
     ): ResultInterface {
         if (is_null($this->capUser)) {
@@ -220,12 +222,12 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @return \App\Model\Entity\User|null
+     * @return User|null
      */
     protected function getCapUser(): ?User
     {
         $request = $this->getController()->getRequest();
-        /** @var \App\Model\Entity\User $identity */
+        /** @var User $identity */
         $identity = $this->getIdentity($request);
 
         if ($identity instanceof IdentityInterface) {

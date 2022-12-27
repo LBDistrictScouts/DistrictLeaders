@@ -1,9 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var \App\Model\Entity\Directory $directory
  * @var mixed $directoryTypes
  */
+
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

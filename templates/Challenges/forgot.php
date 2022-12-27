@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Form\ResetForm $resForm
+ * @var AppView $this
+ * @var ResetForm $resForm
  */
+
+use App\Form\ResetForm;
+use App\View\AppView;
+
 ?>
 
 <div class="row justify-content-center">

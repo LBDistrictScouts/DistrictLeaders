@@ -3,56 +3,40 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\View\Cell;
 
+use App\Test\Fixture\FixtureTestTrait;
 use App\View\Cell\NavBarCell;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * App\View\Cell\NavBarCell Test Case
  */
 class NavBarCellTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
+     * @var ServerRequest|MockObject
      */
-    public $request;
+    public ServerRequest|MockObject $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
+     * @var Response|MockObject
      */
-    public $response;
+    public Response|MockObject $response;
 
     /**
      * Test subject
      *
-     * @var \App\View\Cell\NavBarCell
+     * @var NavBarCell
      */
-    public $NavBar;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
+    public NavBarCell $NavBar;
 
     /**
      * setUp method

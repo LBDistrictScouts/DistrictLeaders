@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var mixed $identity
  */
+
+use App\View\AppView;
+
 ?>
 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
     <?php if ($this->Functional->checkFunction('directory', $identity)) : ?>

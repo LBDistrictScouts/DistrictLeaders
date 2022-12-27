@@ -1,9 +1,9 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Camp[]|\Cake\Collection\CollectionInterface $camps
+ * @var AppView $this
+ * @var Camp[]|CollectionInterface $camps
  * @var mixed $issues
- * @var \App\Model\Entity\Camp $camp
+ * @var Camp $camp
  */
 
 $this->extend('../layout/CRUD/index');
@@ -12,6 +12,8 @@ $this->assign('entity', 'Issues');
 $this->assign('subset', 'All');
 
 use App\Model\Entity\Camp;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 ?>
 

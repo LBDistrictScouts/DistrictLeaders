@@ -45,7 +45,7 @@
     },
     "require-dev": {
         "cakephp/bake": "^2.0",
-        "cakephp/cakephp-codesniffer": "^4.0",
+        "cakephp/cakephp-codesniffer": "^5.0",
         "cakephp/debug_kit": "^4.0",
         "cakephp/repl": "^0.1.0",
         "dereuromark/cakephp-ide-helper": "^1.0",
@@ -57,7 +57,6 @@
         "phpunit/php-code-coverage": "@stable",
         "phpunit/phpunit": "^8.0",
         "psy/psysh": "@stable",
-        "slevomat/coding-standard": "^6.1",
         "vierge-noire/cakephp-fixture-factories": "^2.0",
         "vierge-noire/cakephp-test-migrator": "^2.0"
     },
@@ -99,8 +98,8 @@
             "@cs-fix"
         ],
         "coding-standards": "@cs-check",
-        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
-        "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
+        "cs-check": "phpcs --colors -p -s --extensions=php src/ tests/",
+        "cs-fix": "phpcbf --colors -p -s --extensions=php src/ tests/",
         "md-check": "phpmd --strict src/ ansi cleancode",
         "phpstan-check": "vendor/bin/phpstan analyse src tests",
         "phan-check": "vendor/bin/phan",

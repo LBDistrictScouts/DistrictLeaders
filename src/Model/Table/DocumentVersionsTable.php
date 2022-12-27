@@ -8,6 +8,11 @@ use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
 use Cake\Database\Schema\TableSchemaInterface;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -17,23 +22,23 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
 /**
  * DocumentVersions Model
  *
- * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\BelongsTo $Documents
- * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
- * @property \App\Model\Table\CompassRecordsTable&\Cake\ORM\Association\HasMany $CompassRecords
- * @method \App\Model\Entity\DocumentVersion get($primaryKey, $options = [])
- * @method \App\Model\Entity\DocumentVersion newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\DocumentVersion newEmptyEntity()
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property DocumentsTable&BelongsTo $Documents
+ * @property DocumentEditionsTable&HasMany $DocumentEditions
+ * @property CompassRecordsTable&HasMany $CompassRecords
+ * @method DocumentVersion get($primaryKey, $options = [])
+ * @method DocumentVersion newEntity(array $data, array $options = [])
+ * @method DocumentVersion[] newEntities(array $data, array $options = [])
+ * @method DocumentVersion|false save(EntityInterface $entity, $options = [])
+ * @method DocumentVersion saveOrFail(EntityInterface $entity, $options = [])
+ * @method DocumentVersion patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method DocumentVersion[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method DocumentVersion findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method DocumentVersion[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @method DocumentVersion newEmptyEntity()
+ * @method DocumentVersion[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method DocumentVersion[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method DocumentVersion[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DocumentVersionsTable extends Table
 {
@@ -70,8 +75,8 @@ class DocumentVersionsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -97,8 +102,8 @@ class DocumentVersionsTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
-     * @return \Cake\Database\Schema\TableSchemaInterface
+     * @param TableSchemaInterface $schema The Schema to be modified
+     * @return TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -112,8 +117,8 @@ class DocumentVersionsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -127,9 +132,9 @@ class DocumentVersionsTable extends Table
     /**
      * Finder Method for Document List
      *
-     * @param \Cake\ORM\Query $query The Query to be Modified
+     * @param Query $query The Query to be Modified
      * @param array $options The Options passed
-     * @return \Cake\ORM\Query
+     * @return Query
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CamelCaseVariableName)
      */
@@ -138,7 +143,7 @@ class DocumentVersionsTable extends Table
         return $query->contain('Documents')
             ->find('list', array_merge($options, [
                 'valueField' => function ($document_version) {
-                    /** @var \App\Model\Entity\DocumentVersion $document_version */
+                    /** @var DocumentVersion $document_version */
                     return $document_version->document->get(Document::FIELD_DOCUMENT)
                            . ' - '
                            . $document_version->get(DocumentVersion::FIELD_VERSION_NUMBER);
@@ -148,8 +153,8 @@ class DocumentVersionsTable extends Table
 
     /**
      * @param string $mime The FileType for Selection
-     * @param \App\Model\Entity\DocumentVersion $version The DocumentVersion
-     * @return \App\Model\Entity\DocumentEdition|false
+     * @param DocumentVersion $version The DocumentVersion
+     * @return DocumentEdition|false
      */
     public function getFileTypeEdition(string $mime, DocumentVersion $version)
     {
@@ -163,7 +168,7 @@ class DocumentVersionsTable extends Table
                 DocumentEdition::FIELD_FILE_TYPE_ID => $fileType->id,
             ]);
 
-            /** @var \App\Model\Entity\DocumentEdition $edition */
+            /** @var DocumentEdition $edition */
             $edition = $editionQuery->first();
             if ($editionQuery->count() == 1) {
                 return $edition;
@@ -174,7 +179,7 @@ class DocumentVersionsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Parsing
+     * @param DocumentVersion $documentVersion The Document Version for Parsing
      * @return int
      */
     public function importCompassRecords(DocumentVersion $documentVersion): int
@@ -199,7 +204,7 @@ class DocumentVersionsTable extends Table
     }
 
     /**
-     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Parsing
+     * @param DocumentVersion $documentVersion The Document Version for Parsing
      * @return array
      */
     public function mapCompassRecords(DocumentVersion $documentVersion): array

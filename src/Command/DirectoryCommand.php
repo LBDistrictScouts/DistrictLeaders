@@ -3,16 +3,18 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Model\Table\DirectoriesTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property \App\Model\Table\DirectoriesTable $Directories
+ * @property DirectoriesTable $Directories
  */
 class DirectoryCommand extends Command
 {
@@ -28,8 +30,8 @@ class DirectoryCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser Parser Input
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -51,10 +53,10 @@ class DirectoryCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @param Arguments $args Arguments for the Console
+     * @param ConsoleIo $consoleIo The IO
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */

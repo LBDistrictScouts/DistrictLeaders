@@ -6,13 +6,16 @@ namespace App\Controller\Api\V1;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
+use App\Model\Table\SectionsTable;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 use Cake\Utility\Hash;
 
 /**
  * Sections Controller
  *
- * @property \App\Model\Table\SectionsTable $Sections
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property SectionsTable $Sections
+ * @method Section[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
@@ -35,7 +38,7 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {

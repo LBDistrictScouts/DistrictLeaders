@@ -17,7 +17,7 @@ trait TaskTestTrait
      * @param array $expected Data to be verified exists
      * @param int $jobId Job for record retrieval
      */
-    protected function validateExpectedData(array $expected, int $jobId)
+    protected function validateExpectedData(array $expected, int $jobId): void
     {
         $job = $this->QueuedJobs->get($jobId);
         $data = unserialize($job->get('data'));
@@ -33,7 +33,7 @@ trait TaskTestTrait
      */
     protected function checkCreateJob(string $taskName, array $inputData = []): QueuedJob
     {
-        $originalJobCount = $this->QueuedJobs->find('all')->count();
+        $originalJobCount = $this->QueuedJobs->find()->count();
         TestCase::assertEquals(0, $originalJobCount);
 
         $job = $this->QueuedJobs->createJob(
@@ -41,7 +41,7 @@ trait TaskTestTrait
             $inputData
         );
 
-        $resultingJobCount = $this->QueuedJobs->find('all')->count();
+        $resultingJobCount = $this->QueuedJobs->find()->count();
 
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);

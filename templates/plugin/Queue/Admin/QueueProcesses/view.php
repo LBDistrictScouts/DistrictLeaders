@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueueProcess $queueProcess
+ * @var AppView $this
+ * @var QueueProcess $queueProcess
  */
+
+use App\View\AppView;
+use Queue\Model\Entity\QueueProcess;
 use Queue\Queue\Config;
 ?>
 <nav class="actions large-3 medium-4 columns col-sm-4 col-xs-12" id="actions-sidebar">

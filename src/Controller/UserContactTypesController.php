@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\UserContactType;
+use App\Model\Table\UserContactTypesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * UserContactTypes Controller
  *
- * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
- * @method \App\Model\Entity\UserContactType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property UserContactTypesTable $UserContactTypes
+ * @method UserContactType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -27,8 +33,8 @@ class UserContactTypesController extends AppController
      * View method
      *
      * @param string|null $id User Contact Type id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -42,7 +48,7 @@ class UserContactTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -63,8 +69,8 @@ class UserContactTypesController extends AppController
      * Edit method
      *
      * @param string|null $id User Contact Type id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -87,8 +93,8 @@ class UserContactTypesController extends AppController
      * Delete method
      *
      * @param string|null $id User Contact Type id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

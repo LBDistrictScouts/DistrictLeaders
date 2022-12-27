@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\EmailResponse;
+use App\Model\Table\EmailResponsesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * EmailResponses Controller
  *
- * @property \App\Model\Table\EmailResponsesTable $EmailResponses
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property EmailResponsesTable $EmailResponses
+ * @method EmailResponse[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailResponsesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -30,8 +36,8 @@ class EmailResponsesController extends AppController
      * View method
      *
      * @param string|null $id Email Response id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -45,7 +51,7 @@ class EmailResponsesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -68,8 +74,8 @@ class EmailResponsesController extends AppController
      * Edit method
      *
      * @param string|null $id Email Response id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -94,8 +100,8 @@ class EmailResponsesController extends AppController
      * Delete method
      *
      * @param string|null $id Email Response id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

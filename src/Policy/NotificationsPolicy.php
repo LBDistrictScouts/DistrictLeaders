@@ -20,9 +20,9 @@ class NotificationsPolicy implements BeforePolicyInterface
     use AppPolicyTrait;
 
     /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @param \App\Model\Entity\Notification $subject The Notification being Viewed
-     * @return \Authorization\Policy\ResultInterface
+     * @param User $user The User Editing
+     * @param Notification $subject The Notification being Viewed
+     * @return ResultInterface
      */
     public function canView(User $user, Notification $subject): ResultInterface
     {
@@ -35,8 +35,8 @@ class NotificationsPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\ResultInterface
+     * @param User $user The User Editing
+     * @return ResultInterface
      */
     public function canIndex(User $user): ResultInterface
     {

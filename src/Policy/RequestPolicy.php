@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
+use App\Model\Entity\User;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Http\ServerRequest;
@@ -17,9 +18,9 @@ class RequestPolicy implements RequestPolicyInterface
     /**
      * Method to check if the request can be accessed
      *
-     * @param \App\Model\Entity\User|null $identity The Identity
-     * @param \Cake\Http\ServerRequest $request Server Request
-     * @return null|\Authorization\Policy\Result
+     * @param User|null $identity The Identity
+     * @param ServerRequest $request Server Request
+     * @return null|Result
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */

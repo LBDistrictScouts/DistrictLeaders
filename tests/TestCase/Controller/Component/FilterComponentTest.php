@@ -17,7 +17,7 @@ class FilterComponentTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Controller\Component\FilterComponent
+     * @var FilterComponent
      */
     public $Filter;
 

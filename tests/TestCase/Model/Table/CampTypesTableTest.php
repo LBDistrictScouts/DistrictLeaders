@@ -18,18 +18,9 @@ class CampTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CampTypesTable
+     * @var CampTypesTable
      */
-    public $CampTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.CampTypes',
-    ];
+    public CampTypesTable $CampTypes;
 
     /**
      * setUp method
