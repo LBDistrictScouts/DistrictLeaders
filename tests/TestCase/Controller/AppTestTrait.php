@@ -244,8 +244,8 @@ trait AppTestTrait
         $url['action'] = 'view';
         $this->login();
         $this->get($url);
-        $this->assertResponseCode(500);
-        $this->assertResponseFailure();
+        $this->assertResponseCode(404);
+        $this->assertResponseError();
     }
 
     /**

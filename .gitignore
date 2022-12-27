@@ -22,10 +22,12 @@
 /config/.env
 /config/Credentials/token.json
 /config/Credentials/credentials.json
+/config/Credentials/docker.env
 
 /config/Migrations/*.lock
 
 /config/Environment/app_parameters.yml
+/config/Environment/app_parameters.docker.yml
 
 /logs/*
 /tmp/*

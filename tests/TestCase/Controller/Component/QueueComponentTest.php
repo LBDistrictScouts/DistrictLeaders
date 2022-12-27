@@ -31,7 +31,9 @@ class QueueComponentTest extends TestCase
      *
      * @var \App\Controller\Component\QueueComponent
      */
-    protected $Queue;
+    protected QueueComponent $Queue;
+
+    protected ComponentRegistry $Registry;
 
     /**
      * setUp method
