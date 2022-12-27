@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -27,6 +28,7 @@ use Cake\Validation\Validator;
  * @method SiteSession[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method SiteSession[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method SiteSession[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class SiteSessionsTable extends Table
 {

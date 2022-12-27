@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -36,6 +37,7 @@ use League\Flysystem\FileNotFoundException;
  * @method DocumentEdition[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method DocumentEdition[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method DocumentEdition[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class DocumentEditionsTable extends Table
 {

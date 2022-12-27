@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -42,6 +43,7 @@ use Google_Service_Directory_User;
  * @method DirectoryUser[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method DirectoryUser[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method DirectoryUser[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin CaseableBehavior
  * @mixin CaseableBehavior
  */
 class DirectoryUsersTable extends Table

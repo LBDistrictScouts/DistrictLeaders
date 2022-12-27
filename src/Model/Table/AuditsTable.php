@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -48,6 +49,8 @@ use Muffin\Footprint\Model\Behavior\FootprintBehavior;
  * @method Audit[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Audit[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Audit[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin FootprintBehavior
  */
 class AuditsTable extends Table
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -49,6 +50,11 @@ use Muffin\Trash\Model\Behavior\TrashBehavior;
  * @method UserContact[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method UserContact[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method UserContact[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin CaseableBehavior
+ * @mixin AuditableBehavior
+ * @mixin CounterCacheBehavior
  */
 class UserContactsTable extends Table
 {

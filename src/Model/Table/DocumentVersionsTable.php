@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -39,6 +40,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * @method DocumentVersion[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method DocumentVersion[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method DocumentVersion[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class DocumentVersionsTable extends Table
 {

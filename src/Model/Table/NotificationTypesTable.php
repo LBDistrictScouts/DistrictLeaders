@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -133,7 +134,7 @@ class NotificationTypesTable extends Table
      *
      * @param string $emailGenerationCode Notification Type Code
      * @return NotificationType
-     *@throws \Cake\Datasource\Exception\RecordNotFoundException
+     *@throws RecordNotFoundException
      */
     public function getTypeCode(string $emailGenerationCode): NotificationType
     {

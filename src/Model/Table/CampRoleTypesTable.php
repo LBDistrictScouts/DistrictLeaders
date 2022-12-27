@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -30,6 +31,7 @@ use Cake\Validation\Validator;
  * @method CampRoleType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method CampRoleType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method CampRoleType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class CampRoleTypesTable extends Table
 {

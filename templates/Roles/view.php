@@ -2,6 +2,8 @@
 /**
  * @var AppView $this
  * @var Role $role
+ * @var object $html
+ * @var mixed $original
  */
 
 use App\Model\Entity\Audit;

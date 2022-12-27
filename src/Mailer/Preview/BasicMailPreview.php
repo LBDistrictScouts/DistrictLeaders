@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 // Create the file src/Mailer/Preview/UserMailPreview.php
