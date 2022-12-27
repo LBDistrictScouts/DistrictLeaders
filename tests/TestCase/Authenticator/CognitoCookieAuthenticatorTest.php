@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -13,6 +14,7 @@ declare(strict_types=1);
  * @since 4.0.0
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Authenticator;
 
 use App\Authenticator\CognitoCookieAuthenticator;

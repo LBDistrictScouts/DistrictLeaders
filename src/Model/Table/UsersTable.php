@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -55,6 +56,11 @@ use Search\Model\Behavior\SearchBehavior;
  * @method User[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method User[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method User[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin SearchBehavior
+ * @mixin CaseableBehavior
+ * @mixin AuditableBehavior
  */
 class UsersTable extends Table
 {

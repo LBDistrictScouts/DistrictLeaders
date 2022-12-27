@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -18,7 +19,7 @@ use Google_Exception;
  * Directories Controller
  *
  * @property DirectoriesTable $Directories
- * @property GoogleClientComponent GoogleClient
+ * @property GoogleClientComponent $GoogleClient
  * @property QueueComponent $Queue
  * @method Directory[]|ResultSetInterface paginate($object = null, array $settings = [])
  */

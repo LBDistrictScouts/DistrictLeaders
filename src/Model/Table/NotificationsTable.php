@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -41,6 +42,8 @@ use Muffin\Trash\Model\Behavior\TrashBehavior;
  * @method Notification[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Notification[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Notification[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
  */
 class NotificationsTable extends Table
 {

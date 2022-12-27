@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Middleware;
 
 use App\Application;
@@ -607,7 +609,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             ['username' => 'mariano', 'password' => 'password']
         );
         $uri = $request->getUri();
-        $uri = new Uri($uri,'/base', '');
+        $uri = new Uri($uri, '/base', '');
         $request = $request->withUri($uri);
         $handler = new TestRequestHandler(function ($request) {
             throw new UnauthenticatedException();

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Test\Fixture;
 
 use App\Model\Entity\Capability;

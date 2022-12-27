@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -40,6 +41,7 @@ use Queue\Model\Table\QueuedJobsTable;
  * @method Token[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Token[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Token[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class TokensTable extends Table
 {

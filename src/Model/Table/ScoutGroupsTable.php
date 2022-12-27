@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -40,6 +41,10 @@ use Muffin\Trash\Model\Behavior\TrashBehavior;
  * @method ScoutGroup[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method ScoutGroup[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method ScoutGroup[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin ExposeBehavior
+ * @mixin AuditableBehavior
  */
 class ScoutGroupsTable extends Table
 {

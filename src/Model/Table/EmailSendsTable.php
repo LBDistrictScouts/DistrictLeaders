@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -44,6 +45,7 @@ use Cake\Validation\Validator;
  * @method EmailSend[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method EmailSend[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method EmailSend[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class EmailSendsTable extends Table
 {
@@ -214,7 +216,7 @@ class EmailSendsTable extends Table
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
      * @return EmailSend|null
-     *@throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
+     *@throws InvalidNotificationCodeException
      */
     public function make(string $emailGenerationCode): ?EmailSend
     {

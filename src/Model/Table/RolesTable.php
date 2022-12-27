@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -50,6 +51,10 @@ use Muffin\Trash\Model\Behavior\TrashBehavior;
  * @method Role[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Role[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Role[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin AuditableBehavior
+ * @mixin CounterCacheBehavior
  */
 class RolesTable extends Table
 {

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -30,6 +31,7 @@ use Cake\Validation\Validator;
  * @method UserContactType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method UserContactType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method UserContactType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
  */
 class UserContactTypesTable extends Table
 {

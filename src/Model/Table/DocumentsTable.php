@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -48,6 +49,10 @@ use Search\Model\Behavior\SearchBehavior;
  * @method Document[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Document[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Document[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin SearchBehavior
+ * @mixin CaseableBehavior
  */
 class DocumentsTable extends Table
 {

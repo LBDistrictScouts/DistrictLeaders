@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller\Component;
@@ -263,8 +264,7 @@ class CapAuthorizationComponentTest extends TestCase
         bool $expected,
         ?int $group = null,
         ?int $section = null
-    ): void
-    {
+    ): void {
         $admin = (bool)($capability == 'ALL');
         $this->makeAdmin($admin);
 
@@ -289,8 +289,7 @@ class CapAuthorizationComponentTest extends TestCase
         ?int $group,
         ?int $section,
         string $expectedReason
-    ): void
-    {
+    ): void {
         $this->makeAdmin($capability == 'ALL');
 
         $result = $this->Authorization->checkCapabilityResult($capability, $group, $section);

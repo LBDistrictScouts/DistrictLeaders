@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -48,6 +49,9 @@ use Search\Model\Behavior\SearchBehavior;
  * @method CompassRecord[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method CompassRecord[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method CompassRecord[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin SearchBehavior
+ * @mixin CaseableBehavior
+ * @mixin CsvBehavior
  */
 class CompassRecordsTable extends Table
 {

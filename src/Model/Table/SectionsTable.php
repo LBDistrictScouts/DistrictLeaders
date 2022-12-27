@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -47,6 +48,11 @@ use Search\Model\Behavior\SearchBehavior;
  * @method Section[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method Section[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method Section[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @mixin SearchBehavior
+ * @mixin ExposeBehavior
+ * @mixin AuditableBehavior
  */
 class SectionsTable extends Table
 {

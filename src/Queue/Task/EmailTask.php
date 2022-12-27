@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Queue\Task;
@@ -13,7 +14,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property EmailSendsTable EmailSends
+ * @property EmailSendsTable $EmailSends
  * @property QueuedJobsTable $QueuedJobs
  */
 class EmailTask extends Task implements TaskInterface

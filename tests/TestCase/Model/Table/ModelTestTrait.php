@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
@@ -101,8 +102,7 @@ trait ModelTestTrait
         string $field,
         string $errorType,
         ?string $message = null
-    ): void
-    {
+    ): void {
         if (!key_exists($errorType, $this->defaultErrorMessages)) {
             TestCase::assertTrue(false, 'No Error type exists for this field: ' . $field);
         }
@@ -138,8 +138,7 @@ trait ModelTestTrait
         Table $table,
         callable $good,
         string $validator = 'default'
-    ): void
-    {
+    ): void {
         foreach ($requiredFields as $require) {
             $requiredArray = call_user_func($good);
             unset($requiredArray[$require]);
@@ -161,8 +160,7 @@ trait ModelTestTrait
         Table $table,
         callable $good,
         string $validator = 'default'
-    ): void
-    {
+    ): void {
         foreach ($notRequiredFields as $notRequired) {
             $notRequiredArray = call_user_func($good);
             unset($notRequiredArray[$notRequired]);
