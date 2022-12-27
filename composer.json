@@ -60,9 +60,6 @@
         "vierge-noire/cakephp-fixture-factories": "^2.0",
         "vierge-noire/cakephp-test-migrator": "^2.0"
     },
-    "suggest": {
-        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."
-    },
     "autoload": {
         "psr-4": {
             "App\\": "src/"
@@ -83,11 +80,9 @@
         ],
         "post-create-project-cmd": "@console-install",
         "console-install": "App\\Console\\Installer::postInstall",
-        "fixture-check": "bin/cake fixture_check",
         "check": [
             "@cs-check",
             "composer validate",
-            "@fixture-check",
             "@phpstan-check"
         ],
         "fix": [
