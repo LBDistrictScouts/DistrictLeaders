@@ -173,5 +173,9 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --optimize-autoloader
 
+      - name: Run Static Fix
+        if: ${{ matrix.check-type == 'coding-standards' }}
+        run: composer cs-fix
+
       - name: Run Static Check
         run: composer ${{ matrix.check-type }}
