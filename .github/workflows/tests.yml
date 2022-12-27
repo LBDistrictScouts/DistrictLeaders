@@ -83,7 +83,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-scripts --no-suggest
+        run: composer install --no-scripts
 
       - name: Run tests
         run: |
