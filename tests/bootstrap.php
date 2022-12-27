@@ -19,5 +19,6 @@ $migrator = new Migrator();
 
 $migrator->runMany([
     [],
-    ['plugin' => 'Queue']
+    ['plugin' => 'Queue', 'connection' => 'test'],
+    ['plugin' => 'Tags', 'connection' => 'test'],
 ]);

@@ -118,7 +118,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        check-type: [ 'coding-standards', 'fixture-check' ]
+        check-type: [ 'coding-standards', 'validate' ]
 
     name: Static Check ( ${{ matrix.check-type }} )
 
