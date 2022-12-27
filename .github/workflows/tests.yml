@@ -17,7 +17,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1']
+        php-version: ['8.1', '8.2']
         async: ['Y', 'N']
 
     name: PHP ( ${{ matrix.php-version }} ) Async ( ${{ matrix.async }} ) DB ( Postgres )
