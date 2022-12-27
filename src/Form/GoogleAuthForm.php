@@ -14,8 +14,8 @@ class GoogleAuthForm extends Form
     /**
      * Builds the schema for the modelless form
      *
-     * @param \Cake\Form\Schema $schema From schema
-     * @return \Cake\Form\Schema
+     * @param Schema $schema From schema
+     * @return Schema
      */
     protected function buildSchema(Schema $schema): Schema
     {

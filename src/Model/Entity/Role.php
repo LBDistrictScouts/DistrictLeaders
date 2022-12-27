@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -13,17 +14,17 @@ use Cake\ORM\Entity;
  * @property int $section_id
  * @property int $user_id
  * @property int $role_status_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $deleted
  * @property int|null $user_contact_id
  *
- * @property \App\Model\Entity\RoleType $role_type
- * @property \App\Model\Entity\Section $section
- * @property \App\Model\Entity\User $user
- * @property \App\Model\Entity\RoleStatus $role_status
- * @property \App\Model\Entity\UserContact|null $user_contact
- * @property \App\Model\Entity\Audit[] $audits
+ * @property RoleType $role_type
+ * @property Section $section
+ * @property User $user
+ * @property RoleStatus $role_status
+ * @property UserContact|null $user_contact
+ * @property Audit[] $audits
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

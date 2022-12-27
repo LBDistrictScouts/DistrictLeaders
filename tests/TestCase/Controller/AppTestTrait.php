@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace App\Test\TestCase\Controller;
 
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\Utility\Inflector;
 
@@ -24,6 +25,7 @@ use Cake\Utility\Inflector;
 trait AppTestTrait
 {
     use IntegrationTestTrait;
+    use FixtureTestTrait;
 
     /**
      * Function to log user in for authentication

@@ -3,14 +3,20 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Component\QueueComponent;
 use App\Model\Entity\UserState;
+use App\Model\Table\UserStatesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+use Exception;
 
 /**
  * UserStates Controller
  *
- * @property \App\Model\Table\UserStatesTable $UserStates
- * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property UserStatesTable $UserStates
+ * @property QueueComponent $Queue
+ * @method UserState[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class UserStatesController extends AppController
@@ -18,7 +24,7 @@ class UserStatesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -31,8 +37,8 @@ class UserStatesController extends AppController
      * View method
      *
      * @param string|null $userStateId User State id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($userStateId = null)
     {
@@ -46,7 +52,7 @@ class UserStatesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -67,8 +73,8 @@ class UserStatesController extends AppController
      * Edit method
      *
      * @param string|null $userStateId User State id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($userStateId = null)
     {
@@ -91,8 +97,8 @@ class UserStatesController extends AppController
      * Delete method
      *
      * @param string|null $userStateId User State id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($userStateId = null)
     {
@@ -110,8 +116,8 @@ class UserStatesController extends AppController
     /**
      * Process method
      *
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException|Exception When record not found.
      */
     public function process()
     {

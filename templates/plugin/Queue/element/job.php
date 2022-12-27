@@ -1,16 +1,19 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $current
- * @var \Queue\Model\Entity\QueuedJob $queuedJob
+ * @var QueuedJob $queuedJob
  * @var bool $complete
  */
+
+use App\View\AppView;
+use Queue\Model\Entity\QueuedJob;
 
 if (!isset($current)) {
     $current = '';
 }
 ?>
-<?php if (isset($queuedJob) && $queuedJob instanceof \Queue\Model\Entity\QueuedJob) : ?>
+<?php if (isset($queuedJob) && $queuedJob instanceof QueuedJob) : ?>
 <div class="card thick-card">
     <div class="card-body">
         <div class="btn-group" role="group" aria-label="Queue Toolbar">

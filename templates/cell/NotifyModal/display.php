@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
- * @var \App\Model\Entity\Notification[]|\Cake\Collection\CollectionInterface $notifications
+ * @var Notification[]|CollectionInterface $notifications
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
+
 ?>
 <!-- Modal -->
 <?php if (isset($loggedInUserId) && is_integer($loggedInUserId)) : ?>

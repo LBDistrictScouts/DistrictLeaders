@@ -8,6 +8,7 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\Filesystem;
+use League\Flysystem\FilesystemException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**
@@ -20,7 +21,7 @@ class MarkdownHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\MarkdownHelper
+     * @var MarkdownHelper
      */
     public MarkdownHelper $Markdown;
 
@@ -63,7 +64,7 @@ class MarkdownHelperTest extends TestCase
      * Test markdownToHtml method
      *
      * @return void
-     * @throws \League\Flysystem\FilesystemException
+     * @throws FilesystemException
      */
     public function testMarkdownToHtml(): void
     {

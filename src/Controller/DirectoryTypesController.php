@@ -4,12 +4,16 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryType;
+use App\Model\Table\DirectoryTypesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * DirectoryTypes Controller
  *
- * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property DirectoryTypesTable $DirectoryTypes
+ * @method DirectoryType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryTypesController extends AppController
@@ -17,7 +21,7 @@ class DirectoryTypesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -30,8 +34,8 @@ class DirectoryTypesController extends AppController
      * View method
      *
      * @param null $id Directory Type id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -45,7 +49,7 @@ class DirectoryTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -66,8 +70,8 @@ class DirectoryTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Type id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -90,8 +94,8 @@ class DirectoryTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Directory Type id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\NotificationType $notificationType
+ * @var AppView $this
+ * @var NotificationType $notificationType
  */
+
+use App\Model\Entity\NotificationType;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

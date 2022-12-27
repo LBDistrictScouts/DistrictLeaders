@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string $capability
  * @property int $min_level
  *
- * @property \App\Model\Entity\RoleType[] $role_types
+ * @property RoleType[] $role_types
  *
  * @property string $crud_function
  * @property string $applicable_model

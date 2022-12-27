@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $userStateArray
- * @var \App\Model\Entity\User $user
+ * @var User $user
  */
+
+use App\Model\Entity\User;
+use App\View\AppView;
 
 if (isset($userStateArray)) : ?>
     <div class="table-responsive">

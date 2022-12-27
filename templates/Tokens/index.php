@@ -1,8 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Token[]|\Cake\Collection\CollectionInterface $tokens
+ * @var AppView $this
+ * @var Token[]|CollectionInterface $tokens
  */
+
+use App\Model\Entity\Token;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

@@ -36,7 +36,7 @@ use Cake\ORM\Entity;
  * @property string|null $scout_group
  * @property string|null $scout_group_section
  *
- * @property \App\Model\Entity\DocumentVersion $document_version
+ * @property DocumentVersion $document_version
  * @property bool|null $provisional
  * @property string $clean_role
  * @property string $clean_group

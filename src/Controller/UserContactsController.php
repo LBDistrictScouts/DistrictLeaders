@@ -6,19 +6,23 @@ namespace App\Controller;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
+use App\Model\Table\UserContactsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * UserContacts Controller
  *
- * @property \App\Model\Table\UserContactsTable $UserContacts
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property UserContactsTable $UserContacts
+ * @method UserContact[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -34,8 +38,8 @@ class UserContactsController extends AppController
      * View method
      *
      * @param string|null $id User Contact id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -49,7 +53,7 @@ class UserContactsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -63,7 +67,7 @@ class UserContactsController extends AppController
 
         // Set Contact Type if Known
         if (isset($contactType)) {
-            /** @var \App\Model\Entity\UserContactType $userContactType */
+            /** @var UserContactType $userContactType */
             $userContactType = $this->UserContacts->UserContactTypes->find()
                 ->where([UserContactType::FIELD_USER_CONTACT_TYPE => ucwords($contactType)])->firstOrFail();
             $term = $userContactType->get(UserContactType::FIELD_USER_CONTACT_TYPE);
@@ -133,8 +137,8 @@ class UserContactsController extends AppController
      * Edit method
      *
      * @param string|null $id User Contact id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -159,8 +163,8 @@ class UserContactsController extends AppController
      * Delete method
      *
      * @param string|null $contactId User Contact id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($contactId = null)
     {
@@ -183,8 +187,8 @@ class UserContactsController extends AppController
      * Make Primary method
      *
      * @param string|null $contactId User Contact id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function primary($contactId = null)
     {
@@ -203,8 +207,8 @@ class UserContactsController extends AppController
      * Verify method
      *
      * @param string|null $contactId User Contact id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function verify($contactId = null)
     {

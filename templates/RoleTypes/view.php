@@ -1,11 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $crudList
  * @var array $models
  * @var array $capabilities
- * @var \App\Model\Entity\RoleType $roleType
+ * @var RoleType $roleType
  */
+
+use App\Model\Entity\RoleType;
+use App\View\AppView;
 
 ?>
 

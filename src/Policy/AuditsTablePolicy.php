@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
+use App\Model\Entity\User;
 use App\Model\Table\AuditsTable;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
@@ -18,9 +19,9 @@ class AuditsTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can index AuditsTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\AuditsTable $auditsTable The Table to be Verified.
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param AuditsTable $auditsTable The Table to be Verified.
+     * @return ResultInterface|null
      */
     public function canIndex($user, AuditsTable $auditsTable): ?ResultInterface
     {
@@ -34,9 +35,9 @@ class AuditsTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can view AuditsTable
      *
-     * @param \App\Model\Entity\User $user The user.
-     * @param \App\Model\Table\AuditsTable $auditsTable The Table to be Verified.
-     * @return \Authorization\Policy\ResultInterface|null
+     * @param User $user The user.
+     * @param AuditsTable $auditsTable The Table to be Verified.
+     * @return ResultInterface|null
      */
     public function canView($user, AuditsTable $auditsTable)
     {

@@ -5,6 +5,7 @@ namespace App\Test\TestCase\Listener;
 
 use App\Listener\RoleListener;
 use App\Model\Entity\Role;
+use App\Model\Table\RolesTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\Event;
 use Cake\Event\EventList;
@@ -14,7 +15,7 @@ use Cake\Event\EventManager;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- * @property \App\Model\Table\RolesTable $Roles
+ * @property RolesTable $Roles
  * @property EventManager $EventManager
  * @property RoleListener $Listener
  */

@@ -99,7 +99,7 @@ class FunctionalHelper extends Helper
 
     /**
      * @param string $function The functional area being checked
-     * @param \App\Model\Entity\User $identity The User Identity
+     * @param User $identity The User Identity
      * @param string $registeredCap The registered capability key
      * @return bool
      */
@@ -123,7 +123,7 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $function The Function to be Checked
-     * @param \App\Model\Entity\User|null $identity The User Identity
+     * @param User|null $identity The User Identity
      * @param string|null $registeredCap The registered capability key
      * @return bool
      */

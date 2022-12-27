@@ -14,7 +14,7 @@ class CompassRecordTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\CompassRecord
+     * @var CompassRecord
      */
     public $CompassRecord;
 

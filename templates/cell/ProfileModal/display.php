@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $capabilities
  * @var int $loggedInUserId
  * @var string $name
  */
+
+use App\View\AppView;
+
 ?>
 <?= $this->Html->link('View Details', ['controller' => 'Users', 'action' => 'view', $loggedInUserId], ['class' => 'dropdown-item'])  ?>
 <?= $this->Html->link('View Permissions', ['controller' => 'Capabilities', 'action' => 'permissions', $loggedInUserId], ['class' => 'dropdown-item'])  ?>

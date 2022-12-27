@@ -1,14 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CompassRecord[]|\Cake\Collection\CollectionInterface $compassRecords
+ * @var AppView $this
+ * @var CompassRecord[]|CollectionInterface $compassRecords
  */
 
 use App\Model\Entity\CompassRecord;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CompassRecord[]|\Cake\Collection\CollectionInterface $compassRecords
+ * @var AppView $this
+ * @var CompassRecord[]|CollectionInterface $compassRecords
  */
 
 $this->extend('../layout/CRUD/search');

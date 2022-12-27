@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var mixed $action
  * @var mixed $entity
  * @var mixed $objectId
@@ -9,13 +9,15 @@
 declare(strict_types=1);
 
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $tableClass
  * @var array|null $queryParams
  * @var int $objectId
  * @var string $action
  * @var mixed $entity
  */
+
+use App\View\AppView;
 
 $linkArray = [
     'controller' => $entity,

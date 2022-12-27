@@ -3,12 +3,13 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
 
-use App\Test\Factory\UserStateFactory;
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
 use CakephpFixtureFactories\Factory\BaseFactory;
+use Exception;
 
 /**
  * Trait ModelTestTrait
@@ -17,10 +18,12 @@ use CakephpFixtureFactories\Factory\BaseFactory;
  */
 trait ModelTestTrait
 {
+    use FixtureTestTrait;
+
     /**
      * @var array An array for Default Error Messages
      */
-    private $defaultErrorMessages = [
+    private array $defaultErrorMessages = [
         '_required' => 'This field is required',
         '_empty' => 'This field cannot be left empty',
         '_isUnique' => 'This value is already in use',
@@ -35,7 +38,7 @@ trait ModelTestTrait
     /**
      * Function that will return the Entity Name string
      *
-     * @param \Cake\ORM\Table $table
+     * @param Table $table
      * @return string
      */
     private function getEntityName(Table $table): string
@@ -48,7 +51,7 @@ trait ModelTestTrait
     /**
      * Function that will return the class string for the Entity Factory
      *
-     * @param \Cake\ORM\Table $table
+     * @param Table $table
      * @return string
      */
     private function getFactoryName(Table $table): string
@@ -61,7 +64,7 @@ trait ModelTestTrait
     /**
      * Function that will return the 'make' callable string for the Entity Factory
      *
-     * @param \Cake\ORM\Table $table
+     * @param Table $table
      * @return string
      */
     private function getFactoryMake(Table $table): string
@@ -70,24 +73,24 @@ trait ModelTestTrait
     }
 
     /**
-     * @param \Cake\ORM\Table $table
+     * @param Table $table
      * @param array $parameter
      * @param int $quantity
-     * @return \CakephpFixtureFactories\Factory\BaseFactory
+     * @return BaseFactory
      */
-    private function factoryMake(Table $table, array $parameter = [], int $quantity = 1): BaseFactory
+    /*private function factoryMake(Table $table, array $parameter = [], int $quantity = 1): BaseFactory
     {
         $class = $this->getFactoryName($table);
         $config = ['generatePrimaryKey' => false];
 
-        /** @var BaseFactory $factory */
+        * @var BaseFactory $factory
         $factory = new UserStateFactory($config);
 
         return $factory::make($parameter, $quantity);
-    }
+    }*/
 
     /**
-     * @param \Cake\Datasource\EntityInterface $entity
+     * @param EntityInterface $entity
      * @param string $field The Field expected to error
      * @param string $errorType the expected error type
      * @param string|null $message The expected error message output
@@ -98,7 +101,8 @@ trait ModelTestTrait
         string $field,
         string $errorType,
         ?string $message = null
-    ) {
+    ): void
+    {
         if (!key_exists($errorType, $this->defaultErrorMessages)) {
             TestCase::assertTrue(false, 'No Error type exists for this field: ' . $field);
         }
@@ -124,12 +128,17 @@ trait ModelTestTrait
 
     /**
      * @param array $requiredFields Required Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @return void
      */
-    protected function validateRequired($requiredFields, $table, $good, $validator = 'default')
+    protected function validateRequired(
+        array $requiredFields,
+        Table $table,
+        callable $good,
+        string $validator = 'default'
+    ): void
     {
         foreach ($requiredFields as $require) {
             $requiredArray = call_user_func($good);
@@ -142,12 +151,17 @@ trait ModelTestTrait
 
     /**
      * @param array $notRequiredFields Required Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @return void
      */
-    protected function validateNotRequired($notRequiredFields, $table, $good, $validator = 'default')
+    protected function validateNotRequired(
+        array $notRequiredFields,
+        Table $table,
+        callable $good,
+        string $validator = 'default'
+    ): void
     {
         foreach ($notRequiredFields as $notRequired) {
             $notRequiredArray = call_user_func($good);
@@ -159,7 +173,7 @@ trait ModelTestTrait
 
     /**
      * @param string $field Not Empty Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @param string $message The Output Message Expected
@@ -176,7 +190,7 @@ trait ModelTestTrait
 
     /**
      * @param array $notEmptyFields Not Empty Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @return void
@@ -190,7 +204,7 @@ trait ModelTestTrait
 
     /**
      * @param array $emptyFields Not Empty Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @return void
@@ -211,7 +225,7 @@ trait ModelTestTrait
 
     /**
      * @param array $maxLengthFields Associative Max Length Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @return void
@@ -243,7 +257,7 @@ trait ModelTestTrait
 
     /**
      * @param array $regex The Regex Field with various passing and erring strings
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string|null $validator The Validator to be tested
      * @return void
@@ -270,7 +284,7 @@ trait ModelTestTrait
 
     /**
      * @param string $field Not Empty Fields Array
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @param string $validator The Validator to be tested
      * @param string|null $message The Output Message Expected
@@ -302,7 +316,7 @@ trait ModelTestTrait
 
     /**
      * @param string|array $field Field Name
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @return void
      */
@@ -330,7 +344,7 @@ trait ModelTestTrait
 
     /**
      * @param array $uniqueFieldArray Array of Field Names
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @return void
      */
@@ -343,8 +357,8 @@ trait ModelTestTrait
 
     /**
      * @param string $field Field Name
-     * @param \Cake\ORM\Table $table The Table to be tested
-     * @param \Cake\ORM\Table $association The Associated Table to be tested
+     * @param Table $table The Table to be tested
+     * @param Table $association The Associated Table to be tested
      * @param callable $good The Good Generation Function
      * @param array|null $options Options Array for Save Entity
      * @return void
@@ -374,7 +388,7 @@ trait ModelTestTrait
 
     /**
      * @param array $existsArray Array of Foreign Key Names & Associated Tables
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      * @param callable $good The Good Generation Function
      * @return void
      */
@@ -386,7 +400,7 @@ trait ModelTestTrait
     }
 
     /**
-     * @param \Cake\ORM\Table $table The Table to be tested
+     * @param Table $table The Table to be tested
      */
     protected function validateInstallBase($table)
     {
@@ -410,7 +424,7 @@ trait ModelTestTrait
 
     /**
      * @param array $expected Array of Expected Value
-     * @param \Cake\ORM\Table $table The Table being Validated
+     * @param Table $table The Table being Validated
      * @param int $count Number of Items Expected
      * @param array|null $dates Date Fields to be omitted
      * @param int|array|null $get The Get Value
@@ -445,16 +459,13 @@ trait ModelTestTrait
     }
 
     /**
-     * @param \Cake\ORM\Table $table
+     * @param Table $table
+     * @throws Exception
      */
-    protected function validateAutoInitialise(Table $table): void
+    /*protected function validateAutoInitialise(Table $table): void
     {
-        try {
-            $savedEntity = $this->factoryMake($table)->persist();
-            TestCase::assertInstanceOf($table->getEntityClass(), $savedEntity, 'Save Exception');
-        } catch (\Exception $exception) {
-            throw $exception;
-        }
+        $savedEntity = $this->factoryMake($table)->persist();
+        TestCase::assertInstanceOf($table->getEntityClass(), $savedEntity, 'Save Exception');
 
         $actual = $table->get($savedEntity->id)->toArray();
         $expected = $savedEntity->toArray();
@@ -462,5 +473,5 @@ trait ModelTestTrait
 
         $count = $table->find('all')->count();
         TestCase::assertEquals(1, $count);
-    }
+    }*/
 }

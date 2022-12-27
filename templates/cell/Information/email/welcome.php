@@ -1,9 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $system
  * @var string $creator
  */
+
+use App\View\AppView;
 
 $preview = 'Welcome to the ' . $system;
 $this->assign('preview', $preview);

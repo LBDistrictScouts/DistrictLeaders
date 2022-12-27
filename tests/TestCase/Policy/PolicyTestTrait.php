@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Policy;
 
 use App\Model\Entity\User;
+use App\Test\Fixture\FixtureTestTrait;
 use App\Utility\CapBuilder;
 use Authorization\Exception\AuthorizationRequiredException;
 use Cake\Core\Configure;
@@ -20,6 +21,7 @@ use PHPUnit\Exception;
 trait PolicyTestTrait
 {
     use IntegrationTestTrait;
+    use FixtureTestTrait;
     use LocatorAwareTrait;
 
     protected function setupForbiddenError(): void

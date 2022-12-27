@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <nav class="actions large-3 medium-4 columns col-sm-4 col-xs-12" id="actions-sidebar">
     <ul class="side-nav nav nav-pills nav-stacked">

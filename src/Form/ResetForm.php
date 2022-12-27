@@ -15,8 +15,8 @@ class ResetForm extends Form
     /**
      * Build the Schema of the form.
      *
-     * @param \Cake\Form\Schema $schema The basic Schema to be Extended
-     * @return \Cake\Form\Schema $schema
+     * @param Schema $schema The basic Schema to be Extended
+     * @return Schema $schema
      */
     protected function buildSchema(Schema $schema): Schema
     {
@@ -32,8 +32,8 @@ class ResetForm extends Form
     /**
      * Function to Validate the Form
      *
-     * @param \Cake\Validation\Validator $validator The basic Validation to be extended.
-     * @return \Cake\Validation\Validator $validator
+     * @param Validator $validator The basic Validation to be extended.
+     * @return Validator $validator
      */
     public function validationDefault(Validator $validator): Validator
     {

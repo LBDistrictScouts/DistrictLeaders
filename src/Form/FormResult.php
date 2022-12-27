@@ -36,7 +36,7 @@ class FormResult
     /**
      * The identity data used in the authentication attempt
      *
-     * @var null|array|\ArrayAccess
+     * @var null|array|ArrayAccess
      */
     protected $_data;
 
@@ -55,7 +55,7 @@ class FormResult
      * @param null|array $data The identity data
      * @param int $status Status constant equivalent.
      * @param array $messages Messages.
-     * @throws \InvalidArgumentException When invalid identity data is passed.
+     * @throws InvalidArgumentException When invalid identity data is passed.
      */
     public function __construct(?array $data, int $status, array $messages = [])
     {
@@ -99,7 +99,7 @@ class FormResult
     /**
      * Returns the identity data used in the authentication attempt.
      *
-     * @return \ArrayAccess|array|null
+     * @return ArrayAccess|array|null
      */
     public function getData()
     {

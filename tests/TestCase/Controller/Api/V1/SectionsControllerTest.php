@@ -16,17 +16,6 @@ class SectionsControllerTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.Sections',
-        'app.SectionTypes',
-        'app.ScoutGroups',
-    ];
-
-    /**
      * Test index method
      *
      * @return void

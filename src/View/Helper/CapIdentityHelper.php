@@ -15,6 +15,8 @@ declare(strict_types=1);
  */
 namespace App\View\Helper;
 
+use App\Model\Entity\User;
+use Authentication\IdentityInterface;
 use Authentication\View\Helper\IdentityHelper;
 
 /**
@@ -29,7 +31,7 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * Identity Object
      *
-     * @var null|\Authentication\IdentityInterface|\App\Model\Entity\User
+     * @var null|IdentityInterface|User
      */
     protected $_identity;
 

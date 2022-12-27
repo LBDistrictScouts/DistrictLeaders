@@ -17,44 +17,9 @@ class NotificationsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\NotificationsTable
+     * @var NotificationsTable
      */
-    protected $Notifications;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-    ];
+    protected NotificationsTable $Notifications;
 
     /**
      * setUp method

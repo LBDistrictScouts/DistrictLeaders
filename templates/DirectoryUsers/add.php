@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DirectoryUser $directoryUser
+ * @var AppView $this
+ * @var DirectoryUser $directoryUser
  * @var mixed $directories
  */
+
+use App\Model\Entity\DirectoryUser;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

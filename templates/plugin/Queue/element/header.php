@@ -1,8 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array|null $data
  */
+
+use App\View\AppView;
 
 if (!isset($data)) {
     $data = [];

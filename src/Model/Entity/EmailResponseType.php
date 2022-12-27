@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string|null $email_response_type
  * @property bool $bounce
  *
- * @property \App\Model\Entity\EmailResponse[] $email_responses
+ * @property EmailResponse[] $email_responses
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

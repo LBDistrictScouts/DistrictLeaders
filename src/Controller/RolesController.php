@@ -6,19 +6,23 @@ namespace App\Controller;
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Model\Table\RolesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * Roles Controller
  *
- * @property \App\Model\Table\RolesTable $Roles
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property RolesTable $Roles
+ * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -34,8 +38,8 @@ class RolesController extends AppController
      * View method
      *
      * @param string|null $roleId Role id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($roleId = null)
     {
@@ -64,7 +68,7 @@ class RolesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -116,8 +120,8 @@ class RolesController extends AppController
      * Edit method
      *
      * @param string|null $roleId Role id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($roleId = null)
     {
@@ -152,8 +156,8 @@ class RolesController extends AppController
      * Delete method
      *
      * @param string|null $roleId Role id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($roleId = null)
     {

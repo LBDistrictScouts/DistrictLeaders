@@ -15,32 +15,47 @@ declare(strict_types=1);
  */
 namespace App\View;
 
+use App\View\Helper\CapIdentityHelper;
+use App\View\Helper\FunctionalHelper;
+use App\View\Helper\InflectionHelper;
+use App\View\Helper\JobHelper;
+use App\View\Helper\MarkdownHelper;
+use App\View\Helper\PermissionsHelper;
+use BootstrapUI\View\Helper\BreadcrumbsHelper;
+use BootstrapUI\View\Helper\FormHelper;
+use BootstrapUI\View\Helper\HtmlHelper;
+use BootstrapUI\View\Helper\PaginatorHelper;
 use Cake\View\View;
+use Flash\View\Helper\FlashHelper;
+use Queue\View\Helper\QueueProgressHelper;
+use Search\View\Helper\SearchHelper;
 use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use Tools\View\Helper\FormatHelper;
+use Tools\View\Helper\TimeHelper;
 
 /**
  * Application View
  *
  * Your application’s default view class
  *
- * @property \App\View\Helper\FunctionalHelper $Functional
- * @property \App\View\Helper\JobHelper $Job
- * @property \App\View\Helper\PermissionsHelper $Icon
- * @property \App\View\Helper\InflectionHelper $Inflection
- * @property \App\View\Helper\CapIdentityHelper $Identity
- * @property \App\View\Helper\MarkdownHelper $Markdown
+ * @property FunctionalHelper $Functional
+ * @property JobHelper $Job
+ * @property PermissionsHelper $Icon
+ * @property InflectionHelper $Inflection
+ * @property CapIdentityHelper $Identity
+ * @property MarkdownHelper $Markdown
  *
- * @property \BootstrapUI\View\Helper\BreadcrumbsHelper $Breadcrumbs
- * @property \BootstrapUI\View\Helper\FormHelper $Form
- * @property \BootstrapUI\View\Helper\HtmlHelper $Html
- * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
+ * @property BreadcrumbsHelper $Breadcrumbs
+ * @property FormHelper $Form
+ * @property HtmlHelper $Html
+ * @property PaginatorHelper $Paginator
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
- * @property \Tools\View\Helper\TimeHelper $Time
- * @property \Tools\View\Helper\FormatHelper $Format
- * @property \Flash\View\Helper\FlashHelper $Flash
- * @property \Search\View\Helper\SearchHelper $Search
- * @property \Queue\View\Helper\QueueProgressHelper $QueueProgress
- * @property \App\View\Helper\CapIdentityHelper $CapIdentity
+ * @property TimeHelper $Time
+ * @property FormatHelper $Format
+ * @property FlashHelper $Flash
+ * @property SearchHelper $Search
+ * @property QueueProgressHelper $QueueProgress
+ * @property CapIdentityHelper $CapIdentity
  */
 class EmailView extends View
 {

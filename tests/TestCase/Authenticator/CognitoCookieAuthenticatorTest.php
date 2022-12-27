@@ -17,6 +17,7 @@ namespace App\Test\TestCase\Authenticator;
 
 use App\Authenticator\CognitoCookieAuthenticator;
 use App\Authenticator\CognitoResult;
+use App\Test\Fixture\FixtureTestTrait;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
 use ArrayObject;
 use Authentication\Authenticator\Result;
@@ -34,6 +35,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CognitoCookieAuthenticatorTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
      * @var string the Password Token
      */

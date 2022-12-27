@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Token $token
+ * @var AppView $this
+ * @var Token $token
  */
+
+use App\Model\Entity\Token;
+use App\View\AppView;
+
 ?>
 <div class="tokens form large-9 medium-8 columns content">
     <?= $this->Form->create($token) ?>

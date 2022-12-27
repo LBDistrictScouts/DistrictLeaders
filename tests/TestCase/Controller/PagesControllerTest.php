@@ -29,38 +29,6 @@ class PagesControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
-    /**
      * testMultipleGet method
      *
      * @return void

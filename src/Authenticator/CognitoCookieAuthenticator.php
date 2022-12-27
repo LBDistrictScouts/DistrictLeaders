@@ -16,6 +16,7 @@ declare(strict_types=1);
  */
 namespace App\Authenticator;
 
+use ArrayAccess;
 use Authentication\Authenticator\PersistenceInterface;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
@@ -154,7 +155,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      *
      * Returns concatenated username and password hash.
      *
-     * @param array|\ArrayAccess $identity Identity data.
+     * @param array|ArrayAccess $identity Identity data.
      * @return string
      */
     protected function createPlainToken($identity): string
@@ -170,7 +171,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      *
      * Cookie token consists of a username and hashed username + password hash.
      *
-     * @param array|\ArrayAccess $identity Identity data.
+     * @param array|ArrayAccess $identity Identity data.
      * @return string
      */
     public function createToken($identity): string
@@ -186,7 +187,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
     /**
      * Checks whether a token hash matches the identity data.
      *
-     * @param array|\ArrayAccess $identity Identity data.
+     * @param array|ArrayAccess $identity Identity data.
      * @param string $tokenHash Hashed part of a cookie token.
      * @return bool
      */
@@ -214,7 +215,7 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * Creates a cookie instance with configured defaults.
      *
      * @param mixed $value Cookie value.
-     * @return \Cake\Http\Cookie\CookieInterface
+     * @return CookieInterface
      */
     protected function createCookie($value): CookieInterface
     {

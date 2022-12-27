@@ -3,18 +3,24 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\CampRoleType;
+use App\Model\Table\CampRoleTypesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+
 /**
  * CampRoleTypes Controller
  *
- * @property \App\Model\Table\CampRoleTypesTable $CampRoleTypes
- * @method \App\Model\Entity\CampRoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property CampRoleTypesTable $CampRoleTypes
+ * @method CampRoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRoleTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -27,8 +33,8 @@ class CampRoleTypesController extends AppController
      * View method
      *
      * @param string|null $id Camp Role Type id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -42,7 +48,7 @@ class CampRoleTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @return Response|null Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -63,8 +69,8 @@ class CampRoleTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Camp Role Type id.
-     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -87,8 +93,8 @@ class CampRoleTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Camp Role Type id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

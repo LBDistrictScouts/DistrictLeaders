@@ -5,6 +5,7 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\ORM\Association;
+use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 
 /**
@@ -20,9 +21,9 @@ class FilterComponent extends Component
     protected $_defaultConfig = [];
 
     /**
-     * @param \Cake\ORM\Association $association The Association for Filtering on
+     * @param Association $association The Association for Filtering on
      * @param array $queryParams The Query Params of the Request
-     * @return \Cake\ORM\Query
+     * @return Query
      */
     public function indexFilters(Association $association, array $queryParams)
     {

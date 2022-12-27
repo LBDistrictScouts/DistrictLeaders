@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -12,17 +13,17 @@ use Cake\ORM\Entity;
  * @property int|null $user_id
  * @property int|null $notification_type_id
  * @property string $notification_header
- * @property \Cake\I18n\FrozenTime|null $created
- * @property \Cake\I18n\FrozenTime|null $read_date
+ * @property FrozenTime|null $created
+ * @property FrozenTime|null $read_date
  * @property string|null $notification_source
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime|null $deleted
  * @property array $body_content
  * @property array|null $subject_link
  * @property string|null $email_code
  *
- * @property \App\Model\Entity\User|null $user
- * @property \App\Model\Entity\NotificationType|null $notification_type
- * @property \App\Model\Entity\EmailSend[] $email_sends
+ * @property User|null $user
+ * @property NotificationType|null $notification_type
+ * @property EmailSend[] $email_sends
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property bool $new

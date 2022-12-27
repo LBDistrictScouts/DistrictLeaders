@@ -1,8 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\PasswordState[]|\Cake\Collection\CollectionInterface $passwordStates
+ * @var AppView $this
+ * @var PasswordState[]|CollectionInterface $passwordStates
  */
+
+use App\Model\Entity\PasswordState;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

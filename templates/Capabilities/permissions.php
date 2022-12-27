@@ -1,10 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $capabilities
  * @var array $models
- * @var \App\Model\Entity\User $user
+ * @var User $user
  */
+
+use App\Model\Entity\ScoutGroup;
+use App\Model\Entity\Section;
+use App\Model\Entity\User;
+use App\View\AppView;
+
 ?>
 
 
@@ -129,10 +135,10 @@
                         <?php $entity = $capabilityMatrixArray['object']; ?>
                         <div class="card" style="margin-top: 15px;margin-bottom: 15px;">
                             <div class="card-header">
-                                <?php if ($entity instanceof \App\Model\Entity\Section) : ?>
+                                <?php if ($entity instanceof Section) : ?>
                                     <h3>Section: <?= $this->Html->link($entity->section, ['controller' => 'Sections', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
-                                <?php if ($entity instanceof \App\Model\Entity\ScoutGroup) : ?>
+                                <?php if ($entity instanceof ScoutGroup) : ?>
                                     <h3>Scout Group: <?= $this->Html->link($entity->scout_group, ['controller' => 'ScoutGroups', 'action' => 'view', $entity->id]) ?></h3>
                                 <?php endif; ?>
                             </div>

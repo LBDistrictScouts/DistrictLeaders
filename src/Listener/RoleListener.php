@@ -9,13 +9,14 @@ use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- * @property \App\Model\Table\RolesTable $Roles
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property RolesTable $Roles
+ * @property QueuedJobsTable $QueuedJobs
  */
 class RoleListener implements EventListenerInterface
 {
@@ -34,7 +35,7 @@ class RoleListener implements EventListenerInterface
     }
 
     /**
-     * @param \Cake\Event\EventInterface $event The event being processed.
+     * @param EventInterface $event The event being processed.
      * @return void
      */
     public function newRole(EventInterface $event): void
@@ -49,7 +50,7 @@ class RoleListener implements EventListenerInterface
     }
 
     /**
-     * @param \Cake\Event\EventInterface $event The event being processed.
+     * @param EventInterface $event The event being processed.
      * @return void
      */
     public function roleChange(EventInterface $event): void

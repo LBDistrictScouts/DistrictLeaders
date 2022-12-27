@@ -3,22 +3,30 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Component\GoogleClientComponent;
+use App\Controller\Component\QueueComponent;
 use App\Form\GoogleAuthForm;
 use App\Model\Entity\Directory;
+use App\Model\Table\DirectoriesTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
+use Exception;
+use Google_Exception;
 
 /**
  * Directories Controller
  *
- * @property \App\Model\Table\DirectoriesTable $Directories
- * @property \App\Controller\Component\GoogleClientComponent GoogleClient
- * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property DirectoriesTable $Directories
+ * @property GoogleClientComponent GoogleClient
+ * @property QueueComponent $Queue
+ * @method Directory[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoriesController extends AppController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      * @return void
      */
     public function initialize(): void
@@ -31,7 +39,7 @@ class DirectoriesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -47,8 +55,8 @@ class DirectoriesController extends AppController
      * View method
      *
      * @param null $directoryID Directory id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($directoryID = null)
     {
@@ -62,7 +70,7 @@ class DirectoriesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -84,8 +92,8 @@ class DirectoriesController extends AppController
      * Edit method
      *
      * @param string|null $directoryID Directory id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($directoryID = null)
     {
@@ -109,9 +117,9 @@ class DirectoriesController extends AppController
      * Edit method
      *
      * @param string|null $directoryID Directory id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     * @throws \Google_Exception
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
+     * @throws Google_Exception
      */
     public function auth($directoryID = null)
     {
@@ -175,8 +183,8 @@ class DirectoriesController extends AppController
     }
 
     /**
-     * @return \Cake\Http\Response
-     * @throws \Google_Exception
+     * @return Response
+     * @throws Google_Exception
      */
     public function response()
     {
@@ -186,7 +194,7 @@ class DirectoriesController extends AppController
             $query = $this->Directories->find()->where([Directory::FIELD_ACTIVE => false]);
 
             if ($query->count() == 1) {
-                /** @var \App\Model\Entity\Directory $directory */
+                /** @var Directory $directory */
                 $directory = $query->firstOrFail();
 
                 $client = $this->GoogleClient->newClient();
@@ -219,8 +227,8 @@ class DirectoriesController extends AppController
      * Delete method
      *
      * @param string|null $directoryID Directory id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($directoryID = null)
     {
@@ -239,8 +247,8 @@ class DirectoriesController extends AppController
      * Delete method
      *
      * @param string|null $directoryId Directory id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function populate($directoryId = null)
     {

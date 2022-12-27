@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Queue\Task;
 
+use App\Model\Entity\EmailSend;
+use App\Model\Table\EmailSendsTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -10,7 +12,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\EmailSendsTable EmailSends
+ * @property EmailSendsTable EmailSends
  */
 class UnsentTask extends Task implements TaskInterface
 {
@@ -37,7 +39,7 @@ class UnsentTask extends Task implements TaskInterface
     {
         $this->loadModel('EmailSends');
 
-        /** @var \App\Model\Entity\EmailSend[] $unsent */
+        /** @var EmailSend[] $unsent */
         $unsent = $this->EmailSends->find('unsent');
         $found = 0;
         $sent = 0;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Task;
 
 use App\Test\TestCase\QueueTestCase as TestCase;
+use Queue\Model\Entity\QueuedJob;
 
 /**
  * App\Mailer\BasicMailer Test Case
@@ -32,7 +33,7 @@ class DirectoryTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        /** @var \Queue\Model\Entity\QueuedJob $job */
+        /** @var QueuedJob $job */
         $job = $this->QueuedJobs->find()->first();
         $data = unserialize($job->get('data'));
 
@@ -86,7 +87,7 @@ class DirectoryTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        /** @var \Queue\Model\Entity\QueuedJob $job */
+        /** @var QueuedJob $job */
         $job = $this->QueuedJobs->find()->first();
         $data = unserialize($job->get('data'));
 

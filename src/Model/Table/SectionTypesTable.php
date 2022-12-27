@@ -6,6 +6,9 @@ namespace App\Model\Table;
 use App\Model\Entity\RoleType;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -13,21 +16,21 @@ use Cake\Validation\Validator;
 /**
  * SectionTypes Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
- * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
- * @method \App\Model\Entity\SectionType newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\SectionType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\SectionType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\SectionType newEmptyEntity()
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property RoleTypesTable&HasMany $RoleTypes
+ * @property SectionsTable&HasMany $Sections
+ * @method SectionType get($primaryKey, $options = [])
+ * @method SectionType newEntity(array $data, array $options = [])
+ * @method SectionType[] newEntities(array $data, array $options = [])
+ * @method SectionType|false save(EntityInterface $entity, $options = [])
+ * @method SectionType saveOrFail(EntityInterface $entity, $options = [])
+ * @method SectionType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method SectionType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method SectionType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method SectionType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method SectionType newEmptyEntity()
+ * @method SectionType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method SectionType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method SectionType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SectionTypesTable extends Table
 {
@@ -56,8 +59,8 @@ class SectionTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -85,8 +88,8 @@ class SectionTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -98,7 +101,7 @@ class SectionTypesTable extends Table
     /**
      * @param string $sectionType The Section Type for Lookup
      * @param string|null $typeCode The Optional Type Code for Setting
-     * @return \App\Model\Entity\SectionType
+     * @return SectionType
      */
     public function findOrMake(string $sectionType, ?string $typeCode = null): SectionType
     {

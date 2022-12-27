@@ -1,8 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var mixed $PolicyResult
  */
+
+use App\View\AppView;
 
 $path = $this->getRequest()->getPath();
 

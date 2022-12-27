@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DirectoryGroup $directoryGroup
+ * @var AppView $this
+ * @var DirectoryGroup $directoryGroup
  * @var mixed $directories
  * @var mixed $roleTypes
  */
+
+use App\Model\Entity\DirectoryGroup;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

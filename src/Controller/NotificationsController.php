@@ -3,13 +3,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Notification;
+use App\Model\Table\NotificationsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 use Cake\View\CellTrait;
 
 /**
  * Notifications Controller
  *
- * @property \App\Model\Table\NotificationsTable $Notifications
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property NotificationsTable $Notifications
+ * @method Notification[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController
 {
@@ -18,7 +23,7 @@ class NotificationsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -36,8 +41,8 @@ class NotificationsController extends AppController
      * View method
      *
      * @param string|null $notificationId Notification id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($notificationId = null)
     {
@@ -60,8 +65,8 @@ class NotificationsController extends AppController
      * Welcome User method
      *
      * @param string|null $userId Notification id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function welcome(?string $userId = null)
     {
@@ -80,8 +85,8 @@ class NotificationsController extends AppController
      * Delete method
      *
      * @param string|null $notificationId Notification id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($notificationId = null)
     {

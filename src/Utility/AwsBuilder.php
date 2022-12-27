@@ -15,6 +15,7 @@ declare(strict_types=1);
  */
 namespace App\Utility;
 
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Sdk;
 use Cake\Core\Configure;
 
@@ -81,7 +82,7 @@ class AwsBuilder
     /**
      * Constructor.
      *
-     * @return \Aws\Sdk
+     * @return Sdk
      */
     public static function buildSdk(): Sdk
     {
@@ -93,9 +94,9 @@ class AwsBuilder
     /**
      * Constructor.
      *
-     * @return \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
+     * @return CognitoIdentityProviderClient
      */
-    public static function buildCognitoClient(): \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
+    public static function buildCognitoClient(): CognitoIdentityProviderClient
     {
         return self::buildSdk()->createCognitoIdentityProvider();
     }

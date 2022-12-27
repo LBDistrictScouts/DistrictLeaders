@@ -4,15 +4,19 @@ declare(strict_types=1);
 namespace App\View\Cell;
 
 use App\Model\Entity\Notification;
+use App\Model\Table\NotificationsTable;
+use App\View\Helper\CapIdentityHelper;
 use Cake\View\Cell;
+use Cake\View\Helper\HtmlHelper;
+use Cake\View\Helper\TimeHelper;
 
 /**
  * Notify cell
  *
- * @property \App\Model\Table\NotificationsTable $Notifications
- * @property \Cake\View\Helper\HtmlHelper $Html
- * @property \Cake\View\Helper\TimeHelper $Time
- * @property \App\View\Helper\CapIdentityHelper $Identity
+ * @property NotificationsTable $Notifications
+ * @property HtmlHelper $Html
+ * @property TimeHelper $Time
+ * @property CapIdentityHelper $Identity
  */
 class NotifyModalCell extends Cell
 {

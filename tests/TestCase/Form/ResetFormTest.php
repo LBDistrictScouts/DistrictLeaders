@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Form;
 
 use App\Form\ResetForm;
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -11,44 +12,14 @@ use Cake\TestSuite\TestCase;
  */
 class ResetFormTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Form\ResetForm
+     * @var ResetForm
      */
-    public $Reset;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
+    public ResetForm $Reset;
 
     /**
      * setUp method

@@ -14,7 +14,7 @@ class CapabilityTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\Capability
+     * @var Capability
      */
     public $Capability;
 

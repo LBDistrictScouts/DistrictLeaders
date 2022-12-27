@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -15,28 +16,28 @@ use Cake\ORM\Entity;
  * @property string $modified_value
  * @property int|null $user_id
  * @property int $audit_record_id
- * @property \Cake\I18n\FrozenTime $change_date
+ * @property FrozenTime $change_date
  *
- * @property \App\Model\Entity\User|null $user
- * @property \App\Model\Entity\User $changed_user
- * @property \App\Model\Entity\Role $changed_role
- * @property \App\Model\Entity\ScoutGroup $changed_scout_group
- * @property \App\Model\Entity\UserContact $changed_user_contact
+ * @property User|null $user
+ * @property User $changed_user
+ * @property Role $changed_role
+ * @property ScoutGroup $changed_scout_group
+ * @property UserContact $changed_user_contact
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property \App\Model\Entity\Section $changed_section
+ * @property Section $changed_section
  *
- * @property \App\Model\Entity\User $new_user
- * @property \App\Model\Entity\UserContact $new_user_contact
- * @property \App\Model\Entity\Section $new_section
- * @property \App\Model\Entity\RoleStatus $new_role_status
- * @property \App\Model\Entity\RoleType $new_role_type
+ * @property User $new_user
+ * @property UserContact $new_user_contact
+ * @property Section $new_section
+ * @property RoleStatus $new_role_status
+ * @property RoleType $new_role_type
  *
- * @property \App\Model\Entity\User|null $original_user
- * @property \App\Model\Entity\UserContact|null $original_user_contact
- * @property \App\Model\Entity\Section|null $original_section
- * @property \App\Model\Entity\RoleStatus|null $original_role_status
- * @property \App\Model\Entity\RoleType|null $original_role_type
+ * @property User|null $original_user
+ * @property UserContact|null $original_user_contact
+ * @property Section|null $original_section
+ * @property RoleStatus|null $original_role_status
+ * @property RoleType|null $original_role_type
  */
 class Audit extends Entity
 {

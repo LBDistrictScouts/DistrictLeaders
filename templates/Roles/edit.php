@@ -1,13 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var bool $contact
- * @var \App\Model\Entity\Role $role
+ * @var Role $role
  * @var mixed $roleStatuses
  * @var mixed $roleTypes
  * @var mixed $sections
  * @var mixed $userContacts
  */
+
+use App\Model\Entity\Role;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

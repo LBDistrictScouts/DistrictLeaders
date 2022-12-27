@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\IconHelper;
+use App\View\Helper\PermissionsHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
+use TypeError;
 
 /**
  * App\View\Helper\IconHelper Test Case
@@ -15,7 +17,7 @@ class IconHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\PermissionsHelper
+     * @var PermissionsHelper
      */
     protected $Icon;
 
@@ -141,7 +143,7 @@ class IconHelperTest extends TestCase
     public function testIconEnhancedBoolean(?int $value, string $expected): void
     {
         if (is_null($value)) {
-            $this->expectException(\TypeError::class);
+            $this->expectException(TypeError::class);
         }
 
         $result = $this->Icon->iconEnhancedBoolean($value);

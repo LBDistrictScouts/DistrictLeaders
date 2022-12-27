@@ -3,22 +3,28 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Component\QueueComponent;
 use App\Model\Entity\DocumentVersion;
+use App\Model\Table\DocumentVersionsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 use Cake\Utility\Inflector;
+use Exception;
 
 /**
  * DocumentVersions Controller
  *
- * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
- * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property DocumentVersionsTable $DocumentVersions
+ * @property QueueComponent $Queue
+ * @method DocumentVersion[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -37,8 +43,8 @@ class DocumentVersionsController extends AppController
      * View method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($documentVersionId = null)
     {
@@ -52,7 +58,7 @@ class DocumentVersionsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -74,8 +80,8 @@ class DocumentVersionsController extends AppController
      * Edit method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($documentVersionId = null)
     {
@@ -99,8 +105,8 @@ class DocumentVersionsController extends AppController
      * Delete method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($documentVersionId = null)
     {
@@ -119,7 +125,7 @@ class DocumentVersionsController extends AppController
      * Delete method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return Response|void Redirects to index.
      */
     public function compass($documentVersionId = null)
     {
@@ -136,8 +142,8 @@ class DocumentVersionsController extends AppController
      * Auto Merge method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
-     * @throws \Exception
+     * @return Response|void Redirects to index.
+     * @throws Exception
      */
     public function autoMerge($documentVersionId = null)
     {
@@ -154,7 +160,7 @@ class DocumentVersionsController extends AppController
      * Add method
      *
      * @param string|null $documentVersionId Document Edition id.
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function map($documentVersionId = null)
     {

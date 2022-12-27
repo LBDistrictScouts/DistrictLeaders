@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Notification[]|\Cake\Collection\CollectionInterface $notifications
+ * @var AppView $this
+ * @var Notification[]|CollectionInterface $notifications
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

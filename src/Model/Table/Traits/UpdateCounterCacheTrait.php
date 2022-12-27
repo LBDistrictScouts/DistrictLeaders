@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Model\Table\Traits;
 
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Query;
+
 /**
  * Trait UpdateCounterCacheTrait
  *
@@ -25,7 +28,7 @@ trait UpdateCounterCacheTrait
      * @param true|false $reset reset the values to 0, if no matching entry could be found
      * @return int
      *        if $verbose_return == false, the total number of updated fields
-     * @throws \App\Model\Table\Traits\BehaviourNotFoundException when the CounterCacheBehavior is not attached
+     * @throws BehaviourNotFoundException when the CounterCacheBehavior is not attached
      */
     public function updateCounterCache($association = null, $cacheField = null, $reset = true)
     {
@@ -49,7 +52,7 @@ trait UpdateCounterCacheTrait
 
         $totalCount = 0;
         foreach ($associations as $assocName => $config) {
-            /** @var \Cake\ORM\Association\BelongsTo $assoc */
+            /** @var BelongsTo $assoc */
             $assoc = $this->{$assocName};
             $foreignKey = $assoc->getForeignKey();
             $target = $assoc->getTarget();
@@ -85,7 +88,7 @@ trait UpdateCounterCacheTrait
                     $finder = $this->callFinder($options['finder'], $finder);
                 }
 
-                /** @var \Cake\ORM\Query $result */
+                /** @var Query $result */
                 $result = $finder
                     ->select([$foreignKey => $foreignKey, 'count' => $this->query()->func()->count('*')])
                     ->where($options['conditions'])

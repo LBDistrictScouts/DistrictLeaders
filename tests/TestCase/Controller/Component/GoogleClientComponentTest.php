@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Controller\Component;
 use App\Controller\Component\GoogleClientComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\TestSuite\TestCase;
+use Google_Exception;
 
 /**
  * App\Controller\Component\GoogleClientComponent Test Case
@@ -15,7 +16,7 @@ class GoogleClientComponentTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Controller\Component\GoogleClientComponent
+     * @var GoogleClientComponent
      */
     public $GoogleClient;
 
@@ -47,7 +48,7 @@ class GoogleClientComponentTest extends TestCase
      * Test initial setup
      *
      * @return void
-     * @throws \Google_Exception
+     * @throws Google_Exception
      */
     public function testInitialization()
     {

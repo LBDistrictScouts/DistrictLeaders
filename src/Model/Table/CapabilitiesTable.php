@@ -7,7 +7,12 @@ use App\Model\Entity\Capability;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\Database\Exception;
+use Cake\Database\Query;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
 use Cake\Log\Log;
+use Cake\ORM\Association\BelongsToMany;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -17,21 +22,21 @@ use Cake\Validation\Validator;
 /**
  * Capabilities Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
- * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
- * @method \App\Model\Entity\Capability newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Capability|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Capability[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Capability findOrCreate($search, ?callable $callback = null, $options = [])
- * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Capability newEmptyEntity()
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property RoleTypesTable&BelongsToMany $RoleTypes
+ * @method Capability get($primaryKey, $options = [])
+ * @method Capability newEntity(array $data, array $options = [])
+ * @method Capability[] newEntities(array $data, array $options = [])
+ * @method Capability|false save(EntityInterface $entity, $options = [])
+ * @method Capability saveOrFail(EntityInterface $entity, $options = [])
+ * @method Capability patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Capability[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method Capability findOrCreate($search, ?callable $callback = null, $options = [])
+ * @property CapabilitiesRoleTypesTable&HasMany $CapabilitiesRoleTypes
+ * @method Capability[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method Capability newEmptyEntity()
+ * @method Capability[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method Capability[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method Capability[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesTable extends Table
 {
@@ -61,8 +66,8 @@ class CapabilitiesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -96,8 +101,8 @@ class CapabilitiesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -108,11 +113,11 @@ class CapabilitiesTable extends Table
     }
 
     /**
-     * @param \Cake\Database\Query $query The Query being modified
+     * @param Query $query The Query being modified
      * @param array $options Options for the find.
      * @return mixed
      */
-    public function findLevel(\Cake\Database\Query $query, array $options)
+    public function findLevel(Query $query, array $options)
     {
         if (
             key_exists('level', $options)
@@ -244,7 +249,7 @@ class CapabilitiesTable extends Table
 
     /**
      * @param array $objectArray The array to be saved
-     * @return \App\Model\Entity\Capability|false
+     * @return Capability|false
      */
     protected function makeOrPatch(array $objectArray)
     {
@@ -288,7 +293,7 @@ class CapabilitiesTable extends Table
         $special = [];
 
         foreach ($capabilityArray as $capability) {
-            /** @var \App\Model\Entity\Capability $capability */
+            /** @var Capability $capability */
             $isTemplate = $capability->_joinData->template ?? false;
 
             $code = $capability->capability_code;

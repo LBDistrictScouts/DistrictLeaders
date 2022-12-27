@@ -16,13 +16,18 @@ declare(strict_types=1);
  */
 namespace App\Controller;
 
+use App\Controller\Component\CapAuthorizationComponent;
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\TokenListener;
 use App\Listener\UserListener;
+use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\ORM\Entity;
 use Cake\ORM\Table;
+use Exception;
+use Flash\Controller\Component\FlashComponent;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -32,10 +37,10 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * will inherit them.
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
- * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property AuthenticationComponent $Authentication
  *
- * @property \Flash\Controller\Component\FlashComponent $Flash
- * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
+ * @property FlashComponent $Flash
+ * @property CapAuthorizationComponent $Authorization.Authorization
  */
 class AppController extends Controller
 {
@@ -47,7 +52,7 @@ class AppController extends Controller
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
      * @param null $user The Footprint User
-     * @return bool|\Cake\ORM\Entity
+     * @return bool|Entity
      */
     protected function _setCurrentUser($user = null): ?EntityInterface
     {
@@ -72,7 +77,7 @@ class AppController extends Controller
      * e.g. `$this->loadComponent('FormProtection');`
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function initialize(): void
     {
@@ -92,7 +97,7 @@ class AppController extends Controller
     }
 
     /**
-     * @param \Cake\ORM\Table $model Table to be authenticated with credentials.
+     * @param Table $model Table to be authenticated with credentials.
      * @return void
      */
     public function whyPermitted(Table $model)

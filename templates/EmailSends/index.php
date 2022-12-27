@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailSend[]|\Cake\Collection\CollectionInterface $emailSends
+ * @var AppView $this
+ * @var EmailSend[]|CollectionInterface $emailSends
  */
+
+use App\Model\Entity\EmailSend;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

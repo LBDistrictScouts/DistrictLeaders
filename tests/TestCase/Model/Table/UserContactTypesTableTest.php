@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\UserContactType;
 use App\Model\Table\UserContactTypesTable;
 use Cake\TestSuite\TestCase;
+use Exception;
 
 /**
  * App\Model\Table\UserContactTypesTable Test Case
@@ -17,7 +18,7 @@ class UserContactTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UserContactTypesTable
+     * @var UserContactTypesTable
      */
     public $UserContactTypes;
 
@@ -58,7 +59,7 @@ class UserContactTypesTableTest extends TestCase
      * Get Good Set Function
      *
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     private function getGood()
     {
@@ -90,7 +91,7 @@ class UserContactTypesTableTest extends TestCase
      * Test validationDefault method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testValidationDefault()
     {
@@ -117,7 +118,7 @@ class UserContactTypesTableTest extends TestCase
      * Test buildRules method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testBuildRules()
     {

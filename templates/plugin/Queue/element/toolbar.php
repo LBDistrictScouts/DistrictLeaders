@@ -1,9 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $current
  * @var int $job_id
  */
+
+use App\View\AppView;
 
 if (!isset($current)) {
     $current = '';

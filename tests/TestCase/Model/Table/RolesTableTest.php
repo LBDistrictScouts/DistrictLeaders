@@ -11,34 +11,14 @@ use Cake\TestSuite\TestCase;
  */
 class RolesTableTest extends TestCase
 {
+    use ModelTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Table\RolesTable
+     * @var RolesTable
      */
-    public $Roles;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
+    public RolesTable $Roles;
 
     /**
      * setUp method

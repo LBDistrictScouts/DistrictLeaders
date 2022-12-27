@@ -26,8 +26,8 @@ class UpdateCounterCachesCommand extends Command
     /**
      * main() method. Update the counterCache on a provided model or all models
      *
-     * @param \Cake\Console\Arguments $args Console Arguments
-     * @param \Cake\Console\ConsoleIo $consoleIo Console IO output
+     * @param Arguments $args Console Arguments
+     * @param ConsoleIo $consoleIo Console IO output
      * @return void Success or error code.
      */
     public function execute(Arguments $args, ConsoleIo $consoleIo)
@@ -55,8 +55,8 @@ class UpdateCounterCachesCommand extends Command
     /**
      * Manage the available sub-commands along with their arguments and help
      *
-     * @param \Cake\Console\ConsoleOptionParser $parser ConsoleParser for chaining
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser ConsoleParser for chaining
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {

@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  */
+
+use App\View\AppView;
+
 ?>
 <?= $this->Form->create(null, ['type' => 'get', 'url' => ['action' => 'search'], 'class' => 'form-inline ml-auto', 'valueSources' => 'query']) ?>
     <div class="form-group text-white-50">

@@ -4,14 +4,18 @@ declare(strict_types=1);
 // Create the file src/Mailer/Preview/UserMailPreview.php
 namespace App\Mailer\Preview;
 
+use App\Mailer\BasicMailer;
+use App\Model\Entity\Token;
+use App\Model\Table\EmailSendsTable;
+use App\Model\Table\TokensTable;
 use DebugKit\Mailer\MailPreview;
 
 /**
  * Class BasicMailPreview
  *
  * @package App\Mailer\Preview
- * @property \App\Model\Table\EmailSendsTable $EmailSends
- * @property \App\Model\Table\TokensTable $Tokens
+ * @property EmailSendsTable $EmailSends
+ * @property TokensTable $Tokens
  */
 class BasicMailPreview extends MailPreview
 {
@@ -25,13 +29,13 @@ class BasicMailPreview extends MailPreview
         $this->loadModel('EmailSends');
         $this->loadModel('Tokens');
 
-        /** @var \App\Model\Entity\Token $token */
+        /** @var Token $token */
         $token = $this->Tokens->find()->contain(['EmailSends' => ['Users', 'Tokens', 'Notifications']])->first();
         $emailSend = $token->email_send;
         $notification = $token->email_send->notification;
         $user = $token->email_send->user;
 
-        /** @var \App\Mailer\BasicMailer $mailer */
+        /** @var BasicMailer $mailer */
         $mailer = $this->getMailer('Basic');
 
         $mailer->doSend($emailSend, $token->token, $user, $notification);

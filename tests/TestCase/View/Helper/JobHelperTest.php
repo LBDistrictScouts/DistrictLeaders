@@ -15,7 +15,7 @@ class JobHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\JobHelper
+     * @var JobHelper
      */
     protected $JobHelper;
 

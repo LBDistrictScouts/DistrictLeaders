@@ -16,12 +16,12 @@ class SectionTypesControllerTest extends TestCase
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'SectionTypes';
+    private string $controller = 'SectionTypes';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         SectionType::FIELD_SECTION_TYPE => 'Llamas',
         SectionType::FIELD_SECTION_TYPE_CODE => 'l',
     ];
@@ -31,7 +31,7 @@ class SectionTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -41,7 +41,7 @@ class SectionTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -51,7 +51,7 @@ class SectionTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->tryAddGet($this->controller);
 
@@ -67,7 +67,7 @@ class SectionTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -83,7 +83,7 @@ class SectionTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

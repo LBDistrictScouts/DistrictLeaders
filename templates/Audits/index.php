@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Audit[]|\Cake\Collection\CollectionInterface $audits
+ * @var AppView $this
+ * @var Audit[]|CollectionInterface $audits
  */
+
+use App\Model\Entity\Audit;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 
@@ -15,12 +19,12 @@ $this->assign('add', 'No');
 
 <thead>
 <tr>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_CHANGED_USER) ?></th>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_AUDIT_FIELD) ?></th>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_ORIGINAL_VALUE, 'Old Value') ?></th>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_MODIFIED_VALUE, 'New Value') ?></th>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_USER_ID, 'Changed By') ?></th>
-    <th scope="col"><?= $this->Paginator->sort(\App\Model\Entity\Audit::FIELD_CHANGE_DATE) ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_CHANGED_USER) ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_AUDIT_FIELD) ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_ORIGINAL_VALUE, 'Old Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_MODIFIED_VALUE, 'New Value') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_USER_ID, 'Changed By') ?></th>
+    <th scope="col"><?= $this->Paginator->sort(Audit::FIELD_CHANGE_DATE) ?></th>
     <th scope="col" class="actions"><?= __('Actions') ?></th>
 </tr>
 </thead>

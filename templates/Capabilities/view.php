@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Capability $capability
+ * @var AppView $this
+ * @var Capability $capability
  */
+
+use App\Model\Entity\Capability;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

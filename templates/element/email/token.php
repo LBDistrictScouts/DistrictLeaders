@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $token
  * @var string $action
  */
+
+use App\View\AppView;
+
 ?>
 <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">
     <tbody>

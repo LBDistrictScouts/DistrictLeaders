@@ -8,8 +8,12 @@ use Cake\Core\Configure;
 use Cake\Datasource\FactoryLocator;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Google_Client;
+use Google_Exception;
 use Google_Service_Directory;
+use Google_Service_Directory_Domains2;
 use Google_Service_Directory_Groups;
+use Google_Service_Directory_User;
+use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component
@@ -23,8 +27,8 @@ class GoogleBuilder
     protected const ACCESS_PROMPT = 'select_account consent';
 
     /**
-     * @return \Google_Client
-     * @throws \Google_Exception
+     * @return Google_Client
+     * @throws Google_Exception
      */
     public static function newClient(): Google_Client
     {
@@ -46,9 +50,9 @@ class GoogleBuilder
     /**
      * Get Client for Google
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @return \Google_Client|false
-     * @throws \Google_Exception
+     * @param Directory|null $directory The Directory to Take Config From
+     * @return Google_Client|false
+     * @throws Google_Exception
      */
     public static function getClient(?Directory $directory = null)
     {
@@ -71,9 +75,9 @@ class GoogleBuilder
     }
 
     /**
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @return \Google_Service_Directory
-     * @throws \Google_Exception
+     * @param Directory|null $directory The Directory to Take Config From
+     * @return Google_Service_Directory
+     * @throws Google_Exception
      */
     public static function getService(?Directory $directory = null)
     {
@@ -85,8 +89,8 @@ class GoogleBuilder
     /**
      * Save Token Method
      *
-     * @param \Google_Client $client An Activated Client
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Save Config To
+     * @param Google_Client $client An Activated Client
+     * @param Directory|null $directory The Directory to Save Config To
      * @return void
      */
     public static function saveToken(Google_Client $client, ?Directory $directory = null)
@@ -102,9 +106,9 @@ class GoogleBuilder
     }
 
     /**
-     * @param \Google_Client $client The Google Token to get Token
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @return \Google_Client
+     * @param Google_Client $client The Google Token to get Token
+     * @param Directory|null $directory The Directory to Take Config From
+     * @return Google_Client
      */
     public static function getToken(Google_Client $client, ?Directory $directory = null)
     {
@@ -121,12 +125,12 @@ class GoogleBuilder
     /**
      * get List
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
+     * @param Directory|null $directory The Directory to Take Config From
      * @param null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
-     * @return \Google_Service_Directory_Users
-     * @throws \Google_Exception
+     * @return Google_Service_Directory_Users
+     * @throws Google_Exception
      */
     public static function getUserList(
         ?Directory $directory = null,
@@ -161,12 +165,12 @@ class GoogleBuilder
     /**
      * get List
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
+     * @param Directory|null $directory The Directory to Take Config From
      * @param null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
-     * @return \Google_Service_Directory_Groups
-     * @throws \Google_Exception
+     * @return Google_Service_Directory_Groups
+     * @throws Google_Exception
      */
     public static function getGroupList(
         ?Directory $directory = null,
@@ -202,9 +206,9 @@ class GoogleBuilder
      *
      * @param string $userId ID for the Directory User
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @return \Google_Service_Directory_User
-     * @throws \Google_Exception
+     * @param Directory|null $directory The Directory to Take Config From
+     * @return Google_Service_Directory_User
+     * @throws Google_Exception
      */
     public static function getUser($userId, ?Directory $directory = null)
     {
@@ -216,9 +220,9 @@ class GoogleBuilder
     /**
      * get List
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @return \Google_Service_Directory_Domains2
-     * @throws \Google_Exception
+     * @param Directory|null $directory The Directory to Take Config From
+     * @return Google_Service_Directory_Domains2
+     * @throws Google_Exception
      */
     public static function getDomainList(?Directory $directory = null)
     {

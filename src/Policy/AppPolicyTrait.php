@@ -24,10 +24,10 @@ use Authorization\Policy\Result;
 trait AppPolicyTrait
 {
     /**
-     * @param \App\Model\Entity\User $user Identity object.
+     * @param User $user Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
-     * @return \Authorization\Policy\Result|null
+     * @return Result|null
      */
     public function before($user, $resource, $action): ?Result
     {
@@ -47,9 +47,9 @@ trait AppPolicyTrait
     }
 
     /**
-     * @param \App\Model\Entity\User $user The user to be processed
+     * @param User $user The user to be processed
      * @param string $message The message to record
-     * @return \Authorization\Policy\Result|null
+     * @return Result|null
      */
     protected function canBuildAndCheck(User $user, string $message): ?Result
     {

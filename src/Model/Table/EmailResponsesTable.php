@@ -3,30 +3,36 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\EmailResponse;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * EmailResponses Model
  *
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
- * @property \App\Model\Table\EmailResponseTypesTable&\Cake\ORM\Association\BelongsTo $EmailResponseTypes
- * @method \App\Model\Entity\EmailResponse get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailResponse newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponse[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponse|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponse saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponse patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponse[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponse findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponse newEmptyEntity()
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property EmailSendsTable&BelongsTo $EmailSends
+ * @property EmailResponseTypesTable&BelongsTo $EmailResponseTypes
+ * @method EmailResponse get($primaryKey, $options = [])
+ * @method EmailResponse newEntity(array $data, array $options = [])
+ * @method EmailResponse[] newEntities(array $data, array $options = [])
+ * @method EmailResponse|false save(EntityInterface $entity, $options = [])
+ * @method EmailResponse saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailResponse patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailResponse[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method EmailResponse findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @method EmailResponse[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method EmailResponse newEmptyEntity()
+ * @method EmailResponse[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method EmailResponse[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method EmailResponse[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailResponsesTable extends Table
 {
@@ -70,8 +76,8 @@ class EmailResponsesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -119,8 +125,8 @@ class EmailResponsesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $system
  * @var string $creator
  */
+
+use App\View\AppView;
+
 ?>
 <div class="card thick-card">
     <div class="card-header">

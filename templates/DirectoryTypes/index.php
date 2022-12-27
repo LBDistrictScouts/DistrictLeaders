@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DirectoryType[]|\Cake\Collection\CollectionInterface $directoryTypes
+ * @var AppView $this
+ * @var DirectoryType[]|CollectionInterface $directoryTypes
  */
+
+use App\Model\Entity\DirectoryType;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

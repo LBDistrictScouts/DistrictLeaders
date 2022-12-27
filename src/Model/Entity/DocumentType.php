@@ -12,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $document_type
  * @property string|null $special_capability
  *
- * @property \App\Model\Entity\Document[] $documents
+ * @property Document[] $documents
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

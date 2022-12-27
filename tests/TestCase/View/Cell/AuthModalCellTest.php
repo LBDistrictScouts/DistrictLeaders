@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace App\Test\TestCase\View\Cell;
 
 use App\View\Cell\AuthModalCell;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * App\View\Cell\AuthModalCell Test Case
@@ -14,23 +17,23 @@ class AuthModalCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
+     * @var ServerRequest|MockObject
      */
-    protected $request;
+    protected ServerRequest|MockObject $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
+     * @var Response|MockObject
      */
-    protected $response;
+    protected Response|MockObject $response;
 
     /**
      * Test subject
      *
-     * @var \App\View\Cell\AuthModalCell
+     * @var AuthModalCell
      */
-    protected $AuthModal;
+    protected AuthModalCell $AuthModal;
 
     /**
      * setUp method

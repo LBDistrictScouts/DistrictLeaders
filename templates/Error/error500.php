@@ -1,9 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var object $error
  * @var mixed $message
  */
+
+use App\View\AppView;
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
 

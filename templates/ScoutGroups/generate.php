@@ -1,10 +1,17 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\ScoutGroup[]|\Cake\Collection\CollectionInterface $scoutGroups
- * @var \App\Model\Entity\User $authUser
- * @var \App\Model\Entity\SectionType[]|\Cake\Collection\CollectionInterface $sectionTypes
+ * @var AppView $this
+ * @var ScoutGroup[]|CollectionInterface $scoutGroups
+ * @var User $authUser
+ * @var SectionType[]|CollectionInterface $sectionTypes
  */
+
+use App\Model\Entity\ScoutGroup;
+use App\Model\Entity\SectionType;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
+use Cake\ORM\ResultSet;
 
 $authUser = $this->getRequest()->getAttribute('identity');
 
@@ -16,8 +23,8 @@ $authUser = $this->getRequest()->getAttribute('identity');
  * Date: 2018-12-31
  * Time: 17:36
  *
- * @var \App\View\AppView $this
- * @var \Cake\ORM\ResultSet $filterArray
+ * @var AppView $this
+ * @var ResultSet $filterArray
  * @var array $appliedFilters
  */
 

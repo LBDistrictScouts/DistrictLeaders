@@ -4,12 +4,13 @@ declare(strict_types=1);
 namespace App\View\Cell;
 
 use App\Model\Entity\Notification;
+use App\Model\Table\NotificationsTable;
 use Cake\View\Cell;
 
 /**
  * Notify cell
  *
- * @property \App\Model\Table\NotificationsTable $Notifications
+ * @property NotificationsTable $Notifications
  */
 class NotifyCell extends Cell
 {

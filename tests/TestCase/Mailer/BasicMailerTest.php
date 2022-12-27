@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Mailer;
 
+use App\Mailer\BasicMailer;
 use Cake\TestSuite\EmailTrait;
 use Cake\TestSuite\TestCase;
 
@@ -16,7 +17,7 @@ class BasicMailerTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Mailer\BasicMailer
+     * @var BasicMailer
      */
     public $Basic;
 

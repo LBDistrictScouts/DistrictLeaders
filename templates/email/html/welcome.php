@@ -11,10 +11,14 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Notification $notification
+ * @var AppView $this
+ * @var Notification $notification
  * @var string $token
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
+
 ?>
 <?= $this->cell('Information::email', [$notification]) ?>
 <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;">

@@ -3,17 +3,18 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
  * CampRoleType Entity
  *
  * @property int $id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
  * @property string $camp_role_type
  *
- * @property \App\Model\Entity\CampRole[] $camp_roles
+ * @property CampRole[] $camp_roles
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

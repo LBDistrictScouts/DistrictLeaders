@@ -16,7 +16,7 @@ class FunctionalHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\FunctionalHelper
+     * @var FunctionalHelper
      */
     public $Functional;
 

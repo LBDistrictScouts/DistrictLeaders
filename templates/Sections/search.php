@@ -1,14 +1,19 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
- * @var \App\Model\Entity\Section[]|\Cake\Collection\CollectionInterface $sections
+ * @var AppView $this
+ * @var User[]|CollectionInterface $users
+ * @var Section[]|CollectionInterface $sections
  */
 
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Section[]|\Cake\Collection\CollectionInterface $sections
+ * @var AppView $this
+ * @var Section[]|CollectionInterface $sections
  */
+
+use App\Model\Entity\Section;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/search');
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Command;
 
 use AWS\Sdk;
+use Aws\Ssm\SsmClient;
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
@@ -11,6 +12,7 @@ use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
 use Cake\Utility\Inflector;
+use Exception;
 
 /**
  * Class PasswordCommand
@@ -54,8 +56,8 @@ class ParamStoreCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
-     * @return \Cake\Console\ConsoleOptionParser
+     * @param ConsoleOptionParser $parser Parser Input
+     * @return ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -136,7 +138,7 @@ class ParamStoreCommand extends Command
     }
 
     /**
-     * @return \Aws\Ssm\SsmClient
+     * @return SsmClient
      */
     protected function makeClient()
     {
@@ -284,7 +286,7 @@ class ParamStoreCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\ConsoleIo $consoleIo The console for Output
+     * @param ConsoleIo $consoleIo The console for Output
      * @return void
      */
     protected function echoInfo(ConsoleIo $consoleIo)
@@ -303,10 +305,10 @@ class ParamStoreCommand extends Command
     }
 
     /**
-     * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleConsoleIo The IO
+     * @param Arguments $args Arguments for the Console
+     * @param ConsoleIo $consoleConsoleIo The IO
      * @return int|void|null
-     * @throws \Exception
+     * @throws Exception
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function execute(Arguments $args, ConsoleIo $consoleConsoleIo)

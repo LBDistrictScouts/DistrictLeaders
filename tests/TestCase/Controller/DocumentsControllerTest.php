@@ -16,51 +16,14 @@ class DocumentsControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
-    ];
-
-    /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Documents';
+    private string $controller = 'Documents';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         Document::FIELD_DOCUMENT => 'My new document',
         Document::FIELD_DOCUMENT_TYPE_ID => 1,
     ];
@@ -70,7 +33,7 @@ class DocumentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -80,7 +43,7 @@ class DocumentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -90,7 +53,7 @@ class DocumentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         TestCase::markTestIncomplete();
         $this->tryAddGet($this->controller);
@@ -107,7 +70,7 @@ class DocumentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -123,7 +86,7 @@ class DocumentsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         TestCase::markTestIncomplete();
         $this->tryDeletePost(

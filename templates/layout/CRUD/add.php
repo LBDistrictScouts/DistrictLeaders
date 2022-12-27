@@ -5,8 +5,11 @@
  * Date: 2018-12-31
  * Time: 17:36
  *
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col-12 col-lg-8 offset-lg-2">

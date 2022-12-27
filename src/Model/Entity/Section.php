@@ -14,23 +14,23 @@ use Cake\ORM\Entity;
  * @property string $section
  * @property int $section_type_id
  * @property int $scout_group_id
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
  *
- * @property \App\Model\Entity\SectionType $section_type
- * @property \App\Model\Entity\ScoutGroup $scout_group
- * @property \App\Model\Entity\Role[] $roles
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property SectionType $section_type
+ * @property ScoutGroup $scout_group
+ * @property Role[] $roles
+ * @property FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
  * @property int|null $meeting_day
  * @property string|null $meeting_start_time
  * @property string|null $meeting_end_time
  * @property string $meeting_weekday
- * @property \App\Model\Entity\User[] $users
+ * @property User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property \App\Model\Entity\Audit[] $audits
+ * @property Audit[] $audits
  */
 class Section extends Entity
 {
@@ -60,7 +60,7 @@ class Section extends Entity
     /**
      * Function to get Reference Time Point
      *
-     * @return \Cake\I18n\FrozenTime
+     * @return FrozenTime
      */
     private function baseTime(): FrozenTime
     {

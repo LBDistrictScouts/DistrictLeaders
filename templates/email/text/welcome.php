@@ -11,9 +11,12 @@
  * @link          https://cakephp.org CakePHP(tm) Project
  * @since         0.10.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $content
- * @var \App\Model\Entity\Notification $notification
+ * @var Notification $notification
  */
+
+use App\Model\Entity\Notification;
+use App\View\AppView;
 
 echo $this->cell('information::email', [$notification]);

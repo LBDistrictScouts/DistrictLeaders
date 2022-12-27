@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Command;
 
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\Console\Command;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -16,28 +17,7 @@ use Cake\TestSuite\TestCase;
 class PermissionsCommandTest extends TestCase
 {
     use ConsoleIntegrationTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-    ];
+    use FixtureTestTrait;
 
     /**
      * Setup Function

@@ -1,11 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CampRole $campRole
+ * @var AppView $this
+ * @var CampRole $campRole
  * @var mixed $campRoleTypes
  * @var mixed $camps
  * @var mixed $users
  */
+
+use App\Model\Entity\CampRole;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

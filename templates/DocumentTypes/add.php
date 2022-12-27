@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DocumentType $documentType
+ * @var AppView $this
+ * @var DocumentType $documentType
  */
+
+use App\Model\Entity\DocumentType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserContact $userContact
+ * @var AppView $this
+ * @var UserContact $userContact
  * @var mixed $userContactTypes
  * @var mixed $users
  */
+
+use App\Model\Entity\UserContact;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

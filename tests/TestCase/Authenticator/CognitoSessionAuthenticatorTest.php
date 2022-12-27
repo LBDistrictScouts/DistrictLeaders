@@ -18,11 +18,13 @@ namespace App\Test\TestCase\Authenticator;
 
 use App\Authenticator\CognitoResult;
 use App\Authenticator\CognitoSessionAuthenticator;
+use App\Test\Fixture\FixtureTestTrait;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
 use ArrayObject;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
+use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -33,13 +35,15 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CognitoSessionAuthenticatorTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
-     * @var \Authentication\Identifier\IdentifierCollection The collection of Identifiers Specified
+     * @var IdentifierCollection The collection of Identifiers Specified
      */
     protected $identifiers;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject a Mocked Session for Recording Auth in
+     * @var MockObject a Mocked Session for Recording Auth in
      */
     protected $sessionMock;
 

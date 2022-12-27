@@ -15,56 +15,16 @@ class NotificationsControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
-    /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Notifications';
+    private string $controller = 'Notifications';
 
     /**
      * Test index method
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -74,7 +34,7 @@ class NotificationsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -84,7 +44,7 @@ class NotificationsControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

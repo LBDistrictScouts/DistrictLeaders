@@ -5,12 +5,16 @@ namespace App\Controller;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\SectionType;
+use App\Model\Table\ScoutGroupsTable;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\Datasource\ResultSetInterface;
+use Cake\Http\Response;
 
 /**
  * ScoutGroups Controller
  *
- * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property ScoutGroupsTable $ScoutGroups
+ * @method ScoutGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ScoutGroupsController extends AppController
 {
@@ -27,7 +31,7 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function index()
     {
@@ -46,7 +50,7 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return Response|void
      */
     public function generate()
     {
@@ -69,11 +73,11 @@ class ScoutGroupsController extends AppController
             ->orderAsc(SectionType::FIELD_SECTION_TYPE);
         $scoutGroups = [];
 
-        /** @var \App\Model\Entity\ScoutGroup $scoutGroup */
+        /** @var ScoutGroup $scoutGroup */
         foreach ($scoutGroupsFinder as $idx => $scoutGroup) {
             $matrix = [];
 
-            /** @var \App\Model\Entity\SectionType $sectionType */
+            /** @var SectionType $sectionType */
             foreach ($sectionTypes as $sectionType) {
                 if ($sectionType->is_young_person_section) {
                     $count = 0;
@@ -102,8 +106,8 @@ class ScoutGroupsController extends AppController
      * View method
      *
      * @param string|null $id Scout Group id.
-     * @return \Cake\Http\Response|void
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void
+     * @throws RecordNotFoundException When record not found.
      */
     public function view($id = null)
     {
@@ -151,7 +155,7 @@ class ScoutGroupsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return Response|void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -172,8 +176,8 @@ class ScoutGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Scout Group id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|void Redirects on successful edit, renders view otherwise.
+     * @throws RecordNotFoundException When record not found.
      */
     public function edit($id = null)
     {
@@ -196,8 +200,8 @@ class ScoutGroupsController extends AppController
      * Delete method
      *
      * @param string|null $id Scout Group id.
-     * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return Response|null Redirects to index.
+     * @throws RecordNotFoundException When record not found.
      */
     public function delete($id = null)
     {

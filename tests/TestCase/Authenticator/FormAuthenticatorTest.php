@@ -272,45 +272,6 @@ class FormAuthenticatorTest extends TestCase
     }
 
     /**
-     * testLoginUrlSuccessWithBase
-     *
-     * @return void
-     */
-    public function testLoginUrlSuccessWithBase()
-    {
-        $identifiers = new IdentifierCollection([
-            'Authentication.Password',
-        ]);
-
-        $request = ServerRequestFactory::fromGlobals(
-            ['REQUEST_URI' => '/users/login'],
-            [],
-            ['username' => 'mariano', 'password' => 'password']
-        );
-
-        $mockerUri = $this->getMockBuilder($request->getUri()::class);
-        $uri = $mockerUri
-            ->onlyMethods(['_getUrlFromRequest'])
-            ->getMock();
-
-        $uri->method('_getUrlFromRequest')->willReturn('/base');
-
-        $request = $request->withUri($uri);
-        $request = $request->withAttribute('base', '/base');
-        $response = new Response();
-
-        $form = new FormAuthenticator($identifiers, [
-            'loginUrl' => '/base/users/login',
-        ]);
-
-        $result = $form->authenticate($request, $response);
-
-        $this->assertInstanceOf(Result::class, $result);
-        $this->assertEquals(ResultInterface::SUCCESS, $result->getStatus());
-        $this->assertEquals([], $result->getErrors());
-    }
-
-    /**
      * testRegexLoginUrlSuccess
      *
      * @return void

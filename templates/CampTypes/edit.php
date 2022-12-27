@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CampType $campType
+ * @var AppView $this
+ * @var CampType $campType
  */
+
+use App\Model\Entity\CampType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

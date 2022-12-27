@@ -3,40 +3,50 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\BelongsTo;
+use Cake\ORM\Association\BelongsToMany;
+use Cake\ORM\Association\HasMany;
+use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Expose\Model\Behavior\ExposeBehavior;
+use Muffin\Trash\Model\Behavior\TrashBehavior;
+use Search\Model\Behavior\SearchBehavior;
 
 /**
  * Sections Model
  *
- * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ScoutGroups
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- * @method \App\Model\Entity\Section get($primaryKey, $options = [])
- * @method \App\Model\Entity\Section newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Section|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\Section[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\Section findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin \Expose\Model\Behavior\ExposeBehavior
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
- * @mixin \Search\Model\Behavior\SearchBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
- * @mixin \App\Model\Behavior\AuditableBehavior
- * @method \App\Model\Entity\Section newEmptyEntity()
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property SectionTypesTable&BelongsTo $SectionTypes
+ * @property ScoutGroupsTable&BelongsTo $ScoutGroups
+ * @property RolesTable&HasMany $Roles
+ * @method Section get($primaryKey, $options = [])
+ * @method Section newEntity(array $data, array $options = [])
+ * @method Section[] newEntities(array $data, array $options = [])
+ * @method Section|false save(EntityInterface $entity, $options = [])
+ * @method Section saveOrFail(EntityInterface $entity, $options = [])
+ * @method Section patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method Section[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method Section findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin TimestampBehavior
+ * @mixin TrashBehavior
+ * @method Section[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin ExposeBehavior
+ * @property UsersTable&BelongsToMany $Users
+ * @mixin SearchBehavior
+ * @property AuditsTable&HasMany $Audits
+ * @mixin AuditableBehavior
+ * @method Section newEmptyEntity()
+ * @method Section[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method Section[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method Section[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SectionsTable extends Table
 {
@@ -97,8 +107,8 @@ class SectionsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -120,8 +130,8 @@ class SectionsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -133,8 +143,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param \Cake\ORM\Query $query The Query to be modified.
-     * @return \Cake\ORM\Query
+     * @param Query $query The Query to be modified.
+     * @return Query
      */
     public function findLeaderSections(Query $query): Query
     {
@@ -144,8 +154,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param \Cake\ORM\Query $query The Query to be modified.
-     * @return \Cake\ORM\Query
+     * @param Query $query The Query to be modified.
+     * @return Query
      */
     public function findTeamSections(Query $query): Query
     {
@@ -155,8 +165,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param \Cake\ORM\Query $query The Query to be modified.
-     * @return \Cake\ORM\Query
+     * @param Query $query The Query to be modified.
+     * @return Query
      */
     public function findCommitteeSections(Query $query): Query
     {
@@ -190,7 +200,7 @@ class SectionsTable extends Table
      * @param string $section Section String
      * @param string $group Group String
      * @param string $sectionType The Section Type for Context
-     * @return \App\Model\Entity\Section
+     * @return Section
      */
     public function findOrMake(string $section, string $group, string $sectionType): Section
     {

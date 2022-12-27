@@ -4,15 +4,17 @@ declare(strict_types=1);
 namespace App\View\Helper;
 
 use App\Model\Entity\User;
+use Authentication\View\Helper\IdentityHelper;
 use Cake\Datasource\EntityInterface;
 use Cake\View\Helper;
+use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class Permissions Helper
  *
  * @package App\View\Helper
- * @property \Authentication\View\Helper\IdentityHelper $Identity
- * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property IdentityHelper $Identity
+ * @property HtmlHelper $Html
  */
 class PermissionsHelper extends Helper
 {
@@ -20,7 +22,7 @@ class PermissionsHelper extends Helper
 
     /**
      * @param string $buttonLabel The Label on the Button
-     * @param \Cake\Datasource\EntityInterface $resource The Entity Resource
+     * @param EntityInterface $resource The Entity Resource
      * @param string|null $action The link Action required
      * @param string|null $controller The Link Controller
      * @param string[]|null $class The Button Class
@@ -52,7 +54,7 @@ class PermissionsHelper extends Helper
 
     /**
      * @param string $buttonLabel The Label on the Button
-     * @param \Cake\Datasource\EntityInterface $resource The Entity Resource
+     * @param EntityInterface $resource The Entity Resource
      * @param string|null $action The link Action required
      * @param string|null $controller The Link Controller
      * @param array|null $buttonOptions The Button Options
@@ -133,7 +135,7 @@ class PermissionsHelper extends Helper
     }
 
     /**
-     * @param \Cake\Datasource\EntityInterface $resource The Resource for evaluating
+     * @param EntityInterface $resource The Resource for evaluating
      * @return bool
      */
     protected function hasEditOwn(EntityInterface $resource): bool

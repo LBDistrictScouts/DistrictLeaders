@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Section[]|\Cake\Collection\CollectionInterface $sections
- * @var \App\Model\Entity\User $authUser
+ * @var AppView $this
+ * @var Section[]|CollectionInterface $sections
+ * @var User $authUser
  */
+
+use App\Model\Entity\Section;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

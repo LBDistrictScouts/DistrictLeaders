@@ -3,12 +3,14 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use Cake\View\Cell;
 
 /**
  * NavBar cell
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class NavBarCell extends Cell
 {
@@ -32,7 +34,7 @@ class NavBarCell extends Cell
     /**
      * Default display method.
      *
-     * @param \App\Model\Entity\User $identity The Authenticated User
+     * @param User $identity The Authenticated User
      * @return void
      */
     public function display($identity)

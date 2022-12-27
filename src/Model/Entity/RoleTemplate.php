@@ -13,7 +13,7 @@ use Cake\ORM\Entity;
  * @property array $template_capabilities
  * @property int $indicative_level
  *
- * @property \App\Model\Entity\RoleType[] $role_types
+ * @property RoleType[] $role_types
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */

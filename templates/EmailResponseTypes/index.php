@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailResponseType[]|\Cake\Collection\CollectionInterface $emailResponseTypes
+ * @var AppView $this
+ * @var EmailResponseType[]|CollectionInterface $emailResponseTypes
  */
+
+use App\Model\Entity\EmailResponseType;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

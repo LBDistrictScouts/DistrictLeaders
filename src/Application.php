@@ -18,6 +18,7 @@ namespace App;
 
 use App\Authenticator\CognitoAuthenticationService;
 use App\Middleware\CognitoAuthenticationMiddleware;
+use App\Model\Entity\User;
 use App\Policy\RequestPolicy;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -127,10 +128,10 @@ class Application extends BaseApplication implements
     }
 
     /**
-     * Setup the middleware queue your application will use.
+     * Set up the middleware queue your application will use.
      *
-     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
-     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
+     * @param MiddlewareQueue $middlewareQueue The middleware queue to set up.
+     * @return MiddlewareQueue The updated middleware queue.
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
@@ -185,8 +186,7 @@ class Application extends BaseApplication implements
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [
-                'identityDecorator' => function ($auth, $user) {
-                    /** @var \App\Model\Entity\User $user */
+                'identityDecorator' => function (AuthorizationService $auth, User $user) {
                     return $user->setAuthorization($auth);
                 },
                 'unauthorizedHandler' => $unAuthArray,
@@ -219,7 +219,7 @@ class Application extends BaseApplication implements
     /**
      * Register application container services.
      *
-     * @param \Cake\Core\ContainerInterface $container The Container to update.
+     * @param ContainerInterface $container The Container to update.
      * @return void
      * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
      */
@@ -228,8 +228,8 @@ class Application extends BaseApplication implements
     }
 
     /**
-     * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
-     * @return \Authorization\AuthorizationServiceInterface
+     * @param ServerRequestInterface $request The Request Submitted
+     * @return AuthorizationServiceInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
@@ -247,8 +247,8 @@ class Application extends BaseApplication implements
     /**
      * Returns a service provider instance.
      *
-     * @param \Psr\Http\Message\ServerRequestInterface $request Request
-     * @return \Authentication\AuthenticationServiceInterface
+     * @param ServerRequestInterface $request Request
+     * @return AuthenticationServiceInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface

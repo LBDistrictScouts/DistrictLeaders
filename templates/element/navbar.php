@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  * @var mixed $PolicyResult
  */
+
+use App\Model\Entity\User;
+use App\View\AppView;
+use Authentication\AuthenticationService;
+
 ?>
 <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean">
     <div class="container">
@@ -14,10 +19,10 @@
 
         <div class="collapse navbar-collapse" id="nToggle">
             <?php
-            /** @var \Authentication\AuthenticationService $authAttr */
+            /** @var AuthenticationService $authAttr */
             $authAttr = $this->getRequest()->getAttribute('authentication');
             $result = $authAttr->getResult();
-            /** @var \App\Model\Entity\User $identity */
+            /** @var User $identity */
             $identity = $this->getRequest()->getAttribute('identity');
 
             if ($result->isValid()) : ?>

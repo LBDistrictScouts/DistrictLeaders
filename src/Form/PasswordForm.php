@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Form;
 
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
 use Cake\Datasource\ModelAwareTrait;
 use Cake\Form\Form;
 use Cake\Form\Schema;
@@ -12,7 +13,7 @@ use Cake\Validation\Validator;
 /**
  * Password Form.
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class PasswordForm extends Form
 {
@@ -21,8 +22,8 @@ class PasswordForm extends Form
     /**
      * Builds the schema for the modelless form
      *
-     * @param \Cake\Form\Schema $schema From schema
-     * @return \Cake\Form\Schema
+     * @param Schema $schema From schema
+     * @return Schema
      */
     protected function buildSchema(Schema $schema): Schema
     {
@@ -37,8 +38,8 @@ class PasswordForm extends Form
     /**
      * Form validation builder
      *
-     * @param \Cake\Validation\Validator $validator to use against the form
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator to use against the form
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -88,7 +89,7 @@ class PasswordForm extends Form
         }
 
         if (key_exists('user', $data) && key_exists(self::FIELD_POSTCODE, $requestData)) {
-            /** @var \App\Model\Entity\User $user */
+            /** @var User $user */
             $user = $data['user'];
 
             if (!$user instanceof User) {

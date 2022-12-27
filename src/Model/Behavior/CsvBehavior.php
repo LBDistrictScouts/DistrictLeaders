@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -124,7 +125,7 @@ class CsvBehavior extends Behavior
      * Converts a data array into
      *
      * @param string $filename to export to
-     * @param \Cake\ORM\Entity[] $data to export
+     * @param Entity[] $data to export
      * @param array $options Options Configuration
      * @return int|false
      * @author Dean

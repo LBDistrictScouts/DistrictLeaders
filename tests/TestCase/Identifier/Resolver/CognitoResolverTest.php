@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Identifier\Resolver;
 
 use App\Identifier\Resolver\CognitoResolver;
+use App\Model\Entity\User;
 use App\Test\TestCase\AuthenticationTestCase;
 use Cake\Datasource\EntityInterface;
 
@@ -49,7 +50,7 @@ class CognitoResolverTest extends AuthenticationTestCase
             ],
         ]);
 
-        /** @var \App\Model\Entity\User $user */
+        /** @var User $user */
         $user = $resolver->find([
             'username' => 'mariano',
         ]);

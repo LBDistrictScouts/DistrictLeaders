@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use App\Model\Entity\EmailResponseType;
+use Cake\Datasource\EntityInterface;
+use Cake\Datasource\ResultSetInterface;
+use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -10,20 +14,20 @@ use Cake\Validation\Validator;
 /**
  * EmailResponseTypes Model
  *
- * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
- * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
- * @method \App\Model\Entity\EmailResponseType newEntity(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponseType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponseType newEmptyEntity()
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property EmailResponsesTable&HasMany $EmailResponses
+ * @method EmailResponseType get($primaryKey, $options = [])
+ * @method EmailResponseType newEntity(array $data, array $options = [])
+ * @method EmailResponseType[] newEntities(array $data, array $options = [])
+ * @method EmailResponseType|false save(EntityInterface $entity, $options = [])
+ * @method EmailResponseType saveOrFail(EntityInterface $entity, $options = [])
+ * @method EmailResponseType patchEntity(EntityInterface $entity, array $data, array $options = [])
+ * @method EmailResponseType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method EmailResponseType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method EmailResponseType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method EmailResponseType newEmptyEntity()
+ * @method EmailResponseType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method EmailResponseType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method EmailResponseType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {
@@ -49,8 +53,8 @@ class EmailResponseTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
+     * @param Validator $validator Validator instance.
+     * @return Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -76,8 +80,8 @@ class EmailResponseTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
+     * @param RulesChecker $rules The rules object to be modified.
+     * @return RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

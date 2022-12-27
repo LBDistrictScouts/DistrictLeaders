@@ -5,10 +5,12 @@ namespace App\Model\Entity;
 
 use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentityInterface;
+use Authorization\AuthorizationService;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 use Authorization\Policy\ResultInterface;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
@@ -28,10 +30,10 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property string|null $county
  * @property string|null $postcode
  *
- * @property \Cake\I18n\FrozenTime $created
- * @property \Cake\I18n\FrozenTime|null $modified
- * @property \Cake\I18n\FrozenTime|null $last_login
- * @property \Cake\I18n\FrozenTime|null $deleted
+ * @property FrozenTime $created
+ * @property FrozenTime|null $modified
+ * @property FrozenTime|null $last_login
+ * @property FrozenTime|null $deleted
  * @property string|null $last_login_ip
  *
  * @property array|null $capabilities
@@ -54,19 +56,19 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * @property array|null $groups
  * @property array|null $sections
  *
- * @property \App\Model\Entity\UserState|null $user_state
- * @property \App\Model\Entity\Audit[] $changes
- * @property \App\Model\Entity\Audit[] $audits
- * @property \App\Model\Entity\CampRole[] $camp_roles
- * @property \App\Model\Entity\EmailSend[] $email_sends
- * @property \App\Model\Entity\Notification[] $notifications
- * @property \App\Model\Entity\Role[] $roles
- * @property \App\Model\Entity\UserContact[] $user_contacts
- * @property \App\Model\Entity\UserContact[] $contact_emails
- * @property \App\Model\Entity\UserContact[] $contact_numbers
- * @property \App\Model\Entity\DirectoryUser[] $directory_users
+ * @property UserState|null $user_state
+ * @property Audit[] $changes
+ * @property Audit[] $audits
+ * @property CampRole[] $camp_roles
+ * @property EmailSend[] $email_sends
+ * @property Notification[] $notifications
+ * @property Role[] $roles
+ * @property UserContact[] $user_contacts
+ * @property UserContact[] $contact_emails
+ * @property UserContact[] $contact_numbers
+ * @property DirectoryUser[] $directory_users
  *
- * @property \Authorization\AuthorizationService $authorization
+ * @property AuthorizationService $authorization
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property string|null $search_string
@@ -182,7 +184,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @param string $action The action/operation being performed.
      * @param mixed $resource The resource being operated on.
-     * @return \Authorization\Policy\ResultInterface
+     * @return ResultInterface
      */
     public function canResult(string $action, $resource): ResultInterface
     {
@@ -214,10 +216,10 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
     /**
      * Setter to be used by the middleware.
      *
-     * @param \Authorization\AuthorizationService $service The Auth Service
+     * @param AuthorizationService $service The Auth Service
      * @return self
      */
-    public function setAuthorization(\Authorization\AuthorizationService $service): User
+    public function setAuthorization(AuthorizationService $service): User
     {
         $this->authorization = $service;
 
@@ -286,7 +288,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param int|array|null $group The Group ID for checking against
      * @param int|array|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     * @return \Authorization\Policy\ResultInterface
+     * @return ResultInterface
      */
     public function buildAndCheckCapabilityResult(
         string $action,
@@ -323,7 +325,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param string $capability The Capability being checked.
      * @param int|array|null $group A Group ID if applicable
      * @param int|array|null $section A Section ID if applicable
-     * @return \Authorization\Policy\ResultInterface
+     * @return ResultInterface
      */
     public function checkCapabilityResult(string $capability, $group = null, $section = null): ResultInterface
     {

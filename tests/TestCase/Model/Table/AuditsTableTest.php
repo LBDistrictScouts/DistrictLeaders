@@ -20,7 +20,7 @@ class AuditsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\AuditsTable
+     * @var AuditsTable
      */
     public $Audits;
 

@@ -14,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string|null $icon
  * @property string $type_code
  * @property string $content_template
- * @property \App\Model\Entity\Notification[] $notifications
+ * @property Notification[] $notifications
  * @property string $type
  * @property string $sub_type
  * @property bool $repetitive

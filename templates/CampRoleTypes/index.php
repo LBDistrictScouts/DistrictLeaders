@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CampRoleType[]|\Cake\Collection\CollectionInterface $campRoleTypes
+ * @var AppView $this
+ * @var CampRoleType[]|CollectionInterface $campRoleTypes
  */
+
+use App\Model\Entity\CampRoleType;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

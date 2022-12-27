@@ -3,49 +3,16 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Controller\ChallengessController Test Case
+ * App\Controller\ChallengesController Test Case
  *
- * @uses \App\Controller\ChallengessController
+ * @uses \App\Controller\ChallengesController
  */
-class ChallengessControllerTest extends TestCase
+class ChallengesControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
+    use AppTestTrait;
 
     /**
      * Test index method
