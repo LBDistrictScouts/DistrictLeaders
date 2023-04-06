@@ -10,11 +10,13 @@ use App\Model\Table\DocumentTypesTable;
 use App\Model\Table\FileTypesTable;
 use App\Model\Table\NotificationTypesTable;
 use App\Model\Table\RoleTemplatesTable;
+use App\Model\Table\UserContactTypesTable;
 use App\Model\Table\UserStatesTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Exception;
 
 /**
@@ -28,9 +30,12 @@ use Exception;
  * @property DirectoryTypesTable $DirectoryTypes
  * @property UserStatesTable $UserStates
  * @property DocumentTypesTable $DocumentTypes
+ * @property UserContactTypesTable $UserContactTypes
  */
 class InstallBaseCommand extends Command
 {
+    use LocatorAwareTrait;
+
     /**
      * Initialise method
      *
@@ -39,13 +44,14 @@ class InstallBaseCommand extends Command
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadModel('Capabilities');
-        $this->loadModel('NotificationTypes');
-        $this->loadModel('FileTypes');
-        $this->loadModel('RoleTemplates');
-        $this->loadModel('DirectoryTypes');
-        $this->loadModel('UserStates');
-        $this->loadModel('DocumentTypes');
+        $this->Capabilities = $this->fetchTable('Capabilities');
+        $this->NotificationTypes = $this->fetchTable('NotificationTypes');
+        $this->FileTypes = $this->fetchTable('FileTypes');
+        $this->RoleTemplates = $this->fetchTable('RoleTemplates');
+        $this->DirectoryTypes = $this->fetchTable('DirectoryTypes');
+        $this->UserStates = $this->fetchTable('UserStates');
+        $this->DocumentTypes = $this->fetchTable('DocumentTypes');
+        $this->UserContactTypes = $this->fetchTable('UserContactTypes');
     }
 
     /**
@@ -86,10 +92,15 @@ class InstallBaseCommand extends Command
                 'short' => 'y',
                 'help' => 'Document Types',
                 'boolean' => true,
-                ])
+            ])
             ->addOption('notification_types', [
                 'short' => 'n',
                 'help' => 'Notification Types',
+                'boolean' => true,
+            ])
+            ->addOption('user_contact_types', [
+                'short' => 'u',
+                'help' => 'User Contact Types',
                 'boolean' => true,
             ]);
 
@@ -147,6 +158,12 @@ class InstallBaseCommand extends Command
             $happenings = $this->DocumentTypes->installBaseDocumentTypes();
 
             $consoleIo->info('Document Types Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('user_contact_types')) {
+            $happenings = $this->UserContactTypes->installBaseUserContactTypes();
+
+            $consoleIo->info('User Contact Types Installed: ' . $happenings);
         }
     }
 }

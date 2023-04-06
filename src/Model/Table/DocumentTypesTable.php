@@ -101,7 +101,7 @@ class DocumentTypesTable extends Table
      *
      * @return int
      */
-    public function installBaseDocumentTypes()
+    public function installBaseDocumentTypes(): int
     {
         return $this->installBase($this);
     }

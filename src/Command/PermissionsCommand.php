@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
@@ -9,6 +8,7 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\ORM\Locator\LocatorAwareTrait;
 use Exception;
 
 /**
@@ -19,6 +19,8 @@ use Exception;
  */
 class PermissionsCommand extends Command
 {
+    use LocatorAwareTrait;
+
     /**
      * Initialise method
      *
@@ -27,7 +29,7 @@ class PermissionsCommand extends Command
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadModel('Users');
+        $this->Users = $this->fetchTable('Users');
     }
 
     /**
@@ -56,12 +58,12 @@ class PermissionsCommand extends Command
     /**
      * @param Arguments $args Arguments for the Console
      * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
+     * @return void
      * @throws Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): void
     {
         if ($args->getOption('all') || $args->getOption('capabilities')) {
             $users = $this->Users->find('all');

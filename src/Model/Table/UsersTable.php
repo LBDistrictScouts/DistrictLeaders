@@ -512,7 +512,7 @@ class UsersTable extends Table
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function isValidDomainEmail($value, $context)
+    public function isValidDomainEmail(string $value, array $context): bool
     {
         return $this->Roles->Sections->ScoutGroups->domainVerify($value);
     }

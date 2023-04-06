@@ -1,9 +1,17 @@
-FROM php:8.2-alpine3.16 as base
+FROM php:8.2-fpm-alpine3.16 as base
 
-ARG user=app-user
-ARG uid=969
+ARG user=www-data
+ARG group=www-data
+#ARG uid=969
 
 RUN apk update
+
+COPY bin/worker-cron /etc/cron.d/worker-cron
+RUN chmod 0644 /etc/cron.d/worker-cron
+RUN crontab /etc/cron.d/worker-cron
+
+RUN touch /var/log/cron.log
+RUN touch /var/log/worker-cron.log
 
 RUN apk add zip unzip postgresql14-client icu-dev libpq-dev php81-pdo_pgsql php81-pgsql
 
@@ -13,9 +21,9 @@ RUN docker-php-ext-install intl pgsql pdo pdo_pgsql
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-RUN adduser -S -G www-data -u $uid -h /home/$user $user
+#RUN adduser -S -G $group -u $uid -h /home/$user $user
 RUN mkdir -p /home/$user/.composer \
-    && chown -R $user:www-data /home/$user
+    && chown -R $user:$group /home/$user
 
 USER $user
 
@@ -29,7 +37,7 @@ RUN composer install --optimize-autoloader --no-scripts --no-interaction --profi
 COPY . .
 
 USER root
-RUN chown -R $user:www-data /var/www/html \
+RUN chown -R $user:$group /var/www/html \
     && chmod -R 777 /var/www/html
 USER $user
 
@@ -39,14 +47,15 @@ RUN composer console-install
 
 FROM base as webserver
 
-#RUN composer migrate
-#RUN composer install-base
+# RUN composer migrate
+# RUN composer install-base
 
-EXPOSE 80:6001
-CMD bin/cake server
+EXPOSE 80
+EXPOSE 8765
+#CMD bin/cake server
 
 FROM base as test
 CMD composer test
 
-#FROM Base as Worker
-#CMD bin/cake.php queue runworker
+FROM base as worker
+CMD crond && tail -f /var/log/cron.log

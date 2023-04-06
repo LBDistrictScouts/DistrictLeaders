@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\UserContactType;
+use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\Association\HasMany;
@@ -35,6 +36,8 @@ use Cake\Validation\Validator;
  */
 class UserContactTypesTable extends Table
 {
+    use BaseInstallerTrait;
+
     /**
      * Initialize method
      *
@@ -90,5 +93,15 @@ class UserContactTypesTable extends Table
         $rules->add($rules->isUnique(['user_contact_type']));
 
         return $rules;
+    }
+
+    /**
+     * install the application status config
+     *
+     * @return int
+     */
+    public function installBaseUserContactTypes(): int
+    {
+        return $this->installBase($this);
     }
 }

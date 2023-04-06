@@ -2,6 +2,8 @@ version: "3.8"
 
 services:
   application:
+    image: ${DOCKER_REGISTRY}/lbd_leaders_app_php
+    container_name: dl_app
     build:
       context: .
       dockerfile: .dockerfile
@@ -18,8 +20,22 @@ services:
         target: 8000
     volumes:
       - application-data:/app
+      - ./tmp:/var/www/html/tmp
+      - ./config/Environment/app_parameters.docker.yml:/var/www/html/config/Environment/app_parameters.yml
+  app-worker:
+    image: ${DOCKER_REGISTRY}/lbd_leaders_worker_php
+    container_name: dl_worker
+    build:
+      context: .
+      dockerfile: .dockerfile
+      target: worker
+    depends_on:
+      - application
+      - redis
+      - database
   database:
     image: postgres:14-alpine3.16
+    container_name: dl_db
     env_file:
       - config/Credentials/docker.env
     ports:
@@ -29,6 +45,7 @@ services:
       - database-data:/var/lib/postgresql/data
   test-database:
     image: postgres:14-alpine3.16
+    container_name: dl_test_db
     env_file:
       - config/Credentials/docker.env
     ports:
@@ -36,12 +53,14 @@ services:
         target: 5432
   redis:
     image: redis:alpine
+    container_name: dl_redis
     ports:
       - published: 6379
         target: 6379
     volumes:
       - redis-data:/data
   test:
+    container_name: dl_test_app
     build:
       context: .
       dockerfile: .dockerfile
@@ -50,6 +69,24 @@ services:
       - redis
       - application
       - database
+  nginx:
+    image: nginx:alpine
+    container_name: dl_nginx
+    working_dir: /var/www/html
+    depends_on:
+      - application
+    volumes:
+      - .:/var/www/html
+      - ./logs:/var/www/html/logs
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - published: 8180
+        target: 80
+      - published: 8181
+        target: 443
+    links:
+      - application
+
 
 volumes:
   redis-data:

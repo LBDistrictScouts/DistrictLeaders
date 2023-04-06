@@ -1,0 +1,3 @@
+UserContactTypes:
+  - user_contact_type: Email
+  - user_contact_type: Phone
