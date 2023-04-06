@@ -343,6 +343,6 @@ class CognitoCookieAuthenticatorTest extends TestCase
         static::assertInstanceOf(RequestInterface::class, $result['request']);
         static::assertInstanceOf(ResponseInterface::class, $result['response']);
 
-        static::assertEquals('CookieAuth=; expires=Thu, 01-Jan-1970 00:00:01 UTC; path=/', $result['response']->getHeaderLine('Set-Cookie'));
+        static::assertEquals('CookieAuth=; expires=Thu, 01-Jan-1970 00:00:01 GMT+0000; path=/', $result['response']->getHeaderLine('Set-Cookie'));
     }
 }
