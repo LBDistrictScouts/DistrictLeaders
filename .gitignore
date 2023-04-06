@@ -83,3 +83,5 @@ nbproject/*
 /webroot/css/node_modules/
 /webroot/css/*.css
 /webroot/css/*.css.map
+
+.env

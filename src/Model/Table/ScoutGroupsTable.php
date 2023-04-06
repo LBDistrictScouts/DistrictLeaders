@@ -6,6 +6,7 @@ namespace App\Model\Table;
 
 use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\ScoutGroup;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\Association\HasMany;
@@ -183,6 +184,10 @@ class ScoutGroupsTable extends Table
      */
     public function domainVerify(string $emailAddress): bool
     {
+        if ($emailAddress == Configure::read('DefaultAdmin.email')) {
+            return true;
+        }
+
         $domains = $this->getDomains();
         if (strpos($emailAddress, '@') !== false) {
             $emailDomain = strtolower(explode('@', $emailAddress)[1]);
