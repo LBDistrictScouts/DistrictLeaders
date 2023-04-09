@@ -11,6 +11,28 @@ This is a web application for use with District Leaders.
 ### Development Branch
 ![GitHub CI](https://github.com/LBDistrictScouts/DistrictLeaders/workflows/GitHub%20CI/badge.svg?branch=Development)
 [![codecov](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders/branch/Development/graph/badge.svg)](https://codecov.io/gh/LBDistrictScouts/DistrictLeaders)
+
+## Docker Installation
+
+1. Ensure Docker is installed and functional.
+2. Clone the District Leaders Project
+    ```bash
+    git clone https://github.com/LBDistrictScouts/DistrictLeaders.git
+    ```
+3. Enter the project directory
+    ```bash
+    cd DistrictLeaders
+    ```
+4. Add the following config files
+    - config/app_file.php
+    - config/app.php
+    - config/Credentials/docker.env
+    - config/Environment/app_parameters.docker.yml
+5. Run docker compose
+    ```bash
+    docker compose up
+    ```
+
 ## Development Installation
 
 If Composer is installed globally, run
