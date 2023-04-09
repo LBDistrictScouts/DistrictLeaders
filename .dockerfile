@@ -13,7 +13,7 @@ RUN crontab /etc/cron.d/worker-cron
 RUN touch /var/log/cron.log
 RUN touch /var/log/worker-cron.log
 
-RUN apk add zip unzip postgresql14-client icu-dev libpq-dev php81-pdo_pgsql php81-pgsql
+RUN apk add bash zip unzip postgresql14-client icu-dev libpq-dev php81-pdo_pgsql php81-pgsql
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql

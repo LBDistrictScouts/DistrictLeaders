@@ -1,1 +1,1 @@
-* * * * */5 /var/www/html/bin/cake.php queue runworker >> /var/log/worker-cron.log 2>&1
+* * * * */5 /var/www/html/bin/cake queue runworker >> /var/log/worker-cron.log 2>&1
