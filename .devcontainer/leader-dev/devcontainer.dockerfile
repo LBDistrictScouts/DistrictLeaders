@@ -1,6 +1,8 @@
 FROM ubuntu:kinetic
 
 ARG DEBIAN_FRONTEND=noninteractive
+ARG APP_DL_INSTALL_MODE=DOCKER
+
 
 RUN apt update
 RUN apt -y upgrade
@@ -16,9 +18,8 @@ WORKDIR /var/www/html
 COPY  ["composer.json", "."]
 COPY ["composer.lock", "."]
 
-RUN composer install --optimize-autoloader --no-interaction --profile --version
+RUN composer install --optimize-autoloader --no-interaction --profile --version --no-scripts
 
 COPY . .
 
-RUN mv ./config/Environment/app_parameters.docker.yml ./config/Environment/app_parameters.yml
-
+RUN composer console-install
