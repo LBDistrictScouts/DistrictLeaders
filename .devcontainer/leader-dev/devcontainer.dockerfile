@@ -19,7 +19,8 @@ USER $user
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY  ["composer.json", "."]
 COPY ["composer.lock", "."]
-RUN composer install --optimize-autoloader --no-interaction --profile --version --no-scripts
+RUN composer --version
+RUN composer install --optimize-autoloader --no-interaction --profile --no-scripts --prefer-dist --optimize-autoloader
 
 COPY . .
 
