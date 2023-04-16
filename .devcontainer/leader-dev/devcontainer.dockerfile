@@ -12,15 +12,13 @@ RUN apt -y -q install php8.1 php8.1-pgsql
 RUN apt -y -q install php8.1-intl php8.1-pgsql php8.1-pdo php8.1-xdebug
 
 RUN useradd -U $user
+WORKDIR /var/www/html
+RUN chown -R $user:$group /var/www/html
 USER $user
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-WORKDIR /var/www/html
-
 COPY  ["composer.json", "."]
 COPY ["composer.lock", "."]
-
 RUN composer install --optimize-autoloader --no-interaction --profile --version --no-scripts
 
 COPY . .
