@@ -2,5 +2,18 @@
     "build": {
         "dockerfile": "devcontainer.dockerfile",
         "context": "../../"
-    }
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-yaml",
+				"jebbs.plantuml",
+				"ms-azuretools.vscode-docker",
+				"hashicorp.terraform",
+				"prosser.json-schema-2020-validation",
+				"mohsen1.prettify-json",
+				"GitHub.copilot"
+			]
+		}
+	}
 }
