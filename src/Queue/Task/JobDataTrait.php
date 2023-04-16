@@ -16,7 +16,8 @@ trait JobDataTrait
     /**
      * @var \Queue\Model\Table\QueuedJobsTable
      */
-    public QueuedJobsTable $QueuedJobs;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $QueuedJobs;
 
     /**
      * @var string The access key for job data

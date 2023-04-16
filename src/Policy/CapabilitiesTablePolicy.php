@@ -109,7 +109,7 @@ class CapabilitiesTablePolicy implements BeforePolicyInterface
             return new Result(true, '101');
         }
 
-        if ($user->checkCapability('OWN_USER', 'Users')) {
+        if ($user->checkCapability('OWN_USER')) {
             return new Result(true, '103');
         }
 

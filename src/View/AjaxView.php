@@ -31,7 +31,8 @@ class AjaxView extends AppView
      *
      * @var string
      */
-    public string $layout = 'ajax';
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $layout = 'ajax';
 
     /**
      * Initialization hook method.

@@ -214,8 +214,6 @@ class UserStatesTable extends Table
                 return $state;
             }
         }
-
-        return $state;
     }
 
     /**

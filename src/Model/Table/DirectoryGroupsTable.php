@@ -7,6 +7,7 @@ use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Model\Entity\DirectoryGroup;
 use App\Utility\GoogleBuilder;
+use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -155,7 +156,7 @@ class DirectoryGroupsTable extends Table
         Directory $directory,
         ?string $directoryDomain = null,
         int $count = 0,
-        null $pageToken = null
+        ?string $pageToken = null
     ): array {
         $userList = GoogleBuilder::getGroupList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();
@@ -174,12 +175,12 @@ class DirectoryGroupsTable extends Table
     /**
      * @param \Google_Service_Directory_Group $directoryGroup Google Response Object
      * @param int $directoryId ID of the Parent Directory
-     * @return \App\Model\Entity\DirectoryDomain|\App\Model\Table\EntityInterface|array|false|null
+     * @return \App\Model\Entity\DirectoryDomain|\Cake\ORM\Entity|array|false|null
      */
     public function findOrMake(
         Google_Service_Directory_Group $directoryGroup,
         int $directoryId
-    ): DirectoryDomain|array|EntityInterface|false|null {
+    ): DirectoryDomain|array|Entity|false|null {
         $search = [
             DirectoryGroup::FIELD_DIRECTORY_GROUP_REFERENCE => $directoryGroup->getId(),
             DirectoryGroup::FIELD_DIRECTORY_ID => $directoryId,

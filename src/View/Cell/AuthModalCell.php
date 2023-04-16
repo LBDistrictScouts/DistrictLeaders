@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use Authorization\Policy\Result;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\View\Cell;
@@ -18,7 +19,8 @@ class AuthModalCell extends Cell
      *
      * @var array
      */
-    protected array $_validCellOptions = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_validCellOptions = [];
 
     /**
      * Initialization logic run at the end of object construction.

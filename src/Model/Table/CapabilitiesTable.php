@@ -202,9 +202,9 @@ class CapabilitiesTable extends Table
     /**
      * @param string $entity The Entity to be generated
      * @param int $baseLevel The Base level of the entity
-     * @return int
+     * @return int|false
      */
-    public function fieldCapability(string $entity, int $baseLevel): int
+    public function fieldCapability(string $entity, int $baseLevel): int|false
     {
         $fieldActions = CapBuilder::getFieldCapabilities();
 
@@ -266,9 +266,9 @@ class CapabilitiesTable extends Table
      * @param string $action Action Method
      * @param string $model Model to be referenced
      * @param string|null $field The Field being referenced
-     * @return string
+     * @return string|false
      */
-    public function buildCapability(string $action, string $model, ?string $field = null): string
+    public function buildCapability(string $action, string $model, ?string $field = null): string|false
     {
         if (!CapBuilder::isActionType($action)) {
             Log::debug('NotActionType');

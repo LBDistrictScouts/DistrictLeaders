@@ -31,9 +31,14 @@ class QueueComponent extends Component
      *
      * @var array
      */
-    protected array $_defaultConfig = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [];
 
-    public array $components = ['Flash'];
+    /**
+     * @var array|array<string>
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $components = ['Flash'];
 
     /**
      * @inheritDoc

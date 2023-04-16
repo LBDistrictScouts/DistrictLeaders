@@ -18,12 +18,15 @@ declare(strict_types=1);
 namespace App\Identifier;
 
 use App\Utility\AwsBuilder;
+use ArrayAccess;
 use Authentication\Identifier\AbstractIdentifier;
 use Authentication\Identifier\Resolver\ResolverAwareTrait;
 use Authentication\Identifier\Resolver\ResolverInterface;
 use Authentication\PasswordHasher\PasswordHasherFactory;
 use Authentication\PasswordHasher\PasswordHasherInterface;
 use Authentication\PasswordHasher\PasswordHasherTrait;
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
+use Cake\Datasource\EntityInterface;
 
 /**
  * Password Identifier
@@ -59,7 +62,8 @@ class CognitoIdentifier extends AbstractIdentifier
      *
      * @var array
      */
-    protected array $_defaultConfig = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'fields' => [
             self::CREDENTIAL_USERNAME => 'username',
             self::CREDENTIAL_PASSWORD => 'password',
@@ -234,9 +238,9 @@ class CognitoIdentifier extends AbstractIdentifier
      * Find a user record using the username/identifier provided.
      *
      * @param string $identifier The username/identifier.
-     * @return \ArrayAccess|array|null
+     * @return array|ArrayAccess|EntityInterface|null
      */
-    protected function findIdentity(string $identifier): ArrayAccess|array|null
+    protected function findIdentity(string $identifier): array|ArrayAccess|EntityInterface|null
     {
         $fields = $this->getConfig('fields.' . self::CREDENTIAL_USERNAME);
         $conditions = [];

@@ -59,7 +59,8 @@ class CompassRecord extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'document_version_id' => true,
         'membership_number' => true,
         'title' => true,
@@ -203,9 +204,9 @@ class CompassRecord extends Entity
     /**
      * Cleaned Section
      *
-     * @return string
+     * @return string|null
      */
-    protected function _getCleanSectionType(): string
+    protected function _getCleanSectionType(): ?string
     {
         if (empty($this->location) && !$this->otherFieldsNotEmpty()) {
             return null;
@@ -235,7 +236,7 @@ class CompassRecord extends Entity
      *
      * @return string
      */
-    protected function _getCleanSection(): string
+    protected function _getCleanSection(): ?string
     {
         if (empty($this->clean_section_type) || (empty($this->location) && !$this->otherFieldsNotEmpty())) {
             return null;
@@ -279,9 +280,9 @@ class CompassRecord extends Entity
     /**
      * Return a Last Name Field
      *
-     * @return string
+     * @return string|null
      */
-    protected function _getLastName(): string
+    protected function _getLastName(): ?string
     {
         if (empty($this->surname)) {
             return null;
@@ -300,7 +301,11 @@ class CompassRecord extends Entity
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    protected array $_virtual = [
+    /**
+     * @var array<string> A list of virtual properties
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_virtual = [
         'provisional',
         'clean_role',
         'clean_group',

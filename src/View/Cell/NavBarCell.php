@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use App\Model\Entity\User;
 use Cake\View\Cell;
 
 /**
@@ -18,7 +19,8 @@ class NavBarCell extends Cell
      *
      * @var array
      */
-    protected array $_validCellOptions = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_validCellOptions = [];
 
     /**
      * Initialization logic run at the end of object construction.

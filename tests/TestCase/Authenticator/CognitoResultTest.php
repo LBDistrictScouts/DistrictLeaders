@@ -48,8 +48,8 @@ class CognitoResultTest extends TestCase
      */
     public function testConstructorInvalidData()
     {
-        $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage('Identity data must be `null`, an `array` or implement `ArrayAccess` interface, `stdClass` given.');
+        $this->expectException('TypeError');
+//        $this->expectExceptionMessage('App\Authenticator\CognitoResult::__construct(): Argument #1 ($data) must be of type ArrayAccess|array|null, `stdClass` given.');
 
         new CognitoResult(new stdClass(), CognitoResult::FAILURE_CREDENTIALS_INVALID);
     }

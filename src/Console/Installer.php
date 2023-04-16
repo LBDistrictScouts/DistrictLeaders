@@ -49,18 +49,39 @@ class Installer
     /**
      * An array of config files
      */
-    public const PHP_CONFIG_FILES = [
-        'app',
-        'app_file',
+    public const CONFIG_FILES = [
+        [
+            'name' => 'Main App Config',
+            'path' => 'app',
+            'extension' => 'php',
+        ],
+        [
+            'name' => 'File App Config',
+            'path' => 'app_file',
+            'extension' => 'php',
+        ],
+        [
+            'name' => 'App Parameters',
+            'path' => 'Environment/app_parameters',
+            'extension' => 'yml',
+        ],
+        [
+            'name' => 'Docker Runtime Variables',
+            'path' => 'Credentials/docker',
+            'extension' => 'env',
+        ],
     ];
 
-    public const PHP_RELATIVE_CONFIG_DIRECTORY = DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
-    public const YAML_RELATIVE_CONFIG_DIRECTORY = self::PHP_RELATIVE_CONFIG_DIRECTORY . 'Environment' .
-    DIRECTORY_SEPARATOR;
-
-    public const YAML_CONFIG_FILES = [
-        'app_parameters',
+    /**
+     * An array of security salt placeholders
+     */
+    public const SALTS = [
+        'Security.salt' => '__SALT__',
+        'Cookie.salt' => '__COOKIE_SALT__',
+        'PG.Password' => '__POSTGRES__PASSWORD__',
     ];
+
+    public const RELATIVE_CONFIG_DIRECTORY = DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
 
     /**
      * Does some routine installation tasks so people don't have to.
@@ -146,21 +167,21 @@ class Installer
     {
         $configProcess = function (
             string $configDir,
-            string $configFile,
-            string $suffix
+            array $config
         ) use (
             $installMode,
             &$consoleIo
         ): void {
-            $appConfig = $configDir . $configFile . $suffix;
+            $extension = '.' . $config['extension'];
+            $appConfig = $configDir . $config['path'] . $extension;
 
-            $default_suffix = '.default' . $suffix;
-            $defaultConfig = $configDir . $configFile . $default_suffix;
+            $default_suffix = '.default' . $extension;
+            $defaultConfig = $configDir . $config['path'] . $default_suffix;
             if ($installMode != 'NORMAL') {
-                $default_suffix = '.' . strtolower($installMode) . $suffix;
+                $default_suffix = '.' . strtolower($installMode) . $extension;
             }
 
-            $presentConfig = $configDir . $configFile . $default_suffix;
+            $presentConfig = $configDir . $config['path'] . $default_suffix;
             if (!file_exists($presentConfig)) {
                 $presentConfig = $defaultConfig;
             }
@@ -172,15 +193,9 @@ class Installer
         };
 
         // Loop through PHP config Files, like app.php & app_file.php
-        $configDir = $dir . static::PHP_RELATIVE_CONFIG_DIRECTORY;
-        foreach (static::PHP_CONFIG_FILES as $phpConfigFile) {
-            $configProcess($configDir, $phpConfigFile, '.php');
-        }
-
-        // loop through yaml config files in the Environment Directory.
-        $yamlDir = $dir . static::YAML_RELATIVE_CONFIG_DIRECTORY;
-        foreach (static::YAML_CONFIG_FILES as $ymlConfigFile) {
-            $configProcess($yamlDir, $ymlConfigFile, '.yml');
+        $configDir = $dir . static::RELATIVE_CONFIG_DIRECTORY;
+        foreach (static::CONFIG_FILES as $config) {
+            $configProcess($configDir, $config);
         }
     }
 
@@ -258,12 +273,7 @@ class Installer
      */
     public static function setSecuritySalt(string $dir, IOInterface $consoleIo): void
     {
-        $salts = [
-            'Security.salt' => '__SALT__',
-            'Cookie.salt' => '__COOKIE_SALT__',
-        ];
-
-        foreach ($salts as $placeHolderName => $searchString) {
+        foreach (static::SALTS as $placeHolderName => $searchString) {
             $newKey = hash('sha256', Security::randomBytes(64));
             static::replacePlaceholders($dir, $consoleIo, $newKey, $searchString, $placeHolderName);
         }
@@ -286,16 +296,10 @@ class Installer
         string $searchToken,
         ?string $placeHolderName = null
     ): void {
-        $php_config_dir = $dir . static::PHP_RELATIVE_CONFIG_DIRECTORY;
-        foreach (static::PHP_CONFIG_FILES as $php_config) {
-            $config_file = $php_config_dir . $php_config . '.php';
-            static::replacePlaceholder($config_file, $consoleIo, $value, $searchToken, $placeHolderName);
-        }
-
-        $yaml_config_dir = $dir . static::YAML_RELATIVE_CONFIG_DIRECTORY;
-        foreach (static::YAML_CONFIG_FILES as $yaml_config) {
-            $config_file = $yaml_config_dir . $yaml_config . '.yml';
-            static::replacePlaceholder($config_file, $consoleIo, $value, $searchToken, $placeHolderName);
+        $configDir = $dir . static::RELATIVE_CONFIG_DIRECTORY;
+        foreach (static::CONFIG_FILES as $config) {
+            $configFile = $configDir . $config['path'] . '.' . $config['extension'];
+            static::replacePlaceholder($configFile, $consoleIo, $value, $searchToken, $placeHolderName);
         }
     }
 
@@ -329,7 +333,7 @@ class Installer
 
         $result = file_put_contents($config, $content);
         if ($result) {
-            $consoleIo->write('Updated ' . $placeHolderName . ' value in config/' . $config);
+            $consoleIo->write('Updated ' . $placeHolderName . ' value in ' . $config);
 
             return;
         }

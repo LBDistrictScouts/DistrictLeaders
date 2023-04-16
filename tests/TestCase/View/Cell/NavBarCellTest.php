@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\View\Cell;
 
+use App\Model\Entity\User;
 use App\Test\Fixture\FixtureTestTrait;
 use App\View\Cell\NavBarCell;
 use Cake\Http\Response;
@@ -70,7 +71,8 @@ class NavBarCellTest extends TestCase
      */
     public function testDisplay()
     {
-        $this->NavBar->display(1);
+        $user = new User();
+        $this->NavBar->display($user);
 
         $options = $this->NavBar->viewBuilder()->getOptions();
         $expected = [];

@@ -18,7 +18,8 @@ class InformationCell extends Cell
      *
      * @var array
      */
-    protected array $_validCellOptions = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_validCellOptions = [];
 
     protected string $interfacePath = 'cell/Information/interface';
 

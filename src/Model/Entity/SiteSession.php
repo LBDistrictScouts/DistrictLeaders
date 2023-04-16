@@ -27,7 +27,8 @@ class SiteSession extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'created' => true,
         'modified' => true,
         'data' => true,

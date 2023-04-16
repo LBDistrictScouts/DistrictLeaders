@@ -86,7 +86,8 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'username' => true,
         'membership_number' => true,
         'first_name' => true,
@@ -128,21 +129,24 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
-    protected array $_hidden = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_hidden = [
         'password',
     ];
 
     /**
      * @param string $value The un-hashed password string
-     * @return string|bool|void
+     * @return string
      */
-    protected function _setPassword(string $value): bool|string|null
+    protected function _setPassword(string $value): string
     {
         if (strlen($value)) {
             $hasher = new DefaultPasswordHasher();
 
             return $hasher->hash($value);
         }
+
+        return $value;
     }
 
     /**
@@ -160,7 +164,8 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
-    protected array $_virtual = ['full_name', 'sections', 'groups'];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_virtual = ['full_name', 'sections', 'groups'];
 
     private string $userKey = self::CAP_KEY_USER;
     private string $groupKey = self::CAP_KEY_GROUP;
@@ -369,10 +374,10 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @param string $capability The Capability being verified
      * @param string $subset The Authorisation Subset
-     * @param int $entities The Entity ID or Array of IDs
+     * @param array|int|null $entities The Entity ID or Array of IDs
      * @return bool
      */
-    private function subSetCapabilityCheck(string $capability, string $subset, int $entities): bool
+    private function subSetCapabilityCheck(string $capability, string $subset, int|array|null $entities): bool
     {
         if (key_exists($subset, $this->capabilities)) {
             $subsetCapabilities = $this->capabilities[$subset];

@@ -175,7 +175,7 @@ class DirectoryUsersTable extends Table
      * @param \App\Model\Entity\Directory $directory The Directory
      * @param string|null $directoryDomain The Directory Domain
      * @param int $count The Count start point
-     * @param null $pageToken The Next Page Token
+     * @param string|null $pageToken The Next Page Token
      * @return array
      * @throws \Google_Exception
      */
@@ -183,7 +183,7 @@ class DirectoryUsersTable extends Table
         Directory $directory,
         ?string $directoryDomain = null,
         int $count = 0,
-        null $pageToken = null
+        ?string $pageToken = null
     ): array {
         $userList = GoogleBuilder::getUserList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();

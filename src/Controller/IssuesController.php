@@ -19,20 +19,22 @@ class IssuesController extends Controller
 
     /**
      * @param \Cake\Event\Event $event The event being interrupted
-     * @return \App\Controller\Response|null|void
+     * @return \App\Controller\Response|null
      */
-    public function beforeFilter(EventInterface $event): Response|null|null
+    public function beforeFilter(EventInterface $event): void
     {
         $this->modelFactory('Endpoint', ['Muffin\Webservice\Model\EndpointRegistry', 'get']);
         $this->loadModel('CvoTechnologies/GitHub.Issues', 'Endpoint');
+
+        return null;
     }
 
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $issues = $this->Issues->find()->where([
             'owner' => 'LBDistrictScouts',
@@ -46,10 +48,10 @@ class IssuesController extends Controller
      * View method
      *
      * @param string|null $id Issue id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $issue = $this->Issues->get($id, [
             'contain' => [],
@@ -63,7 +65,7 @@ class IssuesController extends Controller
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $issue = $this->Issues->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -71,11 +73,13 @@ class IssuesController extends Controller
             if ($this->Issues->save($issue)) {
                 $this->Flash->success(__('The issue has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
         $this->set(compact('issue'));
+
+        return null;
     }
 
     /**
@@ -85,7 +89,7 @@ class IssuesController extends Controller
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $issue = $this->Issues->get($id, [
             'contain' => [],
@@ -95,11 +99,13 @@ class IssuesController extends Controller
             if ($this->Issues->save($issue)) {
                 $this->Flash->success(__('The issue has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The issue could not be saved. Please, try again.'));
         }
         $this->set(compact('issue'));
+
+        return null;
     }
 
     /**
@@ -109,7 +115,7 @@ class IssuesController extends Controller
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $issue = $this->Issues->get($id);
@@ -119,6 +125,6 @@ class IssuesController extends Controller
             $this->Flash->error(__('The issue could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

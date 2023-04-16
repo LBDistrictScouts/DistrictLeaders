@@ -6,6 +6,7 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\ORM\Query;
 
 /**
  * Class UsersPolicy
@@ -21,7 +22,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeIndex(User $user, Query $query): mixed
+    public function scopeIndex(User $user, Query $query): Query
     {
         if ($user->checkCapability('DIRECTORY')) {
             return $query;
@@ -35,7 +36,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeSearch(User $user, Query $query): mixed
+    public function scopeSearch(User $user, Query $query): Query
     {
         if ($user->checkCapability('DIRECTORY')) {
             return $query;
@@ -49,7 +50,7 @@ class UsersTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeEdit(User $user, Query $query): mixed
+    public function scopeEdit(User $user, Query $query): Query
     {
         if ($user->checkCapability('EDIT_USER')) {
             return $query;
@@ -60,9 +61,9 @@ class UsersTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canIndex(User $user): Result
+    public function canIndex(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true, '101');
@@ -77,9 +78,9 @@ class UsersTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canView(User $user): Result
+    public function canView(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'Users')) {
             return new Result(true, '101');
@@ -124,9 +125,9 @@ class UsersTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Logging In
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canLogin(User $user): Result
+    public function canLogin(User $user): ?Result
     {
         if ($user->checkCapability('LOGIN')) {
             return new Result(true, '50');

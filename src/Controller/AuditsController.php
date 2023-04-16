@@ -25,9 +25,9 @@ class AuditsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Users', 'ChangedUsers'],
@@ -40,14 +40,14 @@ class AuditsController extends AppController
     /**
      * View method
      *
-     * @param string|null $id Audit id.
-     * @return \Cake\Http\Response
+     * @param string|null $auditId Audit id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): Response
+    public function view(?string $auditId = null): void
     {
-        $audit = $this->Audits->get($id);
+        $audit = $this->Audits->get($auditId);
 
-        return $this->redirect(['controller' => $audit->audit_table, 'action' => 'view', $audit->audit_record_id]);
+        $this->redirect(['controller' => $audit->audit_table, 'action' => 'view', $audit->audit_record_id]);
     }
 }

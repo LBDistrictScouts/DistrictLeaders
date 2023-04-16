@@ -17,6 +17,8 @@ declare(strict_types=1);
 
 namespace App\Authenticator;
 
+use App\Model\Entity\User;
+use ArrayAccess;
 use Authentication\Authenticator\PersistenceInterface;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
@@ -187,11 +189,11 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
     /**
      * Checks whether a token hash matches the identity data.
      *
-     * @param \App\Authenticator\ArrayAccess|array $identity Identity data.
+     * @param \App\Model\Entity\User|\ArrayAccess|array $identity Identity data.
      * @param string $tokenHash Hashed part of a cookie token.
      * @return bool
      */
-    protected function checkToken(array|ArrayAccess $identity, string $tokenHash): bool
+    protected function checkToken(array|ArrayAccess|User $identity, string $tokenHash): bool
     {
         $plain = $this->createPlainToken($identity);
 

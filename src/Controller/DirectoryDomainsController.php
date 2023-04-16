@@ -17,9 +17,9 @@ class DirectoryDomainsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Directories'],
@@ -32,11 +32,11 @@ class DirectoryDomainsController extends AppController
     /**
      * View method
      *
-     * @param null $id Directory Domain id.
-     * @return \Cake\Http\Response|void
+     * @param int $id Directory Domain id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(null $id = null): ?Response
+    public function view(int $id): void
     {
         $directoryDomain = $this->DirectoryDomains->get($id, [
             'contain' => ['Directories'],
@@ -48,9 +48,9 @@ class DirectoryDomainsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $directoryDomain = $this->DirectoryDomains->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -58,7 +58,7 @@ class DirectoryDomainsController extends AppController
             if ($this->DirectoryDomains->save($directoryDomain)) {
                 $this->Flash->success(__('The directory domain has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryDomain->get(DirectoryDomain::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryDomain->get(DirectoryDomain::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory domain could not be saved. Please, try again.'));
         }
@@ -70,10 +70,10 @@ class DirectoryDomainsController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Domain id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $directoryDomain = $this->DirectoryDomains->get($id, [
             'contain' => [],
@@ -83,7 +83,7 @@ class DirectoryDomainsController extends AppController
             if ($this->DirectoryDomains->save($directoryDomain)) {
                 $this->Flash->success(__('The directory domain has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryDomain->get(DirectoryDomain::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryDomain->get(DirectoryDomain::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory domain could not be saved. Please, try again.'));
         }
@@ -98,7 +98,7 @@ class DirectoryDomainsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $directoryDomain = $this->DirectoryDomains->get($id);
@@ -108,6 +108,6 @@ class DirectoryDomainsController extends AppController
             $this->Flash->error(__('The directory domain could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

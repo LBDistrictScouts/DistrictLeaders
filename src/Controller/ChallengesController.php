@@ -59,18 +59,18 @@ class ChallengesController extends Controller
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
     }
 
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function expired(): ?Response
+    public function expired(): void
     {
         $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
         $this->loadModel('Tokens');
@@ -109,7 +109,7 @@ class ChallengesController extends Controller
 //        if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
 ////            $this->Flash->error('Password Reset Token could not be validated.');
 //
-////            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+////            $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
 //        }
 
         $passwordForm = new PasswordForm();
@@ -129,7 +129,7 @@ class ChallengesController extends Controller
                 if ($result) {
                     $this->Flash->success('Your password was saved successfully.');
 
-                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                    $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
                 }
 
                 $this->Flash->error(__('The password security could not be validated. Is your postcode correct?'));

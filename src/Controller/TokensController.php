@@ -32,11 +32,11 @@ class TokensController extends AppController
      * @param string $token The Token for deciphering.
      * @return \Cake\Http\Response|null
      */
-    public function validate(?string $token = null): ?Response
+    public function validate(?string $token = null): void
     {
         // Kick if no Token
         if (is_null($token)) {
-            return $this->redirect($this->referer('/'));
+            $this->redirect($this->referer('/'));
         }
 
         // Validate Token
@@ -45,7 +45,7 @@ class TokensController extends AppController
         if (!is_numeric($validated) || (!$validated && is_bool($validated))) {
             $this->Flash->error('This Token is Invalid');
 
-            return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+            $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
         }
 
         if (is_numeric($validated)) {
@@ -67,11 +67,11 @@ class TokensController extends AppController
                 ];
                 $redirect = array_merge($location, $tokenReData);
 
-                return $this->redirect($redirect);
+                $this->redirect($redirect);
             }
         }
 
-        return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+        $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
     }
 
     /**
@@ -89,7 +89,7 @@ class TokensController extends AppController
             }
         }
 
-        return $this->redirect($this->referer([
+        $this->redirect($this->referer([
             'controller' => 'EmailSends',
             'action' => 'view',
             $token->email_send_id,
@@ -103,7 +103,7 @@ class TokensController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function parse(int|string|null $tokenId = null): ?Response
+    public function parse(int|string|null $tokenId = null): void
     {
         $this->request->allowMethod(['post']);
 
@@ -119,12 +119,12 @@ class TokensController extends AppController
                 $this->Flash->success('No Action Taken');
             }
 
-            return $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
+            $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
         }
 
         $this->loadComponent('Queue');
         $this->Queue->setTokenParse();
 
-        return $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
+        $this->redirect($this->referer(['controller' => 'Admin', 'action' => 'index']));
     }
 }

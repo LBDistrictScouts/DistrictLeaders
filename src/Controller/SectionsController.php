@@ -29,9 +29,9 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->Authorization->authorize($this->Sections);
 
@@ -46,9 +46,9 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function search(): ?Response
+    public function search(): void
     {
         $query = $this->Sections->find('search', [
             'search' => $this->getRequest()->getQueryParams(),
@@ -68,10 +68,10 @@ class SectionsController extends AppController
      * View method
      *
      * @param string|null $id Section id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $section = $this->Sections->get($id, [
             'contain' => [
@@ -93,7 +93,7 @@ class SectionsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $section = $this->Sections->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -101,7 +101,7 @@ class SectionsController extends AppController
             if ($this->Sections->save($section)) {
                 $this->Flash->success(__('The section has been saved.'));
 
-                return $this->redirect(['action' => 'view', $section->get('id')]);
+                $this->redirect(['action' => 'view', $section->get('id')]);
             }
             $this->Flash->error(__('The section could not be saved. Please, try again.'));
         }
@@ -117,7 +117,7 @@ class SectionsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $section = $this->Sections->get($id, [
             'contain' => [],
@@ -127,7 +127,7 @@ class SectionsController extends AppController
             if ($this->Sections->save($section)) {
                 $this->Flash->success(__('The section has been saved.'));
 
-                return $this->redirect(['action' => 'view', $section->get('id')]);
+                $this->redirect(['action' => 'view', $section->get('id')]);
             }
             $this->Flash->error(__('The section could not be saved. Please, try again.'));
         }
@@ -143,7 +143,7 @@ class SectionsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $section = $this->Sections->get($id);
@@ -153,6 +153,6 @@ class SectionsController extends AppController
             $this->Flash->error(__('The section could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -14,7 +14,11 @@ use Cake\View\Helper;
  */
 class FunctionalHelper extends Helper
 {
-    protected array $_defaultConfig = [
+    /**
+     * @var array The Default Array of config.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'functionalAreas' => [
             'directory' => true,
             'camps' => true,

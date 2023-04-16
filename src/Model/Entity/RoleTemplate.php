@@ -28,7 +28,8 @@ class RoleTemplate extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'role_template' => true,
         'template_capabilities' => true,
         'indicative_level' => true,

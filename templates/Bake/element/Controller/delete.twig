@@ -30,5 +30,5 @@
             $this->Flash->error(__('The {{ singularHumanName|lower }} could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }

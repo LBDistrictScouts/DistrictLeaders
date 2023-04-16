@@ -19,12 +19,14 @@ class TokenTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public int $timeout = 20;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $timeout = 20;
 
     /**
      * @var int
      */
-    public int $retries = 1;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $retries = 1;
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()

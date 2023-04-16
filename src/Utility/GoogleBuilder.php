@@ -10,6 +10,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Google_Client;
 use Google_Service_Directory;
 use Google_Service_Directory_Groups;
+use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component
@@ -121,16 +122,16 @@ class GoogleBuilder
     /**
      * get List
      *
-     * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @param null $domain Domain Limit
+     * @param Directory|null $directory The Directory to Take Config From
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
-     * @return \Google_Service_Directory_Users
+     * @return Google_Service_Directory_Users
      * @throws \Google_Exception
      */
     public static function getUserList(
         ?Directory $directory = null,
-        null $domain = null,
+        string $domain = null,
         int $limit = 50,
         ?string $pageToken = null
     ): Google_Service_Directory_Users {
@@ -162,7 +163,7 @@ class GoogleBuilder
      * get List
      *
      * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @param null $domain Domain Limit
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Groups
@@ -170,7 +171,7 @@ class GoogleBuilder
      */
     public static function getGroupList(
         ?Directory $directory = null,
-        null $domain = null,
+        ?string $domain = null,
         int $limit = 50,
         ?string $pageToken = null
     ): Google_Service_Directory_Groups {

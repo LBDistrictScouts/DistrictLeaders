@@ -5,6 +5,7 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\ORM\Association;
+use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 
 /**
@@ -17,7 +18,8 @@ class FilterComponent extends Component
      *
      * @var array
      */
-    protected array $_defaultConfig = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [];
 
     /**
      * @param \Cake\ORM\Association $association The Association for Filtering on

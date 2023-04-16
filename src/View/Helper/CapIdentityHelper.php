@@ -30,9 +30,10 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * Identity Object
      *
-     * @var \App\View\Helper\IdentityInterface|\App\View\Helper\User|null
+     * @var \App\Model\Entity\User|\Authorization\IdentityInterface|null
      */
-    protected IdentityInterface|User|null $_identity = null;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_identity = null;
 
     /**
      * @param string $capabilityCode Capability Code for Checking
@@ -46,16 +47,16 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|null $group The Group ID for checking against
-     * @param int|null $section The Section ID for checking against
+     * @param int|array|null $group The Group ID for checking against
+     * @param int|array|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return bool
      */
     public function buildAndCheckCapability(
         string $action,
         string $model,
-        ?int $group = null,
-        ?int $section = null,
+        int|array|null $group = null,
+        int|array|null $section = null,
         ?string $field = null
     ): bool {
         return $this->_identity->buildAndCheckCapability($action, $model, $group, $section, $field);

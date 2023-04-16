@@ -16,9 +16,9 @@ class RoleTemplatesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $roleTemplates = $this->paginate($this->RoleTemplates);
 
@@ -29,10 +29,10 @@ class RoleTemplatesController extends AppController
      * View method
      *
      * @param string|null $templateId Role Template id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $templateId = null): ?Response
+    public function view(?string $templateId = null): void
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
             'contain' => ['RoleTypes'],
@@ -46,7 +46,7 @@ class RoleTemplatesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $roleTemplate = $this->RoleTemplates->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -54,7 +54,7 @@ class RoleTemplatesController extends AppController
             if ($this->RoleTemplates->save($roleTemplate)) {
                 $this->Flash->success(__('The role template has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleTemplate->get(RoleTemplate::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $roleTemplate->get(RoleTemplate::FIELD_ID)]);
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
@@ -66,10 +66,10 @@ class RoleTemplatesController extends AppController
      * Edit method
      *
      * @param string|null $templateId Role Template id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $templateId = null): ?Response
+    public function edit(?string $templateId = null): void
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
             'contain' => [],
@@ -79,7 +79,7 @@ class RoleTemplatesController extends AppController
             if ($this->RoleTemplates->save($roleTemplate)) {
                 $this->Flash->success(__('The role template has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleTemplate->get(RoleTemplate::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $roleTemplate->get(RoleTemplate::FIELD_ID)]);
             }
             $this->Flash->error(__('The role template could not be saved. Please, try again.'));
         }
@@ -92,10 +92,10 @@ class RoleTemplatesController extends AppController
      * Delete method
      *
      * @param string|null $templateId Role Template id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $templateId = null): ?Response
+    public function delete(?string $templateId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleTemplate = $this->RoleTemplates->get($templateId);
@@ -105,6 +105,6 @@ class RoleTemplatesController extends AppController
             $this->Flash->error(__('The role template could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

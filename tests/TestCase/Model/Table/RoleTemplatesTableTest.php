@@ -10,8 +10,6 @@ use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Table\RoleTemplatesTable Test Case
- *
- * @property EventManager $EventManager
  */
 class RoleTemplatesTableTest extends TestCase
 {

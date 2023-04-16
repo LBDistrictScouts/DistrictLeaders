@@ -14,9 +14,9 @@ class EmailResponsesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['EmailSends', 'EmailResponseTypes'],
@@ -30,10 +30,10 @@ class EmailResponsesController extends AppController
      * View method
      *
      * @param string|null $id Email Response id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $emailResponse = $this->EmailResponses->get($id, [
             'contain' => ['EmailSends', 'EmailResponseTypes'],
@@ -47,7 +47,7 @@ class EmailResponsesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $emailResponse = $this->EmailResponses->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -55,7 +55,7 @@ class EmailResponsesController extends AppController
             if ($this->EmailResponses->save($emailResponse)) {
                 $this->Flash->success(__('The email response has been saved.'));
 
-                return $this->redirect(['action' => 'view', $emailResponse->get('id')]);
+                $this->redirect(['action' => 'view', $emailResponse->get('id')]);
             }
             $this->Flash->error(__('The email response could not be saved. Please, try again.'));
         }
@@ -71,7 +71,7 @@ class EmailResponsesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $emailResponse = $this->EmailResponses->get($id, [
             'contain' => [],
@@ -81,7 +81,7 @@ class EmailResponsesController extends AppController
             if ($this->EmailResponses->save($emailResponse)) {
                 $this->Flash->success(__('The email response has been saved.'));
 
-                return $this->redirect(['action' => 'view', $emailResponse->get('id')]);
+                $this->redirect(['action' => 'view', $emailResponse->get('id')]);
             }
             $this->Flash->error(__('The email response could not be saved. Please, try again.'));
         }
@@ -97,7 +97,7 @@ class EmailResponsesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $emailResponse = $this->EmailResponses->get($id);
@@ -107,6 +107,6 @@ class EmailResponsesController extends AppController
             $this->Flash->error(__('The email response could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

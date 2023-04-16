@@ -13,7 +13,11 @@ use Cake\View\Helper;
  */
 class IconHelper extends Helper
 {
-    protected array $_defaultConfig = [
+    /**
+     * @var array|array<string> The default config.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'iconWeight' => 'fal',
         'iconPrefix' => 'fa',
     ];

@@ -34,7 +34,8 @@ class Directory extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'directory' => true,
         'configuration_payload' => true,
         'directory_type_id' => true,
@@ -52,7 +53,8 @@ class Directory extends Entity
      *
      * @var array
      */
-    protected array $_hidden = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_hidden = [
         'authorisation_token',
     ];
 

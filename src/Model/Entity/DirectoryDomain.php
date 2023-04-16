@@ -28,7 +28,8 @@ class DirectoryDomain extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         self::FIELD_DIRECTORY_DOMAIN => true,
         self::FIELD_DIRECTORY_ID => true,
         self::FIELD_INGEST => true,

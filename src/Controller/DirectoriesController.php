@@ -31,9 +31,9 @@ class DirectoriesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['DirectoryTypes'],
@@ -46,11 +46,11 @@ class DirectoriesController extends AppController
     /**
      * View method
      *
-     * @param null $directoryID Directory id.
-     * @return \Cake\Http\Response|void
+     * @param int $directoryID Directory id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(null $directoryID = null): ?Response
+    public function view(int $directoryID): void
     {
         $directory = $this->Directories->get($directoryID, [
             'contain' => ['DirectoryTypes', 'DirectoryDomains', 'DirectoryGroups', 'DirectoryUsers.UserContacts'],
@@ -62,9 +62,9 @@ class DirectoriesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $directory = $this->Directories->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -72,7 +72,7 @@ class DirectoriesController extends AppController
             if ($this->Directories->save($directory)) {
                 $this->Flash->success(__('The directory has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directory->get(Directory::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directory->get(Directory::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory could not be saved. Please, try again.'));
         }
@@ -83,11 +83,11 @@ class DirectoriesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $directoryID Directory id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @param int $directoryID Directory id.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $directoryID = null): ?Response
+    public function edit(int $directoryID): void
     {
         $directory = $this->Directories->get($directoryID, [
             'contain' => [],
@@ -97,7 +97,7 @@ class DirectoriesController extends AppController
             if ($this->Directories->save($directory)) {
                 $this->Flash->success(__('The directory has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directory->get(Directory::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directory->get(Directory::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory could not be saved. Please, try again.'));
         }
@@ -109,11 +109,11 @@ class DirectoriesController extends AppController
      * Edit method
      *
      * @param string|null $directoryID Directory id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      * @throws \Google_Exception
      */
-    public function auth(?string $directoryID = null): ?Response
+    public function auth(?string $directoryID = null): void
     {
         $directory = $this->Directories->get($directoryID, [
             'contain' => [],
@@ -134,7 +134,7 @@ class DirectoriesController extends AppController
             if (!$client->isAccessTokenExpired()) {
                 $this->Flash->success('Token is Active');
 
-                return $this->redirect(['action' => 'view', $directoryID]);
+                $this->redirect(['action' => 'view', $directoryID]);
             }
 
             // Refresh the token if possible, else fetch a new one.
@@ -143,7 +143,7 @@ class DirectoriesController extends AppController
                 $this->GoogleClient->saveToken($client, $directory);
                 $this->Flash->success('Token Successfully Renewed.');
 
-                return $this->redirect(['action' => 'view', $directoryID]);
+                $this->redirect(['action' => 'view', $directoryID]);
             } else {
                 $directory->set(Directory::FIELD_ACTIVE, false);
                 $this->Directories->save($directory);
@@ -165,12 +165,12 @@ class DirectoriesController extends AppController
                 $this->log(join(', ', $accessToken), 'error');
                 $this->Flash->error('Error in Authorising Token.');
 
-                return $this->redirect(['action' => 'view', $directoryID]);
+                $this->redirect(['action' => 'view', $directoryID]);
             }
             $this->Flash->success('Token Authorised Successfully.');
             $this->GoogleClient->saveToken($client, $directory);
 
-            return $this->redirect(['action' => 'view', $directoryID]);
+            $this->redirect(['action' => 'view', $directoryID]);
         }
     }
 
@@ -198,7 +198,7 @@ class DirectoriesController extends AppController
                     $this->log(join(', ', $accessToken), 'error');
                     $this->Flash->error('Error in Authorising Token.');
 
-                    return $this->redirect(['action' => 'view', $directory->id]);
+                    $this->redirect(['action' => 'view', $directory->id]);
                 }
                 $this->Flash->success('Token Authorised Successfully.');
                 $this->GoogleClient->saveToken($client, $directory);
@@ -206,13 +206,13 @@ class DirectoriesController extends AppController
                 $directory->set(Directory::FIELD_ACTIVE, true);
                 $this->Directories->save($directory);
 
-                return $this->redirect(['action' => 'view', $directory->id]);
+                $this->redirect(['action' => 'view', $directory->id]);
             }
         }
 
         $this->Flash->error('Code unprocessed. Token not Authorised.');
 
-        return $this->redirect('/');
+        $this->redirect('/');
     }
 
     /**
@@ -222,7 +222,7 @@ class DirectoriesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $directoryID = null): ?Response
+    public function delete(?string $directoryID = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $directory = $this->Directories->get($directoryID);
@@ -232,17 +232,17 @@ class DirectoriesController extends AppController
             $this->Flash->error(__('The directory could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $directoryId Directory id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function populate(?string $directoryId = null): ?Response
+    public function populate(?string $directoryId = null): void
     {
         $this->request->allowMethod(['post']);
         $directory = $this->Directories->get($directoryId);
@@ -250,6 +250,6 @@ class DirectoriesController extends AppController
         $this->loadComponent('Queue');
         $this->Queue->setDirectoryImport($directory);
 
-        return $this->redirect(['controller' => 'Directories', 'action' => 'view', $directoryId]);
+        $this->redirect(['controller' => 'Directories', 'action' => 'view', $directoryId]);
     }
 }

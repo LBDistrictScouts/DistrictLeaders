@@ -44,13 +44,13 @@ class PagesController extends AppController
      * @throws \Cake\Http\Exception\NotFoundException When the view file could not
      * be found and not in debug mode.
      */
-    public function display(string ...$path): ?Response
+    public function display(string ...$path): void
     {
         $this->viewBuilder()->setLayout('welcome');
 
         $count = count($path);
         if (!$count) {
-            return $this->redirect('/');
+            $this->redirect('/');
         }
         if (in_array('..', $path, true) || in_array('.', $path, true)) {
             throw new ForbiddenException();
@@ -66,7 +66,7 @@ class PagesController extends AppController
         $this->set(compact('page', 'subpage'));
 
         try {
-            return $this->render(implode('/', $path));
+            $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {
             if (Configure::read('debug')) {
                 throw $exception;

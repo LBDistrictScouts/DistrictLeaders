@@ -28,7 +28,8 @@ class FileType extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'file_type' => true,
         'file_extension' => true,
         'mime' => true,

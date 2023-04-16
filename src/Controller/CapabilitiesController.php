@@ -32,9 +32,9 @@ class CapabilitiesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $capabilities = $this->paginate($this->Capabilities);
 
@@ -45,10 +45,10 @@ class CapabilitiesController extends AppController
      * View method
      *
      * @param int|null $capabilityId Capability id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?int $capabilityId = null): ?Response
+    public function view(?int $capabilityId = null): void
     {
         $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
@@ -61,10 +61,10 @@ class CapabilitiesController extends AppController
      * View method
      *
      * @param int|null $userId User id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function permissions(?int $userId = null): ?Response
+    public function permissions(?int $userId = null): void
     {
         $user = $this->Capabilities->RoleTypes->Roles->Users->get($userId);
         $this->set('user', $user);
@@ -96,7 +96,7 @@ class CapabilitiesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $capability = $this->Capabilities->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -104,7 +104,7 @@ class CapabilitiesController extends AppController
             if ($this->Capabilities->save($capability)) {
                 $this->Flash->success(__('The capability has been saved.'));
 
-                return $this->redirect(['action' => 'edit', $capability->get('id'), '?' => ['roleTypes' => true]]);
+                $this->redirect(['action' => 'edit', $capability->get('id'), '?' => ['roleTypes' => true]]);
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
@@ -118,7 +118,7 @@ class CapabilitiesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $capabilityId = null): ?Response
+    public function edit(?string $capabilityId = null): void
     {
         $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
@@ -128,7 +128,7 @@ class CapabilitiesController extends AppController
             if ($this->Capabilities->save($capability)) {
                 $this->Flash->success(__('The capability has been saved.'));
 
-                return $this->redirect(['action' => 'view', $capability->get('id')]);
+                $this->redirect(['action' => 'view', $capability->get('id')]);
             }
             $this->Flash->error(__('The capability could not be saved. Please, try again.'));
         }
@@ -150,7 +150,7 @@ class CapabilitiesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $capabilityId = null): ?Response
+    public function delete(?string $capabilityId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $capability = $this->Capabilities->get($capabilityId);
@@ -160,7 +160,7 @@ class CapabilitiesController extends AppController
             $this->Flash->error(__('The capability could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -169,13 +169,13 @@ class CapabilitiesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function process(): ?Response
+    public function process(): void
     {
         $this->request->allowMethod(['post']);
 
         $this->loadComponent('Queue');
         $this->Queue->setCapabilityParse();
 
-        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
+        $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }
