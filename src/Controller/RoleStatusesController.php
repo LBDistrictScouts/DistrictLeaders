@@ -14,9 +14,9 @@ class RoleStatusesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $roleStatuses = $this->paginate($this->RoleStatuses);
 
@@ -27,10 +27,10 @@ class RoleStatusesController extends AppController
      * View method
      *
      * @param string|null $id Role Status id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $roleStatus = $this->RoleStatuses->get($id, [
             'contain' => ['Roles'],
@@ -44,7 +44,7 @@ class RoleStatusesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $roleStatus = $this->RoleStatuses->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -52,7 +52,7 @@ class RoleStatusesController extends AppController
             if ($this->RoleStatuses->save($roleStatus)) {
                 $this->Flash->success(__('The role status has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleStatus->get('id')]);
+                $this->redirect(['action' => 'view', $roleStatus->get('id')]);
             }
             $this->Flash->error(__('The role status could not be saved. Please, try again.'));
         }
@@ -66,7 +66,7 @@ class RoleStatusesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $roleStatus = $this->RoleStatuses->get($id, [
             'contain' => [],
@@ -76,7 +76,7 @@ class RoleStatusesController extends AppController
             if ($this->RoleStatuses->save($roleStatus)) {
                 $this->Flash->success(__('The role status has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleStatus->get('id')]);
+                $this->redirect(['action' => 'view', $roleStatus->get('id')]);
             }
             $this->Flash->error(__('The role status could not be saved. Please, try again.'));
         }
@@ -90,7 +90,7 @@ class RoleStatusesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleStatus = $this->RoleStatuses->get($id);
@@ -100,6 +100,6 @@ class RoleStatusesController extends AppController
             $this->Flash->error(__('The role status could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

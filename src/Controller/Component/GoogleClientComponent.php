@@ -7,6 +7,8 @@ use App\Model\Entity\Directory;
 use App\Utility\GoogleBuilder;
 use Cake\Controller\Component;
 use Google_Client;
+use Google_Service_Directory_Users;
+use Google_Service_Directory_Domains2;
 
 /**
  * GoogleClient component
@@ -17,7 +19,7 @@ class GoogleClientComponent extends Component
      * get List
      *
      * @param \App\Model\Entity\Directory $directory The Directory Authentication
-     * @param null $domain Domain Limit
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Users
@@ -25,7 +27,7 @@ class GoogleClientComponent extends Component
      */
     public function getUserList(
         Directory $directory,
-        null $domain = null,
+        ?string $domain = null,
         int $limit = 50,
         ?string $pageToken = null
     ): Google_Service_Directory_Users {

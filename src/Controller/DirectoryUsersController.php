@@ -17,9 +17,9 @@ class DirectoryUsersController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Directories', 'UserContacts'],
@@ -32,13 +32,13 @@ class DirectoryUsersController extends AppController
     /**
      * View method
      *
-     * @param null $id Directory User id.
-     * @return \Cake\Http\Response|void
+     * @param string|int $directoryUserId Directory User id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(null $id = null): ?Response
+    public function view(string|int $directoryUserId): void
     {
-        $directoryUser = $this->DirectoryUsers->get($id, [
+        $directoryUser = $this->DirectoryUsers->get($directoryUserId, [
             'contain' => ['Directories', 'Users'],
         ]);
 
@@ -52,9 +52,9 @@ class DirectoryUsersController extends AppController
      *
      * @param int $directoryUserId The ID of the Directory User
      * @param int $userId The ID of the User
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function link(int $directoryUserId, int $userId): ?Response
+    public function link(int $directoryUserId, int $userId): void
     {
         $directoryUser = $this->DirectoryUsers->get((int)$directoryUserId);
         $user = $this->DirectoryUsers->Users->get((int)$userId);
@@ -67,13 +67,13 @@ class DirectoryUsersController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Directory User id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @param string|int $directoryUserId Directory User id.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(string|int $directoryUserId): void
     {
-        $directoryUser = $this->DirectoryUsers->get($id, [
+        $directoryUser = $this->DirectoryUsers->get($directoryUserId, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -81,7 +81,7 @@ class DirectoryUsersController extends AppController
             if ($this->DirectoryUsers->save($directoryUser)) {
                 $this->Flash->success(__('The directory user has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryUser->get(DirectoryUser::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryUser->get(DirectoryUser::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory user could not be saved. Please, try again.'));
         }
@@ -92,20 +92,20 @@ class DirectoryUsersController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Directory User id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @param string|int $directoryUserId Directory User id.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(string|int $directoryUserId): void
     {
         $this->request->allowMethod(['post', 'delete']);
-        $directoryUser = $this->DirectoryUsers->get($id);
+        $directoryUser = $this->DirectoryUsers->get($directoryUserId);
         if ($this->DirectoryUsers->delete($directoryUser)) {
             $this->Flash->success(__('The directory user has been deleted.'));
         } else {
             $this->Flash->error(__('The directory user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

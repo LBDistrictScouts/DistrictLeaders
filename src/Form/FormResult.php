@@ -25,7 +25,7 @@ use InvalidArgumentException;
  */
 class FormResult
 {
-    public const STATUS_SUCCESS = 0;
+    public const STATUS_SUCCESS = 'SUCCESS';
 
     /**
      * Authentication result status
@@ -54,13 +54,13 @@ class FormResult
      * Sets the result status, identity, and failure messages
      *
      * @param array|null $data The identity data
-     * @param int $status Status constant equivalent.
+     * @param string $status Status constant equivalent.
      * @param array $messages Messages.
      * @throws \InvalidArgumentException When invalid identity data is passed.
      */
-    public function __construct(?array $data, int $status, array $messages = [])
+    public function __construct(?array $data, string $status, array $messages = [])
     {
-        if ($status === self::STATUS_SUCCESS && empty($data)) {
+        if ($status == self::STATUS_SUCCESS && empty($data)) {
             throw new InvalidArgumentException('Data can not be empty with status success.');
         }
         if ($data !== null && !is_array($data) && !($data instanceof ArrayAccess)) {

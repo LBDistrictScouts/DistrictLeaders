@@ -18,7 +18,8 @@ class CsvBehavior extends Behavior
      * @var array
      * @access protected
      */
-    protected array $_defaultConfig = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'length' => 0,
         'delimiter' => ',',
         'enclosure' => '"',

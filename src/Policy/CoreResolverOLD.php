@@ -60,12 +60,12 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for an ORM Table, Entity or Query.
      *
-     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\EntityInterface|\Cake\Datasource\QueryInterface $resource The resource.
+     * @param mixed $resource The resource.
      * @return object
      * @throws \Authorization\Policy\Exception\MissingPolicyException When a policy for the
      * resource has not been defined or cannot be resolved.
      */
-    public function getPolicy(RepositoryInterface|EntityInterface|QueryInterface $resource): object
+    public function getPolicy(mixed $resource): object
     {
         if ($resource instanceof EntityInterface) {
             return $this->getEntityPolicy($resource);

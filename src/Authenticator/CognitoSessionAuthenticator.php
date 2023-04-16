@@ -33,11 +33,12 @@ class CognitoSessionAuthenticator extends CognitoAuthenticator implements Persis
      * Default config for this object.
      * - `fields` The fields to use to verify a user by.
      * - `sessionKey` Session key.
-     * - `identify` Whether or not to identify user data stored in a session.
+     * - `identify` Whether to identify user data stored in a session.
      *
      * @var array
      */
-    protected array $_defaultConfig = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'fields' => [
             IdentifierInterface::CREDENTIAL_USERNAME => 'username',
         ],

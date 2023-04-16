@@ -6,6 +6,7 @@ namespace App\Model\Behavior;
 use App\Utility\TextSafe;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 
 /**
  * Caseable behavior
@@ -19,7 +20,8 @@ class CaseableBehavior extends Behavior
      *
      * @var array
      */
-    protected array $_defaultConfig = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [
         'case_columns' => [],
     ];
 

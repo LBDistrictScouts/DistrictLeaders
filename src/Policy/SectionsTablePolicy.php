@@ -6,6 +6,7 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\ORM\Query;
 
 /**
  * Class UsersPolicy
@@ -54,7 +55,7 @@ class SectionsTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result
      */
-    public function canIndex(User $user): Result
+    public function canIndex(User $user): ?Result
     {
         if ($user->checkCapability('NON_PUBLIC_GROUP') && $user->buildAndCheckCapability('VIEW', 'SECTIONS')) {
             return new Result(true, '203');
@@ -75,7 +76,7 @@ class SectionsTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result
      */
-    public function canView(User $user): Result
+    public function canView(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
             return new Result(true, '200');

@@ -305,11 +305,11 @@ class ParamStoreCommand extends Command
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
      * @param \Cake\Console\ConsoleIo $consoleConsoleIo The IO
-     * @return int|null|void
+     * @return int|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleConsoleIo): int|null|null
+    public function execute(Arguments $args, ConsoleIo $consoleConsoleIo): ?int
     {
         if ($args->getOption('Info')) {
             $this->echoInfo($consoleConsoleIo);

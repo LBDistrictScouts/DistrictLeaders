@@ -16,7 +16,11 @@ use Cake\View\Helper;
  */
 class PermissionsHelper extends Helper
 {
-    public array $helpers = ['Identity', 'Html'];
+    /**
+     * @var array|array<string> List of Helpers to be Loaded.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $helpers = ['Identity', 'Html'];
 
     /**
      * @param string $buttonLabel The Label on the Button
@@ -45,7 +49,11 @@ class PermissionsHelper extends Helper
         );
     }
 
-    protected array $_config = [
+    /**
+     * @var array|array<string> Default Config Array
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_config = [
         'class',
         'role',
     ];

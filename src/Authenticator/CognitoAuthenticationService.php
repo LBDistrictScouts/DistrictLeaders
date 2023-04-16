@@ -83,10 +83,11 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
      * @return array
      * @psalm-return array{request: \Psr\Http\Message\ServerRequestInterface, response: \Psr\Http\Message\ResponseInterface}
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public function persistIdentity(
         ServerRequestInterface $request,
         ResponseInterface $response,
-        ArrayAccess|array $identity
+        $identity
     ): array {
         foreach ($this->authenticators() as $authenticator) {
             if ($authenticator instanceof PersistenceInterface) {

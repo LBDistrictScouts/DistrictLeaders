@@ -39,7 +39,8 @@ class RoleType extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'role_type' => true,
         'role_abbreviation' => true,
         'section_type_id' => true,

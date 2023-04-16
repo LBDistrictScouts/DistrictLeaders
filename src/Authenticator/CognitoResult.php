@@ -30,9 +30,9 @@ class CognitoResult extends Result implements ResultInterface
     /**
      * Authentication result status
      *
-     * @var string
+     * @var bool
      */
-    protected string $_challenge;
+    protected bool $_challenge;
 
     /**
      * Failure due to identity not being found.

@@ -7,6 +7,7 @@ use Cake\ORM\Entity;
 use Josbeir\Filesystem\FileEntityInterface;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\FileNotFoundException;
+use League\Flysystem\FilesystemException;
 
 /**
  * DocumentEdition Entity
@@ -40,7 +41,8 @@ class DocumentEdition extends Entity implements FileEntityInterface
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'created' => true,
         'modified' => true,
         'deleted' => true,
@@ -75,6 +77,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
 
     /**
      * @return string|false
+     * @throws FilesystemException
      */
     public function read(): string|false
     {

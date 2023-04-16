@@ -40,9 +40,9 @@ class DocumentsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         try {
             $this->loadComponent('Filter');
@@ -62,9 +62,9 @@ class DocumentsController extends AppController
     /**
      * Search method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function search(): ?Response
+    public function search(): void
     {
         $this->paginate = [
             'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes'],
@@ -84,10 +84,10 @@ class DocumentsController extends AppController
      * View method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $documentId = null): ?Response
+    public function view(?string $documentId = null): void
     {
         $document = $this->Documents->get($documentId, [
             'contain' => ['DocumentTypes', 'DocumentVersions.DocumentEditions.FileTypes', 'DocumentPreviews'],
@@ -99,9 +99,9 @@ class DocumentsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         /** @var \App\Model\Entity\Document $document */
         $document = $this->Documents->newEmptyEntity();
@@ -132,7 +132,7 @@ class DocumentsController extends AppController
             if ($document instanceof Document) {
                 $this->Flash->success(__('The document has been saved.'));
 
-                return $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);
             }
             $this->Flash->error(__('The document could not be saved. Please, try again.'));
         }
@@ -149,10 +149,10 @@ class DocumentsController extends AppController
      * Edit method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $documentId = null): ?Response
+    public function edit(?string $documentId = null): void
     {
         $document = $this->Documents->get($documentId, [
             'contain' => [],
@@ -162,7 +162,7 @@ class DocumentsController extends AppController
             if ($this->Documents->save($document)) {
                 $this->Flash->success(__('The document has been saved.'));
 
-                return $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $document->get(Document::FIELD_ID)]);
             }
             $this->Flash->error(__('The document could not be saved. Please, try again.'));
         }
@@ -174,10 +174,10 @@ class DocumentsController extends AppController
      * Delete method
      *
      * @param string|null $documentId Document id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $documentId = null): ?Response
+    public function delete(?string $documentId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $document = $this->Documents->get($documentId);
@@ -187,6 +187,6 @@ class DocumentsController extends AppController
             $this->Flash->error(__('The document could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

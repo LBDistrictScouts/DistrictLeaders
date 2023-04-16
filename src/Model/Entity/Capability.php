@@ -34,7 +34,8 @@ class Capability extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'capability_code' => true,
         'capability' => true,
         'role_types' => true,
@@ -104,7 +105,7 @@ class Capability extends Entity
             return CapBuilder::breakCode($this->capability_code)['field'];
         }
 
-        return false;
+        return '';
     }
 
     /**
@@ -112,7 +113,8 @@ class Capability extends Entity
      *
      * @var array
      */
-    protected array $_virtual = ['crud_function', 'applicable_model', 'applicable_field', 'is_field_capability'];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_virtual = ['crud_function', 'applicable_model', 'applicable_field', 'is_field_capability'];
 
     public const FIELD_ID = 'id';
     public const FIELD_CAPABILITY_CODE = 'capability_code';

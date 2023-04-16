@@ -27,9 +27,9 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->Authorization->authorize($this->ScoutGroups);
 
@@ -46,9 +46,9 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function generate(): ?Response
+    public function generate(): void
     {
         $this->Authorization->authorize($this->ScoutGroups);
 
@@ -102,10 +102,10 @@ class ScoutGroupsController extends AppController
      * View method
      *
      * @param string|null $id Scout Group id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
             'contain' => [
@@ -151,9 +151,9 @@ class ScoutGroupsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $scoutGroup = $this->ScoutGroups->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -161,7 +161,7 @@ class ScoutGroupsController extends AppController
             if ($this->ScoutGroups->save($scoutGroup)) {
                 $this->Flash->success(__('The scout group has been saved.'));
 
-                return $this->redirect(['action' => 'view', $scoutGroup->get(ScoutGroup::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $scoutGroup->get(ScoutGroup::FIELD_ID)]);
             }
             $this->Flash->error(__('The scout group could not be saved. Please, try again.'));
         }
@@ -172,10 +172,10 @@ class ScoutGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Scout Group id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
             'contain' => [],
@@ -185,7 +185,7 @@ class ScoutGroupsController extends AppController
             if ($this->ScoutGroups->save($scoutGroup)) {
                 $this->Flash->success(__('The scout group has been saved.'));
 
-                return $this->redirect(['action' => 'view', $scoutGroup->get(ScoutGroup::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $scoutGroup->get(ScoutGroup::FIELD_ID)]);
             }
             $this->Flash->error(__('The scout group could not be saved. Please, try again.'));
         }
@@ -199,7 +199,7 @@ class ScoutGroupsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $scoutGroup = $this->ScoutGroups->get($id);
@@ -209,6 +209,6 @@ class ScoutGroupsController extends AppController
             $this->Flash->error(__('The scout group could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -17,7 +17,8 @@ class MarkdownHelper extends Helper
      *
      * @var array
      */
-    protected array $_defaultConfig = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_defaultConfig = [];
 
     /**
      * @var \League\CommonMark\CommonMarkConverter

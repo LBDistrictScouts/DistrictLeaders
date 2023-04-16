@@ -19,12 +19,14 @@ class UnsentTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public int $timeout = 20;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $timeout = 20;
 
     /**
      * @var int
      */
-    public int $retries = 2;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    public $retries = 2;
 
     protected string $outputKey = 'output';
 

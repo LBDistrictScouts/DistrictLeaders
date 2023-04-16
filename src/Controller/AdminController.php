@@ -13,19 +13,19 @@ class AdminController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
     }
 
     /**
      * Status method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function status(): ?Response
+    public function status(): void
     {
     }
 }

@@ -14,9 +14,9 @@ class UserContactTypesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $userContactTypes = $this->paginate($this->UserContactTypes);
 
@@ -27,10 +27,10 @@ class UserContactTypesController extends AppController
      * View method
      *
      * @param string|null $id User Contact Type id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $userContactType = $this->UserContactTypes->get($id, [
             'contain' => ['UserContacts'],
@@ -44,7 +44,7 @@ class UserContactTypesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $userContactType = $this->UserContactTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -52,7 +52,7 @@ class UserContactTypesController extends AppController
             if ($this->UserContactTypes->save($userContactType)) {
                 $this->Flash->success(__('The user contact type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userContactType->get('id')]);
+                $this->redirect(['action' => 'view', $userContactType->get('id')]);
             }
             $this->Flash->error(__('The user contact type could not be saved. Please, try again.'));
         }
@@ -66,7 +66,7 @@ class UserContactTypesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $userContactType = $this->UserContactTypes->get($id, [
             'contain' => [],
@@ -76,7 +76,7 @@ class UserContactTypesController extends AppController
             if ($this->UserContactTypes->save($userContactType)) {
                 $this->Flash->success(__('The user contact type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userContactType->get('id')]);
+                $this->redirect(['action' => 'view', $userContactType->get('id')]);
             }
             $this->Flash->error(__('The user contact type could not be saved. Please, try again.'));
         }
@@ -90,7 +90,7 @@ class UserContactTypesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $userContactType = $this->UserContactTypes->get($id);
@@ -100,6 +100,6 @@ class UserContactTypesController extends AppController
             $this->Flash->error(__('The user contact type could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

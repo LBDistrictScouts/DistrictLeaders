@@ -43,9 +43,9 @@ class UsersController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->Authorization->authorize($this->Users);
 
@@ -66,9 +66,9 @@ class UsersController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function search(): ?Response
+    public function search(): void
     {
         $this->Authorization->authorize($this->Users);
 
@@ -100,10 +100,10 @@ class UsersController extends AppController
      * View method
      *
      * @param string|null $userId User id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $userId = null): ?Response
+    public function view(?string $userId = null): void
     {
         $this->Authorization->see($this->Users->get($userId));
 
@@ -177,10 +177,10 @@ class UsersController extends AppController
         $userId = $this->Authentication->getIdentity()->getIdentifier();
 
         if (is_numeric($userId)) {
-            return $this->redirect(['action' => 'view', $userId]);
+            $this->redirect(['action' => 'view', $userId]);
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -188,7 +188,7 @@ class UsersController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -197,7 +197,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'view', $user->id]);
+                $this->redirect(['action' => 'view', $user->id]);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
@@ -213,7 +213,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      * @throws \Exception
      */
-    public function import(string $userDirectoryId): ?Response
+    public function import(string $userDirectoryId): void
     {
         $this->loadComponent('GoogleClient');
 
@@ -224,7 +224,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'view', $user->id]);
+                $this->redirect(['action' => 'view', $user->id]);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
@@ -240,7 +240,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $userId = null): ?Response
+    public function edit(?string $userId = null): void
     {
         $user = $this->Users->get($userId, [
             'contain' => [],
@@ -251,7 +251,7 @@ class UsersController extends AppController
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
-                return $this->redirect(['action' => 'view', $user->get('id')]);
+                $this->redirect(['action' => 'view', $user->get('id')]);
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));
         }
@@ -267,7 +267,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
@@ -277,16 +277,16 @@ class UsersController extends AppController
             $this->Flash->error(__('The user could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
      * Login method
      *
-     * @return \Cake\Http\Response|void If Successful - redirects to landing.
+     * @return void If Successful - redirects to landing.
      * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function login(): ?Response
+    public function login(): void
     {
         // Set the layout.
         $this->viewBuilder()->setLayout('login');
@@ -296,7 +296,7 @@ class UsersController extends AppController
 
         // Redirect if challenged
         if ($result instanceof CognitoResult && $result->isChallenge()) {
-            return $this->redirect([
+            $this->redirect([
                 'controller' => 'Challenges',
                 'action' => 'expired',
                 '?' => $this->request->getQuery(),
@@ -312,7 +312,7 @@ class UsersController extends AppController
 
             $redirect = $this->request->getQuery('redirect', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
-            return $this->redirect($redirect);
+            $this->redirect($redirect);
         }
 
         // display error if user submitted and authentication failed
@@ -324,9 +324,9 @@ class UsersController extends AppController
     /**
      * Logout Function
      *
-     * @return \Cake\Http\Response|null
+     * @return void
      */
-    public function logout(): ?Response
+    public function logout(): void
     {
         $this->Authorization->skipAuthorization();
 
@@ -335,10 +335,10 @@ class UsersController extends AppController
         if (!$logout) {
             $this->Flash->success('You are now logged out.');
 
-            return $this->redirect('/');
+            $this->redirect('/');
         }
 
-        return $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));
+        $this->redirect($this->referer(['controller' => 'Pages', 'action' => 'display', 'home']));
     }
 
     /**
@@ -393,7 +393,7 @@ class UsersController extends AppController
                         $message .= ' This is valid for a short period of time.';
                         $this->Flash->success($message);
 
-                        return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+                        $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
                     }
 
                     $this->Flash->error(__('The user could not be saved. Please, try again.'));
@@ -405,7 +405,7 @@ class UsersController extends AppController
             } else {
                 $this->Flash->error('You have failed entry too many times. Please try again later.');
 
-                return $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
+                $this->redirect(['prefix' => false, 'controller' => 'Landing', 'action' => 'welcome']);
             }
         }
     }
@@ -451,9 +451,9 @@ class UsersController extends AppController
     /**
      * Token - Completes Password Reset Function
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function password(): ?Response
+    public function password(): void
     {
         $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
         $this->loadModel('Tokens');
@@ -478,7 +478,7 @@ class UsersController extends AppController
         if ($changeType == self::CHANGE_TYPE_UNAUTHORIZED) {
             $this->Flash->error('Password Reset Token could not be validated.');
 
-            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+            $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
         $passwordForm = new PasswordForm();
@@ -500,7 +500,7 @@ class UsersController extends AppController
                 ) {
                     $this->Flash->success('Your password was saved successfully.');
 
-                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                    $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
                 }
 
                 $this->Flash->error(__('The password security could not  be validated. Is your postcode correct?'));
@@ -513,9 +513,9 @@ class UsersController extends AppController
     /**
      * Token - Completes Password Reset Function
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function welcome(): ?Response
+    public function welcome(): void
     {
         $this->loadModel('Tokens');
         $this->viewBuilder()->setLayout('login');
@@ -525,14 +525,14 @@ class UsersController extends AppController
         if (!$resetToken instanceof Token) {
             $this->Flash->error('Token is Invalid.');
 
-            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+            $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
         $user = $resetToken->email_send->user;
         if (!$user instanceof User) {
             $this->Flash->error('User is Invalid.');
 
-            return $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
+            $this->redirect(['controller' => 'Pages', 'action' => 'display', 'home']);
         }
 
         $identity = $this->Authentication->getIdentity();
@@ -567,7 +567,7 @@ class UsersController extends AppController
                 if ($this->Users->save($user)) {
                     $this->Flash->success('Your username & password were saved successfully.');
 
-                    return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
+                    $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'login']);
                 }
 
                 $this->Flash->error(__('Something went wrong.'));
@@ -584,7 +584,7 @@ class UsersController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function activate(?string $userId = null): ?Response
+    public function activate(?string $userId = null): void
     {
         $this->request->allowMethod(['post']);
         $user = $this->Users->get($userId);
@@ -594,6 +594,6 @@ class UsersController extends AppController
             $this->Flash->error(__('The user contact could not be activated. Please, try again.'));
         }
 
-        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userId]));
+        $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userId]));
     }
 }

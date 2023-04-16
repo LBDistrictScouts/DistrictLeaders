@@ -21,6 +21,7 @@ use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\TokenListener;
 use App\Listener\UserListener;
+use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
@@ -47,10 +48,10 @@ class AppController extends Controller
     /**
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
-     * @param null $user The Footprint User
-     * @return \App\Controller\Entity|bool
+     * @param \App\Model\Entity\User|null $user The Footprint User
+     * @return \Cake\Datasource\EntityInterface|null
      */
-    protected function _setCurrentUser(null $user = null): ?EntityInterface
+    protected function _setCurrentUser(?User $user = null): ?EntityInterface
     {
         if (!$user) {
             $user = $this->request->getAttribute('identity');

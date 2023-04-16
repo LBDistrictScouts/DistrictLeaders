@@ -43,7 +43,8 @@ class Notification extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'user_id' => true,
         'notification_type_id' => true,
         'notification_header' => true,
@@ -72,11 +73,19 @@ class Notification extends Entity
         return $this->notification_type->type . '-' . $this->user_id . '-' . $this->notification_type->sub_type;
     }
 
-    protected array $_virtual = [
+    /**
+     * @var array<string> List of Virtual Properties
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_virtual = [
         'email_code',
     ];
 
-    protected array $_hidden = [
+    /**
+     * @var array|array<string> List of Properties to be hidden from the UI.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_hidden = [
         'new',
         'text',
         'link_id',

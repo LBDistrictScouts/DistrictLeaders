@@ -24,9 +24,9 @@ class CapAuthorizationComponent extends AuthorizationComponent
     use ModelAwareTrait;
 
     /**
-     * @var \App\Model\Entity\User
+     * @var \App\Model\Entity\User|null
      */
-    protected User $capUser;
+    protected ?User $capUser;
 
     /**
      * @inheritDoc

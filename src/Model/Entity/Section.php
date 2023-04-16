@@ -43,7 +43,8 @@ class Section extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         self::FIELD_SECTION => true,
         self::FIELD_SECTION_TYPE_ID => true,
         self::FIELD_SCOUT_GROUP_ID => true,
@@ -146,7 +147,10 @@ class Section extends Entity
         return $dayGrid;
     }
 
-    protected array $_virtual = ['meeting_weekday'];
+    /**
+     * @var array<string> List of Virtual Properties
+     */
+    protected $_virtual = ['meeting_weekday'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION = 'section';

@@ -6,6 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Table\Traits\BaseInstallerTrait;
+use ArrayObject;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
@@ -101,11 +102,11 @@ class RoleTemplatesTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param \ArrayObject|array $options Options Values
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(EventInterface $event, RoleTemplate $entity, array $options): bool
+    public function beforeSave(EventInterface $event, RoleTemplate $entity, ArrayObject|array $options): bool
     {
         if (
             $entity->isNew()

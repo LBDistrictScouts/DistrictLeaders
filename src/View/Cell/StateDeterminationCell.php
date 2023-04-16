@@ -22,7 +22,8 @@ class StateDeterminationCell extends Cell
      *
      * @var array
      */
-    protected array $_validCellOptions = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_validCellOptions = [];
 
     /**
      * @var array<string>  Helper Array

@@ -32,7 +32,8 @@ class UserState extends Entity
      *
      * @var array
      */
-    protected array $_accessible = [
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_accessible = [
         'user_state' => true,
         'active' => true,
         'expired' => true,
@@ -62,7 +63,11 @@ class UserState extends Entity
         return $this->active ?? false;
     }
 
-    protected array $_virtual = [
+    /**
+     * @var array<string> List of Virtual Properties
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_virtual = [
         'is_email_send_active',
     ];
 

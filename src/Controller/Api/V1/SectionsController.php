@@ -35,9 +35,9 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $sections = $this->Sections
             ->find('all', [

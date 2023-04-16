@@ -18,9 +18,9 @@ class UserContactsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Users', 'UserContactTypes'],
@@ -34,10 +34,10 @@ class UserContactsController extends AppController
      * View method
      *
      * @param string|null $id User Contact id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(?string $id = null): ?Response
+    public function view(?string $id = null): void
     {
         $userContact = $this->UserContacts->get($id, [
             'contain' => ['Users', 'UserContactTypes', 'Audits', 'Roles'],
@@ -51,7 +51,7 @@ class UserContactsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $userContact = $this->UserContacts->newEmptyEntity();
         if (key_exists('user_contact_type', $this->request->getQueryParams())) {
@@ -110,7 +110,7 @@ class UserContactsController extends AppController
             if ($this->UserContacts->save($userContact)) {
                 $this->Flash->success(__('The user contact has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userContact->get('id')]);
+                $this->redirect(['action' => 'view', $userContact->get('id')]);
             }
             $this->Flash->error(__('The user contact could not be saved. Please, try again.'));
         }
@@ -136,7 +136,7 @@ class UserContactsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $userContact = $this->UserContacts->get($id, [
             'contain' => [],
@@ -146,7 +146,7 @@ class UserContactsController extends AppController
             if ($this->UserContacts->save($userContact)) {
                 $this->Flash->success(__('The user contact has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userContact->get('id')]);
+                $this->redirect(['action' => 'view', $userContact->get('id')]);
             }
             $this->Flash->error(__('The user contact could not be saved. Please, try again.'));
         }
@@ -162,7 +162,7 @@ class UserContactsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $contactId = null): ?Response
+    public function delete(?string $contactId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $userContact = $this->UserContacts->get($contactId, ['contain' => 'UserContactTypes']);
@@ -176,7 +176,7 @@ class UserContactsController extends AppController
             $this->Flash->error(__('The user contact could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['controller' => 'Users', 'action' => 'view', $userContact->user_id]);
+        $this->redirect(['controller' => 'Users', 'action' => 'view', $userContact->user_id]);
     }
 
     /**
@@ -186,7 +186,7 @@ class UserContactsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function primary(?string $contactId = null): ?Response
+    public function primary(?string $contactId = null): void
     {
         $this->request->allowMethod(['post']);
         $userContact = $this->UserContacts->get($contactId);
@@ -196,7 +196,7 @@ class UserContactsController extends AppController
             $this->Flash->error(__('The user email could not be made primary. Please, try again.'));
         }
 
-        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
+        $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
     }
 
     /**
@@ -206,7 +206,7 @@ class UserContactsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function verify(?string $contactId = null): ?Response
+    public function verify(?string $contactId = null): void
     {
         $this->request->allowMethod(['post']);
         $userContact = $this->UserContacts->get($contactId);
@@ -216,6 +216,6 @@ class UserContactsController extends AppController
             $this->Flash->error(__('The user contact could not be verified. Please, try again.'));
         }
 
-        return $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
+        $this->redirect($this->referer(['controller' => 'Users', 'action' => 'view', $userContact->user_id]));
     }
 }

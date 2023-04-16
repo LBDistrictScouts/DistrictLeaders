@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
+use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\EventInterface;
@@ -470,11 +471,11 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param arrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(EventInterface $event, User $user, array $options): User
+    public function beforeSave(EventInterface $event, User $user, arrayObject $options): User
     {
         return $this->UserStates->determineUserState($user);
     }
@@ -484,11 +485,11 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param ArrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterSave(EventInterface $event, User $user, array $options): User
+    public function afterSave(EventInterface $event, User $user, ArrayObject $options): User
     {
         $this->UserContacts->associatePrimary($user);
 

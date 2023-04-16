@@ -5,6 +5,7 @@ namespace App\Policy;
 
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
+use Cake\ORM\Query;
 
 /**
  * Class UsersPolicy

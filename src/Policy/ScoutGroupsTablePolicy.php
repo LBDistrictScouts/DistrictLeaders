@@ -6,6 +6,7 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\ORM\Query;
 
 /**
  * Class UsersPolicy
@@ -32,9 +33,9 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canIndex(User $user): Result
+    public function canIndex(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
             return new Result(true, '200');
@@ -45,9 +46,9 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canView(User $user): Result
+    public function canView(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
             return new Result(true, '200');

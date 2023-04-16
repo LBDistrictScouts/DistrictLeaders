@@ -17,9 +17,9 @@ class DirectoryGroupsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index(): ?Response
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Directories'],
@@ -32,11 +32,11 @@ class DirectoryGroupsController extends AppController
     /**
      * View method
      *
-     * @param null $id Directory Group id.
-     * @return \Cake\Http\Response|void
+     * @param int $id Directory Group id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view(null $id = null): ?Response
+    public function view(int $id): void
     {
         $directoryGroup = $this->DirectoryGroups->get($id, [
             'contain' => ['Directories', 'RoleTypes'],
@@ -48,9 +48,9 @@ class DirectoryGroupsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add(): ?Response
+    public function add(): void
     {
         $directoryGroup = $this->DirectoryGroups->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -58,7 +58,7 @@ class DirectoryGroupsController extends AppController
             if ($this->DirectoryGroups->save($directoryGroup)) {
                 $this->Flash->success(__('The directory group has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryGroup->get(DirectoryGroup::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryGroup->get(DirectoryGroup::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory group could not be saved. Please, try again.'));
         }
@@ -71,10 +71,10 @@ class DirectoryGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Group id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit(?string $id = null): ?Response
+    public function edit(?string $id = null): void
     {
         $directoryGroup = $this->DirectoryGroups->get($id, [
             'contain' => ['RoleTypes'],
@@ -84,7 +84,7 @@ class DirectoryGroupsController extends AppController
             if ($this->DirectoryGroups->save($directoryGroup)) {
                 $this->Flash->success(__('The directory group has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryGroup->get(DirectoryGroup::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryGroup->get(DirectoryGroup::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory group could not be saved. Please, try again.'));
         }
@@ -97,10 +97,10 @@ class DirectoryGroupsController extends AppController
      * Delete method
      *
      * @param string|null $id Directory Group id.
-     * @return \Cake\Http\Response|null Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $id = null): ?Response
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $directoryGroup = $this->DirectoryGroups->get($id);
@@ -110,6 +110,6 @@ class DirectoryGroupsController extends AppController
             $this->Flash->error(__('The directory group could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

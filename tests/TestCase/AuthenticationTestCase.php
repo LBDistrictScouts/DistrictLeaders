@@ -36,17 +36,17 @@ class AuthenticationTestCase extends TestCase
     /**
      * @var string The Plain Password Value
      */
-    protected $plainPassword = 'password';
+    protected string $plainPassword = 'password';
 
     /**
      * @var string The Variable for Standard Testcase Username
      */
-    protected $username = 'mariano';
+    protected string $username = 'mariano';
 
     /**
      * @var string The Hashed Password Value
      */
-    protected $password;
+    protected string $password;
 
     /**
      * @inheritDoc

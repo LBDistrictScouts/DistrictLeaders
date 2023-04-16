@@ -18,7 +18,8 @@ class ProfileModalCell extends Cell
      *
      * @var array
      */
-    protected array $_validCellOptions = [];
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_validCellOptions = [];
 
     /**
      * Initialization logic run at the end of object construction.
