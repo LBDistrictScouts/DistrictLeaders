@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\Role;
 use App\Model\Entity\RoleStatus;
 use App\Model\Entity\RoleType;
@@ -12,49 +10,43 @@ use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\CounterCacheBehavior;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * Roles Model
  *
- * @property RoleTypesTable&BelongsTo $RoleTypes
- * @property SectionsTable&BelongsTo $Sections
- * @property UsersTable&BelongsTo $Users
- * @property RoleStatusesTable&BelongsTo $RoleStatuses
- * @property UserContactsTable&BelongsTo $UserContacts
- * @method Role get($primaryKey, $options = [])
- * @method Role newEntity(array $data, array $options = [])
- * @method Role[] newEntities(array $data, array $options = [])
- * @method Role|false save(EntityInterface $entity, $options = [])
- * @method Role saveOrFail(EntityInterface $entity, $options = [])
- * @method Role patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Role[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Role findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @property AuditsTable&HasMany $Audits
- * @method Role[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin CounterCacheBehavior
- * @mixin AuditableBehavior
- * @method Role newEmptyEntity()
- * @method Role[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Role[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Role[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin AuditableBehavior
- * @mixin CounterCacheBehavior
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $RoleTypes
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $Sections
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $RoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $UserContacts
+ * @method \App\Model\Entity\Role get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Role newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Role|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Role patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Role[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Role findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\Role newEmptyEntity()
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class RolesTable extends Table
 {
@@ -129,8 +121,8 @@ class RolesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -149,8 +141,8 @@ class RolesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -166,12 +158,12 @@ class RolesTable extends Table
     /**
      * Finder Method for
      *
-     * @param Query $query The Query to be Modified
+     * @param \Cake\ORM\Query $query The Query to be Modified
      * @param array $options The Options passed
-     * @return Query
+     * @return \Cake\ORM\Query
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         $query
             ->contain('RoleStatuses')
@@ -183,8 +175,8 @@ class RolesTable extends Table
     /**
      * after Save LifeCycle Callback
      *
-     * @param EventInterface $event The Event to be Processed
-     * @param Role $role The Entity on which the Save is being Called.
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
+     * @param \App\Model\Entity\Role $role The Entity on which the Save is being Called.
      * @param object|null $options Options Values
      * @return bool
      */
@@ -212,13 +204,13 @@ class RolesTable extends Table
     }
 
     /**
-     * @param User $user The User for Role Creation
+     * @param \App\Model\Entity\User $user The User for Role Creation
      * @param string $section Section for merge
      * @param string $group Group for Section Context
      * @param string $roleType RoleType for merge
      * @param string $sectionType The Section Type
      * @param string|null $status The Role Status
-     * @param UserContact|null $userContact The User Contact entity
+     * @param \App\Model\Entity\UserContact|null $userContact The User Contact entity
      * @return bool
      */
     public function mergeRole(

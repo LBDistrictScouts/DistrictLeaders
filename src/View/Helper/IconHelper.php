@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Helper;
@@ -14,7 +13,7 @@ use Cake\View\Helper;
  */
 class IconHelper extends Helper
 {
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'iconWeight' => 'fal',
         'iconPrefix' => 'fa',
     ];
@@ -24,7 +23,7 @@ class IconHelper extends Helper
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string
      */
-    private function buildIconString($iconName, $modifiers = null)
+    private function buildIconString(string $iconName, ?array $modifiers = null): string
     {
         $weight = $this->getConfig('iconWeight');
         $prefix = $this->getConfig('iconPrefix');
@@ -48,7 +47,7 @@ class IconHelper extends Helper
      * @param string $iconString Output from BuildIconString
      * @return string
      */
-    private function buildHtmlString($iconString)
+    private function buildHtmlString(string $iconString): string
     {
         return '<i class="' . $iconString . '"></i>';
     }
@@ -57,7 +56,7 @@ class IconHelper extends Helper
      * @param string $entityName The Name of the Entity
      * @return string|false
      */
-    private function getEntityIcon($entityName)
+    private function getEntityIcon(string $entityName): string|false
     {
         Configure::load('Application' . DS . 'icon_standards', 'yaml', false);
         $iconStandard = Configure::read('IconStandards');
@@ -74,7 +73,7 @@ class IconHelper extends Helper
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string
      */
-    public function iconStandard($iconName, $modifiers = null)
+    public function iconStandard(string $iconName, ?array $modifiers = null): string
     {
         return $this->buildIconString($iconName, $modifiers);
     }
@@ -129,7 +128,7 @@ class IconHelper extends Helper
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string
      */
-    public function iconHtml($iconName, $modifiers = null)
+    public function iconHtml(string $iconName, ?array $modifiers = null): string
     {
         $iconString = $this->buildIconString($iconName, $modifiers);
 
@@ -141,7 +140,7 @@ class IconHelper extends Helper
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string|bool
      */
-    public function iconStandardEntity($entityName, $modifiers = null)
+    public function iconStandardEntity(string $entityName, ?array $modifiers = null): string|bool
     {
         $iconName = $this->getEntityIcon($entityName);
         if (!$iconName) {
@@ -156,7 +155,7 @@ class IconHelper extends Helper
      * @param array|null $modifiers An Array of Additional Modifiers
      * @return string|bool
      */
-    public function iconHtmlEntity($entityName, $modifiers = null)
+    public function iconHtmlEntity(string $entityName, ?array $modifiers = null): string|bool
     {
         $iconName = $this->getEntityIcon($entityName);
         if ($iconName == false) {

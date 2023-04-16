@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -12,7 +11,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $role_status
  *
- * @property Role[] $roles
+ * @property \App\Model\Entity\Role[] $roles
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -27,7 +26,7 @@ class RoleStatus extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'role_status' => true,
         'roles' => true,
     ];

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -18,10 +17,8 @@ declare(strict_types=1);
 
 namespace App\Authenticator;
 
-use ArrayAccess;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
-use Authentication\Authenticator\AuthenticatorInterface;
 use Authentication\Authenticator\PersistenceInterface;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Authenticator\StatelessInterface;
@@ -38,15 +35,15 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
     /**
      * {@inheritDoc}
      *
-     * @param ServerRequestInterface $request The request.
-     * @return ResultInterface The result object. If none of the adapters was a success
-     *  the last failed result is returned.
-     * @throws RuntimeException Throws a runtime exception when no authenticators are loaded.
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @return \Authentication\Authenticator\ResultInterface The result object. If none of the adapters was a success
+     * the last failed result is returned.
+     * @throws \RuntimeException Throws a runtime exception when no authenticators are loaded.
      */
     public function authenticate(ServerRequestInterface $request): ResultInterface
     {
         $result = null;
-        /** @var AuthenticatorInterface $authenticator */
+        /** @var \Authentication\Authenticator\AuthenticatorInterface $authenticator */
         foreach ($this->authenticators() as $authenticator) {
             $result = $authenticator->authenticate($request);
             if ($result->isValid()) {
@@ -80,14 +77,17 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
     /**
      * Sets identity data and persists it in the authenticators that support it.
      *
-     * @param ServerRequestInterface $request The request.
-     * @param ResponseInterface $response The response.
-     * @param ArrayAccess|array $identity Identity data.
+     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
+     * @param \Psr\Http\Message\ResponseInterface $response The response.
+     * @param \ArrayAccess|array $identity Identity data.
      * @return array
-     * @psalm-return array{request: ServerRequestInterface, response: ResponseInterface}
+     * @psalm-return array{request: \Psr\Http\Message\ServerRequestInterface, response: \Psr\Http\Message\ResponseInterface}
      */
-    public function persistIdentity(ServerRequestInterface $request, ResponseInterface $response, $identity): array
-    {
+    public function persistIdentity(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        ArrayAccess|array $identity
+    ): array {
         foreach ($this->authenticators() as $authenticator) {
             if ($authenticator instanceof PersistenceInterface) {
                 $result = $authenticator->persistIdentity($request, $response, $identity);
@@ -109,7 +109,7 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
     /**
      * Gets the result of the last authenticate() call.
      *
-     * @return CognitoResult|null Authentication result interface
+     * @return \App\Authenticator\CognitoResult|null Authentication result interface
      */
     public function getResult(): ?ResultInterface
     {
@@ -119,7 +119,7 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
     /**
      * Gets an identity object
      *
-     * @return null|IdentityInterface
+     * @return \Authentication\IdentityInterface|null
      */
     public function getIdentity(): ?IdentityInterface
     {

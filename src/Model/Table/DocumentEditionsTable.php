@@ -1,16 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\FileType;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -21,23 +16,23 @@ use League\Flysystem\FileNotFoundException;
 /**
  * DocumentEditions Model
  *
- * @property DocumentVersionsTable&BelongsTo $DocumentVersions
- * @property FileTypesTable&BelongsTo $FileTypes
- * @method DocumentEdition get($primaryKey, $options = [])
- * @method DocumentEdition newEntity(array $data, array $options = [])
- * @method DocumentEdition[] newEntities(array $data, array $options = [])
- * @method DocumentEdition|false save(EntityInterface $entity, $options = [])
- * @method DocumentEdition saveOrFail(EntityInterface $entity, $options = [])
- * @method DocumentEdition patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DocumentEdition[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method DocumentEdition findOrCreate($search, ?callable $callback = null, $options = [])
- * @method DocumentEdition[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @method DocumentEdition newEmptyEntity()
- * @method DocumentEdition[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method DocumentEdition[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method DocumentEdition[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
+ * @property \App\Model\Table\DocumentVersionsTable&\App\Model\Table\BelongsTo $DocumentVersions
+ * @property \App\Model\Table\FileTypesTable&\App\Model\Table\BelongsTo $FileTypes
+ * @method \App\Model\Entity\DocumentEdition get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DocumentEdition newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentEdition saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentEdition patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentEdition findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\DocumentEdition newEmptyEntity()
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class DocumentEditionsTable extends Table
 {
@@ -72,8 +67,8 @@ class DocumentEditionsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -118,8 +113,8 @@ class DocumentEditionsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -136,9 +131,9 @@ class DocumentEditionsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     * @return EntityInterface|bool
+     * @return \Cake\Datasource\EntityInterface|bool
      */
-    public function uploadDocument($postData)
+    public function uploadDocument(array $postData): EntityInterface|bool
     {
         debug($postData);
         if (!key_exists('uploadedFile', $postData)) {
@@ -146,7 +141,7 @@ class DocumentEditionsTable extends Table
         }
 
         try {
-            /** @var EntityInterface $fileEntity */
+            /** @var \Cake\Datasource\EntityInterface $fileEntity */
             $fileEntity = $this->getFilesystem('default')->upload($postData['uploadedFile']);
         } catch (FilesystemException $e) {
             debug('filesys');

@@ -1,21 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\DocumentEdition;
-use App\Model\Table\DocumentEditionsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 
 /**
  * DocumentEditions Controller
  *
- * @property DocumentEditionsTable $DocumentEditions
- * @method DocumentEdition[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {
@@ -24,9 +19,9 @@ class DocumentEditionsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['DocumentVersions.Documents', 'FileTypes'],
@@ -40,10 +35,10 @@ class DocumentEditionsController extends AppController
      * View method
      *
      * @param string|null $documentEditionId Document Edition id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($documentEditionId = null)
+    public function view(?string $documentEditionId = null): ?Response
     {
         $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => ['DocumentVersions', 'FileTypes'],
@@ -55,9 +50,9 @@ class DocumentEditionsController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function upload()
+    public function upload(): ?Response
     {
         $documentEdition = $this->DocumentEditions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -83,10 +78,10 @@ class DocumentEditionsController extends AppController
      * Edit method
      *
      * @param string|null $documentEditionId Document Edition id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($documentEditionId = null)
+    public function edit(?string $documentEditionId = null): ?Response
     {
         $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => [],
@@ -109,10 +104,10 @@ class DocumentEditionsController extends AppController
      * Delete method
      *
      * @param string|null $id Document Edition id.
-     * @return Response|void Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $documentEdition = $this->DocumentEditions->get($id);

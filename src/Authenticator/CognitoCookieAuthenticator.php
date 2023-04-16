@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -18,7 +17,6 @@ declare(strict_types=1);
 
 namespace App\Authenticator;
 
-use ArrayAccess;
 use Authentication\Authenticator\PersistenceInterface;
 use Authentication\Authenticator\ResultInterface;
 use Authentication\Identifier\IdentifierCollection;
@@ -157,10 +155,10 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      *
      * Returns concatenated username and password hash.
      *
-     * @param array|ArrayAccess $identity Identity data.
+     * @param \App\Authenticator\ArrayAccess|array $identity Identity data.
      * @return string
      */
-    protected function createPlainToken($identity): string
+    protected function createPlainToken(array|ArrayAccess $identity): string
     {
         $usernameField = $this->getConfig('fields.username');
         $passwordField = $this->getConfig('fields.password');
@@ -173,10 +171,10 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      *
      * Cookie token consists of a username and hashed username + password hash.
      *
-     * @param array|ArrayAccess $identity Identity data.
+     * @param \App\Authenticator\ArrayAccess|array $identity Identity data.
      * @return string
      */
-    public function createToken($identity): string
+    public function createToken(array|ArrayAccess $identity): string
     {
         $plain = $this->createPlainToken($identity);
         $hash = $this->getPasswordHasher()->hash($plain);
@@ -189,11 +187,11 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
     /**
      * Checks whether a token hash matches the identity data.
      *
-     * @param array|ArrayAccess $identity Identity data.
+     * @param \App\Authenticator\ArrayAccess|array $identity Identity data.
      * @param string $tokenHash Hashed part of a cookie token.
      * @return bool
      */
-    protected function checkToken($identity, $tokenHash): bool
+    protected function checkToken(array|ArrayAccess $identity, string $tokenHash): bool
     {
         $plain = $this->createPlainToken($identity);
 
@@ -217,9 +215,9 @@ class CognitoCookieAuthenticator extends CognitoAuthenticator implements Persist
      * Creates a cookie instance with configured defaults.
      *
      * @param mixed $value Cookie value.
-     * @return CookieInterface
+     * @return \Cake\Http\Cookie\CookieInterface
      */
-    protected function createCookie($value): CookieInterface
+    protected function createCookie(mixed $value): CookieInterface
     {
         $data = $this->getConfig('cookie');
 

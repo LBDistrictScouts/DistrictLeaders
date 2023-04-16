@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
@@ -10,7 +9,6 @@ use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
-use Exception;
 
 /**
  * App\Model\Table\CapabilitiesTable Test Case

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller\Component;
@@ -7,14 +6,12 @@ namespace App\Test\TestCase\Controller\Component;
 use App\Controller\Component\QueueComponent;
 use App\Model\Entity\Directory;
 use App\Model\Entity\DocumentVersion;
-use App\Model\Table\DirectoriesTable;
 use App\Test\TestCase\ComponentTestCase as TestCase;
 use Cake\Controller\Component\FlashComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Exception;
 use Queue\Model\Table\QueuedJobsTable;
 
 /**

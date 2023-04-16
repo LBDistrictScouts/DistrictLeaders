@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -14,7 +13,7 @@ use Cake\ORM\Entity;
  * @property int $directory_id
  * @property bool $ingest
  *
- * @property Directory $directory
+ * @property \App\Model\Entity\Directory $directory
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -29,7 +28,7 @@ class DirectoryDomain extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         self::FIELD_DIRECTORY_DOMAIN => true,
         self::FIELD_DIRECTORY_ID => true,
         self::FIELD_INGEST => true,

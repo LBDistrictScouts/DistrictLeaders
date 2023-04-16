@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -33,7 +32,7 @@ class CognitoResult extends Result implements ResultInterface
      *
      * @var string
      */
-    protected $_challenge;
+    protected string $_challenge;
 
     /**
      * Failure due to identity not being found.
@@ -43,12 +42,12 @@ class CognitoResult extends Result implements ResultInterface
     /**
      * Sets the result status, identity, and failure messages
      *
-     * @param null|array|ArrayAccess $data The identity data
+     * @param \ArrayAccess|array|null $data The identity data
      * @param string $status Status constant equivalent.
      * @param array $messages Messages.
-     * @throws InvalidArgumentException When invalid identity data is passed.
+     * @throws \InvalidArgumentException When invalid identity data is passed.
      */
-    public function __construct($data, $status, array $messages = [])
+    public function __construct(array|ArrayAccess|null $data, string $status, array $messages = [])
     {
         if ($status === self::SUCCESS && empty($data)) {
             throw new InvalidArgumentException('Identity data can not be empty with status success.');
@@ -112,9 +111,9 @@ class CognitoResult extends Result implements ResultInterface
     /**
      * Returns the identity data used in the authentication attempt.
      *
-     * @return ArrayAccess|array|null
+     * @return \ArrayAccess|array|null
      */
-    public function getData()
+    public function getData(): ArrayAccess|array|null
     {
         return $this->_data;
     }

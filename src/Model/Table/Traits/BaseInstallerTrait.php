@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table\Traits;
@@ -16,10 +15,10 @@ use Cake\Utility\Inflector;
 trait BaseInstallerTrait
 {
     /**
-     * @param Table $table The Table being Called
+     * @param \Cake\ORM\Table $table The Table being Called
      * @return array
      */
-    public function getBaseValues(Table $table)
+    public function getBaseValues(Table $table): array
     {
         $tableName = $table->getRegistryAlias();
         $fileName = Inflector::underscore($tableName);
@@ -32,7 +31,7 @@ trait BaseInstallerTrait
     /**
      * install the application status config
      *
-     * @param Table $table The Table being Called
+     * @param \Cake\ORM\Table $table The Table being Called
      * @param string|null $businessKey The Business Key of the Table
      * @param callable|null $callback The Callback Function for Additional Processing
      * @param string|null $callbackKey The Key of the Data Array for Callback

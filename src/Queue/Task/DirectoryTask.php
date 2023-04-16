@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\DirectoriesTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -13,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property DirectoriesTable $Directories
+ * @property \App\Model\Table\DirectoriesTable $Directories
  */
 class DirectoryTask extends Task implements TaskInterface
 {
@@ -22,12 +20,12 @@ class DirectoryTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public $timeout = 900;
+    public int $timeout = 900;
 
     /**
      * @var int
      */
-    public $retries = 1;
+    public int $retries = 1;
 
     /**
      * @var string The Data Key

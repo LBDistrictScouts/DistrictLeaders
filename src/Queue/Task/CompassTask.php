@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\DocumentVersionsTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -13,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property DocumentVersionsTable $DocumentVersions
+ * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  */
 class CompassTask extends Task implements TaskInterface
 {
@@ -22,29 +20,29 @@ class CompassTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public $timeout = 900;
+    public int $timeout = 900;
 
     /**
      * @var int
      */
-    public $retries = 1;
+    public int $retries = 1;
 
     /**
      * @var string The Data Key
      */
-    protected $entityKey = 'version';
+    protected string $entityKey = 'version';
 
     /**
      * @var string The Data Key
      */
-    protected $outputKey = 'compass_records';
+    protected string $outputKey = 'compass_records';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->loadModel('DocumentVersions');
 

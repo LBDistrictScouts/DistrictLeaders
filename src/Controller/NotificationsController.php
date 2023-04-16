@@ -1,21 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Notification;
-use App\Model\Table\NotificationsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 use Cake\View\CellTrait;
 
 /**
  * Notifications Controller
  *
- * @property NotificationsTable $Notifications
- * @method Notification[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\NotificationsTable $Notifications
+ * @method \App\Model\Entity\Notification[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController
 {
@@ -24,9 +18,9 @@ class NotificationsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->Authorization->authorize($this->Notifications);
 
@@ -42,10 +36,10 @@ class NotificationsController extends AppController
      * View method
      *
      * @param string|null $notificationId Notification id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($notificationId = null)
+    public function view(?string $notificationId = null): ?Response
     {
         $notification = $this->Notifications->get($notificationId, [
             'contain' => ['Users', 'NotificationTypes', 'EmailSends.Tokens'],
@@ -66,10 +60,10 @@ class NotificationsController extends AppController
      * Welcome User method
      *
      * @param string|null $userId Notification id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function welcome(?string $userId = null)
+    public function welcome(?string $userId = null): ?Response
     {
         $this->request->allowMethod(['post']);
         $user = $this->Notifications->Users->get($userId);
@@ -86,10 +80,10 @@ class NotificationsController extends AppController
      * Delete method
      *
      * @param string|null $notificationId Notification id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($notificationId = null)
+    public function delete(?string $notificationId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $notification = $this->Notifications->get($notificationId);

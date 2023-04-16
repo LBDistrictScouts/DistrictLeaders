@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -7,9 +6,6 @@ namespace App\Model\Table;
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentType;
 use App\Model\Table\Traits\BaseInstallerTrait;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -17,20 +13,20 @@ use Cake\Validation\Validator;
 /**
  * DocumentTypes Model
  *
- * @property DocumentsTable&HasMany $Documents
- * @method DocumentType get($primaryKey, $options = [])
- * @method DocumentType newEntity(array $data, array $options = [])
- * @method DocumentType[] newEntities(array $data, array $options = [])
- * @method DocumentType|false save(EntityInterface $entity, $options = [])
- * @method DocumentType saveOrFail(EntityInterface $entity, $options = [])
- * @method DocumentType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DocumentType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method DocumentType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method DocumentType newEmptyEntity()
- * @method DocumentType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method DocumentType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method DocumentType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method DocumentType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\DocumentsTable&\App\Model\Table\HasMany $Documents
+ * @method \App\Model\Entity\DocumentType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DocumentType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DocumentType newEmptyEntity()
+ * @method \App\Model\Entity\DocumentType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DocumentTypesTable extends Table
 {
@@ -58,8 +54,8 @@ class DocumentTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -86,8 +82,8 @@ class DocumentTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

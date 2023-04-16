@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Behavior;
 
 use Cake\ORM\Behavior;
-use Cake\ORM\Entity;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
@@ -20,7 +18,7 @@ class CsvBehavior extends Behavior
      * @var array
      * @access protected
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'length' => 0,
         'delimiter' => ',',
         'enclosure' => '"',
@@ -40,8 +38,12 @@ class CsvBehavior extends Behavior
      * @return array|false of all data from the csv file in [Model][field] format
      * @author Dean Sofer
      */
-    public function importCsv(string $content, array $fields = [], array $options = [], bool $mapping = false)
-    {
+    public function importCsv(
+        string $content,
+        array $fields = [],
+        array $options = [],
+        bool $mapping = false
+    ): array|false {
         $config = $this->getConfig();
         $options = array_merge($config, $options);
 
@@ -126,12 +128,12 @@ class CsvBehavior extends Behavior
      * Converts a data array into
      *
      * @param string $filename to export to
-     * @param Entity[] $data to export
+     * @param array<\App\Model\Behavior\Entity> $data to export
      * @param array $options Options Configuration
      * @return int|false
      * @author Dean
      */
-    public function exportCsv(string $filename, array $data, array $options = [])
+    public function exportCsv(string $filename, array $data, array $options = []): int|false
     {
         $config = $this->getConfig();
         $options = array_merge($config, $options);

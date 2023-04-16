@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -33,14 +32,14 @@ class FormResult
      *
      * @var string
      */
-    protected $_status;
+    protected string $_status;
 
     /**
      * The identity data used in the authentication attempt
      *
-     * @var null|array|ArrayAccess
+     * @var \ArrayAccess|array|null
      */
-    protected $_data;
+    protected array|ArrayAccess|null $_data = null;
 
     /**
      * An array of string reasons why the authentication attempt was unsuccessful
@@ -49,15 +48,15 @@ class FormResult
      *
      * @var array
      */
-    protected $_errors = [];
+    protected array $_errors = [];
 
     /**
      * Sets the result status, identity, and failure messages
      *
-     * @param null|array $data The identity data
+     * @param array|null $data The identity data
      * @param int $status Status constant equivalent.
      * @param array $messages Messages.
-     * @throws InvalidArgumentException When invalid identity data is passed.
+     * @throws \InvalidArgumentException When invalid identity data is passed.
      */
     public function __construct(?array $data, int $status, array $messages = [])
     {
@@ -101,9 +100,9 @@ class FormResult
     /**
      * Returns the identity data used in the authentication attempt.
      *
-     * @return ArrayAccess|array|null
+     * @return \ArrayAccess|array|null
      */
-    public function getData()
+    public function getData(): ArrayAccess|array|null
     {
         return $this->_data;
     }

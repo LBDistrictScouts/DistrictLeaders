@@ -1,60 +1,49 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\AuditableBehavior;
-use App\Model\Behavior\CaseableBehavior;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
 use App\Model\Table\Exceptions\BadUserDataException;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\CounterCacheBehavior;
-use Cake\ORM\Behavior\TimestampBehavior;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * UserContacts Model
  *
- * @property UsersTable&BelongsTo $Users
- * @property UserContactTypesTable&BelongsTo $UserContactTypes
- * @property RolesTable&HasMany $Roles
- * @method UserContact get($primaryKey, $options = [])
- * @method UserContact newEntity(array $data, array $options = [])
- * @method UserContact[] newEntities(array $data, array $options = [])
- * @method UserContact|false save(EntityInterface $entity, $options = [])
- * @method UserContact saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContact patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContact[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method UserContact findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @property AuditsTable&HasMany $Audits
- * @mixin CaseableBehavior
- * @mixin AuditableBehavior
- * @method UserContact[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property DirectoryUsersTable&BelongsTo $DirectoryUsers
- * @mixin CounterCacheBehavior
- * @method UserContact newEmptyEntity()
- * @method UserContact[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method UserContact[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method UserContact[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin CaseableBehavior
- * @mixin AuditableBehavior
- * @mixin CounterCacheBehavior
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\UserContactTypesTable&\App\Model\Table\BelongsTo $UserContactTypes
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
+ * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContact newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\App\Model\Table\BelongsTo $DirectoryUsers
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
+ * @method \App\Model\Entity\UserContact newEmptyEntity()
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class UserContactsTable extends Table
 {
@@ -128,8 +117,8 @@ class UserContactsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -161,10 +150,10 @@ class UserContactsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
-    public function validationEmail(Validator $validator)
+    public function validationEmail(Validator $validator): Validator
     {
         $validator = $this->validationDefault($validator);
 
@@ -183,8 +172,8 @@ class UserContactsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -209,20 +198,20 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findValidated($query)
+    public function findValidated(Query $query): Query
     {
         return $query
             ->where([UserContact::FIELD_VERIFIED => true]);
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findContactEmails($query)
+    public function findContactEmails(Query $query): Query
     {
         return $query
             ->contain(['UserContactTypes'])
@@ -230,10 +219,10 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findValidatedEmails($query)
+    public function findValidatedEmails(Query $query): Query
     {
         return $query
             ->find('validated')
@@ -241,10 +230,10 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findContactNumbers($query)
+    public function findContactNumbers(Query $query): Query
     {
         return $query
             ->contain(['UserContactTypes'])
@@ -252,10 +241,10 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findValidatedNumbers($query)
+    public function findValidatedNumbers(Query $query): Query
     {
         return $query
             ->find('validated')
@@ -263,12 +252,12 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param UserContact $contact The User Contact Email to be made Primary
+     * @param \App\Model\Entity\UserContact $contact The User Contact Email to be made Primary
      * @return bool
      */
     public function makePrimaryEmail(UserContact $contact): bool
     {
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $this->Users->get($contact->user_id);
 
         if ($this->isValidDomainEmail($contact->contact_field) && $contact->validated) {
@@ -282,7 +271,7 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param UserContact $contact The User Contact Email to be made Primary
+     * @param \App\Model\Entity\UserContact $contact The User Contact Email to be made Primary
      * @return bool
      */
     public function verify(UserContact $contact): bool
@@ -297,9 +286,9 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param User $user The User for Attaching
+     * @param \App\Model\Entity\User $user The User for Attaching
      * @param string $email The Email String for Creation
-     * @return UserContact
+     * @return \App\Model\Entity\UserContact
      */
     public function makeEmail(User $user, string $email): UserContact
     {
@@ -323,7 +312,7 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param User $user User to have User Contact Made
+     * @param \App\Model\Entity\User $user User to have User Contact Made
      * @return bool
      */
     public function associatePrimary(User $user): bool
@@ -332,9 +321,9 @@ class UserContactsTable extends Table
     }
 
     /**
-     * @param User $user The User for Attaching
+     * @param \App\Model\Entity\User $user The User for Attaching
      * @param string $number The Phone Number String for Creation
-     * @return UserContact
+     * @return \App\Model\Entity\UserContact
      */
     public function makePhone(User $user, string $number): UserContact
     {

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\View\Helper;
@@ -9,7 +8,6 @@ use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\Filesystem;
-use League\Flysystem\FilesystemException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 
 /**

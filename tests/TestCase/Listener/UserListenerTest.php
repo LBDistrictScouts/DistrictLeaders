@@ -1,13 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
 use App\Listener\UserListener;
 use App\Model\Entity\User;
-use App\Model\Table\RolesTable;
-use App\Model\Table\UsersTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\Event;
 use Cake\Event\EventList;

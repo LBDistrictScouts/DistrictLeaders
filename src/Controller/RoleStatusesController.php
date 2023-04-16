@@ -1,29 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\RoleStatus;
-use App\Model\Table\RoleStatusesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-
 /**
  * RoleStatuses Controller
  *
- * @property RoleStatusesTable $RoleStatuses
- * @method RoleStatus[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\RoleStatusesTable $RoleStatuses
+ * @method \App\Model\Entity\RoleStatus[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleStatusesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $roleStatuses = $this->paginate($this->RoleStatuses);
 
@@ -34,10 +27,10 @@ class RoleStatusesController extends AppController
      * View method
      *
      * @param string|null $id Role Status id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $roleStatus = $this->RoleStatuses->get($id, [
             'contain' => ['Roles'],
@@ -49,9 +42,9 @@ class RoleStatusesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $roleStatus = $this->RoleStatuses->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -70,10 +63,10 @@ class RoleStatusesController extends AppController
      * Edit method
      *
      * @param string|null $id Role Status id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $roleStatus = $this->RoleStatuses->get($id, [
             'contain' => [],
@@ -94,10 +87,10 @@ class RoleStatusesController extends AppController
      * Delete method
      *
      * @param string|null $id Role Status id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleStatus = $this->RoleStatuses->get($id);

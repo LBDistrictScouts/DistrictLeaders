@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -37,14 +36,14 @@ class CoreResolverOLD implements ResolverInterface
      *
      * @var string
      */
-    protected $appNamespace = 'App';
+    protected string $appNamespace = 'App';
 
     /**
      * Plugin name overrides.
      *
      * @var array<string, string>
      */
-    protected $overrides = [];
+    protected array $overrides = [];
 
     /**
      * Constructor
@@ -52,7 +51,7 @@ class CoreResolverOLD implements ResolverInterface
      * @param string $appNamespace The application namespace
      * @param array<string, string> $overrides A list of plugin name overrides.
      */
-    public function __construct($appNamespace = 'App', array $overrides = [])
+    public function __construct(string $appNamespace = 'App', array $overrides = [])
     {
         $this->appNamespace = $appNamespace;
         $this->overrides = $overrides;
@@ -61,12 +60,12 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for an ORM Table, Entity or Query.
      *
-     * @param RepositoryInterface|EntityInterface|QueryInterface $resource The resource.
+     * @param \Cake\Datasource\RepositoryInterface|\Cake\Datasource\EntityInterface|\Cake\Datasource\QueryInterface $resource The resource.
      * @return object
-     * @throws MissingPolicyException When a policy for the
-     *   resource has not been defined or cannot be resolved.
+     * @throws \Authorization\Policy\Exception\MissingPolicyException When a policy for the
+     * resource has not been defined or cannot be resolved.
      */
-    public function getPolicy($resource)
+    public function getPolicy(RepositoryInterface|EntityInterface|QueryInterface $resource): object
     {
         if ($resource instanceof EntityInterface) {
             return $this->getEntityPolicy($resource);
@@ -75,7 +74,7 @@ class CoreResolverOLD implements ResolverInterface
             return $this->getRepositoryPolicy($resource);
         }
         if ($resource instanceof QueryInterface) {
-            /** @var RepositoryInterface $table */
+            /** @var \Cake\Datasource\RepositoryInterface $table */
             $table = $resource instanceof Query ? $resource->getRepository() : $resource->repository();
 
             return $this->getRepositoryPolicy($table);
@@ -88,10 +87,10 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for an entity
      *
-     * @param EntityInterface $entity The entity to get a policy for
+     * @param \Cake\Datasource\EntityInterface $entity The entity to get a policy for
      * @return object
      */
-    protected function getEntityPolicy(EntityInterface $entity)
+    protected function getEntityPolicy(EntityInterface $entity): object
     {
         $class = get_class($entity);
         $entityNamespace = '\Model\Entity\\';
@@ -104,10 +103,10 @@ class CoreResolverOLD implements ResolverInterface
     /**
      * Get a policy for a table
      *
-     * @param RepositoryInterface $table The table/repository to get a policy for.
+     * @param \Cake\Datasource\RepositoryInterface $table The table/repository to get a policy for.
      * @return object
      */
-    protected function getRepositoryPolicy(RepositoryInterface $table)
+    protected function getRepositoryPolicy(RepositoryInterface $table): object
     {
         $class = get_class($table);
         $tableNamespace = '\Model\Table\\';
@@ -124,10 +123,10 @@ class CoreResolverOLD implements ResolverInterface
      * @param string $name The name suffix of the resource.
      * @param string $namespace The namespace to find the policy in.
      * @return object
-     * @throws MissingPolicyException When a policy for the
-     *   resource has not been defined.
+     * @throws \Authorization\Policy\Exception\MissingPolicyException When a policy for the
+     * resource has not been defined.
      */
-    protected function findPolicy($class, $name, $namespace)
+    protected function findPolicy(string $class, string $name, string $namespace): object
     {
         $namespace = $this->getNamespace($namespace);
         $policyClass = false;
@@ -155,7 +154,7 @@ class CoreResolverOLD implements ResolverInterface
      * @param string $namespace The namespace to find the policy in.
      * @return string
      */
-    protected function getNamespace($namespace)
+    protected function getNamespace(string $namespace): string
     {
         if (isset($this->overrides[$namespace])) {
             return $this->overrides[$namespace];

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -17,7 +16,7 @@ use Cake\ORM\Entity;
  * @property int|null $precedence_order
  * @property int $signature
  *
- * @property User[] $users
+ * @property \App\Model\Entity\User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property bool $is_email_send_active
@@ -33,7 +32,7 @@ class UserState extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'user_state' => true,
         'active' => true,
         'expired' => true,
@@ -63,7 +62,7 @@ class UserState extends Entity
         return $this->active ?? false;
     }
 
-    protected $_virtual = [
+    protected array $_virtual = [
         'is_email_send_active',
     ];
 

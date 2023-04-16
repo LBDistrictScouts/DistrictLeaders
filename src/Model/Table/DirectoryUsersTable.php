@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\CaseableBehavior;
 use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Model\Entity\DirectoryUser;
@@ -12,11 +10,6 @@ use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Entity\UserContactType;
 use App\Utility\GoogleBuilder;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\BelongsToMany;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -26,25 +19,25 @@ use Google_Service_Directory_User;
 /**
  * DirectoryUsers Model
  *
- * @property DirectoriesTable&BelongsTo $Directories
- * @method DirectoryUser get($primaryKey, $options = [])
- * @method DirectoryUser newEntity(array $data, array $options = [])
- * @method DirectoryUser[] newEntities(array $data, array $options = [])
- * @method DirectoryUser|false save(EntityInterface $entity, $options = [])
- * @method DirectoryUser saveOrFail(EntityInterface $entity, $options = [])
- * @method DirectoryUser patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DirectoryUser[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method DirectoryUser findOrCreate($search, ?callable $callback = null, $options = [])
- * @property UsersTable&BelongsToMany $Users
- * @property UserContactsTable&HasMany $UserContacts
- * @mixin CaseableBehavior
- * @method DirectoryUser newEmptyEntity()
- * @method DirectoryUser[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method DirectoryUser[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method DirectoryUser[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method DirectoryUser[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin CaseableBehavior
- * @mixin CaseableBehavior
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\BelongsTo $Directories
+ * @method \App\Model\Entity\DirectoryUser get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DirectoryUser newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryUser[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryUser|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryUser saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryUser patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryUser[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryUser findOrCreate($search, ?callable $callback = null, $options = [])
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsToMany $Users
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $UserContacts
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @method \App\Model\Entity\DirectoryUser newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DirectoryUsersTable extends Table
 {
@@ -87,8 +80,8 @@ class DirectoryUsersTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -133,8 +126,8 @@ class DirectoryUsersTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -146,8 +139,8 @@ class DirectoryUsersTable extends Table
     }
 
     /**
-     * @param Directory $directory The directory to be Populated with Domains
-     * @param DirectoryDomain|null $directoryDomain Limit to Domain
+     * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
+     * @param \App\Model\Entity\DirectoryDomain|null $directoryDomain Limit to Domain
      * @return int
      */
     public function populate(Directory $directory, ?DirectoryDomain $directoryDomain = null): int
@@ -179,23 +172,23 @@ class DirectoryUsersTable extends Table
     }
 
     /**
-     * @param Directory $directory The Directory
+     * @param \App\Model\Entity\Directory $directory The Directory
      * @param string|null $directoryDomain The Directory Domain
      * @param int $count The Count start point
      * @param null $pageToken The Next Page Token
      * @return array
-     * @throws Google_Exception
+     * @throws \Google_Exception
      */
     public function populateFromList(
         Directory $directory,
         ?string $directoryDomain = null,
-        $count = 0,
-        $pageToken = null
+        int $count = 0,
+        null $pageToken = null
     ): array {
         $userList = GoogleBuilder::getUserList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();
 
-        /** @var Google_Service_Directory_User $user */
+        /** @var \Google_Service_Directory_User $user */
         foreach ($userList->getUsers() as $user) {
             $result = $this->findOrMake($user, $directory);
             if ($result) {
@@ -207,12 +200,14 @@ class DirectoryUsersTable extends Table
     }
 
     /**
-     * @param Google_Service_Directory_User $directoryUser Google Response Object
-     * @param Directory $directory The Parent Directory
-     * @return DirectoryDomain|array|EntityInterface|false|null
+     * @param \Google_Service_Directory_User $directoryUser Google Response Object
+     * @param \App\Model\Entity\Directory $directory The Parent Directory
+     * @return \App\Model\Entity\DirectoryDomain|\App\Model\Table\EntityInterface|array|false|null
      */
-    public function findOrMake(Google_Service_Directory_User $directoryUser, Directory $directory)
-    {
+    public function findOrMake(
+        Google_Service_Directory_User $directoryUser,
+        Directory $directory
+    ): DirectoryDomain|array|EntityInterface|false|null {
         $search = [
             DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE => $directoryUser->getId(),
             DirectoryUser::FIELD_DIRECTORY_ID => $directory->id,
@@ -222,7 +217,7 @@ class DirectoryUsersTable extends Table
             $this->Directories->setCustomerReference($directory, $directoryUser);
         }
 
-        return $this->findOrCreate($search, function (DirectoryUser $entity) use ($directoryUser) {
+        return $this->findOrCreate($search, function (DirectoryUser $entity) use ($directoryUser): void {
             $entity->set($entity::FIELD_GIVEN_NAME, $directoryUser->getName()->getGivenName());
             $entity->set($entity::FIELD_FAMILY_NAME, $directoryUser->getName()->getFamilyName());
             $entity->set($entity::FIELD_PRIMARY_EMAIL, $directoryUser->getPrimaryEmail());
@@ -230,8 +225,8 @@ class DirectoryUsersTable extends Table
     }
 
     /**
-     * @param DirectoryUser $directoryUser User to be estimated
-     * @return User|null
+     * @param \App\Model\Entity\DirectoryUser $directoryUser User to be estimated
+     * @return \App\Model\Entity\User|null
      */
     public function detectUser(DirectoryUser $directoryUser): ?User
     {
@@ -292,8 +287,8 @@ class DirectoryUsersTable extends Table
     }
 
     /**
-     * @param DirectoryUser $directoryUser Source Directory User
-     * @param User $user User to be Linked via UserContact
+     * @param \App\Model\Entity\DirectoryUser $directoryUser Source Directory User
+     * @param \App\Model\Entity\User $user User to be Linked via UserContact
      * @return bool
      */
     public function linkUser(DirectoryUser $directoryUser, User $user): bool

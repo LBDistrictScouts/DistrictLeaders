@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Utility;
@@ -10,8 +9,8 @@ namespace App\Utility;
 class Cartesian
 {
     /**
-     * @param array[] $set Multiple Arrays to be Cartesian Joined
-     * @return array[]
+     * @param array<array> $set Multiple Arrays to be Cartesian Joined
+     * @return array<array>
      */
     public static function build(array $set): array
     {

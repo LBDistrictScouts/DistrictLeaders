@@ -1,33 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\CapAuthorizationComponent;
 use App\Form\PasswordForm;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
-use App\Model\Table\TokensTable;
-use App\Model\Table\UsersTable;
-use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Controller\Controller;
-use Cake\Http\Response;
-use Cake\ORM\Table;
-use Exception;
-use Flash\Controller\Component\FlashComponent;
 
 /**
  * Challenges Controller
  *
- * @property AuthenticationComponent $Authentication
- * @property CapAuthorizationComponent $Authorization
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization
  *
- * @property FlashComponent $Flash
+ * @property \Flash\Controller\Component\FlashComponent $Flash
  *
- * @property TokensTable $Tokens
- * @property UsersTable $Users
- * @property Table $Challenges
+ * @property \App\Model\Table\TokensTable $Tokens
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \Cake\ORM\Table $Challenges
  **/
 class ChallengesController extends Controller
 {
@@ -44,7 +35,7 @@ class ChallengesController extends Controller
      * e.g. `$this->loadComponent('Security');`
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -68,18 +59,18 @@ class ChallengesController extends Controller
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
     }
 
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function expired()
+    public function expired(): ?Response
     {
         $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
         $this->loadModel('Tokens');

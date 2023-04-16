@@ -1,21 +1,19 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
  * CampRoleType Entity
  *
  * @property int $id
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  * @property string $camp_role_type
  *
- * @property CampRole[] $camp_roles
+ * @property \App\Model\Entity\CampRole[] $camp_roles
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -30,7 +28,7 @@ class CampRoleType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'created' => true,
         'modified' => true,
         'camp_role_type' => true,

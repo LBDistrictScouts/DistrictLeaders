@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -271,7 +270,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         ]);
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('customIdentity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -296,7 +295,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
 
         $middleware = new CognitoAuthenticationMiddleware($this->application);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -329,7 +328,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
         $handler = new TestRequestHandler(function ($request) {
-            $service = $request->getAttribute('authentication');
             $this->assertNull($request->getAttribute('session')->read('Auth'));
 
             return new Response();
@@ -358,7 +356,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
 
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -446,7 +444,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             throw new UnauthenticatedException();
         });
         $middleware = new CognitoAuthenticationMiddleware($this->service);
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
     }
 
     /**
@@ -517,10 +515,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $handler = new TestRequestHandler(function ($request) {
             throw new UnauthenticatedException();
         });
-
-        $next = function ($request, $response) {
-            throw new UnauthenticatedException();
-        };
 
         $this->service->setConfig([
             'unauthenticatedRedirect' => '/users/login',
@@ -640,9 +634,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             ['username' => 'mariano', 'password' => 'password']
         );
         $response = new Response();
-        $next = function ($request, $response) {
-            throw new UnauthenticatedException();
-        };
 
         $this->service->setConfig([
             'unauthenticatedRedirect' => '/users/login',
@@ -696,7 +687,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $handler = new TestRequestHandler();
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -769,18 +760,14 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
                 'password' => 'password',
             ]
         );
-        $response = new Response();
         $middleware = new CognitoAuthenticationMiddleware($service, [
             'identityAttribute' => 'user',
             'unauthenticatedRedirect' => '/login',
             'queryParam' => 'redirect',
         ]);
-        $next = function ($request, $response) {
-            return $response;
-        };
         $this->deprecated(function () use ($request, $middleware) {
             $handler = new TestRequestHandler();
-            $response = $middleware->process($request, $handler);
+            $middleware->process($request, $handler);
         });
         $this->assertSame('user', $service->getConfig('identityAttribute'));
         $this->assertSame('redirect', $service->getConfig('queryParam'));

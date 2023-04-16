@@ -1,12 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Entity;
 
-use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
-use App\Model\Table\UserContactsTable;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\TestSuite\TestCase;
 

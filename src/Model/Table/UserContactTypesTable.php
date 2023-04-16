@@ -1,15 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\UserContactType;
 use App\Model\Table\Traits\BaseInstallerTrait;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -17,22 +11,22 @@ use Cake\Validation\Validator;
 /**
  * UserContactTypes Model
  *
- * @property UserContactsTable&HasMany $UserContacts
- * @method UserContactType get($primaryKey, $options = [])
- * @method UserContactType newEntity(array $data, array $options = [])
- * @method UserContactType[] newEntities(array $data, array $options = [])
- * @method UserContactType|false save(EntityInterface $entity, $options = [])
- * @method UserContactType saveOrFail(EntityInterface $entity, $options = [])
- * @method UserContactType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method UserContactType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method UserContactType findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @method UserContactType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method UserContactType newEmptyEntity()
- * @method UserContactType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method UserContactType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method UserContactType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $UserContacts
+ * @method \App\Model\Entity\UserContactType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\UserContactType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContactType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\UserContactType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContactType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContactType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContactType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContactType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\UserContactType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContactType newEmptyEntity()
+ * @method \App\Model\Entity\UserContactType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContactType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContactType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class UserContactTypesTable extends Table
 {
@@ -62,8 +56,8 @@ class UserContactTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -85,8 +79,8 @@ class UserContactTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

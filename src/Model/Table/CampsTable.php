@@ -1,15 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\Camp;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -17,23 +10,23 @@ use Cake\Validation\Validator;
 /**
  * Camps Model
  *
- * @property CampTypesTable&BelongsTo $CampTypes
- * @property CampRolesTable&HasMany $CampRoles
- * @method Camp get($primaryKey, $options = [])
- * @method Camp newEntity(array $data, array $options = [])
- * @method Camp[] newEntities(array $data, array $options = [])
- * @method Camp|false save(EntityInterface $entity, $options = [])
- * @method Camp saveOrFail(EntityInterface $entity, $options = [])
- * @method Camp patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Camp[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Camp findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @method Camp[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method Camp newEmptyEntity()
- * @method Camp[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Camp[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Camp[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
+ * @property \App\Model\Table\CampTypesTable&\App\Model\Table\BelongsTo $CampTypes
+ * @property \App\Model\Table\CampRolesTable&\App\Model\Table\HasMany $CampRoles
+ * @method \App\Model\Entity\Camp get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Camp newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Camp[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Camp|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Camp saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Camp patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Camp[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Camp findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp newEmptyEntity()
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CampsTable extends Table
 {
@@ -65,8 +58,8 @@ class CampsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -97,8 +90,8 @@ class CampsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

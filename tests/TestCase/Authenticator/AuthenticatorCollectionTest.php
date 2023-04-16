@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -23,7 +22,6 @@ use Authentication\Authenticator\AuthenticatorInterface;
 use Authentication\Authenticator\FormAuthenticator;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\TestSuite\TestCase;
-use Exception;
 
 /**
  * Class AuthenticatorCollectionTest

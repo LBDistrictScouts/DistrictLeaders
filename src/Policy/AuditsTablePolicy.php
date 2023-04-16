@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
 use App\Model\Table\AuditsTable;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
@@ -20,11 +18,11 @@ class AuditsTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can index AuditsTable
      *
-     * @param User $user The user.
-     * @param AuditsTable $auditsTable The Table to be Verified.
-     * @return ResultInterface|null
+     * @param \App\Model\Entity\User $user The user.
+     * @param \App\Model\Table\AuditsTable $auditsTable The Table to be Verified.
+     * @return \Authorization\Policy\ResultInterface|null
      */
-    public function canIndex($user, AuditsTable $auditsTable): ?ResultInterface
+    public function canIndex(User $user, AuditsTable $auditsTable): ?ResultInterface
     {
         if ($user->checkCapability('HISTORY')) {
             return new Result(true, '104');
@@ -36,11 +34,11 @@ class AuditsTablePolicy implements BeforePolicyInterface
     /**
      * Check if $user can view AuditsTable
      *
-     * @param User $user The user.
-     * @param AuditsTable $auditsTable The Table to be Verified.
-     * @return ResultInterface|null
+     * @param \App\Model\Entity\User $user The user.
+     * @param \App\Model\Table\AuditsTable $auditsTable The Table to be Verified.
+     * @return \Authorization\Policy\ResultInterface|null
      */
-    public function canView($user, AuditsTable $auditsTable)
+    public function canView(User $user, AuditsTable $auditsTable): ?ResultInterface
     {
         if ($user->checkCapability('HISTORY')) {
             return new Result(true, '104');

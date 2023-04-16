@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Cell;
@@ -19,11 +18,11 @@ class InformationCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
-    protected $interfacePath = 'cell/Information/interface';
+    protected string $interfacePath = 'cell/Information/interface';
 
-    protected $emailPath = 'cell/Information/email';
+    protected string $emailPath = 'cell/Information/email';
 
     /**
      * Initialization logic run at the end of object construction.
@@ -37,10 +36,10 @@ class InformationCell extends Cell
     /**
      * Default display method.
      *
-     * @param Notification $notification Notification for Display
+     * @param \App\Model\Entity\Notification $notification Notification for Display
      * @return void
      */
-    public function sharedDisplay(Notification $notification)
+    public function sharedDisplay(Notification $notification): void
     {
         $this->viewBuilder()->setTemplate($notification->notification_type->content_template);
         $this->set('system', Configure::read('App.who.system', 'District Leader System'));
@@ -51,10 +50,10 @@ class InformationCell extends Cell
     /**
      * Interface display method.
      *
-     * @param Notification $notification Notification for Interface Display
+     * @param \App\Model\Entity\Notification $notification Notification for Interface Display
      * @return void
      */
-    public function display(Notification $notification)
+    public function display(Notification $notification): void
     {
         $this->viewBuilder()->setTemplatePath($this->interfacePath);
         $this->sharedDisplay($notification);
@@ -63,10 +62,10 @@ class InformationCell extends Cell
     /**
      * Email display method.
      *
-     * @param Notification $notification Notification for Email Display
+     * @param \App\Model\Entity\Notification $notification Notification for Email Display
      * @return void
      */
-    public function email(Notification $notification)
+    public function email(Notification $notification): void
     {
         $this->viewBuilder()->setTemplatePath($this->emailPath);
         $this->sharedDisplay($notification);

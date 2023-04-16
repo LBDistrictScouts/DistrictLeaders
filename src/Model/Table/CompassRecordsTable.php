@@ -1,11 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\CaseableBehavior;
-use App\Model\Behavior\CsvBehavior;
 use App\Model\Entity\CompassRecord;
 use App\Model\Entity\DirectoryUser;
 use App\Model\Entity\DocumentVersion;
@@ -14,63 +11,59 @@ use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
 use App\Model\Table\Exceptions\BadUserDataException;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Log\Log;
-use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Search\Model\Behavior\SearchBehavior;
 
 /**
  * CompassRecords Model
  *
- * @property DocumentVersionsTable&BelongsTo $DocumentVersions
- * @method CompassRecord get($primaryKey, $options = [])
- * @method CompassRecord newEntity(array $data, array $options = [])
- * @method CompassRecord[] newEntities(array $data, array $options = [])
- * @method CompassRecord|false save(EntityInterface $entity, $options = [])
- * @method CompassRecord saveOrFail(EntityInterface $entity, $options = [])
- * @method CompassRecord patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method CompassRecord[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method CompassRecord findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin CaseableBehavior
- * @mixin CsvBehavior
- * @mixin SearchBehavior
- * @property UsersTable $Users
- * @property ScoutGroupsTable $ScoutGroups
- * @property RoleTypesTable $RoleTypes
- * @property DirectoryUsersTable $DirectoryUsers
- * @method CompassRecord newEmptyEntity()
- * @method CompassRecord[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method CompassRecord[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method CompassRecord[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method CompassRecord[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin SearchBehavior
- * @mixin CaseableBehavior
- * @mixin CsvBehavior
+ * @property \App\Model\Table\DocumentVersionsTable&\App\Model\Table\BelongsTo $DocumentVersions
+ * @method \App\Model\Entity\CompassRecord get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CompassRecord newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CompassRecord saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CompassRecord patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\CsvBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
+ * @property \App\Model\Table\RoleTypesTable $RoleTypes
+ * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
+ * @method \App\Model\Entity\CompassRecord newEmptyEntity()
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\CsvBehavior
  */
 class CompassRecordsTable extends Table
 {
     use ModelAwareTrait;
 
     /**
-     * @var UsersTable
+     * @var \App\Model\Table\UsersTable
      */
-    private $Users;
+    private UsersTable $Users;
 
     /**
-     * @var DirectoryUsersTable
+     * @var \App\Model\Table\DirectoryUsersTable
      */
-    private $DirectoryUsers;
+    private DirectoryUsersTable $DirectoryUsers;
 
     /**
-     * @var ScoutGroupsTable
+     * @var \App\Model\Table\ScoutGroupsTable
      */
-    private $ScoutGroups;
+    private ScoutGroupsTable $ScoutGroups;
 
     /**
      * Initialize method
@@ -123,8 +116,8 @@ class CompassRecordsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -223,8 +216,8 @@ class CompassRecordsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -241,10 +234,10 @@ class CompassRecordsTable extends Table
     /**
      * Stores emails as lower case.
      *
-     * @param Event $event The event being processed.
+     * @param \Cake\Event\Event $event The event being processed.
      * @return bool
      */
-    public function beforeRules(Event $event)
+    public function beforeRules(Event $event): bool
     {
         $entity = $event->getData('entity');
 
@@ -256,7 +249,7 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param CompassRecord $compassRecord The Compass Record
+     * @param \App\Model\Entity\CompassRecord $compassRecord The Compass Record
      * @return string
      */
     public function shouldMerge(CompassRecord $compassRecord): string
@@ -301,7 +294,7 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param CompassRecord $compassRecord The Compass Record
+     * @param \App\Model\Entity\CompassRecord $compassRecord The Compass Record
      * @return bool
      */
     public function doAutoMerge(CompassRecord $compassRecord): bool
@@ -314,7 +307,7 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param DocumentVersion $documentVersion Document Version ID
+     * @param \App\Model\Entity\DocumentVersion $documentVersion Document Version ID
      * @return array
      */
     public function autoMerge(DocumentVersion $documentVersion): array
@@ -363,7 +356,7 @@ class CompassRecordsTable extends Table
 
     /**
      * @param array $data The Data to be converted into Records
-     * @param DocumentVersion $version The Document Version for Associating
+     * @param \App\Model\Entity\DocumentVersion $version The Document Version for Associating
      * @return int
      */
     public function parseImportedData(array $data, DocumentVersion $version): int
@@ -400,8 +393,8 @@ class CompassRecordsTable extends Table
     /**
      * Matches the record with alternative sources of up to date emails
      *
-     * @param CompassRecord $record The Compass Record to be Reconciled
-     * @return CompassRecord
+     * @param \App\Model\Entity\CompassRecord $record The Compass Record to be Reconciled
+     * @return \App\Model\Entity\CompassRecord
      */
     public function prepareRecord(CompassRecord $record): CompassRecord
     {
@@ -428,8 +421,8 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param CompassRecord $record The Record for Detection
-     * @return User|null
+     * @param \App\Model\Entity\CompassRecord $record The Record for Detection
+     * @return \App\Model\Entity\User|null
      */
     public function detectUser(CompassRecord $record): ?User
     {
@@ -489,7 +482,7 @@ class CompassRecordsTable extends Table
         return null;
     }
 
-    private $userMap = [
+    private array $userMap = [
         User::FIELD_MEMBERSHIP_NUMBER => CompassRecord::FIELD_MEMBERSHIP_NUMBER,
         User::FIELD_FIRST_NAME => CompassRecord::FIELD_FIRST_NAME,
         User::FIELD_LAST_NAME => CompassRecord::FIELD_LAST_NAME,
@@ -502,8 +495,8 @@ class CompassRecordsTable extends Table
     ];
 
     /**
-     * @param CompassRecord $record Record to be Consumed
-     * @param User|null $user User to be linked if detected
+     * @param \App\Model\Entity\CompassRecord $record Record to be Consumed
+     * @param \App\Model\Entity\User|null $user User to be linked if detected
      * @return bool
      */
     public function importUser(CompassRecord $record, ?User $user = null): bool
@@ -544,8 +537,8 @@ class CompassRecordsTable extends Table
     }
 
     /**
-     * @param CompassRecord $record The Compass Record for Merging
-     * @param User $user User to be Linked via UserContact
+     * @param \App\Model\Entity\CompassRecord $record The Compass Record for Merging
+     * @param \App\Model\Entity\User $user User to be Linked via UserContact
      * @return bool
      */
     public function mergeUser(CompassRecord $record, User $user): bool

@@ -1,16 +1,14 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Cell;
 
-use App\Model\Table\UsersTable;
 use Cake\View\Cell;
 
 /**
  * Profile cell
  *
- * @property UsersTable $Users
+ * @property \App\Model\Table\UsersTable $Users
  */
 class ProfileModalCell extends Cell
 {
@@ -20,7 +18,7 @@ class ProfileModalCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
     /**
      * Initialization logic run at the end of object construction.
@@ -37,7 +35,7 @@ class ProfileModalCell extends Cell
      * @param int $loggedInUserId The Id of the Authenticated User
      * @return void
      */
-    public function display($loggedInUserId)
+    public function display(int $loggedInUserId): void
     {
         if (is_integer($loggedInUserId)) {
             $this->loadModel('Users');

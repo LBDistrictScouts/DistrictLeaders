@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -7,10 +6,7 @@ namespace App\Model\Table;
 use App\Model\Entity\NotificationType;
 use App\Model\Entity\User;
 use App\Model\Table\Traits\BaseInstallerTrait;
-use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -18,20 +14,20 @@ use Cake\Validation\Validator;
 /**
  * NotificationTypes Model
  *
- * @property NotificationsTable&HasMany $Notifications
- * @method NotificationType get($primaryKey, $options = [])
- * @method NotificationType newEntity(array $data, array $options = [])
- * @method NotificationType[] newEntities(array $data, array $options = [])
- * @method NotificationType|false save(EntityInterface $entity, $options = [])
- * @method NotificationType saveOrFail(EntityInterface $entity, $options = [])
- * @method NotificationType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method NotificationType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method NotificationType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method NotificationType newEmptyEntity()
- * @method NotificationType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method NotificationType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method NotificationType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method NotificationType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\NotificationsTable&\App\Model\Table\HasMany $Notifications
+ * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\NotificationType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\NotificationType newEmptyEntity()
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class NotificationTypesTable extends Table
 {
@@ -61,8 +57,8 @@ class NotificationTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -108,8 +104,8 @@ class NotificationTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -124,7 +120,7 @@ class NotificationTypesTable extends Table
      *
      * @return int
      */
-    public function installBaseNotificationTypes()
+    public function installBaseNotificationTypes(): int
     {
         return $this->installBase($this);
     }
@@ -133,8 +129,8 @@ class NotificationTypesTable extends Table
      * install the application status config
      *
      * @param string $emailGenerationCode Notification Type Code
-     * @return NotificationType
-     *@throws RecordNotFoundException
+     * @return \App\Model\Entity\NotificationType
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function getTypeCode(string $emailGenerationCode): NotificationType
     {
@@ -169,7 +165,7 @@ class NotificationTypesTable extends Table
 
     /**
      * @param string $emailGenerationCode The Email Generation Code
-     * @return string[]
+     * @return array<string>
      */
     public function entityCodeSplitter(string $emailGenerationCode): array
     {
@@ -210,8 +206,8 @@ class NotificationTypesTable extends Table
     /**
      * Function to build Notification Standard Header
      *
-     * @param NotificationType $notificationType Notification Type for Header Build
-     * @param User $user User for Header Context
+     * @param \App\Model\Entity\NotificationType $notificationType Notification Type for Header Build
+     * @param \App\Model\Entity\User $user User for Header Context
      * @param array|null $data Additional Notification Context Data
      * @return string
      */
@@ -268,7 +264,7 @@ class NotificationTypesTable extends Table
     /**
      * Function to build Notification Standard Header
      *
-     * @param NotificationType $notificationType Notification Type
+     * @param \App\Model\Entity\NotificationType $notificationType Notification Type
      * @param array|null $data Additional Notification Context Data
      * @return array
      */

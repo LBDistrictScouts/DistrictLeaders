@@ -1,17 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Cell;
 
 use App\Model\Entity\Notification;
-use App\Model\Table\NotificationsTable;
 use Cake\View\Cell;
 
 /**
  * Notify cell
  *
- * @property NotificationsTable $Notifications
+ * @property \App\Model\Table\NotificationsTable $Notifications
  */
 class NotifyCell extends Cell
 {
@@ -21,12 +19,12 @@ class NotifyCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
     /**
-     * @var string[] Helper Array
+     * @var array<string>  Helper Array
      */
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Time',
     ];
@@ -47,7 +45,7 @@ class NotifyCell extends Cell
      * @param int $loggedInUserId The Id of the Authenticated User
      * @return void
      */
-    public function display($loggedInUserId)
+    public function display(int $loggedInUserId): void
     {
         if (is_integer($loggedInUserId)) {
             $notificationCount = $this->Notifications

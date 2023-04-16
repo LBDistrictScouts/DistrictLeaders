@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -7,9 +6,6 @@ namespace App\Model\Table;
 use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Utility\GoogleBuilder;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -19,22 +15,22 @@ use Google_Service_Directory_Domains;
 /**
  * DirectoryDomains Model
  *
- * @property DirectoriesTable&BelongsTo $Directories
- * @method DirectoryDomain get($primaryKey, $options = [])
- * @method DirectoryDomain newEntity(array $data, array $options = [])
- * @method DirectoryDomain[] newEntities(array $data, array $options = [])
- * @method DirectoryDomain|false save(EntityInterface $entity, $options = [])
- * @method DirectoryDomain saveOrFail(EntityInterface $entity, $options = [])
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\BelongsTo $Directories
+ * @method \App\Model\Entity\DirectoryDomain get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryDomain
  * patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
- * @method DirectoryDomain[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method DirectoryDomain findOrCreate($search, ?callable $callback = null, $options = [])
- * @method DirectoryDomain patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DirectoryDomain newEmptyEntity()
- * @method DirectoryDomain[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method DirectoryDomain[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method DirectoryDomain[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method DirectoryDomain[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryDomainsTable extends Table
 {
@@ -61,8 +57,8 @@ class DirectoryDomainsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -92,8 +88,8 @@ class DirectoryDomainsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -104,7 +100,7 @@ class DirectoryDomainsTable extends Table
     }
 
     /**
-     * @param Directory $directory The directory to be Populated with Domains
+     * @param \App\Model\Entity\Directory $directory The directory to be Populated with Domains
      * @return int
      */
     public function populate(Directory $directory): int
@@ -116,7 +112,7 @@ class DirectoryDomainsTable extends Table
         }
         $count = 0;
 
-        /** @var Google_Service_Directory_Domains $domain */
+        /** @var \Google_Service_Directory_Domains $domain */
         foreach ($domainList->getDomains() as $domain) {
             $result = $this->findOrMake($domain, $directory->id);
             if ($result) {
@@ -128,12 +124,14 @@ class DirectoryDomainsTable extends Table
     }
 
     /**
-     * @param Google_Service_Directory_Domains $directoryDomains Google Response Object
+     * @param \Google_Service_Directory_Domains $directoryDomains Google Response Object
      * @param int $directoryId ID of the Parent Directory
-     * @return DirectoryDomain|array|EntityInterface|false|null
+     * @return \App\Model\Entity\DirectoryDomain|\App\Model\Table\EntityInterface|array|false|null
      */
-    public function findOrMake(Google_Service_Directory_Domains $directoryDomains, int $directoryId)
-    {
+    public function findOrMake(
+        Google_Service_Directory_Domains $directoryDomains,
+        int $directoryId
+    ): DirectoryDomain|array|EntityInterface|false|null {
         $search = [
             DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
             DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,

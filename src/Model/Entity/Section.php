@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -15,23 +14,23 @@ use Cake\ORM\Entity;
  * @property string $section
  * @property int $section_type_id
  * @property int $scout_group_id
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property SectionType $section_type
- * @property ScoutGroup $scout_group
- * @property Role[] $roles
- * @property FrozenTime|null $deleted
+ * @property \App\Model\Entity\SectionType $section_type
+ * @property \App\Model\Entity\ScoutGroup $scout_group
+ * @property \App\Model\Entity\Role[] $roles
+ * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
  * @property int|null $meeting_day
  * @property string|null $meeting_start_time
  * @property string|null $meeting_end_time
  * @property string $meeting_weekday
- * @property User[] $users
+ * @property \App\Model\Entity\User[] $users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property Audit[] $audits
+ * @property \App\Model\Entity\Audit[] $audits
  */
 class Section extends Entity
 {
@@ -44,7 +43,7 @@ class Section extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         self::FIELD_SECTION => true,
         self::FIELD_SECTION_TYPE_ID => true,
         self::FIELD_SCOUT_GROUP_ID => true,
@@ -61,7 +60,7 @@ class Section extends Entity
     /**
      * Function to get Reference Time Point
      *
-     * @return FrozenTime
+     * @return \Cake\I18n\FrozenTime
      */
     private function baseTime(): FrozenTime
     {
@@ -85,9 +84,9 @@ class Section extends Entity
     /**
      * Retrieve User Capabilities
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function timeList()
+    public function timeList(): array
     {
         return Cache::remember('TIME_LIST', function () {
             return $this->makeTimeList();
@@ -97,9 +96,9 @@ class Section extends Entity
     /**
      * Retrieve User Capabilities
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function dayList()
+    public function dayList(): array
     {
         return Cache::remember('DAY_LIST', function () {
             return $this->makeDayList();
@@ -109,7 +108,7 @@ class Section extends Entity
     /**
      * function to generate time indexes at 15 minute intervals
      *
-     * @return string[]
+     * @return array<string>
      */
     public function makeTimeList(): array
     {
@@ -130,7 +129,7 @@ class Section extends Entity
     /**
      * function to generate time indexes at 15 minute intervals
      *
-     * @return string[]
+     * @return array<string>
      */
     public function makeDayList(): array
     {
@@ -147,7 +146,7 @@ class Section extends Entity
         return $dayGrid;
     }
 
-    protected $_virtual = ['meeting_weekday'];
+    protected array $_virtual = ['meeting_weekday'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION = 'section';

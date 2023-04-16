@@ -1,56 +1,49 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\Audit;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Muffin\Footprint\Model\Behavior\FootprintBehavior;
 
 /**
  * Audits Model
  *
- * @property UsersTable&BelongsTo $Users
- * @property UsersTable&BelongsTo $ChangedUsers
- * @method Audit get($primaryKey, $options = [])
- * @method Audit newEntity(array $data, array $options = [])
- * @method Audit[] newEntities(array $data, array $options = [])
- * @method Audit|false save(EntityInterface $entity, $options = [])
- * @method Audit saveOrFail(EntityInterface $entity, $options = [])
- * @method Audit patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Audit[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Audit findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin FootprintBehavior
- * @method Audit[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property RolesTable&BelongsTo $ChangedRoles
- * @property ScoutGroupsTable&BelongsTo $ChangedScoutGroups
- * @property UserContactsTable&BelongsTo $ChangedUserContacts
- * @property SectionsTable&BelongsTo $ChangedSections
- * @property SectionsTable&BelongsTo $NewSections
- * @property RoleTypesTable&BelongsTo $NewRoleTypes
- * @property UsersTable&BelongsTo $NewUsers
- * @property RoleStatusesTable&BelongsTo $NewRoleStatuses
- * @property UserContactsTable&BelongsTo $NewUserContacts
- * @property SectionsTable&BelongsTo $OriginalSections
- * @property RoleTypesTable&BelongsTo $OriginalRoleTypes
- * @property UsersTable&BelongsTo $OriginalUsers
- * @property RoleStatusesTable&BelongsTo $OriginalRoleStatuses
- * @property UserContactsTable&BelongsTo $OriginalUserContacts
- * @method Audit newEmptyEntity()
- * @method Audit[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Audit[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Audit[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin FootprintBehavior
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $ChangedUsers
+ * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Audit newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Audit|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Audit[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Audit findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\BelongsTo $ChangedRoles
+ * @property \App\Model\Table\ScoutGroupsTable&\App\Model\Table\BelongsTo $ChangedScoutGroups
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $ChangedUserContacts
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $ChangedSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $NewSections
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $NewRoleTypes
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $NewUsers
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $NewRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $NewUserContacts
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $OriginalSections
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $OriginalRoleTypes
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $OriginalUsers
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $OriginalRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $OriginalUserContacts
+ * @method \App\Model\Entity\Audit newEmptyEntity()
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  */
 class AuditsTable extends Table
 {
@@ -228,8 +221,8 @@ class AuditsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -272,8 +265,8 @@ class AuditsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -283,8 +276,8 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findUsers(Query $query): Query
     {
@@ -294,8 +287,8 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findRoles(Query $query): Query
     {
@@ -305,8 +298,8 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findScoutGroups(Query $query): Query
     {
@@ -316,8 +309,8 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findSections(Query $query): Query
     {
@@ -327,8 +320,8 @@ class AuditsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findContacts(Query $query): Query
     {

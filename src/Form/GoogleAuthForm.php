@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Form;
@@ -15,8 +14,8 @@ class GoogleAuthForm extends Form
     /**
      * Builds the schema for the modelless form
      *
-     * @param Schema $schema From schema
-     * @return Schema
+     * @param \Cake\Form\Schema $schema From schema
+     * @return \Cake\Form\Schema
      */
     protected function buildSchema(Schema $schema): Schema
     {

@@ -1,34 +1,29 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\SiteSession;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * SiteSessions Model
  *
- * @method SiteSession get($primaryKey, $options = [])
- * @method SiteSession newEntity(array $data, array $options = [])
- * @method SiteSession[] newEntities(array $data, array $options = [])
- * @method SiteSession|false save(EntityInterface $entity, $options = [])
- * @method SiteSession saveOrFail(EntityInterface $entity, $options = [])
- * @method SiteSession patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method SiteSession[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method SiteSession findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @method SiteSession[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method SiteSession newEmptyEntity()
- * @method SiteSession[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method SiteSession[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method SiteSession[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
+ * @method \App\Model\Entity\SiteSession get($primaryKey, $options = [])
+ * @method \App\Model\Entity\SiteSession newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession newEmptyEntity()
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class SiteSessionsTable extends Table
 {
@@ -52,8 +47,8 @@ class SiteSessionsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {

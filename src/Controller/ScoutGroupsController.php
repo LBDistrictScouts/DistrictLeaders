@@ -1,21 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\SectionType;
-use App\Model\Table\ScoutGroupsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * ScoutGroups Controller
  *
- * @property ScoutGroupsTable $ScoutGroups
- * @method ScoutGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\ScoutGroupsTable $ScoutGroups
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class ScoutGroupsController extends AppController
 {
@@ -32,9 +27,9 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->Authorization->authorize($this->ScoutGroups);
 
@@ -51,9 +46,9 @@ class ScoutGroupsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function generate()
+    public function generate(): ?Response
     {
         $this->Authorization->authorize($this->ScoutGroups);
 
@@ -74,11 +69,11 @@ class ScoutGroupsController extends AppController
             ->orderAsc(SectionType::FIELD_SECTION_TYPE);
         $scoutGroups = [];
 
-        /** @var ScoutGroup $scoutGroup */
+        /** @var \App\Model\Entity\ScoutGroup $scoutGroup */
         foreach ($scoutGroupsFinder as $idx => $scoutGroup) {
             $matrix = [];
 
-            /** @var SectionType $sectionType */
+            /** @var \App\Model\Entity\SectionType $sectionType */
             foreach ($sectionTypes as $sectionType) {
                 if ($sectionType->is_young_person_section) {
                     $count = 0;
@@ -107,10 +102,10 @@ class ScoutGroupsController extends AppController
      * View method
      *
      * @param string|null $id Scout Group id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
             'contain' => [
@@ -156,9 +151,9 @@ class ScoutGroupsController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $scoutGroup = $this->ScoutGroups->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -177,10 +172,10 @@ class ScoutGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Scout Group id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $scoutGroup = $this->ScoutGroups->get($id, [
             'contain' => [],
@@ -201,10 +196,10 @@ class ScoutGroupsController extends AppController
      * Delete method
      *
      * @param string|null $id Scout Group id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $scoutGroup = $this->ScoutGroups->get($id);

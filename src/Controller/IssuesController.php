@@ -1,33 +1,27 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Issue;
 use Cake\Controller\Controller;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\Event\Event;
 use Cake\Event\EventInterface;
-use Cake\Http\Response;
-use Cake\ORM\Table;
 
 /**
  * Issues Controller
  *
- * @method Issue[]|ResultSetInterface paginate($object = null, array $settings = [])
- * @property Table $Issues
+ * @method \App\Model\Entity\Issue[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \Cake\ORM\Table $Issues
  */
 class IssuesController extends Controller
 {
     use ModelAwareTrait;
 
     /**
-     * @param Event $event The event being interrupted
-     * @return Response|void|null
+     * @param \Cake\Event\Event $event The event being interrupted
+     * @return \App\Controller\Response|null|void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): Response|null|null
     {
         $this->modelFactory('Endpoint', ['Muffin\Webservice\Model\EndpointRegistry', 'get']);
         $this->loadModel('CvoTechnologies/GitHub.Issues', 'Endpoint');
@@ -36,9 +30,9 @@ class IssuesController extends Controller
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $issues = $this->Issues->find()->where([
             'owner' => 'LBDistrictScouts',
@@ -52,10 +46,10 @@ class IssuesController extends Controller
      * View method
      *
      * @param string|null $id Issue id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $issue = $this->Issues->get($id, [
             'contain' => [],
@@ -67,9 +61,9 @@ class IssuesController extends Controller
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $issue = $this->Issues->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -88,10 +82,10 @@ class IssuesController extends Controller
      * Edit method
      *
      * @param string|null $id Issue id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $issue = $this->Issues->get($id, [
             'contain' => [],
@@ -112,10 +106,10 @@ class IssuesController extends Controller
      * Delete method
      *
      * @param string|null $id Issue id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $issue = $this->Issues->get($id);

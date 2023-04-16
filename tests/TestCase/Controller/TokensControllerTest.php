@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\Token;
-use App\Model\Table\TokensTable;
 use Cake\TestSuite\TestCase;
 
 /**

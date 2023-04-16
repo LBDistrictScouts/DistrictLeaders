@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller\Component;
@@ -7,7 +6,6 @@ namespace App\Test\TestCase\Controller\Component;
 use App\Controller\Component\GoogleClientComponent;
 use Cake\Controller\ComponentRegistry;
 use Cake\TestSuite\TestCase;
-use Google_Exception;
 
 /**
  * App\Controller\Component\GoogleClientComponent Test Case

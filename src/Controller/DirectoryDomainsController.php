@@ -1,20 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryDomain;
-use App\Model\Table\DirectoryDomainsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * DirectoryDomains Controller
  *
- * @property DirectoryDomainsTable $DirectoryDomains
- * @method DirectoryDomain[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\DirectoryDomainsTable $DirectoryDomains
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryDomainsController extends AppController
@@ -22,9 +17,9 @@ class DirectoryDomainsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Directories'],
@@ -38,10 +33,10 @@ class DirectoryDomainsController extends AppController
      * View method
      *
      * @param null $id Directory Domain id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(null $id = null): ?Response
     {
         $directoryDomain = $this->DirectoryDomains->get($id, [
             'contain' => ['Directories'],
@@ -53,9 +48,9 @@ class DirectoryDomainsController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $directoryDomain = $this->DirectoryDomains->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -75,10 +70,10 @@ class DirectoryDomainsController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Domain id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $directoryDomain = $this->DirectoryDomains->get($id, [
             'contain' => [],
@@ -100,10 +95,10 @@ class DirectoryDomainsController extends AppController
      * Delete method
      *
      * @param string|null $id Directory Domain id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $directoryDomain = $this->DirectoryDomains->get($id);

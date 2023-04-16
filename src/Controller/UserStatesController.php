@@ -1,23 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\QueueComponent;
 use App\Model\Entity\UserState;
-use App\Model\Table\UserStatesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-use Exception;
 
 /**
  * UserStates Controller
  *
- * @property UserStatesTable $UserStates
- * @property QueueComponent $Queue
- * @method UserState[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \App\Controller\Component\QueueComponent $Queue
+ * @method \App\Model\Entity\UserState[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class UserStatesController extends AppController
@@ -25,9 +18,9 @@ class UserStatesController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $userStates = $this->paginate($this->UserStates);
 
@@ -38,10 +31,10 @@ class UserStatesController extends AppController
      * View method
      *
      * @param string|null $userStateId User State id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($userStateId = null)
+    public function view(?string $userStateId = null): ?Response
     {
         $userState = $this->UserStates->get($userStateId, [
             'contain' => ['Users'],
@@ -53,9 +46,9 @@ class UserStatesController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $userState = $this->UserStates->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -74,10 +67,10 @@ class UserStatesController extends AppController
      * Edit method
      *
      * @param string|null $userStateId User State id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($userStateId = null)
+    public function edit(?string $userStateId = null): ?Response
     {
         $userState = $this->UserStates->get($userStateId, [
             'contain' => [],
@@ -98,10 +91,10 @@ class UserStatesController extends AppController
      * Delete method
      *
      * @param string|null $userStateId User State id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($userStateId = null)
+    public function delete(?string $userStateId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $userState = $this->UserStates->get($userStateId);
@@ -117,10 +110,10 @@ class UserStatesController extends AppController
     /**
      * Process method
      *
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException|Exception When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function process()
+    public function process(): ?Response
     {
         $this->request->allowMethod(['post']);
 

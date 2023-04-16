@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -7,25 +6,21 @@ namespace App\Controller;
 use App\Model\Entity\Role;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
-use App\Model\Table\RolesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * Roles Controller
  *
- * @property RolesTable $Roles
- * @method Role[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\RolesTable $Roles
+ * @method \App\Model\Entity\Role[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
@@ -39,10 +34,10 @@ class RolesController extends AppController
      * View method
      *
      * @param string|null $roleId Role id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($roleId = null)
+    public function view(?string $roleId = null): ?Response
     {
         $role = $this->Roles->get($roleId, [
             'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts',
@@ -69,9 +64,9 @@ class RolesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         if (key_exists('user_id', $this->request->getQueryParams())) {
             $user_id = $this->request->getQueryParams()['user_id'];
@@ -121,10 +116,10 @@ class RolesController extends AppController
      * Edit method
      *
      * @param string|null $roleId Role id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($roleId = null)
+    public function edit(?string $roleId = null): ?Response
     {
         $contact = $this->getRequest()->getQueryParams()['contact'] ?? false;
         $this->set('contact', $contact);
@@ -157,10 +152,10 @@ class RolesController extends AppController
      * Delete method
      *
      * @param string|null $roleId Role id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($roleId = null)
+    public function delete(?string $roleId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $role = $this->Roles->get($roleId);

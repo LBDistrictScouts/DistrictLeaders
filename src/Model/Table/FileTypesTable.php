@@ -1,14 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use App\Model\Entity\FileType;
 use App\Model\Table\Traits\BaseInstallerTrait;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -16,20 +12,20 @@ use Cake\Validation\Validator;
 /**
  * FileTypes Model
  *
- * @property DocumentEditionsTable&HasMany $DocumentEditions
- * @method FileType get($primaryKey, $options = [])
- * @method FileType newEntity(array $data, array $options = [])
- * @method FileType[] newEntities(array $data, array $options = [])
- * @method FileType|false save(EntityInterface $entity, $options = [])
- * @method FileType saveOrFail(EntityInterface $entity, $options = [])
- * @method FileType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method FileType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method FileType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method FileType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method FileType newEmptyEntity()
- * @method FileType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method FileType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method FileType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\DocumentEditionsTable&\App\Model\Table\HasMany $DocumentEditions
+ * @method \App\Model\Entity\FileType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\FileType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\FileType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\FileType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\FileType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\FileType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\FileType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\FileType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\FileType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\FileType newEmptyEntity()
+ * @method \App\Model\Entity\FileType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\FileType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\FileType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class FileTypesTable extends Table
 {
@@ -57,8 +53,8 @@ class FileTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -94,8 +90,8 @@ class FileTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -111,7 +107,7 @@ class FileTypesTable extends Table
      *
      * @return int
      */
-    public function installBaseFileTypes()
+    public function installBaseFileTypes(): int
     {
         return $this->installBase($this);
     }

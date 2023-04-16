@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -9,41 +8,35 @@ use App\Model\Entity\NotificationType;
 use App\Model\Entity\User;
 use App\Model\Table\Exceptions\MalformedDataException;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * Notifications Model
  *
- * @property UsersTable&BelongsTo $Users
- * @property NotificationTypesTable&BelongsTo $NotificationTypes
- * @property EmailSendsTable&HasMany $EmailSends
- * @method Notification get($primaryKey, $options = [])
- * @method Notification newEntity(array $data, array $options = [])
- * @method Notification[] newEntities(array $data, array $options = [])
- * @method Notification|false save(EntityInterface $entity, $options = [])
- * @method Notification saveOrFail(EntityInterface $entity, $options = [])
- * @method Notification patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Notification[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Notification findOrCreate($search, ?callable $callback = null, $options = [])
- * @method Notification[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @method Notification newEmptyEntity()
- * @method Notification[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Notification[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Notification[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\NotificationTypesTable&\App\Model\Table\BelongsTo $NotificationTypes
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\HasMany $EmailSends
+ * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Notification newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Notification[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Notification|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Notification saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Notification patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Notification[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Notification findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Notification newEmptyEntity()
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class NotificationsTable extends Table
 {
@@ -80,8 +73,8 @@ class NotificationsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -124,8 +117,8 @@ class NotificationsTable extends Table
     }
 
     /**
-     * @param TableSchemaInterface $schema The Schema to be modified
-     * @return TableSchemaInterface
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -140,8 +133,8 @@ class NotificationsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -152,8 +145,8 @@ class NotificationsTable extends Table
     }
 
     /**
-     * @param Query $query Query for Modification
-     * @return Query
+     * @param \Cake\ORM\Query $query Query for Modification
+     * @return \Cake\ORM\Query
      */
     public function findUnread(Query $query): Query
     {
@@ -161,7 +154,7 @@ class NotificationsTable extends Table
     }
 
     /**
-     * @param Notification $notification Notification to be Read
+     * @param \App\Model\Entity\Notification $notification Notification to be Read
      * @return bool
      */
     public function markRead(Notification $notification): bool
@@ -174,7 +167,7 @@ class NotificationsTable extends Table
     /**
      * Function to return Email Generation Code String
      *
-     * @param Notification $notification The notification entity
+     * @param \App\Model\Entity\Notification $notification The notification entity
      * @return string
      */
     public function getEmailGenerationCode(Notification $notification): string
@@ -186,10 +179,10 @@ class NotificationsTable extends Table
 
     /**
      * @param string $emailGenerationCode Email Send Style Notification Entity Code
-     * @param User $user Notification User Entity
+     * @param \App\Model\Entity\User $user Notification User Entity
      * @param array|null $body Starting Body for Notification
      * @param array|null $data Additional Notification Context Data
-     * @return Notification
+     * @return \App\Model\Entity\Notification
      */
     public function make(
         string $emailGenerationCode,
@@ -234,13 +227,16 @@ class NotificationsTable extends Table
     /**
      * Function to determine if a Notification should be made or if it already exists
      *
-     * @param NotificationType $notificationType The Notification Type
+     * @param \App\Model\Entity\NotificationType $notificationType The Notification Type
      * @param string $emailGenerationCode Generation Code
-     * @param User $user User for Existing Check
-     * @return true|Notification
+     * @param \App\Model\Entity\User $user User for Existing Check
+     * @return \App\Model\Entity\Notification|true
      */
-    protected function checkShouldMake(NotificationType $notificationType, string $emailGenerationCode, User $user)
-    {
+    protected function checkShouldMake(
+        NotificationType $notificationType,
+        string $emailGenerationCode,
+        User $user
+    ): bool|Notification {
         if ($notificationType->repetitive) {
             return true;
         }
@@ -264,8 +260,8 @@ class NotificationsTable extends Table
     }
 
     /**
-     * @param User $user The User for initiating welcome notification
-     * @return Notification
+     * @param \App\Model\Entity\User $user The User for initiating welcome notification
+     * @return \App\Model\Entity\Notification
      */
     public function welcome(User $user): Notification
     {

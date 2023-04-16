@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
@@ -8,7 +7,6 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Exception;
 use Symfony\Component\Yaml\Dumper;
 
 /**
@@ -29,8 +27,8 @@ class YamlConvertCommand extends Command
     }
 
     /**
-     * @param ConsoleOptionParser $parser Parser Input
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -45,14 +43,14 @@ class YamlConvertCommand extends Command
     }
 
     /**
-     * @param Arguments $args Arguments for the Console
-     * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
-     * @throws Exception
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @return int|null|void
+     * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): int|null|null
     {
         $fileName = $args->getArgument('file');
         if (!preg_match('/[.]/', $fileName) || explode('.', $fileName)[1] != 'php') {

@@ -1,29 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\RoleTemplate;
-use App\Model\Table\RoleTemplatesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * RoleTemplates Controller
  *
- * @property RoleTemplatesTable $RoleTemplates
- * @method RoleTemplate[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
+ * @method \App\Model\Entity\RoleTemplate[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTemplatesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $roleTemplates = $this->paginate($this->RoleTemplates);
 
@@ -34,10 +29,10 @@ class RoleTemplatesController extends AppController
      * View method
      *
      * @param string|null $templateId Role Template id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($templateId = null)
+    public function view(?string $templateId = null): ?Response
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
             'contain' => ['RoleTypes'],
@@ -49,9 +44,9 @@ class RoleTemplatesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $roleTemplate = $this->RoleTemplates->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -71,10 +66,10 @@ class RoleTemplatesController extends AppController
      * Edit method
      *
      * @param string|null $templateId Role Template id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($templateId = null)
+    public function edit(?string $templateId = null): ?Response
     {
         $roleTemplate = $this->RoleTemplates->get($templateId, [
             'contain' => [],
@@ -97,10 +92,10 @@ class RoleTemplatesController extends AppController
      * Delete method
      *
      * @param string|null $templateId Role Template id.
-     * @return Response|void Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($templateId = null)
+    public function delete(?string $templateId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleTemplate = $this->RoleTemplates->get($templateId);

@@ -1,14 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
 use App\Model\Entity\DirectoryType;
 use App\Model\Table\Traits\BaseInstallerTrait;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -16,20 +12,20 @@ use Cake\Validation\Validator;
 /**
  * DirectoryTypes Model
  *
- * @property DirectoriesTable&HasMany $Directories
- * @method DirectoryType get($primaryKey, $options = [])
- * @method DirectoryType newEntity(array $data, array $options = [])
- * @method DirectoryType[] newEntities(array $data, array $options = [])
- * @method DirectoryType|false save(EntityInterface $entity, $options = [])
- * @method DirectoryType saveOrFail(EntityInterface $entity, $options = [])
- * @method DirectoryType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method DirectoryType newEmptyEntity()
- * @method DirectoryType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method DirectoryType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method DirectoryType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method DirectoryType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\HasMany $Directories
+ * @method \App\Model\Entity\DirectoryType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\DirectoryType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\DirectoryType newEmptyEntity()
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryTypesTable extends Table
 {
@@ -57,8 +53,8 @@ class DirectoryTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -87,8 +83,8 @@ class DirectoryTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

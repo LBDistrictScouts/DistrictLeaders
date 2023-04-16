@@ -1,36 +1,26 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Model\Table\CapabilitiesTable;
-use App\Model\Table\DirectoryTypesTable;
-use App\Model\Table\DocumentTypesTable;
-use App\Model\Table\FileTypesTable;
-use App\Model\Table\NotificationTypesTable;
-use App\Model\Table\RoleTemplatesTable;
-use App\Model\Table\UserContactTypesTable;
-use App\Model\Table\UserStatesTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property CapabilitiesTable $Capabilities
- * @property NotificationTypesTable $NotificationTypes
- * @property FileTypesTable $FileTypes
- * @property RoleTemplatesTable $RoleTemplates
- * @property DirectoryTypesTable $DirectoryTypes
- * @property UserStatesTable $UserStates
- * @property DocumentTypesTable $DocumentTypes
- * @property UserContactTypesTable $UserContactTypes
+ * @property \App\Model\Table\CapabilitiesTable $Capabilities
+ * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
+ * @property \App\Model\Table\FileTypesTable $FileTypes
+ * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
+ * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
+ * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
+ * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  */
 class InstallBaseCommand extends Command
 {
@@ -55,8 +45,8 @@ class InstallBaseCommand extends Command
     }
 
     /**
-     * @param ConsoleOptionParser $parser Parser Input
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -108,15 +98,15 @@ class InstallBaseCommand extends Command
     }
 
     /**
-     * @param Arguments $args Arguments for the Console
-     * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
-     * @throws Exception
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @return int|null|void
+     * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): int|null|null
     {
         if ($args->getOption('all') || $args->getOption('capabilities')) {
             $happenings = $this->Capabilities->installBaseCapabilities();

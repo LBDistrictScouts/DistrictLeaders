@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
 use App\Model\Entity\RoleTemplate;
-use App\Model\Table\RoleTemplatesTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;

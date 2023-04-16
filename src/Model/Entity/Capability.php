@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -15,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string $capability
  * @property int $min_level
  *
- * @property RoleType[] $role_types
+ * @property \App\Model\Entity\RoleType[] $role_types
  *
  * @property string $crud_function
  * @property string $applicable_model
@@ -35,7 +34,7 @@ class Capability extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'capability_code' => true,
         'capability' => true,
         'role_types' => true,
@@ -45,7 +44,7 @@ class Capability extends Entity
     /**
      * @return bool
      */
-    private function specialCode()
+    private function specialCode(): bool
     {
         return (bool)CapBuilder::isSpecialCode($this->capability_code);
     }
@@ -53,7 +52,7 @@ class Capability extends Entity
     /**
      * @return bool
      */
-    protected function _getIsFieldCapability()
+    protected function _getIsFieldCapability(): bool
     {
         return (bool)CapBuilder::isFieldType($this->capability_code);
     }
@@ -63,7 +62,7 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getCrudFunction()
+    protected function _getCrudFunction(): string
     {
         if (is_null($this->capability_code)) {
             return 'EMPTY';
@@ -81,7 +80,7 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getApplicableModel()
+    protected function _getApplicableModel(): string
     {
         if (is_null($this->capability_code)) {
             return 'EMPTY';
@@ -99,7 +98,7 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getApplicableField()
+    protected function _getApplicableField(): string
     {
         if ($this->is_field_capability) {
             return CapBuilder::breakCode($this->capability_code)['field'];
@@ -113,7 +112,7 @@ class Capability extends Entity
      *
      * @var array
      */
-    protected $_virtual = ['crud_function', 'applicable_model', 'applicable_field', 'is_field_capability'];
+    protected array $_virtual = ['crud_function', 'applicable_model', 'applicable_field', 'is_field_capability'];
 
     public const FIELD_ID = 'id';
     public const FIELD_CAPABILITY_CODE = 'capability_code';

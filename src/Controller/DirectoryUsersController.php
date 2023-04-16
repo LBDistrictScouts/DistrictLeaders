@@ -1,20 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryUser;
-use App\Model\Table\DirectoryUsersTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * DirectoryUsers Controller
  *
- * @property DirectoryUsersTable $DirectoryUsers
- * @method DirectoryUser[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryUsersController extends AppController
@@ -22,9 +17,9 @@ class DirectoryUsersController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Directories', 'UserContacts'],
@@ -38,10 +33,10 @@ class DirectoryUsersController extends AppController
      * View method
      *
      * @param null $id Directory User id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(null $id = null): ?Response
     {
         $directoryUser = $this->DirectoryUsers->get($id, [
             'contain' => ['Directories', 'Users'],
@@ -57,9 +52,9 @@ class DirectoryUsersController extends AppController
      *
      * @param int $directoryUserId The ID of the Directory User
      * @param int $userId The ID of the User
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function link($directoryUserId, $userId)
+    public function link(int $directoryUserId, int $userId): ?Response
     {
         $directoryUser = $this->DirectoryUsers->get((int)$directoryUserId);
         $user = $this->DirectoryUsers->Users->get((int)$userId);
@@ -73,10 +68,10 @@ class DirectoryUsersController extends AppController
      * Edit method
      *
      * @param string|null $id Directory User id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $directoryUser = $this->DirectoryUsers->get($id, [
             'contain' => [],
@@ -98,10 +93,10 @@ class DirectoryUsersController extends AppController
      * Delete method
      *
      * @param string|null $id Directory User id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $directoryUser = $this->DirectoryUsers->get($id);

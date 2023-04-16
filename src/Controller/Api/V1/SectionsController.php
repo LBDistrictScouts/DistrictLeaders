@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Api\V1;
@@ -7,16 +6,13 @@ namespace App\Controller\Api\V1;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
-use App\Model\Table\SectionsTable;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 use Cake\Utility\Hash;
 
 /**
  * Sections Controller
  *
- * @property SectionsTable $Sections
- * @method Section[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\SectionsTable $Sections
+ * @method \App\Model\Entity\Section[]|\App\Controller\Api\V1\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
@@ -39,9 +35,9 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $sections = $this->Sections
             ->find('all', [

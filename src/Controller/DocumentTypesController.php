@@ -1,29 +1,24 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\DocumentType;
-use App\Model\Table\DocumentTypesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * DocumentTypes Controller
  *
- * @property DocumentTypesTable $DocumentTypes
- * @method DocumentType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
+ * @method \App\Model\Entity\DocumentType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $documentTypes = $this->paginate($this->DocumentTypes);
 
@@ -34,10 +29,10 @@ class DocumentTypesController extends AppController
      * View method
      *
      * @param string|null $id Document Type id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $documentType = $this->DocumentTypes->get($id, [
             'contain' => ['Documents'],
@@ -49,9 +44,9 @@ class DocumentTypesController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $documentType = $this->DocumentTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -70,10 +65,10 @@ class DocumentTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Document Type id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $documentType = $this->DocumentTypes->get($id, [
             'contain' => [],
@@ -94,10 +89,10 @@ class DocumentTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Document Type id.
-     * @return Response|void Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $documentType = $this->DocumentTypes->get($id);

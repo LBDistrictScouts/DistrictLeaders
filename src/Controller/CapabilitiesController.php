@@ -1,29 +1,21 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\QueueComponent;
-use App\Model\Entity\Capability;
-use App\Model\Table\CapabilitiesTable;
 use Cake\Core\Configure;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-use Exception;
 
 /**
  * Capabilities Controller
  *
- * @property CapabilitiesTable $Capabilities
- * @property QueueComponent $Queue
- * @method Capability[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CapabilitiesTable $Capabilities
+ * @property \App\Controller\Component\QueueComponent $Queue
+ * @method \App\Model\Entity\Capability[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CapabilitiesController extends AppController
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function initialize(): void
@@ -40,9 +32,9 @@ class CapabilitiesController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $capabilities = $this->paginate($this->Capabilities);
 
@@ -53,10 +45,10 @@ class CapabilitiesController extends AppController
      * View method
      *
      * @param int|null $capabilityId Capability id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($capabilityId = null)
+    public function view(?int $capabilityId = null): ?Response
     {
         $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
@@ -69,10 +61,10 @@ class CapabilitiesController extends AppController
      * View method
      *
      * @param int|null $userId User id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function permissions($userId = null)
+    public function permissions(?int $userId = null): ?Response
     {
         $user = $this->Capabilities->RoleTypes->Roles->Users->get($userId);
         $this->set('user', $user);
@@ -91,7 +83,6 @@ class CapabilitiesController extends AppController
                     $capabilities[$key]['object'] = $section;
                 }
             }
-            $array = [];
         }
         $this->set('capabilities', $capabilities);
 
@@ -103,9 +94,9 @@ class CapabilitiesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $capability = $this->Capabilities->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -124,10 +115,10 @@ class CapabilitiesController extends AppController
      * Edit method
      *
      * @param string|null $capabilityId Capability id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($capabilityId = null)
+    public function edit(?string $capabilityId = null): ?Response
     {
         $capability = $this->Capabilities->get($capabilityId, [
             'contain' => ['RoleTypes'],
@@ -156,10 +147,10 @@ class CapabilitiesController extends AppController
      * Delete method
      *
      * @param string|null $capabilityId Capability id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($capabilityId = null)
+    public function delete(?string $capabilityId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $capability = $this->Capabilities->get($capabilityId);
@@ -175,10 +166,10 @@ class CapabilitiesController extends AppController
     /**
      * Process method
      *
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function process()
+    public function process(): ?Response
     {
         $this->request->allowMethod(['post']);
 

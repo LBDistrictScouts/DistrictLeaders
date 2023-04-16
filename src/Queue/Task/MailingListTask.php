@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\EmailSendsTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -13,26 +11,26 @@ use Queue\Queue\TaskInterface;
  * Class QueueMailingListTask
  *
  * @package App\Shell\Task
- * @property EmailSendsTable $EmailSends
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
  */
 class MailingListTask extends Task implements TaskInterface
 {
     /**
      * @var int
      */
-    public $timeout = 300;
+    public int $timeout = 300;
 
     /**
      * @var int
      */
-    public $retries = 1;
+    public int $retries = 1;
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         if (!key_exists('email_generation_code', $data)) {
             throw new QueueException('Email generation code not specified.');

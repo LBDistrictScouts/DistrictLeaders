@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\ORM\Association;
-use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 
 /**
@@ -19,14 +17,14 @@ class FilterComponent extends Component
      *
      * @var array
      */
-    protected $_defaultConfig = [];
+    protected array $_defaultConfig = [];
 
     /**
-     * @param Association $association The Association for Filtering on
+     * @param \Cake\ORM\Association $association The Association for Filtering on
      * @param array $queryParams The Query Params of the Request
-     * @return Query
+     * @return \Cake\ORM\Query
      */
-    public function indexFilters(Association $association, array $queryParams)
+    public function indexFilters(Association $association, array $queryParams): Query
     {
         $baseTable = $association->getSource();
         $associatedTable = $association->getTarget();

@@ -1,22 +1,18 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Cell;
 
 use App\Model\Entity\User;
 use App\Model\Entity\UserState;
-use App\Model\Table\UserStatesTable;
-use App\View\Helper\IconHelper;
 use Cake\View\Cell;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * StateDetermination cell
  *
- * @property HtmlHelper $Html
- * @property IconHelper $Icon
- * @property UserStatesTable $UserStates
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \App\View\Helper\IconHelper $Icon
+ * @property \App\Model\Table\UserStatesTable $UserStates
  */
 class StateDeterminationCell extends Cell
 {
@@ -26,12 +22,12 @@ class StateDeterminationCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
     /**
-     * @var string[] Helper Array
+     * @var array<string>  Helper Array
      */
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Icon',
     ];
@@ -48,7 +44,7 @@ class StateDeterminationCell extends Cell
     /**
      * Default display method.
      *
-     * @param User $user User for Determining State
+     * @param \App\Model\Entity\User $user User for Determining State
      * @return void
      */
     public function display(User $user): void

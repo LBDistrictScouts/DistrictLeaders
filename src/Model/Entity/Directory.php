@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -17,10 +16,10 @@ use Cake\ORM\Entity;
  * @property string|null $customer_reference
  * @property array|null $authorisation_token
  *
- * @property DirectoryType $directory_type
- * @property DirectoryDomain[] $directory_domains
- * @property DirectoryGroup[] $directory_groups
- * @property DirectoryUser[] $directory_users
+ * @property \App\Model\Entity\DirectoryType $directory_type
+ * @property \App\Model\Entity\DirectoryDomain[] $directory_domains
+ * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
+ * @property \App\Model\Entity\DirectoryUser[] $directory_users
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -35,7 +34,7 @@ class Directory extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'directory' => true,
         'configuration_payload' => true,
         'directory_type_id' => true,
@@ -53,7 +52,7 @@ class Directory extends Entity
      *
      * @var array
      */
-    protected $_hidden = [
+    protected array $_hidden = [
         'authorisation_token',
     ];
 

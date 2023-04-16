@@ -1,41 +1,34 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\EmailResponse;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * EmailResponses Model
  *
- * @property EmailSendsTable&BelongsTo $EmailSends
- * @property EmailResponseTypesTable&BelongsTo $EmailResponseTypes
- * @method EmailResponse get($primaryKey, $options = [])
- * @method EmailResponse newEntity(array $data, array $options = [])
- * @method EmailResponse[] newEntities(array $data, array $options = [])
- * @method EmailResponse|false save(EntityInterface $entity, $options = [])
- * @method EmailResponse saveOrFail(EntityInterface $entity, $options = [])
- * @method EmailResponse patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method EmailResponse[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method EmailResponse findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @method EmailResponse[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method EmailResponse newEmptyEntity()
- * @method EmailResponse[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method EmailResponse[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method EmailResponse[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\BelongsTo $EmailSends
+ * @property \App\Model\Table\EmailResponseTypesTable&\App\Model\Table\BelongsTo $EmailResponseTypes
+ * @method \App\Model\Entity\EmailResponse get($primaryKey, $options = [])
+ * @method \App\Model\Entity\EmailResponse newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse newEmptyEntity()
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class EmailResponsesTable extends Table
 {
@@ -79,8 +72,8 @@ class EmailResponsesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -128,8 +121,8 @@ class EmailResponsesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

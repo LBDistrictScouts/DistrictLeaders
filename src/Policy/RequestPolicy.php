@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Http\ServerRequest;
@@ -19,13 +17,13 @@ class RequestPolicy implements RequestPolicyInterface
     /**
      * Method to check if the request can be accessed
      *
-     * @param User|null $identity The Identity
-     * @param ServerRequest $request Server Request
-     * @return null|Result
+     * @param \App\Model\Entity\User|null $identity The Identity
+     * @param \Cake\Http\ServerRequest $request Server Request
+     * @return \Authorization\Policy\Result|null
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function canAccess($identity, ServerRequest $request): ?Result
+    public function canAccess(?User $identity, ServerRequest $request): ?Result
     {
         $action = $request->getParam('action');
         $controller = $request->getParam('controller');

@@ -1,31 +1,25 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\RoleType;
-use App\Model\Table\RoleTypesTable;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * RoleTypes Controller
  *
- * @property RoleTypesTable $RoleTypes
- * @method RoleType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\RoleTypesTable $RoleTypes
+ * @method \App\Model\Entity\RoleType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['SectionTypes', 'RoleTemplates'],
@@ -39,10 +33,10 @@ class RoleTypesController extends AppController
      * View method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($roleTypeId = null)
+    public function view(?string $roleTypeId = null): ?Response
     {
         $roleType = $this->RoleTypes->get($roleTypeId, [
             'contain' => [
@@ -74,9 +68,9 @@ class RoleTypesController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $roleType = $this->RoleTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -106,10 +100,10 @@ class RoleTypesController extends AppController
      * Edit method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($roleTypeId = null)
+    public function edit(?string $roleTypeId = null): ?Response
     {
         $roleType = $this->RoleTypes->get($roleTypeId, [
             'contain' => ['Capabilities'],
@@ -138,10 +132,10 @@ class RoleTypesController extends AppController
      * Delete method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return Response|void Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($roleTypeId = null)
+    public function delete(?string $roleTypeId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleType = $this->RoleTypes->get($roleTypeId);

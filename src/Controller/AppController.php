@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -18,18 +17,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\CapAuthorizationComponent;
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\TokenListener;
 use App\Listener\UserListener;
-use Authentication\Controller\Component\AuthenticationComponent;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
-use Cake\ORM\Entity;
 use Cake\ORM\Table;
-use Exception;
-use Flash\Controller\Component\FlashComponent;
 use Muffin\Footprint\Auth\FootprintAwareTrait;
 
 /**
@@ -39,10 +33,10 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * will inherit them.
  *
  * @link https://book.cakephp.org/4/en/controllers.html#the-app-controller
- * @property AuthenticationComponent $Authentication
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  *
- * @property FlashComponent $Flash
- * @property CapAuthorizationComponent $Authorization.Authorization
+ * @property \Flash\Controller\Component\FlashComponent $Flash
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization .Authorization
  */
 class AppController extends Controller
 {
@@ -54,9 +48,9 @@ class AppController extends Controller
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
      * @param null $user The Footprint User
-     * @return bool|Entity
+     * @return \App\Controller\Entity|bool
      */
-    protected function _setCurrentUser($user = null): ?EntityInterface
+    protected function _setCurrentUser(null $user = null): ?EntityInterface
     {
         if (!$user) {
             $user = $this->request->getAttribute('identity');
@@ -79,7 +73,7 @@ class AppController extends Controller
      * e.g. `$this->loadComponent('FormProtection');`
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
     public function initialize(): void
     {
@@ -99,10 +93,10 @@ class AppController extends Controller
     }
 
     /**
-     * @param Table $model Table to be authenticated with credentials.
+     * @param \Cake\ORM\Table $model Table to be authenticated with credentials.
      * @return void
      */
-    public function whyPermitted(Table $model)
+    public function whyPermitted(Table $model): void
     {
         $result = $this->Authorization->canResult($model);
         $this->set('PolicyResult', $result);
@@ -113,7 +107,7 @@ class AppController extends Controller
      *
      * @return void
      */
-    private function eventListeners()
+    private function eventListeners(): void
     {
         $this->getEventManager()->on(new TokenListener());
         $this->getEventManager()->on(new RoleListener());

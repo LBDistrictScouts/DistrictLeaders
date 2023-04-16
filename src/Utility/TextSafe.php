@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -22,7 +21,7 @@ namespace App\Utility;
  */
 class TextSafe
 {
-    protected static $changeChars = [
+    protected static array $changeChars = [
         '=' => '~',
         '+' => '-',
         '/' => '_',
@@ -30,9 +29,9 @@ class TextSafe
 
     /**
      * @param string $string The String to be Encoded
-     * @return string|string[]|null
+     * @return array<string>|string|null
      */
-    public static function encode($string)
+    public static function encode(string $string): string|array|null
     {
         $changeChars = static::$changeChars;
         $pattern = [];
@@ -52,9 +51,9 @@ class TextSafe
 
     /**
      * @param string $string The String to be Decoded
-     * @return string|string[]|null
+     * @return array<string>|string|null
      */
-    public static function decode($string)
+    public static function decode(string $string): string|array|null
     {
         $changeChars = static::$changeChars;
         $pattern = [];
@@ -73,7 +72,7 @@ class TextSafe
      * @param int $length The length of the String
      * @return string
      */
-    public static function shuffle($length = 3)
+    public static function shuffle(int $length = 3): string
     {
         $repeats = $length * 2;
 

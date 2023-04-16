@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -17,12 +16,12 @@ use Cake\ORM\Entity;
  * @property string $primary_email
  * @property string $full_name
  *
- * @property Directory $directory
- * @property User[] $users
- * @property UserContact[] $user_contacts
+ * @property \App\Model\Entity\Directory $directory
+ * @property \App\Model\Entity\User[] $users
+ * @property \App\Model\Entity\UserContact[] $user_contacts
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property UserContact|null $user_contact
+ * @property \App\Model\Entity\UserContact|null $user_contact
  */
 class DirectoryUser extends Entity
 {
@@ -35,7 +34,7 @@ class DirectoryUser extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'directory_id' => true,
         'directory_user_reference' => true,
         'given_name' => true,
@@ -49,7 +48,7 @@ class DirectoryUser extends Entity
      *
      * @return string
      */
-    protected function _getFullName()
+    protected function _getFullName(): string
     {
         return $this->given_name . ' ' . $this->family_name;
     }
@@ -59,7 +58,7 @@ class DirectoryUser extends Entity
      *
      * @var array
      */
-    protected $_virtual = ['full_name'];
+    protected array $_virtual = ['full_name'];
 
     public const FIELD_ID = 'id';
     public const FIELD_DIRECTORY_ID = 'directory_id';
