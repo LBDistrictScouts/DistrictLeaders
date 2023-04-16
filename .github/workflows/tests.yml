@@ -139,9 +139,6 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, intl, apcu
 
-      - name: Set General YML Config
-        run: mv config/Environment/ci_parameters.yml config/Environment/app_parameters.yml
-
       - name: Update composer
         run: composer self-update
 
