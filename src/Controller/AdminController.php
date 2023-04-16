@@ -1,36 +1,31 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Response;
-use Cake\ORM\Table;
-
 /**
  * Admin Controller
  *
- * @property Table $Admin
+ * @property \Cake\ORM\Table $Admin
  */
 class AdminController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
     }
 
     /**
      * Status method
      *
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function status()
+    public function status(): ?Response
     {
     }
 }

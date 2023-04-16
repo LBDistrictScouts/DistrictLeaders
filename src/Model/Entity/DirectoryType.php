@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -13,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $directory_type
  * @property string $directory_type_code
  *
- * @property Directory[] $directories
+ * @property \App\Model\Entity\Directory[] $directories
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -28,7 +27,7 @@ class DirectoryType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'directory_type' => true,
         'directory_type_code' => true,
         'directories' => true,

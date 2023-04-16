@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -12,10 +10,10 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $user_contact_type
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  *
- * @property UserContact[] $user_contacts
+ * @property \App\Model\Entity\UserContact[] $user_contacts
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -30,7 +28,7 @@ class UserContactType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'user_contact_type' => true,
         'created' => true,
         'modified' => true,

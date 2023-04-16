@@ -1,21 +1,18 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Model\Table\DocumentVersionsTable;
 use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property DocumentVersionsTable $DocumentVersions
+ * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  */
 class ImportCompassRecordsCommand extends Command
 {
@@ -31,8 +28,8 @@ class ImportCompassRecordsCommand extends Command
     }
 
     /**
-     * @param ConsoleOptionParser $parser Parser Input
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -49,15 +46,15 @@ class ImportCompassRecordsCommand extends Command
     }
 
     /**
-     * @param Arguments $args Arguments for the Console
-     * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
-     * @throws Exception
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @return int|null|void
+     * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): int|null|null
     {
         $directoryId = (int)$args->getOption('document_version_id');
         if (!is_integer($directoryId)) {

@@ -1,14 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\CampRole;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -16,24 +10,24 @@ use Cake\Validation\Validator;
 /**
  * CampRoles Model
  *
- * @property CampsTable&BelongsTo $Camps
- * @property UsersTable&BelongsTo $Users
- * @property CampRoleTypesTable&BelongsTo $CampRoleTypes
- * @method CampRole get($primaryKey, $options = [])
- * @method CampRole newEntity(array $data, array $options = [])
- * @method CampRole[] newEntities(array $data, array $options = [])
- * @method CampRole|false save(EntityInterface $entity, $options = [])
- * @method CampRole saveOrFail(EntityInterface $entity, $options = [])
- * @method CampRole patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method CampRole[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method CampRole findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @method CampRole[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method CampRole newEmptyEntity()
- * @method CampRole[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method CampRole[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method CampRole[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
+ * @property \App\Model\Table\CampsTable&\App\Model\Table\BelongsTo $Camps
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\CampRoleTypesTable&\App\Model\Table\BelongsTo $CampRoleTypes
+ * @method \App\Model\Entity\CampRole get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CampRole newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\CampRole[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CampRole|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRole saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampRole patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CampRole[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CampRole findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @method \App\Model\Entity\CampRole[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRole newEmptyEntity()
+ * @method \App\Model\Entity\CampRole[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRole[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampRole[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CampRolesTable extends Table
 {
@@ -70,8 +64,8 @@ class CampRolesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -86,8 +80,8 @@ class CampRolesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

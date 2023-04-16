@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -12,7 +11,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $camp_type
  *
- * @property Camp[] $camps
+ * @property \App\Model\Entity\Camp[] $camps
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -27,7 +26,7 @@ class CampType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'camp_type' => true,
         'camps' => true,
     ];

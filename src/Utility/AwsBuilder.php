@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -84,7 +83,7 @@ class AwsBuilder
     /**
      * Constructor.
      *
-     * @return Sdk
+     * @return \Aws\Sdk
      */
     public static function buildSdk(): Sdk
     {
@@ -96,7 +95,7 @@ class AwsBuilder
     /**
      * Constructor.
      *
-     * @return CognitoIdentityProviderClient
+     * @return \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
      */
     public static function buildCognitoClient(): CognitoIdentityProviderClient
     {

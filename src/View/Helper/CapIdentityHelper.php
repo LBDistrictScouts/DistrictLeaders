@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -17,8 +16,6 @@ declare(strict_types=1);
 
 namespace App\View\Helper;
 
-use App\Model\Entity\User;
-use Authentication\IdentityInterface;
 use Authentication\View\Helper\IdentityHelper;
 
 /**
@@ -33,15 +30,15 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * Identity Object
      *
-     * @var null|IdentityInterface|User
+     * @var \App\View\Helper\IdentityInterface|\App\View\Helper\User|null
      */
-    protected $_identity;
+    protected IdentityInterface|User|null $_identity = null;
 
     /**
      * @param string $capabilityCode Capability Code for Checking
      * @return bool
      */
-    public function checkCapability($capabilityCode)
+    public function checkCapability(string $capabilityCode): bool
     {
         return $this->_identity->checkCapability($capabilityCode);
     }
@@ -54,15 +51,20 @@ class CapIdentityHelper extends IdentityHelper
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
-    {
+    public function buildAndCheckCapability(
+        string $action,
+        string $model,
+        ?int $group = null,
+        ?int $section = null,
+        ?string $field = null
+    ): bool {
         return $this->_identity->buildAndCheckCapability($action, $model, $group, $section, $field);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->_identity->full_name;
     }

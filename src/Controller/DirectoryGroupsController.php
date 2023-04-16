@@ -1,20 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\DirectoryGroup;
-use App\Model\Table\DirectoryGroupsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * DirectoryGroups Controller
  *
- * @property DirectoryGroupsTable $DirectoryGroups
- * @method DirectoryGroup[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\DirectoryGroupsTable $DirectoryGroups
+ * @method \App\Model\Entity\DirectoryGroup[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryGroupsController extends AppController
@@ -22,9 +17,9 @@ class DirectoryGroupsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Directories'],
@@ -38,10 +33,10 @@ class DirectoryGroupsController extends AppController
      * View method
      *
      * @param null $id Directory Group id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(null $id = null): ?Response
     {
         $directoryGroup = $this->DirectoryGroups->get($id, [
             'contain' => ['Directories', 'RoleTypes'],
@@ -53,9 +48,9 @@ class DirectoryGroupsController extends AppController
     /**
      * Add method
      *
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $directoryGroup = $this->DirectoryGroups->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -76,10 +71,10 @@ class DirectoryGroupsController extends AppController
      * Edit method
      *
      * @param string|null $id Directory Group id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $directoryGroup = $this->DirectoryGroups->get($id, [
             'contain' => ['RoleTypes'],
@@ -102,10 +97,10 @@ class DirectoryGroupsController extends AppController
      * Delete method
      *
      * @param string|null $id Directory Group id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $directoryGroup = $this->DirectoryGroups->get($id);

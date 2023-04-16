@@ -1,19 +1,13 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
 
 use App\Model\Entity\RoleTemplate;
-use App\Model\Table\RoleTemplatesTable;
 use App\Queue\Task\CapabilityTask;
-use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Queue\Model\Entity\QueuedJob;
-use Queue\Model\Table\QueuedJobsTable;
 use Queue\Queue\Task;
-use Throwable;
 
 /**
  * App\Mailer\BasicMailer Test Case

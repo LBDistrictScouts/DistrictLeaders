@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Behavior;
@@ -8,8 +7,6 @@ use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
-use App\Model\Table\AuditsTable;
-use App\Model\Table\UsersTable;
 use App\Test\Fixture\FixtureTestTrait;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;

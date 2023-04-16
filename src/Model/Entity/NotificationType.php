@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -15,7 +14,7 @@ use Cake\ORM\Entity;
  * @property string|null $icon
  * @property string $type_code
  * @property string $content_template
- * @property Notification[] $notifications
+ * @property \App\Model\Entity\Notification[] $notifications
  * @property string $type
  * @property string $sub_type
  * @property bool $repetitive
@@ -33,7 +32,7 @@ class NotificationType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'notification_type' => true,
         'notification_description' => true,
         'icon' => true,
@@ -45,7 +44,7 @@ class NotificationType extends Entity
     /**
      * @return array
      */
-    private function typeSplitter()
+    private function typeSplitter(): array
     {
         $generationArray = explode('-', $this->type_code, 2);
 
@@ -87,7 +86,7 @@ class NotificationType extends Entity
         return (bool)in_array($this->type_code, $repetitive);
     }
 
-    protected $_virtual = [
+    protected array $_virtual = [
         self::FIELD_TYPE,
         self::FIELD_SUB_TYPE,
         self::FIELD_REPETITIVE,

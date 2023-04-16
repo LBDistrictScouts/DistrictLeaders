@@ -1,26 +1,18 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\Audit;
-use App\Model\Table\AuditsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-use Exception;
-
 /**
  * Audits Controller
  *
- * @property AuditsTable $Audits
- * @method Audit[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\AuditsTable $Audits
+ * @method \App\Model\Entity\Audit[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class AuditsController extends AppController
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function initialize(): void
@@ -33,9 +25,9 @@ class AuditsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Users', 'ChangedUsers'],
@@ -49,10 +41,10 @@ class AuditsController extends AppController
      * View method
      *
      * @param string|null $id Audit id.
-     * @return Response
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): Response
     {
         $audit = $this->Audits->get($id);
 

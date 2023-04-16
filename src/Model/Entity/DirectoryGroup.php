@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -15,8 +14,8 @@ use Cake\ORM\Entity;
  * @property string $directory_group_email
  * @property string|null $directory_group_reference
  *
- * @property Directory $directory
- * @property RoleType[] $role_types
+ * @property \App\Model\Entity\Directory $directory
+ * @property \App\Model\Entity\RoleType[] $role_types
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -31,7 +30,7 @@ class DirectoryGroup extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'directory_id' => true,
         'directory_group_name' => true,
         'directory_group_email' => true,

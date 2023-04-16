@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Listener;
@@ -11,14 +10,13 @@ use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\FrozenTime;
 use Cake\Log\Log;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class LoginEvent
  *
  * @package App\Listener
- * @property UsersTable $Users
- * @property QueuedJobsTable $QueuedJobs
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class UserListener implements EventListenerInterface
 {
@@ -33,12 +31,12 @@ class UserListener implements EventListenerInterface
     }
 
     /**
-     * @param EventInterface $event The event being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
      * @return void
      */
     public function updateLogin(EventInterface $event): void
     {
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $event->getData('user');
         $this->Users = $event->getSubject();
 

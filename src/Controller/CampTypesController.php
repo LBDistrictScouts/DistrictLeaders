@@ -1,29 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\CampType;
-use App\Model\Table\CampTypesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-
 /**
  * CampTypes Controller
  *
- * @property CampTypesTable $CampTypes
- * @method CampType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CampTypesTable $CampTypes
+ * @method \App\Model\Entity\CampType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $campTypes = $this->paginate($this->CampTypes);
 
@@ -34,10 +27,10 @@ class CampTypesController extends AppController
      * View method
      *
      * @param string|null $id Camp Type id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $campType = $this->CampTypes->get($id, [
             'contain' => ['Camps'],
@@ -49,9 +42,9 @@ class CampTypesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $campType = $this->CampTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -70,10 +63,10 @@ class CampTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Camp Type id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $campType = $this->CampTypes->get($id, [
             'contain' => [],
@@ -94,10 +87,10 @@ class CampTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Camp Type id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $campType = $this->CampTypes->get($id);

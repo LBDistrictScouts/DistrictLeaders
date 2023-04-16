@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
 
 use App\Queue\Task\EmailTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
-use Queue\Model\Entity\QueuedJob;
 
 /**
  * App\Mailer\BasicMailer Test Case

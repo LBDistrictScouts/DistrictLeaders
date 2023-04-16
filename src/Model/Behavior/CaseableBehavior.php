@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Behavior;
@@ -7,7 +6,6 @@ namespace App\Model\Behavior;
 use App\Utility\TextSafe;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
-use Cake\ORM\Entity;
 
 /**
  * Caseable behavior
@@ -21,19 +19,19 @@ class CaseableBehavior extends Behavior
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'case_columns' => [],
     ];
 
     /**
      * Stores emails as lower case.
      *
-     * @param EventInterface $event The event being processed.
-     * @param Entity $entity The Entity being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
+     * @param \Cake\ORM\Entity $entity The Entity being processed.
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeRules(EventInterface $event, $entity)
+    public function beforeRules(EventInterface $event, Entity $entity): bool
     {
         $dirty = $entity->getDirty();
         $columns = $this->_config['case_columns'];

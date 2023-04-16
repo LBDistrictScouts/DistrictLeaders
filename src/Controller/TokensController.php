@@ -1,27 +1,21 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\QueueComponent;
-use App\Model\Entity\Token;
-use App\Model\Table\TokensTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Http\Response;
-use Exception;
 
 /**
  * Tokens Controller
  *
- * @property TokensTable $Tokens
- * @property QueueComponent $Queue
- * @method Token[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\TokensTable $Tokens
+ * @property \App\Controller\Component\QueueComponent $Queue
+ * @method \App\Model\Entity\Token[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class TokensController extends AppController
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function initialize(): void
@@ -36,9 +30,9 @@ class TokensController extends AppController
      * Validation of a Token
      *
      * @param string $token The Token for deciphering.
-     * @return Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function validate($token = null)
+    public function validate(?string $token = null): ?Response
     {
         // Kick if no Token
         if (is_null($token)) {
@@ -82,9 +76,9 @@ class TokensController extends AppController
 
     /**
      * @param int|null $tokenId Token ID to be deactivated
-     * @return Response
+     * @return \Cake\Http\Response
      */
-    public function inactivate($tokenId = null): Response
+    public function inactivate(?int $tokenId = null): Response
     {
         $token = $this->Tokens->get($tokenId);
 
@@ -105,11 +99,11 @@ class TokensController extends AppController
     /**
      * Process method
      *
-     * @param int|string|null $tokenId The Optional ID of the Token
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException|Exception When record not found.
+     * @param string|int|null $tokenId The Optional ID of the Token
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function parse($tokenId = null)
+    public function parse(int|string|null $tokenId = null): ?Response
     {
         $this->request->allowMethod(['post']);
 

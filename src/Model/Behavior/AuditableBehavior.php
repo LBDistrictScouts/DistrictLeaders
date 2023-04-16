@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Behavior;
@@ -8,14 +7,13 @@ use App\Model\Table\AuditsTable;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
-use Cake\ORM\Entity;
 use Cake\ORM\Exception\MissingBehaviorException;
 use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Auditable behavior
  *
- * @property AuditsTable $Audits
+ * @property \App\Model\Table\AuditsTable $Audits
  */
 class AuditableBehavior extends Behavior
 {
@@ -26,7 +24,7 @@ class AuditableBehavior extends Behavior
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'tracked_fields' => [],
     ];
 
@@ -35,12 +33,12 @@ class AuditableBehavior extends Behavior
     /**
      * after Save LifeCycle Callback
      *
-     * @param Event $event The Event to be Processed
-     * @param Entity $entity The Entity on which the Save is being Called.
+     * @param \Cake\Event\Event $event The Event to be Processed
+     * @param \Cake\ORM\Entity $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      * @return bool
      */
-    public function afterSave(EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, Entity $entity, array $options): bool
     {
         if ($this->table()->hasAssociation('Audits')) {
             $this->Audits = $this->getTableLocator()->get('Audits');

@@ -1,13 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Entity\CapabilitiesRoleType;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -15,21 +10,21 @@ use Cake\Validation\Validator;
 /**
  * CapabilitiesRoleTypes Model
  *
- * @property CapabilitiesTable&BelongsTo $Capabilities
- * @property RoleTypesTable&BelongsTo $RoleTypes
- * @method CapabilitiesRoleType get($primaryKey, $options = [])
- * @method CapabilitiesRoleType newEntity(array $data, array $options = [])
- * @method CapabilitiesRoleType[] newEntities(array $data, array $options = [])
- * @method CapabilitiesRoleType|false save(EntityInterface $entity, $options = [])
- * @method CapabilitiesRoleType saveOrFail(EntityInterface $entity, $options = [])
- * @method CapabilitiesRoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method CapabilitiesRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method CapabilitiesRoleType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method CapabilitiesRoleType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method CapabilitiesRoleType newEmptyEntity()
- * @method CapabilitiesRoleType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method CapabilitiesRoleType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method CapabilitiesRoleType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\CapabilitiesTable&\App\Model\Table\BelongsTo $Capabilities
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $RoleTypes
+ * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType newEmptyEntity()
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesRoleTypesTable extends Table
 {
@@ -60,8 +55,8 @@ class CapabilitiesRoleTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -76,8 +71,8 @@ class CapabilitiesRoleTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {

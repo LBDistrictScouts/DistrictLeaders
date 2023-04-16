@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -132,8 +131,8 @@ class Application extends BaseApplication implements
     /**
      * Set up the middleware queue your application will use.
      *
-     * @param MiddlewareQueue $middlewareQueue The middleware queue to set up.
-     * @return MiddlewareQueue The updated middleware queue.
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to set up.
+     * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
@@ -221,7 +220,7 @@ class Application extends BaseApplication implements
     /**
      * Register application container services.
      *
-     * @param ContainerInterface $container The Container to update.
+     * @param \Cake\Core\ContainerInterface $container The Container to update.
      * @return void
      * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
      */
@@ -230,8 +229,8 @@ class Application extends BaseApplication implements
     }
 
     /**
-     * @param ServerRequestInterface $request The Request Submitted
-     * @return AuthorizationServiceInterface
+     * @param \Psr\Http\Message\ServerRequestInterface $request The Request Submitted
+     * @return \Authorization\AuthorizationServiceInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
@@ -249,8 +248,8 @@ class Application extends BaseApplication implements
     /**
      * Returns a service provider instance.
      *
-     * @param ServerRequestInterface $request Request
-     * @return AuthenticationServiceInterface
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @return \Authentication\AuthenticationServiceInterface
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface

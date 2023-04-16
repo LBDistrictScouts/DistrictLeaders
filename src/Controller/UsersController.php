@@ -1,40 +1,32 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Authenticator\CognitoResult;
-use App\Controller\Component\GoogleClientComponent;
 use App\Form\PasswordForm;
 use App\Form\ResetForm;
 use App\Model\Entity\Audit;
 use App\Model\Entity\Token;
 use App\Model\Entity\User;
 use App\Model\Filter\UsersCollection;
-use App\Model\Table\EmailSendsTable;
-use App\Model\Table\TokensTable;
-use App\Model\Table\UsersTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\ORM\Query;
-use Exception;
 
 /**
  * Users Controller
  *
- * @property UsersTable $Users
- * @method User[]|ResultSetInterface paginate($object = null, array $settings = [])
- * @property TokensTable $Tokens
- * @property EmailSendsTable $EmailSends
- * @property GoogleClientComponent $GoogleClient
+ * @property \App\Model\Table\UsersTable $Users
+ * @method \App\Model\Entity\User[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\TokensTable $Tokens
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
+ * @property \App\Controller\Component\GoogleClientComponent $GoogleClient
  */
 class UsersController extends AppController
 {
     /**
-     * @throws Exception
+     * @throws \Exception
      * @return void
      */
     public function initialize(): void
@@ -51,13 +43,13 @@ class UsersController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->Authorization->authorize($this->Users);
 
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
         if (!$user->checkCapability('DIRECTORY')) {
@@ -74,13 +66,13 @@ class UsersController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function search()
+    public function search(): ?Response
     {
         $this->Authorization->authorize($this->Users);
 
-        /** @var User $user */
+        /** @var \App\Model\Entity\User $user */
         $user = $this->request->getAttribute('identity')->getOriginalData();
 
         if (!$user->checkCapability('DIRECTORY')) {
@@ -108,12 +100,12 @@ class UsersController extends AppController
      * View method
      *
      * @param string|null $userId User id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($userId = null)
+    public function view(?string $userId = null): ?Response
     {
-        $blockedFields = $this->Authorization->see($this->Users->get($userId));
+        $this->Authorization->see($this->Users->get($userId));
 
         $containArray = [
             'UserStates',
@@ -178,7 +170,7 @@ class UsersController extends AppController
     }
 
     /**
-     * @return Response
+     * @return \Cake\Http\Response
      */
     public function self(): Response
     {
@@ -194,9 +186,9 @@ class UsersController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -218,14 +210,12 @@ class UsersController extends AppController
      * Add method
      *
      * @param string $userDirectoryId The API ID of the User
-     * @return Response|null Redirects on successful add, renders view otherwise.
-     * @throws Exception
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
+     * @throws \Exception
      */
-    public function import($userDirectoryId)
+    public function import(string $userDirectoryId): ?Response
     {
         $this->loadComponent('GoogleClient');
-
-        $serviceUser = $this->GoogleClient->getUser($userDirectoryId);
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -247,10 +237,10 @@ class UsersController extends AppController
      * Edit method
      *
      * @param string|null $userId User id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($userId = null)
+    public function edit(?string $userId = null): ?Response
     {
         $user = $this->Users->get($userId, [
             'contain' => [],
@@ -274,10 +264,10 @@ class UsersController extends AppController
      * Delete method
      *
      * @param string|null $id User id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
@@ -293,15 +283,15 @@ class UsersController extends AppController
     /**
      * Login method
      *
-     * @return Response|void If Successful - redirects to landing.
-     * @throws NotFoundException When record not found.
+     * @return \Cake\Http\Response|void If Successful - redirects to landing.
+     * @throws \Cake\Http\Exception\NotFoundException When record not found.
      */
-    public function login()
+    public function login(): ?Response
     {
         // Set the layout.
         $this->viewBuilder()->setLayout('login');
 
-        /** @var CognitoResult $result */
+        /** @var \App\Authenticator\CognitoResult $result */
         $result = $this->Authentication->getResult();
 
         // Redirect if challenged
@@ -334,9 +324,9 @@ class UsersController extends AppController
     /**
      * Logout Function
      *
-     * @return Response|null
+     * @return \Cake\Http\Response|null
      */
-    public function logout()
+    public function logout(): ?Response
     {
         $this->Authorization->skipAuthorization();
 
@@ -354,10 +344,10 @@ class UsersController extends AppController
     /**
      * Password Reset Function - Enables Resetting a User's Password via Email
      *
-     * @return Response
-     * @throws Exception
+     * @return \Cake\Http\Response
+     * @throws \Exception
      */
-    public function forgot()
+    public function forgot(): Response
     {
         $this->viewBuilder()->setLayout('login');
 
@@ -424,9 +414,9 @@ class UsersController extends AppController
      * Username Clarification Function - Enables Resetting a User's Password via Email
      *
      * @return void
-     * @throws Exception
+     * @throws \Exception
      */
-    public function username()
+    public function username(): void
     {
         $this->viewBuilder()->setLayout('login');
 
@@ -461,9 +451,9 @@ class UsersController extends AppController
     /**
      * Token - Completes Password Reset Function
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function password()
+    public function password(): ?Response
     {
         $changeType = self::CHANGE_TYPE_UNAUTHORIZED;
         $this->loadModel('Tokens');
@@ -523,9 +513,9 @@ class UsersController extends AppController
     /**
      * Token - Completes Password Reset Function
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function welcome()
+    public function welcome(): ?Response
     {
         $this->loadModel('Tokens');
         $this->viewBuilder()->setLayout('login');
@@ -591,10 +581,10 @@ class UsersController extends AppController
      * Activate method
      *
      * @param string|null $userId User id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function activate($userId = null)
+    public function activate(?string $userId = null): ?Response
     {
         $this->request->allowMethod(['post']);
         $user = $this->Users->get($userId);

@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -16,21 +14,21 @@ use Cake\ORM\Entity;
  * @property int|null $number_stripped
  * @property int|null $charity_number
  * @property string|null $group_domain
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  *
  * @property string $clean_domain
  *
- * @property Section[] $sections
- * @property FrozenTime|null $deleted
+ * @property \App\Model\Entity\Section[] $sections
+ * @property \Cake\I18n\FrozenTime|null $deleted
  * @property string|null $uuid
  * @property bool $public
- * @property Audit[] $audits
+ * @property \App\Model\Entity\Audit[] $audits
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
- * @property Section[] $leader_sections
- * @property Section[] $committee_sections
- * @property Section[] $team_sections
+ * @property \App\Model\Entity\Section[] $leader_sections
+ * @property \App\Model\Entity\Section[] $committee_sections
+ * @property \App\Model\Entity\Section[] $team_sections
  */
 class ScoutGroup extends Entity
 {
@@ -43,7 +41,7 @@ class ScoutGroup extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'scout_group' => true,
         'group_alias' => true,
         'number_stripped' => true,
@@ -88,7 +86,7 @@ class ScoutGroup extends Entity
      *
      * @var array
      */
-    protected $_virtual = ['clean_domain'];
+    protected array $_virtual = ['clean_domain'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SCOUT_GROUP = 'scout_group';

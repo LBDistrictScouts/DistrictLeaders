@@ -1,32 +1,25 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Controller\Component\QueueComponent;
 use App\Model\Entity\EmailSend;
-use App\Model\Table\EmailSendsTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-use Exception;
 
 /**
  * EmailSends Controller
  *
- * @property EmailSendsTable $EmailSends
- * @property QueueComponent $Queue
- * @method EmailSend[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\EmailSendsTable $EmailSends
+ * @property \App\Controller\Component\QueueComponent $Queue
+ * @method \App\Model\Entity\EmailSend[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailSendsController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Users', 'Notifications'],
@@ -43,10 +36,10 @@ class EmailSendsController extends AppController
      * View method
      *
      * @param string|null $id Email Send id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $emailSend = $this->EmailSends->get($id, [
             'contain' => ['Users', 'Notifications', 'EmailResponses', 'Tokens'],
@@ -59,10 +52,10 @@ class EmailSendsController extends AppController
      * Delete method
      *
      * @param string|null $emailId Email Send id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function send($emailId = null)
+    public function send(?string $emailId = null): ?Response
     {
         $this->request->allowMethod(['post']);
         if ($this->EmailSends->send((int)$emailId)) {
@@ -78,9 +71,9 @@ class EmailSendsController extends AppController
      * Add method
      *
      * @param string $notificationId Notification ID
-     * @return Response Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response Redirects on successful add, renders view otherwise.
      */
-    public function make(string $notificationId)
+    public function make(string $notificationId): Response
     {
         $this->request->allowMethod(['post']);
         $notification = $this->EmailSends->Notifications->get($notificationId, ['contain' => 'NotificationTypes']);
@@ -102,10 +95,10 @@ class EmailSendsController extends AppController
      * Edit method
      *
      * @param string|null $id Email Send id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $emailSend = $this->EmailSends->get($id, [
             'contain' => [],
@@ -128,10 +121,10 @@ class EmailSendsController extends AppController
      * Delete method
      *
      * @param string|null $id Email Send id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $emailSend = $this->EmailSends->get($id);
@@ -147,10 +140,10 @@ class EmailSendsController extends AppController
     /**
      * Process method
      *
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException|Exception When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function unsent()
+    public function unsent(): ?Response
     {
         $this->request->allowMethod(['post']);
 

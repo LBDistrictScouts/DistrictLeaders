@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -17,24 +16,7 @@ declare(strict_types=1);
 
 namespace App\View;
 
-use App\View\Helper\CapIdentityHelper;
-use App\View\Helper\FunctionalHelper;
-use App\View\Helper\IconHelper;
-use App\View\Helper\InflectionHelper;
-use App\View\Helper\JobHelper;
-use App\View\Helper\MarkdownHelper;
-use App\View\Helper\PermissionsHelper;
-use BootstrapUI\View\Helper\BreadcrumbsHelper;
-use BootstrapUI\View\Helper\FormHelper;
-use BootstrapUI\View\Helper\HtmlHelper;
-use BootstrapUI\View\Helper\PaginatorHelper;
 use Cake\View\View;
-use Flash\View\Helper\FlashHelper;
-use Queue\View\Helper\QueueProgressHelper;
-use Search\View\Helper\SearchHelper;
-use Tags\View\Helper\TagHelper;
-use Tools\View\Helper\FormatHelper;
-use Tools\View\Helper\TimeHelper;
 
 /**
  * Application View
@@ -42,25 +24,25 @@ use Tools\View\Helper\TimeHelper;
  * Your application’s default view class
  *
  * @link https://book.cakephp.org/3.0/en/views.html#the-app-view
- * @property FunctionalHelper $Functional
- * @property JobHelper $Job
- * @property IconHelper $Icon
- * @property InflectionHelper $Inflection
- * @property CapIdentityHelper $Identity
- * @property MarkdownHelper $Markdown
+ * @property \App\View\Helper\FunctionalHelper $Functional
+ * @property \App\View\Helper\JobHelper $Job
+ * @property \App\View\Helper\IconHelper $Icon
+ * @property \App\View\Helper\InflectionHelper $Inflection
+ * @property \App\View\Helper\CapIdentityHelper $Identity
+ * @property \App\View\Helper\MarkdownHelper $Markdown
  *
- * @property BreadcrumbsHelper $Breadcrumbs
- * @property FormHelper $Form
- * @property HtmlHelper $Html
- * @property PaginatorHelper $Paginator
- * @property TimeHelper $Time
- * @property FormatHelper $Format
- * @property FlashHelper $Flash
- * @property SearchHelper $Search
- * @property QueueProgressHelper $QueueProgress
- * @property CapIdentityHelper $CapIdentity
- * @property PermissionsHelper $Permissions
- * @property TagHelper $Tag
+ * @property \BootstrapUI\View\Helper\BreadcrumbsHelper $Breadcrumbs
+ * @property \BootstrapUI\View\Helper\FormHelper $Form
+ * @property \BootstrapUI\View\Helper\HtmlHelper $Html
+ * @property \BootstrapUI\View\Helper\PaginatorHelper $Paginator
+ * @property \Tools\View\Helper\TimeHelper $Time
+ * @property \Tools\View\Helper\FormatHelper $Format
+ * @property \Flash\View\Helper\FlashHelper $Flash
+ * @property \Search\View\Helper\SearchHelper $Search
+ * @property \Queue\View\Helper\QueueProgressHelper $QueueProgress
+ * @property \App\View\Helper\CapIdentityHelper $CapIdentity
+ * @property \App\View\Helper\PermissionsHelper $Permissions
+ * @property \Tags\View\Helper\TagHelper $Tag
  */
 class AppView extends View
 {

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
@@ -9,7 +8,6 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
-use Exception;
 
 /**
  * Class PasswordCommand
@@ -29,8 +27,8 @@ class DailyCommand extends Command
     }
 
     /**
-     * @param ConsoleOptionParser $parser Parser Input
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -40,21 +38,21 @@ class DailyCommand extends Command
     }
 
     /**
-     * @param Arguments $args Arguments for the Console
-     * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
-     * @throws Exception
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @return int|null|void
+     * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): int|null|null
     {
         $tasks = Cron::collectCronClasses();
         $success = 0;
 
         foreach ($tasks as $class) {
-            /** @var Cron $taskClass */
+            /** @var \App\Cron\Cron $taskClass */
             $taskClass = new $class();
 
             if (get_parent_class($taskClass) == 'App\Cron\Cron') {

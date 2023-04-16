@@ -1,21 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\CaseableBehavior;
 use App\Model\Entity\Document;
 use App\Model\Entity\DocumentEdition;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Entity\FileType;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Log\Log;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -23,36 +17,34 @@ use Cake\Validation\Validator;
 use Josbeir\Filesystem\Exception\FilesystemException;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\FileNotFoundException;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
-use Search\Model\Behavior\SearchBehavior;
 
 /**
  * Documents Model
  *
- * @property DocumentTypesTable&BelongsTo $DocumentTypes
- * @property DocumentVersionsTable&HasMany $DocumentVersions
- * @method Document get($primaryKey, $options = [])
- * @method Document newEntity(array $data, array $options = [])
- * @method Document[] newEntities(array $data, array $options = [])
- * @method Document|false save(EntityInterface $entity, $options = [])
- * @method Document saveOrFail(EntityInterface $entity, $options = [])
- * @method Document patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Document[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Document findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin CaseableBehavior
- * @mixin SearchBehavior
- * @method Document[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property DocumentEditionsTable&BelongsTo $DocumentPreviews
- * @method Document newEmptyEntity()
- * @method Document[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Document[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Document[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin SearchBehavior
- * @mixin CaseableBehavior
+ * @property \App\Model\Table\DocumentTypesTable&\App\Model\Table\BelongsTo $DocumentTypes
+ * @property \App\Model\Table\DocumentVersionsTable&\App\Model\Table\HasMany $DocumentVersions
+ * @method \App\Model\Entity\Document get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Document newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Document|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Document patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Document[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Document findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\DocumentEditionsTable&\App\Model\Table\BelongsTo $DocumentPreviews
+ * @method \App\Model\Entity\Document newEmptyEntity()
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DocumentsTable extends Table
 {
@@ -101,8 +93,8 @@ class DocumentsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -123,8 +115,8 @@ class DocumentsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -136,9 +128,9 @@ class DocumentsTable extends Table
 
     /**
      * @param array $postData Post Request Data (file upload array)
-     * @param Document $document The Document Entity
+     * @param \App\Model\Entity\Document $document The Document Entity
      * @param string $fileSystem The configured Filesystem Name
-     * @return EntityInterface|void
+     * @return \Cake\Datasource\EntityInterface|void
      */
     public function uploadDocument(
         array $postData,
@@ -150,7 +142,7 @@ class DocumentsTable extends Table
         }
 
         try {
-            /** @var EntityInterface $fileEntity */
+            /** @var \Cake\Datasource\EntityInterface $fileEntity */
             $fileEntity = $this->getFilesystem($fileSystem)->upload($postData['uploadedFile']);
         } catch (FilesystemException $e) {
             return null;

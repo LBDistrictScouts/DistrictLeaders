@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
@@ -7,7 +6,6 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\UserContactType;
 use App\Model\Table\UserContactTypesTable;
 use Cake\TestSuite\TestCase;
-use Exception;
 
 /**
  * App\Model\Table\UserContactTypesTable Test Case

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Component;
@@ -14,16 +13,14 @@ use App\Queue\Task\StateTask;
 use App\Queue\Task\TokenTask;
 use App\Queue\Task\UnsentTask;
 use Cake\Controller\Component;
-use Cake\Controller\Component\FlashComponent;
 use Cake\Datasource\ModelAwareTrait;
 use Queue\Model\Entity\QueuedJob;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Queue component
  *
- * @property QueuedJobsTable $QueuedJobs
- * @property FlashComponent $Flash
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property \Cake\Controller\Component\FlashComponent $Flash
  */
 class QueueComponent extends Component
 {
@@ -34,9 +31,9 @@ class QueueComponent extends Component
      *
      * @var array
      */
-    protected $_defaultConfig = [];
+    protected array $_defaultConfig = [];
 
-    public $components = ['Flash'];
+    public array $components = ['Flash'];
 
     /**
      * @inheritDoc
@@ -48,7 +45,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param Directory $directory The Document Version for Queuing
+     * @param \App\Model\Entity\Directory $directory The Document Version for Queuing
      * @return void
      */
     public function setDirectoryImport(Directory $directory): void
@@ -67,7 +64,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param DocumentVersion $documentVersion The Document Version for Queuing
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassVersionImport(DocumentVersion $documentVersion): void
@@ -86,7 +83,7 @@ class QueueComponent extends Component
     }
 
     /**
-     * @param DocumentVersion $documentVersion The Document Version for Queuing
+     * @param \App\Model\Entity\DocumentVersion $documentVersion The Document Version for Queuing
      * @return void
      */
     public function setCompassAutoMerge(DocumentVersion $documentVersion): void
@@ -107,7 +104,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setCapabilityParse()
+    public function setCapabilityParse(): void
     {
         $job = $this->QueuedJobs->createJob(CapabilityTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -123,7 +120,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setUserStateParse()
+    public function setUserStateParse(): void
     {
         $job = $this->QueuedJobs->createJob(StateTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -139,7 +136,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setUnsent()
+    public function setUnsent(): void
     {
         $job = $this->QueuedJobs->createJob(UnsentTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -155,7 +152,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setTokenParse()
+    public function setTokenParse(): void
     {
         $job = $this->QueuedJobs->createJob(TokenTask::taskName());
         if ($job instanceof QueuedJob) {

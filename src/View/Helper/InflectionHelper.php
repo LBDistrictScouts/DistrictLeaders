@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Helper;
@@ -17,7 +16,7 @@ class InflectionHelper extends Helper
      *
      * @var array
      */
-    protected $_defaultConfig = [];
+    protected array $_defaultConfig = [];
 
     /**
      *  Humanise
@@ -25,7 +24,7 @@ class InflectionHelper extends Helper
      * @param string $text The Text to be humanised
      * @return string
      */
-    public function space($text)
+    public function space(string $text): string
     {
         return Inflector::humanize(Inflector::underscore($text));
     }
@@ -36,7 +35,7 @@ class InflectionHelper extends Helper
      * @param string $text The Text to be humanised
      * @return string
      */
-    public function singleSpace($text)
+    public function singleSpace(string $text): string
     {
         return Inflector::singularize($this->space($text));
     }

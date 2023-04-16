@@ -1,58 +1,47 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\ScoutGroup;
 use App\Model\Entity\Section;
 use App\Model\Entity\SectionType;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\BelongsToMany;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Expose\Model\Behavior\ExposeBehavior;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
-use Search\Model\Behavior\SearchBehavior;
 
 /**
  * Sections Model
  *
- * @property SectionTypesTable&BelongsTo $SectionTypes
- * @property ScoutGroupsTable&BelongsTo $ScoutGroups
- * @property RolesTable&HasMany $Roles
- * @method Section get($primaryKey, $options = [])
- * @method Section newEntity(array $data, array $options = [])
- * @method Section[] newEntities(array $data, array $options = [])
- * @method Section|false save(EntityInterface $entity, $options = [])
- * @method Section saveOrFail(EntityInterface $entity, $options = [])
- * @method Section patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method Section[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method Section findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @method Section[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin ExposeBehavior
- * @property UsersTable&BelongsToMany $Users
- * @mixin SearchBehavior
- * @property AuditsTable&HasMany $Audits
- * @mixin AuditableBehavior
- * @method Section newEmptyEntity()
- * @method Section[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method Section[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method Section[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin SearchBehavior
- * @mixin ExposeBehavior
- * @mixin AuditableBehavior
+ * @property \App\Model\Table\SectionTypesTable&\App\Model\Table\BelongsTo $SectionTypes
+ * @property \App\Model\Table\ScoutGroupsTable&\App\Model\Table\BelongsTo $ScoutGroups
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
+ * @method \App\Model\Entity\Section get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Section newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Section|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Section saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Section patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Section[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Section findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsToMany $Users
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @method \App\Model\Entity\Section newEmptyEntity()
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class SectionsTable extends Table
 {
@@ -113,8 +102,8 @@ class SectionsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -136,8 +125,8 @@ class SectionsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -149,8 +138,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findLeaderSections(Query $query): Query
     {
@@ -160,8 +149,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findTeamSections(Query $query): Query
     {
@@ -171,8 +160,8 @@ class SectionsTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
     public function findCommitteeSections(Query $query): Query
     {
@@ -206,7 +195,7 @@ class SectionsTable extends Table
      * @param string $section Section String
      * @param string $group Group String
      * @param string $sectionType The Section Type for Context
-     * @return Section
+     * @return \App\Model\Entity\Section
      */
     public function findOrMake(string $section, string $group, string $sectionType): Section
     {

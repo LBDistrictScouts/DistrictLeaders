@@ -1,24 +1,21 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Command;
 
 use App\Model\Entity\User;
-use App\Model\Table\UsersTable;
 use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
 use Cake\Core\Configure;
 use Cake\Mailer\MailerAwareTrait;
-use Exception;
 
 /**
  * Class PasswordCommand
  *
  * @package App\Command
- * @property UsersTable $Users
+ * @property \App\Model\Table\UsersTable $Users
  */
 class PasswordCommand extends Command
 {
@@ -36,8 +33,8 @@ class PasswordCommand extends Command
     }
 
     /**
-     * @param ConsoleOptionParser $parser Parser Input
-     * @return ConsoleOptionParser
+     * @param \Cake\Console\ConsoleOptionParser $parser Parser Input
+     * @return \Cake\Console\ConsoleOptionParser
      */
     protected function buildOptionParser(ConsoleOptionParser $parser): ConsoleOptionParser
     {
@@ -53,14 +50,14 @@ class PasswordCommand extends Command
     }
 
     /**
-     * @param Arguments $args Arguments for the Console
-     * @param ConsoleIo $consoleIo The IO
-     * @return int|void|null
-     * @throws Exception
+     * @param \Cake\Console\Arguments $args Arguments for the Console
+     * @param \Cake\Console\ConsoleIo $consoleIo The IO
+     * @return int|null|void
+     * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): int|null|null
     {
         if (!$args->hasArgument('password')) {
             $consoleIo->error('Password not listed.');

@@ -1,12 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queue\Task;
 
 use App\Model\Entity\DocumentVersion;
-use App\Model\Table\CompassRecordsTable;
-use App\Model\Table\DocumentVersionsTable;
 use Queue\Model\QueueException;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
@@ -15,8 +12,8 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property CompassRecordsTable $CompassRecords
- * @property DocumentVersionsTable $DocumentVersions
+ * @property \App\Model\Table\CompassRecordsTable $CompassRecords
+ * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  */
 class AutoMergeTask extends Task implements TaskInterface
 {
@@ -25,12 +22,12 @@ class AutoMergeTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public $timeout = 900;
+    public int $timeout = 900;
 
     /**
      * @var int
      */
-    public $retries = 1;
+    public int $retries = 1;
 
     /**
      * @var string The Data Key

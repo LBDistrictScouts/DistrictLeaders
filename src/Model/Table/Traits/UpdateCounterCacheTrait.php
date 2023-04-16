@@ -1,11 +1,7 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table\Traits;
-
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Query;
 
 /**
  * Trait UpdateCounterCacheTrait
@@ -15,13 +11,13 @@ use Cake\ORM\Query;
 trait UpdateCounterCacheTrait
 {
     /**
-     * @param null|string|array $association Table Association
+     * @param array|string|null $association Table Association
      *        null - update all CounterCaches
      *        string - update only the CounterCache for this association
      *        array - update CounterCaches for the listed associations,
      *            update only the fields listed like ['Tags' => ['count']]
      *            if no $cacheFields given, to update all set the key to true
-     * @param null|string|array $cacheField Field for Counter Cache
+     * @param array|string|null $cacheField Field for Counter Cache
      *        null - update all fields for the CounterCache(s)
      *        string - update only this field for the CounterCache(s)
      *        array - update the given fields in the CounterCache(s),
@@ -29,10 +25,13 @@ trait UpdateCounterCacheTrait
      * @param true|false $reset reset the values to 0, if no matching entry could be found
      * @return int
      *        if $verbose_return == false, the total number of updated fields
-     * @throws BehaviourNotFoundException when the CounterCacheBehavior is not attached
+     * @throws \App\Model\Table\Traits\BehaviourNotFoundException when the CounterCacheBehavior is not attached
      */
-    public function updateCounterCache($association = null, $cacheField = null, $reset = true)
-    {
+    public function updateCounterCache(
+        string|array|null $association = null,
+        string|array|null $cacheField = null,
+        bool $reset = true
+    ): int {
         $counterCache = $this->behaviors()->get('CounterCache');
 
         if (!$counterCache) {
@@ -53,7 +52,7 @@ trait UpdateCounterCacheTrait
 
         $totalCount = 0;
         foreach ($associations as $assocName => $config) {
-            /** @var BelongsTo $assoc */
+            /** @var \Cake\ORM\Association\BelongsTo $assoc */
             $assoc = $this->{$assocName};
             $foreignKey = $assoc->getForeignKey();
             $target = $assoc->getTarget();
@@ -89,7 +88,7 @@ trait UpdateCounterCacheTrait
                     $finder = $this->callFinder($options['finder'], $finder);
                 }
 
-                /** @var Query $result */
+                /** @var \Cake\ORM\Query $result */
                 $result = $finder
                     ->select([$foreignKey => $foreignKey, 'count' => $this->query()->func()->count('*')])
                     ->where($options['conditions'])

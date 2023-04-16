@@ -1,10 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Cell;
 
-use Authorization\Policy\Result;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\View\Cell;
@@ -20,7 +18,7 @@ class AuthModalCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
     /**
      * Initialization logic run at the end of object construction.
@@ -33,9 +31,9 @@ class AuthModalCell extends Cell
 
     /**
      * @param int $reason The Reason ID
-     * @return bool|string
+     * @return string|bool
      */
-    protected function getReasonLong(int $reason)
+    protected function getReasonLong(int $reason): bool|string
     {
         Configure::load('Application' . DS . 'reasons', 'yaml');
         $reasons = Configure::read('Reasons', []);
@@ -51,7 +49,7 @@ class AuthModalCell extends Cell
      * @param int $reason Reason ID for Display
      * @return mixed
      */
-    protected function getCachedReasonLong(int $reason)
+    protected function getCachedReasonLong(int $reason): mixed
     {
         return Cache::remember('reason-key-' . $reason, function () use ($reason) {
             return $this->getReasonLong($reason);
@@ -61,10 +59,10 @@ class AuthModalCell extends Cell
     /**
      * Default display method.
      *
-     * @param Result $policyResult The result of the Policy Authorisation
+     * @param \Authorization\Policy\Result $policyResult The result of the Policy Authorisation
      * @return void
      */
-    public function display($policyResult)
+    public function display(Result $policyResult): void
     {
         $reason = $policyResult->getReason();
 

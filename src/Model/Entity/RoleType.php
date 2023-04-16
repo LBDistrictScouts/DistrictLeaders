@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -21,11 +20,11 @@ use Cake\ORM\Entity;
  * @property string $placeholder_code
  * @property int $role_type_sort_order
  *
- * @property SectionType|null $section_type
- * @property RoleTemplate|null $role_template
- * @property Role[] $roles
- * @property Capability[] $capabilities
- * @property DirectoryGroup[] $directory_groups
+ * @property \App\Model\Entity\SectionType|null $section_type
+ * @property \App\Model\Entity\RoleTemplate|null $role_template
+ * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\Capability[] $capabilities
+ * @property \App\Model\Entity\DirectoryGroup[] $directory_groups
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -40,7 +39,7 @@ class RoleType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'role_type' => true,
         'role_abbreviation' => true,
         'section_type_id' => true,

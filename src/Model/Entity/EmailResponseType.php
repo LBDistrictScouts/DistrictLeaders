@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -13,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string|null $email_response_type
  * @property bool $bounce
  *
- * @property EmailResponse[] $email_responses
+ * @property \App\Model\Entity\EmailResponse[] $email_responses
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -28,7 +27,7 @@ class EmailResponseType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'email_response_type' => true,
         'bounce' => true,
         'email_responses' => true,

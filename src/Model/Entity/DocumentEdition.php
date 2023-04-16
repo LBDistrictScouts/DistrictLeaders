@@ -1,23 +1,20 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 use Josbeir\Filesystem\FileEntityInterface;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\FileNotFoundException;
-use League\Flysystem\Filesystem;
 
 /**
  * DocumentEdition Entity
  *
  * @property int $id
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
- * @property FrozenTime|null $deleted
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int $document_version_id
  * @property int $file_type_id
  * @property string|null $file_path
@@ -25,8 +22,8 @@ use League\Flysystem\Filesystem;
  * @property int|null $size
  * @property string|null $md5_hash
  *
- * @property DocumentVersion $document_version
- * @property FileType $file_type
+ * @property \App\Model\Entity\DocumentVersion $document_version
+ * @property \App\Model\Entity\FileType $file_type
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -43,7 +40,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'created' => true,
         'modified' => true,
         'deleted' => true,
@@ -67,7 +64,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
 
     /**
      * @param string $path The Path to be set
-     * @return FileEntityInterface
+     * @return \Josbeir\Filesystem\FileEntityInterface
      */
     public function setPath(string $path): FileEntityInterface
     {
@@ -79,9 +76,9 @@ class DocumentEdition extends Entity implements FileEntityInterface
     /**
      * @return string|false
      */
-    public function read()
+    public function read(): string|false
     {
-        /** @var Filesystem $fileSystem */
+        /** @var \League\Flysystem\Filesystem $fileSystem */
         $fileSystem = $this->getFilesystem();
 
         try {

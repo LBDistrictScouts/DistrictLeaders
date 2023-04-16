@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -22,7 +21,7 @@ use Cake\Http\Session\DatabaseSession;
  */
 class ComboSession extends DatabaseSession
 {
-    public $cacheKey;
+    public ?string $cacheKey;
 
     /**
      * ComboSession constructor.
@@ -39,7 +38,7 @@ class ComboSession extends DatabaseSession
      * @param string|int $sessionId ID that uniquely identifies session in database.
      * @return string Session data or empty string if it does not exist.
      */
-    public function read($sessionId): string
+    public function read(string|int $sessionId): string
     {
         $result = Cache::read($sessionId, $this->cacheKey);
         if ($result) {
@@ -56,7 +55,7 @@ class ComboSession extends DatabaseSession
      * @param mixed $data The data to be saved.
      * @return bool True for successful write, false otherwise.
      */
-    public function write($sessionId, $data): bool
+    public function write(string|int $sessionId, mixed $data): bool
     {
         Cache::write($sessionId, $data, $this->cacheKey);
 
@@ -69,7 +68,7 @@ class ComboSession extends DatabaseSession
      * @param string|int $sessionId ID that uniquely identifies session in database.
      * @return bool True for successful delete, false otherwise.
      */
-    public function destroy($sessionId): bool
+    public function destroy(string|int $sessionId): bool
     {
         Cache::delete($sessionId, $this->cacheKey);
 

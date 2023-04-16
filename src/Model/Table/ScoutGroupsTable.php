@@ -1,51 +1,43 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\ScoutGroup;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\HasMany;
-use Cake\ORM\Behavior\TimestampBehavior;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Expose\Model\Behavior\ExposeBehavior;
-use Muffin\Trash\Model\Behavior\TrashBehavior;
 
 /**
  * ScoutGroups Model
  *
- * @property SectionsTable&HasMany $Sections
- * @method ScoutGroup get($primaryKey, $options = [])
- * @method ScoutGroup newEntity(array $data, array $options = [])
- * @method ScoutGroup[] newEntities(array $data, array $options = [])
- * @method ScoutGroup|false save(EntityInterface $entity, $options = [])
- * @method ScoutGroup saveOrFail(EntityInterface $entity, $options = [])
- * @method ScoutGroup patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @method ScoutGroup[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @mixin ExposeBehavior
- * @property AuditsTable&HasMany $Audits
- * @mixin AuditableBehavior
- * @property SectionsTable&HasMany $LeaderSections
- * @property SectionsTable&HasMany $CommitteeSections
- * @property SectionsTable&HasMany $TeamSections
- * @method ScoutGroup newEmptyEntity()
- * @method ScoutGroup[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method ScoutGroup[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method ScoutGroup[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- * @mixin TimestampBehavior
- * @mixin TrashBehavior
- * @mixin ExposeBehavior
- * @mixin AuditableBehavior
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $Sections
+ * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
+ * @method \App\Model\Entity\ScoutGroup newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $LeaderSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $CommitteeSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $TeamSections
+ * @method \App\Model\Entity\ScoutGroup newEmptyEntity()
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class ScoutGroupsTable extends Table
 {
@@ -107,8 +99,8 @@ class ScoutGroupsTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -148,8 +140,8 @@ class ScoutGroupsTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -163,13 +155,13 @@ class ScoutGroupsTable extends Table
      *
      * @return array
      */
-    public function getDomains()
+    public function getDomains(): array
     {
         $groups = $this->find('all');
         $cleanDomains = [];
 
         foreach ($groups as $group) {
-            /** @var ScoutGroup $group */
+            /** @var \App\Model\Entity\ScoutGroup $group */
             array_push($cleanDomains, $group->get('clean_domain'));
         }
 

@@ -1,11 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\View\Helper;
 
 use App\View\Helper\IconHelper;
-use App\View\Helper\PermissionsHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 use TypeError;

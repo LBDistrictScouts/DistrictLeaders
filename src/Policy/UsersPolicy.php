@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -20,9 +19,9 @@ class UsersPolicy implements BeforePolicyInterface
     use AppPolicyTrait;
 
     /**
-     * @param User $user The User Editing
-     * @param User $subject The User being Edited
-     * @return ResultInterface
+     * @param \App\Model\Entity\User $user The User Editing
+     * @param \App\Model\Entity\User $subject The User being Edited
+     * @return \Authorization\Policy\ResultInterface
      */
     public function canUpdate(User $user, User $subject): ResultInterface
     {
@@ -39,9 +38,9 @@ class UsersPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param User $user The User Editing
-     * @param User $subject The User being Edited
-     * @return ResultInterface
+     * @param \App\Model\Entity\User $user The User Editing
+     * @param \App\Model\Entity\User $subject The User being Edited
+     * @return \Authorization\Policy\ResultInterface
      */
     public function canView(User $user, User $subject): ResultInterface
     {
@@ -62,8 +61,8 @@ class UsersPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param User $user The User Editing
-     * @return ResultInterface
+     * @param \App\Model\Entity\User $user The User Editing
+     * @return \Authorization\Policy\ResultInterface
      */
     public function canIndex(User $user): ResultInterface
     {

@@ -1,29 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\NotificationType;
-use App\Model\Table\NotificationTypesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-
 /**
  * NotificationTypes Controller
  *
- * @property NotificationTypesTable $NotificationTypes
- * @method NotificationType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\NotificationTypesTable $NotificationTypes
+ * @method \App\Model\Entity\NotificationType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $notificationTypes = $this->paginate($this->NotificationTypes);
 
@@ -34,10 +27,10 @@ class NotificationTypesController extends AppController
      * View method
      *
      * @param string|null $id Notification Type id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $notificationType = $this->NotificationTypes->get($id, [
             'contain' => ['Notifications'],
@@ -49,9 +42,9 @@ class NotificationTypesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $notificationType = $this->NotificationTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -70,10 +63,10 @@ class NotificationTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Notification Type id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $notificationType = $this->NotificationTypes->get($id, [
             'contain' => [],
@@ -94,10 +87,10 @@ class NotificationTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Notification Type id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $notificationType = $this->NotificationTypes->get($id);

@@ -74,7 +74,7 @@ class ApplicationTest extends TestCase
 
         $remainingPlugins = $app->getPlugins();
 
-        foreach ($expectedPlugins as $idx => $plugin) {
+        foreach ($expectedPlugins as $plugin) {
             TestCase::assertSame($plugin, $plugins->get($plugin)->getName());
             $remainingPlugins->remove($plugin);
         }

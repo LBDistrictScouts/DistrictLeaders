@@ -20,10 +20,8 @@ namespace App\Test\TestCase;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\Console\ConsoleOutput;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Queue\Model\Table\QueuedJobsTable;
 use Queue\Queue\Task;
 
 /**

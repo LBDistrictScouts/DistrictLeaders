@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -26,7 +25,6 @@ use ArrayObject;
 use Authentication\Identifier\IdentifierCollection;
 use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
-use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

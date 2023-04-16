@@ -1,32 +1,29 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Helper;
 
 use App\Model\Entity\User;
-use Authentication\View\Helper\IdentityHelper;
 use Cake\Datasource\EntityInterface;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class Permissions Helper
  *
  * @package App\View\Helper
- * @property IdentityHelper $Identity
- * @property HtmlHelper $Html
+ * @property \Authentication\View\Helper\IdentityHelper $Identity
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class PermissionsHelper extends Helper
 {
-    public $helpers = ['Identity', 'Html'];
+    public array $helpers = ['Identity', 'Html'];
 
     /**
      * @param string $buttonLabel The Label on the Button
-     * @param EntityInterface $resource The Entity Resource
+     * @param \Cake\Datasource\EntityInterface $resource The Entity Resource
      * @param string|null $action The link Action required
      * @param string|null $controller The Link Controller
-     * @param string[]|null $class The Button Class
+     * @param array<string>|null $class The Button Class
      * @return string
      */
     public function dropDownButton(
@@ -48,14 +45,14 @@ class PermissionsHelper extends Helper
         );
     }
 
-    protected $_config = [
+    protected array $_config = [
         'class',
         'role',
     ];
 
     /**
      * @param string $buttonLabel The Label on the Button
-     * @param EntityInterface $resource The Entity Resource
+     * @param \Cake\Datasource\EntityInterface $resource The Entity Resource
      * @param string|null $action The link Action required
      * @param string|null $controller The Link Controller
      * @param array|null $buttonOptions The Button Options
@@ -90,7 +87,7 @@ class PermissionsHelper extends Helper
         return '';
     }
 
-    protected $validButtonOptions = [
+    protected array $validButtonOptions = [
         'class',
         'role',
     ];
@@ -99,7 +96,7 @@ class PermissionsHelper extends Helper
      * @param array $buttonOptions The Options processor for the Button Class
      * @return array
      */
-    protected function getButtonOptions(array $buttonOptions)
+    protected function getButtonOptions(array $buttonOptions): array
     {
         $finalOptions = [];
 
@@ -136,7 +133,7 @@ class PermissionsHelper extends Helper
     }
 
     /**
-     * @param EntityInterface $resource The Resource for evaluating
+     * @param \Cake\Datasource\EntityInterface $resource The Resource for evaluating
      * @return bool
      */
     protected function hasEditOwn(EntityInterface $resource): bool

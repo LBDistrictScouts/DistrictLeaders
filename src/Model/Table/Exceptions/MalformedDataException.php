@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table\Exceptions;
@@ -17,7 +16,7 @@ class MalformedDataException extends RuntimeException
      *
      * @param string $message The exception message
      * @param int $code The exception code that will be used as a HTTP status code
-     * @param Throwable|null $previous The previous exception or null
+     * @param \Throwable|null $previous The previous exception or null
      */
     public function __construct(string $message = '', int $code = 500, ?Throwable $previous = null)
     {

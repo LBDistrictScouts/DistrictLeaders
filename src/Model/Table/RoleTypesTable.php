@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -12,11 +11,6 @@ use App\Model\Entity\RoleType;
 use App\Model\Entity\SectionType;
 use App\Model\Entity\User;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
-use Cake\ORM\Association\BelongsTo;
-use Cake\ORM\Association\BelongsToMany;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -25,26 +19,26 @@ use Cake\Validation\Validator;
 /**
  * RoleTypes Model
  *
- * @property SectionTypesTable&BelongsTo $SectionTypes
- * @property RoleTemplatesTable&BelongsTo $RoleTemplates
- * @property RolesTable&HasMany $Roles
- * @property CapabilitiesTable&BelongsToMany $Capabilities
- * @property CapabilitiesRoleTypesTable&HasMany $CapabilitiesRoleTypes
- * @property Table&HasMany $DirectoryGroupsRoleTypes
- * @property DirectoryGroupsTable&BelongsToMany $DirectoryGroups
- * @method RoleType get($primaryKey, $options = [])
- * @method RoleType newEntity(array $data, array $options = [])
- * @method RoleType[] newEntities(array $data, array $options = [])
- * @method RoleType|false save(EntityInterface $entity, $options = [])
- * @method RoleType saveOrFail(EntityInterface $entity, $options = [])
- * @method RoleType patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method RoleType[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method RoleType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method RoleType[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method RoleType newEmptyEntity()
- * @method RoleType[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method RoleType[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method RoleType[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\SectionTypesTable&\App\Model\Table\BelongsTo $SectionTypes
+ * @property \App\Model\Table\RoleTemplatesTable&\App\Model\Table\BelongsTo $RoleTemplates
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
+ * @property \App\Model\Table\CapabilitiesTable&\App\Model\Table\BelongsToMany $Capabilities
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\App\Model\Table\HasMany $CapabilitiesRoleTypes
+ * @property \Cake\ORM\Table&\App\Model\Table\HasMany $DirectoryGroupsRoleTypes
+ * @property \App\Model\Table\DirectoryGroupsTable&\App\Model\Table\BelongsToMany $DirectoryGroups
+ * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
+ * @method \App\Model\Entity\RoleType newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType newEmptyEntity()
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTypesTable extends Table
 {
@@ -86,8 +80,8 @@ class RoleTypesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -139,8 +133,8 @@ class RoleTypesTable extends Table
      * Returns a rules checker object that will be used for validating
      * application integrity.
      *
-     * @param RulesChecker $rules The rules object to be modified.
-     * @return RulesChecker
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules): RulesChecker
     {
@@ -153,10 +147,10 @@ class RoleTypesTable extends Table
     }
 
     /**
-     * @param Query $query The Query to be modified.
-     * @return Query
+     * @param \Cake\ORM\Query $query The Query to be modified.
+     * @return \Cake\ORM\Query
      */
-    public function findGroupedList($query)
+    public function findGroupedList(Query $query): Query
     {
         return $query
             ->find('list', [
@@ -173,8 +167,8 @@ class RoleTypesTable extends Table
     }
 
     /**
-     * @param RoleType $roleType The Entity to be Patched.
-     * @return RoleType
+     * @param \App\Model\Entity\RoleType $roleType The Entity to be Patched.
+     * @return \App\Model\Entity\RoleType
      */
     public function patchTemplateCapabilities(RoleType $roleType): RoleType
     {
@@ -205,7 +199,7 @@ class RoleTypesTable extends Table
     }
 
     /**
-     * @param RoleType $roleType The RoleType Entity
+     * @param \App\Model\Entity\RoleType $roleType The RoleType Entity
      * @return int
      */
     public function patchRoleUsers(RoleType $roleType): int
@@ -233,7 +227,7 @@ class RoleTypesTable extends Table
     /**
      * @param string $roleType The RoleType String for Creation
      * @param string $sectionType The Section Type String for Context
-     * @return RoleType
+     * @return \App\Model\Entity\RoleType
      */
     public function findOrMake(string $roleType, string $sectionType): RoleType
     {
@@ -244,7 +238,7 @@ class RoleTypesTable extends Table
         $query = $this->find()->where($conditions);
 
         if ($query->count() == 1) {
-            /** @var RoleType $roleTypeEntity */
+            /** @var \App\Model\Entity\RoleType $roleTypeEntity */
             $roleTypeEntity = $query->first();
 
             if ($roleTypeEntity instanceof RoleType) {
@@ -252,7 +246,7 @@ class RoleTypesTable extends Table
             }
         }
 
-        /** @var RoleTemplate $lowestTemplate */
+        /** @var \App\Model\Entity\RoleTemplate $lowestTemplate */
         $lowestTemplate = $this->RoleTemplates->find()->orderAsc(RoleTemplate::FIELD_INDICATIVE_LEVEL)->first();
 
         $conditions[RoleType::FIELD_ROLE_TEMPLATE_ID] = $lowestTemplate->id;

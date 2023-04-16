@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
@@ -9,7 +8,6 @@ use App\Model\Entity\Notification;
 use App\Model\Table\EmailSendsTable;
 use App\Test\TestCase\EmailTestCase as TestCase;
 use Cake\I18n\FrozenTime;
-use Exception;
 
 /**
  * App\Model\Table\EmailSendsTable Test Case
@@ -292,6 +290,6 @@ class EmailSendsTableTest extends TestCase
         }
         // Check third is not blocked
         TestCase::assertEquals($notificationId, $this->EmailSends->make($emailGenerationCode)->notification_id);
-//        $this->validateExpected($type, $sendId, $notificationId);
+        $this->validateExpected($type, $sendId, $notificationId);
     }
 }

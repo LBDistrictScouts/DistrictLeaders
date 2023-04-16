@@ -1,29 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\CampRole;
-use App\Model\Table\CampRolesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-
 /**
  * CampRoles Controller
  *
- * @property CampRolesTable $CampRoles
- * @method CampRole[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CampRolesTable $CampRoles
+ * @method \App\Model\Entity\CampRole[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRolesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $this->paginate = [
             'contain' => ['Camps', 'Users', 'CampRoleTypes'],
@@ -37,10 +30,10 @@ class CampRolesController extends AppController
      * View method
      *
      * @param string|null $id Camp Role id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $campRole = $this->CampRoles->get($id, [
             'contain' => ['Camps', 'Users', 'CampRoleTypes'],
@@ -52,9 +45,9 @@ class CampRolesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $campRole = $this->CampRoles->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -76,10 +69,10 @@ class CampRolesController extends AppController
      * Edit method
      *
      * @param string|null $id Camp Role id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $campRole = $this->CampRoles->get($id, [
             'contain' => [],
@@ -103,10 +96,10 @@ class CampRolesController extends AppController
      * Delete method
      *
      * @param string|null $id Camp Role id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $campRole = $this->CampRoles->get($id);

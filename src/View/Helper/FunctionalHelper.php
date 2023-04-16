@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\View\Helper;
@@ -15,7 +14,7 @@ use Cake\View\Helper;
  */
 class FunctionalHelper extends Helper
 {
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'functionalAreas' => [
             'directory' => true,
             'camps' => true,
@@ -30,21 +29,21 @@ class FunctionalHelper extends Helper
      *
      * @var array
      */
-    private $FunctionalAreas;
+    private array $FunctionalAreas;
 
     /**
      * Configuration Value
      *
      * @var array
      */
-    private $FunctionalArea;
+    private array $FunctionalArea;
 
     /**
      * Configuration Value
      *
      * @var array
      */
-    private $SearchConfigured;
+    private array $SearchConfigured;
 
     /**
      * @param array $config The Config Array
@@ -62,7 +61,7 @@ class FunctionalHelper extends Helper
      * @param string $function Functional Area Key
      * @return void
      */
-    private function setFunctionalArea(string $function)
+    private function setFunctionalArea(string $function): void
     {
         if (key_exists($function, $this->FunctionalAreas) && is_array($this->FunctionalAreas[$function])) {
             $this->FunctionalArea = $this->FunctionalAreas[$function];
@@ -100,11 +99,11 @@ class FunctionalHelper extends Helper
 
     /**
      * @param string $function The functional area being checked
-     * @param User $identity The User Identity
+     * @param \App\Model\Entity\User $identity The User Identity
      * @param string $registeredCap The registered capability key
      * @return bool
      */
-    private function checkFunctionAuthorised(string $function, User $identity, string $registeredCap)
+    private function checkFunctionAuthorised(string $function, User $identity, string $registeredCap): bool
     {
         // Check for Special Auth Registered on Function
         if (key_exists('capability', $this->FunctionalArea)) {
@@ -124,7 +123,7 @@ class FunctionalHelper extends Helper
      * Set Functional Areas Values
      *
      * @param string $function The Function to be Checked
-     * @param User|null $identity The User Identity
+     * @param \App\Model\Entity\User|null $identity The User Identity
      * @param string|null $registeredCap The registered capability key
      * @return bool
      */
@@ -156,7 +155,7 @@ class FunctionalHelper extends Helper
      * @param string $searchModel The Function to be Checked
      * @return bool
      */
-    public function checkSearchConfigured($searchModel)
+    public function checkSearchConfigured(string $searchModel): bool
     {
         if (key_exists($searchModel, $this->SearchConfigured)) {
             return (bool)$this->SearchConfigured[$searchModel];

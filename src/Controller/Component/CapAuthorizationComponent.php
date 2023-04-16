@@ -1,12 +1,9 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Component;
 
-use App\Controller\AppController;
 use App\Model\Entity\User;
-use App\Model\Table\UsersTable;
 use Authorization\Controller\Component\AuthorizationComponent;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
@@ -19,17 +16,17 @@ use Cake\Datasource\ModelAwareTrait;
  *
  * CapAuthorization component
  *
- * @property UsersTable $Users
- * @method AppController getController()
+ * @property \App\Model\Table\UsersTable $Users
+ * @method \App\Controller\AppController getController()
  */
 class CapAuthorizationComponent extends AuthorizationComponent
 {
     use ModelAwareTrait;
 
     /**
-     * @var User
+     * @var \App\Model\Entity\User
      */
-    protected $capUser;
+    protected User $capUser;
 
     /**
      * @inheritDoc
@@ -46,17 +43,17 @@ class CapAuthorizationComponent extends AuthorizationComponent
     /**
      * @var array The Array for Permissions which shouldn't be blocked
      */
-    private $alwaysPermitted = [
+    private array $alwaysPermitted = [
         User::FIELD_ID,
         User::FIELD_CAPABILITIES,
     ];
 
     /**
-     * @param EntityInterface $resource The resource to check authorization on.
+     * @param \Cake\Datasource\EntityInterface $resource The resource to check authorization on.
      * @param string|null $action The action to check authorization for.
      * @return array
      */
-    public function see(EntityInterface $resource, $action = 'VIEW')
+    public function see(EntityInterface $resource, ?string $action = 'VIEW'): array
     {
         $fields = [];
 
@@ -90,7 +87,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param EntityInterface $resource ORM Resource
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getResourceFields(EntityInterface $resource): array
@@ -112,7 +109,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param EntityInterface $resource ORM Resource
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getGroups(EntityInterface $resource): ?array
@@ -127,7 +124,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     }
 
     /**
-     * @param EntityInterface $resource ORM Resource
+     * @param \Cake\Datasource\EntityInterface $resource ORM Resource
      * @return array
      */
     protected function getSections(EntityInterface $resource): ?array
@@ -166,7 +163,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string $capability The Capability being checked.
      * @param int|null $group A Group ID if applicable
      * @param int|null $section A Section ID if applicable
-     * @return ResultInterface
+     * @return \Authorization\Policy\ResultInterface
      */
     public function checkCapabilityResult(string $capability, ?int $group = null, ?int $section = null): ResultInterface
     {
@@ -188,7 +185,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param array|int|null $group The Group ID for checking against
      * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
-     * @return ResultInterface
+     * @return \Authorization\Policy\ResultInterface
      */
     public function buildAndCheckCapabilityResult(
         string $action,
@@ -217,18 +214,23 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null): bool
-    {
+    public function buildAndCheckCapability(
+        string $action,
+        string $model,
+        array|int|null $group = null,
+        array|int|null $section = null,
+        ?string $field = null
+    ): bool {
         return $this->buildAndCheckCapabilityResult($action, $model, $group, $section, $field)->getStatus();
     }
 
     /**
-     * @return User|null
+     * @return \App\Model\Entity\User|null
      */
     protected function getCapUser(): ?User
     {
         $request = $this->getController()->getRequest();
-        /** @var User $identity */
+        /** @var \App\Model\Entity\User $identity */
         $identity = $this->getIdentity($request);
 
         if ($identity instanceof IdentityInterface) {

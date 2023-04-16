@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -37,7 +36,7 @@ use Cake\ORM\Entity;
  * @property string|null $scout_group
  * @property string|null $scout_group_section
  *
- * @property DocumentVersion $document_version
+ * @property \App\Model\Entity\DocumentVersion $document_version
  * @property bool|null $provisional
  * @property string $clean_role
  * @property string $clean_group
@@ -60,7 +59,7 @@ class CompassRecord extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'document_version_id' => true,
         'membership_number' => true,
         'title' => true,
@@ -206,7 +205,7 @@ class CompassRecord extends Entity
      *
      * @return string
      */
-    protected function _getCleanSectionType()
+    protected function _getCleanSectionType(): string
     {
         if (empty($this->location) && !$this->otherFieldsNotEmpty()) {
             return null;
@@ -236,7 +235,7 @@ class CompassRecord extends Entity
      *
      * @return string
      */
-    protected function _getCleanSection()
+    protected function _getCleanSection(): string
     {
         if (empty($this->clean_section_type) || (empty($this->location) && !$this->otherFieldsNotEmpty())) {
             return null;
@@ -264,7 +263,7 @@ class CompassRecord extends Entity
     /**
      * Return a First Name Field
      *
-     * @return null|string
+     * @return string|null
      */
     protected function _getFirstName(): ?string
     {
@@ -282,7 +281,7 @@ class CompassRecord extends Entity
      *
      * @return string
      */
-    protected function _getLastName()
+    protected function _getLastName(): string
     {
         if (empty($this->surname)) {
             return null;
@@ -296,12 +295,12 @@ class CompassRecord extends Entity
      *
      * @return string
      */
-    protected function _getFullName()
+    protected function _getFullName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    protected $_virtual = [
+    protected array $_virtual = [
         'provisional',
         'clean_role',
         'clean_group',

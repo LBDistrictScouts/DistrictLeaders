@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -26,12 +25,12 @@ use Authorization\Policy\Result;
 trait AppPolicyTrait
 {
     /**
-     * @param User $user Identity object.
+     * @param \App\Model\Entity\User $user Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
-     * @return Result|null
+     * @return \Authorization\Policy\Result|null
      */
-    public function before($user, $resource, $action): ?Result
+    public function before(User $user, mixed $resource, string $action): ?Result
     {
         if (is_null($user)) {
             return new Result(false, 'User not present. Auth error.');
@@ -49,9 +48,9 @@ trait AppPolicyTrait
     }
 
     /**
-     * @param User $user The user to be processed
+     * @param \App\Model\Entity\User $user The user to be processed
      * @param string $message The message to record
-     * @return Result|null
+     * @return \Authorization\Policy\Result|null
      */
     protected function canBuildAndCheck(User $user, string $message): ?Result
     {

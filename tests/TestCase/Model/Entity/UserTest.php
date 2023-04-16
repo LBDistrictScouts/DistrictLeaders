@@ -1,12 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Entity;
 
 use App\Model\Entity\Capability;
 use App\Model\Entity\User;
-use App\Model\Table\UsersTable;
 use App\Test\TestCase\Controller\AppTestTrait;
 use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityDecorator;

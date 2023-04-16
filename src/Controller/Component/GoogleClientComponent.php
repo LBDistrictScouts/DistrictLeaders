@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller\Component;
@@ -8,10 +7,6 @@ use App\Model\Entity\Directory;
 use App\Utility\GoogleBuilder;
 use Cake\Controller\Component;
 use Google_Client;
-use Google_Exception;
-use Google_Service_Directory_Domains2;
-use Google_Service_Directory_User;
-use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component
@@ -21,27 +16,31 @@ class GoogleClientComponent extends Component
     /**
      * get List
      *
-     * @param Directory $directory The Directory Authentication
+     * @param \App\Model\Entity\Directory $directory The Directory Authentication
      * @param null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
-     * @return Google_Service_Directory_Users
-     * @throws Google_Exception
+     * @return \Google_Service_Directory_Users
+     * @throws \Google_Exception
      */
-    public function getUserList(Directory $directory, $domain = null, int $limit = 50, ?string $pageToken = null)
-    {
+    public function getUserList(
+        Directory $directory,
+        null $domain = null,
+        int $limit = 50,
+        ?string $pageToken = null
+    ): Google_Service_Directory_Users {
         return GoogleBuilder::getUserList($directory, $domain, $limit, $pageToken);
     }
 
     /**
      * get List
      *
-     * @param Directory $directory The Directory Entity
+     * @param \App\Model\Entity\Directory $directory The Directory Entity
      * @param string $userId User ID to be retrieved
-     * @return Google_Service_Directory_User
-     * @throws Google_Exception
+     * @return \Google_Service_Directory_User
+     * @throws \Google_Exception
      */
-    public function getUser(Directory $directory, $userId)
+    public function getUser(Directory $directory, string $userId): Google_Service_Directory_User
     {
         return GoogleBuilder::getUser($userId, $directory);
     }
@@ -49,17 +48,17 @@ class GoogleClientComponent extends Component
     /**
      * get List
      *
-     * @return Google_Service_Directory_Domains2
-     * @throws Google_Exception
+     * @return \Google_Service_Directory_Domains2
+     * @throws \Google_Exception
      */
-    public function getDomainList()
+    public function getDomainList(): Google_Service_Directory_Domains2
     {
         return GoogleBuilder::getDomainList();
     }
 
     /**
-     * @return Google_Client
-     * @throws Google_Exception
+     * @return \Google_Client
+     * @throws \Google_Exception
      */
     public function newClient(): Google_Client
     {
@@ -67,9 +66,9 @@ class GoogleClientComponent extends Component
     }
 
     /**
-     * @param Google_Client $client The Instantiated Google Client
-     * @param Directory $directory The Directory Instance
-     * @return Google_Client
+     * @param \Google_Client $client The Instantiated Google Client
+     * @param \App\Model\Entity\Directory $directory The Directory Instance
+     * @return \Google_Client
      */
     public function getToken(Google_Client $client, Directory $directory): Google_Client
     {
@@ -79,11 +78,11 @@ class GoogleClientComponent extends Component
     /**
      * Save Token Method
      *
-     * @param Google_Client $client An Activated Client
-     * @param Directory $directory The Directory to Save Config To
+     * @param \Google_Client $client An Activated Client
+     * @param \App\Model\Entity\Directory $directory The Directory to Save Config To
      * @return void
      */
-    public function saveToken(Google_Client $client, Directory $directory)
+    public function saveToken(Google_Client $client, Directory $directory): void
     {
         GoogleBuilder::saveToken($client, $directory);
     }

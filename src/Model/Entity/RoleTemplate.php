@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -14,7 +13,7 @@ use Cake\ORM\Entity;
  * @property array $template_capabilities
  * @property int $indicative_level
  *
- * @property RoleType[] $role_types
+ * @property \App\Model\Entity\RoleType[] $role_types
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -29,7 +28,7 @@ class RoleTemplate extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'role_template' => true,
         'template_capabilities' => true,
         'indicative_level' => true,

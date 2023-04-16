@@ -1,18 +1,15 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Listener;
 
 use App\Listener\TokenListener;
 use App\Model\Entity\Token;
-use App\Model\Table\TokensTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
 use Cake\Event\Event;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\I18n\FrozenTime;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class UserListenerTest

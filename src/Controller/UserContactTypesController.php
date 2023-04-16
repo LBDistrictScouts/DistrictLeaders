@@ -1,29 +1,22 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Model\Entity\UserContactType;
-use App\Model\Table\UserContactTypesTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
-
 /**
  * UserContactTypes Controller
  *
- * @property UserContactTypesTable $UserContactTypes
- * @method UserContactType[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
+ * @method \App\Model\Entity\UserContactType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class UserContactTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index()
+    public function index(): ?Response
     {
         $userContactTypes = $this->paginate($this->UserContactTypes);
 
@@ -34,10 +27,10 @@ class UserContactTypesController extends AppController
      * View method
      *
      * @param string|null $id User Contact Type id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): ?Response
     {
         $userContactType = $this->UserContactTypes->get($id, [
             'contain' => ['UserContacts'],
@@ -49,9 +42,9 @@ class UserContactTypesController extends AppController
     /**
      * Add method
      *
-     * @return Response|null Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): ?Response
     {
         $userContactType = $this->UserContactTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -70,10 +63,10 @@ class UserContactTypesController extends AppController
      * Edit method
      *
      * @param string|null $id User Contact Type id.
-     * @return Response|null Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): ?Response
     {
         $userContactType = $this->UserContactTypes->get($id, [
             'contain' => [],
@@ -94,10 +87,10 @@ class UserContactTypesController extends AppController
      * Delete method
      *
      * @param string|null $id User Contact Type id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $userContactType = $this->UserContactTypes->get($id);

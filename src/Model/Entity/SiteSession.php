@@ -1,18 +1,16 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
  * SiteSession Entity
  *
  * @property string $id
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  * @property string $data
  * @property int $expires
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
@@ -29,7 +27,7 @@ class SiteSession extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'created' => true,
         'modified' => true,
         'data' => true,

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Table;
@@ -9,8 +8,6 @@ use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Security;
-use CakephpFixtureFactories\Factory\BaseFactory;
-use Exception;
 
 /**
  * Trait ModelTestTrait

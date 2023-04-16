@@ -1,15 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use App\Model\Table\CompassRecordsTable;
-use App\Model\Table\DirectoryUsersTable;
-use App\Model\Table\UserContactTypesTable;
 use Cake\Datasource\FactoryLocator;
 use Cake\Datasource\ModelAwareTrait;
-use Cake\I18n\FrozenTime;
 use Cake\ORM\Entity;
 
 /**
@@ -19,22 +14,22 @@ use Cake\ORM\Entity;
  * @property string $contact_field
  * @property int $user_id
  * @property int $user_contact_type_id
- * @property FrozenTime $created
- * @property FrozenTime|null $modified
+ * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\FrozenTime|null $modified
  * @property bool $verified
  * @property bool|null $validated
- * @property FrozenTime|null $deleted
+ * @property \Cake\I18n\FrozenTime|null $deleted
  * @property int|null $directory_user_id
  *
- * @property Audit[] $audits
- * @property User $user
- * @property UserContactType $user_contact_type
- * @property Role[] $roles
- * @property DirectoryUser|null $directory_user
+ * @property \App\Model\Entity\Audit[] $audits
+ * @property \App\Model\Entity\User $user
+ * @property \App\Model\Entity\UserContactType $user_contact_type
+ * @property \App\Model\Entity\Role[] $roles
+ * @property \App\Model\Entity\DirectoryUser|null $directory_user
  *
- * @property DirectoryUsersTable $DirectoryUsers
- * @property CompassRecordsTable $CompassRecords
- * @property UserContactTypesTable $UserContactTypes
+ * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
+ * @property \App\Model\Table\CompassRecordsTable $CompassRecords
+ * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  * @property int $validation_state
@@ -52,7 +47,7 @@ class UserContact extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'contact_field' => true,
         'user_id' => true,
         'user_contact_type_id' => true,
@@ -73,7 +68,7 @@ class UserContact extends Entity
      * @param string $contactField The Contact Field being Set
      * @return bool
      */
-    protected function _setContactField(string $contactField)
+    protected function _setContactField(string $contactField): bool
     {
         if ($this->verified) {
             return $contactField;
@@ -130,7 +125,7 @@ class UserContact extends Entity
         return 0;
     }
 
-    protected $_virtual = ['validated', 'validation_state'];
+    protected array $_virtual = ['validated', 'validation_state'];
 
     public const FIELD_ID = 'id';
     public const FIELD_CONTACT_FIELD = 'contact_field';

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -13,7 +12,7 @@ use Cake\ORM\Entity;
  * @property string $document_type
  * @property string|null $special_capability
  *
- * @property Document[] $documents
+ * @property \App\Model\Entity\Document[] $documents
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -28,7 +27,7 @@ class DocumentType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'document_type' => true,
         'special_capability' => true,
         'documents' => true,

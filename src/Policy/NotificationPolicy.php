@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Policy;
@@ -19,11 +18,11 @@ class NotificationPolicy implements BeforePolicyInterface
     use AppPolicyTrait;
 
     /**
-     * @param User $user The User Editing
-     * @param Notification $subject The User being Edited
-     * @return Result
+     * @param \App\Model\Entity\User $user The User Editing
+     * @param \App\Model\Entity\Notification $subject The User being Edited
+     * @return \Authorization\Policy\Result
      */
-    public function canView(User $user, Notification $subject)
+    public function canView(User $user, Notification $subject): Result
     {
         if ($user->id == $subject->user_id && $user->buildAndCheckCapability('VIEW', 'Notifications')) {
             return new Result(true, '106');
@@ -34,10 +33,10 @@ class NotificationPolicy implements BeforePolicyInterface
     }
 
     /**
-     * @param User $user The User Editing
-     * @return Result
+     * @param \App\Model\Entity\User $user The User Editing
+     * @return \Authorization\Policy\Result
      */
-    public function canIndex(User $user)
+    public function canIndex(User $user): Result
     {
         if ($user->checkCapability('DIRECTORY')) {
             return new Result(true);

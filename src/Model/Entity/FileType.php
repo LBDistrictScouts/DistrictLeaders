@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -14,7 +13,7 @@ use Cake\ORM\Entity;
  * @property string $file_extension
  * @property string|null $mime
  *
- * @property DocumentEdition[] $document_editions
+ * @property \App\Model\Entity\DocumentEdition[] $document_editions
  * @SuppressWarnings(PHPMD.CamelCaseMethodName)
  * @SuppressWarnings(PHPMD.CamelCasePropertyName)
  */
@@ -29,7 +28,7 @@ class FileType extends Entity
      *
      * @var array
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'file_type' => true,
         'file_extension' => true,
         'mime' => true,

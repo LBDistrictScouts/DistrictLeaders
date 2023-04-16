@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -8,31 +7,28 @@ use App\Model\Entity\Capability;
 use App\Model\Entity\RoleTemplate;
 use App\Model\Table\Traits\BaseInstallerTrait;
 use Cake\Database\Schema\TableSchemaInterface;
-use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
-use Cake\ORM\Association\HasMany;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * RoleTemplates Model
  *
- * @property RoleTypesTable&HasMany $RoleTypes
- * @method RoleTemplate get($primaryKey, $options = [])
- * @method RoleTemplate newEntity(array $data, array $options = [])
- * @method RoleTemplate[] newEntities(array $data, array $options = [])
- * @method RoleTemplate|false save(EntityInterface $entity, $options = [])
- * @method RoleTemplate saveOrFail(EntityInterface $entity, $options = [])
- * @method RoleTemplate patchEntity(EntityInterface $entity, array $data, array $options = [])
- * @method RoleTemplate[] patchEntities(iterable $entities, array $data, array $options = [])
- * @method RoleTemplate findOrCreate($search, ?callable $callback = null, $options = [])
- * @method RoleTemplate[]|ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method RoleTemplate newEmptyEntity()
- * @method RoleTemplate[]|ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method RoleTemplate[]|ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method RoleTemplate[]|ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\HasMany $RoleTypes
+ * @method \App\Model\Entity\RoleTemplate get($primaryKey, $options = [])
+ * @method \App\Model\Entity\RoleTemplate newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleTemplate saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleTemplate patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleTemplate findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate newEmptyEntity()
+ * @method \App\Model\Entity\RoleTemplate[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleTemplate[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTemplatesTable extends Table
 {
@@ -60,8 +56,8 @@ class RoleTemplatesTable extends Table
     /**
      * Default validation rules.
      *
-     * @param Validator $validator Validator instance.
-     * @return Validator
+     * @param \Cake\Validation\Validator $validator Validator instance.
+     * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator): Validator
     {
@@ -89,8 +85,8 @@ class RoleTemplatesTable extends Table
     }
 
     /**
-     * @param TableSchemaInterface $schema The Schema to be modified
-     * @return TableSchemaInterface
+     * @param \Cake\Database\Schema\TableSchemaInterface $schema The Schema to be modified
+     * @return \Cake\Database\Schema\TableSchemaInterface
      * @SuppressWarnings(PHPMD.CamelCaseMethodName)
      */
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
@@ -103,13 +99,13 @@ class RoleTemplatesTable extends Table
     /**
      * before Save LifeCycle Callback
      *
-     * @param EventInterface $event The Event to be Processed
-     * @param RoleTemplate $entity The Entity on which the Save is being Called.
+     * @param \Cake\Event\EventInterface $event The Event to be Processed
+     * @param \App\Model\Entity\RoleTemplate $entity The Entity on which the Save is being Called.
      * @param array $options Options Values
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, RoleTemplate $entity, array $options): bool
     {
         if (
             $entity->isNew()
@@ -131,7 +127,7 @@ class RoleTemplatesTable extends Table
      *
      * @return int
      */
-    public function installBaseRoleTemplates()
+    public function installBaseRoleTemplates(): int
     {
         $count = 0;
         $roleTemplates = $this->getBaseValues($this);
@@ -151,7 +147,7 @@ class RoleTemplatesTable extends Table
      * @param array $roleTemplate Role Template Array for Config
      * @return bool
      */
-    public function installBaseRoleTemplate($roleTemplate)
+    public function installBaseRoleTemplate(array $roleTemplate): bool
     {
         // Quit loop if keys not present
         if (!key_exists('template_name', $roleTemplate) || !key_exists('core_level', $roleTemplate)) {
@@ -184,9 +180,9 @@ class RoleTemplatesTable extends Table
     /**
      * @param string $name The Role Template Name
      * @param int $level The Permission Level
-     * @return RoleTemplate|false
+     * @return \App\Model\Entity\RoleTemplate|false
      */
-    public function makeCoreTemplate(string $name, int $level)
+    public function makeCoreTemplate(string $name, int $level): RoleTemplate|false
     {
         $query = $this->RoleTypes->Capabilities->find('level', ['level' => $level]);
         $capabilities = [];
@@ -206,7 +202,7 @@ class RoleTemplatesTable extends Table
 
     /**
      * @param array $objectArray The array to be saved
-     * @return RoleTemplate
+     * @return \App\Model\Entity\RoleTemplate
      */
     protected function makeOrPatch(array $objectArray): RoleTemplate
     {

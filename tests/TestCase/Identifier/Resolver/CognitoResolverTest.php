@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -19,7 +18,6 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Identifier\Resolver;
 
 use App\Identifier\Resolver\CognitoResolver;
-use App\Model\Entity\User;
 use App\Test\TestCase\AuthenticationTestCase;
 use Cake\Datasource\EntityInterface;
 

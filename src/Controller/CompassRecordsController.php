@@ -1,23 +1,17 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Model\Entity\CompassRecord;
 use App\Model\Filter\CompassRecordsCollection;
-use App\Model\Table\CompassRecordsTable;
-use App\Model\Table\UsersTable;
-use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Datasource\ResultSetInterface;
-use Cake\Http\Response;
 
 /**
  * CompassRecords Controller
  *
- * @property CompassRecordsTable $CompassRecords
- * @property UsersTable $Users
- * @method CompassRecord[]|ResultSetInterface paginate($object = null, array $settings = [])
+ * @property \App\Model\Table\CompassRecordsTable $CompassRecords
+ * @property \App\Model\Table\UsersTable $Users
+ * @method \App\Model\Entity\CompassRecord[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class CompassRecordsController extends AppController
@@ -26,9 +20,9 @@ class CompassRecordsController extends AppController
      * Index method
      *
      * @param int|null $documentVersionId The ID of the Document Version for Limiting
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function index($documentVersionId = null)
+    public function index(?int $documentVersionId = null): ?Response
     {
         $this->paginate = [
             'contain' => ['DocumentVersions.Documents'],
@@ -45,9 +39,9 @@ class CompassRecordsController extends AppController
     /**
      * Index method
      *
-     * @return Response|void
+     * @return \Cake\Http\Response|void
      */
-    public function search()
+    public function search(): ?Response
     {
         $this->paginate = [
             'contain' => ['DocumentVersions.Documents'],
@@ -65,10 +59,10 @@ class CompassRecordsController extends AppController
      * View method
      *
      * @param null $recordId Compass Record id.
-     * @return Response|void
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($recordId = null)
+    public function view(null $recordId = null): ?Response
     {
         $compassRecord = $this->CompassRecords->get($recordId, [
             'contain' => ['DocumentVersions.Documents'],
@@ -84,9 +78,9 @@ class CompassRecordsController extends AppController
      * Add method
      *
      * @param int $recordId Compass Record ID for editing
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function edit($recordId)
+    public function edit(int $recordId): ?Response
     {
         $compassRecord = $this->CompassRecords->get($recordId, [
             'contain' => ['DocumentVersions.Documents'],
@@ -108,9 +102,9 @@ class CompassRecordsController extends AppController
      *
      * @param int $compassRecordId The ID of the Directory User
      * @param int $userId The ID of the User
-     * @return Response|void Redirects on successful add, renders view otherwise.
+     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function merge($compassRecordId, $userId)
+    public function merge(int $compassRecordId, int $userId): ?Response
     {
         $this->loadModel('Users');
 
@@ -126,10 +120,10 @@ class CompassRecordsController extends AppController
      * Edit method
      *
      * @param string|null $recordId Compass Record id.
-     * @return Response|void Redirects on successful edit, renders view otherwise.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function consume($recordId = null)
+    public function consume(?string $recordId = null): ?Response
     {
         $compassRecord = $this->CompassRecords->get($recordId);
         if ($this->request->is(['post'])) {
@@ -147,10 +141,10 @@ class CompassRecordsController extends AppController
      * Delete method
      *
      * @param string|null $recordId Compass Record id.
-     * @return Response|null Redirects to index.
-     * @throws RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null Redirects to index.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete(?string $recordId = null)
+    public function delete(?string $recordId = null): ?Response
     {
         $this->request->allowMethod(['post', 'delete']);
         $compassRecord = $this->CompassRecords->get($recordId);

@@ -1,13 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
 use App\Model\Entity\User;
-use App\Model\Table\UsersTable;
 use App\Test\TestCase\ControllerTestCase as TestCase;
-use PHPUnit\Exception;
 
 /**
  * App\Controller\UsersController Test Case

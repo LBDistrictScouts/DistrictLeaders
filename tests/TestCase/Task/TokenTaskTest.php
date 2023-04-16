@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Test\TestCase\Task;
@@ -9,9 +8,7 @@ use App\Model\Table\TokensTable;
 use App\Queue\Task\TokenTask;
 use App\Test\TestCase\QueueTestCase as TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
-use Queue\Model\Entity\QueuedJob;
 use Queue\Queue\Task;
-use Throwable;
 
 /**
  * App\Mailer\BasicMailer Test Case

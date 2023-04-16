@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace App\Listener;
 
-use App\Model\Entity\RoleTemplate;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\ORM\Locator\LocatorAwareTrait;
-use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class LoginEvent
@@ -29,15 +27,15 @@ class CapabilityListener implements EventListenerInterface
     }
 
     /**
-     * @param EventInterface $event The event being processed.
+     * @param \Cake\Event\EventInterface $event The event being processed.
      * @return void
      */
-    public function templateChange(EventInterface $event)
+    public function templateChange(EventInterface $event): void
     {
-        /** @var QueuedJobsTable $QueuedJobs */
+        /** @var \Queue\Model\Table\QueuedJobsTable $QueuedJobs */
         $QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
 
-        /** @var RoleTemplate $roleTemplate */
+        /** @var \App\Model\Entity\RoleTemplate $roleTemplate */
         $roleTemplate = $event->getData('role_template');
 
         $QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');

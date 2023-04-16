@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -42,7 +41,7 @@ class CognitoResolver implements ResolverInterface
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'userModel' => 'Users',
         'finder' => 'all',
     ];

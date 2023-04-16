@@ -1,12 +1,8 @@
 <?php
-
 declare(strict_types=1);
 
 namespace App\Queue\Task;
 
-use App\Model\Table\UsersTable;
-use App\Model\Table\UserStatesTable;
-use Queue\Model\Table\QueuedJobsTable;
 use Queue\Queue\Task;
 use Queue\Queue\TaskInterface;
 
@@ -14,9 +10,9 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property UsersTable $Users
- * @property UserStatesTable $UserStates
- * @property QueuedJobsTable $QueuedJobs
+ * @property \App\Model\Table\UsersTable $Users
+ * @property \App\Model\Table\UserStatesTable $UserStates
+ * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class StateTask extends Task implements TaskInterface
 {
@@ -25,24 +21,24 @@ class StateTask extends Task implements TaskInterface
     /**
      * @var int
      */
-    public $timeout = 900;
+    public int $timeout = 900;
 
     /**
      * @var int
      */
-    public $retries = 1;
+    public int $retries = 1;
 
     /**
      * @var string The Data Key
      */
-    private $outputKey = 'user_records';
+    private string $outputKey = 'user_records';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->jobId = $jobId;
 
