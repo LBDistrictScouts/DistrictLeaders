@@ -29,7 +29,7 @@ webroot/css/.sass-cache
 webroot/css/.sass-cache/*
 
 phpunit.xml.dist
-phpunit-travis.xml.dist
+phpunit-ci.xml.dist
 phpcs.xml.dist
 
 config/Migrations/schema-dump-default.lock

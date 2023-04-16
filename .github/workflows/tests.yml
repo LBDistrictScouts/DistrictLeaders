@@ -52,7 +52,7 @@ jobs:
           coverage: xdebug
 
       - name: Set App File Config
-        run: mv config/app_file.travis.php config/app_file.php
+        run: mv config/app_file.ci.php config/app_file.php
 
       - name: Set App Config
         run: mv config/app.github-ci.php config/app.php
@@ -61,10 +61,10 @@ jobs:
         run: if [[ ${{ matrix.async }} == 'N' ]]; then rm phpunit.xml.dist; fi
 
       - name: Set Async Setup
-        run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
+        run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-ci.xml.dist phpunit.xml.dist; fi
 
       - name: Set General YML Config
-        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+        run: mv config/Environment/ci_parameters.yml config/Environment/app_parameters.yml
 
       - name: Update composer
         run: composer self-update
@@ -143,13 +143,13 @@ jobs:
           extensions: mbstring, intl, apcu
 
       - name: Set App File Config
-        run: mv config/app_file.travis.php config/app_file.php
+        run: mv config/app_file.ci.php config/app_file.php
 
       - name: Set App Config
         run: mv config/app.github-ci.php config/app.php
 
       - name: Set General YML Config
-        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+        run: mv config/Environment/ci_parameters.yml config/Environment/app_parameters.yml
 
       - name: Update composer
         run: composer self-update
