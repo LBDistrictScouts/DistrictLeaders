@@ -1,5 +1,8 @@
 name: GitHub CI
 
+env:
+    APP_DL_INSTALL_MODE: CI
+
 on:
   push:
     branches:
@@ -51,20 +54,11 @@ jobs:
           ini-values: xdebug.mode="develop,coverage", apc.enable_cli=1
           coverage: xdebug
 
-      - name: Set App File Config
-        run: mv config/app_file.ci.php config/app_file.php
-
-      - name: Set App Config
-        run: mv config/app.github-ci.php config/app.php
-
       - name: Set Async Setup
         run: if [[ ${{ matrix.async }} == 'N' ]]; then rm phpunit.xml.dist; fi
 
       - name: Set Async Setup
         run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-ci.xml.dist phpunit.xml.dist; fi
-
-      - name: Set General YML Config
-        run: mv config/Environment/ci_parameters.yml config/Environment/app_parameters.yml
 
       - name: Update composer
         run: composer self-update
@@ -84,6 +78,9 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-scripts
+
+      - name: Create Config Files
+        run: composer console-install
 
       - name: Run tests
         run: |
@@ -142,12 +139,6 @@ jobs:
           php-version: '8.2'
           extensions: mbstring, intl, apcu
 
-      - name: Set App File Config
-        run: mv config/app_file.ci.php config/app_file.php
-
-      - name: Set App Config
-        run: mv config/app.github-ci.php config/app.php
-
       - name: Set General YML Config
         run: mv config/Environment/ci_parameters.yml config/Environment/app_parameters.yml
 
@@ -169,6 +160,9 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --optimize-autoloader
+
+      - name: Add Config Files
+        run: composer console-install
 
       - name: Run Static Fix
         if: ${{ matrix.check-type == 'coding-standards' }}
