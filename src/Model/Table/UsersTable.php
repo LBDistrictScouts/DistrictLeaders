@@ -471,7 +471,7 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param arrayObject $options Options Values
+     * @param \ArrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -485,7 +485,7 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param ArrayObject $options Options Values
+     * @param \ArrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */

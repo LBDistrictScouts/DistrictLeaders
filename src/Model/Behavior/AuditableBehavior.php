@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace App\Model\Behavior;
 
-use ArrayObject;
 use App\Model\Table\AuditsTable;
+use ArrayObject;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
@@ -38,7 +38,7 @@ class AuditableBehavior extends Behavior
      *
      * @param \Cake\Event\Event $event The Event to be Processed
      * @param \Cake\ORM\Entity $entity The Entity on which the Save is being Called.
-     * @param ArrayObject $options Options Values
+     * @param \ArrayObject $options Options Values
      * @return bool
      */
     public function afterSave(EventInterface $event, Entity $entity, ArrayObject $options): bool

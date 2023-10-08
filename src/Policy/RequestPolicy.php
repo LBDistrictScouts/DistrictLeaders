@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
-use App\Model\Entity\User;
 use Authorization\IdentityInterface;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Http\ServerRequest;
-use Exception;
 
 /**
  * Class RequestPolicy

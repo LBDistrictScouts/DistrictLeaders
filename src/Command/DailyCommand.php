@@ -47,7 +47,6 @@ class DailyCommand extends Command
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function execute(Arguments $args, ConsoleIo $consoleIo): ?int
-
     {
         $tasks = Cron::collectCronClasses();
         $success = 0;

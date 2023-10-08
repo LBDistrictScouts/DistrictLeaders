@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\Model\Entity\CompassRecord;
 use App\Model\Filter\CompassRecordsCollection;
-use Cake\Http\Response;
 
 /**
  * CompassRecords Controller

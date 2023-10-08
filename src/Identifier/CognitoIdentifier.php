@@ -238,7 +238,7 @@ class CognitoIdentifier extends AbstractIdentifier
      * Find a user record using the username/identifier provided.
      *
      * @param string $identifier The username/identifier.
-     * @return array|ArrayAccess|EntityInterface|null
+     * @return \Cake\Datasource\EntityInterface|\ArrayAccess|array|null
      */
     protected function findIdentity(string $identifier): array|ArrayAccess|EntityInterface|null
     {

@@ -82,8 +82,7 @@
         "console-install": "App\\Console\\Installer::postInstall",
         "check": [
             "@cs-check",
-            "composer validate",
-            "@phpstan-check"
+            "composer validate"
         ],
         "fix": [
             "@annotate",

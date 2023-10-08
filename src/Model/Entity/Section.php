@@ -150,7 +150,7 @@ class Section extends Entity
     /**
      * @var array<string> List of Virtual Properties
      */
-    protected $_virtual = ['meeting_weekday'];
+    protected array $_virtual = ['meeting_weekday'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION = 'section';

@@ -7,8 +7,8 @@ use App\Model\Entity\Directory;
 use App\Utility\GoogleBuilder;
 use Cake\Controller\Component;
 use Google_Client;
-use Google_Service_Directory_Users;
 use Google_Service_Directory_Domains2;
+use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component

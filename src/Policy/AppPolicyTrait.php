@@ -19,7 +19,6 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
-use Exception;
 
 /**
  * A trait intended to make application tests of your controllers easier.
@@ -32,9 +31,10 @@ trait AppPolicyTrait
      * @param string $action The action/operation being performed.
      * @return \Authorization\Policy\Result|null
      * @throws \Exception
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-    public function before(?IdentityInterface $identity, $resource, $action): ?Result
+    public function before(?IdentityInterface $identity, mixed $resource, string $action): ?Result
     {
         if (is_null($identity)) {
             return new Result(false, 'User not present. Auth error.');

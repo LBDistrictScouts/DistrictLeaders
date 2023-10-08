@@ -47,8 +47,8 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|array|null $group The Group ID for checking against
-     * @param int|array|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return bool
      */

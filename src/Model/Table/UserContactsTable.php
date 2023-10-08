@@ -9,9 +9,9 @@ use App\Model\Entity\UserContactType;
 use App\Model\Table\Exceptions\BadUserDataException;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\ORM\Query;
 use Cake\Validation\Validator;
 
 /**

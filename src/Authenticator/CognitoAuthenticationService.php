@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 namespace App\Authenticator;
 
+use ArrayAccess;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\Authenticator\PersistenceInterface;
@@ -82,12 +83,13 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
      * @param \ArrayAccess|array $identity Identity data.
      * @return array
      * @psalm-return array{request: \Psr\Http\Message\ServerRequestInterface, response: \Psr\Http\Message\ResponseInterface}
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public function persistIdentity(
         ServerRequestInterface $request,
         ResponseInterface $response,
-        $identity
+        array|ArrayAccess $identity
     ): array {
         foreach ($this->authenticators() as $authenticator) {
             if ($authenticator instanceof PersistenceInterface) {

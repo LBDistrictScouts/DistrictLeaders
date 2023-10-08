@@ -7,7 +7,6 @@ use Cake\ORM\Entity;
 use Josbeir\Filesystem\FileEntityInterface;
 use Josbeir\Filesystem\FilesystemAwareTrait;
 use League\Flysystem\FileNotFoundException;
-use League\Flysystem\FilesystemException;
 
 /**
  * DocumentEdition Entity
@@ -77,7 +76,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
 
     /**
      * @return string|false
-     * @throws FilesystemException
+     * @throws \League\Flysystem\FilesystemException
      */
     public function read(): string|false
     {
