@@ -14,12 +14,14 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use App\Listener\CapabilityListener;
 use App\Listener\RoleListener;
 use App\Listener\TokenListener;
 use App\Listener\UserListener;
+use App\Model\Entity\User;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Table;
@@ -35,7 +37,7 @@ use Muffin\Footprint\Auth\FootprintAwareTrait;
  * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
  *
  * @property \Flash\Controller\Component\FlashComponent $Flash
- * @property \App\Controller\Component\CapAuthorizationComponent $Authorization.Authorization
+ * @property \App\Controller\Component\CapAuthorizationComponent $Authorization .Authorization
  */
 class AppController extends Controller
 {
@@ -46,10 +48,10 @@ class AppController extends Controller
     /**
      * The override code to configure Footprint Aware Audits for use with the Authentication Plugin
      *
-     * @param null $user The Footprint User
-     * @return bool|\Cake\ORM\Entity
+     * @param \App\Model\Entity\User|null $user The Footprint User
+     * @return \Cake\Datasource\EntityInterface|null
      */
-    protected function _setCurrentUser($user = null): ?EntityInterface
+    protected function _setCurrentUser(?User $user = null): ?EntityInterface
     {
         if (!$user) {
             $user = $this->request->getAttribute('identity');
@@ -95,7 +97,7 @@ class AppController extends Controller
      * @param \Cake\ORM\Table $model Table to be authenticated with credentials.
      * @return void
      */
-    public function whyPermitted(Table $model)
+    public function whyPermitted(Table $model): void
     {
         $result = $this->Authorization->canResult($model);
         $this->set('PolicyResult', $result);
@@ -106,7 +108,7 @@ class AppController extends Controller
      *
      * @return void
      */
-    private function eventListeners()
+    private function eventListeners(): void
     {
         $this->getEventManager()->on(new TokenListener());
         $this->getEventManager()->on(new RoleListener());

@@ -10,7 +10,7 @@ use App\Test\TestCase\ControllerTestCase as TestCase;
  * App\Controller\UsersController Test Case
  *
  * @uses \App\Controller\UsersController
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class UsersControllerTest extends TestCase
 {
@@ -129,7 +129,7 @@ class UsersControllerTest extends TestCase
      * Test login method
      *
      * @return void
-     * @throws \PHPUnit\Exception
+     * @throws Exception
      */
     public function testLogin()
     {

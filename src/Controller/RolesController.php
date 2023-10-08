@@ -11,16 +11,16 @@ use App\Model\Entity\UserContact;
  * Roles Controller
  *
  * @property \App\Model\Table\RolesTable $Roles
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Role[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RolesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses'],
@@ -34,10 +34,10 @@ class RolesController extends AppController
      * View method
      *
      * @param string|null $roleId Role id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($roleId = null)
+    public function view(?string $roleId = null): void
     {
         $role = $this->Roles->get($roleId, [
             'contain' => ['RoleTypes', 'Sections', 'Users', 'RoleStatuses', 'UserContacts',
@@ -66,7 +66,7 @@ class RolesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         if (key_exists('user_id', $this->request->getQueryParams())) {
             $user_id = $this->request->getQueryParams()['user_id'];
@@ -94,7 +94,7 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'edit', $role->get('id'), '?' => ['contact' => true]]);
+                $this->redirect(['action' => 'edit', $role->get('id'), '?' => ['contact' => true]]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
@@ -119,7 +119,7 @@ class RolesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($roleId = null)
+    public function edit(?string $roleId = null): void
     {
         $contact = $this->getRequest()->getQueryParams()['contact'] ?? false;
         $this->set('contact', $contact);
@@ -132,7 +132,7 @@ class RolesController extends AppController
             if ($this->Roles->save($role)) {
                 $this->Flash->success(__('The role has been saved.'));
 
-                return $this->redirect(['action' => 'view', $role->get('id')]);
+                $this->redirect(['action' => 'view', $role->get('id')]);
             }
             $this->Flash->error(__('The role could not be saved. Please, try again.'));
         }
@@ -155,7 +155,7 @@ class RolesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($roleId = null)
+    public function delete(?string $roleId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $role = $this->Roles->get($roleId);
@@ -165,6 +165,6 @@ class RolesController extends AppController
             $this->Flash->error(__('The role could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

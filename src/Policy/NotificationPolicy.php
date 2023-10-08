@@ -22,7 +22,7 @@ class NotificationPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\Notification $subject The User being Edited
      * @return \Authorization\Policy\Result
      */
-    public function canView(User $user, Notification $subject)
+    public function canView(User $user, Notification $subject): Result
     {
         if ($user->id == $subject->user_id && $user->buildAndCheckCapability('VIEW', 'Notifications')) {
             return new Result(true, '106');
@@ -36,7 +36,7 @@ class NotificationPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result
      */
-    public function canIndex(User $user)
+    public function canIndex(User $user): Result
     {
         if ($user->checkCapability('DIRECTORY')) {
             return new Result(true);

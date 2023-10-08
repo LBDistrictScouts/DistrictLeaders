@@ -9,7 +9,7 @@ use App\Model\Entity\DirectoryType;
  * DirectoryTypes Controller
  *
  * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class DirectoryTypesController extends AppController
@@ -17,9 +17,9 @@ class DirectoryTypesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $directoryTypes = $this->paginate($this->DirectoryTypes);
 
@@ -29,13 +29,13 @@ class DirectoryTypesController extends AppController
     /**
      * View method
      *
-     * @param null $id Directory Type id.
-     * @return \Cake\Http\Response|void
+     * @param int $directoryTypeId Directory Type id.
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(int $directoryTypeId): void
     {
-        $directoryType = $this->DirectoryTypes->get($id, [
+        $directoryType = $this->DirectoryTypes->get($directoryTypeId, [
             'contain' => ['Directories'],
         ]);
 
@@ -45,9 +45,9 @@ class DirectoryTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $directoryType = $this->DirectoryTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -55,7 +55,7 @@ class DirectoryTypesController extends AppController
             if ($this->DirectoryTypes->save($directoryType)) {
                 $this->Flash->success(__('The directory type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryType->get(DirectoryType::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryType->get(DirectoryType::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory type could not be saved. Please, try again.'));
         }
@@ -65,13 +65,13 @@ class DirectoryTypesController extends AppController
     /**
      * Edit method
      *
-     * @param string|null $id Directory Type id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @param string|null $directoryTypeId Directory Type id.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $directoryTypeId): void
     {
-        $directoryType = $this->DirectoryTypes->get($id, [
+        $directoryType = $this->DirectoryTypes->get($directoryTypeId, [
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -79,7 +79,7 @@ class DirectoryTypesController extends AppController
             if ($this->DirectoryTypes->save($directoryType)) {
                 $this->Flash->success(__('The directory type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $directoryType->get(DirectoryType::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $directoryType->get(DirectoryType::FIELD_ID)]);
             }
             $this->Flash->error(__('The directory type could not be saved. Please, try again.'));
         }
@@ -89,20 +89,20 @@ class DirectoryTypesController extends AppController
     /**
      * Delete method
      *
-     * @param string|null $id Directory Type id.
+     * @param string|int $directoryTypeId Directory Type id.
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(string $directoryTypeId): void
     {
         $this->request->allowMethod(['post', 'delete']);
-        $directoryType = $this->DirectoryTypes->get($id);
+        $directoryType = $this->DirectoryTypes->get($directoryTypeId);
         if ($this->DirectoryTypes->delete($directoryType)) {
             $this->Flash->success(__('The directory type has been deleted.'));
         } else {
             $this->Flash->error(__('The directory type could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

@@ -6,7 +6,7 @@ namespace App\Test\TestCase\Controller\Component;
 use App\Controller\Component\CapAuthorizationComponent;
 use App\Model\Entity\User;
 use App\Model\Table\UsersTable;
-use App\Test\TestCase\Controller\AppTestTrait;
+use App\Test\TestCase\ComponentTestCase as TestCase;
 use Authorization\AuthorizationService;
 use Authorization\IdentityDecorator;
 use Authorization\Policy\OrmResolver;
@@ -14,83 +14,34 @@ use Authorization\Policy\ResultInterface;
 use Cake\Controller\ComponentRegistry;
 use Cake\Controller\Controller;
 use Cake\Http\ServerRequest;
-use Cake\TestSuite\TestCase;
+use TypeError;
 
 /**
  * App\Controller\Component\CapAuthorizationComponent Test Case
  */
 class CapAuthorizationComponentTest extends TestCase
 {
-    use AppTestTrait;
+    /**
+     * @var CapAuthorizationComponent The Component under test
+     */
+    public CapAuthorizationComponent $Authorization;
 
     /**
-     * @var \App\Controller\Component\CapAuthorizationComponent The Component under test
+     * @var Controller The Controller for Request
      */
-    public $Authorization;
+    public Controller $Controller;
 
     /**
-     * @var \Cake\Controller\Controller The Controller for Request
+     * @var ComponentRegistry The Registry of Components
      */
-    public $Controller;
-
-    /**
-     * @var \Cake\Controller\ComponentRegistry The Registry of Components
-     */
-    public $ComponentRegistry;
+    public ComponentRegistry $ComponentRegistry;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable The Table for Users
+     * @var UsersTable The Table for Users
      */
-    public $Users;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
-        'app.CompassRecords',
-    ];
+    public UsersTable $Users;
 
     /**
      * setUp method
@@ -106,13 +57,12 @@ class CapAuthorizationComponentTest extends TestCase
         $this->Users = $this->getTableLocator()->get('Users', $config);
 
         $user = $this->Users->patchCapabilities($this->Users->get(1));
-        if (!$admin) {
-            $capabilities = $user->capabilities;
-            $key = array_search('ALL', $capabilities['user']);
-            unset($capabilities['user'][$key]);
-            $user->set($user::FIELD_CAPABILITIES, $capabilities);
-        }
 
+        $this->addAuthHeaders($user);
+    }
+
+    protected function addAuthHeaders(User $user): void
+    {
         $service = new AuthorizationService(new OrmResolver());
         $identity = new IdentityDecorator($service, $user);
 
@@ -129,6 +79,30 @@ class CapAuthorizationComponentTest extends TestCase
     }
 
     /**
+     * setUp method
+     *
+     * @param bool $admin
+     * @return void
+     */
+    public function makeAdmin(bool $admin = true): void
+    {
+        $user = $this->Users->patchCapabilities($this->Users->get(1));
+
+        $capabilities = $user->capabilities;
+
+        if (!$admin) {
+            $key = array_search('ALL', $capabilities['user']);
+            unset($capabilities['user'][$key]);
+        } else {
+            $capabilities['user'] = array_unique(array_merge($capabilities['user'], ['ALL']));
+        }
+
+        $user->set($user::FIELD_CAPABILITIES, $capabilities);
+
+        $this->addAuthHeaders($user);
+    }
+
+    /**
      * tearDown method
      *
      * @return void
@@ -140,7 +114,7 @@ class CapAuthorizationComponentTest extends TestCase
         parent::tearDown();
     }
 
-    public function provideSee()
+    public function provideSee(): array
     {
         return [
             'Non Admin User' => [
@@ -201,10 +175,10 @@ class CapAuthorizationComponentTest extends TestCase
      * @param array $expectedData Expected SEE field array
      * @return void
      */
-    public function testSee(bool $admin, array $expectedData)
+    public function testSee(bool $admin, array $expectedData): void
     {
         $user = $this->Users->get(2);
-        $this->setUp($admin);
+        $this->makeAdmin($admin);
         $result = $this->Authorization->see($user);
         TestCase::assertEquals($expectedData, $result);
     }
@@ -212,7 +186,7 @@ class CapAuthorizationComponentTest extends TestCase
     /**
      * @return array
      */
-    public function providerCheckCapability()
+    public function providerCheckCapability(): array
     {
         return [
             'Valid Special' => [
@@ -278,21 +252,22 @@ class CapAuthorizationComponentTest extends TestCase
      * Test checkCapability method
      *
      * @dataProvider providerCheckCapability
-     * @param string $capability Capabilty to be Checked
+     * @param string $capability Capability to be Checked
      * @param bool $expected Expected Boolean Outcome
+     * @param int|null $group
+     * @param int|null $section
      * @return void
      */
-    public function testCheckCapability(string $capability, bool $expected, ?int $group = null, ?int $section = null)
-    {
+    public function testCheckCapability(
+        string $capability,
+        bool $expected,
+        ?int $group = null,
+        ?int $section = null
+    ): void {
         $admin = (bool)($capability == 'ALL');
-        $this->setUp($admin);
+        $this->makeAdmin($admin);
 
         $result = $this->Authorization->checkCapability($capability, $group, $section);
-
-        if ($result instanceof ResultInterface) {
-            $result = $result->getStatus();
-        }
-
         TestCase::assertEquals($expected, $result);
     }
 
@@ -314,8 +289,7 @@ class CapAuthorizationComponentTest extends TestCase
         ?int $section,
         string $expectedReason
     ): void {
-        $admin = (bool)($capability == 'ALL');
-        $this->setUp($admin);
+        $this->makeAdmin($capability == 'ALL');
 
         $result = $this->Authorization->checkCapabilityResult($capability, $group, $section);
 
@@ -328,7 +302,7 @@ class CapAuthorizationComponentTest extends TestCase
     /**
      * @return array
      */
-    public function providerBuildCapability()
+    public function providerBuildCapability(): array
     {
         return [
             'All Standard' => [
@@ -388,10 +362,10 @@ class CapAuthorizationComponentTest extends TestCase
         bool $expected,
         string $expectedReason
     ): void {
-        $this->setUp($admin);
+        $this->makeAdmin($admin);
 
         if (is_null($capArray[0]) || is_null($capArray[1])) {
-            $this->expectException(\TypeError::class);
+            $this->expectException(TypeError::class);
         }
 
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);
@@ -418,10 +392,10 @@ class CapAuthorizationComponentTest extends TestCase
         bool $expected,
         string $expectedReason
     ): void {
-        $this->setUp($admin);
+        $this->makeAdmin($admin);
 
         if (is_null($capArray[0]) || is_null($capArray[1])) {
-            $this->expectException(\TypeError::class);
+            $this->expectException(TypeError::class);
         }
 
         $result = $this->Authorization->buildAndCheckCapabilityResult(...$capArray);

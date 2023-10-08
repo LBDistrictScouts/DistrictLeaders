@@ -22,12 +22,13 @@ class NotifyModalCell extends Cell
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_validCellOptions = [];
 
     /**
-     * @var string[] Helper Array
+     * @var array<string>  Helper Array
      */
-    public $helpers = [
+    public array $helpers = [
         'Html',
         'Time',
         'Identity',
@@ -49,7 +50,7 @@ class NotifyModalCell extends Cell
      * @param int $loggedInUserId The Id of the Authenticated User
      * @return void
      */
-    public function display($loggedInUserId)
+    public function display(int $loggedInUserId): void
     {
         if (is_integer($loggedInUserId)) {
             $notifications = $this->Notifications->find('unread', ['contain' => 'NotificationTypes'])

@@ -14,13 +14,13 @@ declare(strict_types=1);
  * @since     0.2.9
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Controller;
 
 use Cake\Core\Configure;
 use Cake\Event\EventInterface;
 use Cake\Http\Exception\ForbiddenException;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Http\Response;
 use Cake\View\Exception\MissingTemplateException;
 
 /**
@@ -43,13 +43,13 @@ class PagesController extends AppController
      * @throws \Cake\Http\Exception\NotFoundException When the view file could not
      * be found and not in debug mode.
      */
-    public function display(string ...$path): ?Response
+    public function display(string ...$path): void
     {
         $this->viewBuilder()->setLayout('welcome');
 
         $count = count($path);
         if (!$count) {
-            return $this->redirect('/');
+            $this->redirect('/');
         }
         if (in_array('..', $path, true) || in_array('.', $path, true)) {
             throw new ForbiddenException();
@@ -65,7 +65,7 @@ class PagesController extends AppController
         $this->set(compact('page', 'subpage'));
 
         try {
-            return $this->render(implode('/', $path));
+            $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {
             if (Configure::read('debug')) {
                 throw $exception;
@@ -78,7 +78,7 @@ class PagesController extends AppController
      * @param \Cake\Event\EventInterface $event The CakePHP Event
      * @return void
      */
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         $this->Authentication->allowUnauthenticated(['display']);
     }

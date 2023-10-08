@@ -1,11 +1,15 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $processes
- * @var \Queue\Model\Entity\QueueProcess[] $terminated
- * @var \Queue\Model\Entity\QueuedJob $queuedJob
+ * @var QueueProcess[] $terminated
+ * @var QueuedJob $queuedJob
  */
+
+use App\View\AppView;
 use Cake\I18n\Time;
+use Queue\Model\Entity\QueuedJob;
+use Queue\Model\Entity\QueueProcess;
 
 ?>
 <?= $this->element('header', ['current' => 'processes']) ?>

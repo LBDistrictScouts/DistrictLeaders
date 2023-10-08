@@ -10,7 +10,7 @@ use Cake\TestSuite\TestCase;
 /**
  * App\Model\Entity\User Test Case
  *
- * @property \App\Model\Table\UserContactsTable $UserContacts
+ * @property UserContactsTable $UserContacts
  */
 class UserContactTest extends TestCase
 {
@@ -19,7 +19,7 @@ class UserContactTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\User
+     * @var User
      */
     public $UserContact;
 

@@ -13,8 +13,10 @@ declare(strict_types=1);
  * @since         2.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Utility;
 
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
 use Aws\Sdk;
 use Cake\Core\Configure;
 
@@ -95,7 +97,7 @@ class AwsBuilder
      *
      * @return \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
      */
-    public static function buildCognitoClient(): \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
+    public static function buildCognitoClient(): CognitoIdentityProviderClient
     {
         return self::buildSdk()->createCognitoIdentityProvider();
     }

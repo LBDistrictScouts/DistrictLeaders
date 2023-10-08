@@ -28,6 +28,7 @@ class SectionType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'section_type' => true,
         'section_type_code' => true,
@@ -35,6 +36,10 @@ class SectionType extends Entity
         'sections' => true,
     ];
 
+    /**
+     * @var array<string> List of virtual properties.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['is_young_person_section'];
 
     /**

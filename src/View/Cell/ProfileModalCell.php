@@ -18,6 +18,7 @@ class ProfileModalCell extends Cell
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_validCellOptions = [];
 
     /**
@@ -35,7 +36,7 @@ class ProfileModalCell extends Cell
      * @param int $loggedInUserId The Id of the Authenticated User
      * @return void
      */
-    public function display($loggedInUserId)
+    public function display(int $loggedInUserId): void
     {
         if (is_integer($loggedInUserId)) {
             $this->loadModel('Users');

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\View\Cell;
 
+use App\Model\Entity\User;
 use Cake\View\Cell;
 
 /**
@@ -18,6 +19,7 @@ class NavBarCell extends Cell
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_validCellOptions = [];
 
     /**
@@ -35,7 +37,7 @@ class NavBarCell extends Cell
      * @param \App\Model\Entity\User $identity The Authenticated User
      * @return void
      */
-    public function display($identity)
+    public function display(User $identity): void
     {
         $this->set(compact('identity'));
     }

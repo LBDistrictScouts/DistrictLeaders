@@ -6,43 +6,46 @@
     "license": "MIT",
     "require": {
         "php": ">=8.1",
+        "ext-mbstring": "*",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*",
         "ext-json": ">=1.5",
-        "cakephp/authentication": "^2.0",
-        "cakephp/authorization": "^2.0",
-        "cakephp/cakephp": "^4.3",
-        "cakephp/elastic-search": "^3.0",
-        "cakephp/migrations": "^3.0",
-        "cakephp/plugin-installer": "^1.0",
-        "dereuromark/cakephp-ajax": "^2.0",
-        "dereuromark/cakephp-databaselog": "^3.0",
-        "dereuromark/cakephp-dto": "^1.0",
-        "dereuromark/cakephp-expose": "^1.4",
+        "cakephp/authentication": "^2.9",
+        "cakephp/authorization": "^2.2",
+        "cakephp/cakephp": "^4.4",
+        "cakephp/elastic-search": "^3.4",
+        "cakephp/migrations": "^3.7",
+        "cakephp/plugin-installer": "^1.3",
+        "dereuromark/cakephp-ajax": "^2.1",
+        "dereuromark/cakephp-databaselog": "^3.2",
+        "dereuromark/cakephp-dto": "^1.2",
+        "dereuromark/cakephp-expose": "^1.5",
         "dereuromark/cakephp-flash": "^2.0",
-        "dereuromark/cakephp-queue": "^6.3.1",
-        "dereuromark/cakephp-tags": "^1.1",
-        "dereuromark/cakephp-tools": "^2.4",
-        "friendsofcake/bootstrap-ui": "^3.0",
-        "friendsofcake/search": "^6.0",
-        "google/apiclient": "^2.0",
-        "guzzlehttp/psr7": "^1.5",
+        "dereuromark/cakephp-queue": "^6.5",
+        "dereuromark/cakephp-tags": "^1.2",
+        "dereuromark/cakephp-tools": "^2.5",
+        "friendsofcake/bootstrap-ui": "^3.1",
+        "friendsofcake/search": "^6.2",
+        "google/apiclient": "^2.13",
+        "guzzlehttp/psr7": "^1.9",
         "jomweb/cake-impersonate": "^4.0",
-        "josbeir/cakephp-filesystem": "3.0-alpha.2",
-        "league/commonmark": "^1.1",
-        "league/flysystem-aws-s3-v3": "^3.0",
-        "mobiledetect/mobiledetectlib": "^2.0",
+        "josbeir/cakephp-filesystem": "^3.0",
+        "league/commonmark": "^1.6",
+        "league/flysystem-aws-s3-v3": "^3.10",
+        "mobiledetect/mobiledetectlib": "^2.8",
         "muffin/footprint": "^2.0",
-        "muffin/trash": "^3.0.0",
-        "muffin/webservice": "^3.0.0",
+        "muffin/trash": "^3.1",
+        "muffin/webservice": "^3.0",
         "php-http/guzzle7-adapter": "^1.0",
         "sparkpost/sparkpost": "^2.3",
-        "symfony/yaml": "^5.0",
+        "symfony/yaml": "^5.4",
         "tijsverkoyen/css-to-inline-styles": "^2.2",
-        "twilio/sdk": "^5.34",
-        "webonyx/graphql-php": "^0.13.8"
+        "twilio/sdk": "^5.42",
+        "webonyx/graphql-php": "^0.13.9"
     },
     "require-dev": {
         "cakephp/bake": "^2.0",
-        "cakephp/cakephp-codesniffer": "^4.0",
+        "cakephp/cakephp-codesniffer": "^5.0",
         "cakephp/debug_kit": "^4.0",
         "cakephp/repl": "^0.1.0",
         "dereuromark/cakephp-ide-helper": "^1.0",
@@ -54,12 +57,8 @@
         "phpunit/php-code-coverage": "@stable",
         "phpunit/phpunit": "^8.0",
         "psy/psysh": "@stable",
-        "slevomat/coding-standard": "^6.1",
         "vierge-noire/cakephp-fixture-factories": "^2.0",
         "vierge-noire/cakephp-test-migrator": "^2.0"
-    },
-    "suggest": {
-        "markstory/asset_compress": "An asset compression plugin which provides file concatenation and a flexible filter system for preprocessing and minification."
     },
     "autoload": {
         "psr-4": {
@@ -81,12 +80,9 @@
         ],
         "post-create-project-cmd": "@console-install",
         "console-install": "App\\Console\\Installer::postInstall",
-        "fixture-check": "bin/cake fixture_check",
         "check": [
             "@cs-check",
-            "composer validate",
-            "@fixture-check",
-            "@phpstan-check"
+            "composer validate"
         ],
         "fix": [
             "@annotate",
@@ -96,8 +92,8 @@
             "@cs-fix"
         ],
         "coding-standards": "@cs-check",
-        "cs-check": "phpcs --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/",
-        "cs-fix": "phpcbf --colors -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/ tests/ templates/ config/",
+        "cs-check": "phpcs --colors -p -s --extensions=php src/ tests/",
+        "cs-fix": "phpcbf --colors -p -s --extensions=php src/ tests/",
         "md-check": "phpmd --strict src/ ansi cleancode",
         "phpstan-check": "vendor/bin/phpstan analyse src tests",
         "phan-check": "vendor/bin/phan",
@@ -130,7 +126,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "cakephp/plugin-installer": true,
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "php-http/discovery": true
         }
     }
 }

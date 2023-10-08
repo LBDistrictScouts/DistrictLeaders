@@ -17,23 +17,24 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
 /**
  * DocumentVersions Model
  *
- * @property \App\Model\Table\DocumentsTable&\Cake\ORM\Association\BelongsTo $Documents
- * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\HasMany $DocumentEditions
- * @property \App\Model\Table\CompassRecordsTable&\Cake\ORM\Association\HasMany $CompassRecords
+ * @property \App\Model\Table\DocumentsTable&\App\Model\Table\BelongsTo $Documents
+ * @property \App\Model\Table\DocumentEditionsTable&\App\Model\Table\HasMany $DocumentEditions
+ * @property \App\Model\Table\CompassRecordsTable&\App\Model\Table\HasMany $CompassRecords
  * @method \App\Model\Entity\DocumentVersion get($primaryKey, $options = [])
  * @method \App\Model\Entity\DocumentVersion newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DocumentVersion|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DocumentVersion patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DocumentVersion|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentVersion saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DocumentVersion patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DocumentVersion findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @method \App\Model\Entity\DocumentVersion newEmptyEntity()
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class DocumentVersionsTable extends Table
 {
@@ -133,7 +134,7 @@ class DocumentVersionsTable extends Table
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      * @SuppressWarnings(PHPMD.CamelCaseVariableName)
      */
-    public function findDocumentList(Query $query, array $options)
+    public function findDocumentList(Query $query, array $options): Query
     {
         return $query->contain('Documents')
             ->find('list', array_merge($options, [
@@ -151,7 +152,7 @@ class DocumentVersionsTable extends Table
      * @param \App\Model\Entity\DocumentVersion $version The DocumentVersion
      * @return \App\Model\Entity\DocumentEdition|false
      */
-    public function getFileTypeEdition(string $mime, DocumentVersion $version)
+    public function getFileTypeEdition(string $mime, DocumentVersion $version): DocumentEdition|false
     {
         $where = [FileType::FIELD_MIME => $mime];
 

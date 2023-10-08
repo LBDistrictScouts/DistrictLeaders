@@ -21,19 +21,19 @@ class ParamStoreCommand extends Command
 {
     use MailerAwareTrait;
 
-    protected $configKey = 'ConfigKeys';
+    protected string $configKey = 'ConfigKeys';
 
-    protected $secureKeys = 'SecureKeys';
+    protected string $secureKeys = 'SecureKeys';
 
-    protected $configFile = 'config_keys';
+    protected string $configFile = 'config_keys';
 
-    protected $outputFile = 'Environment' . DS . 'app_parameters';
+    protected string $outputFile = 'Environment' . DS . 'app_parameters';
 
-    protected $configEngine = 'yaml';
+    protected string $configEngine = 'yaml';
 
-    protected $pathRoot;
+    protected string $pathRoot;
 
-    protected $overwrite = true;
+    protected bool $overwrite = true;
 
     /**
      * Initialise method
@@ -95,7 +95,7 @@ class ParamStoreCommand extends Command
      * @param string $key Parameter Key
      * @return string
      */
-    protected function makePath($key)
+    protected function makePath(string $key): string
     {
         return $this->pathRoot . '/' . Inflector::dasherize($key);
     }
@@ -104,7 +104,7 @@ class ParamStoreCommand extends Command
      * @param string $path Path to be reversed
      * @return string
      */
-    protected function reversePath($path)
+    protected function reversePath(string $path): string
     {
         return Inflector::camelize(explode('/', $path, 4)[3], '-');
     }
@@ -113,7 +113,7 @@ class ParamStoreCommand extends Command
      * @param array $configKeys Configuration keys to be parsed into paths
      * @return array
      */
-    protected function makePaths(array $configKeys)
+    protected function makePaths(array $configKeys): array
     {
         $paths = [];
 
@@ -128,7 +128,7 @@ class ParamStoreCommand extends Command
     /**
      * @return array|false
      */
-    protected function getList()
+    protected function getList(): array|false
     {
         Configure::load($this->configFile, 'yaml');
 
@@ -138,7 +138,7 @@ class ParamStoreCommand extends Command
     /**
      * @return \Aws\Ssm\SsmClient
      */
-    protected function makeClient()
+    protected function makeClient(): SsmClient
     {
         $sharedConfig = [
             'region' => 'eu-west-1',
@@ -154,7 +154,7 @@ class ParamStoreCommand extends Command
      * @param array $storeList List of Parameters to be Stored in File
      * @return void
      */
-    protected function dumpParameters(array $storeList)
+    protected function dumpParameters(array $storeList): void
     {
         if (!empty($storeList)) {
             Configure::dump($this->outputFile, $this->configEngine, $storeList);
@@ -164,7 +164,7 @@ class ParamStoreCommand extends Command
     /**
      * @return int|void
      */
-    protected function getParameters()
+    protected function getParameters(): ?int
     {
         $list = $this->getList();
         $storeList = [];
@@ -197,7 +197,7 @@ class ParamStoreCommand extends Command
      * @param string $param Parameter Name
      * @return bool
      */
-    protected function writeParameter(string $param)
+    protected function writeParameter(string $param): bool
     {
         $path = $this->makePath($param);
 
@@ -222,7 +222,7 @@ class ParamStoreCommand extends Command
     /**
      * @return int
      */
-    protected function writeParameters()
+    protected function writeParameters(): int
     {
         $params = $this->getList();
         $count = 0;
@@ -244,7 +244,7 @@ class ParamStoreCommand extends Command
     /**
      * @return void
      */
-    protected function removeParameters()
+    protected function removeParameters(): void
     {
         $configKeys = Configure::read();
 
@@ -277,7 +277,7 @@ class ParamStoreCommand extends Command
     /**
      * @return void
      */
-    protected function setupParameters()
+    protected function setupParameters(): void
     {
         Configure::load('app.default', 'default');
         $this->writeParameters();
@@ -287,7 +287,7 @@ class ParamStoreCommand extends Command
      * @param \Cake\Console\ConsoleIo $consoleIo The console for Output
      * @return void
      */
-    protected function echoInfo(ConsoleIo $consoleIo)
+    protected function echoInfo(ConsoleIo $consoleIo): void
     {
         $indent = '     ';
 
@@ -305,11 +305,11 @@ class ParamStoreCommand extends Command
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
      * @param \Cake\Console\ConsoleIo $consoleConsoleIo The IO
-     * @return int|void|null
+     * @return int|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleConsoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleConsoleIo): ?int
     {
         if ($args->getOption('Info')) {
             $this->echoInfo($consoleConsoleIo);

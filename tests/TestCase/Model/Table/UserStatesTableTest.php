@@ -11,6 +11,7 @@ use App\Model\Table\UserStatesTable;
 use Cake\I18n\FrozenTime;
 use Cake\TestSuite\TestCase;
 use Cake\Utility\Inflector;
+use Exception;
 use Faker\Factory;
 
 /**
@@ -24,39 +25,30 @@ class UserStatesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UserStatesTable
+     * @var UserStatesTable
      */
-    protected $UserStates;
+    protected UserStatesTable $UserStates;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var UsersTable
      */
-    protected $Users;
+    protected UsersTable $Users;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\User
+     * @var User
      */
-    protected $User;
+    protected User $User;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\UserState
+     * @var UserState
      */
-    protected $UserState;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-    ];
+    protected UserState $UserState;
 
     /**
      * @var string[]
@@ -238,7 +230,7 @@ class UserStatesTableTest extends TestCase
         while ($pos <= 10) {
             try {
                 $randKey = random_int(0, $binMax - 1);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $randKey = 5;
             }
             $applicableCases = [];
@@ -399,7 +391,7 @@ class UserStatesTableTest extends TestCase
     }
 
     /**
-     * @return \int[][]
+     * @return int[][]
      */
     public function provideBaseSignatureState()
     {
@@ -432,7 +424,7 @@ class UserStatesTableTest extends TestCase
     }
 
     /**
-     * @return \int[][]
+     * @return int[][]
      */
     public function provideDetermineSignatureState()
     {

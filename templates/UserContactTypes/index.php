@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserContactType[]|\Cake\Collection\CollectionInterface $userContactTypes
+ * @var AppView $this
+ * @var UserContactType[]|CollectionInterface $userContactTypes
  */
+
+use App\Model\Entity\UserContactType;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

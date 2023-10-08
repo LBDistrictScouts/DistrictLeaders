@@ -11,7 +11,7 @@ use Queue\Queue\TaskInterface;
  * Class QueueWelcomeTask
  *
  * @package App\Shell\Task
- * @property \App\Model\Table\RoleTypesTable $RoleTypes
+ * @property \App\Model\Table\RoleTypesTable|\Cake\ORM\Table $RoleTypes
  */
 class CapabilityTask extends Task implements TaskInterface
 {
@@ -20,11 +20,13 @@ class CapabilityTask extends Task implements TaskInterface
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $timeout = 20;
 
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $retries = 1;
 
     /**
@@ -32,9 +34,9 @@ class CapabilityTask extends Task implements TaskInterface
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
-        $this->loadModel('RoleTypes');
+        $this->RoleTypes = $this->getTableLocator()->get('RoleTypes');
 
         $passed = 0;
         $idx = 0;

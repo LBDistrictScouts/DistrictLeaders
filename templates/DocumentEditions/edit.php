@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DocumentEdition $documentEdition
+ * @var AppView $this
+ * @var DocumentEdition $documentEdition
  * @var mixed $documentVersions
  * @var mixed $fileTypes
  */
+
+use App\Model\Entity\DocumentEdition;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

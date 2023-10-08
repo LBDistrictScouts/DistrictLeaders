@@ -6,6 +6,7 @@ namespace App\Test\TestCase\Model\Table;
 use App\Model\Entity\DocumentVersion;
 use App\Model\Table\DocumentVersionsTable;
 use Cake\TestSuite\TestCase;
+use Exception;
 
 /**
  * App\Model\Table\DocumentVersionsTable Test Case
@@ -17,7 +18,7 @@ class DocumentVersionsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DocumentVersionsTable
+     * @var DocumentVersionsTable
      */
     public $DocumentVersions;
 
@@ -70,7 +71,7 @@ class DocumentVersionsTableTest extends TestCase
                 DocumentVersion::FIELD_DOCUMENT_ID => 1,
                 DocumentVersion::FIELD_VERSION_NUMBER => random_int(1, 9999999),
             ];
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return [];
         }
     }

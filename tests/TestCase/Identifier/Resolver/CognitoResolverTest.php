@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Identifier\Resolver;
 
 use App\Identifier\Resolver\CognitoResolver;
@@ -49,7 +50,7 @@ class CognitoResolverTest extends AuthenticationTestCase
             ],
         ]);
 
-        /** @var \App\Model\Entity\User $user */
+        /** @var User $user */
         $user = $resolver->find([
             'username' => 'mariano',
         ]);

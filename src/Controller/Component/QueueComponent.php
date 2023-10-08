@@ -31,8 +31,13 @@ class QueueComponent extends Component
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [];
 
+    /**
+     * @var array|array<string>
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $components = ['Flash'];
 
     /**
@@ -104,7 +109,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setCapabilityParse()
+    public function setCapabilityParse(): void
     {
         $job = $this->QueuedJobs->createJob(CapabilityTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -120,7 +125,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setUserStateParse()
+    public function setUserStateParse(): void
     {
         $job = $this->QueuedJobs->createJob(StateTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -136,7 +141,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setUnsent()
+    public function setUnsent(): void
     {
         $job = $this->QueuedJobs->createJob(UnsentTask::taskName());
         if ($job instanceof QueuedJob) {
@@ -152,7 +157,7 @@ class QueueComponent extends Component
     /**
      * @return void
      */
-    public function setTokenParse()
+    public function setTokenParse(): void
     {
         $job = $this->QueuedJobs->createJob(TokenTask::taskName());
         if ($job instanceof QueuedJob) {

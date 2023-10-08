@@ -7,16 +7,16 @@ namespace App\Controller;
  * Camps Controller
  *
  * @property \App\Model\Table\CampsTable $Camps
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Camp[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['CampTypes'],
@@ -30,10 +30,10 @@ class CampsController extends AppController
      * View method
      *
      * @param string|null $id Camp id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $camp = $this->Camps->get($id, [
             'contain' => ['CampTypes', 'CampRoles'],
@@ -47,7 +47,7 @@ class CampsController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $camp = $this->Camps->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -55,7 +55,7 @@ class CampsController extends AppController
             if ($this->Camps->save($camp)) {
                 $this->Flash->success(__('The camp has been saved.'));
 
-                return $this->redirect(['action' => 'view', $camp->get('id')]);
+                $this->redirect(['action' => 'view', $camp->get('id')]);
             }
             $this->Flash->error(__('The camp could not be saved. Please, try again.'));
         }
@@ -70,7 +70,7 @@ class CampsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): void
     {
         $camp = $this->Camps->get($id, [
             'contain' => [],
@@ -80,7 +80,7 @@ class CampsController extends AppController
             if ($this->Camps->save($camp)) {
                 $this->Flash->success(__('The camp has been saved.'));
 
-                return $this->redirect(['action' => 'view', $camp->get('id')]);
+                $this->redirect(['action' => 'view', $camp->get('id')]);
             }
             $this->Flash->error(__('The camp could not be saved. Please, try again.'));
         }
@@ -95,7 +95,7 @@ class CampsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $camp = $this->Camps->get($id);
@@ -105,6 +105,6 @@ class CampsController extends AppController
             $this->Flash->error(__('The camp could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

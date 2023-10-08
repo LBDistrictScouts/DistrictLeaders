@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Controller;
 
-use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -13,17 +12,7 @@ use Cake\TestSuite\TestCase;
  */
 class DirectoryDomainsControllerTest extends TestCase
 {
-    use IntegrationTestTrait;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.DirectoryDomains',
-        'app.Directories',
-    ];
+    use AppTestTrait;
 
     /**
      * Test index method

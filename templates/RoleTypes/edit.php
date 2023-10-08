@@ -1,11 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\RoleType $roleType
+ * @var AppView $this
+ * @var RoleType $roleType
  * @var mixed $capabilities
  * @var mixed $roleTemplates
  * @var mixed $sectionTypes
  */
+
+use App\Model\Entity\RoleType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

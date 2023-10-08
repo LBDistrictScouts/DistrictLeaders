@@ -3,10 +3,13 @@
  * This requires chart.js library to be installed and available via layout.
  * You can otherwise just overwrite this template on project level and format/output as you need it using your own frontend assets.
  *
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var array $stats
  * @var string[] $jobTypes
  */
+
+use App\View\AppView;
+
 ?>
 
 <nav class="col-md-3 col-xs-12 large-3 medium-4 columns" id="actions-sidebar">

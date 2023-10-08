@@ -1,5 +1,8 @@
 name: GitHub CI
 
+env:
+    APP_DL_INSTALL_MODE: CI
+
 on:
   push:
     branches:
@@ -17,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.1']
+        php-version: ['8.1', '8.2']
         async: ['Y', 'N']
 
     name: PHP ( ${{ matrix.php-version }} ) Async ( ${{ matrix.async }} ) DB ( Postgres )
@@ -51,30 +54,21 @@ jobs:
           ini-values: xdebug.mode="develop,coverage", apc.enable_cli=1
           coverage: xdebug
 
-      - name: Set App File Config
-        run: mv config/app_file.travis.php config/app_file.php
-
-      - name: Set App Config
-        run: mv config/app.github-ci.php config/app.php
-
       - name: Set Async Setup
         run: if [[ ${{ matrix.async }} == 'N' ]]; then rm phpunit.xml.dist; fi
 
       - name: Set Async Setup
-        run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-travis.xml.dist phpunit.xml.dist; fi
-
-      - name: Set General YML Config
-        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
+        run: if [[ ${{ matrix.async }} == 'N' ]]; then mv phpunit-ci.xml.dist phpunit.xml.dist; fi
 
       - name: Update composer
         run: composer self-update
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           # Use composer.json for key, if composer.lock is not committed.
@@ -82,11 +76,11 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      - name: Validate composer.json
-        run: composer validate
-
       - name: Install dependencies
-        run: composer install --no-scripts --no-suggest
+        run: composer install --no-scripts
+
+      - name: Create Config Files
+        run: composer console-install
 
       - name: Run tests
         run: |
@@ -118,7 +112,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        check-type: [ 'coding-standards', 'fixture-check' ]
+        check-type: [ 'coding-standards', 'validate' ]
 
     name: Static Check ( ${{ matrix.check-type }} )
 
@@ -142,27 +136,18 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
           extensions: mbstring, intl, apcu
-
-      - name: Set App File Config
-        run: mv config/app_file.travis.php config/app_file.php
-
-      - name: Set App Config
-        run: mv config/app.github-ci.php config/app.php
-
-      - name: Set General YML Config
-        run: mv config/Environment/travis_parameters.yml config/Environment/app_parameters.yml
 
       - name: Update composer
         run: composer self-update
 
       - name: Get composer cache directory
         id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache composer dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           # Use composer.json for key, if composer.lock is not committed.
@@ -172,6 +157,13 @@ jobs:
 
       - name: Install dependencies
         run: composer install --prefer-dist --optimize-autoloader
+
+      - name: Add Config Files
+        run: composer console-install
+
+      - name: Run Static Fix
+        if: ${{ matrix.check-type == 'coding-standards' }}
+        run: composer cs-fix
 
       - name: Run Static Check
         run: composer ${{ matrix.check-type }}

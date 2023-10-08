@@ -9,7 +9,7 @@ use Cake\View\CellTrait;
  * Notifications Controller
  *
  * @property \App\Model\Table\NotificationsTable $Notifications
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Notification[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class NotificationsController extends AppController
 {
@@ -18,9 +18,9 @@ class NotificationsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->Authorization->authorize($this->Notifications);
 
@@ -36,10 +36,10 @@ class NotificationsController extends AppController
      * View method
      *
      * @param string|null $notificationId Notification id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($notificationId = null)
+    public function view(?string $notificationId = null): void
     {
         $notification = $this->Notifications->get($notificationId, [
             'contain' => ['Users', 'NotificationTypes', 'EmailSends.Tokens'],
@@ -63,7 +63,7 @@ class NotificationsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function welcome(?string $userId = null)
+    public function welcome(?string $userId = null): void
     {
         $this->request->allowMethod(['post']);
         $user = $this->Notifications->Users->get($userId);
@@ -73,7 +73,7 @@ class NotificationsController extends AppController
             $this->Flash->error(__('The user could not be sent a welcome email. Please, try again.'));
         }
 
-        return $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'view', $userId]);
+        $this->redirect(['prefix' => false, 'controller' => 'Users', 'action' => 'view', $userId]);
     }
 
     /**
@@ -83,7 +83,7 @@ class NotificationsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($notificationId = null)
+    public function delete(?string $notificationId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $notification = $this->Notifications->get($notificationId);
@@ -93,6 +93,6 @@ class NotificationsController extends AppController
             $this->Flash->error(__('The notification could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

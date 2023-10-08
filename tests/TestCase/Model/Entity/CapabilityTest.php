@@ -14,7 +14,7 @@ class CapabilityTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\Capability
+     * @var Capability
      */
     public $Capability;
 
@@ -126,7 +126,7 @@ class CapabilityTest extends TestCase
     public function testGetApplicableField()
     {
         $fieldValue = $this->Capability->get(Capability::FIELD_APPLICABLE_FIELD);
-        TestCase::assertFalse($fieldValue);
+        TestCase::assertEquals('', $fieldValue);
 
         $this->Capability = new Capability([
             Capability::FIELD_CAPABILITY_CODE => 'FIELD_CHANGE_SCOUT_GROUP@GROUP_ALIAS',

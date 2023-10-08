@@ -14,10 +14,12 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Authenticator;
 
 use App\Authenticator\CognitoResult;
 use App\Authenticator\CognitoSessionAuthenticator;
+use App\Test\Fixture\FixtureTestTrait;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
 use ArrayObject;
 use Authentication\Identifier\IdentifierCollection;
@@ -33,13 +35,15 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CognitoSessionAuthenticatorTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
-     * @var \Authentication\Identifier\IdentifierCollection The collection of Identifiers Specified
+     * @var IdentifierCollection The collection of Identifiers Specified
      */
     protected $identifiers;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject a Mocked Session for Recording Auth in
+     * @var MockObject a Mocked Session for Recording Auth in
      */
     protected $sessionMock;
 

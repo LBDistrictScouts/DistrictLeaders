@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Policy;
 
+use Authorization\IdentityInterface;
 use Authorization\Policy\RequestPolicyInterface;
 use Authorization\Policy\Result;
 use Cake\Http\ServerRequest;
@@ -17,13 +18,14 @@ class RequestPolicy implements RequestPolicyInterface
     /**
      * Method to check if the request can be accessed
      *
-     * @param \App\Model\Entity\User|null $identity The Identity
+     * @param \Authorization\IdentityInterface|null $identity The Identity
      * @param \Cake\Http\ServerRequest $request Server Request
-     * @return null|\Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @throws \Exception
      */
-    public function canAccess($identity, ServerRequest $request): ?Result
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): ?Result
     {
         $action = $request->getParam('action');
         $controller = $request->getParam('controller');
@@ -66,7 +68,7 @@ class RequestPolicy implements RequestPolicyInterface
             }
         }
 
-        if ($controller === 'Capabilities' && in_array($action, ['permissions'])) {
+        if ($controller === 'Capabilities' && $action == 'permissions') {
             if ($identity->id == $object && $identity->checkCapability('OWN_USER')) {
                 return new Result(true);
             }
@@ -78,7 +80,7 @@ class RequestPolicy implements RequestPolicyInterface
             return new Result(true);
         }
 
-        if (isset($identity) && !is_null($identity) && $identity->buildAndCheckCapability($action, $controller)) {
+        if (isset($identity) && $identity->buildAndCheckCapability($action, $controller)) {
             return new Result(true, 'Entity Specific Capability Present.');
         }
 

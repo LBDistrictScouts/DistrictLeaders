@@ -43,6 +43,7 @@ class Section extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         self::FIELD_SECTION => true,
         self::FIELD_SECTION_TYPE_ID => true,
@@ -84,9 +85,9 @@ class Section extends Entity
     /**
      * Retrieve User Capabilities
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function timeList()
+    public function timeList(): array
     {
         return Cache::remember('TIME_LIST', function () {
             return $this->makeTimeList();
@@ -96,9 +97,9 @@ class Section extends Entity
     /**
      * Retrieve User Capabilities
      *
-     * @return string[]
+     * @return array<string>
      */
-    public function dayList()
+    public function dayList(): array
     {
         return Cache::remember('DAY_LIST', function () {
             return $this->makeDayList();
@@ -108,7 +109,7 @@ class Section extends Entity
     /**
      * function to generate time indexes at 15 minute intervals
      *
-     * @return string[]
+     * @return array<string>
      */
     public function makeTimeList(): array
     {
@@ -129,7 +130,7 @@ class Section extends Entity
     /**
      * function to generate time indexes at 15 minute intervals
      *
-     * @return string[]
+     * @return array<string>
      */
     public function makeDayList(): array
     {
@@ -146,7 +147,10 @@ class Section extends Entity
         return $dayGrid;
     }
 
-    protected $_virtual = ['meeting_weekday'];
+    /**
+     * @var array<string> List of Virtual Properties
+     */
+    protected array $_virtual = ['meeting_weekday'];
 
     public const FIELD_ID = 'id';
     public const FIELD_SECTION = 'section';

@@ -12,20 +12,20 @@ use Cake\Validation\Validator;
 /**
  * CampTypes Model
  *
- * @property \App\Model\Table\CampsTable&\Cake\ORM\Association\HasMany $Camps
+ * @property \App\Model\Table\CampsTable&\App\Model\Table\HasMany $Camps
  * @method \App\Model\Entity\CampType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CampType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CampType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CampType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CampType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CampType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CampType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CampType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\CampType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\CampType newEmptyEntity()
- * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CampType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CampType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CampTypesTable extends Table
 {

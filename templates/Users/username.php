@@ -1,10 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Form\ResetForm $resForm
+ * @var AppView $this
+ * @var ResetForm $resForm
  * @var string username
  * @var mixed $username
  */
+
+use App\Form\ResetForm;
+use App\View\AppView;
+
 ?>
 <?= $this->Form->create($resForm); ?>
     <?php if (isset($username)) : ?>

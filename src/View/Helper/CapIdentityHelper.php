@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\View\Helper;
 
 use Authentication\View\Helper\IdentityHelper;
@@ -29,15 +30,16 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * Identity Object
      *
-     * @var null|\Authentication\IdentityInterface|\App\Model\Entity\User
+     * @var \App\Model\Entity\User|\Authorization\IdentityInterface|null
      */
-    protected $_identity;
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    protected $_identity = null;
 
     /**
      * @param string $capabilityCode Capability Code for Checking
      * @return bool
      */
-    public function checkCapability($capabilityCode)
+    public function checkCapability(string $capabilityCode): bool
     {
         return $this->_identity->checkCapability($capabilityCode);
     }
@@ -45,20 +47,25 @@ class CapIdentityHelper extends IdentityHelper
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|null $group The Group ID for checking against
-     * @param int|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null)
-    {
+    public function buildAndCheckCapability(
+        string $action,
+        string $model,
+        int|array|null $group = null,
+        int|array|null $section = null,
+        ?string $field = null
+    ): bool {
         return $this->_identity->buildAndCheckCapability($action, $model, $group, $section, $field);
     }
 
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->_identity->full_name;
     }

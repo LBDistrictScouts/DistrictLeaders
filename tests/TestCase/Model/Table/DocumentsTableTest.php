@@ -18,7 +18,7 @@ class DocumentsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DocumentsTable
+     * @var DocumentsTable
      */
     public $Documents;
 

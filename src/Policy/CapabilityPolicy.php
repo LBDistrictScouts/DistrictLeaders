@@ -55,7 +55,7 @@ class CapabilityPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\Capability $capability Entity to be Checked
      * @return \Authorization\Policy\ResultInterface|null
      */
-    public function canDelete(User $user, Capability $capability)
+    public function canDelete(User $user, Capability $capability): ?ResultInterface
     {
         if ($user->buildAndCheckCapability('DELETE', 'Capabilities')) {
             return new Result(true, '803');
@@ -71,7 +71,7 @@ class CapabilityPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\Capability $capability Entity to be Checked
      * @return \Authorization\Policy\ResultInterface|null
      */
-    public function canView(User $user, Capability $capability)
+    public function canView(User $user, Capability $capability): ?ResultInterface
     {
         if ($user->buildAndCheckCapability('VIEW', 'Capabilities')) {
             return new Result(true, '800');

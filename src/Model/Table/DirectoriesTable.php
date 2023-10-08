@@ -8,27 +8,28 @@ use Cake\Database\Schema\TableSchemaInterface;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Service_Directory_User;
 
 /**
  * Directories Model
  *
- * @property \App\Model\Table\DirectoryTypesTable&\Cake\ORM\Association\BelongsTo $DirectoryTypes
- * @property \App\Model\Table\DirectoryDomainsTable&\Cake\ORM\Association\HasMany $DirectoryDomains
- * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\HasMany $DirectoryGroups
- * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\HasMany $DirectoryUsers
+ * @property \App\Model\Table\DirectoryTypesTable&\App\Model\Table\BelongsTo $DirectoryTypes
+ * @property \App\Model\Table\DirectoryDomainsTable&\App\Model\Table\HasMany $DirectoryDomains
+ * @property \App\Model\Table\DirectoryGroupsTable&\App\Model\Table\HasMany $DirectoryGroups
+ * @property \App\Model\Table\DirectoryUsersTable&\App\Model\Table\HasMany $DirectoryUsers
  * @method \App\Model\Entity\Directory get($primaryKey, $options = [])
  * @method \App\Model\Entity\Directory newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Directory[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Directory|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Directory saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Directory patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Directory|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Directory saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Directory patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Directory[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Directory findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\Directory newEmptyEntity()
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Directory[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Directory[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoriesTable extends Table
 {
@@ -128,7 +129,7 @@ class DirectoriesTable extends Table
      * @param \App\Model\Entity\Directory $directory The directory to be Populated
      * @return array
      */
-    public function populate(Directory $directory)
+    public function populate(Directory $directory): array
     {
         $domainsCount = $this->DirectoryDomains->populate($directory);
         $usersCount = $this->DirectoryUsers->populate($directory);
@@ -142,7 +143,7 @@ class DirectoriesTable extends Table
      * @param \Google_Service_Directory_User $directoryUser The Google API Response for User
      * @return \App\Model\Entity\Directory|false
      */
-    public function setCustomerReference(Directory $directory, \Google_Service_Directory_User $directoryUser): Directory
+    public function setCustomerReference(Directory $directory, Google_Service_Directory_User $directoryUser): Directory
     {
         $directory->set(Directory::FIELD_CUSTOMER_REFERENCE, $directoryUser->getCustomerId());
 

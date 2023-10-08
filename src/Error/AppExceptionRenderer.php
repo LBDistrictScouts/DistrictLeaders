@@ -19,7 +19,7 @@ class AppExceptionRenderer extends ExceptionRenderer
      * @param \App\Model\Table\Exceptions\BadUserDataException $error The Error being handled
      * @return \Cake\Http\Response
      */
-    public function invalidEmailDomain(BadUserDataException $error)
+    public function invalidEmailDomain(BadUserDataException $error): Response
     {
         $exception = $error;
         $code = $this->_code($exception);

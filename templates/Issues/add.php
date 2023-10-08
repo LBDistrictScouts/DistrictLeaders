@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Camp $camp
+ * @var AppView $this
+ * @var Camp $camp
  *
  * @var array $campTypes
  */
+
+use App\Model\Entity\Camp;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

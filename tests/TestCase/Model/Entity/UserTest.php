@@ -10,11 +10,12 @@ use Authorization\AuthorizationServiceInterface;
 use Authorization\IdentityDecorator;
 use Cake\TestSuite\TestCase;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * App\Model\Entity\User Test Case
  *
- * @property \App\Model\Table\UsersTable $Users
+ * @property UsersTable $Users
  */
 class UserTest extends TestCase
 {
@@ -23,16 +24,16 @@ class UserTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\User
+     * @var User
      */
     public User $User;
 
     /**
      * Test Table subject
      *
-     * @var AuthorizationServiceInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @var AuthorizationServiceInterface|MockObject
      */
-    public \PHPUnit\Framework\MockObject\MockObject|AuthorizationServiceInterface $Auth;
+    public MockObject|AuthorizationServiceInterface $Auth;
 
     /**
      * Fixtures

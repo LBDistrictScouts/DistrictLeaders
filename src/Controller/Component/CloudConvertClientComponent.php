@@ -15,5 +15,6 @@ class CloudConvertClientComponent extends Component
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [];
 }

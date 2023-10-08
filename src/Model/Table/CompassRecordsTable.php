@@ -21,13 +21,13 @@ use Cake\Validation\Validator;
 /**
  * CompassRecords Model
  *
- * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\BelongsTo $DocumentVersions
+ * @property \App\Model\Table\DocumentVersionsTable&\App\Model\Table\BelongsTo $DocumentVersions
  * @method \App\Model\Entity\CompassRecord get($primaryKey, $options = [])
  * @method \App\Model\Entity\CompassRecord newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CompassRecord[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CompassRecord|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CompassRecord saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CompassRecord patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CompassRecord|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CompassRecord saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CompassRecord patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CompassRecord[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\CompassRecord findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \App\Model\Behavior\CaseableBehavior
@@ -38,10 +38,13 @@ use Cake\Validation\Validator;
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
  * @property \App\Model\Table\DirectoryUsersTable $DirectoryUsers
  * @method \App\Model\Entity\CompassRecord newEmptyEntity()
- * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CompassRecord[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CompassRecord[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\CsvBehavior
  */
 class CompassRecordsTable extends Table
 {
@@ -50,17 +53,17 @@ class CompassRecordsTable extends Table
     /**
      * @var \App\Model\Table\UsersTable
      */
-    private $Users;
+    private UsersTable $Users;
 
     /**
      * @var \App\Model\Table\DirectoryUsersTable
      */
-    private $DirectoryUsers;
+    private DirectoryUsersTable $DirectoryUsers;
 
     /**
      * @var \App\Model\Table\ScoutGroupsTable
      */
-    private $ScoutGroups;
+    private ScoutGroupsTable $ScoutGroups;
 
     /**
      * Initialize method
@@ -234,7 +237,7 @@ class CompassRecordsTable extends Table
      * @param \Cake\Event\Event $event The event being processed.
      * @return bool
      */
-    public function beforeRules(Event $event)
+    public function beforeRules(Event $event): bool
     {
         $entity = $event->getData('entity');
 
@@ -479,7 +482,7 @@ class CompassRecordsTable extends Table
         return null;
     }
 
-    private $userMap = [
+    private array $userMap = [
         User::FIELD_MEMBERSHIP_NUMBER => CompassRecord::FIELD_MEMBERSHIP_NUMBER,
         User::FIELD_FIRST_NAME => CompassRecord::FIELD_FIRST_NAME,
         User::FIELD_LAST_NAME => CompassRecord::FIELD_LAST_NAME,

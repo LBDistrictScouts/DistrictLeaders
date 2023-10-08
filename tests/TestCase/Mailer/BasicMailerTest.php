@@ -16,7 +16,7 @@ class BasicMailerTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Mailer\BasicMailer
+     * @var BasicMailer
      */
     public $Basic;
 

@@ -35,6 +35,7 @@ class EmailResponse extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'email_send_id' => true,
         'deleted' => true,

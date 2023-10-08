@@ -7,16 +7,16 @@ namespace App\Controller;
  * SectionTypes Controller
  *
  * @property \App\Model\Table\SectionTypesTable $SectionTypes
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\SectionType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $sectionTypes = $this->paginate($this->SectionTypes);
 
@@ -27,10 +27,10 @@ class SectionTypesController extends AppController
      * View method
      *
      * @param string|null $id Section Type id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $sectionType = $this->SectionTypes->get($id, [
             'contain' => ['RoleTypes', 'Sections'],
@@ -44,7 +44,7 @@ class SectionTypesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $sectionType = $this->SectionTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -52,7 +52,7 @@ class SectionTypesController extends AppController
             if ($this->SectionTypes->save($sectionType)) {
                 $this->Flash->success(__('The section type has been saved.'));
 
-                return $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
+                $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
             }
             $this->Flash->error(__('The section type could not be saved. Please, try again.'));
         }
@@ -66,7 +66,7 @@ class SectionTypesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): void
     {
         $sectionType = $this->SectionTypes->get($id, [
             'contain' => [],
@@ -76,7 +76,7 @@ class SectionTypesController extends AppController
             if ($this->SectionTypes->save($sectionType)) {
                 $this->Flash->success(__('The section type has been saved.'));
 
-                return $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
+                $this->redirect(['controller' => 'SectionTypes', 'action' => 'view', $sectionType->id]);
             }
             $this->Flash->error(__('The section type could not be saved. Please, try again.'));
         }
@@ -90,7 +90,7 @@ class SectionTypesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $sectionType = $this->SectionTypes->get($id);
@@ -100,6 +100,6 @@ class SectionTypesController extends AppController
             $this->Flash->error(__('The section type could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

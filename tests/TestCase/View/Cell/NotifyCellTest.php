@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace App\Test\TestCase\View\Cell;
 
 use App\View\Cell\NotifyCell;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * App\View\Cell\NotifyCell Test Case
@@ -14,55 +17,23 @@ class NotifyCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
+     * @var ServerRequest|MockObject
      */
-    public $request;
+    public ServerRequest|MockObject $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
+     * @var Response|MockObject
      */
-    public $response;
+    public Response|MockObject $response;
 
     /**
      * Test subject
      *
-     * @var \App\View\Cell\NotifyCell
+     * @var NotifyCell
      */
-    public $Notify;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
+    public NotifyCell $Notify;
 
     /**
      * setUp method
@@ -94,7 +65,7 @@ class NotifyCellTest extends TestCase
      *
      * @return void
      */
-    public function testDisplay()
+    public function testDisplay(): void
     {
         $this->Notify->display(1);
 

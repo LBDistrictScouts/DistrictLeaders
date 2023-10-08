@@ -5,6 +5,7 @@ namespace App\Model\Table;
 
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
+use ArrayObject;
 use Cake\Cache\Cache;
 use Cake\Database\Schema\TableSchemaInterface;
 use Cake\Event\EventInterface;
@@ -16,20 +17,20 @@ use Cake\Validation\Validator;
 /**
  * Users Model
  *
- * @property \App\Model\Table\UserStatesTable&\Cake\ORM\Association\BelongsTo $UserStates
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Changes
- * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
- * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
+ * @property \App\Model\Table\UserStatesTable&\App\Model\Table\BelongsTo $UserStates
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Changes
+ * @property \App\Model\Table\CampRolesTable&\App\Model\Table\HasMany $CampRoles
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\HasMany $EmailSends
+ * @property \App\Model\Table\NotificationsTable&\App\Model\Table\HasMany $Notifications
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $UserContacts
  * @method \App\Model\Entity\User get($primaryKey, $options = [])
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\User|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\User patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\User|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\User patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\User[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\User findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
@@ -37,14 +38,19 @@ use Cake\Validation\Validator;
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsToMany $DirectoryUsers
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $ContactEmails
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $ContactNumbers
+ * @method \App\Model\Entity\User[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\App\Model\Table\BelongsToMany $DirectoryUsers
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $ContactEmails
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $ContactNumbers
  * @method \App\Model\Entity\User newEmptyEntity()
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\User[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\User[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\User[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\User[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class UsersTable extends Table
 {
@@ -293,7 +299,7 @@ class UsersTable extends Table
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function retrieveAllCapabilities(User $user)
+    public function retrieveAllCapabilities(User $user): array
     {
         $user = $this->get($user->id, [
             'contain' => [
@@ -380,7 +386,7 @@ class UsersTable extends Table
      * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      * @return array
      */
-    public function retrieveCapabilities(User $user)
+    public function retrieveCapabilities(User $user): array
     {
         return Cache::remember('USR_CAP_' . $user->id, function () use ($user) {
             return $this->retrieveAllCapabilities($user);
@@ -393,7 +399,7 @@ class UsersTable extends Table
      * @param \App\Model\Entity\User $user The User to have their capabilities Cache Remembered
      * @return \App\Model\Entity\User|bool
      */
-    public function patchCapabilities(User $user)
+    public function patchCapabilities(User $user): User|bool
     {
         $capabilities = $this->retrieveAllCapabilities($user);
         $user->capabilities = $capabilities;
@@ -407,9 +413,9 @@ class UsersTable extends Table
      *
      * @param \App\Model\Entity\User $user The User to be checked
      * @param string $capability The Capability to be found
-     * @return bool|array
+     * @return array|bool
      */
-    public function userCapability(User $user, string $capability)
+    public function userCapability(User $user, string $capability): bool|array
     {
         $capabilities = $this->retrieveCapabilities($user);
 
@@ -452,7 +458,7 @@ class UsersTable extends Table
      * @return \Cake\ORM\Query
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function findAuth(Query $query, array $options)
+    public function findAuth(Query $query, array $options): Query
     {
         $query
             ->where([User::FIELD_USERNAME . ' IS NOT NULL']);
@@ -465,11 +471,11 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param \ArrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeSave(EventInterface $event, $user, $options): User
+    public function beforeSave(EventInterface $event, User $user, arrayObject $options): User
     {
         return $this->UserStates->determineUserState($user);
     }
@@ -479,11 +485,11 @@ class UsersTable extends Table
      *
      * @param \Cake\Event\EventInterface $event The Event to be Processed
      * @param \App\Model\Entity\User $user The Entity on which the Save is being Called.
-     * @param array $options Options Values
+     * @param \ArrayObject $options Options Values
      * @return \App\Model\Entity\User
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function afterSave(EventInterface $event, $user, $options): User
+    public function afterSave(EventInterface $event, User $user, ArrayObject $options): User
     {
         $this->UserContacts->associatePrimary($user);
 
@@ -496,7 +502,7 @@ class UsersTable extends Table
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function isValidDomainEmail($value, $context)
+    public function isValidDomainEmail(string $value, array $context): bool
     {
         return $this->Roles->Sections->ScoutGroups->domainVerify($value);
     }

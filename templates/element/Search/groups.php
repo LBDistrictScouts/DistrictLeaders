@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Sections')) : ?>
     <?= $this->Form->create(null, ['type' => 'get', 'url' => ['controller' => 'Sections', 'action' => 'search'], 'class' => 'form-inline ml-auto', 'valueSources' => 'query']) ?>

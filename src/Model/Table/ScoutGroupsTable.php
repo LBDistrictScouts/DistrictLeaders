@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Model\Table;
 
 use App\Model\Entity\ScoutGroup;
+use Cake\Core\Configure;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -11,28 +12,32 @@ use Cake\Validation\Validator;
 /**
  * ScoutGroups Model
  *
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $Sections
  * @method \App\Model\Entity\ScoutGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\ScoutGroup newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\ScoutGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\ScoutGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\ScoutGroup|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\ScoutGroup patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\ScoutGroup findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
  * @mixin \App\Model\Behavior\AuditableBehavior
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $LeaderSections
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $CommitteeSections
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $TeamSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $LeaderSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $CommitteeSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $TeamSections
  * @method \App\Model\Entity\ScoutGroup newEmptyEntity()
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\ScoutGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\ScoutGroup[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class ScoutGroupsTable extends Table
 {
@@ -150,7 +155,7 @@ class ScoutGroupsTable extends Table
      *
      * @return array
      */
-    public function getDomains()
+    public function getDomains(): array
     {
         $groups = $this->find('all');
         $cleanDomains = [];
@@ -171,6 +176,10 @@ class ScoutGroupsTable extends Table
      */
     public function domainVerify(string $emailAddress): bool
     {
+        if ($emailAddress == Configure::read('DefaultAdmin.email')) {
+            return true;
+        }
+
         $domains = $this->getDomains();
         if (strpos($emailAddress, '@') !== false) {
             $emailDomain = strtolower(explode('@', $emailAddress)[1]);

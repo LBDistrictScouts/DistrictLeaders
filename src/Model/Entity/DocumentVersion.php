@@ -33,6 +33,7 @@ class DocumentVersion extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'document_id' => true,
         'created' => true,

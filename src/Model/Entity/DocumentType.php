@@ -27,6 +27,7 @@ class DocumentType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'document_type' => true,
         'special_capability' => true,

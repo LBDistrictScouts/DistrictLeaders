@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Form;
 
 use ArrayAccess;
@@ -24,21 +25,21 @@ use InvalidArgumentException;
  */
 class FormResult
 {
-    public const STATUS_SUCCESS = 0;
+    public const STATUS_SUCCESS = 'SUCCESS';
 
     /**
      * Authentication result status
      *
      * @var string
      */
-    protected $_status;
+    protected string $_status;
 
     /**
      * The identity data used in the authentication attempt
      *
-     * @var null|array|\ArrayAccess
+     * @var \ArrayAccess|array|null
      */
-    protected $_data;
+    protected array|ArrayAccess|null $_data = null;
 
     /**
      * An array of string reasons why the authentication attempt was unsuccessful
@@ -47,19 +48,19 @@ class FormResult
      *
      * @var array
      */
-    protected $_errors = [];
+    protected array $_errors = [];
 
     /**
      * Sets the result status, identity, and failure messages
      *
-     * @param null|array $data The identity data
-     * @param int $status Status constant equivalent.
+     * @param array|null $data The identity data
+     * @param string $status Status constant equivalent.
      * @param array $messages Messages.
      * @throws \InvalidArgumentException When invalid identity data is passed.
      */
-    public function __construct(?array $data, int $status, array $messages = [])
+    public function __construct(?array $data, string $status, array $messages = [])
     {
-        if ($status === self::STATUS_SUCCESS && empty($data)) {
+        if ($status == self::STATUS_SUCCESS && empty($data)) {
             throw new InvalidArgumentException('Data can not be empty with status success.');
         }
         if ($data !== null && !is_array($data) && !($data instanceof ArrayAccess)) {
@@ -101,7 +102,7 @@ class FormResult
      *
      * @return \ArrayAccess|array|null
      */
-    public function getData()
+    public function getData(): ArrayAccess|array|null
     {
         return $this->_data;
     }

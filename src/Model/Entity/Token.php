@@ -36,6 +36,7 @@ class Token extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'token' => true,
         'email_send_id' => true,
@@ -56,6 +57,7 @@ class Token extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_hidden = [
         'hash', 'token',
     ];

@@ -13,9 +13,11 @@ declare(strict_types=1);
  * @since         3.7.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Policy;
 
 use App\Model\Entity\User;
+use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 
 /**
@@ -24,22 +26,25 @@ use Authorization\Policy\Result;
 trait AppPolicyTrait
 {
     /**
-     * @param \App\Model\Entity\User $user Identity object.
+     * @param \Authorization\IdentityInterface|null $identity Identity object.
      * @param mixed $resource The resource being operated on.
      * @param string $action The action/operation being performed.
      * @return \Authorization\Policy\Result|null
+     * @throws \Exception
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    public function before($user, $resource, $action): ?Result
+    public function before(?IdentityInterface $identity, mixed $resource, string $action): ?Result
     {
-        if (is_null($user)) {
+        if (is_null($identity)) {
             return new Result(false, 'User not present. Auth error.');
         }
 
-        if ($user->checkCapability('ALL')) {
+        if ($identity->checkCapability('ALL')) {
             return new Result(true, '900');
         }
 
-        if ($user->checkCapability($action)) {
+        if ($identity->checkCapability($action)) {
             return new Result(true, 'Action specific capability present.');
         }
 

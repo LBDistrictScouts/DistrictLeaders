@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Document $document
+ * @var AppView $this
+ * @var Document $document
  * @var mixed $documentTypes
  */
+
+use App\Model\Entity\Document;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

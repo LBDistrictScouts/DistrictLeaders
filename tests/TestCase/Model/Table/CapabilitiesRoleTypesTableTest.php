@@ -21,22 +21,9 @@ class CapabilitiesRoleTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CapabilitiesRoleTypesTable
+     * @var CapabilitiesRoleTypesTable
      */
     public $CapabilitiesRoleTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-    ];
 
     /**
      * setUp method

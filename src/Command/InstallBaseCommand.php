@@ -7,6 +7,7 @@ use Cake\Console\Arguments;
 use Cake\Console\Command;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\ORM\Locator\LocatorAwareTrait;
 
 /**
  * Class PasswordCommand
@@ -19,9 +20,12 @@ use Cake\Console\ConsoleOptionParser;
  * @property \App\Model\Table\DirectoryTypesTable $DirectoryTypes
  * @property \App\Model\Table\UserStatesTable $UserStates
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
+ * @property \App\Model\Table\UserContactTypesTable $UserContactTypes
  */
 class InstallBaseCommand extends Command
 {
+    use LocatorAwareTrait;
+
     /**
      * Initialise method
      *
@@ -30,13 +34,14 @@ class InstallBaseCommand extends Command
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadModel('Capabilities');
-        $this->loadModel('NotificationTypes');
-        $this->loadModel('FileTypes');
-        $this->loadModel('RoleTemplates');
-        $this->loadModel('DirectoryTypes');
-        $this->loadModel('UserStates');
-        $this->loadModel('DocumentTypes');
+        $this->Capabilities = $this->fetchTable('Capabilities');
+        $this->NotificationTypes = $this->fetchTable('NotificationTypes');
+        $this->FileTypes = $this->fetchTable('FileTypes');
+        $this->RoleTemplates = $this->fetchTable('RoleTemplates');
+        $this->DirectoryTypes = $this->fetchTable('DirectoryTypes');
+        $this->UserStates = $this->fetchTable('UserStates');
+        $this->DocumentTypes = $this->fetchTable('DocumentTypes');
+        $this->UserContactTypes = $this->fetchTable('UserContactTypes');
     }
 
     /**
@@ -77,10 +82,15 @@ class InstallBaseCommand extends Command
                 'short' => 'y',
                 'help' => 'Document Types',
                 'boolean' => true,
-                ])
+            ])
             ->addOption('notification_types', [
                 'short' => 'n',
                 'help' => 'Notification Types',
+                'boolean' => true,
+            ])
+            ->addOption('user_contact_types', [
+                'short' => 'u',
+                'help' => 'User Contact Types',
                 'boolean' => true,
             ]);
 
@@ -89,55 +99,61 @@ class InstallBaseCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
-     * @return int|void|null
+     * @param \Cake\Console\ConsoleIo $io The IO
+     * @return void
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $io): void
     {
         if ($args->getOption('all') || $args->getOption('capabilities')) {
             $happenings = $this->Capabilities->installBaseCapabilities();
 
-            $consoleIo->info('Capabilities Installed: ' . $happenings);
+            $io->info('Capabilities Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('notification_types')) {
             $happenings = $this->NotificationTypes->installBaseNotificationTypes();
 
-            $consoleIo->info('Notification Types Installed: ' . $happenings);
+            $io->info('Notification Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('directory_types')) {
             $happenings = $this->DirectoryTypes->installBaseDirectoryTypes();
 
-            $consoleIo->info('Directory Types Installed: ' . $happenings);
+            $io->info('Directory Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('file_types')) {
             $happenings = $this->FileTypes->installBaseFileTypes();
 
-            $consoleIo->info('File Types Installed: ' . $happenings);
+            $io->info('File Types Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('role_templates')) {
             $happenings = $this->RoleTemplates->installBaseRoleTemplates();
 
-            $consoleIo->info('Role Templates Installed: ' . $happenings);
+            $io->info('Role Templates Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('user_states')) {
             $happenings = $this->UserStates->installBaseUserStates();
 
-            $consoleIo->info('User States Installed: ' . $happenings);
+            $io->info('User States Installed: ' . $happenings);
         }
 
         if ($args->getOption('all') || $args->getOption('document_types')) {
             $happenings = $this->DocumentTypes->installBaseDocumentTypes();
 
-            $consoleIo->info('Document Types Installed: ' . $happenings);
+            $io->info('Document Types Installed: ' . $happenings);
+        }
+
+        if ($args->getOption('all') || $args->getOption('user_contact_types')) {
+            $happenings = $this->UserContactTypes->installBaseUserContactTypes();
+
+            $io->info('User Contact Types Installed: ' . $happenings);
         }
     }
 }

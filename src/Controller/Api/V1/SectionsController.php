@@ -12,7 +12,7 @@ use Cake\Utility\Hash;
  * Sections Controller
  *
  * @property \App\Model\Table\SectionsTable $Sections
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Section[]|\App\Controller\Api\V1\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class SectionsController extends AppController
 {
@@ -35,9 +35,9 @@ class SectionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $sections = $this->Sections
             ->find('all', [

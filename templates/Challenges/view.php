@@ -1,9 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User $user
- * @var \App\Model\Entity\Audit $audit
+ * @var AppView $this
+ * @var User $user
+ * @var Audit $audit
  */
+
+use App\Model\Entity\Audit;
+use App\Model\Entity\User;
+use App\View\AppView;
 
 $authUser = $this->getRequest()->getAttribute('identity');
 

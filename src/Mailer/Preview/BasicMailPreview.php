@@ -20,7 +20,7 @@ class BasicMailPreview extends MailPreview
      *
      * @return mixed
      */
-    public function confirmation()
+    public function confirmation(): mixed
     {
         $this->loadModel('EmailSends');
         $this->loadModel('Tokens');

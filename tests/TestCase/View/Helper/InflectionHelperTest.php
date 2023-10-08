@@ -15,9 +15,9 @@ class InflectionHelperTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\View\Helper\InflectionHelper
+     * @var InflectionHelper
      */
-    public $Inflection;
+    public InflectionHelper $Inflection;
 
     /**
      * setUp method
@@ -48,7 +48,7 @@ class InflectionHelperTest extends TestCase
      *
      * @return array
      */
-    public function provideSpaceData()
+    public function provideSpaceData(): array
     {
         return [
             ['Scout Group', 'ScoutGroup'],
@@ -64,9 +64,19 @@ class InflectionHelperTest extends TestCase
      * @dataProvider provideSpaceData
      * @return void
      */
-    public function testSpace($expected, $provided)
+    public function testSpace(string $expected, string $provided): void
     {
         TestCase::assertEquals($expected, $this->Inflection->space($provided));
+    }
+
+    /**
+     * Test null setup
+     *
+     * @return void
+     */
+    public function testNullSpace(): void
+    {
+        TestCase::assertEquals(null, $this->Inflection->space(null));
     }
 
     /**
@@ -74,7 +84,7 @@ class InflectionHelperTest extends TestCase
      *
      * @return array
      */
-    public function provideSpaceSingluarData()
+    public function provideSpaceSingularData(): array
     {
         return [
             ['Scout Group', 'ScoutGroups'],
@@ -88,11 +98,21 @@ class InflectionHelperTest extends TestCase
      *
      * @param string $expected The Value Expected
      * @param string $provided The Value Provided
-     * @dataProvider provideSpaceSingluarData
+     * @dataProvider provideSpaceSingularData
      * @return void
      */
-    public function testSinglulariseSpace($expected, $provided)
+    public function testSingulariseSpace(string $expected, string $provided)
     {
         TestCase::assertEquals($expected, $this->Inflection->singleSpace($provided));
+    }
+
+    /**
+     * Test initial setup
+     *
+     * @return void
+     */
+    public function testSingulariseNullSpace()
+    {
+        TestCase::assertEquals(null, $this->Inflection->singleSpace(null));
     }
 }

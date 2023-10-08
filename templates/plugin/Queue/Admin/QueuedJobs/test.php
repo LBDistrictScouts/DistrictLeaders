@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueuedJob $queuedJob
+ * @var AppView $this
+ * @var QueuedJob $queuedJob
  * @var string[] $tasks
  */
+
+use App\View\AppView;
+use Cake\I18n\FrozenTime;
+use Queue\Model\Entity\QueuedJob;
+
 ?>
 <nav class="actions large-3 medium-4 columns col-sm-4 col-xs-12" id="actions-sidebar">
     <ul class="side-nav nav nav-pills nav-stacked">
@@ -20,9 +25,9 @@
         <?php
             echo $this->Form->control('job_type', ['options' => $tasks, 'empty' => true]);
 
-            echo '<p>Current (server) time: ' . (new \Cake\I18n\FrozenTime()) . '</>';
+            echo '<p>Current (server) time: ' . (new FrozenTime()) . '</>';
 
-            echo $this->Form->control('notbefore', ['default' => (new \Cake\I18n\FrozenTime())->addMinutes(5)]);
+            echo $this->Form->control('notbefore', ['default' => (new FrozenTime())->addMinutes(5)]);
 
             echo '<p>The target time must also be in that (server) time(zone).</p>';
         ?>

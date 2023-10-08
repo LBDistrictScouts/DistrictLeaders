@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Authenticator;
 
 use ArrayAccess;
@@ -29,9 +30,9 @@ class CognitoResult extends Result implements ResultInterface
     /**
      * Authentication result status
      *
-     * @var string
+     * @var bool
      */
-    protected $_challenge;
+    protected bool $_challenge;
 
     /**
      * Failure due to identity not being found.
@@ -41,12 +42,12 @@ class CognitoResult extends Result implements ResultInterface
     /**
      * Sets the result status, identity, and failure messages
      *
-     * @param null|array|\ArrayAccess $data The identity data
+     * @param \ArrayAccess|array|null $data The identity data
      * @param string $status Status constant equivalent.
      * @param array $messages Messages.
      * @throws \InvalidArgumentException When invalid identity data is passed.
      */
-    public function __construct($data, $status, array $messages = [])
+    public function __construct(array|ArrayAccess|null $data, string $status, array $messages = [])
     {
         if ($status === self::SUCCESS && empty($data)) {
             throw new InvalidArgumentException('Identity data can not be empty with status success.');
@@ -112,7 +113,7 @@ class CognitoResult extends Result implements ResultInterface
      *
      * @return \ArrayAccess|array|null
      */
-    public function getData()
+    public function getData(): ArrayAccess|array|null
     {
         return $this->_data;
     }

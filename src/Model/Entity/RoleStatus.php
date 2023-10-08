@@ -26,6 +26,7 @@ class RoleStatus extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'role_status' => true,
         'roles' => true,

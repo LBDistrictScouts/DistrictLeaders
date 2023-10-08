@@ -1,10 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $current
- * @var \Queue\Model\Entity\QueuedJob $queuedJob
+ * @var QueuedJob $queuedJob
  * @var bool $complete
  */
+
+use App\View\AppView;
+use Queue\Model\Entity\QueuedJob;
+
 ?>
 <h3>Welcome Admin</h3>
 <div class="card thick-card">

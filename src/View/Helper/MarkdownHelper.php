@@ -17,12 +17,13 @@ class MarkdownHelper extends Helper
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [];
 
     /**
      * @var \League\CommonMark\CommonMarkConverter
      */
-    protected $converter;
+    protected CommonMarkConverter $converter;
 
     /**
      * {@inheritDoc}
@@ -48,7 +49,7 @@ class MarkdownHelper extends Helper
      * @param string $markdownStream The Markdown Stream to be converted to html
      * @return string
      */
-    public function markdownToHtml($markdownStream)
+    public function markdownToHtml(string $markdownStream): string
     {
         return $this->converter->convertToHtml($markdownStream);
     }

@@ -13,28 +13,30 @@ use App\Utility\GoogleBuilder;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Exception;
 use Google_Service_Directory_User;
 
 /**
  * DirectoryUsers Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\BelongsTo $Directories
  * @method \App\Model\Entity\DirectoryUser get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryUser newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryUser[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryUser|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryUser saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryUser patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryUser|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryUser saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryUser patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryUser[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryUser findOrCreate($search, ?callable $callback = null, $options = [])
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\HasMany $UserContacts
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsToMany $Users
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\HasMany $UserContacts
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @method \App\Model\Entity\DirectoryUser newEmptyEntity()
- * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryUser[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryUser[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DirectoryUsersTable extends Table
@@ -155,7 +157,7 @@ class DirectoryUsersTable extends Table
         while ($continue) {
             try {
                 $result = $this->populateFromList($directory, $domain, $count, $pageToken);
-            } catch (\Google_Exception $e) {
+            } catch (Google_Exception $e) {
                 return $count;
             }
             $count += $result['count'];
@@ -173,20 +175,20 @@ class DirectoryUsersTable extends Table
      * @param \App\Model\Entity\Directory $directory The Directory
      * @param string|null $directoryDomain The Directory Domain
      * @param int $count The Count start point
-     * @param null $pageToken The Next Page Token
+     * @param string|null $pageToken The Next Page Token
      * @return array
      * @throws \Google_Exception
      */
     public function populateFromList(
         Directory $directory,
         ?string $directoryDomain = null,
-        $count = 0,
-        $pageToken = null
+        int $count = 0,
+        ?string $pageToken = null
     ): array {
         $userList = GoogleBuilder::getUserList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();
 
-        /** @var \Google_Service_Directory_user $user */
+        /** @var \Google_Service_Directory_User $user */
         foreach ($userList->getUsers() as $user) {
             $result = $this->findOrMake($user, $directory);
             if ($result) {
@@ -200,10 +202,12 @@ class DirectoryUsersTable extends Table
     /**
      * @param \Google_Service_Directory_User $directoryUser Google Response Object
      * @param \App\Model\Entity\Directory $directory The Parent Directory
-     * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
+     * @return \App\Model\Entity\DirectoryDomain|\App\Model\Table\EntityInterface|array|false|null
      */
-    public function findOrMake(Google_Service_Directory_User $directoryUser, Directory $directory)
-    {
+    public function findOrMake(
+        Google_Service_Directory_User $directoryUser,
+        Directory $directory
+    ): DirectoryDomain|array|EntityInterface|false|null {
         $search = [
             DirectoryUser::FIELD_DIRECTORY_USER_REFERENCE => $directoryUser->getId(),
             DirectoryUser::FIELD_DIRECTORY_ID => $directory->id,
@@ -213,7 +217,7 @@ class DirectoryUsersTable extends Table
             $this->Directories->setCustomerReference($directory, $directoryUser);
         }
 
-        return $this->findOrCreate($search, function (DirectoryUser $entity) use ($directoryUser) {
+        return $this->findOrCreate($search, function (DirectoryUser $entity) use ($directoryUser): void {
             $entity->set($entity::FIELD_GIVEN_NAME, $directoryUser->getName()->getGivenName());
             $entity->set($entity::FIELD_FAMILY_NAME, $directoryUser->getName()->getFamilyName());
             $entity->set($entity::FIELD_PRIMARY_EMAIL, $directoryUser->getPrimaryEmail());

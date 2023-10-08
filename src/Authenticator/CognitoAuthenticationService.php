@@ -14,8 +14,10 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Authenticator;
 
+use ArrayAccess;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\Authenticator\PersistenceInterface;
@@ -36,7 +38,7 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request The request.
      * @return \Authentication\Authenticator\ResultInterface The result object. If none of the adapters was a success
-     *  the last failed result is returned.
+     * the last failed result is returned.
      * @throws \RuntimeException Throws a runtime exception when no authenticators are loaded.
      */
     public function authenticate(ServerRequestInterface $request): ResultInterface
@@ -81,9 +83,14 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
      * @param \ArrayAccess|array $identity Identity data.
      * @return array
      * @psalm-return array{request: \Psr\Http\Message\ServerRequestInterface, response: \Psr\Http\Message\ResponseInterface}
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    public function persistIdentity(ServerRequestInterface $request, ResponseInterface $response, $identity): array
-    {
+    public function persistIdentity(
+        ServerRequestInterface $request,
+        ResponseInterface $response,
+        array|ArrayAccess $identity
+    ): array {
         foreach ($this->authenticators() as $authenticator) {
             if ($authenticator instanceof PersistenceInterface) {
                 $result = $authenticator->persistIdentity($request, $response, $identity);
@@ -115,7 +122,7 @@ class CognitoAuthenticationService extends AuthenticationService implements Auth
     /**
      * Gets an identity object
      *
-     * @return null|\Authentication\IdentityInterface
+     * @return \Authentication\IdentityInterface|null
      */
     public function getIdentity(): ?IdentityInterface
     {

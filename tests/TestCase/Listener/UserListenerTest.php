@@ -15,8 +15,8 @@ use Cake\I18n\FrozenTime;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- * @property \App\Model\Table\UsersTable $Users
- * @property \App\Model\Table\RolesTable $Roles
+ * @property UsersTable $Users
+ * @property RolesTable $Roles
  * @property EventManager $EventManager
  * @property EventManager $RoleEvents
  * @property UserListener $Listener

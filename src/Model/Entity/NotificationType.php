@@ -32,6 +32,7 @@ class NotificationType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'notification_type' => true,
         'notification_description' => true,
@@ -44,7 +45,7 @@ class NotificationType extends Entity
     /**
      * @return array
      */
-    private function typeSplitter()
+    private function typeSplitter(): array
     {
         $generationArray = explode('-', $this->type_code, 2);
 
@@ -86,6 +87,10 @@ class NotificationType extends Entity
         return (bool)in_array($this->type_code, $repetitive);
     }
 
+    /**
+     * @var array<string>
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = [
         self::FIELD_TYPE,
         self::FIELD_SUB_TYPE,

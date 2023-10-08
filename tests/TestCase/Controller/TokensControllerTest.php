@@ -60,7 +60,7 @@ class TokensControllerTest extends TestCase
      */
     public function testValidate()
     {
-        /** @var \App\Model\Table\TokensTable $tokens */
+        /** @var TokensTable $tokens */
         $tokens = $this->getTableLocator()->get('Tokens');
 
         $token = $tokens->prepareToken(1);
@@ -92,7 +92,7 @@ class TokensControllerTest extends TestCase
      */
     public function testValidateAndAuthenticate()
     {
-        /** @var \App\Model\Table\TokensTable $tokens */
+        /** @var TokensTable $tokens */
         $tokens = $this->getTableLocator()->get($this->controller);
 
         $tokenRow = $tokens->get(1);

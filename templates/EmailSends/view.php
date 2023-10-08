@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailSend $emailSend
+ * @var AppView $this
+ * @var EmailSend $emailSend
  */
+
+use App\Model\Entity\EmailSend;
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col">

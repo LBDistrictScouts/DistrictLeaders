@@ -10,16 +10,16 @@ use Cake\Core\Configure;
  * RoleTypes Controller
  *
  * @property \App\Model\Table\RoleTypesTable $RoleTypes
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class RoleTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['SectionTypes', 'RoleTemplates'],
@@ -33,10 +33,10 @@ class RoleTypesController extends AppController
      * View method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($roleTypeId = null)
+    public function view(?string $roleTypeId = null): void
     {
         $roleType = $this->RoleTypes->get($roleTypeId, [
             'contain' => [
@@ -68,9 +68,9 @@ class RoleTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $roleType = $this->RoleTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -78,7 +78,7 @@ class RoleTypesController extends AppController
             if ($this->RoleTypes->save($roleType)) {
                 $this->Flash->success(__('The role type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleType->id]);
+                $this->redirect(['action' => 'view', $roleType->id]);
             }
             $this->Flash->error(__('The role type could not be saved. Please, try again.'));
         }
@@ -100,10 +100,10 @@ class RoleTypesController extends AppController
      * Edit method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($roleTypeId = null)
+    public function edit(?string $roleTypeId = null): void
     {
         $roleType = $this->RoleTypes->get($roleTypeId, [
             'contain' => ['Capabilities'],
@@ -113,7 +113,7 @@ class RoleTypesController extends AppController
             if ($this->RoleTypes->save($roleType)) {
                 $this->Flash->success(__('The role type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $roleType->id]);
+                $this->redirect(['action' => 'view', $roleType->id]);
             }
             $this->Flash->error(__('The role type could not be saved. Please, try again.'));
         }
@@ -132,10 +132,10 @@ class RoleTypesController extends AppController
      * Delete method
      *
      * @param string|null $roleTypeId Role Type id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($roleTypeId = null)
+    public function delete(?string $roleTypeId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $roleType = $this->RoleTypes->get($roleTypeId);
@@ -145,6 +145,6 @@ class RoleTypesController extends AppController
             $this->Flash->error(__('The role type could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

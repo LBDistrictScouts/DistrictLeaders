@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Model\Table\Traits;
 
 use RuntimeException;

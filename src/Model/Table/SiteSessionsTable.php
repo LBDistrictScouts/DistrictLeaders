@@ -12,17 +12,18 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\SiteSession get($primaryKey, $options = [])
  * @method \App\Model\Entity\SiteSession newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SiteSession|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SiteSession saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SiteSession patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SiteSession|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SiteSession patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\SiteSession findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\SiteSession newEmptyEntity()
- * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\SiteSession[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SiteSession[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class SiteSessionsTable extends Table
 {

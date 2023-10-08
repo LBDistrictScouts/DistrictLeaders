@@ -11,16 +11,16 @@ use Cake\Utility\Inflector;
  *
  * @property \App\Model\Table\DocumentVersionsTable $DocumentVersions
  * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\DocumentVersion[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentVersion[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentVersionsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => [
@@ -37,10 +37,10 @@ class DocumentVersionsController extends AppController
      * View method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($documentVersionId = null)
+    public function view(?string $documentVersionId = null): void
     {
         $documentVersion = $this->DocumentVersions->get($documentVersionId, [
             'contain' => ['Documents', 'DocumentEditions'],
@@ -52,9 +52,9 @@ class DocumentVersionsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $documentVersion = $this->DocumentVersions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -62,7 +62,7 @@ class DocumentVersionsController extends AppController
             if ($this->DocumentVersions->save($documentVersion)) {
                 $this->Flash->success(__('The document version has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The document version could not be saved. Please, try again.'));
         }
@@ -74,10 +74,10 @@ class DocumentVersionsController extends AppController
      * Edit method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($documentVersionId = null)
+    public function edit(?string $documentVersionId = null): void
     {
         $documentVersion = $this->DocumentVersions->get($documentVersionId, [
             'contain' => [],
@@ -87,7 +87,7 @@ class DocumentVersionsController extends AppController
             if ($this->DocumentVersions->save($documentVersion)) {
                 $this->Flash->success(__('The document version has been saved.'));
 
-                return $this->redirect(['action' => 'index']);
+                $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The document version could not be saved. Please, try again.'));
         }
@@ -99,10 +99,10 @@ class DocumentVersionsController extends AppController
      * Delete method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($documentVersionId = null)
+    public function delete(?string $documentVersionId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
@@ -112,16 +112,16 @@ class DocumentVersionsController extends AppController
             $this->Flash->error(__('The document version could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
      * Delete method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      */
-    public function compass($documentVersionId = null)
+    public function compass(?string $documentVersionId = null): void
     {
         $this->request->allowMethod(['post']);
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
@@ -129,17 +129,17 @@ class DocumentVersionsController extends AppController
         $this->loadComponent('Queue');
         $this->Queue->setCompassVersionImport($documentVersion);
 
-        return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
+        $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
     }
 
     /**
      * Auto Merge method
      *
      * @param string|null $documentVersionId Document Version id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Exception
      */
-    public function autoMerge($documentVersionId = null)
+    public function autoMerge(?string $documentVersionId = null): void
     {
         $this->request->allowMethod(['post']);
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
@@ -147,16 +147,16 @@ class DocumentVersionsController extends AppController
         $this->loadComponent('Queue');
         $this->Queue->setCompassAutoMerge($documentVersion);
 
-        return $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
+        $this->redirect(['controller' => 'CompassRecords', 'action' => 'index', $documentVersionId]);
     }
 
     /**
      * Add method
      *
      * @param string|null $documentVersionId Document Edition id.
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function map($documentVersionId = null)
+    public function map(?string $documentVersionId = null): void
     {
         $documentVersion = $this->DocumentVersions->get($documentVersionId);
         $result = $this->DocumentVersions->mapCompassRecords($documentVersion);

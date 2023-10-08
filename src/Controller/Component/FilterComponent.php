@@ -5,6 +5,7 @@ namespace App\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\ORM\Association;
+use Cake\ORM\Query;
 use Cake\Utility\Inflector;
 
 /**
@@ -17,6 +18,7 @@ class FilterComponent extends Component
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [];
 
     /**
@@ -24,7 +26,7 @@ class FilterComponent extends Component
      * @param array $queryParams The Query Params of the Request
      * @return \Cake\ORM\Query
      */
-    public function indexFilters(Association $association, array $queryParams)
+    public function indexFilters(Association $association, array $queryParams): Query
     {
         $baseTable = $association->getSource();
         $associatedTable = $association->getTarget();

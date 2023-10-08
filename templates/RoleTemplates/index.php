@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\RoleTemplate[]|\Cake\Collection\CollectionInterface $roleTemplates
+ * @var AppView $this
+ * @var \App\Model\Entity\RoleTemplate[]|CollectionInterface $roleTemplates
  */
+
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

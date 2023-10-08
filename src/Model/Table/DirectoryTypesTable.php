@@ -12,20 +12,20 @@ use Cake\Validation\Validator;
 /**
  * DirectoryTypes Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\HasMany $Directories
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\HasMany $Directories
  * @method \App\Model\Entity\DirectoryType get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryType findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\DirectoryType newEmptyEntity()
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryTypesTable extends Table
 {

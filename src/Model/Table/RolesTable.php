@@ -20,11 +20,11 @@ use Cake\Validation\Validator;
 /**
  * Roles Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $Sections
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $RoleStatuses
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $UserContacts
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $RoleTypes
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $Sections
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $RoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $UserContacts
  * @method \App\Model\Entity\Role get($primaryKey, $options = [])
  * @method \App\Model\Entity\Role newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Role[] newEntities(array $data, array $options = [])
@@ -35,14 +35,18 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Role findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @method \App\Model\Entity\Role newEmptyEntity()
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Role[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Role[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class RolesTable extends Table
 {
@@ -159,7 +163,7 @@ class RolesTable extends Table
      * @return \Cake\ORM\Query
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function findActive(Query $query, array $options)
+    public function findActive(Query $query, array $options): Query
     {
         $query
             ->contain('RoleStatuses')

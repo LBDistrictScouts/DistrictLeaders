@@ -42,6 +42,7 @@ class EmailSend extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'email_generation_code' => true,
         'email_template' => true,

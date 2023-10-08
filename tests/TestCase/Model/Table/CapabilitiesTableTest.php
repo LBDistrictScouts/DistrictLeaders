@@ -20,44 +20,9 @@ class CapabilitiesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CapabilitiesTable
+     * @var CapabilitiesTable
      */
-    public $Capabilities;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
+    public CapabilitiesTable $Capabilities;
 
     /**
      * setUp method
@@ -496,7 +461,7 @@ class CapabilitiesTableTest extends TestCase
      * @param array $expected Entities Created
      * @param array $hydrated First Entity
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testFieldCapability(
         string $entity,

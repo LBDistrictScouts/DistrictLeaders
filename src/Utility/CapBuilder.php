@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @since         2.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Utility;
 
 use App\Model\Entity\Capability;
@@ -27,24 +28,24 @@ class CapBuilder
     /**
      * @var string
      */
-    protected static $fieldPrefix = 'FIELD';
+    protected static string $fieldPrefix = 'FIELD';
 
     /**
      * @var int
      */
-    protected static $maxLevel = 5;
+    protected static int $maxLevel = 5;
 
     /**
      * @var int
      */
-    protected static $minLevel = 1;
+    protected static int $minLevel = 1;
 
     /**
      * @var int
      */
-    protected static $absoluteMinLevel = 0;
+    protected static int $absoluteMinLevel = 0;
 
-    protected static $actionOverrides = [
+    protected static array $actionOverrides = [
       'INDEX' => 'VIEW',
       'ADD' => 'CREATE',
       'EDIT' => 'UPDATE',
@@ -52,16 +53,16 @@ class CapBuilder
       'PERMISSIONS' => 'VIEW',
     ];
 
-    protected static $fieldActionOverrides = [
+    protected static array $fieldActionOverrides = [
         'CHANGE' => 'UPDATE',
     ];
 
-    protected static $fieldCapabilities = [
+    protected static array $fieldCapabilities = [
         'CHANGE' => 1,
         'VIEW' => 0,
     ];
 
-    protected static $entityCapabilities = [
+    protected static array $entityCapabilities = [
         'CREATE' => 1,
         'UPDATE' => 1,
         'VIEW' => -5,
@@ -74,7 +75,7 @@ class CapBuilder
      * @param string|null $field The Field being limited
      * @return string|false
      */
-    public static function capabilityCodeFormat(string $action, string $model, ?string $field = null)
+    public static function capabilityCodeFormat(string $action, string $model, ?string $field = null): string|false
     {
         $action = CapBuilder::applyActionOverrides($action);
 
@@ -107,7 +108,7 @@ class CapBuilder
      * @param string|null $field The Field Restriction
      * @return string|false
      */
-    public static function capabilityNameFormat(string $action, string $model, ?string $field = null)
+    public static function capabilityNameFormat(string $action, string $model, ?string $field = null): string|false
     {
         if (
             (!is_null($field) && !CapBuilder::isFieldActionType($action))
@@ -299,7 +300,7 @@ class CapBuilder
      * @param string $capabilityCode Capability code to be broken
      * @return array|false
      */
-    protected static function breakFieldCode(string $capabilityCode)
+    protected static function breakFieldCode(string $capabilityCode): array|false
     {
         if (CapBuilder::isFieldType($capabilityCode)) {
             $code = substr($capabilityCode, 6);
@@ -349,7 +350,7 @@ class CapBuilder
      * @param string $capabilityCode The Capability Code to be broken
      * @return array|false
      */
-    public static function breakCode(string $capabilityCode)
+    public static function breakCode(string $capabilityCode): array|false
     {
         $code = $capabilityCode;
         if (CapBuilder::isFieldType($capabilityCode)) {

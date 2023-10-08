@@ -14,7 +14,7 @@ use Cake\Event\EventManager;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- * @property \App\Model\Table\RolesTable $Roles
+ * @property RolesTable $Roles
  * @property EventManager $EventManager
  * @property RoleListener $Listener
  */

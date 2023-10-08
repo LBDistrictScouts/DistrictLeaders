@@ -15,46 +15,14 @@ class EmailResponseTypesControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.Camps',
-        'app.CampTypes',
-        'app.Notifications',
-        'app.NotificationTypes',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
-    /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'EmailResponseTypes';
+    private string $controller = 'EmailResponseTypes';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         'email_response_type' => 'Email Send',
         'bounce' => false,
     ];
@@ -64,7 +32,7 @@ class EmailResponseTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -74,7 +42,7 @@ class EmailResponseTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -84,7 +52,7 @@ class EmailResponseTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->tryAddGet($this->controller);
 
@@ -100,7 +68,7 @@ class EmailResponseTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -116,7 +84,7 @@ class EmailResponseTypesControllerTest extends TestCase
      *
      * @return void
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

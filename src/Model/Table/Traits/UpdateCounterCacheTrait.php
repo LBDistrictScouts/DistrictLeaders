@@ -11,13 +11,13 @@ namespace App\Model\Table\Traits;
 trait UpdateCounterCacheTrait
 {
     /**
-     * @param null|string|array $association Table Association
+     * @param array|string|null $association Table Association
      *        null - update all CounterCaches
      *        string - update only the CounterCache for this association
      *        array - update CounterCaches for the listed associations,
      *            update only the fields listed like ['Tags' => ['count']]
      *            if no $cacheFields given, to update all set the key to true
-     * @param null|string|array $cacheField Field for Counter Cache
+     * @param array|string|null $cacheField Field for Counter Cache
      *        null - update all fields for the CounterCache(s)
      *        string - update only this field for the CounterCache(s)
      *        array - update the given fields in the CounterCache(s),
@@ -27,8 +27,11 @@ trait UpdateCounterCacheTrait
      *        if $verbose_return == false, the total number of updated fields
      * @throws \App\Model\Table\Traits\BehaviourNotFoundException when the CounterCacheBehavior is not attached
      */
-    public function updateCounterCache($association = null, $cacheField = null, $reset = true)
-    {
+    public function updateCounterCache(
+        string|array|null $association = null,
+        string|array|null $cacheField = null,
+        bool $reset = true
+    ): int {
         $counterCache = $this->behaviors()->get('CounterCache');
 
         if (!$counterCache) {

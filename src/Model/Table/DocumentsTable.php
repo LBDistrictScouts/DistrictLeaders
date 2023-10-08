@@ -21,8 +21,8 @@ use League\Flysystem\FileNotFoundException;
 /**
  * Documents Model
  *
- * @property \App\Model\Table\DocumentTypesTable&\Cake\ORM\Association\BelongsTo $DocumentTypes
- * @property \App\Model\Table\DocumentVersionsTable&\Cake\ORM\Association\HasMany $DocumentVersions
+ * @property \App\Model\Table\DocumentTypesTable&\App\Model\Table\BelongsTo $DocumentTypes
+ * @property \App\Model\Table\DocumentVersionsTable&\App\Model\Table\HasMany $DocumentVersions
  * @method \App\Model\Entity\Document get($primaryKey, $options = [])
  * @method \App\Model\Entity\Document newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Document[] newEntities(array $data, array $options = [])
@@ -35,12 +35,16 @@ use League\Flysystem\FileNotFoundException;
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \Search\Model\Behavior\SearchBehavior
- * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property \App\Model\Table\DocumentEditionsTable&\Cake\ORM\Association\BelongsTo $DocumentPreviews
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\DocumentEditionsTable&\App\Model\Table\BelongsTo $DocumentPreviews
  * @method \App\Model\Entity\Document newEmptyEntity()
- * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Document[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Document[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
  */
 class DocumentsTable extends Table
 {

@@ -28,6 +28,7 @@ class UserContactType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'user_contact_type' => true,
         'created' => true,

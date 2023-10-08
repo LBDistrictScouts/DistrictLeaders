@@ -1,4 +1,9 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
+ */
+
+use App\View\AppView;
+/**
+ * @var AppView $this
  */

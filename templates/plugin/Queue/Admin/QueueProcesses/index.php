@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueueProcess[]|\Cake\Collection\CollectionInterface $queueProcesses
+ * @var AppView $this
+ * @var QueueProcess[]|CollectionInterface $queueProcesses
  */
+
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
+use Queue\Model\Entity\QueueProcess;
 use Queue\Queue\Config;
 ?>
 <?= $this->element('header', ['current' => 'process-list']) ?>

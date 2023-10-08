@@ -20,29 +20,31 @@ class CompassTask extends Task implements TaskInterface
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $timeout = 900;
 
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $retries = 1;
 
     /**
      * @var string The Data Key
      */
-    protected $entityKey = 'version';
+    protected string $entityKey = 'version';
 
     /**
      * @var string The Data Key
      */
-    protected $outputKey = 'compass_records';
+    protected string $outputKey = 'compass_records';
 
     /**
      * @param array $data The array passed to QueuedJobsTable::createJob()
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->loadModel('DocumentVersions');
 

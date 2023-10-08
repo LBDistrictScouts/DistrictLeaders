@@ -19,11 +19,13 @@ class TokenTask extends Task implements TaskInterface
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $timeout = 20;
 
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $retries = 1;
 
     /**
@@ -31,7 +33,7 @@ class TokenTask extends Task implements TaskInterface
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         $this->loadModel('Tokens');
         $result = $this->Tokens->cleanAllTokens((int)$jobId);

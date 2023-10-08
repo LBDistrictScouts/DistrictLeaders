@@ -15,7 +15,7 @@ class EmailResponseTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\EmailResponseTypesTable
+     * @var EmailResponseTypesTable
      */
     public $EmailResponseTypes;
 

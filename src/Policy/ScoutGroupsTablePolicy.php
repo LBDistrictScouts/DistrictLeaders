@@ -6,6 +6,7 @@ namespace App\Policy;
 use App\Model\Entity\User;
 use Authorization\Policy\BeforePolicyInterface;
 use Authorization\Policy\Result;
+use Cake\ORM\Query;
 
 /**
  * Class UsersPolicy
@@ -21,7 +22,7 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
      * @param \Cake\ORM\Query $query The Query object to be limited.
      * @return mixed
      */
-    public function scopeIndex($user, $query)
+    public function scopeIndex(User $user, Query $query): mixed
     {
         if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
             return $query;
@@ -32,22 +33,9 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
 
     /**
      * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
+     * @return \Authorization\Policy\Result|null
      */
-    public function canIndex(User $user)
-    {
-        if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
-            return new Result(true, '200');
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \App\Model\Entity\User $user The User Editing
-     * @return \Authorization\Policy\Result
-     */
-    public function canView(User $user)
+    public function canIndex(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
             return new Result(true, '200');
@@ -60,7 +48,20 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result|null
      */
-    public function canAdd(User $user)
+    public function canView(User $user): ?Result
+    {
+        if ($user->buildAndCheckCapability('VIEW', 'ScoutGroups')) {
+            return new Result(true, '200');
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \App\Model\Entity\User $user The User Editing
+     * @return \Authorization\Policy\Result|null
+     */
+    public function canAdd(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('CREATE', 'ScoutGroups')) {
             return new Result(true, '201');
@@ -73,7 +74,7 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result|null
      */
-    public function canEdit(User $user)
+    public function canEdit(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('UPDATE', 'ScoutGroups')) {
             return new Result(true, '202');
@@ -86,7 +87,7 @@ class ScoutGroupsTablePolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result|null
      */
-    public function canGenerate(User $user)
+    public function canGenerate(User $user): ?Result
     {
         if ($user->buildAndCheckCapability('CREATE', 'ScoutGroups')) {
             return new Result(true, '201');

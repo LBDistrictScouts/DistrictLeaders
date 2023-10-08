@@ -18,6 +18,7 @@ class CsvBehavior extends Behavior
      * @var array
      * @access protected
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [
         'length' => 0,
         'delimiter' => ',',
@@ -38,8 +39,12 @@ class CsvBehavior extends Behavior
      * @return array|false of all data from the csv file in [Model][field] format
      * @author Dean Sofer
      */
-    public function importCsv(string $content, array $fields = [], array $options = [], bool $mapping = false)
-    {
+    public function importCsv(
+        string $content,
+        array $fields = [],
+        array $options = [],
+        bool $mapping = false
+    ): array|false {
         $config = $this->getConfig();
         $options = array_merge($config, $options);
 
@@ -124,12 +129,12 @@ class CsvBehavior extends Behavior
      * Converts a data array into
      *
      * @param string $filename to export to
-     * @param \Cake\ORM\Entity[] $data to export
+     * @param array<\App\Model\Behavior\Entity> $data to export
      * @param array $options Options Configuration
      * @return int|false
      * @author Dean
      */
-    public function exportCsv(string $filename, array $data, array $options = [])
+    public function exportCsv(string $filename, array $data, array $options = []): int|false
     {
         $config = $this->getConfig();
         $options = array_merge($config, $options);

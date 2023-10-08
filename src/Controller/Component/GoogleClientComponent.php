@@ -7,6 +7,8 @@ use App\Model\Entity\Directory;
 use App\Utility\GoogleBuilder;
 use Cake\Controller\Component;
 use Google_Client;
+use Google_Service_Directory_Domains2;
+use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component
@@ -17,14 +19,18 @@ class GoogleClientComponent extends Component
      * get List
      *
      * @param \App\Model\Entity\Directory $directory The Directory Authentication
-     * @param null $domain Domain Limit
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Users
      * @throws \Google_Exception
      */
-    public function getUserList(Directory $directory, $domain = null, int $limit = 50, ?string $pageToken = null)
-    {
+    public function getUserList(
+        Directory $directory,
+        ?string $domain = null,
+        int $limit = 50,
+        ?string $pageToken = null
+    ): Google_Service_Directory_Users {
         return GoogleBuilder::getUserList($directory, $domain, $limit, $pageToken);
     }
 
@@ -36,7 +42,7 @@ class GoogleClientComponent extends Component
      * @return \Google_Service_Directory_User
      * @throws \Google_Exception
      */
-    public function getUser(Directory $directory, $userId)
+    public function getUser(Directory $directory, string $userId): Google_Service_Directory_User
     {
         return GoogleBuilder::getUser($userId, $directory);
     }
@@ -47,7 +53,7 @@ class GoogleClientComponent extends Component
      * @return \Google_Service_Directory_Domains2
      * @throws \Google_Exception
      */
-    public function getDomainList()
+    public function getDomainList(): Google_Service_Directory_Domains2
     {
         return GoogleBuilder::getDomainList();
     }
@@ -78,7 +84,7 @@ class GoogleClientComponent extends Component
      * @param \App\Model\Entity\Directory $directory The Directory to Save Config To
      * @return void
      */
-    public function saveToken(Google_Client $client, Directory $directory)
+    public function saveToken(Google_Client $client, Directory $directory): void
     {
         GoogleBuilder::saveToken($client, $directory);
     }

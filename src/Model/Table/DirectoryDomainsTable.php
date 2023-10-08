@@ -9,27 +9,28 @@ use App\Utility\GoogleBuilder;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Exception;
 use Google_Service_Directory_Domains;
 
 /**
  * DirectoryDomains Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\BelongsTo $Directories
  * @method \App\Model\Entity\DirectoryDomain get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryDomain newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryDomain|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryDomain saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
  * @method \App\Model\Entity\DirectoryDomain
  * patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\DirectoryDomain patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryDomain patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryDomain newEmptyEntity()
- * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryDomain[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryDomain[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryDomainsTable extends Table
 {
@@ -106,7 +107,7 @@ class DirectoryDomainsTable extends Table
     {
         try {
             $domainList = GoogleBuilder::getDomainList($directory);
-        } catch (\Google_Exception $e) {
+        } catch (Google_Exception $e) {
             return 0;
         }
         $count = 0;
@@ -125,10 +126,12 @@ class DirectoryDomainsTable extends Table
     /**
      * @param \Google_Service_Directory_Domains $directoryDomains Google Response Object
      * @param int $directoryId ID of the Parent Directory
-     * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
+     * @return \App\Model\Entity\DirectoryDomain|\App\Model\Table\EntityInterface|array|false|null
      */
-    public function findOrMake(Google_Service_Directory_Domains $directoryDomains, int $directoryId)
-    {
+    public function findOrMake(
+        Google_Service_Directory_Domains $directoryDomains,
+        int $directoryId
+    ): DirectoryDomain|array|EntityInterface|false|null {
         $search = [
             DirectoryDomain::FIELD_DIRECTORY_DOMAIN => $directoryDomains->getDomainName(),
             DirectoryDomain::FIELD_DIRECTORY_ID => $directoryId,

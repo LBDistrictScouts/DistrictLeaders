@@ -18,11 +18,13 @@ class MailingListTask extends Task implements TaskInterface
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $timeout = 300;
 
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $retries = 1;
 
     /**
@@ -30,7 +32,7 @@ class MailingListTask extends Task implements TaskInterface
      * @param int $jobId The id of the QueuedJob entity
      * @return void
      */
-    public function run(array $data, $jobId): void
+    public function run(array $data, int $jobId): void
     {
         if (!key_exists('email_generation_code', $data)) {
             throw new QueueException('Email generation code not specified.');

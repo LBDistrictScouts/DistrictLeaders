@@ -49,6 +49,7 @@ class Audit extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'audit_field' => true,
         'audit_table' => true,

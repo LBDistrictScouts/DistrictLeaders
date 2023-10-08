@@ -20,18 +20,9 @@ class DirectoryTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\DirectoryTypesTable
+     * @var DirectoryTypesTable
      */
-    protected $DirectoryTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.DirectoryTypes',
-    ];
+    protected DirectoryTypesTable $DirectoryTypes;
 
     /**
      * setUp method

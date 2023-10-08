@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CompassRecord $compassRecord
+ * @var AppView $this
+ * @var CompassRecord $compassRecord
  * @var mixed $documentVersions
  */
+
+use App\Model\Entity\CompassRecord;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

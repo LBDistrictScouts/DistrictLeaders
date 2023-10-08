@@ -27,6 +27,7 @@ class EmailResponseType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'email_response_type' => true,
         'bounce' => true,

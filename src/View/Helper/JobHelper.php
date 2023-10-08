@@ -12,7 +12,7 @@ use Cake\View\Helper;
  */
 class JobHelper extends Helper
 {
-    protected $resultKeys = [
+    protected array $resultKeys = [
         'compass_records' => 'Parsed Compass Records',
         'user_records' => 'Parsed Users',
         'email_send_id' => 'Email Send ID',
@@ -31,14 +31,14 @@ class JobHelper extends Helper
         'skippedRecords' => 'Skipped Compass Records',
     ];
 
-    protected $inputKeys = [
+    protected array $inputKeys = [
         'version' => 'Document Version',
         'directory' => 'Directory',
         'email_generation_code' => 'Email Generation Code',
         'role_template_id' => 'Role Template ID',
     ];
 
-    protected $linkKeys = [
+    protected array $linkKeys = [
         'version' => '/document-versions/view/{0}',
         'directory' => '/directories/view/{0}',
         'email_send_id' => '/email-sends/view/{0}',
@@ -67,7 +67,7 @@ class JobHelper extends Helper
      * @param string|null $link The Link for passing
      * @return string
      */
-    private function cellFormat($value, ?string $link = null): string
+    private function cellFormat(string|int $value, ?string $link = null): string
     {
         if (!empty($link) && is_numeric($value)) {
             return '<td><a href="' . __($link, $value) . '" >' . (string)$value . '</a></td>';

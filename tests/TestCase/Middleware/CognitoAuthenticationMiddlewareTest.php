@@ -14,12 +14,14 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Middleware;
 
 use App\Application;
 use App\Authenticator\CognitoAuthenticationService;
 use App\Middleware\CognitoAuthenticationMiddleware;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
+use App\Test\TestCase\Model\Table\ModelTestTrait;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -28,7 +30,9 @@ use Authentication\Authenticator\UnauthenticatedException;
 use Authentication\IdentityInterface;
 use Cake\Http\Response;
 use Cake\Http\ServerRequestFactory;
+use Cake\Http\Uri;
 use Firebase\JWT\JWT;
+use stdClass;
 
 /**
  * Class AuthenticationMiddlewareTest
@@ -37,52 +41,17 @@ use Firebase\JWT\JWT;
  */
 class CognitoAuthenticationMiddlewareTest extends TestCase
 {
-    /**
-     * Fixtures
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
+    use ModelTestTrait;
 
     /**
-     * @var \App\Authenticator\CognitoAuthenticationService
+     * @var CognitoAuthenticationService
      */
-    protected $service;
+    protected CognitoAuthenticationService $service;
 
     /**
-     * @var \App\Application
+     * @var Application
      */
-    protected $application;
+    protected Application $application;
 
     /**
      * @inheritDoc
@@ -90,16 +59,17 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
     public function setUp(): void
     {
         $this->markTestSkipped();
-        parent::setUp();
-        $this->service = new CognitoAuthenticationService([
-            'identifiers' => [
-                'Cognito',
-            ],
-            'authenticators' => [
-                'Cognito',
-            ],
-        ]);
-        $this->application = new Application('config');
+
+//        parent::setUp();
+//        $this->service = new CognitoAuthenticationService([
+//            'identifiers' => [
+//                'Cognito',
+//            ],
+//            'authenticators' => [
+//                'Cognito',
+//            ],
+//        ]);
+//        $this->application = new Application('config');
     }
 
     public function testApplicationAuthentication()
@@ -115,7 +85,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $middleware = new CognitoAuthenticationMiddleware($this->application);
         $middleware->process($request, $handler);
 
-        /** @var \App\Authenticator\CognitoAuthenticationService $service */
+        /** @var CognitoAuthenticationService $service */
         $service = $request->getAttribute('authentication');
         static::assertInstanceOf(AuthenticationService::class, $service);
 
@@ -186,7 +156,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         );
         $handler = new TestRequestHandler();
 
-        $middleware = new CognitoAuthenticationMiddleware(new \stdClass());
+        $middleware = new CognitoAuthenticationMiddleware(new stdClass());
         $middleware->process($request, $handler);
     }
 
@@ -263,7 +233,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             ['username' => 'mariano', 'password' => 'password']
         );
         $handler = new TestRequestHandler(function ($req) {
-            /** @var \Authentication\AuthenticationService $service */
+            /** @var AuthenticationService $service */
             $service = $req->getAttribute('authentication');
             $this->assertInstanceOf(AuthenticationService::class, $service);
             $this->assertEquals('customIdentity', $service->getConfig('identityAttribute'));
@@ -300,7 +270,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         ]);
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('customIdentity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -325,7 +295,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
 
         $middleware = new CognitoAuthenticationMiddleware($this->application);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -358,7 +328,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
         $handler = new TestRequestHandler(function ($request) {
-            $service = $request->getAttribute('authentication');
             $this->assertNull($request->getAttribute('session')->read('Auth'));
 
             return new Response();
@@ -387,7 +356,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
 
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -475,7 +444,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             throw new UnauthenticatedException();
         });
         $middleware = new CognitoAuthenticationMiddleware($this->service);
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
     }
 
     /**
@@ -546,10 +515,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $handler = new TestRequestHandler(function ($request) {
             throw new UnauthenticatedException();
         });
-
-        $next = function ($request, $response) {
-            throw new UnauthenticatedException();
-        };
 
         $this->service->setConfig([
             'unauthenticatedRedirect' => '/users/login',
@@ -638,7 +603,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             ['username' => 'mariano', 'password' => 'password']
         );
         $uri = $request->getUri();
-        $uri->base = '/base';
+        $uri = new Uri($uri, '/base', '');
         $request = $request->withUri($uri);
         $handler = new TestRequestHandler(function ($request) {
             throw new UnauthenticatedException();
@@ -669,9 +634,6 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
             ['username' => 'mariano', 'password' => 'password']
         );
         $response = new Response();
-        $next = function ($request, $response) {
-            throw new UnauthenticatedException();
-        };
 
         $this->service->setConfig([
             'unauthenticatedRedirect' => '/users/login',
@@ -725,7 +687,7 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
         $handler = new TestRequestHandler();
         $middleware = new CognitoAuthenticationMiddleware($this->service);
 
-        $response = $middleware->process($request, $handler);
+        $middleware->process($request, $handler);
         $identity = $handler->request->getAttribute('identity');
         $service = $handler->request->getAttribute('authentication');
 
@@ -798,18 +760,14 @@ class CognitoAuthenticationMiddlewareTest extends TestCase
                 'password' => 'password',
             ]
         );
-        $response = new Response();
         $middleware = new CognitoAuthenticationMiddleware($service, [
             'identityAttribute' => 'user',
             'unauthenticatedRedirect' => '/login',
             'queryParam' => 'redirect',
         ]);
-        $next = function ($request, $response) {
-            return $response;
-        };
         $this->deprecated(function () use ($request, $middleware) {
             $handler = new TestRequestHandler();
-            $response = $middleware->process($request, $handler);
+            $middleware->process($request, $handler);
         });
         $this->assertSame('user', $service->getConfig('identityAttribute'));
         $this->assertSame('redirect', $service->getConfig('queryParam'));

@@ -18,22 +18,23 @@ use Cake\Validation\Validator;
 /**
  * Tokens Model
  *
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\BelongsTo $EmailSends
  * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  * @method \App\Model\Entity\Token get($primaryKey, $options = [])
  * @method \App\Model\Entity\Token newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Token[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Token|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Token|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Token[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Token findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\Token saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Token[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Token newEmptyEntity()
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Token[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Token[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class TokensTable extends Table
 {
@@ -354,9 +355,9 @@ class TokensTable extends Table
 
     /**
      * @param array $requestQueryParams Request Query Params
-     * @return false|\App\Model\Entity\Token
+     * @return \App\Model\Entity\Token|false
      */
-    public function validateTokenRequest(array $requestQueryParams)
+    public function validateTokenRequest(array $requestQueryParams): false|Token
     {
         if (key_exists('token', $requestQueryParams)) {
             $token = $requestQueryParams['token'];

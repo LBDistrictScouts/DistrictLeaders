@@ -14,15 +14,19 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Identifier;
 
 use App\Utility\AwsBuilder;
+use ArrayAccess;
 use Authentication\Identifier\AbstractIdentifier;
 use Authentication\Identifier\Resolver\ResolverAwareTrait;
 use Authentication\Identifier\Resolver\ResolverInterface;
 use Authentication\PasswordHasher\PasswordHasherFactory;
 use Authentication\PasswordHasher\PasswordHasherInterface;
 use Authentication\PasswordHasher\PasswordHasherTrait;
+use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
+use Cake\Datasource\EntityInterface;
 
 /**
  * Password Identifier
@@ -58,6 +62,7 @@ class CognitoIdentifier extends AbstractIdentifier
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [
         'fields' => [
             self::CREDENTIAL_USERNAME => 'username',
@@ -70,17 +75,17 @@ class CognitoIdentifier extends AbstractIdentifier
     /**
      * @var \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
      */
-    protected $client;
+    protected CognitoIdentityProviderClient $client;
 
     /**
      * @var string ID for the Cognito User Pool
      */
-    protected $userPoolId;
+    protected string $userPoolId;
 
     /**
      * @var string ID for the Application
      */
-    protected $poolClientId;
+    protected string $poolClientId;
 
     /**
      * Constructor.
@@ -185,11 +190,11 @@ class CognitoIdentifier extends AbstractIdentifier
      * Input passwords will be hashed even when a user doesn't exist. This
      * helps mitigate timing attacks that are attempting to find valid usernames.
      *
-     * @param array|\ArrayAccess|null $identity The identity or null.
+     * @param \App\Identifier\ArrayAccess|array|null $identity The identity or null.
      * @param string|null $password The password.
      * @return bool
      */
-    protected function checkPassword($identity, ?string $password): bool
+    protected function checkPassword(array|ArrayAccess|null $identity, ?string $password): bool
     {
         $passwordField = $this->getConfig('fields.' . self::CREDENTIAL_PASSWORD);
 
@@ -213,10 +218,10 @@ class CognitoIdentifier extends AbstractIdentifier
     /**
      * Check if a user is Cognito Enabled
      *
-     * @param array|\ArrayAccess|null $identity The identity or null.
+     * @param \App\Identifier\ArrayAccess|array|null $identity The identity or null.
      * @return bool
      */
-    protected function checkCognito($identity): bool
+    protected function checkCognito(array|ArrayAccess|null $identity): bool
     {
         if ($identity === null) {
             return false;
@@ -233,9 +238,9 @@ class CognitoIdentifier extends AbstractIdentifier
      * Find a user record using the username/identifier provided.
      *
      * @param string $identifier The username/identifier.
-     * @return \ArrayAccess|array|null
+     * @return \Cake\Datasource\EntityInterface|\ArrayAccess|array|null
      */
-    protected function findIdentity(string $identifier)
+    protected function findIdentity(string $identifier): array|ArrayAccess|EntityInterface|null
     {
         $fields = $this->getConfig('fields.' . self::CREDENTIAL_USERNAME);
         $conditions = [];

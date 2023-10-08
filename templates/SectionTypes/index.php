@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\SectionType[]|\Cake\Collection\CollectionInterface $sectionTypes
- * @var \App\Model\Entity\User $authUser
+ * @var AppView $this
+ * @var SectionType[]|CollectionInterface $sectionTypes
+ * @var User $authUser
  */
+
+use App\Model\Entity\SectionType;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $authUser = $this->getRequest()->getAttribute('identity');
 

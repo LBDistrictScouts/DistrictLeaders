@@ -10,7 +10,7 @@ use App\Model\Entity\UserState;
  *
  * @property \App\Model\Table\UserStatesTable $UserStates
  * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\UserState[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 
 class UserStatesController extends AppController
@@ -18,9 +18,9 @@ class UserStatesController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $userStates = $this->paginate($this->UserStates);
 
@@ -31,10 +31,10 @@ class UserStatesController extends AppController
      * View method
      *
      * @param string|null $userStateId User State id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($userStateId = null)
+    public function view(?string $userStateId = null): void
     {
         $userState = $this->UserStates->get($userStateId, [
             'contain' => ['Users'],
@@ -46,9 +46,9 @@ class UserStatesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $userState = $this->UserStates->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -56,7 +56,7 @@ class UserStatesController extends AppController
             if ($this->UserStates->save($userState)) {
                 $this->Flash->success(__('The user state has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userState->get(UserState::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $userState->get(UserState::FIELD_ID)]);
             }
             $this->Flash->error(__('The user state could not be saved. Please, try again.'));
         }
@@ -67,10 +67,10 @@ class UserStatesController extends AppController
      * Edit method
      *
      * @param string|null $userStateId User State id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($userStateId = null)
+    public function edit(?string $userStateId = null): void
     {
         $userState = $this->UserStates->get($userStateId, [
             'contain' => [],
@@ -80,7 +80,7 @@ class UserStatesController extends AppController
             if ($this->UserStates->save($userState)) {
                 $this->Flash->success(__('The user state has been saved.'));
 
-                return $this->redirect(['action' => 'view', $userState->get(UserState::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $userState->get(UserState::FIELD_ID)]);
             }
             $this->Flash->error(__('The user state could not be saved. Please, try again.'));
         }
@@ -94,7 +94,7 @@ class UserStatesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($userStateId = null)
+    public function delete(?string $userStateId = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $userState = $this->UserStates->get($userStateId);
@@ -104,22 +104,22 @@ class UserStatesController extends AppController
             $this->Flash->error(__('The user state could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
      * Process method
      *
      * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function process()
+    public function process(): void
     {
         $this->request->allowMethod(['post']);
 
         $this->loadComponent('Queue');
         $this->Queue->setUserStateParse();
 
-        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
+        $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }

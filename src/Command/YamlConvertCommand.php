@@ -45,12 +45,11 @@ class YamlConvertCommand extends Command
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
      * @param \Cake\Console\ConsoleIo $consoleIo The IO
-     * @return int|void|null
+     * @return int|null
      * @throws \Exception
-     * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): ?int
     {
         $fileName = $args->getArgument('file');
         if (!preg_match('/[.]/', $fileName) || explode('.', $fileName)[1] != 'php') {

@@ -47,6 +47,7 @@ class UserContact extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'contact_field' => true,
         'user_id' => true,
@@ -66,9 +67,9 @@ class UserContact extends Entity
      * Function to check alternative Verification Methods
      *
      * @param string $contactField The Contact Field being Set
-     * @return bool
+     * @return string
      */
-    protected function _setContactField(string $contactField)
+    protected function _setContactField(string $contactField): string
     {
         if ($this->verified) {
             return $contactField;
@@ -125,6 +126,10 @@ class UserContact extends Entity
         return 0;
     }
 
+    /**
+     * @var array<string> A List of virtual properties.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['validated', 'validation_state'];
 
     public const FIELD_ID = 'id';

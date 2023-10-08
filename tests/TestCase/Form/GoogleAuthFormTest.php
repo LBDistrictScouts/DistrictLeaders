@@ -14,7 +14,7 @@ class GoogleAuthFormTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Form\GoogleAuthForm
+     * @var GoogleAuthForm
      */
     public $GoogleAuth;
 

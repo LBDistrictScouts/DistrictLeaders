@@ -17,7 +17,7 @@
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
     public function add()
     {
@@ -27,7 +27,7 @@
             if ($this->{{ currentModelName }}->save(${{ singularName }})) {
                 $this->Flash->success(__('The {{ singularHumanName|lower }} has been saved.'));
 
-                return $this->redirect(['action' => 'view', ${{ singularName }}->get({{ currentModelName|singularize }}::FIELD_ID)]);
+                $this->redirect(['action' => 'view', ${{ singularName }}->get({{ currentModelName|singularize }}::FIELD_ID)]);
             }
             $this->Flash->error(__('The {{ singularHumanName|lower }} could not be saved. Please, try again.'));
         }

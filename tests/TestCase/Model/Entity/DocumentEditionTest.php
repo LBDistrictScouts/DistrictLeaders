@@ -8,14 +8,14 @@ use Cake\TestSuite\TestCase;
 /**
  * App\Model\Entity\DocumentEdition Test Case
  *
- * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
+ * @property DocumentEditionsTable $DocumentEditions
  */
 class DocumentEditionTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \App\Model\Entity\DocumentEdition
+     * @var DocumentEdition
      */
     public $DocumentEdition;
 

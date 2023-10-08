@@ -16,14 +16,6 @@ class AdminControllerTest extends TestCase
     use IntegrationTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-    ];
-
-    /**
      * Test index method
      *
      * @return void

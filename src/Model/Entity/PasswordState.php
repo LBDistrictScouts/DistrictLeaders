@@ -28,6 +28,7 @@ class PasswordState extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'user_state' => true,
         'active' => true,

@@ -7,16 +7,16 @@ namespace App\Controller;
  * CampRoles Controller
  *
  * @property \App\Model\Table\CampRolesTable $CampRoles
- * @method \App\Model\Entity\CampRole[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\CampRole[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class CampRolesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Camps', 'Users', 'CampRoleTypes'],
@@ -30,10 +30,10 @@ class CampRolesController extends AppController
      * View method
      *
      * @param string|null $id Camp Role id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $campRole = $this->CampRoles->get($id, [
             'contain' => ['Camps', 'Users', 'CampRoleTypes'],
@@ -47,7 +47,7 @@ class CampRolesController extends AppController
      *
      * @return \Cake\Http\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $campRole = $this->CampRoles->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -55,7 +55,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'view', $campRole->get('id')]);
+                $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }
@@ -72,7 +72,7 @@ class CampRolesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): void
     {
         $campRole = $this->CampRoles->get($id, [
             'contain' => [],
@@ -82,7 +82,7 @@ class CampRolesController extends AppController
             if ($this->CampRoles->save($campRole)) {
                 $this->Flash->success(__('The camp role has been saved.'));
 
-                return $this->redirect(['action' => 'view', $campRole->get('id')]);
+                $this->redirect(['action' => 'view', $campRole->get('id')]);
             }
             $this->Flash->error(__('The camp role could not be saved. Please, try again.'));
         }
@@ -99,7 +99,7 @@ class CampRolesController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $campRole = $this->CampRoles->get($id);
@@ -109,6 +109,6 @@ class CampRolesController extends AppController
             $this->Flash->error(__('The camp role could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

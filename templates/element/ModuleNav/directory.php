@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'Users') || $this->Identity->checkCapability('DIRECTORY')) : ?>
     <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Members</a>

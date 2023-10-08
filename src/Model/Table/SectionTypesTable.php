@@ -13,21 +13,21 @@ use Cake\Validation\Validator;
 /**
  * SectionTypes Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\HasMany $RoleTypes
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\HasMany $Sections
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\HasMany $RoleTypes
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\HasMany $Sections
  * @method \App\Model\Entity\SectionType get($primaryKey, $options = [])
  * @method \App\Model\Entity\SectionType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\SectionType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SectionType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\SectionType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\SectionType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\SectionType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\SectionType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\SectionType newEmptyEntity()
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\SectionType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\SectionType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class SectionTypesTable extends Table
 {

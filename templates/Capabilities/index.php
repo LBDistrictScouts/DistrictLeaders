@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Capability[]|\Cake\Collection\CollectionInterface $capabilities
+ * @var AppView $this
+ * @var Capability[]|CollectionInterface $capabilities
  */
+
+use App\Model\Entity\Capability;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $this->extend('../layout/CRUD/index');
 

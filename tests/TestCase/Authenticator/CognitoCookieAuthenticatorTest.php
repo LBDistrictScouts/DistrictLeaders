@@ -13,10 +13,12 @@ declare(strict_types=1);
  * @since 4.0.0
  * @license http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Authenticator;
 
 use App\Authenticator\CognitoCookieAuthenticator;
 use App\Authenticator\CognitoResult;
+use App\Test\Fixture\FixtureTestTrait;
 use App\Test\TestCase\AuthenticationTestCase as TestCase;
 use ArrayObject;
 use Authentication\Authenticator\Result;
@@ -34,6 +36,8 @@ use Psr\Http\Message\ResponseInterface;
  */
 class CognitoCookieAuthenticatorTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
      * @var string the Password Token
      */
@@ -338,6 +342,6 @@ class CognitoCookieAuthenticatorTest extends TestCase
         static::assertInstanceOf(RequestInterface::class, $result['request']);
         static::assertInstanceOf(ResponseInterface::class, $result['response']);
 
-        static::assertEquals('CookieAuth=; expires=Thu, 01-Jan-1970 00:00:01 UTC; path=/', $result['response']->getHeaderLine('Set-Cookie'));
+        static::assertEquals('CookieAuth=; expires=Thu, 01-Jan-1970 00:00:01 GMT+0000; path=/', $result['response']->getHeaderLine('Set-Cookie'));
     }
 }

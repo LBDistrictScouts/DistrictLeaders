@@ -1,11 +1,15 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Document $document
+ * @var AppView $this
+ * @var Document $document
  * @var mixed $documentTypes
  * @var string $term
- * @var \App\Model\Entity\DocumentType $documentType
+ * @var DocumentType $documentType
  */
+
+use App\Model\Entity\Document;
+use App\Model\Entity\DocumentType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

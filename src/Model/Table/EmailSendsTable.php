@@ -19,24 +19,25 @@ use Cake\Validation\Validator;
 /**
  * EmailSends Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\BelongsTo $Notifications
- * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
- * @property \App\Model\Table\TokensTable&\Cake\ORM\Association\HasMany $Tokens
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\NotificationsTable&\App\Model\Table\BelongsTo $Notifications
+ * @property \App\Model\Table\EmailResponsesTable&\App\Model\Table\HasMany $EmailResponses
+ * @property \App\Model\Table\TokensTable&\App\Model\Table\HasMany $Tokens
  * @method \App\Model\Entity\EmailSend get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailSend newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailSend|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailSend patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailSend|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailSend saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailSend patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailSend findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\EmailSend newEmptyEntity()
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailSend[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class EmailSendsTable extends Table
 {
@@ -162,7 +163,7 @@ class EmailSendsTable extends Table
      * @param \Cake\ORM\Query $query The original query to be modified.
      * @return \Cake\ORM\Query The modified query.
      */
-    public function findUnsent(Query $query)
+    public function findUnsent(Query $query): Query
     {
         return $query->where(function ($exp) {
             /** @var \Cake\Database\Expression\QueryExpression $exp */
@@ -172,7 +173,7 @@ class EmailSendsTable extends Table
 
     /**
      * @param string $emailGenerationCode The Email Generation Code
-     * @return string[]
+     * @return array<string>
      */
     private function codeSplitter(string $emailGenerationCode): array
     {
@@ -181,7 +182,7 @@ class EmailSendsTable extends Table
 
     /**
      * @param string $emailGenerationCode The Code provided to generate the email
-     * @return false|string
+     * @return string|false
      */
     private function codeExistValidator(string $emailGenerationCode): string
     {
@@ -206,8 +207,8 @@ class EmailSendsTable extends Table
      * Hashes the password before save
      *
      * @param string $emailGenerationCode The Type & SubType of Token to Make
-     * @throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
      * @return \App\Model\Entity\EmailSend|null
+     * @throws \App\Model\Table\Exceptions\InvalidNotificationCodeException
      */
     public function make(string $emailGenerationCode): ?EmailSend
     {

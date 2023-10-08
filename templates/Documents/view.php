@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Document $document
+ * @var AppView $this
+ * @var Document $document
  */
+
+use App\Model\Entity\Document;
+use App\View\AppView;
+
 ?>
 <div class="jumbotron d-none d-sm-none d-md-flex d-lg-flex d-xl-flex" style="background-image: url(/img/activity-bg-2.jpg);background-size: cover;height: 300px;background-position: center;"></div>
 <div class="card" style="margin-top: 15px;margin-bottom: 15px;">

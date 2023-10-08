@@ -16,6 +16,7 @@ trait JobDataTrait
     /**
      * @var \Queue\Model\Table\QueuedJobsTable
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $QueuedJobs;
 
     /**
@@ -48,7 +49,7 @@ trait JobDataTrait
 
     /**
      * @param int $jobId The ID of the Job
-     * @param int|string $result The result Output
+     * @param string|int $result The result Output
      * @param string $key The data key
      * @return void
      */

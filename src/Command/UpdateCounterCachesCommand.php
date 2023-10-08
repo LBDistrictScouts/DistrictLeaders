@@ -18,7 +18,7 @@ class UpdateCounterCachesCommand extends Command
      *
      * @var array $_models
      */
-    private $models = [
+    private array $models = [
         'UserContacts',
         'Roles',
     ];
@@ -30,7 +30,7 @@ class UpdateCounterCachesCommand extends Command
      * @param \Cake\Console\ConsoleIo $consoleIo Console IO output
      * @return void Success or error code.
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $consoleIo): void
     {
         $consoleIo->out($this->getOptionParser()->help());
 

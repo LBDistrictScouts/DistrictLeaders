@@ -4,7 +4,10 @@ declare(strict_types=1);
 namespace App\Test\TestCase\View\Cell;
 
 use App\View\Cell\StateDeterminationCell;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\TestSuite\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * App\View\Cell\StateDeterminationCell Test Case
@@ -14,23 +17,23 @@ class StateDeterminationCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
+     * @var MockObject|ServerRequest
      */
-    protected $request;
+    protected ServerRequest|MockObject $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
+     * @var Response|MockObject
      */
-    protected $response;
+    protected Response|MockObject $response;
 
     /**
      * Test subject
      *
-     * @var \App\View\Cell\StateDeterminationCell
+     * @var StateDeterminationCell
      */
-    protected $StateDetermination;
+    protected StateDeterminationCell $StateDetermination;
 
     /**
      * setUp method

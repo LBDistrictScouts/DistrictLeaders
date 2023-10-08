@@ -21,22 +21,22 @@ class Cron
     /**
      * @var \Queue\Model\Table\QueuedJobsTable
      */
-    protected $QueuedJobs;
+    protected QueuedJobsTable $QueuedJobs;
 
     /**
      * @var string
      */
-    public $taskName;
+    public string $taskName;
 
     /**
      * @var array
      */
-    public $dailySchedule;
+    public array $dailySchedule;
 
     /**
      * @var array The Default Configuration
      */
-    protected $defaultConfig = [
+    protected array $defaultConfig = [
         self::CONF_DAILY_SCHEDULE => [
             self::STANDARD_JOB_TIME, // 01:00
         ], // Array
@@ -66,7 +66,7 @@ class Cron
      *
      * @return int|false
      */
-    public function scheduleJobs()
+    public function scheduleJobs(): int|false
     {
         if (is_null($this->dailySchedule)) {
             return false;
@@ -90,7 +90,7 @@ class Cron
      * @param array|null $data Data for Task
      * @return bool
      */
-    protected function scheduleJob(string $offset, ?array $data = null)
+    protected function scheduleJob(string $offset, ?array $data = null): bool
     {
         // If empty task will be created
         if (is_null($this->taskName) || empty($this->taskName)) {
@@ -113,7 +113,7 @@ class Cron
      * @param string $offset Time Offset Compatible with FrozenTime Modify
      * @return \Cake\I18n\FrozenTime
      */
-    protected function getTimeOffset($offset)
+    protected function getTimeOffset(string $offset): FrozenTime
     {
         $now = FrozenTime::today();
         $now = $now->subSeconds($now->secondsSinceMidnight());
@@ -126,7 +126,7 @@ class Cron
      *
      * @return array
      */
-    public static function collectCronClasses()
+    public static function collectCronClasses(): array
     {
         $tasks = Configure::read(Cron::CONF_KEY);
         $cronClasses = [];

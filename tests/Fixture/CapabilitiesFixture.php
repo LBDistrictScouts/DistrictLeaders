@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Test\Fixture;
 
+use App\Model\Entity\Capability;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
@@ -8,26 +10,6 @@ use Cake\TestSuite\Fixture\TestFixture;
  */
 class CapabilitiesFixture extends TestFixture
 {
-    /**
-     * Fields
-     *
-     * @var array
-     */
-    // @codingStandardsIgnoreStart
-    public $fields = [
-        'id' => ['type' => 'integer', 'length' => 10, 'autoIncrement' => true, 'default' => null, 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null],
-        'capability_code' => ['type' => 'string', 'length' => 63, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'capability' => ['type' => 'string', 'length' => 255, 'default' => null, 'null' => false, 'collate' => null, 'comment' => null, 'precision' => null, 'fixed' => null],
-        'min_level' => ['type' => 'integer', 'length' => 10, 'default' => '1', 'null' => false, 'comment' => null, 'precision' => null, 'unsigned' => null, 'autoIncrement' => null],
-        '_indexes' => [
-            'capabilities_min_level' => ['type' => 'index', 'columns' => ['min_level'], 'length' => []],
-        ],
-        '_constraints' => [
-            'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'capabilities_capability_code' => ['type' => 'unique', 'columns' => ['capability_code'], 'length' => []],
-            'capabilities_capability' => ['type' => 'unique', 'columns' => ['capability'], 'length' => []],
-        ],
-    ];
     // @codingStandardsIgnoreEnd
     /**
      * Init method
@@ -38,34 +20,34 @@ class CapabilitiesFixture extends TestFixture
     {
         $this->records = [
             [
-                'capability_code' => 'ALL',
-                'capability' => 'SuperUser Permissions',
-                'min_level' => 5, // Config Level
+                Capability::FIELD_CAPABILITY_CODE => 'ALL',
+                Capability::FIELD_CAPABILITY => 'SuperUser Permissions',
+                Capability::FIELD_MIN_LEVEL => 5, // Config Level
             ],
             [
-                'capability_code' => 'EDIT_GROUP',
-                'capability' => 'Edit Group',
-                'min_level' => 4, // District Level
+                Capability::FIELD_CAPABILITY_CODE => 'EDIT_GROUP',
+                Capability::FIELD_CAPABILITY => 'Edit Group',
+                Capability::FIELD_MIN_LEVEL => 4, // District Level
             ],
             [
-                'capability_code' => 'EDIT_SECT',
-                'capability' => 'Edit Section',
-                'min_level' => 3, // Group Level
+                Capability::FIELD_CAPABILITY_CODE => 'EDIT_SECT',
+                Capability::FIELD_CAPABILITY => 'Edit Section',
+                Capability::FIELD_MIN_LEVEL => 3, // Group Level
             ],
             [
-                'capability_code' => 'EDIT_USER',
-                'capability' => 'Edit User',
-                'min_level' => 2, // Section Level
+                Capability::FIELD_CAPABILITY_CODE => 'EDIT_USER',
+                Capability::FIELD_CAPABILITY => 'Edit User',
+                Capability::FIELD_MIN_LEVEL => 2, // Section Level
             ],
             [
-                'capability_code' => 'OWN_USER',
-                'capability' => 'Edit Own User',
-                'min_level' => 1, // User Level
+                Capability::FIELD_CAPABILITY_CODE => 'OWN_USER',
+                Capability::FIELD_CAPABILITY => 'Edit Own User',
+                Capability::FIELD_MIN_LEVEL => 1, // User Level
             ],
             [
-                'capability_code' => 'LOGIN',
-                'capability' => 'Login',
-                'min_level' => 0, // Base Level
+                Capability::FIELD_CAPABILITY_CODE => 'LOGIN',
+                Capability::FIELD_CAPABILITY => 'Login',
+                Capability::FIELD_MIN_LEVEL => 0, // Base Level
             ],
         ];
         parent::init();

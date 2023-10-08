@@ -15,20 +15,20 @@ use Cake\Validation\Validator;
 /**
  * UserStates Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\HasMany $Users
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\HasMany $Users
  * @method \App\Model\Entity\UserState get($primaryKey, $options = [])
  * @method \App\Model\Entity\UserState newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\UserState[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UserState|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserState saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserState patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserState|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserState saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserState patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserState[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserState findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\UserState newEmptyEntity()
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserState[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserState[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class UserStatesTable extends Table
 {
@@ -204,7 +204,7 @@ class UserStatesTable extends Table
      */
     public function determineSignatureState(int $signature): UserState
     {
-        /** @var \App\Model\Entity\UserState[] $states */
+        /** @var array<\App\Model\Entity\UserState> $states */
         $states = $this->find()->orderAsc(UserState::FIELD_PRECEDENCE_ORDER);
 
         foreach ($states as $state) {
@@ -214,8 +214,6 @@ class UserStatesTable extends Table
                 return $state;
             }
         }
-
-        return $state;
     }
 
     /**

@@ -17,18 +17,9 @@ class SectionTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SectionTypesTable
+     * @var SectionTypesTable
      */
     protected $SectionTypes;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.SectionTypes',
-    ];
 
     /**
      * setUp method

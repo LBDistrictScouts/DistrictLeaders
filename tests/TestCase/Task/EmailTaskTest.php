@@ -86,7 +86,7 @@ class EmailTaskTest extends TestCase
         TestCase::assertNotEquals($originalJobCount, $resultingJobCount);
         TestCase::assertEquals($originalJobCount + 1, $resultingJobCount);
 
-        /** @var \Queue\Model\Entity\QueuedJob $job */
+        /** @var QueuedJob $job */
         $job = $this->QueuedJobs->find()->first();
         $data = unserialize($job->get('data'));
 

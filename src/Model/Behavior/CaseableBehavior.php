@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Model\Behavior;
 
 use App\Utility\TextSafe;
+use Cake\Event\EventInterface;
 use Cake\ORM\Behavior;
+use Cake\ORM\Entity;
 
 /**
  * Caseable behavior
@@ -18,6 +20,7 @@ class CaseableBehavior extends Behavior
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [
         'case_columns' => [],
     ];
@@ -30,7 +33,7 @@ class CaseableBehavior extends Behavior
      * @return bool
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeRules(\Cake\Event\EventInterface $event, $entity)
+    public function beforeRules(EventInterface $event, Entity $entity): bool
     {
         $dirty = $entity->getDirty();
         $columns = $this->_config['case_columns'];

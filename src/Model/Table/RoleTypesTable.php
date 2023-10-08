@@ -19,26 +19,26 @@ use Cake\Validation\Validator;
 /**
  * RoleTypes Model
  *
- * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\RoleTemplatesTable&\Cake\ORM\Association\BelongsTo $RoleTemplates
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
- * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsToMany $Capabilities
- * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
- * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
- * @property \App\Model\Table\DirectoryGroupsTable&\Cake\ORM\Association\BelongsToMany $DirectoryGroups
+ * @property \App\Model\Table\SectionTypesTable&\App\Model\Table\BelongsTo $SectionTypes
+ * @property \App\Model\Table\RoleTemplatesTable&\App\Model\Table\BelongsTo $RoleTemplates
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
+ * @property \App\Model\Table\CapabilitiesTable&\App\Model\Table\BelongsToMany $Capabilities
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\App\Model\Table\HasMany $CapabilitiesRoleTypes
+ * @property \Cake\ORM\Table&\App\Model\Table\HasMany $DirectoryGroupsRoleTypes
+ * @property \App\Model\Table\DirectoryGroupsTable&\App\Model\Table\BelongsToMany $DirectoryGroups
  * @method \App\Model\Entity\RoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\RoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\RoleType newEmptyEntity()
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleTypesTable extends Table
 {
@@ -150,7 +150,7 @@ class RoleTypesTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findGroupedList($query)
+    public function findGroupedList(Query $query): Query
     {
         return $query
             ->find('list', [

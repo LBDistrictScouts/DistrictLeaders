@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var int $loggedInUserId
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($this->Functional->checkFunction('admin', $this->Identity->get())) : ?>
     <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'Admin', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Admin Dashboard</a>

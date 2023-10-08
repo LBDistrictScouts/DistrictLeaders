@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <!-- START FOOTER -->
 <div class="footer" style="clear: both; Margin-top: 10px; text-align: center; width: 100%;">

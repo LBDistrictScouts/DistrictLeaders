@@ -3,61 +3,30 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Behavior;
 
+use App\Model\Behavior\CaseableBehavior;
 use App\Model\Entity\User;
+use App\Model\Table\UsersTable;
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * App\Model\Behavior\CaseableBehavior Test Case
- *
- * @property \App\Model\Table\UsersTable $Users
  */
 class CaseableBehaviorTest extends TestCase
 {
+    use FixtureTestTrait;
+
+    /**
+     * @var UsersTable
+     */
+    public UsersTable $Users;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Behavior\CaseableBehavior
+     * @var CaseableBehavior
      */
-    public $Caseable;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
+    public CaseableBehavior $Caseable;
 
     public function provideInitialisation(): array
     {
@@ -94,7 +63,7 @@ class CaseableBehaviorTest extends TestCase
      * @dataProvider provideInitialisation
      * @return void
      */
-    public function testInitialization(string $field, string $beforeValue, string $expected)
+    public function testInitialization(string $field, string $beforeValue, string $expected): void
     {
         $this->Users = $this->getTableLocator()->get('Users');
         $user = $this->Users->get(1);

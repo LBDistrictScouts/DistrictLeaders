@@ -10,22 +10,23 @@ use Cake\Validation\Validator;
 /**
  * Camps Model
  *
- * @property \App\Model\Table\CampTypesTable&\Cake\ORM\Association\BelongsTo $CampTypes
- * @property \App\Model\Table\CampRolesTable&\Cake\ORM\Association\HasMany $CampRoles
+ * @property \App\Model\Table\CampTypesTable&\App\Model\Table\BelongsTo $CampTypes
+ * @property \App\Model\Table\CampRolesTable&\App\Model\Table\HasMany $CampRoles
  * @method \App\Model\Entity\Camp get($primaryKey, $options = [])
  * @method \App\Model\Entity\Camp newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Camp[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Camp|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Camp saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Camp patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Camp|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Camp saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Camp patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Camp[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Camp findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Camp newEmptyEntity()
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Camp[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Camp[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CampsTable extends Table
 {

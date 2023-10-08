@@ -1,10 +1,15 @@
 <?php
 /**
- * @var \App\Model\Entity\User $entity
- * @var \App\Model\Entity\EmailSend $email_send
+ * @var User $entity
+ * @var EmailSend $email_send
  * @var string $token
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\Model\Entity\EmailSend;
+use App\Model\Entity\User;
+use App\View\AppView;
+
 ?>
 <h2>Hertfordshire Cubs Booking System - Password Reset</h2>
 

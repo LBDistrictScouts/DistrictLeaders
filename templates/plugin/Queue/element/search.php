@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var mixed $_isSearch
  */
+
+use App\View\AppView;
+
 ?>
 <br />
 <div class="card">

@@ -40,6 +40,7 @@ class DocumentEdition extends Entity implements FileEntityInterface
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'created' => true,
         'modified' => true,
@@ -75,8 +76,9 @@ class DocumentEdition extends Entity implements FileEntityInterface
 
     /**
      * @return string|false
+     * @throws \League\Flysystem\FilesystemException
      */
-    public function read()
+    public function read(): string|false
     {
         /** @var \League\Flysystem\Filesystem $fileSystem */
         $fileSystem = $this->getFilesystem();

@@ -1,8 +1,11 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\UserContactType $userContactType
+ * @var AppView $this
+ * @var UserContactType $userContactType
  */
+
+use App\Model\Entity\UserContactType;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/edit');
 

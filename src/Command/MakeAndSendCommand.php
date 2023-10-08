@@ -27,7 +27,7 @@ class MakeAndSendCommand extends Command
     public function initialize(): void
     {
         parent::initialize();
-        $this->loadModel('EmailSends');
+        $this->EmailSends = $this->getTableLocator()->get('EmailSends');
     }
 
     /**
@@ -48,32 +48,34 @@ class MakeAndSendCommand extends Command
 
     /**
      * @param \Cake\Console\Arguments $args Arguments for the Console
-     * @param \Cake\Console\ConsoleIo $consoleIo The IO
-     * @return int|void|null
+     * @param \Cake\Console\ConsoleIo $io The IO
+     * @return int|null
      * @throws \Exception
      * @SuppressWarnings(PHPMD.ShortVariable)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute(Arguments $args, ConsoleIo $consoleIo)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $consoleIo->info('Code "' . $args->getArgument('code') . '" initiated.');
+        $io->info('Code "' . $args->getArgument('code') . '" initiated.');
 
         $result = $this->EmailSends->make($args->getArgument('code'));
 
         if (!$result) {
-            $consoleIo->error('Email did not "Make" successfully.');
+            $io->error('Email did not "Make" successfully.');
 
-            return;
+            return null;
         }
 
         $result = $this->EmailSends->send($result->id);
 
         if (!$result) {
-            $consoleIo->error('Email did not "Send" successfully.');
+            $io->error('Email did not "Send" successfully.');
 
-            return;
+            return null;
         }
 
-        $consoleIo->info('Email Sent Successfully.');
+        $io->info('Email Sent Successfully.');
+
+        return null;
     }
 }

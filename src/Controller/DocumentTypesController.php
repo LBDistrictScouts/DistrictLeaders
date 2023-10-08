@@ -9,16 +9,16 @@ use App\Model\Entity\DocumentType;
  * DocumentTypes Controller
  *
  * @property \App\Model\Table\DocumentTypesTable $DocumentTypes
- * @method \App\Model\Entity\DocumentType[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentType[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentTypesController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $documentTypes = $this->paginate($this->DocumentTypes);
 
@@ -29,10 +29,10 @@ class DocumentTypesController extends AppController
      * View method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $documentType = $this->DocumentTypes->get($id, [
             'contain' => ['Documents'],
@@ -44,9 +44,9 @@ class DocumentTypesController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add(): void
     {
         $documentType = $this->DocumentTypes->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -54,7 +54,7 @@ class DocumentTypesController extends AppController
             if ($this->DocumentTypes->save($documentType)) {
                 $this->Flash->success(__('The document type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
             }
             $this->Flash->error(__('The document type could not be saved. Please, try again.'));
         }
@@ -65,10 +65,10 @@ class DocumentTypesController extends AppController
      * Edit method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): void
     {
         $documentType = $this->DocumentTypes->get($id, [
             'contain' => [],
@@ -78,7 +78,7 @@ class DocumentTypesController extends AppController
             if ($this->DocumentTypes->save($documentType)) {
                 $this->Flash->success(__('The document type has been saved.'));
 
-                return $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $documentType->get(DocumentType::FIELD_ID)]);
             }
             $this->Flash->error(__('The document type could not be saved. Please, try again.'));
         }
@@ -89,10 +89,10 @@ class DocumentTypesController extends AppController
      * Delete method
      *
      * @param string|null $id Document Type id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $documentType = $this->DocumentTypes->get($id);
@@ -102,6 +102,6 @@ class DocumentTypesController extends AppController
             $this->Flash->error(__('The document type could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

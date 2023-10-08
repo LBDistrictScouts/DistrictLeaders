@@ -18,7 +18,7 @@ class YamlConfig implements ConfigEngineInterface
 {
     use FileConfigTrait;
 
-    protected $_extension = '.yml';
+    protected string $_extension = '.yml';
 
     /**
      * Method: __construct
@@ -26,7 +26,7 @@ class YamlConfig implements ConfigEngineInterface
      * @param mixed $path Path
      * @return void
      */
-    public function __construct($path = null)
+    public function __construct(mixed $path = null)
     {
         if ($path === null) {
             $path = CONFIG;
@@ -57,7 +57,7 @@ class YamlConfig implements ConfigEngineInterface
      * @param array $data Data
      * @return bool Success
      */
-    public function dump($key, array $data): bool
+    public function dump(mixed $key, array $data): bool
     {
         $filename = $this->_getFilePath($key);
 

@@ -1,11 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Notification[]|\Cake\Collection\CollectionInterface $notifications
+ * @var AppView $this
+ * @var Notification[]|CollectionInterface $notifications
  * @var mixed $index
  */
 
 use App\Model\Entity\Notification;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 ?>
 <thead>

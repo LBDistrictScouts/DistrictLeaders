@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  * @var string $authUrl
- * @var \App\Form\GoogleAuthForm $form
+ * @var GoogleAuthForm $form
  */
+
+use App\Form\GoogleAuthForm;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

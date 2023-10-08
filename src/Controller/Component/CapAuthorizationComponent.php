@@ -24,9 +24,9 @@ class CapAuthorizationComponent extends AuthorizationComponent
     use ModelAwareTrait;
 
     /**
-     * @var \App\Model\Entity\User
+     * @var \App\Model\Entity\User|null
      */
-    protected $capUser;
+    protected ?User $capUser;
 
     /**
      * @inheritDoc
@@ -43,7 +43,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
     /**
      * @var array The Array for Permissions which shouldn't be blocked
      */
-    private $alwaysPermitted = [
+    private array $alwaysPermitted = [
         User::FIELD_ID,
         User::FIELD_CAPABILITIES,
     ];
@@ -53,7 +53,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string|null $action The action to check authorization for.
      * @return array
      */
-    public function see(EntityInterface $resource, $action = 'VIEW')
+    public function see(EntityInterface $resource, ?string $action = 'VIEW'): array
     {
         $fields = [];
 
@@ -149,7 +149,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param int|null $section A Section ID if applicable
      * @return bool
      */
-    public function checkCapability($capability, $group = null, $section = null)
+    public function checkCapability(string $capability, ?int $group = null, ?int $section = null): bool
     {
         return $this->checkCapabilityResult($capability, $group, $section)->getStatus();
     }
@@ -165,7 +165,7 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param int|null $section A Section ID if applicable
      * @return \Authorization\Policy\ResultInterface
      */
-    public function checkCapabilityResult($capability, $group = null, $section = null)
+    public function checkCapabilityResult(string $capability, ?int $group = null, ?int $section = null): ResultInterface
     {
         if (is_null($this->capUser)) {
             return new Result(false, 'Component User Null.');
@@ -190,8 +190,8 @@ class CapAuthorizationComponent extends AuthorizationComponent
     public function buildAndCheckCapabilityResult(
         string $action,
         string $model,
-        $group = null,
-        $section = null,
+        ?int $group = null,
+        ?int $section = null,
         ?string $field = null
     ): ResultInterface {
         if (is_null($this->capUser)) {
@@ -214,8 +214,13 @@ class CapAuthorizationComponent extends AuthorizationComponent
      * @param string|null $field The field for action
      * @return bool
      */
-    public function buildAndCheckCapability($action, $model, $group = null, $section = null, $field = null): bool
-    {
+    public function buildAndCheckCapability(
+        string $action,
+        string $model,
+        array|int|null $group = null,
+        array|int|null $section = null,
+        ?string $field = null
+    ): bool {
         return $this->buildAndCheckCapabilityResult($action, $model, $group, $section, $field)->getStatus();
     }
 

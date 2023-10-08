@@ -7,30 +7,32 @@ use App\Model\Entity\Directory;
 use App\Model\Entity\DirectoryDomain;
 use App\Model\Entity\DirectoryGroup;
 use App\Utility\GoogleBuilder;
+use Cake\ORM\Entity;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Google_Exception;
 use Google_Service_Directory_Group;
 
 /**
  * DirectoryGroups Model
  *
- * @property \App\Model\Table\DirectoriesTable&\Cake\ORM\Association\BelongsTo $Directories
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
+ * @property \App\Model\Table\DirectoriesTable&\App\Model\Table\BelongsTo $Directories
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsToMany $RoleTypes
  * @method \App\Model\Entity\DirectoryGroup get($primaryKey, $options = [])
  * @method \App\Model\Entity\DirectoryGroup newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\DirectoryGroup|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryGroup saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\DirectoryGroup patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\DirectoryGroup|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\DirectoryGroup findOrCreate($search, ?callable $callback = null, $options = [])
- * @property \Cake\ORM\Table&\Cake\ORM\Association\HasMany $DirectoryGroupsRoleTypes
+ * @property \Cake\ORM\Table&\App\Model\Table\HasMany $DirectoryGroupsRoleTypes
  * @method \App\Model\Entity\DirectoryGroup newEmptyEntity()
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\DirectoryGroup[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\DirectoryGroup[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class DirectoryGroupsTable extends Table
 {
@@ -128,7 +130,7 @@ class DirectoryGroupsTable extends Table
         while ($continue) {
             try {
                 $result = $this->populateFromList($directory, $domain, $groupCount, $pageToken);
-            } catch (\Google_Exception $e) {
+            } catch (Google_Exception $e) {
                 return $groupCount;
             }
             $groupCount += $result['count'];
@@ -153,8 +155,8 @@ class DirectoryGroupsTable extends Table
     public function populateFromList(
         Directory $directory,
         ?string $directoryDomain = null,
-        $count = 0,
-        $pageToken = null
+        int $count = 0,
+        ?string $pageToken = null
     ): array {
         $userList = GoogleBuilder::getGroupList($directory, $directoryDomain, 20, $pageToken);
         $pageToken = $userList->getNextPageToken();
@@ -173,16 +175,18 @@ class DirectoryGroupsTable extends Table
     /**
      * @param \Google_Service_Directory_Group $directoryGroup Google Response Object
      * @param int $directoryId ID of the Parent Directory
-     * @return \App\Model\Entity\DirectoryDomain|array|\Cake\Datasource\EntityInterface|false|null
+     * @return \App\Model\Entity\DirectoryDomain|\Cake\ORM\Entity|array|false|null
      */
-    public function findOrMake(Google_Service_Directory_Group $directoryGroup, int $directoryId)
-    {
+    public function findOrMake(
+        Google_Service_Directory_Group $directoryGroup,
+        int $directoryId
+    ): DirectoryDomain|array|Entity|false|null {
         $search = [
             DirectoryGroup::FIELD_DIRECTORY_GROUP_REFERENCE => $directoryGroup->getId(),
             DirectoryGroup::FIELD_DIRECTORY_ID => $directoryId,
         ];
 
-        return $this->findOrCreate($search, function (DirectoryGroup $entity) use ($directoryGroup) {
+        return $this->findOrCreate($search, function (DirectoryGroup $entity) use ($directoryGroup): void {
             $entity->set($entity::FIELD_DIRECTORY_GROUP_NAME, $directoryGroup->getName());
             $entity->set($entity::FIELD_DIRECTORY_GROUP_EMAIL, $directoryGroup->getEmail());
         });

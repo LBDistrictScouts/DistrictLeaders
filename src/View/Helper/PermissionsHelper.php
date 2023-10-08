@@ -16,6 +16,10 @@ use Cake\View\Helper;
  */
 class PermissionsHelper extends Helper
 {
+    /**
+     * @var array|array<string> List of Helpers to be Loaded.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $helpers = ['Identity', 'Html'];
 
     /**
@@ -23,7 +27,7 @@ class PermissionsHelper extends Helper
      * @param \Cake\Datasource\EntityInterface $resource The Entity Resource
      * @param string|null $action The link Action required
      * @param string|null $controller The Link Controller
-     * @param string[]|null $class The Button Class
+     * @param array<string>|null $class The Button Class
      * @return string
      */
     public function dropDownButton(
@@ -45,6 +49,10 @@ class PermissionsHelper extends Helper
         );
     }
 
+    /**
+     * @var array|array<string> Default Config Array
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_config = [
         'class',
         'role',
@@ -87,7 +95,7 @@ class PermissionsHelper extends Helper
         return '';
     }
 
-    protected $validButtonOptions = [
+    protected array $validButtonOptions = [
         'class',
         'role',
     ];
@@ -96,7 +104,7 @@ class PermissionsHelper extends Helper
      * @param array $buttonOptions The Options processor for the Button Class
      * @return array
      */
-    protected function getButtonOptions(array $buttonOptions)
+    protected function getButtonOptions(array $buttonOptions): array
     {
         $finalOptions = [];
 

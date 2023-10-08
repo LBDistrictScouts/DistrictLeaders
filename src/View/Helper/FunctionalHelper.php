@@ -14,6 +14,10 @@ use Cake\View\Helper;
  */
 class FunctionalHelper extends Helper
 {
+    /**
+     * @var array The Default Array of config.
+     */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [
         'functionalAreas' => [
             'directory' => true,
@@ -29,21 +33,21 @@ class FunctionalHelper extends Helper
      *
      * @var array
      */
-    private $FunctionalAreas;
+    private array $FunctionalAreas;
 
     /**
      * Configuration Value
      *
      * @var array
      */
-    private $FunctionalArea;
+    private array $FunctionalArea;
 
     /**
      * Configuration Value
      *
      * @var array
      */
-    private $SearchConfigured;
+    private array $SearchConfigured;
 
     /**
      * @param array $config The Config Array
@@ -61,7 +65,7 @@ class FunctionalHelper extends Helper
      * @param string $function Functional Area Key
      * @return void
      */
-    private function setFunctionalArea(string $function)
+    private function setFunctionalArea(string $function): void
     {
         if (key_exists($function, $this->FunctionalAreas) && is_array($this->FunctionalAreas[$function])) {
             $this->FunctionalArea = $this->FunctionalAreas[$function];
@@ -103,7 +107,7 @@ class FunctionalHelper extends Helper
      * @param string $registeredCap The registered capability key
      * @return bool
      */
-    private function checkFunctionAuthorised(string $function, User $identity, string $registeredCap)
+    private function checkFunctionAuthorised(string $function, User $identity, string $registeredCap): bool
     {
         // Check for Special Auth Registered on Function
         if (key_exists('capability', $this->FunctionalArea)) {
@@ -155,7 +159,7 @@ class FunctionalHelper extends Helper
      * @param string $searchModel The Function to be Checked
      * @return bool
      */
-    public function checkSearchConfigured($searchModel)
+    public function checkSearchConfigured(string $searchModel): bool
     {
         if (key_exists($searchModel, $this->SearchConfigured)) {
             return (bool)$this->SearchConfigured[$searchModel];

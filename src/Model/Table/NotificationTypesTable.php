@@ -14,20 +14,20 @@ use Cake\Validation\Validator;
 /**
  * NotificationTypes Model
  *
- * @property \App\Model\Table\NotificationsTable&\Cake\ORM\Association\HasMany $Notifications
+ * @property \App\Model\Table\NotificationsTable&\App\Model\Table\HasMany $Notifications
  * @method \App\Model\Entity\NotificationType get($primaryKey, $options = [])
  * @method \App\Model\Entity\NotificationType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\NotificationType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\NotificationType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\NotificationType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\NotificationType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\NotificationType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\NotificationType findOrCreate($search, ?callable $callback = null, $options = [])
  * @method \App\Model\Entity\NotificationType newEmptyEntity()
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\NotificationType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\NotificationType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class NotificationTypesTable extends Table
 {
@@ -120,7 +120,7 @@ class NotificationTypesTable extends Table
      *
      * @return int
      */
-    public function installBaseNotificationTypes()
+    public function installBaseNotificationTypes(): int
     {
         return $this->installBase($this);
     }
@@ -129,8 +129,8 @@ class NotificationTypesTable extends Table
      * install the application status config
      *
      * @param string $emailGenerationCode Notification Type Code
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      * @return \App\Model\Entity\NotificationType
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException
      */
     public function getTypeCode(string $emailGenerationCode): NotificationType
     {
@@ -165,7 +165,7 @@ class NotificationTypesTable extends Table
 
     /**
      * @param string $emailGenerationCode The Email Generation Code
-     * @return string[]
+     * @return array<string>
      */
     public function entityCodeSplitter(string $emailGenerationCode): array
     {

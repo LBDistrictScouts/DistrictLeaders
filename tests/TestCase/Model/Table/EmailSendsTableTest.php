@@ -19,7 +19,7 @@ class EmailSendsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\EmailSendsTable
+     * @var EmailSendsTable
      */
     public $EmailSends;
 
@@ -98,6 +98,11 @@ class EmailSendsTableTest extends TestCase
             ],
         ];
 
+        $iteration = $type;
+        if ($sendId > 3) {
+            $iteration .= '-' . (string)($sendId - 3);
+        }
+
         return [
             'id' => $sendId,
             'message_send_code' => null,
@@ -107,7 +112,7 @@ class EmailSendsTableTest extends TestCase
             'from_address' => null,
             'friendly_from' => null,
             'notification_id' => $notificationId,
-            'email_generation_code' => 'USR-2-' . $type,
+            'email_generation_code' => 'USR-2-' . $iteration,
             'email_template' => $typeArray[$type]['action'],
             'include_token' => true,
             'tokens' => [
@@ -142,6 +147,12 @@ class EmailSendsTableTest extends TestCase
         ];
     }
 
+    /**
+     * @param string $type Notification Type Code
+     * @param int $sendId ORM Table ID of the Send
+     * @param int $notificationId ORM Table ID of the Notification
+     * @return void
+     */
     private function validateExpected(string $type, int $sendId, int $notificationId): void
     {
         $expected = $this->getExpected($type, $sendId, $notificationId);
@@ -173,7 +184,7 @@ class EmailSendsTableTest extends TestCase
      * Test initialize method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testInitialize()
     {
@@ -282,7 +293,7 @@ class EmailSendsTableTest extends TestCase
             $notificationId++;
         }
         TestCase::assertEquals($notificationId, $this->EmailSends->make($emailGenerationCode)->notification_id);
-//        $this->validateExpected($type, $sendId, $notificationId); removed array check
+        $this->validateExpected($type, $sendId, $notificationId);
 
         $sendId++;
         if (!$expectedToIterate) {
@@ -290,6 +301,6 @@ class EmailSendsTableTest extends TestCase
         }
         // Check third is not blocked
         TestCase::assertEquals($notificationId, $this->EmailSends->make($emailGenerationCode)->notification_id);
-//        $this->validateExpected($type, $sendId, $notificationId);
+        $this->validateExpected($type, $sendId, $notificationId);
     }
 }

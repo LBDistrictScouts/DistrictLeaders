@@ -27,6 +27,7 @@ class DirectoryType extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'directory_type' => true,
         'directory_type_code' => true,

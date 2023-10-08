@@ -1,9 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Capability $capability
+ * @var AppView $this
+ * @var Capability $capability
  * @var mixed $roleTypes
  */
+
+use App\Model\Entity\Capability;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

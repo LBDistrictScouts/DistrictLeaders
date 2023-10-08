@@ -1,10 +1,13 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailSend $emailSend
+ * @var AppView $this
+ * @var EmailSend $emailSend
  * @var mixed $notifications
  * @var mixed $users
  */
+
+use App\Model\Entity\EmailSend;
+use App\View\AppView;
 
 $this->extend('../layout/CRUD/add');
 

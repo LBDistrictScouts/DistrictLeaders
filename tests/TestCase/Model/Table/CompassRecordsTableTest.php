@@ -22,54 +22,16 @@ class CompassRecordsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CompassRecordsTable
+     * @var CompassRecordsTable
      */
-    protected $CompassRecords;
+    protected CompassRecordsTable $CompassRecords;
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\UsersTable
+     * @var UsersTable
      */
-    protected $Users;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.CompassRecords',
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-    ];
+    protected UsersTable $Users;
 
     /**
      * setUp method

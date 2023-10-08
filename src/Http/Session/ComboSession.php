@@ -21,7 +21,7 @@ use Cake\Http\Session\DatabaseSession;
  */
 class ComboSession extends DatabaseSession
 {
-    public $cacheKey;
+    public ?string $cacheKey;
 
     /**
      * ComboSession constructor.
@@ -35,43 +35,47 @@ class ComboSession extends DatabaseSession
     /**
      * Method used to read from a database session.
      *
-     * @param string|int $sessionId ID that uniquely identifies session in database.
+     * @param string|int $id ID that uniquely identifies session in database.
      * @return string Session data or empty string if it does not exist.
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    public function read($sessionId): string
+    public function read(string|int $id): string
     {
-        $result = Cache::read($sessionId, $this->cacheKey);
+        $result = Cache::read($id, $this->cacheKey);
         if ($result) {
             return $result;
         }
 
-        return parent::read($sessionId);
+        return parent::read($id);
     }
 
     /**
      * Helper function called on write for database sessions.
      *
-     * @param string|int $sessionId ID that uniquely identifies session in database.
+     * @param string|int $id ID that uniquely identifies session in database.
      * @param mixed $data The data to be saved.
      * @return bool True for successful write, false otherwise.
+     *
+     * phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
      */
-    public function write($sessionId, $data): bool
+    public function write(string|int $id, mixed $data): bool
     {
-        Cache::write($sessionId, $data, $this->cacheKey);
+        Cache::write($id, $data, $this->cacheKey);
 
-        return parent::write($sessionId, $data);
+        return parent::write($id, $data);
     }
 
     /**
      * Method called on the destruction of a database session.
      *
-     * @param string|int $sessionId ID that uniquely identifies session in database.
+     * @param string|int $id ID that uniquely identifies session in database.
      * @return bool True for successful delete, false otherwise.
      */
-    public function destroy($sessionId): bool
+    public function destroy(string|int $id): bool
     {
-        Cache::delete($sessionId, $this->cacheKey);
+        Cache::delete($id, $this->cacheKey);
 
-        return parent::destroy($sessionId);
+        return parent::destroy($id);
     }
 }

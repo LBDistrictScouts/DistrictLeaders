@@ -5,6 +5,7 @@ namespace App\Model\Entity;
 
 use App\Utility\CapBuilder;
 use Authentication\IdentityInterface as AuthenticationIdentityInterface;
+use Authorization\AuthorizationService;
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
 use Authorization\Policy\ResultInterface;
@@ -85,6 +86,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'username' => true,
         'membership_number' => true,
@@ -127,21 +129,24 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_hidden = [
         'password',
     ];
 
     /**
      * @param string $value The un-hashed password string
-     * @return bool|string|void
+     * @return string
      */
-    protected function _setPassword($value)
+    protected function _setPassword(string $value): string
     {
         if (strlen($value)) {
             $hasher = new DefaultPasswordHasher();
 
             return $hasher->hash($value);
         }
+
+        return $value;
     }
 
     /**
@@ -149,7 +154,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @return string
      */
-    protected function _getFullName()
+    protected function _getFullName(): string
     {
         return $this->first_name . ' ' . $this->last_name;
     }
@@ -159,11 +164,12 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['full_name', 'sections', 'groups'];
 
-    private $userKey = self::CAP_KEY_USER;
-    private $groupKey = self::CAP_KEY_GROUP;
-    private $sectionKey = self::CAP_KEY_SECTION;
+    private string $userKey = self::CAP_KEY_USER;
+    private string $groupKey = self::CAP_KEY_GROUP;
+    private string $sectionKey = self::CAP_KEY_SECTION;
 
     /**
      * Authorization\IdentityInterface method
@@ -172,7 +178,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param mixed $resource The resource being operated on.
      * @return bool
      */
-    public function can($action, $resource): bool
+    public function can(string $action, mixed $resource): bool
     {
         return $this->authorization->can($this, $action, $resource);
     }
@@ -184,7 +190,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param mixed $resource The resource being operated on.
      * @return \Authorization\Policy\ResultInterface
      */
-    public function canResult(string $action, $resource): ResultInterface
+    public function canResult(string $action, mixed $resource): ResultInterface
     {
         return $this->authorization->canResult($this, $action, $resource);
     }
@@ -196,7 +202,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param mixed $resource The resource being operated on.
      * @return mixed The modified resource.
      */
-    public function applyScope($action, $resource)
+    public function applyScope(string $action, mixed $resource): mixed
     {
         return $this->authorization->applyScope($this, $action, $resource);
     }
@@ -217,7 +223,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param \Authorization\AuthorizationService $service The Auth Service
      * @return self
      */
-    public function setAuthorization(\Authorization\AuthorizationService $service): User
+    public function setAuthorization(AuthorizationService $service): User
     {
         $this->authorization = $service;
 
@@ -265,17 +271,17 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|array|null $group The Group ID for checking against
-     * @param int|array|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return bool
      */
     public function buildAndCheckCapability(
         string $action,
         string $model,
-        $group = null,
-        $section = null,
-        $field = null
+        int|array|null $group = null,
+        int|array|null $section = null,
+        ?string $field = null
     ): bool {
         return $this->buildAndCheckCapabilityResult($action, $model, $group, $section, $field)->getStatus();
     }
@@ -283,16 +289,16 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
     /**
      * @param string $action The Action Method
      * @param string $model The Model being Referenced
-     * @param int|array|null $group The Group ID for checking against
-     * @param int|array|null $section The Section ID for checking against
+     * @param array|int|null $group The Group ID for checking against
+     * @param array|int|null $section The Section ID for checking against
      * @param string|null $field The field for action
      * @return \Authorization\Policy\ResultInterface
      */
     public function buildAndCheckCapabilityResult(
         string $action,
         string $model,
-        $group = null,
-        $section = null,
+        int|array|null $group = null,
+        int|array|null $section = null,
         ?string $field = null
     ): ResultInterface {
         if (!CapBuilder::isActionType($action)) {
@@ -308,12 +314,15 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * Function to Check Capability Exists
      *
      * @param string $capability The Capability being checked.
-     * @param int|array|null $group A Group ID if applicable
-     * @param int|array|null $section A Section ID if applicable
+     * @param array|int|null $group A Group ID if applicable
+     * @param array|int|null $section A Section ID if applicable
      * @return bool
      */
-    public function checkCapability(string $capability, $group = null, $section = null): bool
-    {
+    public function checkCapability(
+        string $capability,
+        int|array|null $group = null,
+        int|array|null $section = null
+    ): bool {
         return $this->checkCapabilityResult($capability, $group, $section)->getStatus();
     }
 
@@ -321,12 +330,15 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * Function to Check Capability Exists
      *
      * @param string $capability The Capability being checked.
-     * @param int|array|null $group A Group ID if applicable
-     * @param int|array|null $section A Section ID if applicable
+     * @param array|int|null $group A Group ID if applicable
+     * @param array|int|null $section A Section ID if applicable
      * @return \Authorization\Policy\ResultInterface
      */
-    public function checkCapabilityResult(string $capability, $group = null, $section = null): ResultInterface
-    {
+    public function checkCapabilityResult(
+        string $capability,
+        int|array|null $group = null,
+        int|array|null $section = null
+    ): ResultInterface {
         if (!is_array($this->capabilities)) {
             return new Result(false, 'Array Not String Passed.');
         }
@@ -362,10 +374,10 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      *
      * @param string $capability The Capability being verified
      * @param string $subset The Authorisation Subset
-     * @param int $entities The Entity ID or Array of IDs
+     * @param array|int|null $entities The Entity ID or Array of IDs
      * @return bool
      */
-    private function subSetCapabilityCheck($capability, $subset, $entities): bool
+    private function subSetCapabilityCheck(string $capability, string $subset, int|array|null $entities): bool
     {
         if (key_exists($subset, $this->capabilities)) {
             $subsetCapabilities = $this->capabilities[$subset];
@@ -392,7 +404,7 @@ class User extends Entity implements IdentityInterface, AuthenticationIdentityIn
      * @param array $subsetCapabilities The Capabilities for the level being checked
      * @return bool
      */
-    private function capabilitySubsetArray($capability, $entityID, $subsetCapabilities)
+    private function capabilitySubsetArray(string $capability, int $entityID, array $subsetCapabilities): bool
     {
         if (key_exists($entityID, $subsetCapabilities)) {
             foreach ($subsetCapabilities as $idx => $set) {

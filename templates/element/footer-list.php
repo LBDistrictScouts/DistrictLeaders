@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <div class="row justify-content-center">
     <div class="col-sm-4 col-md-3 item">

@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Test\TestCase\Model\Behavior;
 
 use App\Model\Behavior\CsvBehavior;
+use App\Model\Table\CompassRecordsTable;
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
@@ -11,54 +13,17 @@ use Cake\TestSuite\TestCase;
  */
 class CsvBehaviorTest extends TestCase
 {
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-    ];
+    use FixtureTestTrait;
 
     /**
-     * @var \App\Model\Behavior\CsvBehavior
+     * @var CsvBehavior
      */
-    protected $Csv;
+    protected CsvBehavior $Csv;
 
     /**
-     * @var \Cake\ORM\Table
+     * @var CompassRecordsTable
      */
-    protected $CompassRecords;
+    protected CompassRecordsTable $CompassRecords;
 
     /**
      * setUp method

@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @since         2.2.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Utility;
 
 use Cake\Core\Configure;

@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 <?php if ($this->Identity->buildAndCheckCapability('VIEW', 'ScoutGroups')) : ?>
     <a class="dropdown-item" role="presentation" href="<?= $this->Url->build(['controller' => 'ScoutGroups', 'action' => 'index', 'prefix' => false, 'plugin' => false])  ?>">Scout Groups</a>

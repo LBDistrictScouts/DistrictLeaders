@@ -30,6 +30,7 @@ class DirectoryGroup extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'directory_id' => true,
         'directory_group_name' => true,

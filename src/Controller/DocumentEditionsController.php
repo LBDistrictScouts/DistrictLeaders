@@ -10,7 +10,7 @@ use Josbeir\Filesystem\FilesystemAwareTrait;
  * DocumentEditions Controller
  *
  * @property \App\Model\Table\DocumentEditionsTable $DocumentEditions
- * @method \App\Model\Entity\DocumentEdition[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\DocumentEdition[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class DocumentEditionsController extends AppController
 {
@@ -19,9 +19,9 @@ class DocumentEditionsController extends AppController
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['DocumentVersions.Documents', 'FileTypes'],
@@ -35,10 +35,10 @@ class DocumentEditionsController extends AppController
      * View method
      *
      * @param string|null $documentEditionId Document Edition id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($documentEditionId = null)
+    public function view(?string $documentEditionId = null): void
     {
         $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => ['DocumentVersions', 'FileTypes'],
@@ -50,9 +50,9 @@ class DocumentEditionsController extends AppController
     /**
      * Add method
      *
-     * @return \Cake\Http\Response|void Redirects on successful add, renders view otherwise.
+     * @return void Redirects on successful add, renders view otherwise.
      */
-    public function upload()
+    public function upload(): void
     {
         $documentEdition = $this->DocumentEditions->newEmptyEntity();
         if ($this->request->is('post')) {
@@ -65,7 +65,7 @@ class DocumentEditionsController extends AppController
             if ($this->DocumentEditions->save($documentEdition)) {
                 $this->Flash->success(__('The document edition has been saved.'));
 
-                return $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
@@ -78,10 +78,10 @@ class DocumentEditionsController extends AppController
      * Edit method
      *
      * @param string|null $documentEditionId Document Edition id.
-     * @return \Cake\Http\Response|void Redirects on successful edit, renders view otherwise.
+     * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($documentEditionId = null)
+    public function edit(?string $documentEditionId = null): void
     {
         $documentEdition = $this->DocumentEditions->get($documentEditionId, [
             'contain' => [],
@@ -91,7 +91,7 @@ class DocumentEditionsController extends AppController
             if ($this->DocumentEditions->save($documentEdition)) {
                 $this->Flash->success(__('The document edition has been saved.'));
 
-                return $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
+                $this->redirect(['action' => 'view', $documentEdition->get(DocumentEdition::FIELD_ID)]);
             }
             $this->Flash->error(__('The document edition could not be saved. Please, try again.'));
         }
@@ -104,10 +104,10 @@ class DocumentEditionsController extends AppController
      * Delete method
      *
      * @param string|null $id Document Edition id.
-     * @return \Cake\Http\Response|void Redirects to index.
+     * @return void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $documentEdition = $this->DocumentEditions->get($id);
@@ -117,6 +117,6 @@ class DocumentEditionsController extends AppController
             $this->Flash->error(__('The document edition could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 }

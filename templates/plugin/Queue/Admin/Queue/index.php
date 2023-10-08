@@ -1,7 +1,7 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \Queue\Model\Entity\QueuedJob[] $pendingDetails
+ * @var AppView $this
+ * @var QueuedJob[] $pendingDetails
  * @var string[] $tasks
  * @var string[] $servers
  * @var array $status
@@ -9,7 +9,11 @@
  * @var int $current
  * @var array $data
  */
+
+use App\View\AppView;
 use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
+use Queue\Model\Entity\QueuedJob;
 
 ?>
 <?= $this->element('header', ['data' => ['current' => 'dashboard']]) ?>
@@ -26,7 +30,7 @@ use Cake\Core\Configure;
             <div class="card-body">
                 <?php if ($status) { ?>
                     <?php
-                    /** @var \Cake\I18n\FrozenTime $time */
+                    /** @var FrozenTime $time */
                     $time = $status['time'];
                     $running = $time->addMinute()->isFuture();
                     ?>

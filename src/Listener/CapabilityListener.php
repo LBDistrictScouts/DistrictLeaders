@@ -11,8 +11,6 @@ use Cake\ORM\Locator\LocatorAwareTrait;
  * Class LoginEvent
  *
  * @package App\Listener
- * @property \App\Model\Table\RoleTemplatesTable $RoleTemplates
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
  */
 class CapabilityListener implements EventListenerInterface
 {
@@ -32,13 +30,16 @@ class CapabilityListener implements EventListenerInterface
      * @param \Cake\Event\EventInterface $event The event being processed.
      * @return void
      */
-    public function templateChange(EventInterface $event)
+    public function templateChange(EventInterface $event): void
     {
+        /** @var \Queue\Model\Table\QueuedJobsTable $QueuedJobs */
+        $QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+
         /** @var \App\Model\Entity\RoleTemplate $roleTemplate */
         $roleTemplate = $event->getData('role_template');
 
-        $this->QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
-        $this->QueuedJobs->createJob(
+        $QueuedJobs = $this->getTableLocator()->get('Queue.QueuedJobs');
+        $QueuedJobs->createJob(
             'Capability',
             ['role_template_id' => $roleTemplate->id]
         );

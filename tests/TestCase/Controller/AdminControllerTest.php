@@ -17,14 +17,14 @@ class AdminControllerTest extends TestCase
     /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'Admin';
+    private string $controller = 'Admin';
 
     /**
      * Test index method
      *
      * @return void
      */
-    public function testStatus()
+    public function testStatus(): void
     {
         TestCase::markTestIncomplete();
         $this->tryGet(['controller' => $this->controller, 'action' => 'status']);
@@ -35,7 +35,7 @@ class AdminControllerTest extends TestCase
      *
      * @return void
      */
-    public function testGoogle()
+    public function testGoogle(): void
     {
         TestCase::markTestIncomplete();
         $this->tryGet(['controller' => $this->controller, 'action' => 'google']);

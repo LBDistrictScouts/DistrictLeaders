@@ -5,10 +5,13 @@
  * Date: 2018-12-31
  * Time: 17:36
  *
- * @var \App\View\AppView $this
- * @var \Cake\ORM\ResultSet $filterArray
+ * @var AppView $this
+ * @var ResultSet $filterArray
  * @var array $appliedFilters
  */
+
+use App\View\AppView;
+use Cake\ORM\ResultSet;
 
 $entity = $this->fetch('entity');
 ?>

@@ -34,6 +34,7 @@ class DirectoryUser extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'directory_id' => true,
         'directory_user_reference' => true,
@@ -48,7 +49,7 @@ class DirectoryUser extends Entity
      *
      * @return string
      */
-    protected function _getFullName()
+    protected function _getFullName(): string
     {
         return $this->given_name . ' ' . $this->family_name;
     }
@@ -58,6 +59,7 @@ class DirectoryUser extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['full_name'];
 
     public const FIELD_ID = 'id';

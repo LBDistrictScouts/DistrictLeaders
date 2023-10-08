@@ -15,46 +15,14 @@ class ScoutGroupsControllerTest extends TestCase
     use AppTestTrait;
 
     /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-        'app.Sections',
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-        'app.Roles',
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-        'app.NotificationTypes',
-        'app.Notifications',
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-    ];
-
-    /**
      * @var string $controller The Name of the controller being interrogated.
      */
-    private $controller = 'ScoutGroups';
+    private string $controller = 'ScoutGroups';
 
     /**
      * @var array $validEntityData Valid creation Data.
      */
-    private $validEntityData = [
+    private array $validEntityData = [
         'scout_group' => '4th Goatville',
         'group_alias' => '4th Goat',
         'number_stripped' => 4,
@@ -68,7 +36,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testIndex()
+    public function testIndex(): void
     {
         $this->tryIndexGet($this->controller);
     }
@@ -79,7 +47,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testGenerate()
+    public function testGenerate(): void
     {
         $actionArray = [
             'controller' => 'ScoutGroups',
@@ -101,7 +69,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testView()
+    public function testView(): void
     {
         $this->tryViewGet($this->controller);
     }
@@ -112,7 +80,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testAdd()
+    public function testAdd(): void
     {
         $this->tryAddGet($this->controller);
 
@@ -129,7 +97,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testEdit()
+    public function testEdit(): void
     {
         $this->tryEditGet($this->controller);
 
@@ -146,7 +114,7 @@ class ScoutGroupsControllerTest extends TestCase
      * @return void
      * @throws
      */
-    public function testDelete()
+    public function testDelete(): void
     {
         $this->tryDeletePost(
             $this->controller,

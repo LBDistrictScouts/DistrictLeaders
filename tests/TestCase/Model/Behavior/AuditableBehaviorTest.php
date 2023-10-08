@@ -3,9 +3,11 @@ declare(strict_types=1);
 
 namespace App\Test\TestCase\Model\Behavior;
 
+use App\Model\Behavior\AuditableBehavior;
 use App\Model\Entity\Audit;
 use App\Model\Entity\User;
 use App\Model\Entity\UserContact;
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\Event\EventList;
 use Cake\Event\EventManager;
 use Cake\TestSuite\TestCase;
@@ -13,54 +15,21 @@ use Cake\TestSuite\TestCase;
 /**
  * App\Model\Behavior\AuditableBehavior Test Case
  *
- * @property \App\Model\Table\AuditsTable $Audits
- * @property \App\Model\Table\UsersTable $Users
+ * @property AuditsTable $Audits
+ * @property UsersTable $Users
  *
  * @property EventManager $EventManager
  */
 class AuditableBehaviorTest extends TestCase
 {
+    use FixtureTestTrait;
+
     /**
      * Test subject
      *
-     * @var \App\Model\Behavior\AuditableBehavior
+     * @var AuditableBehavior
      */
-    public $Auditable;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-    ];
+    public AuditableBehavior $Auditable;
 
     /**
      * Test initial setup

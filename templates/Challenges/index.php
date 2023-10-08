@@ -1,14 +1,16 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
+ * @var AppView $this
+ * @var User[]|CollectionInterface $users
  */
 use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\User[]|\Cake\Collection\CollectionInterface $users
- * @var \App\Model\Entity\User $authUser
+ * @var AppView $this
+ * @var User[]|CollectionInterface $users
+ * @var User $authUser
  */
 
 $authUser = $this->getRequest()->getAttribute('identity');

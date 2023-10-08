@@ -14,10 +14,12 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use App\Authenticator\CognitoAuthenticationService;
 use App\Middleware\CognitoAuthenticationMiddleware;
+use App\Model\Entity\User;
 use App\Policy\RequestPolicy;
 use Authentication\AuthenticationServiceInterface;
 use Authentication\AuthenticationServiceProviderInterface;
@@ -127,9 +129,9 @@ class Application extends BaseApplication implements
     }
 
     /**
-     * Setup the middleware queue your application will use.
+     * Set up the middleware queue your application will use.
      *
-     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
+     * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to set up.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
@@ -185,8 +187,7 @@ class Application extends BaseApplication implements
 
             // Add the Authorisation Middleware to the middleware queue
             ->add(new AuthorizationMiddleware($this, [
-                'identityDecorator' => function ($auth, $user) {
-                    /** @var \App\Model\Entity\User $user */
+                'identityDecorator' => function (AuthorizationService $auth, User $user) {
                     return $user->setAuthorization($auth);
                 },
                 'unauthorizedHandler' => $unAuthArray,

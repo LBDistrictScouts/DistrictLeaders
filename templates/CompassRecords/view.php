@@ -1,10 +1,15 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\CompassRecord $compassRecord
- * @var \App\Model\Entity\User $user
+ * @var AppView $this
+ * @var CompassRecord $compassRecord
+ * @var User $user
  * @var string $mergeStatus
  */
+
+use App\Model\Entity\CompassRecord;
+use App\Model\Entity\User;
+use App\View\AppView;
+
 ?>
 <div class="row">
     <div class="col">
@@ -20,15 +25,15 @@
                         <div class="dropdown d-lg-none"><button class="btn btn-primary dropdown-toggle d-sm-block d-md-block" data-toggle="dropdown" aria-expanded="false" type="button">Actions&nbsp;</button>
                             <div class="dropdown-menu" role="menu">
                                 <?= $this->Identity->buildAndCheckCapability('UPDATE', 'CompassRecords') ? $this->Html->link('<i class="fal fa-pencil"></i> Edit Record', ['controller' => 'CompassRecords', 'action' => 'edit', $compassRecord->id], ['title' => __('Edit Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
-                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && isset($user) && !empty($user) && $user instanceof \App\Model\Entity\User ? $this->Html->link('<i class="fal fa-code-merge"></i> Merge User', ['controller' => 'CompassRecords', 'action' => 'merge', $compassRecord->id, $user->id], ['title' => __('Link Compass Record to User'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
-                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') && ( !isset($user) || empty($user) || !$user instanceof \App\Model\Entity\User ) ? $this->Form->postLink('<i class="fal fa-inbox-in"></i> Consume Compass Record', ['controller' => 'CompassRecords', 'action' => 'consume', $compassRecord->id], ['confirm' => __('Are you sure you want to consume record #{0}, for user {1}?', $compassRecord->id, $compassRecord->full_name), 'title' => __('Consume Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && isset($user) && !empty($user) && $user instanceof User ? $this->Html->link('<i class="fal fa-code-merge"></i> Merge User', ['controller' => 'CompassRecords', 'action' => 'merge', $compassRecord->id, $user->id], ['title' => __('Link Compass Record to User'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') && ( !isset($user) || empty($user) || !$user instanceof User ) ? $this->Form->postLink('<i class="fal fa-inbox-in"></i> Consume Compass Record', ['controller' => 'CompassRecords', 'action' => 'consume', $compassRecord->id], ['confirm' => __('Are you sure you want to consume record #{0}, for user {1}?', $compassRecord->id, $compassRecord->full_name), 'title' => __('Consume Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
                             </div>
                         </div>
                         <div class="dropleft d-none d-sm-none d-lg-inline"><button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button" style="font-family: 'Nunito Sans', sans-serif;">Actions</button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <?= $this->Identity->buildAndCheckCapability('UPDATE', 'CompassRecords') ? $this->Html->link('<i class="fal fa-pencil"></i> Edit Record', ['controller' => 'CompassRecords', 'action' => 'edit', $compassRecord->id], ['title' => __('Edit Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
-                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && isset($user) && !empty($user) && $user instanceof \App\Model\Entity\User ? $this->Html->link('<i class="fal fa-code-merge"></i> Merge User', ['controller' => 'CompassRecords', 'action' => 'merge', $compassRecord->id, $user->id], ['title' => __('Link Compass Record to User'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
-                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') && ( !isset($user) || empty($user) || !$user instanceof \App\Model\Entity\User ) ? $this->Form->postLink('<i class="fal fa-inbox-in"></i> Consume Compass Record', ['controller' => 'CompassRecords', 'action' => 'consume', $compassRecord->id], ['confirm' => __('Are you sure you want to consume record #{0}, for user {1}?', $compassRecord->id, $compassRecord->full_name), 'title' => __('Consume Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('UPDATE', 'Users') && isset($user) && !empty($user) && $user instanceof User ? $this->Html->link('<i class="fal fa-code-merge"></i> Merge User', ['controller' => 'CompassRecords', 'action' => 'merge', $compassRecord->id, $user->id], ['title' => __('Link Compass Record to User'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
+                                <?= $this->Identity->buildAndCheckCapability('CREATE', 'Users') && ( !isset($user) || empty($user) || !$user instanceof User ) ? $this->Form->postLink('<i class="fal fa-inbox-in"></i> Consume Compass Record', ['controller' => 'CompassRecords', 'action' => 'consume', $compassRecord->id], ['confirm' => __('Are you sure you want to consume record #{0}, for user {1}?', $compassRecord->id, $compassRecord->full_name), 'title' => __('Consume Compass Record'), 'class' => 'dropdown-item', 'role' => 'presentation', 'escape' => false]) : '' ?>
                             </div>
                         </div>
                     </div>
@@ -97,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <?php if (isset($user) && !empty($user) && $user instanceof \App\Model\Entity\User) : ?>
+        <?php if (isset($user) && !empty($user) && $user instanceof User) : ?>
             <div class="row">
                 <div class="col-sm-12 col-lg-6">
                     <div class="card" style="margin-top: 15px;margin-bottom: 15px;">

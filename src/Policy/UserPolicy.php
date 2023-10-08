@@ -21,7 +21,7 @@ class UserPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $subject The User being Edited
      * @return \Authorization\Policy\Result
      */
-    public function canEdit(User $user, User $subject)
+    public function canEdit(User $user, User $subject): Result
     {
         if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
             return new Result(true);
@@ -40,7 +40,7 @@ class UserPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $subject The User being Edited
      * @return \Authorization\Policy\Result
      */
-    public function canView(User $user, User $subject)
+    public function canView(User $user, User $subject): Result
     {
         if ($user->id == $subject->id && $user->checkCapability('OWN_USER')) {
             return new Result(true);
@@ -62,7 +62,7 @@ class UserPolicy implements BeforePolicyInterface
      * @param \App\Model\Entity\User $user The User Editing
      * @return \Authorization\Policy\Result
      */
-    public function canIndex(User $user)
+    public function canIndex(User $user): Result
     {
         if ($user->checkCapability('DIRECTORY')) {
             return new Result(true);

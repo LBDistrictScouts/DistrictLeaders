@@ -10,6 +10,7 @@ use Cake\ORM\Locator\LocatorAwareTrait;
 use Google_Client;
 use Google_Service_Directory;
 use Google_Service_Directory_Groups;
+use Google_Service_Directory_Users;
 
 /**
  * GoogleClient component
@@ -50,7 +51,7 @@ class GoogleBuilder
      * @return \Google_Client|false
      * @throws \Google_Exception
      */
-    public static function getClient(?Directory $directory = null)
+    public static function getClient(?Directory $directory = null): Google_Client|false
     {
         $client = GoogleBuilder::newClient();
 
@@ -75,7 +76,7 @@ class GoogleBuilder
      * @return \Google_Service_Directory
      * @throws \Google_Exception
      */
-    public static function getService(?Directory $directory = null)
+    public static function getService(?Directory $directory = null): Google_Service_Directory
     {
         $client = GoogleBuilder::getClient($directory);
 
@@ -89,7 +90,7 @@ class GoogleBuilder
      * @param \App\Model\Entity\Directory|null $directory The Directory to Save Config To
      * @return void
      */
-    public static function saveToken(Google_Client $client, ?Directory $directory = null)
+    public static function saveToken(Google_Client $client, ?Directory $directory = null): void
     {
         if ($directory instanceof Directory) {
             $directory->set(Directory::FIELD_AUTHORISATION_TOKEN, $client->getAccessToken());
@@ -106,7 +107,7 @@ class GoogleBuilder
      * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
      * @return \Google_Client
      */
-    public static function getToken(Google_Client $client, ?Directory $directory = null)
+    public static function getToken(Google_Client $client, ?Directory $directory = null): Google_Client
     {
         if ($directory instanceof Directory && $directory->has(Directory::FIELD_AUTHORISATION_TOKEN)) {
             $accessToken = $directory->get(Directory::FIELD_AUTHORISATION_TOKEN);
@@ -122,7 +123,7 @@ class GoogleBuilder
      * get List
      *
      * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @param null $domain Domain Limit
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Users
@@ -130,10 +131,10 @@ class GoogleBuilder
      */
     public static function getUserList(
         ?Directory $directory = null,
-        $domain = null,
+        ?string $domain = null,
         int $limit = 50,
         ?string $pageToken = null
-    ) {
+    ): Google_Service_Directory_Users {
         $service = GoogleBuilder::getService($directory);
 
         $customerReference = 'my_customer';
@@ -162,7 +163,7 @@ class GoogleBuilder
      * get List
      *
      * @param \App\Model\Entity\Directory|null $directory The Directory to Take Config From
-     * @param null $domain Domain Limit
+     * @param string|null $domain Domain Limit
      * @param int $limit Page Size
      * @param string|null $pageToken String for Next Result Set
      * @return \Google_Service_Directory_Groups
@@ -170,7 +171,7 @@ class GoogleBuilder
      */
     public static function getGroupList(
         ?Directory $directory = null,
-        $domain = null,
+        ?string $domain = null,
         int $limit = 50,
         ?string $pageToken = null
     ): Google_Service_Directory_Groups {
@@ -206,7 +207,7 @@ class GoogleBuilder
      * @return \Google_Service_Directory_User
      * @throws \Google_Exception
      */
-    public static function getUser($userId, ?Directory $directory = null)
+    public static function getUser(string $userId, ?Directory $directory = null): Google_Service_Directory_User
     {
         $service = GoogleBuilder::getService($directory);
 
@@ -220,7 +221,7 @@ class GoogleBuilder
      * @return \Google_Service_Directory_Domains2
      * @throws \Google_Exception
      */
-    public static function getDomainList(?Directory $directory = null)
+    public static function getDomainList(?Directory $directory = null): Google_Service_Directory_Domains2
     {
         $service = GoogleBuilder::getService($directory);
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Authenticator;
 
 use Authentication\Authenticator\AuthenticatorCollection;
@@ -48,7 +49,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testLoad
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testLoad()
     {
@@ -77,7 +78,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testLoadException
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testLoadException()
     {
@@ -92,7 +93,7 @@ class AuthenticatorCollectionTest extends TestCase
      * testIsEmpty
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function testIsEmpty()
     {

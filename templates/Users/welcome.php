@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Form\ResetForm $resForm
- * @var \App\Form\PasswordForm $passwordForm
+ * @var AppView $this
+ * @var ResetForm $resForm
+ * @var PasswordForm $passwordForm
  */
+
+use App\Form\PasswordForm;
+use App\Form\ResetForm;
+use App\View\AppView;
+
 ?>
 <?= $this->Form->create($passwordForm, ['method' => 'post']) ?>
 <div>

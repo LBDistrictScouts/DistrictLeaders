@@ -18,18 +18,9 @@ class SiteSessionsTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\SiteSessionsTable
+     * @var SiteSessionsTable
      */
-    public $SiteSessions;
-
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    public $fixtures = [
-        'app.SiteSessions',
-    ];
+    public SiteSessionsTable $SiteSessions;
 
     /**
      * setUp method

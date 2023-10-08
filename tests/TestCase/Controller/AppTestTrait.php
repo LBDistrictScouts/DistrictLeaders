@@ -13,8 +13,10 @@ declare(strict_types=1);
  * @since         3.7.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Controller;
 
+use App\Test\Fixture\FixtureTestTrait;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\Utility\Inflector;
 
@@ -24,6 +26,7 @@ use Cake\Utility\Inflector;
 trait AppTestTrait
 {
     use IntegrationTestTrait;
+    use FixtureTestTrait;
 
     /**
      * Function to log user in for authentication
@@ -244,8 +247,8 @@ trait AppTestTrait
         $url['action'] = 'view';
         $this->login();
         $this->get($url);
-        $this->assertResponseCode(500);
-        $this->assertResponseFailure();
+        $this->assertResponseCode(404);
+        $this->assertResponseError();
     }
 
     /**

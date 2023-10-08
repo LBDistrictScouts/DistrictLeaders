@@ -22,11 +22,13 @@ class AutoMergeTask extends Task implements TaskInterface
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $timeout = 900;
 
     /**
      * @var int
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     public $retries = 1;
 
     /**

@@ -15,8 +15,8 @@ use Cake\I18n\FrozenTime;
  * Class UserListenerTest
  *
  * @package App\Test\TestCase\Listener
- * @property \App\Model\Table\TokensTable $Tokens
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property TokensTable $Tokens
+ * @property QueuedJobsTable $QueuedJobs
  * @property EventManager $EventManager
  * @property TokenListener $Listener
  */

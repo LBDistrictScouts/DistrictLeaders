@@ -14,29 +14,34 @@ use Cake\Validation\Validator;
 /**
  * Sections Model
  *
- * @property \App\Model\Table\SectionTypesTable&\Cake\ORM\Association\BelongsTo $SectionTypes
- * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ScoutGroups
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\SectionTypesTable&\App\Model\Table\BelongsTo $SectionTypes
+ * @property \App\Model\Table\ScoutGroupsTable&\App\Model\Table\BelongsTo $ScoutGroups
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
  * @method \App\Model\Entity\Section get($primaryKey, $options = [])
  * @method \App\Model\Entity\Section newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Section[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Section|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Section patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Section|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Section saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Section patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Section[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Section findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Expose\Model\Behavior\ExposeBehavior
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsToMany $Users
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsToMany $Users
  * @mixin \Search\Model\Behavior\SearchBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
  * @mixin \App\Model\Behavior\AuditableBehavior
  * @method \App\Model\Entity\Section newEmptyEntity()
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Section[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Section[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \Search\Model\Behavior\SearchBehavior
+ * @mixin \Expose\Model\Behavior\ExposeBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
  */
 class SectionsTable extends Table
 {

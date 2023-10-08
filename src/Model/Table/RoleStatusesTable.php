@@ -10,20 +10,20 @@ use Cake\Validation\Validator;
 /**
  * RoleStatuses Model
  *
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
  * @method \App\Model\Entity\RoleStatus get($primaryKey, $options = [])
  * @method \App\Model\Entity\RoleStatus newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\RoleStatus|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\RoleStatus patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\RoleStatus|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleStatus saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\RoleStatus patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\RoleStatus findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\RoleStatus newEmptyEntity()
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\RoleStatus[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\RoleStatus[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class RoleStatusesTable extends Table
 {

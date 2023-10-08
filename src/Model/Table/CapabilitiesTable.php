@@ -7,6 +7,7 @@ use App\Model\Entity\Capability;
 use App\Utility\CapBuilder;
 use Cake\Core\Configure;
 use Cake\Database\Exception;
+use Cake\Database\Query;
 use Cake\Log\Log;
 use Cake\ORM\Locator\LocatorAwareTrait;
 use Cake\ORM\RulesChecker;
@@ -17,21 +18,21 @@ use Cake\Validation\Validator;
 /**
  * Capabilities Model
  *
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsToMany $RoleTypes
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsToMany $RoleTypes
  * @method \App\Model\Entity\Capability get($primaryKey, $options = [])
  * @method \App\Model\Entity\Capability newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Capability[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Capability|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Capability patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Capability|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Capability saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Capability patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Capability[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Capability findOrCreate($search, ?callable $callback = null, $options = [])
- * @property \App\Model\Table\CapabilitiesRoleTypesTable&\Cake\ORM\Association\HasMany $CapabilitiesRoleTypes
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\CapabilitiesRoleTypesTable&\App\Model\Table\HasMany $CapabilitiesRoleTypes
+ * @method \App\Model\Entity\Capability[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Capability newEmptyEntity()
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Capability[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Capability[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesTable extends Table
 {
@@ -112,7 +113,7 @@ class CapabilitiesTable extends Table
      * @param array $options Options for the find.
      * @return mixed
      */
-    public function findLevel(\Cake\Database\Query $query, array $options)
+    public function findLevel(Query $query, array $options): mixed
     {
         if (
             key_exists('level', $options)
@@ -135,7 +136,7 @@ class CapabilitiesTable extends Table
      *
      * @return int
      */
-    public function installBaseCapabilities()
+    public function installBaseCapabilities(): int
     {
         $base = Configure::read('BaseCapabilities');
 
@@ -157,7 +158,7 @@ class CapabilitiesTable extends Table
      * @param bool $fields Option to run for Fields Too
      * @return int
      */
-    public function generateEntityCapabilities($fields = true)
+    public function generateEntityCapabilities(bool $fields = true): int
     {
         $count = 0;
         foreach (Configure::read('AllModels') as $model => $options) {
@@ -178,7 +179,7 @@ class CapabilitiesTable extends Table
      * @param bool|null $viewRestricted Is the view restricted
      * @return int
      */
-    public function entityCapability($entity, $baseLevel, $viewRestricted = false)
+    public function entityCapability(string $entity, int $baseLevel, ?bool $viewRestricted = false): int
     {
         $entityActions = CapBuilder::getEntityCapabilities();
         $count = 0;
@@ -201,9 +202,9 @@ class CapabilitiesTable extends Table
     /**
      * @param string $entity The Entity to be generated
      * @param int $baseLevel The Base level of the entity
-     * @return int
+     * @return int|false
      */
-    public function fieldCapability(string $entity, int $baseLevel)
+    public function fieldCapability(string $entity, int $baseLevel): int|false
     {
         $fieldActions = CapBuilder::getFieldCapabilities();
 
@@ -246,7 +247,7 @@ class CapabilitiesTable extends Table
      * @param array $objectArray The array to be saved
      * @return \App\Model\Entity\Capability|false
      */
-    protected function makeOrPatch(array $objectArray)
+    protected function makeOrPatch(array $objectArray): Capability|false
     {
         if ($this->exists([Capability::FIELD_CAPABILITY_CODE => $objectArray[Capability::FIELD_CAPABILITY_CODE]])) {
             $capability = $this->find()
@@ -265,9 +266,9 @@ class CapabilitiesTable extends Table
      * @param string $action Action Method
      * @param string $model Model to be referenced
      * @param string|null $field The Field being referenced
-     * @return string
+     * @return string|false
      */
-    public function buildCapability($action, $model, $field = null)
+    public function buildCapability(string $action, string $model, ?string $field = null): string|false
     {
         if (!CapBuilder::isActionType($action)) {
             Log::debug('NotActionType');
@@ -282,7 +283,7 @@ class CapabilitiesTable extends Table
      * @param array $capabilityArray An Array of Associative Objects
      * @return array
      */
-    public function enrichRoleType(array $capabilityArray)
+    public function enrichRoleType(array $capabilityArray): array
     {
         $cleanMatrix = [];
         $special = [];
@@ -310,7 +311,7 @@ class CapabilitiesTable extends Table
      * @param array $capabilityArray The Capability Array to be Enriched.
      * @return array
      */
-    public function enrichUserCapability(array $capabilityArray)
+    public function enrichUserCapability(array $capabilityArray): array
     {
         $cleanMatrix = [];
 
@@ -342,7 +343,7 @@ class CapabilitiesTable extends Table
      * @param string $matrixKey The Matrix Key for the Entity
      * @return array
      */
-    private function entityMatrixParsing(array $cleanMatrix, array $entityArray, string $matrixKey)
+    private function entityMatrixParsing(array $cleanMatrix, array $entityArray, string $matrixKey): array
     {
         $special = [];
         $models = [];
@@ -382,7 +383,7 @@ class CapabilitiesTable extends Table
      * @param int|bool $payload The ID of the Capability
      * @return array
      */
-    private function codeMatrixAdaption(array $models, array $codeArray, $payload)
+    private function codeMatrixAdaption(array $models, array $codeArray, int|bool $payload): array
     {
         if (!key_exists($codeArray['model'], $models)) {
             $models[$codeArray['model']] = [];
@@ -414,7 +415,7 @@ class CapabilitiesTable extends Table
      *
      * @return array
      */
-    public function getSplitLists()
+    public function getSplitLists(): array
     {
         $capabilities = $this->find('list', [
             'keyField' => Capability::FIELD_CAPABILITY_CODE,

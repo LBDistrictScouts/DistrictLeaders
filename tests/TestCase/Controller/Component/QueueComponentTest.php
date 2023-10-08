@@ -20,7 +20,7 @@ use Queue\Model\Table\QueuedJobsTable;
  * @property QueueComponent $Queue
  * @property ComponentRegistry $Registry
  *
- * @property \App\Model\Table\DirectoriesTable $Directories
+ * @property DirectoriesTable $Directories
  */
 class QueueComponentTest extends TestCase
 {
@@ -29,15 +29,17 @@ class QueueComponentTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Controller\Component\QueueComponent
+     * @var QueueComponent
      */
-    protected $Queue;
+    protected QueueComponent $Queue;
+
+    protected ComponentRegistry $Registry;
 
     /**
      * setUp method
      *
      * @return void
-     * @throws \Exception
+     * @throws Exception
      */
     public function setUp(): void
     {

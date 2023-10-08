@@ -10,21 +10,21 @@ use Cake\Validation\Validator;
 /**
  * CapabilitiesRoleTypes Model
  *
- * @property \App\Model\Table\CapabilitiesTable&\Cake\ORM\Association\BelongsTo $Capabilities
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $RoleTypes
+ * @property \App\Model\Table\CapabilitiesTable&\App\Model\Table\BelongsTo $Capabilities
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $RoleTypes
  * @method \App\Model\Entity\CapabilitiesRoleType get($primaryKey, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\CapabilitiesRoleType newEmptyEntity()
- * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\CapabilitiesRoleType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\CapabilitiesRoleType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class CapabilitiesRoleTypesTable extends Table
 {

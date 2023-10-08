@@ -10,16 +10,16 @@ use App\Model\Entity\EmailSend;
  *
  * @property \App\Model\Table\EmailSendsTable $EmailSends
  * @property \App\Controller\Component\QueueComponent $Queue
- * @method \App\Model\Entity\EmailSend[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\EmailSend[]|\App\Controller\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmailSendsController extends AppController
 {
     /**
      * Index method
      *
-     * @return \Cake\Http\Response|void
+     * @return void
      */
-    public function index()
+    public function index(): void
     {
         $this->paginate = [
             'contain' => ['Users', 'Notifications'],
@@ -36,10 +36,10 @@ class EmailSendsController extends AppController
      * View method
      *
      * @param string|null $id Email Send id.
-     * @return \Cake\Http\Response|void
+     * @return void
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null)
+    public function view(?string $id = null): void
     {
         $emailSend = $this->EmailSends->get($id, [
             'contain' => ['Users', 'Notifications', 'EmailResponses', 'Tokens'],
@@ -55,7 +55,7 @@ class EmailSendsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function send($emailId = null)
+    public function send(?string $emailId = null): void
     {
         $this->request->allowMethod(['post']);
         if ($this->EmailSends->send((int)$emailId)) {
@@ -64,7 +64,7 @@ class EmailSendsController extends AppController
             $this->Flash->error(__('The email send could not be sent. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -73,7 +73,7 @@ class EmailSendsController extends AppController
      * @param string $notificationId Notification ID
      * @return \Cake\Http\Response Redirects on successful add, renders view otherwise.
      */
-    public function make(string $notificationId)
+    public function make(string $notificationId): Response
     {
         $this->request->allowMethod(['post']);
         $notification = $this->EmailSends->Notifications->get($notificationId, ['contain' => 'NotificationTypes']);
@@ -88,7 +88,7 @@ class EmailSendsController extends AppController
             $this->Flash->error('Email Send Failed.');
         }
 
-        return $this->redirect(['controller' => 'Notifications', 'actions' => 'view', $notificationId]);
+        $this->redirect(['controller' => 'Notifications', 'actions' => 'view', $notificationId]);
     }
 
     /**
@@ -98,7 +98,7 @@ class EmailSendsController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit(?string $id = null): void
     {
         $emailSend = $this->EmailSends->get($id, [
             'contain' => [],
@@ -108,7 +108,7 @@ class EmailSendsController extends AppController
             if ($this->EmailSends->save($emailSend)) {
                 $this->Flash->success(__('The email send has been saved.'));
 
-                return $this->redirect(['action' => 'view', $emailSend->get('id')]);
+                $this->redirect(['action' => 'view', $emailSend->get('id')]);
             }
             $this->Flash->error(__('The email send could not be saved. Please, try again.'));
         }
@@ -124,7 +124,7 @@ class EmailSendsController extends AppController
      * @return \Cake\Http\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+    public function delete(?string $id = null): void
     {
         $this->request->allowMethod(['post', 'delete']);
         $emailSend = $this->EmailSends->get($id);
@@ -134,22 +134,22 @@ class EmailSendsController extends AppController
             $this->Flash->error(__('The email send could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        $this->redirect(['action' => 'index']);
     }
 
     /**
      * Process method
      *
      * @return \Cake\Http\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\Exception When record not found.
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException|\App\Controller\Exception When record not found.
      */
-    public function unsent()
+    public function unsent(): void
     {
         $this->request->allowMethod(['post']);
 
         $this->loadComponent('Queue');
         $this->Queue->setUnsent();
 
-        return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
+        $this->redirect(['controller' => 'Admin', 'action' => 'index']);
     }
 }

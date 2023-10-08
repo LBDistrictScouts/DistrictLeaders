@@ -14,78 +14,27 @@ declare(strict_types=1);
  * @since 1.0.0
  * @license https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase;
 
 use App\Test\TestCase\Controller\AppTestTrait;
 use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
+use Queue\Model\Table\QueuedJobsTable;
 
 /**
  * Class AuthenticationTestCase
  *
  * @package App\Test\TestCase
- * @property \Queue\Model\Table\QueuedJobsTable $QueuedJobs
+ * @property QueuedJobsTable $QueuedJobs
  */
 class ControllerTestCase extends TestCase
 {
     use LocatorAwareTrait;
     use AppTestTrait;
 
-    /**
-     * Fixtures
-     *
-     * @var array
-     */
-    protected $fixtures = [
-        'app.UserStates',
-        'app.Users',
-        'app.CapabilitiesRoleTypes',
-        'app.Capabilities',
-        'app.ScoutGroups',
-        'app.SectionTypes',
-        'app.Sections',
-
-        'app.RoleTemplates',
-        'app.RoleTypes',
-        'app.RoleStatuses',
-
-        'app.Audits',
-        'app.UserContactTypes',
-        'app.UserContacts',
-
-        'app.DirectoryTypes',
-        'app.Directories',
-        'app.DirectoryDomains',
-        'app.DirectoryUsers',
-        'app.DirectoryGroups',
-        'app.RoleTypesDirectoryGroups',
-
-        'app.Roles',
-
-        'app.NotificationTypes',
-        'app.Notifications',
-
-        'app.EmailSends',
-        'app.Tokens',
-        'app.EmailResponseTypes',
-        'app.EmailResponses',
-
-        'app.FileTypes',
-        'app.DocumentTypes',
-        'app.Documents',
-        'app.DocumentVersions',
-        'app.DocumentEditions',
-        'app.CompassRecords',
-
-        'app.CampTypes',
-        'app.Camps',
-        'app.CampRoleTypes',
-        'app.CampRoles',
-
-        'plugin.Queue.QueuedJobs',
-        'plugin.Queue.QueueProcesses',
-
-    ];
+    public QueuedJobsTable|Table $QueuedJobs;
 
     /**
      * @inheritDoc

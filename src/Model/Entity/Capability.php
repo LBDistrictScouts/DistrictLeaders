@@ -34,6 +34,7 @@ class Capability extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'capability_code' => true,
         'capability' => true,
@@ -44,7 +45,7 @@ class Capability extends Entity
     /**
      * @return bool
      */
-    private function specialCode()
+    private function specialCode(): bool
     {
         return (bool)CapBuilder::isSpecialCode($this->capability_code);
     }
@@ -52,7 +53,7 @@ class Capability extends Entity
     /**
      * @return bool
      */
-    protected function _getIsFieldCapability()
+    protected function _getIsFieldCapability(): bool
     {
         return (bool)CapBuilder::isFieldType($this->capability_code);
     }
@@ -62,7 +63,7 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getCrudFunction()
+    protected function _getCrudFunction(): string
     {
         if (is_null($this->capability_code)) {
             return 'EMPTY';
@@ -80,7 +81,7 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getApplicableModel()
+    protected function _getApplicableModel(): string
     {
         if (is_null($this->capability_code)) {
             return 'EMPTY';
@@ -98,13 +99,13 @@ class Capability extends Entity
      *
      * @return string
      */
-    protected function _getApplicableField()
+    protected function _getApplicableField(): string
     {
         if ($this->is_field_capability) {
             return CapBuilder::breakCode($this->capability_code)['field'];
         }
 
-        return false;
+        return '';
     }
 
     /**
@@ -112,6 +113,7 @@ class Capability extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['crud_function', 'applicable_model', 'applicable_field', 'is_field_capability'];
 
     public const FIELD_ID = 'id';

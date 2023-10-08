@@ -1,8 +1,11 @@
 <?php
 /**
  * @var string $reason
- * @var \App\View\AppView $this
+ * @var AppView $this
  */
+
+use App\View\AppView;
+
 ?>
 
 <div class="modal fade" id="whyAuth" tabindex="5" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

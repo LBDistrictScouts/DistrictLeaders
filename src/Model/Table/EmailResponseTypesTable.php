@@ -10,20 +10,20 @@ use Cake\Validation\Validator;
 /**
  * EmailResponseTypes Model
  *
- * @property \App\Model\Table\EmailResponsesTable&\Cake\ORM\Association\HasMany $EmailResponses
+ * @property \App\Model\Table\EmailResponsesTable&\App\Model\Table\HasMany $EmailResponses
  * @method \App\Model\Entity\EmailResponseType get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailResponseType newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponseType|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponseType saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponseType patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponseType|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponseType saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponseType patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponseType findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\EmailResponseType newEmptyEntity()
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponseType[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponseType[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
  */
 class EmailResponseTypesTable extends Table
 {

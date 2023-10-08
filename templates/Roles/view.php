@@ -1,20 +1,28 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Role $role
- */
-
-/**
- * @param \App\Model\Entity\Audit $audit
- * @param bool $original
- * @param \Cake\View\Helper\HtmlHelper $html
- * @return string|null
- * @var \App\View\AppView $this
+ * @var AppView $this
+ * @var Role $role
  * @var object $html
  * @var mixed $original
- * @var \App\Model\Entity\Role $role
  */
-function auditValue(\App\Model\Entity\Audit $audit, bool $original, \Cake\View\Helper\HtmlHelper $html): ?string
+
+use App\Model\Entity\Audit;
+use App\Model\Entity\Role;
+use App\Model\Entity\RoleType;
+use App\View\AppView;
+use Cake\View\Helper\HtmlHelper;
+
+/**
+ * @param Audit $audit
+ * @param bool $original
+ * @param HtmlHelper $html
+ * @return string|null
+ * @var AppView $this
+ * @var object $html
+ * @var mixed $original
+ * @var Role $role
+ */
+function auditValue(Audit $audit, bool $original, HtmlHelper $html): ?string
 {
     if ($original) {
         $value = $audit->original_value;
@@ -144,7 +152,7 @@ function auditValue(\App\Model\Entity\Audit $audit, bool $original, \Cake\View\H
                                 <div class="table-borderless">
                                     <table class="table">
                                         <tbody>
-                                        <?php if ($role->has($role::FIELD_ROLE_TYPE) && $role->role_type->has(\App\Model\Entity\RoleType::FIELD_ROLE_ABBREVIATION)) : ?>
+                                        <?php if ($role->has($role::FIELD_ROLE_TYPE) && $role->role_type->has(RoleType::FIELD_ROLE_ABBREVIATION)) : ?>
                                             <tr>
                                                 <td><span class="text-muted mb-2">Role Abbreviation</span></td>
                                                 <td><?= $this->Identity->buildAndCheckCapability('VIEW', 'RoleTypes') ? $this->Html->link($role->role_type->role_abbreviation, ['controller' => 'RoleTypes', 'action' => 'view', $role->role_type->id]) : h($role->role_type->role_abbreviation) ?></td>

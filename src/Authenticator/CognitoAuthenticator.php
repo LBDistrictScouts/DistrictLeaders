@@ -14,6 +14,7 @@ declare(strict_types=1);
  * @since         1.0.0
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Authenticator;
 
 use Authentication\Authenticator\AbstractAuthenticator;
@@ -41,6 +42,7 @@ class CognitoAuthenticator extends AbstractAuthenticator
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_defaultConfig = [
         'loginUrl' => null,
         'passwordUrl' => '/users/password',

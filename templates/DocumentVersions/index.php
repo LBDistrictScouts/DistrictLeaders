@@ -1,9 +1,14 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\DocumentVersion[]|\Cake\Collection\CollectionInterface $documentVersions
- * @var \App\Model\Entity\User $authUser
+ * @var AppView $this
+ * @var DocumentVersion[]|CollectionInterface $documentVersions
+ * @var User $authUser
  */
+
+use App\Model\Entity\DocumentVersion;
+use App\Model\Entity\User;
+use App\View\AppView;
+use Cake\Collection\CollectionInterface;
 
 $authUser = $this->getRequest()->getAttribute('identity');
 

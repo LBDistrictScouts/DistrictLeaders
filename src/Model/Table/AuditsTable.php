@@ -11,37 +11,39 @@ use Cake\Validation\Validator;
 /**
  * Audits Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $ChangedUsers
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $ChangedUsers
  * @method \App\Model\Entity\Audit get($primaryKey, $options = [])
  * @method \App\Model\Entity\Audit newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Audit[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Audit|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Audit saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Audit patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Audit|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Audit patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Audit[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Audit findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
- * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\BelongsTo $ChangedRoles
- * @property \App\Model\Table\ScoutGroupsTable&\Cake\ORM\Association\BelongsTo $ChangedScoutGroups
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $ChangedUserContacts
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $ChangedSections
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $NewSections
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $NewRoleTypes
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $NewUsers
- * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $NewRoleStatuses
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $NewUserContacts
- * @property \App\Model\Table\SectionsTable&\Cake\ORM\Association\BelongsTo $OriginalSections
- * @property \App\Model\Table\RoleTypesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleTypes
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $OriginalUsers
- * @property \App\Model\Table\RoleStatusesTable&\Cake\ORM\Association\BelongsTo $OriginalRoleStatuses
- * @property \App\Model\Table\UserContactsTable&\Cake\ORM\Association\BelongsTo $OriginalUserContacts
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\BelongsTo $ChangedRoles
+ * @property \App\Model\Table\ScoutGroupsTable&\App\Model\Table\BelongsTo $ChangedScoutGroups
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $ChangedUserContacts
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $ChangedSections
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $NewSections
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $NewRoleTypes
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $NewUsers
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $NewRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $NewUserContacts
+ * @property \App\Model\Table\SectionsTable&\App\Model\Table\BelongsTo $OriginalSections
+ * @property \App\Model\Table\RoleTypesTable&\App\Model\Table\BelongsTo $OriginalRoleTypes
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $OriginalUsers
+ * @property \App\Model\Table\RoleStatusesTable&\App\Model\Table\BelongsTo $OriginalRoleStatuses
+ * @property \App\Model\Table\UserContactsTable&\App\Model\Table\BelongsTo $OriginalUserContacts
  * @method \App\Model\Entity\Audit newEmptyEntity()
- * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Audit[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Audit[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Footprint\Model\Behavior\FootprintBehavior
  */
 class AuditsTable extends Table
 {

@@ -1,8 +1,12 @@
 <?php
 /**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\EmailResponse $emailResponse
+ * @var AppView $this
+ * @var EmailResponse $emailResponse
  */
+
+use App\Model\Entity\EmailResponse;
+use App\View\AppView;
+
 ?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">

@@ -41,6 +41,7 @@ class ScoutGroup extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_accessible = [
         'scout_group' => true,
         'group_alias' => true,
@@ -86,6 +87,7 @@ class ScoutGroup extends Entity
      *
      * @var array
      */
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
     protected $_virtual = ['clean_domain'];
 
     public const FIELD_ID = 'id';

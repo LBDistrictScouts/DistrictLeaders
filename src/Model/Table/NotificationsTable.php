@@ -17,24 +17,26 @@ use Cake\Validation\Validator;
 /**
  * Notifications Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\NotificationTypesTable&\Cake\ORM\Association\BelongsTo $NotificationTypes
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\HasMany $EmailSends
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\NotificationTypesTable&\App\Model\Table\BelongsTo $NotificationTypes
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\HasMany $EmailSends
  * @method \App\Model\Entity\Notification get($primaryKey, $options = [])
  * @method \App\Model\Entity\Notification newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Notification[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\Notification|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\Notification patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Notification|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Notification saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Notification patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\Notification[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\Notification findOrCreate($search, ?callable $callback = null, $options = [])
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  * @method \App\Model\Entity\Notification newEmptyEntity()
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\Notification[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Notification[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class NotificationsTable extends Table
 {
@@ -228,10 +230,13 @@ class NotificationsTable extends Table
      * @param \App\Model\Entity\NotificationType $notificationType The Notification Type
      * @param string $emailGenerationCode Generation Code
      * @param \App\Model\Entity\User $user User for Existing Check
-     * @return true|\App\Model\Entity\Notification
+     * @return \App\Model\Entity\Notification|true
      */
-    protected function checkShouldMake(NotificationType $notificationType, string $emailGenerationCode, User $user)
-    {
+    protected function checkShouldMake(
+        NotificationType $notificationType,
+        string $emailGenerationCode,
+        User $user
+    ): bool|Notification {
         if ($notificationType->repetitive) {
             return true;
         }

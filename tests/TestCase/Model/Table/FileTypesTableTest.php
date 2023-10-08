@@ -20,7 +20,7 @@ class FileTypesTableTest extends TestCase
     /**
      * Test subject
      *
-     * @var \App\Model\Table\FileTypesTable
+     * @var FileTypesTable
      */
     public $FileTypes;
 

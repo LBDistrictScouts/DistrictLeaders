@@ -12,6 +12,7 @@ declare(strict_types=1);
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App\Test\TestCase\Middleware;
 
 use Cake\Http\Response;

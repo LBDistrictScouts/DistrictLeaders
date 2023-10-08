@@ -10,23 +10,25 @@ use Cake\Validation\Validator;
 /**
  * EmailResponses Model
  *
- * @property \App\Model\Table\EmailSendsTable&\Cake\ORM\Association\BelongsTo $EmailSends
- * @property \App\Model\Table\EmailResponseTypesTable&\Cake\ORM\Association\BelongsTo $EmailResponseTypes
+ * @property \App\Model\Table\EmailSendsTable&\App\Model\Table\BelongsTo $EmailSends
+ * @property \App\Model\Table\EmailResponseTypesTable&\App\Model\Table\BelongsTo $EmailResponseTypes
  * @method \App\Model\Entity\EmailResponse get($primaryKey, $options = [])
  * @method \App\Model\Entity\EmailResponse newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponse[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\EmailResponse|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponse saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\EmailResponse patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\EmailResponse|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\EmailResponse patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponse[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\EmailResponse findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\EmailResponse newEmptyEntity()
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\EmailResponse[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\EmailResponse[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
  */
 class EmailResponsesTable extends Table
 {

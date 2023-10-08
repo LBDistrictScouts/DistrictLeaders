@@ -9,6 +9,7 @@ use App\Model\Entity\UserContactType;
 use App\Model\Table\Exceptions\BadUserDataException;
 use App\Model\Table\Traits\UpdateCounterCacheTrait;
 use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -16,29 +17,34 @@ use Cake\Validation\Validator;
 /**
  * UserContacts Model
  *
- * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- * @property \App\Model\Table\UserContactTypesTable&\Cake\ORM\Association\BelongsTo $UserContactTypes
- * @property \App\Model\Table\RolesTable&\Cake\ORM\Association\HasMany $Roles
+ * @property \App\Model\Table\UsersTable&\App\Model\Table\BelongsTo $Users
+ * @property \App\Model\Table\UserContactTypesTable&\App\Model\Table\BelongsTo $UserContactTypes
+ * @property \App\Model\Table\RolesTable&\App\Model\Table\HasMany $Roles
  * @method \App\Model\Entity\UserContact get($primaryKey, $options = [])
  * @method \App\Model\Entity\UserContact newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\UserContact[] newEntities(array $data, array $options = [])
- * @method \App\Model\Entity\UserContact|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContact saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
- * @method \App\Model\Entity\UserContact patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\UserContact|false save(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact saveOrFail(\App\Model\Table\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\UserContact patchEntity(\App\Model\Table\EntityInterface $entity, array $data, array $options = [])
  * @method \App\Model\Entity\UserContact[] patchEntities(iterable $entities, array $data, array $options = [])
  * @method \App\Model\Entity\UserContact findOrCreate($search, ?callable $callback = null, $options = [])
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
- * @property \App\Model\Table\AuditsTable&\Cake\ORM\Association\HasMany $Audits
+ * @property \App\Model\Table\AuditsTable&\App\Model\Table\HasMany $Audits
  * @mixin \App\Model\Behavior\CaseableBehavior
  * @mixin \App\Model\Behavior\AuditableBehavior
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
- * @property \App\Model\Table\DirectoryUsersTable&\Cake\ORM\Association\BelongsTo $DirectoryUsers
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @property \App\Model\Table\DirectoryUsersTable&\App\Model\Table\BelongsTo $DirectoryUsers
  * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  * @method \App\Model\Entity\UserContact newEmptyEntity()
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
- * @method \App\Model\Entity\UserContact[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\UserContact[]|\App\Model\Table\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ * @mixin \Muffin\Trash\Model\Behavior\TrashBehavior
+ * @mixin \App\Model\Behavior\CaseableBehavior
+ * @mixin \App\Model\Behavior\AuditableBehavior
+ * @mixin \Cake\ORM\Behavior\CounterCacheBehavior
  */
 class UserContactsTable extends Table
 {
@@ -148,7 +154,7 @@ class UserContactsTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationEmail(Validator $validator)
+    public function validationEmail(Validator $validator): Validator
     {
         $validator = $this->validationDefault($validator);
 
@@ -196,7 +202,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findValidated($query)
+    public function findValidated(Query $query): Query
     {
         return $query
             ->where([UserContact::FIELD_VERIFIED => true]);
@@ -206,7 +212,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findContactEmails($query)
+    public function findContactEmails(Query $query): Query
     {
         return $query
             ->contain(['UserContactTypes'])
@@ -217,7 +223,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findValidatedEmails($query)
+    public function findValidatedEmails(Query $query): Query
     {
         return $query
             ->find('validated')
@@ -228,7 +234,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findContactNumbers($query)
+    public function findContactNumbers(Query $query): Query
     {
         return $query
             ->contain(['UserContactTypes'])
@@ -239,7 +245,7 @@ class UserContactsTable extends Table
      * @param \Cake\ORM\Query $query The Query to be modified.
      * @return \Cake\ORM\Query
      */
-    public function findValidatedNumbers($query)
+    public function findValidatedNumbers(Query $query): Query
     {
         return $query
             ->find('validated')
